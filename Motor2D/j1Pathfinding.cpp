@@ -64,17 +64,20 @@ const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 	return &last_path;
 }
 
+//TODO p1 -> const_iterator?? something wrong...
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------
-p2List_item<PathNode>* PathList::Find(const iPoint& point) const
+/*std::list<PathNode>::const_iterator PathList::Find(const iPoint& point) const
 {
-	p2List_item<PathNode>* item = list.start;
-	while(item)
+	//p2List_item<PathNode>* item = list.start;
+	//TODO p1 -> const_iterator?? something wrong...
+	std::list<PathNode>::const_iterator item = list.begin();
+	while(item != list.end())
 	{
-		if(item->data.pos == point)
+		if(item._Ptr->_Myval.pos == point)
 			return item;
-		item = item->next;
+		item++;
 	}
 	return NULL;
 }
@@ -82,23 +85,26 @@ p2List_item<PathNode>* PathList::Find(const iPoint& point) const
 // PathList ------------------------------------------------------------------------
 // Returns the Pathnode with lowest score in this list or NULL if empty
 // ---------------------------------------------------------------------------------
-p2List_item<PathNode>* PathList::GetNodeLowestScore() const
+std::list<PathNode>::const_iterator PathList::GetNodeLowestScore() const
 {
-	p2List_item<PathNode>* ret = NULL;
+	//p2List_item<PathNode>* ret = NULL;
+	//TODO p1 -> const_iterator?? something wrong...
+	std::list<PathNode>::const_iterator ret = NULL;
 	int min = 65535;
 
-	p2List_item<PathNode>* item = list.end;
-	while(item)
+	//p2List_item<PathNode>* item = list.end;
+	std::list<PathNode>::const_iterator item = list.end();
+	while(item != list.begin())
 	{
-		if(item->data.Score() < min)
+		if(item._Ptr->_Myval.Score() < min)
 		{
-			min = item->data.Score();
+			min = item._Ptr->_Myval.Score();
 			ret = item;
 		}
-		item = item->prev;
+		item++;
 	}
 	return ret;
-}
+}*/
 
 // PathNode -------------------------------------------------------------------------
 // Convenient constructors
@@ -118,29 +124,29 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 {
 	iPoint cell;
-	uint before = list_to_fill.list.count();
+	uint before = list_to_fill.list.size();
 
 	// north
 	cell.create(pos.x, pos.y + 1);
 	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(pos.x, pos.y - 1);
 	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
 	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
 	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
-	return list_to_fill.list.count();
+	return list_to_fill.list.size();
 }
 
 // PathNode -------------------------------------------------------------------------

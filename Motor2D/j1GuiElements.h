@@ -18,7 +18,8 @@ public:
 	~Image();
 public:
 	bool start;
-	p2List<j1GuiEntity*>elements;
+	//p2List<j1GuiEntity*>elements;
+	std::list<j1GuiEntity*> elements;
 
 };
 

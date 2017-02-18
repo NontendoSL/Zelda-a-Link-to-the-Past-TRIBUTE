@@ -1,10 +1,11 @@
 #ifndef __j1APP_H__
 #define __j1APP_H__
 
-#include "p2List.h"
+//#include "p2List.h" TODO - p2list
 #include "j1Module.h"
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
+#include <list>
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
@@ -54,8 +55,8 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
-
+	//void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+	void GetSaveGames(std::list<p2SString>& list_to_fill) const;
 private:
 
 	// Load config file
@@ -97,7 +98,8 @@ public:
 
 private:
 
-	p2List<j1Module*>	modules;
+	//p2List<j1Module*>	modules;
+	std::list<j1Module*> modules;
 	int					argc;
 	char**				args;
 

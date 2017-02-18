@@ -35,7 +35,8 @@ public:
 
 public:
 
-	p2List<_TTF_Font*>	fonts;
+	//p2List<_TTF_Font*>	fonts; TODO - p2list
+	std::list<_TTF_Font*> fonts;
 	_TTF_Font*			default;
 };
 

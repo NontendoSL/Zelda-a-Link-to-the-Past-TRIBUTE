@@ -18,54 +18,66 @@ Image::Image(SDL_Rect rectangle, iPoint position): j1GuiEntity(rectangle, positi
 }
 
 
-void Image::Update() {
+void Image::Update() 
+{
 
-	if (start == true){
-		p2List_item<j1GuiEntity*>*iterator = elements.start;
-		while (iterator != nullptr) {
-			iterator->data->position.x += position.x;
-			iterator->data->position.y += position.y;
-			iterator->data->diferential.x = (iterator->data->position.x - position.x);
-			iterator->data->diferential.y = (iterator->data->position.y - position.y);
-			iterator = iterator->next;
+	if (start == true)
+	{
+		//p2List_item<j1GuiEntity*>*iterator = elements.start;
+		std::list<j1GuiEntity*>::iterator iterator = elements.begin();
+		while (iterator != elements.end()) 
+		{
+			iterator._Ptr->_Myval->position.x += position.x;
+			iterator._Ptr->_Myval->position.y += position.y;
+			iterator._Ptr->_Myval->diferential.x = (iterator._Ptr->_Myval->position.x - position.x);
+			iterator._Ptr->_Myval->diferential.y = (iterator._Ptr->_Myval->position.y - position.y);
+			iterator++;
 		}
 		start = false;
 	}
 
-	p2List_item<j1GuiEntity*>*iterator = elements.start;
-	while (iterator != nullptr) {
-		iterator->data->Update();
-		iterator->data->position.x = position.x + iterator->data->diferential.x;
-		iterator->data->position.y = position.y + iterator->data->diferential.y;
-		iterator = iterator->next;
+	//p2List_item<j1GuiEntity*>*iterator = elements.start;
+	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
+	while (iterator != elements.end())
+	{
+		iterator._Ptr->_Myval->Update();
+		iterator._Ptr->_Myval->position.x = position.x + iterator._Ptr->_Myval->diferential.x;
+		iterator._Ptr->_Myval->position.y = position.y + iterator._Ptr->_Myval->diferential.y;
+		iterator++;
 	}
 }
 
 
-void Image::Draw() {
+void Image::Draw()
+{
 
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
-	p2List_item<j1GuiEntity*>*iterator = elements.start;
-	while (iterator != nullptr) {
-		iterator->data->Draw();
-		iterator = iterator->next;
+	//p2List_item<j1GuiEntity*>*iterator = elements.start;
+	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
+	while (iterator != elements.end())
+	{
+		iterator._Ptr->_Myval->Draw();
+		iterator++;
 	}
-	delete iterator;
 }
 
-Image::~Image() {
-	p2List_item<j1GuiEntity*>*iterator = elements.start;
-	if(iterator!=nullptr)
-	while (iterator->next != nullptr) {
-		delete iterator;
-		iterator = iterator->next;
+Image::~Image() 
+{
+	//p2List_item<j1GuiEntity*>*iterator = elements.start;
+	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
+	if(iterator._Ptr->_Myval !=nullptr)
+	while (iterator != elements.end())
+	{
+		delete iterator._Ptr->_Myval;
+		iterator++;
 	}
 	elements.clear();
 }
 
 /////////////////////////////// TEXT METHODS ///////////////////////////////
 
-Text::Text(const char* write, iPoint pos, uint size) :text(write), j1GuiEntity({ 0,0,0,0 }, pos) {
+Text::Text(const char* write, iPoint pos, uint size) :text(write), j1GuiEntity({ 0,0,0,0 }, pos) 
+{
 
 	type = TEXT;
 	font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", size);
@@ -74,18 +86,21 @@ Text::Text(const char* write, iPoint pos, uint size) :text(write), j1GuiEntity({
 }
 
 
-void Text::Draw() {
+void Text::Draw() 
+{
 
 	App->render->Blit(text_texture, position.x, position.y, NULL, 0);
 
 }
 
-void Text::Update() {
+void Text::Update() 
+{
 
 
 }
 
-void Text::Write(const char* string) {
+void Text::Write(const char* string)
+{
 
 	text = string;
 
@@ -96,7 +111,8 @@ Text::~Text() {
 }
 
 /////////////////////////////// BUTTON METHODS ///////////////////////////////
-Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos):j1GuiEntity(rectangle, pos){
+Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos):j1GuiEntity(rectangle, pos)
+{
 	type = BUTTON;
 	state = normal;
 	texture2.x = stat2.x;
@@ -109,9 +125,11 @@ Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const
 	start = true;
 }
 
-void Button::Draw() {
+void Button::Draw() 
+{
 	
-	switch (state) {
+	switch (state) 
+	{
 		case normal:
 			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox,0);
 			break;
@@ -125,30 +143,37 @@ void Button::Draw() {
 	buttontext->Draw();
 }
 
-void Button::Update() {
+void Button::Update() 
+{
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	if (start == true) {
+	if (start == true)
+	{
 		buttontext->position.x += position.x;
 		buttontext->position.y += position.y;
 		start = false;
 	}
-	if (x >= position.x && x <= (position.x + Hitbox.w) && y >= position.y  && y <= (position.y + Hitbox.h)) {
-		if (App->input->GetMouseButtonDown(1) == KEY_REPEAT) {
+	if (x >= position.x && x <= (position.x + Hitbox.w) && y >= position.y  && y <= (position.y + Hitbox.h))
+	{
+		if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+		{
 			state = clicked;
 		}
-		else {
+		else 
+		{
 			state = over;
 		}
 	}
-	else {
+	else
+	{
 		state = normal;
 	}
 
 }
 
-Button::~Button() {
+Button::~Button() 
+{
 	delete buttontext;
 
 }

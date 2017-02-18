@@ -25,6 +25,10 @@ public:
 
 	// Play a music file
 	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
+	bool StopMusic();
+	bool ResumeMusic();
+	void VolumeMusic(int volume);
+	void FadeMusic(int ms);
 
 	// Load a WAV in memory
 	unsigned int LoadFx(const char* path);
@@ -35,7 +39,9 @@ public:
 private:
 
 	_Mix_Music*			music = NULL;
-	p2List<Mix_Chunk*>	fx;
+	//p2List<Mix_Chunk*>	fx; 
+	std::list<Mix_Chunk*> fx;
+
 };
 
 #endif // __j1AUDIO_H__

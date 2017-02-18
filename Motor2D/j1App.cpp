@@ -60,12 +60,13 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	p2List_item<j1Module*>* item = modules.end;
-
-	while(item != NULL)
+	//p2List_item<j1Module*>* item = modules.end;
+	std::list<j1Module*>::iterator item = modules.end();
+	item--;
+	while(item != modules.begin())
 	{
-		RELEASE(item->data);
-		item = item->prev;
+		RELEASE(item._Ptr->_Myval);
+		item--;
 	}
 
 	modules.clear();
@@ -74,7 +75,7 @@ j1App::~j1App()
 void j1App::AddModule(j1Module* module)
 {
 	module->Init();
-	modules.add(module);
+	modules.push_back(module);
 }
 
 // Called before render is available
@@ -108,13 +109,14 @@ bool j1App::Awake()
 
 	if(ret == true)
 	{
-		p2List_item<j1Module*>* item;
-		item = modules.start;
+		//p2List_item<j1Module*>* item;
+		std::list<j1Module*>::iterator item;
+		item = modules.begin();
 
-		while(item != NULL && ret == true)
+		while(item != modules.end() && ret == true)
 		{
-			ret = item->data->Awake(config.child(item->data->name.GetString()));
-			item = item->next;
+			ret = item._Ptr->_Myval->Awake(config.child(item._Ptr->_Myval->name.GetString()));
+			item++;
 		}
 	}
 
@@ -128,13 +130,14 @@ bool j1App::Start()
 {
 	PERF_START(ptimer);
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.start;
+	//p2List_item<j1Module*>* item;
+	std::list<j1Module*>::iterator item;
+	item = modules.begin();
 
-	while(item != NULL && ret == true)
+	while(item != modules.end() && ret == true)
 	{
-		ret = item->data->Start();
-		item = item->next;
+		ret = item._Ptr->_Myval->Start();
+		item++;
 	}
 	startup_time.Start();
 
@@ -235,19 +238,20 @@ void j1App::FinishUpdate()
 bool j1App::PreUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.start;
+	//p2List_item<j1Module*>* item;
+	std::list<j1Module*>::iterator item;
+	item = modules.begin();
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = item._Ptr->_Myval;
 
 		if(pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PreUpdate();
+		ret = item._Ptr->_Myval->PreUpdate();
 	}
 
 	return ret;
@@ -257,19 +261,21 @@ bool j1App::PreUpdate()
 bool j1App::DoUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.start;
+	//p2List_item<j1Module*>* item;
+	std::list<j1Module*>::iterator item;
+	item = modules.begin();
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = item._Ptr->_Myval;
 
-		if(pModule->active == false) {
+		if(pModule->active == false) 
+		{
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = item._Ptr->_Myval->Update(dt);
 	}
 
 	return ret;
@@ -279,18 +285,20 @@ bool j1App::DoUpdate()
 bool j1App::PostUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	//p2List_item<j1Module*>* item;
+	std::list<j1Module*>::iterator item;
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = item._Ptr->_Myval;
 
-		if(pModule->active == false) {
+		if(pModule->active == false) 
+		{
 			continue;
 		}
 
-		ret = item->data->PostUpdate();
+		ret = item._Ptr->_Myval->PostUpdate();
 	}
 
 	return ret;
@@ -301,13 +309,15 @@ bool j1App::CleanUp()
 {
 	PERF_START(ptimer);
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.end;
+	//p2List_item<j1Module*>* item;
+	std::list<j1Module*>::iterator item;
+	item = modules.end();
+	item--;
 
-	while(item != NULL && ret == true)
+	while(item != modules.begin() && ret == true)
 	{
-		ret = item->data->CleanUp();
-		item = item->prev;
+		ret = item._Ptr->_Myval->CleanUp();
+		item--;
 	}
 
 	PERF_PEEK(ptimer);
@@ -367,7 +377,7 @@ void j1App::SaveGame(const char* file) const
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
+void j1App::GetSaveGames(std::list<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
 }
@@ -393,20 +403,21 @@ bool j1App::LoadGameNow()
 
 			root = data.child("game_state");
 
-			p2List_item<j1Module*>* item = modules.start;
+			//p2List_item<j1Module*>* item = modules.start;
+			std::list<j1Module*>::iterator item = modules.begin();
 			ret = true;
 
-			while(item != NULL && ret == true)
+			while(item != modules.end() && ret == true)
 			{
-				ret = item->data->Load(root.child(item->data->name.GetString()));
-				item = item->next;
+				ret = item._Ptr->_Myval->Load(root.child(item._Ptr->_Myval->name.GetString()));
+				item++;
 			}
 
 			data.reset();
 			if(ret == true)
 				LOG("...finished loading");
 			else
-				LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+				LOG("...loading process interrupted with error on module %s", (item._Ptr->_Myval != NULL) ? item._Ptr->_Myval->name.GetString() : "unknown");//TODO LOW
 		}
 		else
 			LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
@@ -430,12 +441,13 @@ bool j1App::SavegameNow() const
 	
 	root = data.append_child("game_state");
 
-	p2List_item<j1Module*>* item = modules.start;
+	//p2List_item<j1Module*>* item = modules.start;
+	std::list<j1Module*>::const_iterator item = modules.begin();
 
-	while(item != NULL && ret == true)
+	while(item != modules.end() && ret == true)
 	{
-		ret = item->data->Save(root.append_child(item->data->name.GetString()));
-		item = item->next;
+		ret = item._Ptr->_Myval->Save(root.append_child(item._Ptr->_Myval->name.GetString()));
+		item++;
 	}
 
 	if(ret == true)
@@ -448,7 +460,7 @@ bool j1App::SavegameNow() const
 		LOG("... finished saving", save_game.GetString());
 	}
 	else
-		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+		LOG("Save process halted from an error in module %s", (item._Ptr->_Myval != NULL) ? item._Ptr->_Myval->name.GetString() : "unknown");
 
 	data.reset();
 	want_to_save = false;
