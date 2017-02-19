@@ -2,7 +2,8 @@
 #define __j1GUI_H__
 
 #include "j1Module.h"
-#include "p2DynArray.h"
+//#include "p2DynArray.h"
+#include <vector>
 
 #define CURSOR_WIDTH 2
 enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE };
@@ -54,7 +55,8 @@ public:
 private:
 
 	p2SString atlas_file_name;
-	p2DynArray<j1GuiEntity*> entities;
+	//p2DynArray<j1GuiEntity*> entities;
+	std::vector<j1GuiEntity*> entities;
 
 protected:
 	SDL_Texture* atlas;

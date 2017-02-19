@@ -19,7 +19,7 @@ bool j1PathFinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
 
-	last_path.Clear();
+	last_path.clear();
 	RELEASE_ARRAY(map);
 	return true;
 }
@@ -58,11 +58,11 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 	return INVALID_WALK_CODE;
 }
 
-// To request all tiles involved in the last generated path
+/*// To request all tiles involved in the last generated path //TODO LOW -> const_iterator??
 const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 {
 	return &last_path;
-}
+}*/
 
 //TODO p1 -> const_iterator?? something wrong...
 // PathList ------------------------------------------------------------------------

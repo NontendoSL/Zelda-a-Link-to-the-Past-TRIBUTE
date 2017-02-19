@@ -42,7 +42,7 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
-	for (uint i = 0; i < entities.Count(); i++) {
+	for (uint i = 0; i < entities.size(); i++) {
 		entities[i]->Update();
 		entities[i]->Handle_Input();
 	}
@@ -54,7 +54,7 @@ bool j1Gui::PreUpdate()
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
-	for (uint i = 0; i < entities.Count(); i++) {
+	for (uint i = 0; i < entities.size(); i++) {
 		entities[i]->Draw();
 	}
 	return true;
@@ -64,10 +64,10 @@ bool j1Gui::PostUpdate()
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
-	for (uint i = entities.Count()-1; i > 0; i--) {
+	for (uint i = entities.size()-1; i > 0; i--) {
 		delete entities[i];
 	}
-	entities.Clear();
+	entities.clear();
 	return true;
 }
 
@@ -82,7 +82,7 @@ Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos) {
 
 	Image* element = new Image(rect, pos);
 
-	entities.PushBack(element);
+	entities.push_back(element);
 
 	return element;
 }
@@ -91,7 +91,7 @@ Text* j1Gui::CreateText(const char* string, iPoint pos, uint size ) {
 
 	Text* element = new Text(string,pos, size);
 
-	entities.PushBack(element);
+	entities.push_back(element);
 
 	return element;
 }
@@ -100,7 +100,7 @@ Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text
 
 	Button* element = new Button(rect, pos, text2, text3, textstring, textsize, textpos);
 
-	entities.PushBack(element);
+	entities.push_back(element);
 
 	return element;
 }
