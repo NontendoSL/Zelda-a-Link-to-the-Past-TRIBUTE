@@ -17,9 +17,13 @@
   <gui>
     <atlas file="gui/82158.png"/>
   </gui>
+
+  <player>
+    <atlas file="gui/sf2.png"/>
+  </player>
     
   <window>
-    <resolution width="512" height="448" scale="2"/>
+    <resolution width="1300" height="800" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>

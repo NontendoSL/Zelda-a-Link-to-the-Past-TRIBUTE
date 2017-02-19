@@ -58,6 +58,9 @@
     <ClCompile Include="j1GuiElements.cpp">
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="j1Player.cpp">
+      <Filter>Desenvolupament  ========\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -135,6 +138,9 @@
     <ClInclude Include="j1GuiElements.h">
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="j1Player.h">
+      <Filter>Desenvolupament  ========\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -158,5 +164,13 @@
     <Filter Include="Desenvolupament  ========\Modules\GUI">
       <UniqueIdentifier>{fff5abb1-d128-4071-a124-281ad1c0603e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Desenvolupament  ========\Player">
+      <UniqueIdentifier>{04f989d6-eec3-42ac-a3ee-25b9e3cedf83}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
