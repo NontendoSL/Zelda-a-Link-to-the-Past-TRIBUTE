@@ -9,7 +9,7 @@
 
 j1FileSystem::j1FileSystem() : j1Module()
 {
-	name.create("file_system");
+	name="file_system";
 
 	// need to be created before Awake so other modules can use it
 	char* base_path = SDL_GetBasePath();

@@ -11,7 +11,7 @@
 
 j1Fonts::j1Fonts() : j1Module()
 {
-	name.create("fonts");
+	name="fonts";
 }
 
 // Destructor

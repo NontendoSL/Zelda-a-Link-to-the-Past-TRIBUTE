@@ -10,7 +10,7 @@
 
 j1Textures::j1Textures() : j1Module()
 {
-	name.create("textures");
+	name="textures";
 }
 
 // Destructor

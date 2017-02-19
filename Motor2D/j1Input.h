@@ -70,7 +70,8 @@ public:
 	//const char* get_lastinput();
 
 	bool input_print;
-	p2SString last_input;
+
+	std::string last_input;
 
 private:
 	bool		windowEvents[WE_COUNT];

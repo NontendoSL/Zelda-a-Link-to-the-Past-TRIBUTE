@@ -54,7 +54,7 @@ public:
 	int Next_id = 0;
 private:
 
-	p2SString atlas_file_name;
+	std::string atlas_file_name;
 	//p2DynArray<j1GuiEntity*> entities;
 	std::vector<j1GuiEntity*> entities;
 

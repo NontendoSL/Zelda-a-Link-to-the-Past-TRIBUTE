@@ -74,7 +74,7 @@ public:
 
 public:
 
-	p2SString	name;
+	std::string	name;
 	bool		active;
 
 };

@@ -13,7 +13,7 @@
 //Constructor
 j1Player::j1Player() : j1Module()
 {
-	name.create("player");
+	name="player";
 }
 
 // Destructor
@@ -38,7 +38,7 @@ bool j1Player::Start()
 	pos.x = 500;
 	pos.y = 200;
 	Camera_follow_player = true;
-	player_texture = App->tex->Load(tex_player_file_name.GetString());
+	player_texture = App->tex->Load(tex_player_file_name.c_str());
 	return ret;
 }
 

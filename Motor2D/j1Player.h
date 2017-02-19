@@ -37,7 +37,7 @@ private:
 	iPoint pos;
 	SDL_Texture* player_texture;
 	SDL_Rect Rect_player;
-	p2SString tex_player_file_name;
+	std::string tex_player_file_name;
 
 	bool Camera_follow_player;
 
