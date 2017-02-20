@@ -27,7 +27,7 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	tex_player_file_name = conf.child("atlas").attribute("file").as_string("");
-	texmapfile_name = conf.child("at").attribute("file").as_string("");
+	texmapfile_name = conf.child("day-night").attribute("file").as_string("");
 	Rect_player = { 984,189,66,90 };
 	return ret;
 }
@@ -113,9 +113,9 @@ bool j1Player::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{
-		SDL_RenderSetLogicalSize(App->render->renderer, 1280, 920);
+		SDL_RenderSetLogicalSize(App->render->renderer, 1300, 800);
 		if (changeResolution)
-			SDL_SetWindowSize(App->win->window, 1280, 920);
+			SDL_SetWindowSize(App->win->window, 1300, 800);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{

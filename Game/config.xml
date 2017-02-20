@@ -20,6 +20,7 @@
 
   <player>
     <atlas file="gui/sf2.png"/>
+    <day-night file="gui/test.png"/>
   </player>
     
   <window>

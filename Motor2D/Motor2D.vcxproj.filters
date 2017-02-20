@@ -58,8 +58,14 @@
     <ClCompile Include="j1GuiElements.cpp">
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="j1EntityElementsScene.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClCompile>
     <ClCompile Include="j1Player.cpp">
-      <Filter>Desenvolupament  ========\Player</Filter>
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Animation.cpp">
+      <Filter>Desenvolupament  ========\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,8 +144,17 @@
     <ClInclude Include="j1GuiElements.h">
       <Filter>Desenvolupament  ========\Modules\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="j1EntityElementsScene.h">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneElements.h">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClInclude>
     <ClInclude Include="j1Player.h">
-      <Filter>Desenvolupament  ========\Player</Filter>
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Animation.h">
+      <Filter>Desenvolupament  ========\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +179,10 @@
     <Filter Include="Desenvolupament  ========\Modules\GUI">
       <UniqueIdentifier>{fff5abb1-d128-4071-a124-281ad1c0603e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Player">
+    <Filter Include="Desenvolupament  ========\ElementsScene">
+      <UniqueIdentifier>{e355e0ac-ad79-457e-b007-beef6e857e81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Animation">
       <UniqueIdentifier>{04f989d6-eec3-42ac-a3ee-25b9e3cedf83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

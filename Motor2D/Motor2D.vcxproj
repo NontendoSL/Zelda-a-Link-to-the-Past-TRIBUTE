@@ -75,6 +75,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="j1Animation.cpp" />
+    <ClCompile Include="j1EntityElementsScene.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Gui.cpp" />
@@ -97,6 +99,8 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="j1Animation.h" />
+    <ClInclude Include="j1EntityElementsScene.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1Gui.h" />
@@ -123,6 +127,7 @@
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="j1SceneElements.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml" />
