@@ -27,6 +27,7 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	tex_player_file_name = conf.child("atlas").attribute("file").as_string("");
+	texmapfile_name = conf.child("at").attribute("file").as_string("");
 	Rect_player = { 984,189,66,90 };
 	return ret;
 }
@@ -38,7 +39,9 @@ bool j1Player::Start()
 	pos.x = 500;
 	pos.y = 200;
 	Camera_follow_player = true;
+	changeResolution = false;
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
+	maptex = App->tex->Load(texmapfile_name.c_str());
 	return ret;
 }
 
@@ -74,9 +77,50 @@ bool j1Player::Update(float dt)
 			pos.y -= 2;
 		}
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		changeResolution = !changeResolution;
+	}
 
 	App->render->Blit(player_texture, pos.x, pos.y, &Rect_player);
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+	{
+		App->render->Blit(maptex, -App->render->camera.x, -App->render->camera.y);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		SDL_RenderSetLogicalSize(App->render->renderer, 800, 400);
+		if(changeResolution)
+			SDL_SetWindowSize(App->win->window, 800, 400);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		SDL_RenderSetLogicalSize(App->render->renderer, 200, 300);
+		if (changeResolution)
+			SDL_SetWindowSize(App->win->window, 200, 300);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		SDL_RenderSetLogicalSize(App->render->renderer, 500, 200);
+		if (changeResolution)
+			SDL_SetWindowSize(App->win->window, 500, 200);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		SDL_RenderSetLogicalSize(App->render->renderer, 1200, 500);
+		if (changeResolution)
+			SDL_SetWindowSize(App->win->window, 1200, 500);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		SDL_RenderSetLogicalSize(App->render->renderer, 1280, 920);
+		if (changeResolution)
+			SDL_SetWindowSize(App->win->window, 1280, 920);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		SDL_SetWindowSize(App->win->window, 800, 300);
+	}
 
 	return ret;
 }

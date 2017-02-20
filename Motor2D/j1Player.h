@@ -36,10 +36,13 @@ private:
 
 	iPoint pos;
 	SDL_Texture* player_texture;
+	SDL_Texture* maptex;
 	SDL_Rect Rect_player;
 	std::string tex_player_file_name;
+	std::string texmapfile_name;
 
 	bool Camera_follow_player;
+	bool changeResolution;
 
 };
 
