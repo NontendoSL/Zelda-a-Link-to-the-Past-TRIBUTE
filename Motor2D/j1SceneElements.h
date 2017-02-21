@@ -9,6 +9,7 @@
 #include "j1AnimationManager.h"
 #include "j1Textures.h"
 
+enum ElementType{PLAYER,ENEMY,ITEM};
 // ---------------------------------------------------
 class j1SceneElement
 {
@@ -33,6 +34,7 @@ public:
 	iPoint position;
 	AnimationState state;
 	Direction dir;
+	ElementType type;
 	//SDL_Texture* texture;
 
 };

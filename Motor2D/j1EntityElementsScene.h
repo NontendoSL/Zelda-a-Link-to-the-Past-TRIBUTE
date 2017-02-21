@@ -6,8 +6,8 @@
 #include <list>
 #include "j1SceneElements.h"
 
-
-
+class j1Enemy;
+class j1Item;
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
 {
@@ -31,7 +31,8 @@ public:
 
 private:
 	std::list<j1SceneElement*> elementscene;
-	//Create/s
+	j1Enemy* CreateEnemy(iPoint position, int hp, int attack, float speed);
+	j1Item* CreateItem(iPoint position);
 	//Delete
 	
 };

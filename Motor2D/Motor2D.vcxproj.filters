@@ -64,11 +64,14 @@
     <ClCompile Include="j1Player.cpp">
       <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Desenvolupament  ========\ElementsScene</Filter>
-    </ClCompile>
     <ClCompile Include="j1AnimationManager.cpp">
       <Filter>Desenvolupament  ========\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Enemy.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Item.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Desenvolupament  ========\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Item.h">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
