@@ -30,10 +30,10 @@ public:
 
 
 private:
-
 	std::list<j1SceneElement*> elementscene;
-
-
+	//Create/s
+	//Delete
+	
 };
 
 #endif // __j1ENTITYELEMENTSCENE_H__

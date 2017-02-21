@@ -5,40 +5,35 @@
 
 #include "j1Module.h"
 #include <list>
-
-
+#include "p2Point.h"
+#include "j1AnimationManager.h"
+#include "j1Textures.h"
 
 // ---------------------------------------------------
-class j1SceneElement : public j1Module
+class j1SceneElement
 {
 public:
 
-	j1SceneElement()
+	j1SceneElement(iPoint position)
 	{}
 
 	~j1SceneElement()
 	{}
 
-	// Called when before render is available
-	virtual bool Awake(pugi::xml_node&);
+	//virtual bool Awake(pugi::xml_node&);
 
-	// Call before first frame
-	bool Start();
+	virtual void Update() {};
 
-	// Called before all Updates
-	bool PreUpdate();
+	virtual void Draw() {};
 
-	// Called after all Updates
-	bool PostUpdate();
-
-	virtual bool Update(float dt);
-
-	// Called before quitting
-	bool CleanUp();
+	virtual void Handle_Input() {};
 
 
-
-
+public:
+	iPoint position;
+	AnimationState state;
+	Direction dir;
+	//SDL_Texture* texture;
 
 };
 
