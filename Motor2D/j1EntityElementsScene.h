@@ -36,11 +36,10 @@ public:
 	Player* CreatePlayer(iPoint position);
 
 	pugi::xml_node conf;
-
+	pugi::xml_document XML;
 private:
 	std::list<j1SceneElement*> elementscene;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
-
 	//Delete
 	
 };

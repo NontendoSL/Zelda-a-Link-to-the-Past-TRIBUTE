@@ -12,6 +12,7 @@
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
 #include "j1Player.h"
+#include "j1FileSystem.h"
 
 //Constructor
 Player::Player(iPoint position) :j1SceneElement(position)
@@ -36,6 +37,7 @@ bool Player::Awake(pugi::xml_node& conf)
 	hp = conf.child("stats").attribute("hp").as_int(0);
 	attack = conf.child("stats").attribute("attack").as_int(0);
 	Rect_player = { 984,189,66,90 };
+
 	return ret;
 }
 
@@ -150,6 +152,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		hp -= 2;
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		attack *= 2;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		Save();
 
 	//TODO MID -> I thing that use a stats_temp all time clear and insert, clear-insert, is not a good idea...
 	stats_temp.clear();
@@ -171,4 +175,13 @@ bool Player::CleanUp()
 
 
 	return ret;
+}
+
+
+bool Player::Save()
+{
+	App->entity_elements->XML.child("config").child("player").child("stats").attribute("hp").set_value(hp);
+
+	App->entity_elements->XML.save_file("config.xml");
+	return true;
 }

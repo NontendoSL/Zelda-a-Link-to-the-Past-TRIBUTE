@@ -42,6 +42,9 @@ bool j1EntityElementScene::Start()
 		//item._Ptr->_Myval->Start();
 		item++;
 	}
+	char* buf;
+	int size = App->fs->Load("config.xml", &buf);
+	XML.load_buffer(buf, size);
 	return ret;
 }
 

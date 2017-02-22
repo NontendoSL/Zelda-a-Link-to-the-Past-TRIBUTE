@@ -45,6 +45,7 @@ public:
 		return true;
 	};
 
+	virtual bool Save() { return false; };
 
 public:
 	iPoint position;

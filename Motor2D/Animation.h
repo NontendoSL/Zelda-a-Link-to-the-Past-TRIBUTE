@@ -17,7 +17,6 @@ public:
 	int loops = 0;
 
 public:
-
 	Animation()
 	{}
 

@@ -1,43 +1,34 @@
-<!-- Config file for the game -->
-
+<?xml version="1.0"?>
 <config>
-  <app framerate_cap="">
-    <title>Pathfinding Test</title>
-    <organization>UPC</organization>
-  </app>
-	
-  <renderer>
-    <vsync value="true"/>
-  </renderer>
-
-  <font>
-    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
-  </font>
-
-  <gui>
-    <atlas file="gui/82158.png"/>
-  </gui>
-
-  <player>
-    <atlas file="gui/sf2.png"/>
-    <day-night file="gui/test.png"/>
-    <stats hp="100" attack="10"/>
-  </player>
-    
-  <window>
-    <resolution width="1300" height="800" scale="1"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
-  </window>
-
-  <file_system>
-    <path>data.zip</path>
-  </file_system>
-
-  <map >
-    <folder>maps/</folder>
-  </map>
-
+	<app framerate_cap="">
+		<title>Pathfinding Test</title>
+		<organization>UPC</organization>
+	</app>
+	<renderer>
+		<vsync value="true" />
+	</renderer>
+	<font>
+		<default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12" />
+	</font>
+	<gui>
+		<atlas file="gui/82158.png" />
+	</gui>
+	<player>
+		<atlas file="gui/sf2.png" />
+		<day-night file="gui/test.png" />
+		<stats hp="777" attack="10" />
+	</player>
+	<window>
+		<resolution width="1300" height="800" scale="1" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<file_system>
+		<path>data.zip</path>
+	</file_system>
+	<map>
+		<folder>maps/</folder>
+	</map>
 </config>
