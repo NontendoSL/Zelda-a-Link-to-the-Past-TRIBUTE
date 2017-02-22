@@ -12,7 +12,7 @@ public:
 
 	~j1Item();
 
-	void Update();
+	bool Update();
 
 	void Draw();
 

@@ -2,6 +2,15 @@
 #include "j1Enemy.h"
 #include "j1Item.h"
 #include "j1Player.h"
+#include "j1App.h"
+#include "j1Input.h"
+#include "p2Log.h"
+#include "j1Textures.h"
+#include "j1Audio.h"
+#include "j1Render.h"
+#include "j1Window.h"
+#include "j1FileSystem.h"
+
 
 j1EntityElementScene::j1EntityElementScene()
 {
@@ -17,7 +26,7 @@ bool j1EntityElementScene::Awake(pugi::xml_node &config)
 	std::list<j1SceneElement*>::iterator item = elementscene.begin();
 	while (item != elementscene.end())
 	{
-		item._Ptr->_Myval->Awake(config.child(item._Ptr->_Myval->name.c_str()));
+		//item._Ptr->_Myval->Awake(config.child(item._Ptr->_Myval->name.c_str()));
 		item++;
 	}
 
@@ -30,7 +39,7 @@ bool j1EntityElementScene::Start()
 	std::list<j1SceneElement*>::iterator item = elementscene.begin();
 	while (item != elementscene.end())
 	{
-		item._Ptr->_Myval->Start();
+		//item._Ptr->_Myval->Start();
 		item++;
 	}
 	return ret;
@@ -39,11 +48,13 @@ bool j1EntityElementScene::Start()
 bool j1EntityElementScene::Update(float dt)
 {
 	bool ret = true;
-	std::list<j1SceneElement*>::iterator item = elementscene.begin();
-	while (item != elementscene.end())
+
+
+	std::list<j1SceneElement*>::iterator item3 = elementscene.begin();
+	while (item3 != elementscene.end())
 	{
-		item._Ptr->_Myval->Update();
-		item++;
+		item3._Ptr->_Myval->Update();
+		item3++;
 	}
 	return ret;
 }
@@ -83,5 +94,29 @@ Player* j1EntityElementScene::CreatePlayer(iPoint position)
 	Player* element = new Player(position);
 	elementscene.push_back(element);
 
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	config = LoadConfig(config_file);
+	element->Awake(config.child(element->name.c_str()));
+	element->Start();
+
 	return element;
+}
+
+// ---------------------------------------------
+pugi::xml_node j1EntityElementScene::LoadConfig(pugi::xml_document& config_file) const
+{
+	pugi::xml_node ret;
+
+	char* buf;
+	int size = App->fs->Load("config.xml", &buf);
+	pugi::xml_parse_result result = config_file.load_buffer(buf, size);
+	RELEASE(buf);
+
+	if (result == NULL)
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	else
+		ret = config_file.child("config");
+
+	return ret;
 }

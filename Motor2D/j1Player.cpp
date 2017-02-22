@@ -16,6 +16,7 @@
 //Constructor
 Player::Player(iPoint position) :j1SceneElement(position)
 {
+
 	type = PLAYER;
 	name = "player";
 }
@@ -61,7 +62,7 @@ bool Player::Start()
 	return ret;
 }
 
-bool Player::Update(float dt)
+bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
 	bool ret = true;
 

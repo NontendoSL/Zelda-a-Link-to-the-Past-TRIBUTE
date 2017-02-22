@@ -15,7 +15,7 @@ class j1SceneElement
 {
 public:
 
-	j1SceneElement(iPoint position)
+	j1SceneElement(iPoint position): position(position)
 	{}
 
 	~j1SceneElement()
@@ -31,7 +31,10 @@ public:
 		return true; 
 	};
 
-	virtual void Update() {};
+	virtual bool Update()
+	{
+		return true;
+	};
 
 	virtual void Draw() {};
 

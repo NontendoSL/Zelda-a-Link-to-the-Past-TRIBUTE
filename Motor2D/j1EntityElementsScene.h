@@ -5,6 +5,7 @@
 #include "j1Module.h"
 #include <list>
 #include "j1SceneElements.h"
+#include "PugiXml\src\pugixml.hpp"
 
 class j1Enemy;
 class j1Item;
@@ -24,7 +25,7 @@ public:
 	// Call before first frame
 	bool Start();
 
-	bool Update(float dt);
+	bool Update(float dt); //TODO LOW -> Change bool to void
 
 	// Called before quitting
 	bool CleanUp();
@@ -34,8 +35,11 @@ public:
 	j1Item* CreateItem(iPoint position);
 	Player* CreatePlayer(iPoint position);
 
+	pugi::xml_node conf;
+
 private:
 	std::list<j1SceneElement*> elementscene;
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 
 	//Delete
 	

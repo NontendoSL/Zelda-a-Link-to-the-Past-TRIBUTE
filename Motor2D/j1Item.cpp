@@ -9,10 +9,10 @@ j1Item::j1Item(iPoint position) :j1SceneElement(position)
 j1Item::~j1Item()
 {}
 
-void j1Item::Update()
+bool j1Item::Update()
 {
 
-
+	return true;
 }
 
 void j1Item::Draw()

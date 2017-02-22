@@ -12,7 +12,7 @@ public:
 
 	~j1Enemy();
 
-	void Update();
+	bool Update();
 
 	void Draw();
 
