@@ -103,6 +103,8 @@ void Text::Write(const char* string)
 {
 
 	text = string;
+	font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", 23);
+	text_texture = App->font->Print(text, { (255),(255),(255),(255) }, font);
 
 }
 

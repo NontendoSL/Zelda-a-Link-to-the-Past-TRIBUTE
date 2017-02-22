@@ -21,6 +21,7 @@
   <player>
     <atlas file="gui/sf2.png"/>
     <day-night file="gui/test.png"/>
+    <stats hp="100" attack="10"/>
   </player>
     
   <window>

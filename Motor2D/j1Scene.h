@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1EntityElementsScene.h"
 
 struct SDL_Texture;
 
@@ -10,6 +11,8 @@ class Image;
 class Text;
 class Button;
 class TextBox;
+
+class Player;
 
 class j1Scene : public j1Module
 {
@@ -47,6 +50,8 @@ public:
 	Image* item;
 	Image* gems;
 	Text* test;
+	Player* player;
+	
 };
 
 #endif // __j1SCENE_H__

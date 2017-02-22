@@ -20,7 +20,7 @@ class j1Map;
 class j1PathFinding;
 class j1Fonts;
 class j1Gui;
-class j1Player;
+class j1EntityElementScene;
 
 class j1App
 {
@@ -85,18 +85,18 @@ private:
 public:
 
 	// Modules
-	j1Window*			win = NULL;
-	j1Input*			input = NULL;
-	j1Render*			render = NULL;
-	j1Textures*			tex = NULL;
-	j1Audio*			audio = NULL;
-	j1Scene*			scene = NULL;
-	j1FileSystem*		fs = NULL;
-	j1Map*				map = NULL;
-	j1PathFinding*		pathfinding = NULL;
-	j1Fonts*			font = NULL;
-	j1Gui*				gui = NULL;
-	j1Player*			player = NULL;
+	j1Window*				win = NULL;
+	j1Input*				input = NULL;
+	j1Render*				render = NULL;
+	j1Textures*				tex = NULL;
+	j1Audio*				audio = NULL;
+	j1Scene*				scene = NULL;
+	j1FileSystem*			fs = NULL;
+	j1Map*					map = NULL;
+	j1PathFinding*			pathfinding = NULL;
+	j1Fonts*				font = NULL;
+	j1Gui*					gui = NULL;
+	j1EntityElementScene*	entity_elements = NULL;
 
 private:
 

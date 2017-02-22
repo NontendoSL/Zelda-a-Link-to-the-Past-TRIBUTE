@@ -38,6 +38,8 @@ bool j1Scene::Start()
 	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
 	test = App->gui->CreateText("A link to the Nintendo Worlds", { 12,80 }, 23);
+	//TODO HIGH -> All proces of to create player has wrong...
+	player = App->entity_elements->CreatePlayer(iPoint(500, 200));
 	App->map->Load("iso.tmx");
 	return true;
 }
@@ -67,6 +69,7 @@ bool j1Scene::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			App->render->camera.x -= 2;
 	}
+
 
 	return true;
 }

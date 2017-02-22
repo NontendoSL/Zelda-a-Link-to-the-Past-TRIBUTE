@@ -2,16 +2,18 @@
 #ifndef __PLAYER_H_
 #define __PLAYER_H_
 
-#include "j1Module.h"
+#include "j1SceneElements.h"
+#include "SDL/include/SDL_rect.h"
 
+class Text;
 
-class j1Player : public j1Module
+class Player : public j1SceneElement
 {
 public:
-	j1Player();
+	Player(iPoint position);
 
 	// Destructor
-	virtual ~j1Player();
+	~Player();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -34,12 +36,19 @@ public:
 
 private:
 
-	iPoint pos;
 	SDL_Texture* player_texture;
 	SDL_Texture* maptex;
 	SDL_Rect Rect_player;
 	std::string tex_player_file_name;
 	std::string texmapfile_name;
+
+	Text* hp_text;
+	int hp;
+	Text* attack_text;
+	int attack;
+
+	//TEST
+	std::string stats_temp;
 
 	bool Camera_follow_player;
 	bool changeResolution;

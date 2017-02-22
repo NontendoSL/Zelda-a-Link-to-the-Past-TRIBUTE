@@ -21,7 +21,15 @@ public:
 	~j1SceneElement()
 	{}
 
-	//virtual bool Awake(pugi::xml_node&);
+	virtual bool Awake(pugi::xml_node&) 
+	{
+		return true;
+	};
+
+	virtual bool Start() 
+	{ 
+		return true; 
+	};
 
 	virtual void Update() {};
 
@@ -29,12 +37,19 @@ public:
 
 	virtual void Handle_Input() {};
 
+	virtual bool CleanUp() 
+	{
+		return true;
+	};
+
 
 public:
 	iPoint position;
 	AnimationState state;
 	Direction dir;
 	ElementType type;
+
+	std::string	name;
 	//SDL_Texture* texture;
 
 };

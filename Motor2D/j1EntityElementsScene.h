@@ -8,6 +8,7 @@
 
 class j1Enemy;
 class j1Item;
+class Player;
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
 {
@@ -28,11 +29,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//TODO LOW
+	j1Enemy* CreateEnemy(iPoint position, int hp, int attack, float speed);
+	j1Item* CreateItem(iPoint position);
+	Player* CreatePlayer(iPoint position);
 
 private:
 	std::list<j1SceneElement*> elementscene;
-	j1Enemy* CreateEnemy(iPoint position, int hp, int attack, float speed);
-	j1Item* CreateItem(iPoint position);
+
 	//Delete
 	
 };
