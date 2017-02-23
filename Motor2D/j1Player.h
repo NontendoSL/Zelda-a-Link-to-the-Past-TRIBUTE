@@ -27,6 +27,7 @@ public:
 	// Called each loop iteration
 	bool Update();
 
+	void Draw();
 	// Called before all Updates
 	//bool PostUpdate();
 

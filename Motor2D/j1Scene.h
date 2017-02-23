@@ -55,7 +55,7 @@ public:
 	Player* player;
 	Enemy* enemy;
 	Item* items;
-	
+
 };
 
 #endif // __j1SCENE_H__

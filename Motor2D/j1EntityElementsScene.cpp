@@ -48,6 +48,17 @@ bool j1EntityElementScene::Start()
 	return ret;
 }
 
+bool j1EntityElementScene::PreUpdate()
+{
+	std::list<j1SceneElement*>::iterator item3 = elementscene.begin();
+	while (item3 != elementscene.end())
+	{
+		item3._Ptr->_Myval->Update();
+		item3++;
+	}
+	return true;
+}
+
 bool j1EntityElementScene::Update(float dt)
 {
 	bool ret = true;
@@ -55,10 +66,16 @@ bool j1EntityElementScene::Update(float dt)
 	std::list<j1SceneElement*>::iterator item3 = elementscene.begin();
 	while (item3 != elementscene.end())
 	{
-		item3._Ptr->_Myval->Update();
+		item3._Ptr->_Myval->Draw();
 		item3++;
 	}
 	return ret;
+}
+
+bool j1EntityElementScene::PostUpdate()
+{
+
+	return true;
 }
 
 bool j1EntityElementScene::CleanUp()

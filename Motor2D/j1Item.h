@@ -29,6 +29,8 @@ public:
 	// Called before all Updates
 	//bool PostUpdate();
 
+	void Draw();
+
 	// Called before quitting
 	bool CleanUp();
 

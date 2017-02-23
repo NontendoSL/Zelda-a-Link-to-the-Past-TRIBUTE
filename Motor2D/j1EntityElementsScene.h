@@ -25,7 +25,12 @@ public:
 	// Call before first frame
 	bool Start();
 
+	// Called before all Updates
+	bool PreUpdate();
+
 	bool Update(float dt); //TODO LOW -> Change bool to void
+
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();

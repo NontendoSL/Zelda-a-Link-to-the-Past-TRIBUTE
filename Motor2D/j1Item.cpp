@@ -38,13 +38,18 @@ bool Item::Start()
 
 bool Item::Update()
 {
+
+
+	return true;
+}
+
+void Item::Draw()
+{
 	if (canBlit == true)
 	{
 		SDL_Rect tem = { 1128,189,66,90 };
 		App->render->Blit(texture, position.x, position.y, &tem);
 	}
-
-	return true;
 }
 
 bool Item::CleanUp()

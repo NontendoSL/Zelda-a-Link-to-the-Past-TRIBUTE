@@ -63,6 +63,13 @@ bool Enemy::Update()
 	{
 		hp -= 2;
 	}
+
+
+	return true;
+}
+
+void Enemy::Draw()
+{
 	if (hp > 0)
 	{
 		SDL_Rect temp{ 1056,189,66,90 };
@@ -72,8 +79,6 @@ bool Enemy::Update()
 	{
 		//Drop_item();
 	}
-
-	return true;
 }
 
 void Enemy::AddItem(Item* item)

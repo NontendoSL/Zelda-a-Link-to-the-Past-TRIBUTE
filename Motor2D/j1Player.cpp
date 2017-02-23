@@ -66,6 +66,7 @@ bool Player::Start()
 
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
+
 	bool ret = true;
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
@@ -102,13 +103,14 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		}
 	}
 
+	
+
 	//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		changeResolution = !changeResolution;
 	}
 
-	App->render->Blit(player_texture, position.x, position.y, &Rect_player);
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
 	{
 		App->render->Blit(maptex, -App->render->camera.x, -App->render->camera.y);
@@ -170,6 +172,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 	
 	return ret;
+}
+
+void Player::Draw()
+{
+	App->render->Blit(player_texture, position.x, position.y, &Rect_player);
 }
 
 bool Player::CleanUp()
