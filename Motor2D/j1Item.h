@@ -5,19 +5,38 @@
 #include "j1SceneElements.h"
 
 
-class j1Item : public j1SceneElement
+enum itemtype{ZELDA, POKEMON};
+
+class Item : public j1SceneElement
 {
 public:
-	j1Item(iPoint position);
+	Item(iPoint position);
 
-	~j1Item();
+	~Item();
 
+	// Called before render is available
+	bool Awake(pugi::xml_node&, uint);
+
+	// Called before the first frame
+	bool Start();
+
+	// Called before all Updates
+	//bool PreUpdate();
+
+	// Called each loop iteration
 	bool Update();
 
-	void Draw();
+	// Called before all Updates
+	//bool PostUpdate();
+
+	// Called before quitting
+	bool CleanUp();
+
+	bool Save();
 
 private:
 	bool picked=false, equiped, equipable;
+	SDL_Texture* texture;
 };
 
 #endif

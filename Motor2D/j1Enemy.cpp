@@ -1,23 +1,97 @@
 #include "j1Enemy.h"
+#include "j1Render.h"
+#include "j1Textures.h"
+#include "j1App.h"
+#include "p2Defs.h"
+#include "j1Input.h"
+#include "j1Item.h"
 
-
-j1Enemy::j1Enemy(iPoint position, int hp, int attack, float speed):j1SceneElement(position)
+Enemy::Enemy(iPoint position):j1SceneElement(position)
 {
+	name = "enemies";
 	type = ENEMY;
 }
 
-j1Enemy::~j1Enemy()
+Enemy::~Enemy()
 {}
 
-bool j1Enemy::Update()
+bool Enemy::Awake(pugi::xml_node &conf, uint id)
 {
+	std::string temp = conf.child("enemy").attribute("file").as_string("");
+	texture = App->tex->Load(temp.c_str());
+	hp = conf.child("enemy").attribute("hp").as_int(0);
+	/*position.x = conf.child("enemy").attribute("pos_x").as_int(0);
+	position.y = conf.child("enemy").attribute("pos_y").as_int(0);*/
+	return true;
+}
+
+bool Enemy::Start()
+{
+
 
 	return true;
 }
 
-void j1Enemy::Draw()
+bool Enemy::Update()
 {
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+	{
+		position.x -= 2;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	{
+		position.y += 2;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+	{
+		position.x += 2;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
+	{
+		position.y -= 2;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		hp -= 2;
+	}
+	if (hp > 0)
+	{
+		SDL_Rect temp{ 1056,189,66,90 };
+		App->render->Blit(texture, position.x, position.y, &temp);
+	}
+	else
+	{
+		//Drop_item();
+	}
 
-
+	return true;
 }
+
+void Enemy::AddItem(Item* item)
+{
+	item_inside = item;
+	item->canBlit = false;
+}
+
+void Enemy::Drop_item()
+{
+	item_inside->canBlit = true;
+	item_inside->position.x = position.x;
+	item_inside->position.y = position.y;
+	item_inside = NULL;
+}
+
+bool Enemy::CleanUp()
+{
+	return true;
+}
+
+bool Enemy::Save()
+{
+	return true;
+}
+
+
+
+
 

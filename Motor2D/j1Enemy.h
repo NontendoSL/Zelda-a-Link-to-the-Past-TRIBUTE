@@ -3,24 +3,46 @@
 #define __ENEMIES_H_
 
 #include "j1SceneElements.h"
+class Item;
 
-
-class j1Enemy : public j1SceneElement
+class Enemy : public j1SceneElement
 {
 public:
-	j1Enemy(iPoint position, int hp, int attack, float speed);
+	Enemy(iPoint position);
 
-	~j1Enemy();
+	~Enemy();
 
+	// Called before render is available
+	bool Awake(pugi::xml_node&, uint);
+
+	// Called before the first frame
+	bool Start();
+
+	// Called before all Updates
+	//bool PreUpdate();
+
+	// Called each loop iteration
 	bool Update();
 
-	void Draw();
+	// Called before all Updates
+	//bool PostUpdate();
+
+	// Called before quitting
+	bool CleanUp();
+
+	bool Save();
+
+	void AddItem(Item*);
+
+	void Drop_item();
 
 private:
-	int hp, attack;
+	int attack;
 	//Item* drop;
 	float speed;
 	bool stunned=false;
+	Item* item_inside;
+	SDL_Texture* texture;
 };
 
 #endif
