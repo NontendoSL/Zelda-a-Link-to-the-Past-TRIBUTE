@@ -49,7 +49,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(font);
-	AddModule(anim_manager);
 
 	// scene last
 	AddModule(scene);
@@ -59,6 +58,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//Player
 	//AddModule(player); //TODO LOW
 
+	AddModule(anim_manager);
 
 	// render last to swap buffer
 	AddModule(render);

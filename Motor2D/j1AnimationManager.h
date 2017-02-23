@@ -5,9 +5,12 @@
 #include "j1Module.h"
 #include <vector>
 #include "Animation.h"
+#include "j1Textures.h"
+#include "j1Render.h"
+#include "p2Defs.h"
 
 enum AnimationState{IDLE,WALKING,ATTACK};
-enum Direction{TOP,BOT,LEFT,RIGHT};
+enum Direction{UP,DOWN,LEFT,RIGHT};
 
 class j1AnimationManager : public j1Module
 {
@@ -29,11 +32,19 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void PlayerSelector(AnimationState status, Direction dir);
+	void PlayerSelector(AnimationState status, Direction dir, iPoint position);
 
 private:
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	std::vector<Animation*> link_anim;
-	Animation* link;
+	Animation link_walk_east;
+	Animation link_walk_north;
+	Animation link_walk_west;
+	Animation link_walk_south;
+	Animation* current_animation;
+	SDL_Texture* graphics = nullptr;
+
+	std::string file_texture;
 };
 
 #endif //__j1ANIMATION_H_

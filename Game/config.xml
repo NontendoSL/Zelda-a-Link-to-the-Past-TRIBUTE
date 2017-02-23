@@ -15,11 +15,13 @@
 	</gui>
   
 	<player>
-		<atlas file="textures/LINK.png"/>
+		<atlas file="textures/LinkWalkingSprites.png"/>
 		<day-night file="gui/test.png" />
 		<stats hp="100" attack="10" />
 	</player>
-  
+  <animation>
+    <sprite file="textures/LinkWalkingSprites.png"/>
+  </animation>
   <items>
     <item id ="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png"/>
     <item id ="2" name="bomb_2" type="ZELDA" attack="100" durability="1" file="gui/sf2.png"/>

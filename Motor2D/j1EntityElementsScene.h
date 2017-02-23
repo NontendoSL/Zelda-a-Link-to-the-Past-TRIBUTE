@@ -45,7 +45,7 @@ public:
 	pugi::xml_document XML;
 private:
 	std::list<j1SceneElement*> elementscene;
-	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const; //TODO LOW ->We hace this function in App but was with private
 	//Delete
 	
 };

@@ -13,6 +13,7 @@
 #include "j1GuiElements.h"
 #include "j1Player.h"
 #include "j1FileSystem.h"
+#include "j1AnimationManager.h"
 
 //Constructor
 Player::Player(iPoint position) :j1SceneElement(position)
@@ -51,7 +52,7 @@ bool Player::Start()
 	maptex = App->tex->Load(texmapfile_name.c_str());
 
 	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
-	stats_temp.clear();
+	/*stats_temp.clear();
 	stats_temp = std::to_string(hp);
 	stats_temp.insert(0, "HP LINK -> ");
 	hp_text = App->gui->CreateText(stats_temp.c_str(), { 300,150 }, 23);
@@ -59,7 +60,7 @@ bool Player::Start()
 	stats_temp = std::to_string(attack);
 	stats_temp.insert(0, "ATTACK OF LINK -> ");
 	attack_text = App->gui->CreateText(stats_temp.c_str(), { 300,200 }, 23);
-
+	*/
 
 	return ret;
 }
@@ -68,10 +69,6 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
 
 	bool ret = true;
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-	{
-
-	}
 	//TEST MOVE LINK
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		Camera_follow_player = !Camera_follow_player;
@@ -82,24 +79,32 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			if (Camera_follow_player)
 				App->render->camera.x += 2;
 			position.x -= 2;
+			state = WALKING;
+			dir = LEFT;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
 			if (Camera_follow_player)
 				App->render->camera.y -= 2;
 			position.y += 2;
+			state = WALKING;
+			dir = DOWN;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
 			if (Camera_follow_player)
 				App->render->camera.x -= 2;
 			position.x += 2;
+			state = WALKING;
+			dir = RIGHT;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
 			if (Camera_follow_player)
 				App->render->camera.y += 2;
 			position.y -= 2;
+			state = WALKING;
+			dir = UP;
 		}
 	}
 
@@ -176,7 +181,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 void Player::Draw()
 {
-	App->render->Blit(player_texture, position.x, position.y, &Rect_player);
+	App->anim_manager->PlayerSelector(state, dir, position);
+	//App->render->Blit(player_texture, position.x, position.y/*, &Rect_player);
 }
 
 bool Player::CleanUp()

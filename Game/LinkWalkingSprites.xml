@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:c9682d11612f6549272368f62cf2d033:9c43309f113ea415bfb80284e11f2856:71b2ca0d8ee1130d075a39750f2b3e5c$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="textures/LinkWalkingSprites.png" width="119" height="119">
+    <sprite dir ="East" n="1" x="0" y="0" w="17" h="24" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="East" n="2" x="17" y="0" w="17" h="25" pX="0.5" pY="0.5"/>
+    <sprite dir ="East" n="3" x="34" y="0" w="17" h="25" pX="0.5" pY="0.5"/>
+    <sprite dir ="East" n="4" x="51" y="0" w="17" h="24" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="East" n="5" x="68" y="0" w="17" h="25" pX="0.5" pY="0.5"/>
+    <sprite dir ="East" n="6" x="85" y="0" w="17" h="25" pX="0.5" pY="0.5"/>
+    <sprite dir ="East" n="7" x="102" y="0" w="17" h="24" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="North" n="1" x="0" y="25" w="17" h="25" pX="0.5" pY="0.5"/>
+    <sprite dir ="North" n="2" x="17" y="25" w="17" h="24" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="North" n="3" x="34" y="25" w="17" h="23" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="North" n="4" x="51" y="25" w="17" h="23" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="North" n="5" x="68" y="25" w="17" h="23" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="North" n="6" x="85" y="25" w="17" h="24" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="North" n="7" x="102" y="25" w="17" h="25" pX="0.5" pY="0.5"/>
+    <sprite dir ="South" n="1" x="0" y="50" w="17" h="25" pX="0.5" pY="0.5"/>
+    <sprite dir ="South" n="2" x="17" y="50" w="17" h="24" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="South" n="3" x="34" y="50" w="17" h="23" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="South" n="4" x="51" y="50" w="17" h="23" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="South" n="5" x="68" y="50" w="17" h="23" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="South" n="6" x="85" y="50" w="17" h="24" pX="0.5" pY="0.5" oX="0" oY="0" oW="17" oH="25"/>
+    <sprite dir ="South" n="7" x="102" y="50" w="17" h="25" pX="0.5" pY="0.5"/>
+    <sprite dir ="West" n="1" x="0" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
+    <sprite dir ="West" n="2" x="17" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
+    <sprite dir ="West" n="3" x="34" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
+    <sprite dir ="West" n="4" x="51" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
+    <sprite dir ="West" n="5" x="68" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
+    <sprite dir ="West" n="6" x="85" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
+    <sprite dir ="West" n="7" x="102" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
+</TextureAtlas>
