@@ -36,14 +36,15 @@ public:
 
 	bool Save();
 
-private:
 
+public:
 	SDL_Texture* player_texture;
 	SDL_Texture* maptex;
 	SDL_Rect Rect_player;
 	std::string tex_player_file_name;
 	std::string texmapfile_name;
 
+private:
 	Text* hp_text;
 	int hp;
 	Text* attack_text;

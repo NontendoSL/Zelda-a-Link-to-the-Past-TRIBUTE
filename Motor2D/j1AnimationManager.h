@@ -3,6 +3,9 @@
 #define __j1ANIMATION_H_
 
 #include "j1Module.h"
+#include <vector>
+#include "Animation.h"
+
 enum AnimationState{IDLE,WALKING,ATTACK};
 enum Direction{TOP,BOT,LEFT,RIGHT};
 
@@ -27,9 +30,10 @@ public:
 	bool CleanUp();
 
 	void PlayerSelector(AnimationState status, Direction dir);
+
 private:
-
-
+	std::vector<Animation*> link_anim;
+	Animation* link;
 };
 
 #endif //__j1ANIMATION_H_

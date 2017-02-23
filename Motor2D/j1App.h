@@ -21,6 +21,7 @@ class j1PathFinding;
 class j1Fonts;
 class j1Gui;
 class j1EntityElementScene;
+class j1AnimationManager;
 
 class j1App
 {
@@ -97,7 +98,7 @@ public:
 	j1Fonts*				font = NULL;
 	j1Gui*					gui = NULL;
 	j1EntityElementScene*	entity_elements = NULL;
-
+	j1AnimationManager*		anim_manager=NULL;
 private:
 
 	//p2List<j1Module*>	modules;

@@ -14,6 +14,7 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1EntityElementsScene.h"
+#include "j1AnimationManager.h"
 #include "j1Fonts.h"
 #include "j1Gui.h"
 #include "j1App.h"
@@ -35,6 +36,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	font = new j1Fonts();
 	gui = new j1Gui();
 	entity_elements = new j1EntityElementScene();
+	anim_manager = new j1AnimationManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -47,7 +49,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(font);
-
+	AddModule(anim_manager);
 
 	// scene last
 	AddModule(scene);
