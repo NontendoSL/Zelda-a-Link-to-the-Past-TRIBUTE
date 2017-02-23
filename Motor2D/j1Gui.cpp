@@ -105,6 +105,13 @@ Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text
 	return element;
 }
 
+Dialogue* j1Gui::CreateDialogue(iPoint pos, const char* string) {
 
+	Dialogue* element = new Dialogue(pos, string);
+
+	entities.push_back(element);
+
+	return element;
+}
 // class Gui ---------------------------------------------------
 

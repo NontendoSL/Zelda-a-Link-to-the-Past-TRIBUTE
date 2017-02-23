@@ -6,14 +6,14 @@
 #include <vector>
 
 #define CURSOR_WIDTH 2
-enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE };
+enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE,DIALOGUE};
 
 // TODO 1: Create your structure of classes
 class j1GuiEntity;
 class Image;
 class Text;
 class Button;
-class TextBox;
+class Dialogue;
 
 // ---------------------------------------------------
 class j1Gui : public j1Module
@@ -49,7 +49,7 @@ public:
 	// create button
 	Button* CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
 
-
+	Dialogue* CreateDialogue(iPoint pos, const char* string);
 public:
 	int Next_id = 0;
 private:

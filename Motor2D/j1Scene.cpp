@@ -43,7 +43,8 @@ bool j1Scene::Start()
 	enemy = App->entity_elements->CreateEnemy(iPoint(200, 400), 1);
 	items = App->entity_elements->CreateItem(iPoint(300, 200), 1);
 	enemy->AddItem(items);
-
+	woaw = App->gui->CreateDialogue({ 50,500 }, "Hi Link! Whatsapp Bro?");
+	woaw->AddLine("-Ameisin");
 	App->map->Load("iso.tmx");
 	return true;
 }

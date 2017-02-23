@@ -10,7 +10,7 @@ class j1GuiEntity;
 class Image;
 class Text;
 class Button;
-class TextBox;
+class Dialogue;
 
 class Player;
 class Item;
@@ -55,7 +55,7 @@ public:
 	Player* player;
 	Enemy* enemy;
 	Item* items;
-
+	Dialogue* woaw;
 };
 
 #endif // __j1SCENE_H__

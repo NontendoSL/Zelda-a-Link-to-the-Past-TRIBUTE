@@ -60,4 +60,19 @@ private:
 
 };
 
+// -------------------------------------------------------
+
+class Dialogue :public j1GuiEntity
+{
+public:
+	Dialogue(iPoint pos, const char* string);
+	~Dialogue();
+public:
+	void Draw();
+	void Update();
+	void AddLine(const char* string);
+public:
+	std::list<Text*>text_lines;
+};
+
 #endif // __j1GUIELEMENTS_H__

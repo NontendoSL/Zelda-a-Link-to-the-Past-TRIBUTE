@@ -89,7 +89,7 @@ Text::Text(const char* write, iPoint pos, uint size) :text(write), j1GuiEntity({
 void Text::Draw() 
 {
 
-	App->render->Blit(text_texture, position.x, position.y, NULL, 0);
+	App->render->Blit(text_texture, position.x, position.y, NULL, 0,false);
 
 }
 
@@ -180,7 +180,41 @@ Button::~Button()
 
 }
 
-/////////////////////////////// TEXTBOX METHODS ///////////////////////////////
+/////////////////////////////// DIALOGUE METHODS ///////////////////////////////
+
+Dialogue::Dialogue(iPoint pos, const char*string) :j1GuiEntity({ 0,82,190,62 }, pos)
+{
+	//TODO MID: Actual font needs a blue outline to match the original one, need to code that or edit the font creating the outline
+	type = DIALOGUE;
+	text_lines.push_back(App->gui->CreateText(string, { position.x + 10,position.y + 5 }, 20));
+}
+
+void Dialogue::Draw()
+{
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
+	std::list<Text*>::iterator iterator = text_lines.begin();
+	while (iterator != text_lines.end())
+	{
+		iterator._Ptr->_Myval->Draw();
+		iterator++;
+	}
+}
+
+void Dialogue::Update()
+{
 
 
+}
+void Dialogue::AddLine(const char* string)
+{
+	std::list<Text*>::iterator iterator = text_lines.end();
+	iterator--;
+	iPoint pos = { position.x + 10,iterator._Ptr->_Myval->Hitbox.h + position.y + 5 };
+	text_lines.push_back(App->gui->CreateText(string, { pos.x,pos.y }, 20));
+}
+
+Dialogue::~Dialogue()
+{
+	//need to clear list;
+}
 // Entity Elements ---------------------------------------------------
