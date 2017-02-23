@@ -8,6 +8,9 @@
 #include "p2Point.h"
 #include "j1AnimationManager.h"
 #include "j1Textures.h"
+#include "SDL/include/SDL_rect.h"
+
+class Item;
 
 enum ElementType{PLAYER,ENEMY,ITEM};
 // ---------------------------------------------------
@@ -21,7 +24,7 @@ public:
 	~j1SceneElement()
 	{}
 
-	virtual bool Awake(pugi::xml_node&) 
+	virtual bool Awake(pugi::xml_node& conf, uint id = 0) 
 	{
 		return true;
 	};
@@ -45,6 +48,8 @@ public:
 		return true;
 	};
 
+	virtual void AddItem(Item* item) {};
+
 	virtual bool Save() { return false; };
 
 public:
@@ -53,6 +58,9 @@ public:
 	Direction dir;
 	ElementType type;
 
+	uint hp;
+
+	bool canBlit;
 	std::string	name;
 	//SDL_Texture* texture;
 

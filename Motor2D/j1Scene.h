@@ -13,6 +13,8 @@ class Button;
 class TextBox;
 
 class Player;
+class Item;
+class Enemy;
 
 class j1Scene : public j1Module
 {
@@ -51,6 +53,8 @@ public:
 	Image* gems;
 	Text* test;
 	Player* player;
+	Enemy* enemy;
+	Item* items;
 	
 };
 

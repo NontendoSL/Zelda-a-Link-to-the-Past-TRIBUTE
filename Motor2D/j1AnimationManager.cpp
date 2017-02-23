@@ -30,6 +30,65 @@ bool j1AnimationManager::CleanUp()
 
 void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir) 
 {
+	if (dir == TOP)
+	{
+		if (status == IDLE)
+		{
 
+		}
+		if (status == ATTACK)
+		{
+
+		}
+		if (status == WALKING)
+		{
+
+		}
+	}
+	else if (dir == BOT)
+	{
+		if (status == IDLE)
+		{
+
+		}
+		if (status == ATTACK)
+		{
+
+		}
+		if (status == WALKING)
+		{
+
+		}
+	}
+	else if (dir == LEFT)
+	{
+		if (status == IDLE)
+		{
+
+		}
+		if (status == ATTACK)
+		{
+
+		}
+		if (status == WALKING)
+		{
+
+		}
+	}
+	else if (dir == RIGHT)
+	{
+		if (status == IDLE)
+		{
+
+		}
+		if (status == ATTACK)
+		{
+
+		}
+		if (status == WALKING)
+		{
+
+		}
+	}
 
 }

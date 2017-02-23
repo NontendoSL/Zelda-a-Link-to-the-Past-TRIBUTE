@@ -3,7 +3,7 @@
 #define __PLAYER_H_
 
 #include "j1SceneElements.h"
-#include "SDL/include/SDL_rect.h"
+
 
 class Text;
 
@@ -47,6 +47,8 @@ private:
 	int hp;
 	Text* attack_text;
 	int attack;
+
+	std::list<Item*> bag;
 
 	//TEST
 	std::string stats_temp;

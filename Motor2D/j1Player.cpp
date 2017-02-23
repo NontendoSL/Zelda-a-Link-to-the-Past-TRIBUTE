@@ -67,7 +67,10 @@ bool Player::Start()
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
 	bool ret = true;
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
 
+	}
 	//TEST MOVE LINK
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		Camera_follow_player = !Camera_follow_player;
@@ -156,14 +159,14 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		Save();
 
 	//TODO MID -> I thing that use a stats_temp all time clear and insert, clear-insert, is not a good idea...
-	stats_temp.clear();
+	/*stats_temp.clear();
 	stats_temp = std::to_string(hp);
 	stats_temp.insert(0, "HP LINK -> ");
 	hp_text->Write(stats_temp.c_str());
 	stats_temp.clear();
 	stats_temp = std::to_string(attack);
 	stats_temp.insert(0, "ATTACK OF LINK -> ");
-	attack_text->Write(stats_temp.c_str());
+	attack_text->Write(stats_temp.c_str());*/
 
 	
 	return ret;
