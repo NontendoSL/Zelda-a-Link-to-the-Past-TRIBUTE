@@ -15,9 +15,18 @@ Item::~Item()
 
 bool Item::Awake(pugi::xml_node &conf, uint id)
 {
-	name = conf.child("item").attribute("name").as_string("");
-	std::string es = conf.child("item").attribute("file").as_string("");
-	texture = App->tex->Load(es.c_str());
+	bool stop_search = false;
+	for (int s_id = conf.child("item").attribute("id").as_int(0); stop_search == false; s_id = conf.child("item").next_sibling().attribute("id").as_int(0))
+	{
+		if (id == s_id)
+		{
+			name = conf.child("item").attribute("name").as_string("");
+			std::string es = conf.child("item").attribute("file").as_string("");
+			texture = App->tex->Load(es.c_str());
+			stop_search = true;
+		}
+	}
+
 	return true;
 }
 
