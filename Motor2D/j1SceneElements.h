@@ -59,6 +59,8 @@ public:
 	ElementType type;
 
 	uint hp;
+	int width;
+	int height;
 
 	bool canBlit;
 	std::string	name;

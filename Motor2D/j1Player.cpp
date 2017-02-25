@@ -51,6 +51,8 @@ bool Player::Start()
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
 	maptex = App->tex->Load(texmapfile_name.c_str());
 
+	width = 17;
+	height = 25;
 	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
 	/*stats_temp.clear();
 	stats_temp = std::to_string(hp);
@@ -76,35 +78,47 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
-			if (Camera_follow_player)
-				App->render->camera.x += 2;
-			position.x -= 2;
-			state = WALKING;
-			dir = LEFT;
+			if (App->map->MovementCost(position.x - 2, position.y) == 0)
+			{
+				if (Camera_follow_player)
+					App->render->camera.x += 2;
+				position.x -= 2;
+				state = WALKING;
+				dir = LEFT;
+			}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
-			if (Camera_follow_player)
-				App->render->camera.y -= 2;
-			position.y += 2;
-			state = WALKING;
-			dir = DOWN;
+			if (App->map->MovementCost(position.x, position.y + (2 + height)) == 0)
+			{
+				if (Camera_follow_player)
+					App->render->camera.y -= 2;
+				position.y += 2;
+				state = WALKING;
+				dir = DOWN;
+			}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
-			if (Camera_follow_player)
-				App->render->camera.x -= 2;
-			position.x += 2;
-			state = WALKING;
-			dir = RIGHT;
+			if (App->map->MovementCost(position.x + (2 + width), position.y) == 0)
+			{
+				if (Camera_follow_player)
+					App->render->camera.x -= 2;
+				position.x += 2;
+				state = WALKING;
+				dir = RIGHT;
+			}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
-			if (Camera_follow_player)
-				App->render->camera.y += 2;
-			position.y -= 2;
-			state = WALKING;
-			dir = UP;
+			if (App->map->MovementCost(position.x, position.y - 2) == 0)
+			{
+				if (Camera_follow_player)
+					App->render->camera.y += 2;
+				position.y -= 2;
+				state = WALKING;
+				dir = UP;
+			}
 		}
 	}
 
@@ -128,9 +142,9 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		SDL_RenderSetLogicalSize(App->render->renderer, 200, 300);
+		SDL_RenderSetLogicalSize(App->render->renderer, 300, 300);
 		if (changeResolution)
-			SDL_SetWindowSize(App->win->window, 200, 300);
+			SDL_SetWindowSize(App->win->window, 300, 300);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{

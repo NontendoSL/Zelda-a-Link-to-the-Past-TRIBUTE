@@ -45,7 +45,7 @@ bool j1Scene::Start()
 	enemy->AddItem(items);
 	woaw = App->gui->CreateDialogue({ 50,500 }, "Hi Link! Whatsapp Bro?");
 	woaw->AddLine("-Ameisin");
-	App->map->Load("iso.tmx");
+	App->map->Load("TiledLinkHouse.tmx");
 	return true;
 }
 

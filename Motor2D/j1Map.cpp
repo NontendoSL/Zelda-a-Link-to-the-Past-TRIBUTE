@@ -39,7 +39,7 @@ void j1Map::Draw()
 	{
 		MapLayer* layer = item._Ptr->_Myval;
 
-		if(layer->properties.Get("Nodraw") != 0)
+		if(layer->properties.Get("Draw") != 0)
 			continue;
 
 		for(int y = 0; y < data.height; ++y)
@@ -67,7 +67,7 @@ int Properties::Get(const char* value, int default_value) const
 	std::list<Property*>::const_iterator item = list.begin();
 	while(item != list.end())
 	{
-		if(item._Ptr->_Myval->name == value)
+		if(strcmp(item._Ptr->_Myval->name.c_str(), value) == 0)
 			return item._Ptr->_Myval->value;
 		item++;
 	}
@@ -85,7 +85,8 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	{
 		if(id < item._Ptr->_Myval->firstgid)
 		{
-			set = item._Ptr->_Myval--;
+			item--;
+			set = item._Ptr->_Myval;
 			break;
 		}
 		set = item._Ptr->_Myval;
@@ -93,6 +94,24 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	}
 
 	return set;
+}
+
+int j1Map::MovementCost(int x, int y) const //TODO 
+{
+	int ret = 0;
+	iPoint p = WorldToMap(x, y);
+	if (p.x >= 0 && p.x < data.width && p.y >= 0 && p.y < data.height)
+	{
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id = item._Ptr->_Myval->Get(p.x, p.y);
+
+		if (id == 1026)
+			ret = 1;
+		else
+			ret = 0;
+	}
+	return ret;
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
@@ -349,12 +368,12 @@ bool j1Map::LoadMap()
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
-	set->name=tileset_node.attribute("name").as_string();
-	set->firstgid = tileset_node.attribute("firstgid").as_int();
-	set->tile_width = tileset_node.attribute("tilewidth").as_int();
-	set->tile_height = tileset_node.attribute("tileheight").as_int();
-	set->margin = tileset_node.attribute("margin").as_int();
-	set->spacing = tileset_node.attribute("spacing").as_int();
+	set->name=tileset_node.attribute("name").as_string(0);
+	set->firstgid = tileset_node.attribute("firstgid").as_int(0);
+	set->tile_width = tileset_node.attribute("tilewidth").as_int(0);
+	set->tile_height = tileset_node.attribute("tileheight").as_int(0);
+	set->margin = tileset_node.attribute("margin").as_int(0);
+	set->spacing = tileset_node.attribute("spacing").as_int(0);
 	pugi::xml_node offset = tileset_node.child("tileoffset");
 
 	if(offset != NULL)
@@ -400,8 +419,8 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 			set->tex_height = h;
 		}
 
-		set->num_tiles_width = set->tex_width / set->tile_width;
-		set->num_tiles_height = set->tex_height / set->tile_height;
+		set->num_tiles_width = set->tex_width / (set->tile_width + set->margin);
+		set->num_tiles_height = set->tex_height / (set->tile_height + set->margin);
 	}
 
 	return ret;

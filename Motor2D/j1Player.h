@@ -46,7 +46,6 @@ public:
 
 private:
 	Text* hp_text;
-	int hp;
 	Text* attack_text;
 	int attack;
 
