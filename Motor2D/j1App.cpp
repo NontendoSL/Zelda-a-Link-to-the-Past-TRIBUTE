@@ -4,6 +4,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 
+#include "j1Collision.h"
 #include "j1Window.h"
 #include "j1Input.h"
 #include "j1Render.h"
@@ -37,6 +38,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	gui = new j1Gui();
 	entity_elements = new j1EntityElementScene();
 	anim_manager = new j1AnimationManager();
+	collision = new j1Collision();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -49,6 +51,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(font);
+	AddModule(collision);
 
 	// scene last
 	AddModule(scene);
