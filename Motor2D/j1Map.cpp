@@ -96,21 +96,43 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return set;
 }
 
-int j1Map::MovementCost(int x, int y) const //TODO 
+int j1Map::MovementCost(int x, int y, Direction dir) const //TODO 
 {
 	int ret = 0;
-	iPoint p = WorldToMap(x, y);
-	if (p.x >= 0 && p.x < data.width && p.y >= 0 && p.y < data.height)
+	iPoint ptemp = WorldToMap(x, y);
+	iPoint pos[4];
+	pos[0].create(ptemp.x, ptemp.y);//p-1
+	pos[1].create(ptemp.x + 1, ptemp.y);//p-2
+	pos[2].create(ptemp.x, ptemp.y + 1);//p-3
+	pos[3].create(ptemp.x + 1, ptemp.y + 1);//p-4
+	if (dir == UP)
 	{
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id = item._Ptr->_Myval->Get(p.x, p.y);
+		if (pos[0].y - 1 >= 0 && pos[0].y - 1 < data.height && pos[1].y - 1 >= 0 && pos[1].y - 1 < data.height)
+		{
+			std::list<MapLayer*>::const_iterator item = data.layers.end();
+			item--;
+			int id_1 = item._Ptr->_Myval->Get(pos[0].x, pos[0].y);
+			int id_2 = item._Ptr->_Myval->Get(pos[1].x, pos[1].y);//TODO HIGH
 
-		if (id == 1026)
-			ret = 1;
-		else
-			ret = 0;
+			if (id_1 == 1026 || id_2 == 1026)
+				ret = 1;
+			else
+				ret = 0;
+		}
 	}
+	if (dir == LEFT)
+	{
+		ret = 0;
+	}
+	if (dir == RIGHT)
+	{
+		ret = 0;
+	}
+	if (dir == DOWN)
+	{
+		ret = 0;
+	}
+
 	return ret;
 }
 

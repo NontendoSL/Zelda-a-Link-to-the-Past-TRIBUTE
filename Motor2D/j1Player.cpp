@@ -78,7 +78,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
-			if (App->map->MovementCost(position.x - 2, position.y) == 0)
+			if (App->map->MovementCost(position.x - 2, position.y, LEFT) == 0)
 			{
 				if (Camera_follow_player)
 					App->render->camera.x += 2;
@@ -89,7 +89,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		}
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
-			if (App->map->MovementCost(position.x, position.y + (2 + height)) == 0)
+			if (App->map->MovementCost(position.x, position.y + (2 + height), DOWN) == 0)
 			{
 				if (Camera_follow_player)
 					App->render->camera.y -= 2;
@@ -100,7 +100,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		}
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
-			if (App->map->MovementCost(position.x + (2 + width), position.y) == 0)
+			if (App->map->MovementCost(position.x + (2 + width), position.y, RIGHT) == 0)
 			{
 				if (Camera_follow_player)
 					App->render->camera.x -= 2;
@@ -111,7 +111,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		}
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
-			if (App->map->MovementCost(position.x, position.y - 2) == 0)
+			if (App->map->MovementCost(position.x, position.y - 2, UP) == 0)
 			{
 				if (Camera_follow_player)
 					App->render->camera.y += 2;

@@ -6,6 +6,7 @@
 #include <list>
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1AnimationManager.h"
 
 // ----------------------------------------------------
 struct Properties
@@ -127,7 +128,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
-	int MovementCost(int x, int y) const;
+	int MovementCost(int x, int y, Direction dir) const;
 
 private:
 
