@@ -99,38 +99,70 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 int j1Map::MovementCost(int x, int y, Direction dir) const //TODO 
 {
 	int ret = 0;
-	iPoint ptemp = WorldToMap(x, y);
-	iPoint pos[4];
-	pos[0].create(ptemp.x, ptemp.y);//p-1
-	pos[1].create(ptemp.x + 1, ptemp.y);//p-2
-	pos[2].create(ptemp.x, ptemp.y + 1);//p-3
-	pos[3].create(ptemp.x + 1, ptemp.y + 1);//p-4
 	if (dir == UP)
 	{
-		if (pos[0].y - 1 >= 0 && pos[0].y - 1 < data.height && pos[1].y - 1 >= 0 && pos[1].y - 1 < data.height)
-		{
-			std::list<MapLayer*>::const_iterator item = data.layers.end();
-			item--;
-			int id_1 = item._Ptr->_Myval->Get(pos[0].x, pos[0].y);
-			int id_2 = item._Ptr->_Myval->Get(pos[1].x, pos[1].y);//TODO HIGH
+		iPoint ptemp = WorldToMap(x, y);
+		iPoint ptemp_2 = WorldToMap(x + 8, y);
+		iPoint ptemp_3 = WorldToMap(x + 15, y);
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
+		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);//TODO HIGH
+		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);//TODO HIGH
 
-			if (id_1 == 1026 || id_2 == 1026)
-				ret = 1;
-			else
-				ret = 0;
-		}
+		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+			ret = 1;
+		else
+			ret = 0;
+
 	}
 	if (dir == LEFT)
 	{
-		ret = 0;
+		iPoint ptemp = WorldToMap(x, y);
+		iPoint ptemp_2 = WorldToMap(x, y + 8);
+		iPoint ptemp_3 = WorldToMap(x, y + 15);
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
+		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);//TODO HIGH
+		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);//TODO HIGH
+
+		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+			ret = 1;
+		else
+			ret = 0;
 	}
 	if (dir == RIGHT)
 	{
-		ret = 0;
+		iPoint ptemp = WorldToMap(x, y);
+		iPoint ptemp_2 = WorldToMap(x, y + 8);
+		iPoint ptemp_3 = WorldToMap(x, y + 15);
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
+		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);//TODO HIGH
+		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);//TODO HIGH
+
+		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+			ret = 1;
+		else
+			ret = 0;
 	}
 	if (dir == DOWN)
 	{
-		ret = 0;
+		iPoint ptemp = WorldToMap(x, y);
+		iPoint ptemp_2 = WorldToMap(x + 8, y);
+		iPoint ptemp_3 = WorldToMap(x + 15, y);
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
+		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);//TODO HIGH
+		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);//TODO HIGH
+
+		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+			ret = 1;
+		else
+			ret = 0;
 	}
 
 	return ret;

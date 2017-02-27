@@ -57,6 +57,7 @@ public:
 	AnimationState state;
 	Direction dir;
 	ElementType type;
+	uint speed;
 
 	uint hp;
 	int width;

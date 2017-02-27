@@ -4,6 +4,7 @@
 #include "j1Module.h"
 //#include "p2List.h" TODO - p2list
 #include <list>
+#include "p2Defs.h"
 
 struct SDL_Texture;
 struct SDL_Surface;

@@ -56,6 +56,7 @@ private:
 
 	bool Camera_follow_player;
 	bool changeResolution;
+
 };
 
 

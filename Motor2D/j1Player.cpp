@@ -37,7 +37,7 @@ bool Player::Awake(pugi::xml_node& conf)
 	texmapfile_name = conf.child("day-night").attribute("file").as_string("");
 	hp = conf.child("stats").attribute("hp").as_int(0);
 	attack = conf.child("stats").attribute("attack").as_int(0);
-	Rect_player = { 984,189,66,90 };
+	speed = conf.child("stats").attribute("speed").as_int(0);
 
 	return ret;
 }
@@ -51,8 +51,8 @@ bool Player::Start()
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
 	maptex = App->tex->Load(texmapfile_name.c_str());
 
-	width = 17;
-	height = 25;
+	width = 15;
+	height = 15;
 	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
 	/*stats_temp.clear();
 	stats_temp = std::to_string(hp);
@@ -74,55 +74,75 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	//TEST MOVE LINK
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		Camera_follow_player = !Camera_follow_player;
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) != KEY_REPEAT)
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		state = IDLE;
+		dir = LEFT;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	{
+		state = IDLE;
+		dir = RIGHT;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
+	{
+		state = IDLE;
+		dir = UP;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	{
+		state = IDLE;
+		dir = DOWN;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
 		{
-			if (App->map->MovementCost(position.x - 2, position.y, LEFT) == 0)
-			{
-				if (Camera_follow_player)
-					App->render->camera.x += 2;
-				position.x -= 2;
-				state = WALKING;
-				dir = LEFT;
-			}
+			if (Camera_follow_player)
+				App->render->camera.x += speed;
+			position.x -= speed;
+			state = WALKING;
+			dir = LEFT;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
 		{
-			if (App->map->MovementCost(position.x, position.y + (2 + height), DOWN) == 0)
-			{
-				if (Camera_follow_player)
-					App->render->camera.y -= 2;
-				position.y += 2;
-				state = WALKING;
-				dir = DOWN;
-			}
+			if (Camera_follow_player)
+				App->render->camera.y -= speed;
+			position.y += speed;
+			state = WALKING;
+			dir = DOWN;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
 		{
-			if (App->map->MovementCost(position.x + (2 + width), position.y, RIGHT) == 0)
-			{
-				if (Camera_follow_player)
-					App->render->camera.x -= 2;
-				position.x += 2;
-				state = WALKING;
-				dir = RIGHT;
-			}
+			if (Camera_follow_player)
+				App->render->camera.x -= speed;
+			position.x += speed;
+			state = WALKING;
+			dir = RIGHT;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	}
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
 		{
-			if (App->map->MovementCost(position.x, position.y - 2, UP) == 0)
-			{
-				if (Camera_follow_player)
-					App->render->camera.y += 2;
-				position.y -= 2;
-				state = WALKING;
-				dir = UP;
-			}
+			if (Camera_follow_player)
+				App->render->camera.y += speed;
+			position.y -= speed;
+			state = WALKING;
+			dir = UP;
 		}
 	}
 
-	
+
+
 
 	//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -137,7 +157,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
 		SDL_RenderSetLogicalSize(App->render->renderer, 800, 400);
-		if(changeResolution)
+		if (changeResolution)
 			SDL_SetWindowSize(App->win->window, 800, 400);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
@@ -189,7 +209,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	stats_temp.insert(0, "ATTACK OF LINK -> ");
 	attack_text->Write(stats_temp.c_str());*/
 
-	
+
 	return ret;
 }
 

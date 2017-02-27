@@ -108,9 +108,6 @@
     <ClInclude Include="p2Log.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
-    <ClInclude Include="p2SString.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
     <ClInclude Include="p2Point.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
