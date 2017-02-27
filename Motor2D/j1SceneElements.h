@@ -12,7 +12,7 @@
 
 class Item;
 
-enum ElementType{PLAYER,ENEMY,ITEM};
+enum ElementType{PLAYER,ENEMY,ITEM, DYNITEMS};
 // ---------------------------------------------------
 class j1SceneElement
 {

@@ -51,6 +51,7 @@ bool Player::Start()
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
 	maptex = App->tex->Load(texmapfile_name.c_str());
 
+
 	width = 15;
 	height = 15;
 	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
@@ -101,7 +102,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
 		{
 			if (Camera_follow_player)
-				App->render->camera.x += speed;
+				App->render->camera.x += speed * 2;
 			position.x -= speed;
 			state = WALKING;
 			dir = LEFT;
@@ -112,7 +113,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
 		{
 			if (Camera_follow_player)
-				App->render->camera.y -= speed;
+				App->render->camera.y -= speed * 2;
 			position.y += speed;
 			state = WALKING;
 			dir = DOWN;
@@ -123,7 +124,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
 		{
 			if (Camera_follow_player)
-				App->render->camera.x -= speed;
+				App->render->camera.x -= speed * 2;
 			position.x += speed;
 			state = WALKING;
 			dir = RIGHT;
@@ -134,7 +135,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
 		{
 			if (Camera_follow_player)
-				App->render->camera.y += speed;
+				App->render->camera.y += speed * 2;
 			position.y -= speed;
 			state = WALKING;
 			dir = UP;

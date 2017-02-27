@@ -36,13 +36,14 @@ public:
 	bool CleanUp();
 
 	//TODO LOW
-	Enemy* CreateEnemy(iPoint position, uint id);
+	Enemy* CreateEnemy(iPoint position, uint id, pugi::xml_node& );
 	bool DeleteEnemy(Enemy* enemy);
 	Item* CreateItem(iPoint position, uint id);
 	Player* CreatePlayer(iPoint position);
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;
+
 private:
 	std::list<j1SceneElement*> elementscene;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const; //TODO LOW ->We hace this function in App but was with private

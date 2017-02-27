@@ -101,7 +101,7 @@ bool j1App::Awake()
 	pugi::xml_node		app_config;
 
 	bool ret = false;
-		
+	
 	config = LoadConfig(config_file);
 
 	if(config.empty() == false)

@@ -18,13 +18,13 @@ Enemy::~Enemy()
 bool Enemy::Awake(pugi::xml_node &conf, uint id)
 {
 	bool stop_search = false;
-	for (int s_id = conf.child("enemy").attribute("id").as_int(0); stop_search == false; s_id = conf.child("enemy").next_sibling().attribute("id").as_int(0))
+	for (int s_id = conf.attribute("id").as_int(0); stop_search == false; s_id = conf.next_sibling().attribute("id").as_int(0))
 	{
 		if (id == s_id)
 		{
-			std::string temp = conf.child("enemy").attribute("file").as_string("");
+			std::string temp = conf.attribute("file").as_string("");
 			texture = App->tex->Load(temp.c_str());
-			hp = conf.child("enemy").attribute("hp").as_int(0);
+			hp = conf.attribute("hp").as_int(0);
 			/*position.x = conf.child("enemy").attribute("pos_x").as_int(0);
 			position.y = conf.child("enemy").attribute("pos_y").as_int(0);*/
 			stop_search = true;

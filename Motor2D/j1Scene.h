@@ -43,9 +43,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool Load_new_map(int n);
 
 private:
 	SDL_Texture* debug_tex;
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 
 public:
 	Image* charge;
@@ -53,9 +55,14 @@ public:
 	Image* gems;
 	Text* test;
 	Player* player;
-	Enemy* enemy;
-	Item* items;
+	std::list<Enemy*> enemy;
+	std::list<Item*> items;
 	Dialogue* woaw;
+
+	pugi::xml_node		config;
+
+
+	int switch_map;
 };
 
 #endif // __j1SCENE_H__

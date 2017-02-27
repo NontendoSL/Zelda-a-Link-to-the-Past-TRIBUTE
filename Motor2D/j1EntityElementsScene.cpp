@@ -90,14 +90,11 @@ bool j1EntityElementScene::CleanUp()
 	return ret;
 }
 
-Enemy* j1EntityElementScene::CreateEnemy(iPoint position, uint id)
+Enemy* j1EntityElementScene::CreateEnemy(iPoint position, uint id, pugi::xml_node& config)
 {
 
 	Enemy* element = new Enemy(position);
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-	config = LoadConfig(config_file);
-	element->Awake(config.child(element->name.c_str()), id);
+	element->Awake(config, id);
 	element->Start();
 	elementscene.push_back(element);
 

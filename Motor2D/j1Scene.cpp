@@ -13,6 +13,8 @@
 #include "j1GuiElements.h"
 #include "j1Scene.h"
 #include "j1Enemy.h"
+#include "j1Player.h"
+#include "j1FileSystem.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -39,12 +41,12 @@ bool j1Scene::Start()
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
 	//TODO HIGH -> All proces of to create player has wrong...
 	player = App->entity_elements->CreatePlayer(iPoint(100, 100));
-	enemy = App->entity_elements->CreateEnemy(iPoint(200, 400), 1);
-	items = App->entity_elements->CreateItem(iPoint(300, 200), 1);
-	enemy->AddItem(items);
+
 	woaw = App->gui->CreateDialogue({ 50,500 }, "Hi Link! Whatsapp Bro?");
 	woaw->AddLine("-Ameisin");
-	App->map->Load("TiledLinkHouse.tmx");
+
+	Load_new_map(1);
+	switch_map = 0;
 	return true;
 }
 
@@ -74,7 +76,7 @@ bool j1Scene::Update(float dt)
 			App->render->camera.x -= 2;
 	}
 
-	if (enemy != NULL)//TODO HIGH -> when enemy die on put this code?
+	/*if (enemy != NULL)//TODO HIGH -> when enemy die on put this code?
 	{
 		if (enemy->hp == 0)
 		{
@@ -82,6 +84,25 @@ bool j1Scene::Update(float dt)
 			App->entity_elements->DeleteEnemy(enemy);
 			enemy = NULL;
 		}
+	}*/
+
+	if (switch_map == 2)
+	{
+		if (App->map->CleanUp())
+		{
+			Load_new_map(2);
+		}
+
+		switch_map = 0;
+	}
+	if (switch_map == 1)
+	{
+		if (App->map->CleanUp())
+		{
+			Load_new_map(1);
+		}
+
+		switch_map = 0;
 	}
 
 
@@ -106,4 +127,72 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+bool j1Scene::Load_new_map(int n)
+{
+	bool stop_rearch = false;
+
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	config = LoadConfig(config_file);
+	for (pugi::xml_node temp = config.child("maps").child("map"); stop_rearch == false; temp = temp.next_sibling())
+	{
+		if (temp.attribute("n").as_int(0) == n)
+		{
+			//player position
+			player->position.x = temp.child("player").attribute("pos_x").as_int(0);
+			player->position.y = temp.child("player").attribute("pos_y").as_int(0);
+
+			//Enemies
+			pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
+			for (int i = 0; i < temp.child("enemies").attribute("num").as_int(0); i++)
+			{
+				enemy.push_back(App->entity_elements->CreateEnemy(iPoint(temp_enemy.attribute("pos_x").as_int(0), temp_enemy.attribute("pos_y").as_int(0)), temp_enemy.attribute("id").as_int(0), temp_enemy));
+				temp_enemy = temp_enemy.next_sibling();
+			}
+
+			//items
+			//Dynamic items (not implmeneted yet)
+
+			//map
+			std::string name_map = temp.attribute("file").as_string("");
+			App->map->Load(name_map.c_str());
+
+			//Camera position
+			App->render->camera.x = 256 / 2 - temp.child("player").attribute("pos_x").as_int(0);
+			App->render->camera.y = 224 / 2 - temp.child("player").attribute("pos_y").as_int(0);
+
+
+			stop_rearch = true;
+		}
+	}
+	
+
+	//enemy = App->entity_elements->CreateEnemy(iPoint(200, 400), 1);
+	//items = App->entity_elements->CreateItem(iPoint(300, 200), 1);
+	//
+	//enemy->AddItem(items);
+
+
+	return true;
+}
+
+
+// ---------------------------------------------
+pugi::xml_node j1Scene::LoadConfig(pugi::xml_document& config_file) const
+{
+	pugi::xml_node ret;
+
+	char* buf;
+	int size = App->fs->Load("config.xml", &buf);
+	pugi::xml_parse_result result = config_file.load_buffer(buf, size);
+	RELEASE(buf);
+
+	if (result == NULL)
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	else
+		ret = config_file.child("config");
+
+	return ret;
 }

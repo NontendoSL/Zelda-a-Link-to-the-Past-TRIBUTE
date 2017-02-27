@@ -76,6 +76,9 @@
     <ClCompile Include="j1Collision.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1DynamicItems.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -173,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="j1Collision.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1DynamicItems.h">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

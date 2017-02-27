@@ -5,6 +5,7 @@
 #include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Scene.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -107,6 +108,9 @@ void j1Map::EditCost(int x, int y, int value)
 int j1Map::MovementCost(int x, int y, Direction dir) const //TODO 
 {
 	int ret = 0;
+	int red_wal = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1;
+	int yellow_wal = red_wal + 1;
+	int blue_wal = red_wal + 4;
 	if (dir == UP)
 	{
 		iPoint ptemp = WorldToMap(x, y);
@@ -118,13 +122,17 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
 		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
-		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
 		}
-		else if (id_2 == 1027)
+		else if (id_1 == yellow_wal || id_2 == yellow_wal || id_3 == yellow_wal)
 		{
 			ret = 2;
+		}
+		else if (id_1 == blue_wal)
+		{
+			App->scene->switch_map = 1;
 		}
 		else
 			ret = 0;
@@ -141,11 +149,11 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
 		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
-		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
 		}
-		else if (id_2 == 1027)
+		else if (id_1 == yellow_wal || id_2 == yellow_wal || id_3 == yellow_wal)
 		{
 			ret = 2;
 		}
@@ -163,11 +171,11 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
 		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
-		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
 		}
-		else if (id_2 == 1027)
+		else if (id_1 == yellow_wal || id_2 == yellow_wal || id_3 == yellow_wal)
 		{
 			ret = 2;
 		}
@@ -185,13 +193,17 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
 		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
-		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
 		}
-		else if (id_2 == 1027)
+		else if (id_1 == yellow_wal || id_2 == yellow_wal || id_3 == yellow_wal)
 		{
 			ret = 2;
+		}
+		else if (id_1 == blue_wal)
+		{
+			App->scene->switch_map = 2;
 		}
 		else
 			ret = 0;
