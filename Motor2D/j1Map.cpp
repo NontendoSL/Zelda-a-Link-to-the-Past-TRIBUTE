@@ -96,6 +96,14 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return set;
 }
 
+void j1Map::EditCost(int x, int y, int value)
+{
+	std::list<MapLayer*>::const_iterator item = data.layers.end();
+	item--;
+	iPoint coords = WorldToMap(x, y);
+	item._Ptr->_Myval->data[(coords.y*item._Ptr->_Myval->width) + coords.x] = value;
+}
+
 int j1Map::MovementCost(int x, int y, Direction dir) const //TODO 
 {
 	int ret = 0;
@@ -107,11 +115,17 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
 		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
-		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);//TODO HIGH
-		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);//TODO HIGH
+		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
+		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
 		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+		{
 			ret = 1;
+		}
+		else if (id_2 == 1027)
+		{
+			ret = 2;
+		}
 		else
 			ret = 0;
 
@@ -124,11 +138,17 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
 		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
-		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);//TODO HIGH
-		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);//TODO HIGH
+		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
+		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
 		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+		{
 			ret = 1;
+		}
+		else if (id_2 == 1027)
+		{
+			ret = 2;
+		}
 		else
 			ret = 0;
 	}
@@ -140,11 +160,17 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
 		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
-		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);//TODO HIGH
-		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);//TODO HIGH
+		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
+		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
 		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+		{
 			ret = 1;
+		}
+		else if (id_2 == 1027)
+		{
+			ret = 2;
+		}
 		else
 			ret = 0;
 	}
@@ -156,17 +182,24 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
 		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
-		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);//TODO HIGH
-		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);//TODO HIGH
+		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
+		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
 		if (id_1 == 1026 || id_2 == 1026 || id_3 == 1026)
+		{
 			ret = 1;
+		}
+		else if (id_2 == 1027)
+		{
+			ret = 2;
+		}
 		else
 			ret = 0;
 	}
 
 	return ret;
 }
+
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {

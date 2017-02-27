@@ -140,7 +140,36 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			dir = UP;
 		}
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+			switch (dir) 
+			{
+			case UP:
+				if (App->map->MovementCost(position.x, position.y - speed, UP) == 2)
+				{
+					App->map->EditCost(position.x + 8, position.y - speed, 0);
+				}
+				break;
+			case DOWN:
+				if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 2)
+				{
+					App->map->EditCost(position.x + 8, position.y + (speed + height), 0);
+				}
+				break;
+			case LEFT:
+				if (App->map->MovementCost(position.x - speed, position.y, UP) == 2)
+				{
+					App->map->EditCost(position.x - speed, position.y + 8, 0);
+				}
+				break;
+			case RIGHT:
+				if (App->map->MovementCost(position.x + (speed + width), position.y , UP) == 2)
+				{
+					App->map->EditCost(position.x , position.y + 8, 0);
+				}
+				break;
+			}
+	}
 
 
 

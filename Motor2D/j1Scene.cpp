@@ -37,7 +37,6 @@ bool j1Scene::Start()
 	charge = App->gui->CreateImage({ 20,18,16,42 }, { 20,18 });
 	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
-	test = App->gui->CreateText("A link to the Nintendo Worlds", { 12,80 }, 23);
 	//TODO HIGH -> All proces of to create player has wrong...
 	player = App->entity_elements->CreatePlayer(iPoint(100, 100));
 	enemy = App->entity_elements->CreateEnemy(iPoint(200, 400), 1);
