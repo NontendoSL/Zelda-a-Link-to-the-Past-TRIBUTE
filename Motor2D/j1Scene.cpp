@@ -99,6 +99,10 @@ bool j1Scene::Update(float dt)
 		{
 			Load_new_map(2);
 			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(176, 245), 3));
+			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(224, 273), 4));
+			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(224, 289), 4));
+			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(240, 273), 4));
+			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(240, 289), 4));
 		}
 
 		switch_map = 0;

@@ -16,16 +16,18 @@ DynamicItems::~DynamicItems()
 bool DynamicItems::Awake(pugi::xml_node &conf, uint id)
 {
 	bool stop_search = false;
-	for (int s_id = conf.child("item").attribute("id").as_int(0); stop_search == false; s_id = conf.child("item").next_sibling().attribute("id").as_int(0))
+	pugi::xml_node temp = conf;
+	for (int s_id = temp.attribute("id").as_int(0); stop_search == false; s_id = temp.attribute("id").as_int(0))
 	{
 		if (id == s_id)
 		{
-			name = conf.child("item").attribute("name").as_string("");
-			std::string es = conf.child("item").attribute("file").as_string("");
+			name = temp.attribute("name").as_string("");
+			std::string es = temp.attribute("file").as_string("");
 			texture = App->tex->Load(es.c_str());
 			canBlit = true;
 			stop_search = true;
 		}
+		temp = temp.next_sibling();
 	}
 
 	return true;

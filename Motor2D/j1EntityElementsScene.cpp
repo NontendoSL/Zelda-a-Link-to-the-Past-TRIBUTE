@@ -147,7 +147,7 @@ DynamicItems* j1EntityElementScene::CreateDynItem(iPoint position, uint id)
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
-	element->Awake(config.child("maps").child("map").next_sibling().child(element->name.c_str()), id);
+	element->Awake(config.child("maps").child("map").next_sibling().child(element->name.c_str()).child("item"), id);
 	element->Start();
 	elementscene.push_back(element);
 
