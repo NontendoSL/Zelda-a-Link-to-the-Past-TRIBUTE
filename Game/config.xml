@@ -17,12 +17,12 @@
   <player>
     <atlas file="textures/LinkWalkingSprites.png"/>
     <day-night file="gui/test.png" />
-    <stats hp="100" attack="10" speed="1" />
+    <stats hp="100" attack="10" speed="1" pos_x="100" pos_y="100" />
   </player>
   
   <maps>
     <map n="1" file="TiledLinkHouse.tmx">
-      <player pos_x="100" pos_y="100"/>
+      <player pos_x="104" pos_y="150"/>
       <items>
         <item id ="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png"/>
         <item id ="2" name="bomb_2" type="ZELDA" attack="100" durability="1" file="gui/sf2.png"/>
@@ -33,7 +33,7 @@
       </enemies>
     </map>
     <map n="2" file="LinkHouseOutdoor.tmx">
-      <player pos_x="185" pos_y="265"/>
+      <player pos_x="184" pos_y="265"/>
       <enemies>
         <enemy id="1" pos_x="100" pos_y="300" hp="10" attack="10" file="gui/sf2.png"/>
       </enemies>

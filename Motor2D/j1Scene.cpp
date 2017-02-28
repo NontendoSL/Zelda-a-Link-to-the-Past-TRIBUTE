@@ -39,13 +39,15 @@ bool j1Scene::Start()
 	charge = App->gui->CreateImage({ 20,18,16,42 }, { 20,18 });
 	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
-	//TODO HIGH -> All proces of to create player has wrong...
-	player = App->entity_elements->CreatePlayer(iPoint(100, 100));
-
 	woaw = App->gui->CreateDialogue({ 50,500 }, "Hi Link! Whatsapp Bro?");
 	woaw->AddLine("-Ameisin");
 
-	Load_new_map(1);
+	//Create First level
+	player = App->entity_elements->CreatePlayer(iPoint(100, 90));
+	App->map->Load("TiledLinkHouse.tmx");
+	App->render->camera.x = -((player->position.x - (256 / 2)) * 2);
+	App->render->camera.y = -((player->position.y - (224 / 2)) * 2);
+	//Load_new_map(1);
 	switch_map = 0;
 	return true;
 }
@@ -86,8 +88,10 @@ bool j1Scene::Update(float dt)
 		}
 	}*/
 
+
 	if (switch_map == 2)
 	{
+		//TODO need destroy all enemies and items
 		if (App->map->CleanUp())
 		{
 			Load_new_map(2);
@@ -136,6 +140,7 @@ bool j1Scene::Load_new_map(int n)
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
+	
 	for (pugi::xml_node temp = config.child("maps").child("map"); stop_rearch == false; temp = temp.next_sibling())
 	{
 		if (temp.attribute("n").as_int(0) == n)
@@ -160,8 +165,8 @@ bool j1Scene::Load_new_map(int n)
 			App->map->Load(name_map.c_str());
 
 			//Camera position
-			App->render->camera.x = 256 / 2 - temp.child("player").attribute("pos_x").as_int(0);
-			App->render->camera.y = 224 / 2 - temp.child("player").attribute("pos_y").as_int(0);
+			App->render->camera.x = -((temp.child("player").attribute("pos_x").as_int(0) - (256 / 2)) * 2);
+			App->render->camera.y = -((temp.child("player").attribute("pos_y").as_int(0) - (224 / 2)) * 2);
 
 
 			stop_rearch = true;

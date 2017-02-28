@@ -64,7 +64,6 @@ void j1Map::Draw()
 
 int Properties::Get(const char* value, int default_value) const
 {
-	//p2List_item<Property*>* item = list.start;
 	std::list<Property*>::const_iterator item = list.begin();
 	while(item != list.end())
 	{
