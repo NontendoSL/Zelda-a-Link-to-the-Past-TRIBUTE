@@ -10,6 +10,7 @@
 class Enemy;
 class Item;
 class Player;
+class DynamicItems;
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
 {
@@ -43,6 +44,7 @@ public:
 	Enemy* CreateEnemy(iPoint position, uint id, pugi::xml_node& );
 	bool DeleteEnemy(Enemy* enemy);
 	Item* CreateItem(iPoint position, uint id);
+	DynamicItems* CreateDynItem(iPoint position, uint id);
 	Player* CreatePlayer(iPoint position);
 
 	pugi::xml_node conf;

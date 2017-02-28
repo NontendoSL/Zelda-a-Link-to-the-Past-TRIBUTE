@@ -327,7 +327,7 @@ bool j1App::CleanUp()
 	item = modules.end();
 	item--;
 
-	while(item != modules.begin() && ret == true)
+	while(item != modules.begin() && ret == true)//TODO HIGH -> need inverse_iterator
 	{
 		ret = item._Ptr->_Myval->CleanUp();
 		item--;

@@ -16,7 +16,7 @@ public:
 	~DynamicItems();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node&, uint);
 
 	// Called before the first frame
 	bool Start();
@@ -38,9 +38,7 @@ public:
 
 
 public:
-	SDL_Texture* player_texture;
-	SDL_Texture* maptex;
-	SDL_Rect Rect_player;
+	SDL_Texture* texture;
 
 
 };

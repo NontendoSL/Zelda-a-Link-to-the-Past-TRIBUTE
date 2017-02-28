@@ -70,7 +70,6 @@ bool Player::Start()
 
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
-
 	bool ret = true;
 	//TEST MOVE LINK
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -107,6 +106,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			state = WALKING;
 			dir = LEFT;
 		}
+		state = WALKING;
+		dir = LEFT;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
@@ -118,6 +119,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			state = WALKING;
 			dir = DOWN;
 		}
+		state = WALKING;
+		dir = DOWN;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
@@ -129,6 +132,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			state = WALKING;
 			dir = RIGHT;
 		}
+		state = WALKING;
+		dir = RIGHT;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
@@ -140,6 +145,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			state = WALKING;
 			dir = UP;
 		}
+		state = WALKING;
+		dir = UP;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{

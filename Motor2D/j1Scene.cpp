@@ -98,6 +98,7 @@ bool j1Scene::Update(float dt)
 		if (App->map->CleanUp())
 		{
 			Load_new_map(2);
+			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(176, 245), 3));
 		}
 
 		switch_map = 0;

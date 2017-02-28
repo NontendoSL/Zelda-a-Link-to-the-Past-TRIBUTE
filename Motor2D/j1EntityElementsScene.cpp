@@ -2,6 +2,7 @@
 #include "j1Enemy.h"
 #include "j1Item.h"
 #include "j1Player.h"
+#include "j1DynamicItems.h"
 #include "j1App.h"
 #include "j1Input.h"
 #include "p2Log.h"
@@ -63,12 +64,14 @@ bool j1EntityElementScene::Update(float dt)
 {
 	bool ret = true;
 
-	std::list<j1SceneElement*>::iterator item3 = elementscene.begin();
-	while (item3 != elementscene.end())
+	std::list<j1SceneElement*>::iterator item = elementscene.end();
+	item--;
+	while (item != elementscene.begin()) //TODO HIGH -> need inverse_iterator
 	{
-		item3._Ptr->_Myval->Draw();
-		item3++;
+		item._Ptr->_Myval->Draw();
+		item--;
 	}
+	item._Ptr->_Myval->Draw();
 	return ret;
 }
 
@@ -128,6 +131,19 @@ Item* j1EntityElementScene::CreateItem(iPoint position, uint id)
 {
 
 	Item* element = new Item(position);
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	config = LoadConfig(config_file);
+	element->Awake(config.child("maps").child("map").next_sibling().child(element->name.c_str()), id);
+	element->Start();
+	elementscene.push_back(element);
+
+	return element;
+}
+
+DynamicItems* j1EntityElementScene::CreateDynItem(iPoint position, uint id)
+{
+	DynamicItems* element = new DynamicItems(position);
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
