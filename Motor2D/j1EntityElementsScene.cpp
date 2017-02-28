@@ -90,6 +90,22 @@ bool j1EntityElementScene::CleanUp()
 	return ret;
 }
 
+bool j1EntityElementScene::Delte_elements()
+{
+	std::list<j1SceneElement*>::iterator item = elementscene.end();
+	item--;
+	if (elementscene.size() > 1)
+	{
+		while (item != elementscene.begin())
+		{
+			delete item._Ptr->_Myval;
+			elementscene.pop_back();
+			item--;
+		}
+	}
+	return true;
+}
+
 Enemy* j1EntityElementScene::CreateEnemy(iPoint position, uint id, pugi::xml_node& config)
 {
 
@@ -101,7 +117,7 @@ Enemy* j1EntityElementScene::CreateEnemy(iPoint position, uint id, pugi::xml_nod
 	return element;
 }
 
-bool j1EntityElementScene::DeleteEnemy(Enemy * enemy)
+bool j1EntityElementScene::DeleteEnemy(Enemy* enemy)
 {
 	elementscene.remove(enemy);
 	LOG("Enemy DELETE!");
@@ -115,7 +131,7 @@ Item* j1EntityElementScene::CreateItem(iPoint position, uint id)
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
-	element->Awake(config.child(element->name.c_str()), id);
+	element->Awake(config.child("maps").child("map").next_sibling().child(element->name.c_str()), id);
 	element->Start();
 	elementscene.push_back(element);
 

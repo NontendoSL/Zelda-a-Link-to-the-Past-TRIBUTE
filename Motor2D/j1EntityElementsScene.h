@@ -35,6 +35,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// delete elements witout player
+	bool Delte_elements();
+
+
 	//TODO LOW
 	Enemy* CreateEnemy(iPoint position, uint id, pugi::xml_node& );
 	bool DeleteEnemy(Enemy* enemy);

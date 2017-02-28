@@ -47,6 +47,7 @@ bool j1Scene::Start()
 	App->map->Load("TiledLinkHouse.tmx");
 	App->render->camera.x = -((player->position.x - (256 / 2)) * 2);
 	App->render->camera.y = -((player->position.y - (224 / 2)) * 2);
+
 	//Load_new_map(1);
 	switch_map = 0;
 	return true;
@@ -78,15 +79,17 @@ bool j1Scene::Update(float dt)
 			App->render->camera.x -= 2;
 	}
 
-	/*if (enemy != NULL)//TODO HIGH -> when enemy die on put this code?
+	if (enemy.begin()._Ptr->_Myval != NULL)//TODO HIGH -> when enemy die on put this code?
 	{
-		if (enemy->hp == 0)
+		if (enemy.begin()._Ptr->_Myval->hp == 0)
 		{
-			enemy->Drop_item();
-			App->entity_elements->DeleteEnemy(enemy);
-			enemy = NULL;
+			items.push_back(App->entity_elements->CreateItem(iPoint(300, 200), 1));
+			enemy.begin()._Ptr->_Myval->AddItem(items.begin()._Ptr->_Myval);
+			enemy.begin()._Ptr->_Myval->Drop_item();
+			App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
+			enemy.begin()._Ptr->_Myval = NULL;
 		}
-	}*/
+	}
 
 
 	if (switch_map == 2)
@@ -103,9 +106,30 @@ bool j1Scene::Update(float dt)
 	{
 		if (App->map->CleanUp())
 		{
+			App->entity_elements->Delte_elements();
+			
+			std::list<Enemy*>::iterator item = enemy.begin();
+			if (enemy.size() > 0)
+			{
+				while (item != enemy.end())
+				{
+					enemy.pop_back();
+					item++;
+				}
+				enemy.clear();
+			}
+			std::list<Item*>::iterator item_s = items.begin();
+			if (items.size() > 0)
+			{
+				while (item_s != items.end())
+				{
+					items.pop_back();
+					item_s++;
+				}
+				items.clear();
+			}
 			Load_new_map(1);
 		}
-
 		switch_map = 0;
 	}
 
