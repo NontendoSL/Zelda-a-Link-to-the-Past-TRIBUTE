@@ -65,7 +65,7 @@ bool j1AnimationManager::Start()
 	}
 		
 	
-
+	range_link = 8;
 
 	/*link.speed = 0.3f;*/
 
@@ -75,7 +75,6 @@ bool j1AnimationManager::Start()
 
 bool j1AnimationManager::Update(float dt)
 {
-
 
 	return true;
 }
@@ -91,7 +90,7 @@ void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iP
 	{
 		if (status == IDLE)
 		{
-			App->render->Blit(App->scene->player->player_texture, position.x, position.y - 8, &link_walk_north.frames[3]);
+			App->render->Blit(App->scene->player->player_texture, position.x, position.y - range_link, &link_walk_north.frames[3]);
 		}
 		else if (status == ATTACK)
 		{
@@ -99,10 +98,9 @@ void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iP
 		}
 		else if (status == WALKING)
 		{
-			link_walk_north.speed = 0.3f;
 			current_animation = &link_walk_north;
 			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(App->scene->player->player_texture, position.x, position.y - 8, &r);
+			App->render->Blit(App->scene->player->player_texture, position.x, position.y - range_link, &r);
 		}
 		else
 		{
@@ -113,7 +111,7 @@ void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iP
 	{
 		if (status == IDLE)
 		{
-			App->render->Blit(graphics, position.x, position.y - 8, &link_walk_south.frames[3]);
+			App->render->Blit(graphics, position.x, position.y - range_link, &link_walk_south.frames[3]);
 		}
 		else if (status == ATTACK)
 		{
@@ -121,10 +119,9 @@ void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iP
 		}
 		else if (status == WALKING)
 		{
-			link_walk_south.speed = 0.3f;
 			current_animation = &link_walk_south;
 			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(graphics, position.x, position.y - 8, &r);
+			App->render->Blit(graphics, position.x, position.y - range_link, &r);
 		}
 		else
 		{
@@ -135,7 +132,7 @@ void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iP
 	{
 		if (status == IDLE)
 		{
-			App->render->Blit(graphics, position.x, position.y - 8, &link_walk_west.frames[3]);
+			App->render->Blit(graphics, position.x, position.y - range_link, &link_walk_west.frames[3]);
 		}
 		else if (status == ATTACK)
 		{
@@ -143,10 +140,9 @@ void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iP
 		}
 		else if (status == WALKING)
 		{
-			link_walk_west.speed = 0.3f;
 			current_animation = &link_walk_west;
 			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(graphics, position.x, position.y - 8, &r);
+			App->render->Blit(graphics, position.x, position.y - range_link, &r);
 		}
 		else
 		{
@@ -157,7 +153,7 @@ void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iP
 	{
 		if (status == IDLE)
 		{
-			App->render->Blit(graphics, position.x, position.y - 8, &link_walk_east.frames[3]);
+			App->render->Blit(graphics, position.x, position.y - range_link, &link_walk_east.frames[3]);
 		}
 		else if (status == ATTACK)
 		{
@@ -165,10 +161,9 @@ void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iP
 		}
 		else if (status == WALKING)
 		{
-			link_walk_east.speed = 0.3f;
 			current_animation = &link_walk_east;
 			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(graphics, position.x, position.y - 8, &r);
+			App->render->Blit(graphics, position.x, position.y - range_link, &r);
 		}
 		else
 		{

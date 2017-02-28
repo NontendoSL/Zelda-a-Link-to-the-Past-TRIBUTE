@@ -36,6 +36,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	//UI
 	charge = App->gui->CreateImage({ 20,18,16,42 }, { 20,18 });
 	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
@@ -45,7 +46,7 @@ bool j1Scene::Start()
 	//Create First level
 	player = App->entity_elements->CreatePlayer(iPoint(100, 90));
 	App->map->Load("TiledLinkHouse.tmx");
-	App->render->camera.x = -((player->position.x - (256 / 2)) * 2);
+	App->render->camera.x = -((player->position.x - (256 / 2)) * 2);//TODO LOW -> No Magic Numbers
 	App->render->camera.y = -((player->position.y - (224 / 2)) * 2);
 
 	//Load_new_map(1);
@@ -79,7 +80,7 @@ bool j1Scene::Update(float dt)
 			App->render->camera.x -= 2;
 	}
 
-	if (enemy.begin()._Ptr->_Myval != NULL)//TODO HIGH -> when enemy die on put this code?
+	if (enemy.size() > 0)//TODO HIGH -> when enemy die on put this code?
 	{
 		if (enemy.begin()._Ptr->_Myval->hp == 0)
 		{

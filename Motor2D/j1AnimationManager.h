@@ -44,6 +44,8 @@ private:
 	Animation* current_animation;
 	SDL_Texture* graphics = nullptr;
 
+	int range_link;
+
 	std::string file_texture;
 };
 
