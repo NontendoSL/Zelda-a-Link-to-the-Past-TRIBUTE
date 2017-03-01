@@ -14,6 +14,7 @@
 #include "j1Player.h"
 #include "j1FileSystem.h"
 #include "j1AnimationManager.h"
+#include "j1Collision.h"
 
 //Constructor
 Player::Player(iPoint position) :j1SceneElement(position)
@@ -34,6 +35,7 @@ bool Player::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	tex_player_file_name = conf.child("atlas").attribute("file").as_string("");
+	file_hit = conf.child("hit").attribute("file").as_string("");
 	texmapfile_name = conf.child("day-night").attribute("file").as_string("");
 	hp = conf.child("stats").attribute("hp").as_int(0);
 	attack = conf.child("stats").attribute("attack").as_int(0);
@@ -50,7 +52,7 @@ bool Player::Start()
 	changeResolution = false;
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
 	maptex = App->tex->Load(texmapfile_name.c_str());
-
+	hit_tex = App->tex->Load(file_hit.c_str());
 
 	width = 15;
 	height = 15;
@@ -64,6 +66,8 @@ bool Player::Start()
 	stats_temp.insert(0, "ATTACK OF LINK -> ");
 	attack_text = App->gui->CreateText(stats_temp.c_str(), { 300,200 }, 23);
 	*/
+
+	collision_player = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_PLAYER, this);
 
 	return ret;
 }
@@ -246,6 +250,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	stats_temp.insert(0, "ATTACK OF LINK -> ");
 	attack_text->Write(stats_temp.c_str());*/
 
+	//Collision follow the Ms Pac Man
+	collision_player->SetPos(position.x, position.y);
 
 	return ret;
 }
@@ -271,4 +277,13 @@ bool Player::Save()
 
 	App->entity_elements->XML.save_file("config.xml");
 	return true;
+}
+
+void Player::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
+	{
+		App->render->Blit(hit_tex, position.x - 91, position.y - 94);
+		//LOG("HIT");
+	}
 }

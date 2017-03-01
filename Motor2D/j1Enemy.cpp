@@ -5,6 +5,7 @@
 #include "p2Defs.h"
 #include "j1Input.h"
 #include "j1Item.h"
+#include "j1Collision.h"
 
 Enemy::Enemy(iPoint position):j1SceneElement(position)
 {
@@ -36,7 +37,7 @@ bool Enemy::Awake(pugi::xml_node &conf, uint id)
 
 bool Enemy::Start()
 {
-
+	collision_enemy = App->collision->AddCollider({ position.x, position.y, 66, 90 }, COLLIDER_ENEMY, this);
 
 	return true;
 }

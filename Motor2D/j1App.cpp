@@ -51,7 +51,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(font);
-	AddModule(collision);
+
 
 	// scene last
 	AddModule(scene);
@@ -62,6 +62,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//AddModule(player); //TODO LOW
 
 	AddModule(anim_manager);
+
+	AddModule(collision);
 
 	// render last to swap buffer
 	AddModule(render);

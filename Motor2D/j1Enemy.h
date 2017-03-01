@@ -45,6 +45,7 @@ private:
 	bool stunned=false;
 	Item* item_inside;
 	SDL_Texture* texture;
+	Collider* collision_enemy;
 };
 
 #endif

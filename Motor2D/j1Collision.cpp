@@ -14,6 +14,10 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_WALL][COLLIDER_SPHERE_LEFT] = true;
 	matrix[COLLIDER_WALL][COLLIDER_LATERAL_WALL] = false;
 
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
+
 
 	matrix[COLLIDER_SPHERE_RIGHT][COLLIDER_WALL] = true;
 	matrix[COLLIDER_SPHERE_RIGHT][COLLIDER_SPHERE_RIGHT] = true;
@@ -136,12 +140,18 @@ void j1Collision::DebugDraw()
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
+		case COLLIDER_PLAYER: // white
+			App->render->DrawQuad(colliders[i]->rect, 255, 180, 125, alpha);
+			break;
+		case COLLIDER_ENEMY: // white
+			App->render->DrawQuad(colliders[i]->rect, 177, 255, 140, alpha);
+			break;
 		}
 	}
 }
 
 
-Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
+Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1SceneElement* callback)
 {
 	Collider* ret = nullptr;
 

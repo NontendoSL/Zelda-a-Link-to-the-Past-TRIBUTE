@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "SDL/include/SDL_rect.h"
+#include "j1SceneElements.h"
 
 #define MAX_COLLIDERS 200
 
@@ -11,6 +12,8 @@ struct SDL_Rect;
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
+	COLLIDER_PLAYER,
+	COLLIDER_ENEMY,
 	COLLIDER_WALL,
 	COLLIDER_SPHERE_RIGHT,
 	COLLIDER_SPHERE_LEFT,
@@ -24,9 +27,9 @@ struct Collider
 
 	bool to_delete = false;
 	COLLIDER_TYPE type;
-	j1Module* callback = nullptr;
+	j1SceneElement* callback = nullptr;
 
-	Collider(COLLIDER_TYPE type, j1Module* callback = nullptr) :type(type),callback(callback){}
+	Collider(COLLIDER_TYPE type, j1SceneElement* callback = nullptr) :type(type),callback(callback){}
 
 	virtual bool CheckCollision(const Collider* c) const = 0;
 	virtual void SetPos(int x, int y) = 0;
@@ -34,7 +37,7 @@ struct Collider
 
 struct ColliderRect : public Collider
 {
-	ColliderRect(SDL_Rect rectangle, COLLIDER_TYPE type, j1Module* callback = nullptr) : Collider(type, callback)
+	ColliderRect(SDL_Rect rectangle, COLLIDER_TYPE type, j1SceneElement* callback = nullptr) : Collider(type, callback)
 	{
 		rect = rectangle;
 	}
@@ -74,7 +77,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1SceneElement* callback = nullptr);
 	bool EraseCollider(Collider* collider);
 	void DebugDraw();
 

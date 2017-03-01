@@ -52,6 +52,8 @@ public:
 
 	virtual bool Save() { return false; };
 
+	virtual void OnCollision(Collider*, Collider*) {}
+
 public:
 	iPoint position;
 	AnimationState state;

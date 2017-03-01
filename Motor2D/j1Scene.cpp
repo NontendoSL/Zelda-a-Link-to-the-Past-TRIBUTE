@@ -80,7 +80,7 @@ bool j1Scene::Update(float dt)
 			App->render->camera.x -= 2;
 	}
 
-	if (enemy.size() > 0)//TODO HIGH -> when enemy die on put this code?
+	if (enemy.size() > 0 && enemy.begin()._Ptr->_Myval != NULL)//TODO HIGH -> when enemy die on put this code?
 	{
 		if (enemy.begin()._Ptr->_Myval->hp == 0)
 		{

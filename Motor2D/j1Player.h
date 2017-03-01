@@ -36,13 +36,17 @@ public:
 
 	bool Save();
 
+	void OnCollision(Collider*, Collider*);
 
 public:
 	SDL_Texture* player_texture;
 	SDL_Texture* maptex;
+	SDL_Texture* hit_tex;
 	SDL_Rect Rect_player;
 	std::string tex_player_file_name;
 	std::string texmapfile_name;
+
+	std::string file_hit;
 
 private:
 	Text* hp_text;
@@ -50,6 +54,8 @@ private:
 	int attack;
 
 	std::list<Item*> bag;
+
+	Collider* collision_player;
 
 	//TEST
 	std::string stats_temp;
