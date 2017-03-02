@@ -43,6 +43,7 @@
         <item id="3" name="door_house_link" type="ZELDA" file="textures/Door_House_link.png" />
         <item id="4" name="bush_plant" type="ZELDA" file="textures/Bush_plant.png" />
       </DynItems>
+      <switch blue="1" yellow="3"/>
 		</map>
 	</maps>
 	<animation>

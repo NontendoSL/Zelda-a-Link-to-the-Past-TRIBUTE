@@ -281,9 +281,9 @@ bool j1Map::CleanUp()
 	//p2List_item<TileSet*>* item;
 	std::list<TileSet*>::iterator item;
 	item = data.tilesets.begin();
-
 	while(item != data.tilesets.end())
 	{
+		App->tex->UnLoad(item._Ptr->_Myval->texture);
 		RELEASE(item._Ptr->_Myval);
 		item++;
 	}
@@ -300,6 +300,8 @@ bool j1Map::CleanUp()
 		item2++;
 	}
 	data.layers.clear();
+
+
 
 	// Clean up the pugui tree
 	map_file.reset();

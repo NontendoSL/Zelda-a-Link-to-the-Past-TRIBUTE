@@ -27,6 +27,7 @@ bool j1EntityElementScene::Awake(pugi::xml_node &config)
 	std::list<j1SceneElement*>::iterator item = elementscene.begin();
 	while (item != elementscene.end())
 	{
+		//TODO HIGH -> we have to do that in Awake call enemies, items and dynitems and load all textures and save this textures in std::vector<Textures*>
 		//item._Ptr->_Myval->Awake(config.child(item._Ptr->_Myval->name.c_str()));
 		item++;
 	}
