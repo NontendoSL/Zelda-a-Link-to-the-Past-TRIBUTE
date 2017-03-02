@@ -69,7 +69,6 @@ bool j1Scene::Update(float dt)
 	App->map->Draw();
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
 	{
-		//TODO LOW -> Directions + and - Inverse?? 
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 			App->render->camera.x += 2;
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
