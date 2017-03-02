@@ -6,7 +6,7 @@
 #include <vector>
 
 #define CURSOR_WIDTH 2
-enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE,DIALOGUE};
+enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE, DIALOGUE };
 
 // TODO 1: Create your structure of classes
 class j1GuiEntity;
@@ -43,9 +43,9 @@ public:
 	const SDL_Texture* GetAtlas() const;
 
 	// create img
-	Image* CreateImage(SDL_Rect rect,iPoint pos);
+	Image* CreateImage(SDL_Rect rect, iPoint pos);
 	// create text
-	Text* CreateText(const char* string, iPoint pos, uint size);
+	Text* CreateText(const char* string, iPoint pos, uint size, bool addelement = true);
 	// create button
 	Button* CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
 

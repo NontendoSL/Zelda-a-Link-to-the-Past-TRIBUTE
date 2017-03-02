@@ -12,7 +12,7 @@
 
 j1Gui::j1Gui() : j1Module()
 {
-	name="gui";
+	name = "gui";
 
 }
 
@@ -55,7 +55,9 @@ bool j1Gui::PreUpdate()
 bool j1Gui::PostUpdate()
 {
 	for (uint i = 0; i < entities.size(); i++) {
-		entities[i]->Draw();
+		if (entities[i]->visible == true) {
+			entities[i]->Draw();
+		}
 	}
 	return true;
 }
@@ -64,7 +66,7 @@ bool j1Gui::PostUpdate()
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
-	for (uint i = entities.size()-1; i > 0; i--) {
+	for (uint i = entities.size() - 1; i > 0; i--) {
 		delete entities[i];
 	}
 	entities.clear();
@@ -87,11 +89,11 @@ Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos) {
 	return element;
 }
 
-Text* j1Gui::CreateText(const char* string, iPoint pos, uint size ) {
+Text* j1Gui::CreateText(const char* string, iPoint pos, uint size, bool addelement) {
 
-	Text* element = new Text(string,pos, size);
-
-	entities.push_back(element);
+	Text* element = new Text(string, pos, size);
+	if (addelement)
+		entities.push_back(element);
 
 	return element;
 }

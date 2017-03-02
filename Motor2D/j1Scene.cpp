@@ -40,8 +40,9 @@ bool j1Scene::Start()
 	charge = App->gui->CreateImage({ 20,18,16,42 }, { 20,18 });
 	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
-	woaw = App->gui->CreateDialogue({ 50,500 }, "Hi Link! Whatsapp Bro?");
-	woaw->AddLine("-Ameisin");
+	dialog = App->gui->CreateDialogue({ 40,150 }, "Hi Link! Whatsapp Bro?");
+	dialog->AddLine("-Ameisin");
+	dialog->AddLine("U wot m8");
 
 	//Create First level
 	player = App->entity_elements->CreatePlayer(iPoint(100, 90));

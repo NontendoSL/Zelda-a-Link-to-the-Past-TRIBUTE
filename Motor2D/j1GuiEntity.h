@@ -27,8 +27,9 @@ public:
 	GuiType type;
 	SDL_Rect Hitbox;
 	iPoint position, diferential;
+	bool visible = true;
 private:
-	
+
 	//int id;
 	int size;
 

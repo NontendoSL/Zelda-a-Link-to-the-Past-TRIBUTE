@@ -59,7 +59,7 @@ public:
 	std::list<Enemy*> enemy;
 	std::list<Item*> items;
 	std::list<DynamicItems*> dynitems;
-	Dialogue* woaw;
+	Dialogue* dialog;
 
 	pugi::xml_node		config;
 

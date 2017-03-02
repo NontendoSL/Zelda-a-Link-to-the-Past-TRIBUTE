@@ -71,8 +71,11 @@ public:
 	void Draw();
 	void Update();
 	void AddLine(const char* string);
+	void PushLine(bool push);
 public:
 	std::list<Text*>text_lines;
+	bool push;
+	uint timer;
 };
 
 #endif // __j1GUIELEMENTS_H__

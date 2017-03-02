@@ -11,21 +11,21 @@
 
 /////////////////////////////// IMAGE METHODS ///////////////////////////////
 
-Image::Image(SDL_Rect rectangle, iPoint position): j1GuiEntity(rectangle, position){
+Image::Image(SDL_Rect rectangle, iPoint position) : j1GuiEntity(rectangle, position) {
 
 	type = IMAGE;
 	start = true;
 }
 
 
-void Image::Update() 
+void Image::Update()
 {
 
 	if (start == true)
 	{
-		//p2List_item<j1GuiEntity*>*iterator = elements.start;
+
 		std::list<j1GuiEntity*>::iterator iterator = elements.begin();
-		while (iterator != elements.end()) 
+		while (iterator != elements.end())
 		{
 			iterator._Ptr->_Myval->position.x += position.x;
 			iterator._Ptr->_Myval->position.y += position.y;
@@ -36,7 +36,6 @@ void Image::Update()
 		start = false;
 	}
 
-	//p2List_item<j1GuiEntity*>*iterator = elements.start;
 	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
 	while (iterator != elements.end())
 	{
@@ -52,7 +51,6 @@ void Image::Draw()
 {
 
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
-	//p2List_item<j1GuiEntity*>*iterator = elements.start;
 	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
 	while (iterator != elements.end())
 	{
@@ -61,39 +59,40 @@ void Image::Draw()
 	}
 }
 
-Image::~Image() 
+Image::~Image()
 {
-	//p2List_item<j1GuiEntity*>*iterator = elements.start;
 	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
-	if(iterator._Ptr->_Myval !=nullptr)
-	while (iterator != elements.end())
-	{
-		delete iterator._Ptr->_Myval;
-		iterator++;
-	}
+	if (iterator._Ptr->_Myval != nullptr)
+		while (iterator != elements.end())
+		{
+			delete iterator._Ptr->_Myval;
+			iterator++;
+		}
 	elements.clear();
 }
 
 /////////////////////////////// TEXT METHODS ///////////////////////////////
 
-Text::Text(const char* write, iPoint pos, uint size) :text(write), j1GuiEntity({ 0,0,0,0 }, pos) 
+Text::Text(const char* write, iPoint pos, uint size) :text(write), j1GuiEntity({ 0,0,0,0 }, pos)
 {
 
 	type = TEXT;
 	font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", size);
-	text_texture= App->font->Print(text, { (255),(255),(255),(255) }, font);
+	text_texture = App->font->Print(text, { (255),(255),(255),(255) }, font);
 	App->font->CalcSize(write, Hitbox.w, Hitbox.h, font);
+	Hitbox.w /= 2; //TODO MID Adapt functions to resolution scale
+	Hitbox.h /= 2;
 }
 
 
-void Text::Draw() 
+void Text::Draw()
 {
 
-	App->render->Blit(text_texture, position.x, position.y, NULL, 0,false);
+	App->render->Blit(text_texture, position.x, position.y, NULL, 0, false);
 
 }
 
-void Text::Update() 
+void Text::Update()
 {
 
 
@@ -113,7 +112,7 @@ Text::~Text() {
 }
 
 /////////////////////////////// BUTTON METHODS ///////////////////////////////
-Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos):j1GuiEntity(rectangle, pos)
+Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos) :j1GuiEntity(rectangle, pos)
 {
 	type = BUTTON;
 	state = normal;
@@ -123,29 +122,29 @@ Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const
 	texture3.y = stat3.y;
 	texture2.w = texture3.w = Hitbox.w;
 	texture2.h = texture3.h = Hitbox.h;
-	buttontext = new Text(textstring, {textpos.x,textpos.y}, textsize);
+	buttontext = new Text(textstring, { textpos.x,textpos.y }, textsize);
 	start = true;
 }
 
-void Button::Draw() 
+void Button::Draw()
 {
-	
-	switch (state) 
+
+	switch (state)
 	{
-		case normal:
-			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox,0);
-			break;
-		case over:
-			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture2,0);
-			break;
-		case clicked:
-			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture3,0);
-			break;
+	case normal:
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
+		break;
+	case over:
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture2, 0);
+		break;
+	case clicked:
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture3, 0);
+		break;
 	}
 	buttontext->Draw();
 }
 
-void Button::Update() 
+void Button::Update()
 {
 
 	int x, y;
@@ -162,7 +161,7 @@ void Button::Update()
 		{
 			state = clicked;
 		}
-		else 
+		else
 		{
 			state = over;
 		}
@@ -174,7 +173,7 @@ void Button::Update()
 
 }
 
-Button::~Button() 
+Button::~Button()
 {
 	delete buttontext;
 
@@ -186,31 +185,59 @@ Dialogue::Dialogue(iPoint pos, const char*string) :j1GuiEntity({ 0,82,190,62 }, 
 {
 	//TODO MID: Actual font needs a blue outline to match the original one, need to code that or edit the font creating the outline
 	type = DIALOGUE;
-	text_lines.push_back(App->gui->CreateText(string, { position.x + 10,position.y + 5 }, 20));
+	text_lines.push_back(App->gui->CreateText(string, { position.x + 10, 0 }, 30, false));
+
 }
 
 void Dialogue::Draw()
 {
+
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
+	SDL_Rect viewport = { 0,312,Hitbox.w * 2,Hitbox.h * 2 };
+	SDL_RenderSetViewport(App->render->renderer, &viewport);
 	std::list<Text*>::iterator iterator = text_lines.begin();
 	while (iterator != text_lines.end())
 	{
-		iterator._Ptr->_Myval->Draw();
+		if (iterator._Ptr->_Myval->visible == true) {
+			iterator._Ptr->_Myval->Draw();
+		}
 		iterator++;
 	}
+	SDL_RenderSetViewport(App->render->renderer, NULL);
 }
 
 void Dialogue::Update()
 {
-
+	if (push == true && SDL_GetTicks() - timer > 200)
+	{
+		push = false;
+		PushLine(false);
+	}
 
 }
+
 void Dialogue::AddLine(const char* string)
 {
 	std::list<Text*>::iterator iterator = text_lines.end();
 	iterator--;
-	iPoint pos = { position.x + 10,iterator._Ptr->_Myval->Hitbox.h + position.y + 5 };
-	text_lines.push_back(App->gui->CreateText(string, { pos.x,pos.y }, 20));
+	iPoint pos = { position.x + 10,iterator._Ptr->_Myval->position.y + (iterator._Ptr->_Myval->Hitbox.h) }; // Hitbox/2 is for the resolution scale
+	text_lines.push_back(App->gui->CreateText(string, { pos.x,pos.y }, 30, false));
+	if (text_lines.size() > 3) {
+		iterator++;
+		iterator._Ptr->_Myval->visible = false;
+	}
+}
+
+void Dialogue::PushLine(bool push)
+{
+	std::list<Text*>::iterator iterator = text_lines.begin();
+	while (iterator != text_lines.end())
+	{
+		iterator._Ptr->_Myval->position.y -= (iterator._Ptr->_Myval->Hitbox.h / 2) + 0.5;
+		iterator++;
+	}
+	timer = SDL_GetTicks();
+	this->push = push;
 }
 
 Dialogue::~Dialogue()
