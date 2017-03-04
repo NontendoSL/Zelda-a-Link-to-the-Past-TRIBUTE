@@ -54,6 +54,9 @@ public:
 	Image* charge;
 	Image* item;
 	Image* gems;
+	Image* bombs;
+	Image* arrows;
+	Image* life;
 	Text* test;
 	Player* player;
 	std::list<Enemy*> enemy;

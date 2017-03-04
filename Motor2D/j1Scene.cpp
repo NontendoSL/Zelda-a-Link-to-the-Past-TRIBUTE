@@ -40,9 +40,15 @@ bool j1Scene::Start()
 	charge = App->gui->CreateImage({ 20,18,16,42 }, { 20,18 });
 	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
+	//gems->elements.push_back(CreateImage)
+	bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
+	arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
+	life = App->gui->CreateImage({ 178,15,44,7}, { 178,15 });
 	dialog = App->gui->CreateDialogue({ 40,150 }, "Hi Link! Whatsapp Bro?");
 	dialog->AddLine("-Ameisin");
 	dialog->AddLine("U wot m8");
+	dialog->AddLine("visible test");
+	dialog->AddLine("nontendo switch");
 
 	//Create First level
 	player = App->entity_elements->CreatePlayer(iPoint(100, 90));

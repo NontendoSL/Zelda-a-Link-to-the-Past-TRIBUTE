@@ -155,6 +155,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
 		App->scene->dialog->PushLine(true);
+		App->render->camera.h;
 			switch (dir) 
 			{
 			case UP:

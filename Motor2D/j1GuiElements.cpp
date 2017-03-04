@@ -193,7 +193,7 @@ void Dialogue::Draw()
 {
 
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
-	SDL_Rect viewport = { 0,312,Hitbox.w * 2,Hitbox.h * 2 };
+	SDL_Rect viewport = { 0,312,Hitbox.w * 2,Hitbox.h*1.5 + 5};//TODO LOW REMOVE MAGIC NUMBERS
 	SDL_RenderSetViewport(App->render->renderer, &viewport);
 	std::list<Text*>::iterator iterator = text_lines.begin();
 	while (iterator != text_lines.end())
@@ -222,10 +222,6 @@ void Dialogue::AddLine(const char* string)
 	iterator--;
 	iPoint pos = { position.x + 10,iterator._Ptr->_Myval->position.y + (iterator._Ptr->_Myval->Hitbox.h) }; // Hitbox/2 is for the resolution scale
 	text_lines.push_back(App->gui->CreateText(string, { pos.x,pos.y }, 30, false));
-	if (text_lines.size() > 3) {
-		iterator++;
-		iterator._Ptr->_Myval->visible = false;
-	}
 }
 
 void Dialogue::PushLine(bool push)

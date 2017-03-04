@@ -45,9 +45,9 @@ public:
 	SDL_Rect Rect_player;
 	std::string tex_player_file_name;
 	std::string texmapfile_name;
-
 	std::string file_hit;
 
+	uint gems, bombs, arrows;
 private:
 	Text* hp_text;
 	Text* attack_text;

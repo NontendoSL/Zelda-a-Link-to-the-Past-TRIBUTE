@@ -15,9 +15,9 @@
 	</gui>
 	<player>
 		<atlas file="textures/LinkWalkingSprites.png" />
-    <hit file="textures/hit.png"/>
+		<hit file="textures/hit.png" />
 		<day-night file="gui/test.png" />
-		<stats hp="100" attack="10" speed="1" pos_x="100" pos_y="100" />
+		<stats hp="94" attack="10" speed="1" pos_x="100" pos_y="100" />
 	</player>
 	<maps>
 		<map n="1" file="TiledLinkHouse.tmx">
@@ -25,7 +25,7 @@
 			<items>
 				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 				<item id="2" name="bomb_2" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
-      </items>
+			</items>
 			<enemies num="0">
 				<enemy id="1" pos_x="70" pos_y="220" hp="10" attack="10" file="gui/sf2.png" />
 				<enemy id="2" pos_x="90" pos_y="220" hp="20" attack="10" file="gui/sf2.png" />
@@ -39,11 +39,11 @@
 			<items>
 				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 			</items>
-      <DynItems>
-        <item id="3" name="door_house_link" type="ZELDA" file="textures/Door_House_link.png" />
-        <item id="4" name="bush_plant" type="ZELDA" file="textures/Bush_plant.png" />
-      </DynItems>
-      <switch blue="1" yellow="3"/>
+			<DynItems>
+				<item id="3" name="door_house_link" type="ZELDA" file="textures/Door_House_link.png" />
+				<item id="4" name="bush_plant" type="ZELDA" file="textures/Bush_plant.png" />
+			</DynItems>
+			<switch blue="1" yellow="3" />
 		</map>
 	</maps>
 	<animation>
