@@ -185,7 +185,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			}
 	}
 
-
+	//Provisional gem provider
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	{
+		gems++;
+	}
 
 	//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)

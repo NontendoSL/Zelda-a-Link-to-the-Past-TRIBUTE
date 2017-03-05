@@ -40,7 +40,9 @@ bool j1Scene::Start()
 	charge = App->gui->CreateImage({ 20,18,16,42 }, { 20,18 });
 	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
-	//gems->elements.push_back(CreateImage)
+	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
+	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
+	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
 	bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
 	arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
 	life = App->gui->CreateImage({ 178,15,44,7}, { 178,15 });
@@ -73,6 +75,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	AssignValues(gems);
 	App->map->Draw();
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
 	{
@@ -167,6 +170,21 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void j1Scene::AssignValues(Image* assigner)
+{
+	std::list<Image*>::iterator value = assigner->elements.end();
+	value--;
+	int number = player->gems % 10;
+	value._Ptr->_Myval->AssignNumber(number);
+	value--;
+	number = player->gems / 10;
+	number %= 10;
+	value._Ptr->_Myval->AssignNumber(number);
+	value--;
+	number = player->gems / 100;
+	value._Ptr->_Myval->AssignNumber(number);
 }
 
 bool j1Scene::Load_new_map(int n)

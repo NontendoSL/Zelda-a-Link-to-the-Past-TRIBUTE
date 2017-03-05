@@ -24,7 +24,7 @@ void Image::Update()
 	if (start == true)
 	{
 
-		std::list<j1GuiEntity*>::iterator iterator = elements.begin();
+		std::list<Image*>::iterator iterator = elements.begin();
 		while (iterator != elements.end())
 		{
 			iterator._Ptr->_Myval->position.x += position.x;
@@ -36,7 +36,7 @@ void Image::Update()
 		start = false;
 	}
 
-	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
+	std::list<Image*>::iterator iterator = elements.begin();
 	while (iterator != elements.end())
 	{
 		iterator._Ptr->_Myval->Update();
@@ -51,7 +51,7 @@ void Image::Draw()
 {
 
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
-	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
+	std::list<Image*>::iterator iterator = elements.begin();
 	while (iterator != elements.end())
 	{
 		iterator._Ptr->_Myval->Draw();
@@ -59,14 +59,63 @@ void Image::Draw()
 	}
 }
 
+void Image::AssignNumber(uint n)
+{
+	switch (n)
+	{
+	case 0:
+		Hitbox.x = 259;
+		Hitbox.y = 13;
+		break; 
+	case 1:
+		Hitbox.x = 267;
+		Hitbox.y = 13;
+		break;
+	case 2:
+		Hitbox.x = 275;
+		Hitbox.y = 13;
+		break;
+	case 3:
+		Hitbox.x = 283;
+		Hitbox.y = 13;
+		break;
+	case 4:
+		Hitbox.x = 291;
+		Hitbox.y = 13;
+		break;
+	case 5:
+		Hitbox.x = 259;
+		Hitbox.y = 21;
+		break;
+	case 6:
+		Hitbox.x = 267;
+		Hitbox.y = 21;
+		break;
+	case 7:
+		Hitbox.x = 275;
+		Hitbox.y = 21;
+		break;
+	case 8:
+		Hitbox.x = 283;
+		Hitbox.y = 21;
+		break;
+	case 9:
+		Hitbox.x = 291;
+		Hitbox.y = 21;
+		break;
+	}
+
+}
+
 Image::~Image()
 {
-	std::list<j1GuiEntity*>::iterator iterator = elements.begin();
+	std::list<Image*>::iterator iterator = elements.end();
+	iterator--;
 	if (iterator._Ptr->_Myval != nullptr)
-		while (iterator != elements.end())
+		while (elements.size()>0)
 		{
-			delete iterator._Ptr->_Myval;
-			iterator++;
+			elements.remove(iterator._Ptr->_Myval);
+			iterator--;
 		}
 	elements.clear();
 }

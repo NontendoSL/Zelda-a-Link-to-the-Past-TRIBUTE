@@ -46,6 +46,7 @@ public:
 
 	bool Load_new_map(int n);
 
+	void AssignValues(Image* assigner);
 private:
 	SDL_Texture* debug_tex;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
@@ -54,8 +55,8 @@ public:
 	Image* charge;
 	Image* item;
 	Image* gems;
-	Image* bombs;
-	Image* arrows;
+	Image* bombs;//TODO LOW: Agrupar imatges bomba, rupias vida i fletxes en una sola Imatge*
+	Image* arrows; //TODO MID: Group all ui in lists
 	Image* life;
 	Text* test;
 	Player* player;

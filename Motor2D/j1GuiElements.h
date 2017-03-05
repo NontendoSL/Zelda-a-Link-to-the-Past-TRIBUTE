@@ -16,10 +16,10 @@ public:
 public:
 	Image(SDL_Rect rectangle, iPoint position);
 	~Image();
+	void AssignNumber(uint n);
 public:
 	bool start;
-	//p2List<j1GuiEntity*>elements;
-	std::list<j1GuiEntity*> elements;
+	std::list<Image*> elements;
 
 };
 
