@@ -10,6 +10,7 @@ public:
 	bool loop = true;
 	float speed = 1.0f;
 	SDL_Rect frames[MAX_FRAMES];
+	std::string anim_name;
 
 public:
 	float current_frame = 0.0f;

@@ -35,8 +35,10 @@ public:
 	void PlayerSelector(AnimationState status, Direction dir, iPoint position);
 
 private:
-	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
-	std::vector<Animation*> link_anim;
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
+	std::vector<Animation> link_anim;
+	std::list<std::string> file_names;
+	std::list<std::vector<Animation>> anim;//TODO LOW -> need implemented
 	Animation link_walk_east;
 	Animation link_walk_north;
 	Animation link_walk_west;
