@@ -67,17 +67,17 @@
     <ClCompile Include="j1AnimationManager.cpp">
       <Filter>Desenvolupament  ========\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="j1Enemy.cpp">
-      <Filter>Desenvolupament  ========\ElementsScene</Filter>
-    </ClCompile>
     <ClCompile Include="j1Item.cpp">
       <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClCompile>
     <ClCompile Include="j1Collision.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1DynamicItems.cpp">
+    <ClCompile Include="j1DynamicObjects.cpp">
       <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Enemy.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -156,13 +156,7 @@
     <ClInclude Include="j1EntityElementsScene.h">
       <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClInclude>
-    <ClInclude Include="j1SceneElements.h">
-      <Filter>Desenvolupament  ========\ElementsScene</Filter>
-    </ClInclude>
     <ClInclude Include="j1Player.h">
-      <Filter>Desenvolupament  ========\ElementsScene</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Enemy.h">
       <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClInclude>
     <ClInclude Include="j1AnimationManager.h">
@@ -177,8 +171,17 @@
     <ClInclude Include="j1Collision.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="j1DynamicItems.h">
+    <ClInclude Include="j1DynamicObjects.h">
       <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneElements.h">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Enemy.h">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +211,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Animation">
       <UniqueIdentifier>{04f989d6-eec3-42ac-a3ee-25b9e3cedf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\ElementsScene\NPCs">
+      <UniqueIdentifier>{f1b3e4aa-26f2-45ab-a125-5ac7b95718a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

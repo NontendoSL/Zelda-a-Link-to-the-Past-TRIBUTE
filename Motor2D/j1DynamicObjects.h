@@ -1,19 +1,19 @@
 #pragma once
-#ifndef __DYNAMICITEMS_H_
-#define __DYNAMICITEMS_H_
+#ifndef __DYNAMICOBJECTS_H_
+#define __DYNAMICOBJECTS_H_
 
-#include "j1SceneElements.h"
+#include "SceneElements.h"
 
 
 class Text;
 
-class DynamicItems : public j1SceneElement
+class DynamicObjects : public SceneElement
 {
 public:
-	DynamicItems(iPoint position);
+	DynamicObjects(iPoint position);
 
 	// Destructor
-	~DynamicItems();
+	~DynamicObjects();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&, uint);
@@ -47,4 +47,4 @@ public:
 
 
 
-#endif //__DYNAMICITEMS_H_
+#endif //__DYNAMICOBJECTS_H_

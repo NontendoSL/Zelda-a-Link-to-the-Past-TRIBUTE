@@ -7,7 +7,7 @@
 #include "j1Item.h"
 #include "j1Collision.h"
 
-Enemy::Enemy(iPoint position):j1SceneElement(position)
+Enemy::Enemy(iPoint position):NPC(position)
 {
 	name = "enemies";
 	type = ENEMY;
@@ -44,7 +44,7 @@ bool Enemy::Start()
 
 bool Enemy::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+	/*if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
 	{
 		position.x -= 2;
 	}
@@ -59,7 +59,7 @@ bool Enemy::Update()
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
 	{
 		position.y -= 2;
-	}
+	}*/
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 	{
 		hp -= 2;

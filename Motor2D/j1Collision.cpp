@@ -151,7 +151,7 @@ void j1Collision::DebugDraw()
 }
 
 
-Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1SceneElement* callback)
+Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneElement* callback)
 {
 	Collider* ret = nullptr;
 

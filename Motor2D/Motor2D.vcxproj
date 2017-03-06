@@ -76,7 +76,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="j1Collision.cpp" />
-    <ClCompile Include="j1DynamicItems.cpp" />
+    <ClCompile Include="j1DynamicObjects.cpp" />
     <ClCompile Include="j1Enemy.cpp" />
     <ClCompile Include="j1Item.cpp" />
     <ClCompile Include="j1AnimationManager.cpp" />
@@ -105,7 +105,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="j1Collision.h" />
-    <ClInclude Include="j1DynamicItems.h" />
+    <ClInclude Include="j1DynamicObjects.h" />
     <ClInclude Include="j1Item.h" />
     <ClInclude Include="j1Enemy.h" />
     <ClInclude Include="j1AnimationManager.h" />
@@ -121,6 +121,7 @@
     <ClInclude Include="j1Player.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Timer.h" />
+    <ClInclude Include="NPC.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />
@@ -135,7 +136,7 @@
     <ClInclude Include="j1Window.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
-    <ClInclude Include="j1SceneElements.h" />
+    <ClInclude Include="SceneElements.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml">

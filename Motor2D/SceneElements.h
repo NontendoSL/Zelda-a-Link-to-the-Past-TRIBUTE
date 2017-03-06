@@ -1,7 +1,6 @@
 #pragma once
-#pragma once
-#ifndef __j1SCENEELEMENT_H__
-#define __j1SCENEELEMENT_H__
+#ifndef __SCENEELEMENT_H__
+#define __SCENEELEMENT_H__
 
 #include "j1Module.h"
 #include <list>
@@ -14,14 +13,14 @@ class Item;
 
 enum ElementType{PLAYER,ENEMY,ITEM, DYNITEMS};
 // ---------------------------------------------------
-class j1SceneElement
+class SceneElement
 {
 public:
 
-	j1SceneElement(iPoint position): position(position)
+	SceneElement(iPoint position): position(position)
 	{}
 
-	~j1SceneElement()
+	~SceneElement()
 	{}
 
 	virtual bool Awake(pugi::xml_node& conf, uint id = 0) 
@@ -71,4 +70,4 @@ public:
 
 };
 
-#endif // __j1SCENEELEMENT_H__
+#endif // __SCENEELEMENT_H__

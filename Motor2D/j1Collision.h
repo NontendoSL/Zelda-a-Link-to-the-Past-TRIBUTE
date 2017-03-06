@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 #include "SDL/include/SDL_rect.h"
-#include "j1SceneElements.h"
+#include "SceneElements.h"
 
 #define MAX_COLLIDERS 200
 
@@ -27,9 +27,9 @@ struct Collider
 
 	bool to_delete = false;
 	COLLIDER_TYPE type;
-	j1SceneElement* callback = nullptr;
+	SceneElement* callback = nullptr;
 
-	Collider(COLLIDER_TYPE type, j1SceneElement* callback = nullptr) :type(type),callback(callback){}
+	Collider(COLLIDER_TYPE type, SceneElement* callback = nullptr) :type(type),callback(callback){}
 
 	virtual bool CheckCollision(const Collider* c) const = 0;
 	virtual void SetPos(int x, int y) = 0;
@@ -37,7 +37,7 @@ struct Collider
 
 struct ColliderRect : public Collider
 {
-	ColliderRect(SDL_Rect rectangle, COLLIDER_TYPE type, j1SceneElement* callback = nullptr) : Collider(type, callback)
+	ColliderRect(SDL_Rect rectangle, COLLIDER_TYPE type, SceneElement* callback = nullptr) : Collider(type, callback)
 	{
 		rect = rectangle;
 	}
@@ -77,7 +77,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1SceneElement* callback = nullptr);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneElement* callback = nullptr);
 	bool EraseCollider(Collider* collider);
 	void DebugDraw();
 

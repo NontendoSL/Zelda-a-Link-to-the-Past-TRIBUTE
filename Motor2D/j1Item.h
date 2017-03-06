@@ -2,12 +2,12 @@
 #ifndef __ITEMS_H_
 #define __ITEMS_H_
 
-#include "j1SceneElements.h"
+#include "SceneElements.h"
 
 
 enum itemtype{ZELDA, POKEMON};
 
-class Item : public j1SceneElement
+class Item : public SceneElement
 {
 public:
 	Item(iPoint position);

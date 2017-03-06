@@ -2,7 +2,7 @@
 #include "j1Enemy.h"
 #include "j1Item.h"
 #include "j1Player.h"
-#include "j1DynamicItems.h"
+#include "j1DynamicObjects.h"
 #include "j1App.h"
 #include "j1Input.h"
 #include "p2Log.h"
@@ -24,7 +24,7 @@ j1EntityElementScene::~j1EntityElementScene()
 
 bool j1EntityElementScene::Awake(pugi::xml_node &config)
 {
-	std::list<j1SceneElement*>::iterator item = elementscene.begin();
+	std::list<SceneElement*>::iterator item = elementscene.begin();
 	while (item != elementscene.end())
 	{
 		//TODO HIGH -> we have to do that in Awake call enemies, items and dynitems and load all textures and save this textures in std::vector<Textures*>
@@ -38,7 +38,7 @@ bool j1EntityElementScene::Awake(pugi::xml_node &config)
 bool j1EntityElementScene::Start()
 {
 	bool ret = true;
-	std::list<j1SceneElement*>::iterator item = elementscene.begin();
+	std::list<SceneElement*>::iterator item = elementscene.begin();
 	while (item != elementscene.end())
 	{
 		//item._Ptr->_Myval->Start();
@@ -52,7 +52,7 @@ bool j1EntityElementScene::Start()
 
 bool j1EntityElementScene::PreUpdate()
 {
-	std::list<j1SceneElement*>::iterator item3 = elementscene.begin();
+	std::list<SceneElement*>::iterator item3 = elementscene.begin();
 	while (item3 != elementscene.end())
 	{
 		item3._Ptr->_Myval->Update();
@@ -65,7 +65,7 @@ bool j1EntityElementScene::Update(float dt)
 {
 	bool ret = true;
 
-	std::list<j1SceneElement*>::iterator item = elementscene.end();
+	std::list<SceneElement*>::iterator item = elementscene.end();
 	item--;
 	while (item != elementscene.begin()) //TODO HIGH -> need inverse_iterator
 	{
@@ -85,7 +85,7 @@ bool j1EntityElementScene::PostUpdate()
 bool j1EntityElementScene::CleanUp()
 {
 	bool ret = true;
-	std::list<j1SceneElement*>::iterator item = elementscene.begin();
+	std::list<SceneElement*>::iterator item = elementscene.begin();
 	while (item != elementscene.end())
 	{
 		item._Ptr->_Myval->CleanUp();
@@ -96,7 +96,7 @@ bool j1EntityElementScene::CleanUp()
 
 bool j1EntityElementScene::Delte_elements()
 {
-	std::list<j1SceneElement*>::iterator item = elementscene.end();
+	std::list<SceneElement*>::iterator item = elementscene.end();
 	item--;
 	if (elementscene.size() > 1)
 	{
@@ -142,13 +142,13 @@ Item* j1EntityElementScene::CreateItem(iPoint position, uint id)
 	return element;
 }
 
-DynamicItems* j1EntityElementScene::CreateDynItem(iPoint position, uint id)
+DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint position, uint id)
 {
-	DynamicItems* element = new DynamicItems(position);
+	DynamicObjects* element = new DynamicObjects(position);
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
-	element->Awake(config.child("maps").child("map").next_sibling().child(element->name.c_str()).child("item"), id);
+	element->Awake(config.child("maps").child("map").next_sibling().child(element->name.c_str()).child("dynobject"), id);
 	element->Start();
 	elementscene.push_back(element);
 

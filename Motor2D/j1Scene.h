@@ -15,7 +15,7 @@ class Dialogue;
 class Player;
 class Item;
 class Enemy;
-class DynamicItems;
+class DynamicObjects;
 
 class j1Scene : public j1Module
 {
@@ -62,7 +62,7 @@ public:
 	Player* player;
 	std::list<Enemy*> enemy;
 	std::list<Item*> items;
-	std::list<DynamicItems*> dynitems;
+	std::list<DynamicObjects*> dynitems;
 	Dialogue* dialog;
 
 	pugi::xml_node		config;

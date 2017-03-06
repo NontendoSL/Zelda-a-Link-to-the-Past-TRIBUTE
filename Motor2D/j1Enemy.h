@@ -2,10 +2,9 @@
 #ifndef __ENEMIES_H_
 #define __ENEMIES_H_
 
-#include "j1SceneElements.h"
-class Item;
+#include "NPC.h"
 
-class Enemy : public j1SceneElement
+class Enemy : public NPC
 {
 public:
 	Enemy(iPoint position);

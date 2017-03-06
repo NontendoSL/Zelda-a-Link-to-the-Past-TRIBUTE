@@ -2,12 +2,12 @@
 #ifndef __PLAYER_H_
 #define __PLAYER_H_
 
-#include "j1SceneElements.h"
+#include "SceneElements.h"
 
 
 class Text;
 
-class Player : public j1SceneElement
+class Player : public SceneElement
 {
 public:
 	Player(iPoint position);

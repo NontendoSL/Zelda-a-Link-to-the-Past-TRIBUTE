@@ -4,13 +4,13 @@
 
 #include "j1Module.h"
 #include <list>
-#include "j1SceneElements.h"
+#include "SceneElements.h"
 #include "PugiXml\src\pugixml.hpp"
 
 class Enemy;
 class Item;
 class Player;
-class DynamicItems;
+class DynamicObjects;
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
 {
@@ -44,14 +44,14 @@ public:
 	Enemy* CreateEnemy(iPoint position, uint id, pugi::xml_node& );
 	bool DeleteEnemy(Enemy* enemy);
 	Item* CreateItem(iPoint position, uint id);
-	DynamicItems* CreateDynItem(iPoint position, uint id);
+	DynamicObjects* CreateDynObject(iPoint position, uint id);
 	Player* CreatePlayer(iPoint position);
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;
 
 private:
-	std::list<j1SceneElement*> elementscene;
+	std::list<SceneElement*> elementscene;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const; //TODO LOW ->We hace this function in App but was with private
 	//Delete
 	

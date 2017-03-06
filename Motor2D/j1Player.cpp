@@ -17,7 +17,7 @@
 #include "j1Collision.h"
 
 //Constructor
-Player::Player(iPoint position) :j1SceneElement(position)
+Player::Player(iPoint position) :SceneElement(position)
 {
 
 	type = PLAYER;

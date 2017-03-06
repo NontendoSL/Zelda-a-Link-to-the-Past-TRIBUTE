@@ -1,19 +1,19 @@
-#include "j1DynamicItems.h"
+#include "j1DynamicObjects.h"
 #include "j1App.h"
 #include "j1Textures.h"
 
-DynamicItems::DynamicItems(iPoint position) :j1SceneElement(position)
+DynamicObjects::DynamicObjects(iPoint position) :SceneElement(position)
 {
 	type = DYNITEMS;
-	name = "DynItems";
+	name = "dynObjects";
 }
 
-DynamicItems::~DynamicItems()
+DynamicObjects::~DynamicObjects()
 {
 
 }
 
-bool DynamicItems::Awake(pugi::xml_node &conf, uint id)
+bool DynamicObjects::Awake(pugi::xml_node &conf, uint id)
 {
 	bool stop_search = false;
 	pugi::xml_node temp = conf;
@@ -33,17 +33,17 @@ bool DynamicItems::Awake(pugi::xml_node &conf, uint id)
 	return true;
 }
 
-bool DynamicItems::Start()
+bool DynamicObjects::Start()
 {
 	return true;
 }
 
-bool DynamicItems::Update()
+bool DynamicObjects::Update()
 {
 	return true;
 }
 
-void DynamicItems::Draw()
+void DynamicObjects::Draw()
 {
 	if (canBlit == true)
 	{
@@ -51,7 +51,7 @@ void DynamicItems::Draw()
 	}
 }
 
-bool DynamicItems::CleanUp()
+bool DynamicObjects::CleanUp()
 {
 	return true;
 }

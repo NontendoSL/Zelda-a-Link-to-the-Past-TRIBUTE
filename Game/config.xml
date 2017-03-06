@@ -39,14 +39,15 @@
 			<items>
 				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 			</items>
-			<DynItems>
-				<item id="3" name="door_house_link" type="ZELDA" file="textures/Door_House_link.png" />
-				<item id="4" name="bush_plant" type="ZELDA" file="textures/Bush_plant.png" />
-			</DynItems>
+      <dynObjects>
+				<dynobject id="3" name="door_house_link" type="ZELDA" file="textures/Door_House_link.png" />
+				<dynobject id="4" name="bush_plant" type="ZELDA" file="textures/Bush_plant.png" />
+			</dynObjects>
 			<switch blue="1" yellow="3" />
 		</map>
 	</maps>
 	<animation>
+    <file file="animation/LinkWalkingSprites.xml"/>
 		<sprite file="textures/LinkWalkingSprites.png" />
 	</animation>
 	<window>

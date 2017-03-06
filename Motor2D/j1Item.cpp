@@ -4,7 +4,7 @@
 #include "j1App.h"
 
 
-Item::Item(iPoint position) :j1SceneElement(position)
+Item::Item(iPoint position) :SceneElement(position)
 {
 	name = "items";
 	type = ITEM;

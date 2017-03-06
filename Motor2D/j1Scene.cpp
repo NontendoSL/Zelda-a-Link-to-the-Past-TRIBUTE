@@ -14,6 +14,7 @@
 #include "j1Scene.h"
 #include "j1Enemy.h"
 #include "j1Player.h"
+#include "j1DynamicObjects.h"
 #include "j1FileSystem.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -108,11 +109,11 @@ bool j1Scene::Update(float dt)
 		if (App->map->CleanUp())
 		{
 			Load_new_map(2);
-			/*dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(176, 245), 3));
-			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(224, 273), 4));
-			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(224, 289), 4));
-			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(240, 273), 4));
-			dynitems.push_back(App->entity_elements->CreateDynItem(iPoint(240, 289), 4));*/
+			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
+			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
+			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 289), 4));
+			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 273), 4));
+			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 289), 4));
 		}
 
 		switch_map = 0;
@@ -204,12 +205,12 @@ bool j1Scene::Load_new_map(int n)
 			player->position.y = temp.child("player").attribute("pos_y").as_int(0);
 
 			//Enemies
-			/*pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
+			pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
 			for (int i = 0; i < temp.child("enemies").attribute("num").as_int(0); i++)
 			{
 				enemy.push_back(App->entity_elements->CreateEnemy(iPoint(temp_enemy.attribute("pos_x").as_int(0), temp_enemy.attribute("pos_y").as_int(0)), temp_enemy.attribute("id").as_int(0), temp_enemy));
 				temp_enemy = temp_enemy.next_sibling();
-			}*/
+			}
 
 			//items
 			//Dynamic items (not implmeneted yet)
