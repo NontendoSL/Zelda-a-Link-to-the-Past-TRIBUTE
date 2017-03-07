@@ -88,12 +88,6 @@ bool j1AnimationManager::Start()
 	return true;
 }
 
-bool j1AnimationManager::Update(float dt)
-{
-
-	return true;
-}
-
 bool j1AnimationManager::CleanUp()
 {
 	return true;

@@ -222,7 +222,7 @@ void j1App::FinishUpdate()
 
 	// Framerate calculations --
 
-	if(last_sec_frame_time.Read() > 1000)
+	if (last_sec_frame_time.Read() > 1000)
 	{
 		last_sec_frame_time.Start();
 		prev_last_sec_frame_count = last_sec_frame_count;
@@ -235,10 +235,15 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
+	App->win->SetTitle(title);
+
+	/*static char title[256];
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	sprintf_s(title, 256, "Coords: X:%i Y:%i ",
-			  x,y);
+			  x,y);*/
 	App->win->SetTitle(title);
 
 	if(capped_ms > 0 && last_frame_ms < capped_ms)
