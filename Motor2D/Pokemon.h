@@ -1,15 +1,15 @@
 #pragma once
-#ifndef __ENEMIES_H_
-#define __ENEMIES_H_
+#ifndef __POKEMON_H_
+#define __POKEMON_H_
 
 #include "NPC.h"
 
-class Enemy : public NPC
+class Pokemon : public NPC
 {
 public:
-	Enemy(iPoint position);
+	Pokemon(iPoint position);
 
-	~Enemy();
+	~Pokemon();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&, uint);
@@ -31,20 +31,17 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool Save();
-
 	void AddItem(Item*);
 
 	void Drop_item();
 
 private:
-	int attack;
+
 	//Item* drop;
-	float speed;
-	bool stunned=false;
+	bool stunned = false;
 	Item* item_inside;
 	SDL_Texture* texture;
 	Collider* collision_enemy;
 };
 
-#endif
+#endif //__POKEMON_H_

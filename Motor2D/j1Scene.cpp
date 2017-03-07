@@ -12,7 +12,7 @@
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
 #include "j1Scene.h"
-#include "j1Enemy.h"
+#include "Soldier.h"
 #include "j1Player.h"
 #include "j1DynamicObjects.h"
 #include "j1FileSystem.h"
@@ -122,9 +122,10 @@ bool j1Scene::Update(float dt)
 	{
 		if (App->map->CleanUp())
 		{
-			App->entity_elements->Delte_elements();
+			App->entity_elements->DelteElements();
+			//App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
 			
-			std::list<Enemy*>::iterator item = enemy.begin();
+			std::list<Soldier*>::iterator item = enemy.begin();
 			if (enemy.size() > 0)
 			{
 				while (item != enemy.end())
@@ -208,7 +209,7 @@ bool j1Scene::Load_new_map(int n)
 			pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
 			for (int i = 0; i < temp.child("enemies").attribute("num").as_int(0); i++)
 			{
-				enemy.push_back(App->entity_elements->CreateEnemy(iPoint(temp_enemy.attribute("pos_x").as_int(0), temp_enemy.attribute("pos_y").as_int(0)), temp_enemy.attribute("id").as_int(0), temp_enemy));
+				enemy.push_back(App->entity_elements->CreateSoldier(iPoint(temp_enemy.attribute("pos_x").as_int(0), temp_enemy.attribute("pos_y").as_int(0)), temp_enemy.attribute("id").as_int(0), temp_enemy));
 				temp_enemy = temp_enemy.next_sibling();
 			}
 

@@ -14,7 +14,7 @@ class Dialogue;
 
 class Player;
 class Item;
-class Enemy;
+class Soldier;
 class DynamicObjects;
 
 class j1Scene : public j1Module
@@ -60,7 +60,7 @@ public:
 	Image* life;
 	Text* test;
 	Player* player;
-	std::list<Enemy*> enemy;
+	std::list<Soldier*> enemy;
 	std::list<Item*> items;
 	std::list<DynamicObjects*> dynitems;
 	Dialogue* dialog;

@@ -7,10 +7,11 @@
 #include "SceneElements.h"
 #include "PugiXml\src\pugixml.hpp"
 
-class Enemy;
+class Soldier;
 class Item;
 class Player;
 class DynamicObjects;
+class NPC;
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
 {
@@ -37,12 +38,12 @@ public:
 	bool CleanUp();
 
 	// delete elements witout player
-	bool Delte_elements();
+	bool DelteElements();
 
 
 	//TODO LOW
-	Enemy* CreateEnemy(iPoint position, uint id, pugi::xml_node& );
-	bool DeleteEnemy(Enemy* enemy);
+	Soldier* CreateSoldier(iPoint position, uint id, pugi::xml_node& );
+	bool DeleteEnemy(NPC* enemy);
 	Item* CreateItem(iPoint position, uint id);
 	DynamicObjects* CreateDynObject(iPoint position, uint id);
 	Player* CreatePlayer(iPoint position);

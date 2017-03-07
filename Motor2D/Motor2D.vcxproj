@@ -75,9 +75,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BCTrooper.cpp" />
+    <ClCompile Include="Ganon.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1DynamicObjects.cpp" />
-    <ClCompile Include="j1Enemy.cpp" />
+    <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="j1Item.cpp" />
     <ClCompile Include="j1AnimationManager.cpp" />
     <ClCompile Include="j1EntityElementsScene.cpp" />
@@ -100,14 +102,18 @@
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />
     <ClCompile Include="j1Window.cpp" />
+    <ClCompile Include="Pokemon.cpp" />
+    <ClCompile Include="PokeTrainer.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BCTrooper.h" />
+    <ClInclude Include="Ganon.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1DynamicObjects.h" />
     <ClInclude Include="j1Item.h" />
-    <ClInclude Include="j1Enemy.h" />
+    <ClInclude Include="Soldier.h" />
     <ClInclude Include="j1AnimationManager.h" />
     <ClInclude Include="j1EntityElementsScene.h" />
     <ClInclude Include="j1FileSystem.h" />
@@ -134,6 +140,8 @@
     <ClInclude Include="j1Render.h" />
     <ClInclude Include="j1Textures.h" />
     <ClInclude Include="j1Window.h" />
+    <ClInclude Include="Pokemon.h" />
+    <ClInclude Include="PokeTrainer.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="SceneElements.h" />

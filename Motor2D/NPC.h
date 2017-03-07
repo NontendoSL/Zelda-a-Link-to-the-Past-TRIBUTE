@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __SOLDIER_H_
-#define __SOLDIER_H_
+#ifndef __NPC_H_
+#define __NPC_H_
 
 #include "SceneElements.h"
 
@@ -28,4 +28,4 @@ public:
 
 };
 
-#endif //__SOLDIER_H_
+#endif //__NPC_H_

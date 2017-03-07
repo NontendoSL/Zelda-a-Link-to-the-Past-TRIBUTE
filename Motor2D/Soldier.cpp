@@ -1,4 +1,4 @@
-#include "j1Enemy.h"
+#include "Soldier.h"
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1App.h"
@@ -7,16 +7,16 @@
 #include "j1Item.h"
 #include "j1Collision.h"
 
-Enemy::Enemy(iPoint position):NPC(position)
+Soldier::Soldier(iPoint position):NPC(position)
 {
-	name = "enemies";
+	name = "enemies"; //TODO need change name to "Soldier".
 	type = ENEMY;
 }
 
-Enemy::~Enemy()
+Soldier::~Soldier()
 {}
 
-bool Enemy::Awake(pugi::xml_node &conf, uint id)
+bool Soldier::Awake(pugi::xml_node &conf, uint id)
 {
 	bool stop_search = false;
 	for (int s_id = conf.attribute("id").as_int(0); stop_search == false; s_id = conf.next_sibling().attribute("id").as_int(0))
@@ -35,14 +35,14 @@ bool Enemy::Awake(pugi::xml_node &conf, uint id)
 	return true;
 }
 
-bool Enemy::Start()
+bool Soldier::Start()
 {
 	collision_enemy = App->collision->AddCollider({ position.x, position.y, 66, 90 }, COLLIDER_ENEMY, this);
 
 	return true;
 }
 
-bool Enemy::Update()
+bool Soldier::Update()
 {
 	/*if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
 	{
@@ -69,7 +69,7 @@ bool Enemy::Update()
 	return true;
 }
 
-void Enemy::Draw()
+void Soldier::Draw()
 {
 	if (hp > 0)
 	{
@@ -82,13 +82,13 @@ void Enemy::Draw()
 	}
 }
 
-void Enemy::AddItem(Item* item)
+void Soldier::AddItem(Item* item)
 {
 	item_inside = item;
 	item->canBlit = false;
 }
 
-void Enemy::Drop_item()
+void Soldier::Drop_item()
 {
 	item_inside->canBlit = true;
 	item_inside->position.x = position.x;
@@ -96,16 +96,10 @@ void Enemy::Drop_item()
 	item_inside = NULL;
 }
 
-bool Enemy::CleanUp()
+bool Soldier::CleanUp()
 {
 	return true;
 }
-
-bool Enemy::Save()
-{
-	return true;
-}
-
 
 
 

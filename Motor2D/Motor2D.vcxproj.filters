@@ -76,7 +76,19 @@
     <ClCompile Include="j1DynamicObjects.cpp">
       <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClCompile>
-    <ClCompile Include="j1Enemy.cpp">
+    <ClCompile Include="BCTrooper.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="Ganon.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="Pokemon.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="PokeTrainer.cpp">
       <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
     </ClCompile>
   </ItemGroup>
@@ -177,10 +189,22 @@
     <ClInclude Include="SceneElements.h">
       <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClInclude>
-    <ClInclude Include="j1Enemy.h">
+    <ClInclude Include="NPC.h">
       <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
     </ClInclude>
-    <ClInclude Include="NPC.h">
+    <ClInclude Include="BCTrooper.h">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ganon.h">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon.h">
+      <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="PokeTrainer.h">
       <Filter>Desenvolupament  ========\ElementsScene\NPCs</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #include "j1EntityElementsScene.h"
-#include "j1Enemy.h"
+#include "Soldier.h"
 #include "j1Item.h"
 #include "j1Player.h"
 #include "j1DynamicObjects.h"
@@ -94,7 +94,7 @@ bool j1EntityElementScene::CleanUp()
 	return ret;
 }
 
-bool j1EntityElementScene::Delte_elements()
+bool j1EntityElementScene::DelteElements()
 {
 	std::list<SceneElement*>::iterator item = elementscene.end();
 	item--;
@@ -110,10 +110,10 @@ bool j1EntityElementScene::Delte_elements()
 	return true;
 }
 
-Enemy* j1EntityElementScene::CreateEnemy(iPoint position, uint id, pugi::xml_node& config)
+Soldier* j1EntityElementScene::CreateSoldier(iPoint position, uint id, pugi::xml_node& config)
 {
 
-	Enemy* element = new Enemy(position);
+	Soldier* element = new Soldier(position);
 	element->Awake(config, id);
 	element->Start();
 	elementscene.push_back(element);
@@ -121,7 +121,7 @@ Enemy* j1EntityElementScene::CreateEnemy(iPoint position, uint id, pugi::xml_nod
 	return element;
 }
 
-bool j1EntityElementScene::DeleteEnemy(Enemy* enemy)
+bool j1EntityElementScene::DeleteEnemy(NPC* enemy)
 {
 	elementscene.remove(enemy);
 	LOG("Enemy DELETE!");
