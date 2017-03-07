@@ -12,6 +12,16 @@
 enum AnimationState{IDLE,WALKING,ATTACK};
 enum Direction{UP,DOWN,LEFT,RIGHT};
 
+struct AnimDirect
+{
+	Animation East_action;
+	Animation North_action;
+	Animation West_action;
+	Animation South_action;
+	float speed;
+	std::string action;
+};
+
 class j1AnimationManager : public j1Module
 {
 public:
@@ -35,7 +45,7 @@ private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
 	std::vector<Animation> link_anim;
 	std::list<std::string> file_names;
-	std::list<std::vector<Animation>> anim;//TODO LOW -> need implemented
+	std::vector<std::vector<AnimDirect>> animdirect;//TODO LOW -> need implemented
 	Animation link_walk_east;
 	Animation link_walk_north;
 	Animation link_walk_west;
