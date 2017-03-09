@@ -209,7 +209,7 @@ bool j1Scene::Load_new_map(int n)
 			pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
 			for (int i = 0; i < temp.child("enemies").attribute("num").as_int(0); i++)
 			{
-				enemy.push_back(App->entity_elements->CreateSoldier(iPoint(temp_enemy.attribute("pos_x").as_int(0), temp_enemy.attribute("pos_y").as_int(0)), temp_enemy.attribute("id").as_int(0), temp_enemy));
+				//enemy.push_back(App->entity_elements->CreateSoldier(iPoint(temp_enemy.attribute("pos_x").as_int(0), temp_enemy.attribute("pos_y").as_int(0)), temp_enemy.attribute("id").as_int(0), temp_enemy));
 				temp_enemy = temp_enemy.next_sibling();
 			}
 

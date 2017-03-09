@@ -300,7 +300,7 @@ bool Player::Camera_inside()
 	iPoint temp = App->map->MapToWorld(App->map->data.height, App->map->data.width);
 	if (dir == UP)
 	{
-		if (position.y < temp.y - 125)
+		if (position.y < temp.y - 140)
 		{
 			if ((0 < -(App->render->camera.y + 2) && temp.y > -(App->render->camera.y + 2)) == false)
 			{
@@ -325,7 +325,7 @@ bool Player::Camera_inside()
 	}
 	if (dir == LEFT)
 	{
-		if (position.x < temp.x - 140)
+		if (position.x < temp.x - 130)
 		{
 			if ((0 < -(App->render->camera.x + 2) && temp.x > -(App->render->camera.x + 2)) == false)
 			{
