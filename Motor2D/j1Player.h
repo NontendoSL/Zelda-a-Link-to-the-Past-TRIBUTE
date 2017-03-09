@@ -38,6 +38,8 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
+	bool Camera_inside();
+
 public:
 	SDL_Texture* player_texture;
 	SDL_Texture* maptex;

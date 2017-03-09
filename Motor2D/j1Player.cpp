@@ -104,24 +104,24 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
 		{
-			if (Camera_follow_player)
+			state = WALKING;
+			dir = LEFT;
+			if (Camera_inside())
 				App->render->camera.x += speed * 2;
 			position.x -= speed;
 			state = WALKING;
 			dir = LEFT;
 		}
-		state = WALKING;
-		dir = LEFT;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
 		{
-			if (Camera_follow_player)
-				App->render->camera.y -= speed * 2;
-			position.y += speed;
 			state = WALKING;
 			dir = DOWN;
+			if (Camera_inside())
+				App->render->camera.y -= speed * 2;
+			position.y += speed;
 		}
 		state = WALKING;
 		dir = DOWN;
@@ -130,11 +130,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
 		{
-			if (Camera_follow_player)
-				App->render->camera.x -= speed * 2;
-			position.x += speed;
 			state = WALKING;
 			dir = RIGHT;
+			if (Camera_inside())
+				App->render->camera.x -= speed * 2;
+			position.x += speed;
 		}
 		state = WALKING;
 		dir = RIGHT;
@@ -143,11 +143,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
 		{
-			if (Camera_follow_player)
-				App->render->camera.y += speed * 2;
-			position.y -= speed;
 			state = WALKING;
 			dir = UP;
+			if (Camera_inside())
+				App->render->camera.y += speed * 2;
+			position.y -= speed;
 		}
 		state = WALKING;
 		dir = UP;
@@ -292,4 +292,60 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		App->render->Blit(hit_tex, position.x - 91, position.y - 94);
 		//LOG("HIT");
 	}
+}
+
+bool Player::Camera_inside()
+{
+	//256x224
+	iPoint temp = App->map->MapToWorld(App->map->data.height, App->map->data.width);
+	if (dir == UP)
+	{
+		if (position.y < temp.y - 125)
+		{
+			if ((0 < -(App->render->camera.y + 2) && temp.y > -(App->render->camera.y + 2)) == false)
+			{
+				return false;
+			}
+		}
+		else
+			return false;
+	}	
+	if (dir == DOWN)
+	{
+		if (position.y > 110)
+		{
+			if ((0 < -(App->render->camera.y - 2) && temp.y > -(App->render->camera.y - 2)) == false)
+			{
+				return false;
+			}
+		}
+		else
+			return false;
+
+	}
+	if (dir == LEFT)
+	{
+		if (position.x < temp.x - 140)
+		{
+			if ((0 < -(App->render->camera.x + 2) && temp.x > -(App->render->camera.x + 2)) == false)
+			{
+				return false;
+			}
+		}
+		else
+			return false;
+	}
+	if (dir == RIGHT)
+	{
+		if (position.x > 128)
+		{
+			if ((0 < -(App->render->camera.x - 2) && temp.x > -(App->render->camera.x - 2)) == false)
+			{
+				return false;
+			}
+		}
+		else
+			return false;
+	}
+	return true;
 }
