@@ -179,6 +179,13 @@ bool j1App::Update()
 	if(ret == true)
 		ret = PostUpdate();
 
+	if (ret == true)
+	{
+		BROFILER_FRAME("test");
+	}
+
+	BROFILER_CATEGORY("UpdateLogic", Profiler::Color::Orchid)
+
 	FinishUpdate();
 	return ret;
 }
