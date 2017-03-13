@@ -48,17 +48,18 @@ bool j1Scene::Start()
 	bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
 	arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
 	life = App->gui->CreateImage({ 178,15,44,7}, { 178,15 });
-	dialog = App->gui->CreateDialogue({ 40,150 }, "Hi Link! Whatsapp Bro?");
+	/*dialog = App->gui->CreateDialogue({ 40,150 }, "Hi Link! Whatsapp Bro?");
 	dialog->AddLine("-Ameisin");
 	dialog->AddLine("U wot m8");
 	dialog->AddLine("visible test");
-	dialog->AddLine("nontendo switch");
+	dialog->AddLine("nontendo switch");*/
 
 	//Create First level
 	player = App->entity_elements->CreatePlayer();
 	App->map->Load("TiledLinkHouse.tmx");
-	App->render->camera.x = -((player->position.x - (256 / 2)) * 2);//TODO LOW -> No Magic Numbers
-	App->render->camera.y = -((player->position.y - (224 / 2)) * 2);
+	int scale = App->win->GetScale();
+	App->render->camera.x = -((player->position.x - (256 / 2)) * scale);//TODO LOW -> No Magic Numbers
+	App->render->camera.y = -((player->position.y - (224 / 2)) * scale);
 
 	//Load_new_map(1);
 	switch_map = 0;
@@ -223,8 +224,9 @@ bool j1Scene::Load_new_map(int n)
 			App->map->Load(name_map.c_str());
 
 			//Camera position
-			App->render->camera.x = -((temp.child("player").attribute("pos_x").as_int(0) - (256 / 2)) * 2);
-			App->render->camera.y = -((temp.child("player").attribute("pos_y").as_int(0) - (224 / 2)) * 2);
+			int scale = App->win->GetScale();
+			App->render->camera.x = -((temp.child("player").attribute("pos_x").as_int(0) - (256 / 2)) * scale);
+			App->render->camera.y = -((temp.child("player").attribute("pos_y").as_int(0) - (224 / 2)) * scale);
 
 
 			stop_rearch = true;

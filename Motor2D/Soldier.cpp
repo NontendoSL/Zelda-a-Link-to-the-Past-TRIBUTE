@@ -48,7 +48,7 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 
 bool Soldier::Start()
 {
-	collision_enemy = App->collision->AddCollider({ position.x, position.y, 18, 28 }, COLLIDER_ENEMY, this);
+	collision_enemy = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_ENEMY, this);
 
 	soldier_right = { 17,0,18,28 };
 	soldier_left = {36,0,18,28};
@@ -59,7 +59,7 @@ bool Soldier::Start()
 	soldier_right_2 = {74,20,21,28 };
 	soldier_up_2 = {48,20,25,28};
 	soldier_down_2 = {0,18,25,30};
-
+	marge = 12;
 	return true;
 }
 
@@ -98,19 +98,19 @@ void Soldier::Draw()
 		{
 			if (dir == UP)
 			{
-				App->render->Blit(texture, position.x, position.y, &soldier_up);
+				App->render->Blit(texture, position.x, position.y - marge, &soldier_up);
 			}
 			if (dir == DOWN)
 			{
-				App->render->Blit(texture, position.x, position.y, &soldier_down);
+				App->render->Blit(texture, position.x, position.y - marge, &soldier_down);
 			}
 			if (dir == RIGHT)
 			{
-				App->render->Blit(texture, position.x, position.y, &soldier_right);
+				App->render->Blit(texture, position.x, position.y - marge, &soldier_right);
 			}
 			if (dir == LEFT)
 			{
-				App->render->Blit(texture, position.x, position.y, &soldier_left);
+				App->render->Blit(texture, position.x, position.y - marge, &soldier_left);
 			}
 		}
 	}
@@ -120,19 +120,19 @@ void Soldier::Draw()
 		{
 			if (dir == UP)
 			{
-				App->render->Blit(texture, position.x, position.y, &soldier_up_2);
+				App->render->Blit(texture, position.x, position.y - marge, &soldier_up_2);
 			}
 			if (dir == DOWN)
 			{
-				App->render->Blit(texture, position.x, position.y, &soldier_down_2);
+				App->render->Blit(texture, position.x, position.y - marge, &soldier_down_2);
 			}
 			if (dir == RIGHT)
 			{
-				App->render->Blit(texture, position.x, position.y, &soldier_right_2);
+				App->render->Blit(texture, position.x, position.y - marge, &soldier_right_2);
 			}
 			if (dir == LEFT)
 			{
-				App->render->Blit(texture, position.x, position.y, &soldier_left_2);
+				App->render->Blit(texture, position.x, position.y - marge, &soldier_left_2);
 			}
 		}
 	}

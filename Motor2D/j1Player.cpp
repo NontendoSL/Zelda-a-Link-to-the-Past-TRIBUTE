@@ -57,7 +57,7 @@ bool Player::Start()
 	hit_tex = App->tex->Load(file_hit.c_str());
 
 	
-
+	scale = App->win->GetScale();
 	width = 15;
 	height = 15;
 	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
@@ -111,7 +111,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			state = WALKING;
 			dir = LEFT;
 			if (Camera_inside())
-				App->render->camera.x += speed * 2;
+				App->render->camera.x += speed * scale;
 			position.x -= speed;
 			state = WALKING;
 			dir = LEFT;
@@ -124,7 +124,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			state = WALKING;
 			dir = DOWN;
 			if (Camera_inside())
-				App->render->camera.y -= speed * 2;
+				App->render->camera.y -= speed * scale;
 			position.y += speed;
 		}
 		state = WALKING;
@@ -137,7 +137,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			state = WALKING;
 			dir = RIGHT;
 			if (Camera_inside())
-				App->render->camera.x -= speed * 2;
+				App->render->camera.x -= speed * scale;
 			position.x += speed;
 		}
 		state = WALKING;
@@ -150,7 +150,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			state = WALKING;
 			dir = UP;
 			if (Camera_inside())
-				App->render->camera.y += speed * 2;
+				App->render->camera.y += speed * scale;
 			position.y -= speed;
 		}
 		state = WALKING;
@@ -293,8 +293,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
 	{
-		App->render->Blit(hit_tex, position.x - 91, position.y - 94);
-		Camera_follow_player = true;
 		if (c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + 1 >= c2->rect.y + c2->rect.h)
 		{
 			App->render->camera.y -= speed * 2;
@@ -324,21 +322,21 @@ bool Player::Camera_inside()
 	iPoint temp = App->map->MapToWorld(App->map->data.height, App->map->data.width);
 	if (dir == UP)
 	{
-		if (position.y < temp.y - 140)
+		if (position.y < temp.y - (224 / 2))
 		{
-			if ((0 < -(App->render->camera.y + 2) && temp.y > -(App->render->camera.y + 2)) == false)
+			if ((0 < -(App->render->camera.y + 2) && temp.y + 64 > -(App->render->camera.y + 2)) == false)
 			{
 				return false;
 			}
 		}
 		else
 			return false;
-	}	
+	}
 	if (dir == DOWN)
 	{
 		if (position.y > 110)
 		{
-			if ((0 < -(App->render->camera.y - 2) && temp.y > -(App->render->camera.y - 2)) == false)
+			if ((0 < -(App->render->camera.y - 2) && temp.y + 64 > -(App->render->camera.y - 2)) == false)
 			{
 				return false;
 			}

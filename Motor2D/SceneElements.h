@@ -66,6 +66,8 @@ public:
 
 	bool canBlit;
 	std::string	name;
+
+	uint scale;
 	//SDL_Texture* texture;
 
 };

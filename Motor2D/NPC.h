@@ -27,6 +27,8 @@ public:
 	bool canattack;
 
 	int npc_id;
+	uint marge;
+
 
 };
 
