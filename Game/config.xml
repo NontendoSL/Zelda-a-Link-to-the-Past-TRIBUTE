@@ -17,7 +17,7 @@
 		<atlas file="textures/LinkWalkingSprites.png" />
 		<hit file="textures/hit.png" />
 		<day-night file="gui/test.png" />
-		<stats hp="94" attack="10" speed="1" pos_x="100" pos_y="90" />
+		<stats hp="74" attack="10" speed="1" pos_x="100" pos_y="90" />
 	</player>
 	<maps>
 		<map n="1" file="TiledLinkHouse.tmx">
@@ -26,29 +26,28 @@
 				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 				<item id="2" name="bomb_2" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 			</items>
-			<enemies num="0">
-			</enemies>
+			<enemies num="0" />
 		</map>
 		<map n="2" file="LinkHouseOutdoor.tmx">
-			<player pos_x="184" pos_y="265"/>
+			<player pos_x="184" pos_y="265" />
 			<enemies num="4">
-				<enemy id="1" pos_x="100" pos_y="300" hp="10" attack="10" dir="up" file="textures/Soldiers.png"/>
-        <enemy id="1" pos_x="120" pos_y="300" hp="10" attack="10" dir="left" file="textures/Soldiers.png"/>
-        <enemy id="1" pos_x="140" pos_y="300" hp="10" attack="10" dir="down" file="textures/Soldiers.png"/>
-        <enemy id="1" pos_x="160" pos_y="300" hp="10" attack="10" dir="right" file="textures/Soldiers.png"/>
-      </enemies>
+				<enemy id="1" pos_x="100" pos_y="300" hp="10" attack="10" dir="up" file="textures/Soldiers.png" />
+				<enemy id="1" pos_x="120" pos_y="300" hp="10" attack="10" dir="left" file="textures/Soldiers.png" />
+				<enemy id="1" pos_x="140" pos_y="300" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+				<enemy id="1" pos_x="160" pos_y="300" hp="10" attack="10" dir="right" file="textures/Soldiers.png" />
+			</enemies>
 			<items>
-				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png"/>
+				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 			</items>
-      <dynObjects>
+			<dynObjects>
 				<dynobject id="3" name="door_house_link" type="ZELDA" file="textures/Door_House_link.png" />
-				<dynobject id="4" name="bush_plant" type="ZELDA" file="textures/Bush_plant.png"/>
+				<dynobject id="4" name="bush_plant" type="ZELDA" file="textures/Bush_plant.png" />
 			</dynObjects>
 			<switch blue="1" yellow="3" />
 		</map>
 	</maps>
 	<animation>
-    <file file="animation/LinkWalkingSprites.xml"/>
+		<file file="animation/LinkWalkingSprites.xml" />
 		<sprite file="textures/LinkWalkingSprites.png" />
 	</animation>
 	<window>
