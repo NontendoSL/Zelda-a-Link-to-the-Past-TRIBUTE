@@ -56,6 +56,8 @@ bool Player::Start()
 	maptex = App->tex->Load(texmapfile_name.c_str());
 	hit_tex = App->tex->Load(file_hit.c_str());
 
+	
+
 	width = 15;
 	height = 15;
 	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
@@ -292,7 +294,27 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 	if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
 	{
 		App->render->Blit(hit_tex, position.x - 91, position.y - 94);
-		//LOG("HIT");
+		Camera_follow_player = true;
+		if (c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + 1 >= c2->rect.y + c2->rect.h)
+		{
+			App->render->camera.y -= speed * 2;
+			position.y = position.y + 1;
+		}
+		else if (c1->rect.y + c1->rect.h >= c2->rect.y && c1->rect.y + c1->rect.h - 1 <= c2->rect.y)
+		{
+			App->render->camera.y += speed * 2;
+			position.y = position.y - 1;
+		}
+		else if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x + c1->rect.w - 1 <= c2->rect.x)
+		{
+			App->render->camera.x += speed * 2;
+			position.x = position.x - 1;
+		}
+		else if (c1->rect.x <= c2->rect.x + c2->rect.w && c1->rect.x + 1 >= c2->rect.x + c2->rect.w)
+		{
+			App->render->camera.x -= speed * 2;
+			position.x = position.x + 1;
+		}
 	}
 }
 

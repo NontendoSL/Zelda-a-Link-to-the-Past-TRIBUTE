@@ -16,6 +16,7 @@
 #include "j1Player.h"
 #include "j1DynamicObjects.h"
 #include "j1FileSystem.h"
+#include "j1Collision.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -122,6 +123,7 @@ bool j1Scene::Update(float dt)
 	{
 		if (App->map->CleanUp())
 		{
+			App->collision->EreseAllColiderPlayer();
 			App->entity_elements->DelteElements();
 			//App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
 			

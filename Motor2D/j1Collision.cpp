@@ -160,6 +160,7 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneEleme
 		if (colliders[i] == nullptr)
 		{
 			ret = colliders[i] = new ColliderRect(rect, type, callback);
+			num_colliders++;
 			break;
 		}
 	}
@@ -180,6 +181,18 @@ bool j1Collision::EraseCollider(Collider* collider)
 		}
 	}
 	return false;
+}
+
+void j1Collision::EreseAllColiderPlayer()
+{
+	for (uint i = 1; i < num_colliders; ++i)
+	{
+		if (colliders[i] != nullptr)
+		{
+			delete colliders[i];
+			colliders[i] = nullptr;
+		}
+	}
 }
 
 // -----------------------------------------------------

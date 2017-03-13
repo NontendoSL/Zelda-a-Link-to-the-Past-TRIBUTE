@@ -49,6 +49,7 @@ struct ColliderRect : public Collider
 	}
 
 	bool CheckCollision(const Collider* c) const;
+
 };
 
 
@@ -79,6 +80,7 @@ public:
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneElement* callback = nullptr);
 	bool EraseCollider(Collider* collider);
+	void EreseAllColiderPlayer();
 	void DebugDraw();
 
 private:
@@ -86,6 +88,7 @@ private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
+	uint num_colliders;
 };
 
 
