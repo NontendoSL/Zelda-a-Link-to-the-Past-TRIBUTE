@@ -1,6 +1,6 @@
 #include "Ganon.h"
 
-Ganon::Ganon(iPoint position) :NPC(position)
+Ganon::Ganon() :NPC()
 {
 	name = "Ganon";
 	type = ENEMY;

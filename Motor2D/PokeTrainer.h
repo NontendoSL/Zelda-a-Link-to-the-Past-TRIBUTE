@@ -7,7 +7,7 @@
 class PokeTrainer : public NPC
 {
 public:
-	PokeTrainer(iPoint position);
+	PokeTrainer();
 
 	~PokeTrainer();
 

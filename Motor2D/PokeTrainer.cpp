@@ -1,6 +1,6 @@
 #include "PokeTrainer.h"
 
-PokeTrainer::PokeTrainer(iPoint position) :NPC(position)
+PokeTrainer::PokeTrainer() :NPC()
 {
 	name = "PokeTrainer";
 	type = ENEMY;

@@ -10,7 +10,7 @@ class Text;
 class DynamicObjects : public SceneElement
 {
 public:
-	DynamicObjects(iPoint position);
+	DynamicObjects();
 
 	// Destructor
 	~DynamicObjects();

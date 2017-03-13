@@ -7,7 +7,7 @@
 class NPC : public SceneElement
 {
 public:
-	NPC(iPoint position) : SceneElement(position)
+	NPC() : SceneElement()
 	{}
 
 	~NPC()
@@ -25,6 +25,8 @@ public:
 	bool indestructive;
 	bool movable;
 	bool canattack;
+
+	int npc_id;
 
 };
 

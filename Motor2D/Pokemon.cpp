@@ -1,6 +1,6 @@
 #include "Pokemon.h"
 
-Pokemon::Pokemon(iPoint position) :NPC(position)
+Pokemon::Pokemon() :NPC()
 {
 	name = "Pokemon";
 	type = ENEMY;

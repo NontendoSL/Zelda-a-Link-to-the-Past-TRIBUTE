@@ -2,7 +2,7 @@
 #include "j1App.h"
 #include "j1Textures.h"
 
-DynamicObjects::DynamicObjects(iPoint position) :SceneElement(position)
+DynamicObjects::DynamicObjects() :SceneElement()
 {
 	type = DYNITEMS;
 	name = "dynObjects";

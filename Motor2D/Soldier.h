@@ -7,7 +7,7 @@
 class Soldier : public NPC
 {
 public:
-	Soldier(iPoint position);
+	Soldier();
 
 	~Soldier();
 
@@ -37,6 +37,16 @@ public:
 
 private:
 
+	//Soldier Test for Release 0.1
+	SDL_Rect soldier_left;
+	SDL_Rect soldier_right;
+	SDL_Rect soldier_up;
+	SDL_Rect soldier_down;
+
+	SDL_Rect soldier_left_2;
+	SDL_Rect soldier_right_2;
+	SDL_Rect soldier_up_2;
+	SDL_Rect soldier_down_2;
 	//Item* drop;
 	bool stunned=false;
 	Item* item_inside;

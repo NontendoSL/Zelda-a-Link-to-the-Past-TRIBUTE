@@ -7,7 +7,7 @@
 #include "j1Item.h"
 #include "j1Collision.h"
 
-Soldier::Soldier(iPoint position):NPC(position)
+Soldier::Soldier():NPC()
 {
 	name = "enemies"; //TODO need change name to "Soldier".
 	type = ENEMY;
@@ -26,8 +26,19 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 			std::string temp = conf.attribute("file").as_string("");
 			texture = App->tex->Load(temp.c_str());
 			hp = conf.attribute("hp").as_int(0);
-			/*position.x = conf.child("enemy").attribute("pos_x").as_int(0);
-			position.y = conf.child("enemy").attribute("pos_y").as_int(0);*/
+			position.x = conf.attribute("pos_x").as_int(0);
+			position.y = conf.attribute("pos_y").as_int(0);
+			temp = conf.attribute("dir").as_string("");
+			if (temp == "up")
+				dir = UP;
+			else if (temp == "down")
+				dir = DOWN;
+			else if (temp == "left")
+				dir = LEFT;
+			else
+				dir = RIGHT;
+
+			npc_id = id;
 			stop_search = true;
 		}
 	}
@@ -39,6 +50,15 @@ bool Soldier::Start()
 {
 	collision_enemy = App->collision->AddCollider({ position.x, position.y, 66, 90 }, COLLIDER_ENEMY, this);
 
+	soldier_right = { 17,0,18,28 };
+	soldier_left = {36,0,18,28};
+	soldier_up = {55,0,16,28};
+	soldier_down = { 0,0,16,28 };
+
+	soldier_left_2 = {26,20,21,28 };
+	soldier_right_2 = {74,20,21,28 };
+	soldier_up_2 = {48,20,25,28};
+	soldier_down_2 = {0,18,25,30};
 	return true;
 }
 
@@ -71,15 +91,51 @@ bool Soldier::Update()
 
 void Soldier::Draw()
 {
-	if (hp > 0)
+	if (npc_id == 1)
 	{
-		SDL_Rect temp{ 1056,189,66,90 };
-		App->render->Blit(texture, position.x, position.y, &temp);
+		if (hp > 0)
+		{
+			if (dir == UP)
+			{
+				App->render->Blit(texture, position.x, position.y, &soldier_up);
+			}
+			if (dir == DOWN)
+			{
+				App->render->Blit(texture, position.x, position.y, &soldier_down);
+			}
+			if (dir == RIGHT)
+			{
+				App->render->Blit(texture, position.x, position.y, &soldier_right);
+			}
+			if (dir == LEFT)
+			{
+				App->render->Blit(texture, position.x, position.y, &soldier_left);
+			}
+		}
 	}
-	else
+	if (npc_id == 2)
 	{
-		//Drop_item();
+		if (hp > 0)
+		{
+			if (dir == UP)
+			{
+				App->render->Blit(texture, position.x, position.y, &soldier_up_2);
+			}
+			if (dir == DOWN)
+			{
+				App->render->Blit(texture, position.x, position.y, &soldier_down_2);
+			}
+			if (dir == RIGHT)
+			{
+				App->render->Blit(texture, position.x, position.y, &soldier_right_2);
+			}
+			if (dir == LEFT)
+			{
+				App->render->Blit(texture, position.x, position.y, &soldier_left_2);
+			}
+		}
 	}
+
 }
 
 void Soldier::AddItem(Item* item)

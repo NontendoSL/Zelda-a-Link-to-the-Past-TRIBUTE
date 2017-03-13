@@ -10,7 +10,7 @@ enum itemtype{ZELDA, POKEMON};
 class Item : public SceneElement
 {
 public:
-	Item(iPoint position);
+	Item();
 
 	~Item();
 

@@ -7,7 +7,7 @@
 class Pokemon : public NPC
 {
 public:
-	Pokemon(iPoint position);
+	Pokemon();
 
 	~Pokemon();
 

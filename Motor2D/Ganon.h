@@ -7,7 +7,7 @@
 class Ganon : public NPC
 {
 public:
-	Ganon(iPoint position);
+	Ganon();
 
 	~Ganon();
 

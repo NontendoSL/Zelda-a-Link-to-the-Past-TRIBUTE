@@ -110,10 +110,10 @@ bool j1EntityElementScene::DelteElements()
 	return true;
 }
 
-Soldier* j1EntityElementScene::CreateSoldier(iPoint position, uint id, pugi::xml_node& config)
+Soldier* j1EntityElementScene::CreateSoldier(uint id, pugi::xml_node& config)
 {
 
-	Soldier* element = new Soldier(position);
+	Soldier* element = new Soldier();
 	element->Awake(config, id);
 	element->Start();
 	elementscene.push_back(element);
@@ -128,10 +128,10 @@ bool j1EntityElementScene::DeleteEnemy(NPC* enemy)
 	return true;
 }
 
-Item* j1EntityElementScene::CreateItem(iPoint position, uint id) 
+Item* j1EntityElementScene::CreateItem(uint id) 
 {
 
-	Item* element = new Item(position);
+	Item* element = new Item();
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
@@ -142,9 +142,9 @@ Item* j1EntityElementScene::CreateItem(iPoint position, uint id)
 	return element;
 }
 
-DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint position, uint id)
+DynamicObjects* j1EntityElementScene::CreateDynObject(uint id)
 {
-	DynamicObjects* element = new DynamicObjects(position);
+	DynamicObjects* element = new DynamicObjects();
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
@@ -155,9 +155,9 @@ DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint position, uint id)
 	return element;
 }
 
-Player* j1EntityElementScene::CreatePlayer(iPoint position)
+Player* j1EntityElementScene::CreatePlayer()
 {
-	Player* element = new Player(position);
+	Player* element = new Player();
 
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;

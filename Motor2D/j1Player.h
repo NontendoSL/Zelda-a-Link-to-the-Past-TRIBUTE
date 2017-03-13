@@ -10,7 +10,7 @@ class Text;
 class Player : public SceneElement
 {
 public:
-	Player(iPoint position);
+	Player();
 
 	// Destructor
 	~Player();

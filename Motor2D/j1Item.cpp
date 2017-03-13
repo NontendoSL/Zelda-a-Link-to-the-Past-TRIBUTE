@@ -4,7 +4,7 @@
 #include "j1App.h"
 
 
-Item::Item(iPoint position) :SceneElement(position)
+Item::Item() :SceneElement()
 {
 	name = "items";
 	type = ITEM;
@@ -21,6 +21,9 @@ bool Item::Awake(pugi::xml_node &conf, uint id)
 		if (id == s_id)
 		{
 			name = conf.child("item").attribute("name").as_string("");
+			//position.x = conf.child("item").attribute("pos_x").as_int(0);
+			position.x = 0;
+			position.y = 0;
 			std::string es = conf.child("item").attribute("file").as_string("");
 			texture = App->tex->Load(es.c_str());
 			canBlit = true;

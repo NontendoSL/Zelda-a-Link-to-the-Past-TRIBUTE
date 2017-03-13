@@ -7,7 +7,7 @@
 class BCTrooper : public NPC
 {
 public:
-	BCTrooper(iPoint position);
+	BCTrooper();
 
 	~BCTrooper();
 

@@ -17,7 +17,7 @@
 #include "j1Collision.h"
 
 //Constructor
-Player::Player(iPoint position) :SceneElement(position)
+Player::Player() :SceneElement()
 {
 
 	type = PLAYER;
@@ -40,6 +40,8 @@ bool Player::Awake(pugi::xml_node& conf)
 	hp = conf.child("stats").attribute("hp").as_int(0);
 	attack = conf.child("stats").attribute("attack").as_int(0);
 	speed = conf.child("stats").attribute("speed").as_int(0);
+	position.x = conf.child("stats").attribute("pos_x").as_int(0);
+	position.y = conf.child("stats").attribute("pos_y").as_int(0);
 
 	return ret;
 }

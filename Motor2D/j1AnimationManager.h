@@ -50,6 +50,7 @@ private:
 	Animation link_walk_north;
 	Animation link_walk_west;
 	Animation link_walk_south;
+
 	Animation* current_animation;
 	SDL_Texture* graphics = nullptr;
 

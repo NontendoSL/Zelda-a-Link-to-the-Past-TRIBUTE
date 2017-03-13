@@ -1,6 +1,6 @@
 #include "BCTrooper.h"
 
-BCTrooper::BCTrooper(iPoint position) :NPC(position)
+BCTrooper::BCTrooper() :NPC()
 {
 	name = "BCTrooper";
 	type = ENEMY;

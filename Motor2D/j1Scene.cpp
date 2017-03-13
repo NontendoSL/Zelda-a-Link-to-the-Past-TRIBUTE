@@ -54,7 +54,7 @@ bool j1Scene::Start()
 	dialog->AddLine("nontendo switch");
 
 	//Create First level
-	player = App->entity_elements->CreatePlayer(iPoint(100, 90));
+	player = App->entity_elements->CreatePlayer();
 	App->map->Load("TiledLinkHouse.tmx");
 	App->render->camera.x = -((player->position.x - (256 / 2)) * 2);//TODO LOW -> No Magic Numbers
 	App->render->camera.y = -((player->position.y - (224 / 2)) * 2);
@@ -94,7 +94,7 @@ bool j1Scene::Update(float dt)
 	{
 		if (enemy.begin()._Ptr->_Myval->hp == 0)
 		{
-			items.push_back(App->entity_elements->CreateItem(iPoint(300, 200), 1));
+			items.push_back(App->entity_elements->CreateItem(1));
 			enemy.begin()._Ptr->_Myval->AddItem(items.begin()._Ptr->_Myval);
 			enemy.begin()._Ptr->_Myval->Drop_item();
 			App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
@@ -109,11 +109,11 @@ bool j1Scene::Update(float dt)
 		if (App->map->CleanUp())
 		{
 			Load_new_map(2);
-			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
+			/*dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
 			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
 			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 289), 4));
 			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 273), 4));
-			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 289), 4));
+			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 289), 4));*/
 		}
 
 		switch_map = 0;
@@ -209,7 +209,7 @@ bool j1Scene::Load_new_map(int n)
 			pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
 			for (int i = 0; i < temp.child("enemies").attribute("num").as_int(0); i++)
 			{
-				//enemy.push_back(App->entity_elements->CreateSoldier(iPoint(temp_enemy.attribute("pos_x").as_int(0), temp_enemy.attribute("pos_y").as_int(0)), temp_enemy.attribute("id").as_int(0), temp_enemy));
+				enemy.push_back(App->entity_elements->CreateSoldier(temp_enemy.attribute("id").as_int(0), temp_enemy));
 				temp_enemy = temp_enemy.next_sibling();
 			}
 

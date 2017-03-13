@@ -42,11 +42,11 @@ public:
 
 
 	//TODO LOW
-	Soldier* CreateSoldier(iPoint position, uint id, pugi::xml_node& );
+	Soldier* CreateSoldier(uint id, pugi::xml_node& );
 	bool DeleteEnemy(NPC* enemy);
-	Item* CreateItem(iPoint position, uint id);
-	DynamicObjects* CreateDynObject(iPoint position, uint id);
-	Player* CreatePlayer(iPoint position);
+	Item* CreateItem(uint id);
+	DynamicObjects* CreateDynObject(uint id);
+	Player* CreatePlayer();
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;

@@ -17,7 +17,7 @@ class SceneElement
 {
 public:
 
-	SceneElement(iPoint position): position(position)
+	SceneElement()
 	{}
 
 	~SceneElement()
