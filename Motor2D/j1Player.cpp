@@ -55,7 +55,7 @@ bool Player::Start()
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
 	maptex = App->tex->Load(texmapfile_name.c_str());
 	hit_tex = App->tex->Load(file_hit.c_str());
-
+	dir = UP;
 	
 	scale = App->win->GetScale();
 	width = 15;
