@@ -80,7 +80,7 @@ bool j1Scene::Update(float dt)
 {
 	AssignValues(gems);
 	App->map->Draw();
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	/*if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 			App->render->camera.x += 2;
@@ -90,7 +90,7 @@ bool j1Scene::Update(float dt)
 			App->render->camera.y += 2;
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			App->render->camera.x -= 2;
-	}
+	}*/
 
 	if (enemy.size() > 0 && enemy.begin()._Ptr->_Myval != NULL)//TODO HIGH -> when enemy die on put this code?
 	{

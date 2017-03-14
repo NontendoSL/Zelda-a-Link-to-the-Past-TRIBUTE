@@ -156,7 +156,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		state = WALKING;
 		dir = UP;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
 		App->scene->dialog->PushLine(true);
 		App->render->camera.h;
@@ -187,7 +187,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 				}
 				break;
 			}
-	}
+	}*/
 
 	//Provisional gem provider
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
@@ -195,7 +195,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		gems++;
 	}
 
-	//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
+	/*//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		changeResolution = !changeResolution;
@@ -239,16 +239,16 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		SDL_SetWindowSize(App->win->window, 800, 300);
 	}
+	*/
 
 
-
-	//TEST DRAW LIVE OF LINK 
+	/*//TEST DRAW LIVE OF LINK 
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 		hp -= 2;
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		attack *= 2;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		Save();
+		Save();*/
 
 	//TODO MID -> I thing that use a stats_temp all time clear and insert, clear-insert, is not a good idea...
 	/*stats_temp.clear();

@@ -80,12 +80,12 @@ bool Soldier::Update()
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
 	{
 		position.y -= 2;
-	}*/
+	}
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 	{
 		hp -= 2;
 	}
-
+	*/
 
 	return true;
 }
