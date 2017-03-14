@@ -2,12 +2,13 @@ The Legend of Zelda: A Link to Pokemon World
 
 Changelog:
 
-V0.1:
-	- Added Link house map and surroundings.
-	- You can move using the arrow keys in the keyboard.
-	- Printed enemies are used as walls. They're not functional yet.
-	- Enemy and map collisions implemented.
-	- Link's house door doesn't get printed at the moment.
+v0.1:
+
+	Added Link house map and surroundings.
+	You can move using the arrow keys in the keyboard.
+	Printed enemies are used as walls. They're not functional yet.
+	Enemy and map collisions implemented.
+	Link's house door doesn't get printed at the moment.
 
 What is The Legend of Zelda: A Link to Pokemon World?
 	
