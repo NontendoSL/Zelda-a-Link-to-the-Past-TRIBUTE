@@ -3,16 +3,16 @@ The Legend of Zelda: A Link to Pokemon World
 Changelog:
 
 V0.1:
-	Added Link house map and surroundings.
-	You can move using the arrow keys in the keyboard.
-	Printed enemies are used as walls. They're not functional yet.
-	Enemy and map collisions implemented.
-	Link's house door doesn't get printed at the moment.
+	- Added Link house map and surroundings.
+	- You can move using the arrow keys in the keyboard.
+	- Printed enemies are used as walls. They're not functional yet.
+	- Enemy and map collisions implemented.
+	- Link's house door doesn't get printed at the moment.
 
 What is The Legend of Zelda: A Link to Pokemon World?
 	
 	It's a project for the Project 2 subject of the Design and Development of 
-	Video Games degree at Centre de la Imatge i MultimËdia (CITM), Terrassa. 
+	Video Games degree at Centre de la Imatge i Multim√®dia (CITM), Terrassa. 
 	It's an action RPG game based on the original "A Link to The past" (1991, SNES). 
 	We use the SDL library and XML to manage dynamic items and enemies.
 
@@ -25,10 +25,10 @@ Authors:
 
 	We are a group of Video Games students. Our members are:
 		
-		Jordi OÒa
-		Elliot JimÈnez
-		Sergio ¡lvarez
-		Sergio S·ez
-		Yabel RodrÌguez
+		Jordi O√±a
+		Elliot Jim√©nez
+		Sergio √Ålvarez
+		Sergio S√°ez
+		Yabel Rodr√≠guez
 		Albert Llopart
-		Marc Fabi·n
+		Marc Fabi√°n
