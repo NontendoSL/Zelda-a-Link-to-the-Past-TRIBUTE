@@ -158,7 +158,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 	/*if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
-		App->scene->dialog->PushLine(true);
+
 		App->render->camera.h;
 			switch (dir) 
 			{
@@ -190,9 +190,21 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}*/
 
 	//Provisional gem provider
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && gems<999)
 	{
 		gems++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT && bombs<99)
+	{
+		bombs++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT && arrows<99)
+	{
+		arrows++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+		App->scene->dialog->PushLine(true);
 	}
 
 	/*//TEST CHANGE RESOLUTION AND SIZE OF SCREEN

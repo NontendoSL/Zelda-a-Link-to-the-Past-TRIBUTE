@@ -46,7 +46,7 @@ public:
 
 	bool Load_new_map(int n);
 
-	void AssignValues(Image* assigner);
+	void AssignValues(Image* assigner,uint var);
 private:
 	SDL_Texture* debug_tex;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;

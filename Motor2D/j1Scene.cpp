@@ -46,7 +46,11 @@ bool j1Scene::Start()
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
 	bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
+	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
+	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
 	arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
+	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
+	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
 	life = App->gui->CreateImage({ 178,15,44,7}, { 178,15 });
 	/*dialog = App->gui->CreateDialogue({ 40,150 }, "Hi Link! Whatsapp Bro?");
 	dialog->AddLine("-Ameisin");
@@ -78,7 +82,9 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	AssignValues(gems);
+	AssignValues(gems, player->gems);
+	AssignValues(bombs, player->bombs);
+	AssignValues(arrows, player->arrows);
 	App->map->Draw();
 	/*if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
 	{
@@ -177,19 +183,23 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void j1Scene::AssignValues(Image* assigner)
+void j1Scene::AssignValues(Image* assigner, uint var)
 {
 	std::list<Image*>::iterator value = assigner->elements.end();
 	value--;
-	int number = player->gems % 10;
+	int number = var % 10;
 	value._Ptr->_Myval->AssignNumber(number);
 	value--;
-	number = player->gems / 10;
+	number = var / 10;
 	number %= 10;
 	value._Ptr->_Myval->AssignNumber(number);
 	value--;
-	number = player->gems / 100;
-	value._Ptr->_Myval->AssignNumber(number);
+	if (assigner->elements.size() > 2)
+	{
+		number = var/ 100;
+		value._Ptr->_Myval->AssignNumber(number);
+	}
+
 }
 
 bool j1Scene::Load_new_map(int n)
