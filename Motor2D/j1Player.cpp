@@ -190,7 +190,15 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}*/
 
 	//Provisional gem provider
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && gems<999)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && charge <= 34)
+	{
+		charge++;
+	}
+	else if (charge != 0)
+	{
+		charge--;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT && gems<999)
 	{
 		gems++;
 	}

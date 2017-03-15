@@ -40,6 +40,8 @@ bool j1Scene::Start()
 {
 	//UI
 	charge = App->gui->CreateImage({ 20,18,16,42 }, { 20,18 });
+	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 });
+	charge->elements.push_back(force);
 	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
