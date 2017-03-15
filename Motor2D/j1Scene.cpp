@@ -39,10 +39,8 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	//UI
-	charge = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 });
-	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 });
-	charge->elements.push_back(force);
-	item = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 });
+	charge = App->gui->CreateImage({ 20,18,16,42 }, { 20,18 });
+	item = App->gui->CreateImage({ 37,20,22,22 }, { 37,20 });
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
@@ -87,7 +85,6 @@ bool j1Scene::Update(float dt)
 	AssignValues(gems, player->gems);
 	AssignValues(bombs, player->bombs);
 	AssignValues(arrows, player->arrows);
-	force->Hitbox.w = player->charge;
 	App->map->Draw();
 	/*if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
 	{

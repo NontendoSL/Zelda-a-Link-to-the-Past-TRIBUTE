@@ -49,7 +49,7 @@ public:
 	std::string texmapfile_name;
 	std::string file_hit;
 
-	uint gems, bombs, arrows, charge;
+	uint gems, bombs, arrows;
 private:
 	Text* hp_text;
 	Text* attack_text;
