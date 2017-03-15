@@ -193,6 +193,7 @@ void j1Collision::EreseAllColiderPlayer()
 			colliders[i] = nullptr;
 		}
 	}
+	num_colliders = 1;
 }
 
 // -----------------------------------------------------
