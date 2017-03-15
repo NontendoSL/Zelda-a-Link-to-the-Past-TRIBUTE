@@ -52,7 +52,7 @@ private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 
 public:
-	Image* charge;
+	Image* charge,* force;
 	Image* item;
 	Image* gems;
 	Image* bombs;//TODO LOW: Agrupar imatges bomba, rupias vida i fletxes en una sola Imatge*
