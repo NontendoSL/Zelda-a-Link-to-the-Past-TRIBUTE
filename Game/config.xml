@@ -59,6 +59,10 @@
 			</dynObjects>
 			<switch blue="1" yellow="3" />
 		</map>
+    <map n="3" file="Test_Slice.tmx">
+      <player pos_x="150" pos_y="100" />
+      
+    </map>
 	</maps>
 	<animation>
 		<file file="animation/LinkWalkingSprites.xml" />
