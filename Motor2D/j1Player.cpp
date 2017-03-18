@@ -15,11 +15,11 @@
 #include "j1FileSystem.h"
 #include "j1AnimationManager.h"
 #include "j1Collision.h"
+#include "j1InputManager.h"
 
 //Constructor
 Player::Player() :SceneElement()
 {
-
 	type = PLAYER;
 	name = "player";
 }
@@ -72,6 +72,13 @@ bool Player::Start()
 	*/
 
 	collision_player = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_PLAYER, this);
+	App->input_manager->AddListener(this);
+	return ret;
+}
+
+bool Player::PreUpdate()
+{
+	bool ret = true;
 
 	return ret;
 }
@@ -83,28 +90,28 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		Camera_follow_player = !Camera_follow_player;
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_UP)
 	{
 		state = IDLE;
 		dir = LEFT;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_UP)
 	{
 		state = IDLE;
 		dir = RIGHT;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_UP)
 	{
 		state = IDLE;
 		dir = UP;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_UP)
 	{
 		state = IDLE;
 		dir = DOWN;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
 		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
 		{
@@ -117,7 +124,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			dir = LEFT;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 	{
 		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
 		{
@@ -130,7 +137,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		state = WALKING;
 		dir = DOWN;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
 		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
 		{
@@ -143,7 +150,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		state = WALKING;
 		dir = RIGHT;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
 		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
 		{
@@ -296,7 +303,6 @@ bool Player::CleanUp()
 {
 	bool ret = true;
 
-
 	return ret;
 }
 
@@ -304,7 +310,6 @@ bool Player::CleanUp()
 bool Player::Save()
 {
 	App->entity_elements->XML.child("config").child("player").child("stats").attribute("hp").set_value(hp);
-
 	App->entity_elements->XML.save_file("config.xml");
 	return true;
 }
@@ -390,4 +395,16 @@ bool Player::Camera_inside()
 			return false;
 	}
 	return true;
+}
+
+void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
+{
+	/*switch (action)
+	{
+	case JUMP:
+
+		if (state == E_DOWN)
+			position.y += 20;
+		break;
+	}*/
 }

@@ -7,13 +7,14 @@
 #include "p2Point.h"
 #include "j1AnimationManager.h"
 #include "j1Textures.h"
+#include "j1InputManager.h"
 #include "SDL/include/SDL_rect.h"
 
 class Item;
 
-enum ElementType{PLAYER,ENEMY,ITEM, DYNITEMS};
+enum ElementType{PLAYER, ENEMY, ITEM, DYNITEMS};
 // ---------------------------------------------------
-class SceneElement
+class SceneElement: public InputListener //TODO MEDIUM -> inputlistener removed from here
 {
 public:
 

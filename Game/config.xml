@@ -4,21 +4,26 @@
 		<title>Pathfinding Test</title>
 		<organization>UPC</organization>
 	</app>
+  
 	<renderer>
 		<vsync value="true" />
 	</renderer>
+  
 	<font>
 		<default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12" />
 	</font>
+  
 	<gui>
 		<atlas file="gui/82158.png" />
 	</gui>
+  
 	<player>
 		<atlas file="textures/LinkWalkingSprites.png" />
 		<hit file="textures/hit.png" />
 		<day-night file="gui/test.png" />
 		<stats hp="74" attack="10" speed="1" pos_x="100" pos_y="90" />
 	</player>
+  
 	<maps>
 		<map n="1" file="TiledLinkHouse.tmx">
 			<player pos_x="104" pos_y="150" />
@@ -28,6 +33,7 @@
 			</items>
 			<enemies num="0" />
 		</map>
+    
 		<map n="2" file="LinkHouseOutdoor.tmx">
 			<player pos_x="184" pos_y="265" />
 			<enemies num="18">
@@ -59,15 +65,17 @@
 			</dynObjects>
 			<switch blue="1" yellow="3" />
 		</map>
+    
     <map n="3" file="Test_Slice.tmx">
       <player pos_x="150" pos_y="100" />
-      
     </map>
 	</maps>
+  
 	<animation>
 		<file file="animation/LinkWalkingSprites.xml" />
 		<sprite file="textures/LinkWalkingSprites.png" />
 	</animation>
+  
 	<window>
 		<resolution width="512" height="448" scale="2" />
 		<fullscreen value="false" />
@@ -75,10 +83,33 @@
 		<resizable value="false" />
 		<fullscreen_window value="false" />
 	</window>
+  
 	<file_system>
 		<path>data.zip</path>
 	</file_system>
+  
 	<map>
 		<folder>maps/</folder>
 	</map>
+
+  <inputManager>
+    <!--JUMP-->
+    <action  button="0" event="0" />
+
+    <!--Move UP-->
+    <action  button="11" event="1" />
+
+    <!--Move DOWN-->
+    <action  button="12" event="2" />
+
+    <!--Move LEFT-->
+    <action  button="13" event="3" />
+
+    <!--Move RIGHT-->
+    <action  button="14" event="4" />
+
+    <!--PAUSE-->
+    <action  button="6"  event="5" />
+  </inputManager>
+  
 </config>

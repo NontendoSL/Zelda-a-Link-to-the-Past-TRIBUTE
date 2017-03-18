@@ -2,9 +2,13 @@
 #define __j1INPUT_H__
 
 #include "j1Module.h"
+#include "SDL\include\SDL_gamecontroller.h"
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
+#define NUM_CONTROLLER_BUTTONS 15
+#define NUM_CONTROLLER_AXIS 6
+#define DEAD_ZONE 20000
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
@@ -82,6 +86,13 @@ private:
 	int			mouse_x;
 	int			mouse_y;
 
+	SDL_Joystick*		joystick = nullptr;
+
+	//TODO 1 Create the game controller pointer
+	SDL_GameController*	controller = nullptr;
+
+	//TODO 3 Create an array for the button handling (Similar to Mouse)
+	j1KeyState	controller_buttons[NUM_CONTROLLER_BUTTONS];
 };
 
 #endif // __j1INPUT_H__

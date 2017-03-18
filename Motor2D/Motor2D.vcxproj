@@ -81,6 +81,7 @@
     <ClCompile Include="Ganon.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1DynamicObjects.cpp" />
+    <ClCompile Include="j1InputManager.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="j1Item.cpp" />
     <ClCompile Include="j1AnimationManager.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Ganon.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1DynamicObjects.h" />
+    <ClInclude Include="j1InputManager.h" />
     <ClInclude Include="j1Item.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="j1AnimationManager.h" />

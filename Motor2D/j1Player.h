@@ -4,6 +4,13 @@
 
 #include "SceneElements.h"
 
+enum DIRECTION
+{
+	D_UP,
+	D_DOWN,
+	D_RIGHT,
+	D_LEFT
+};
 
 class Text;
 
@@ -22,14 +29,14 @@ public:
 	bool Start();
 
 	// Called before all Updates
-	//bool PreUpdate();
+	bool PreUpdate();
 
 	// Called each loop iteration
 	bool Update();
 
 	void Draw();
 	// Called before all Updates
-	//bool PostUpdate();
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
@@ -50,6 +57,7 @@ public:
 	std::string file_hit;
 
 	uint gems, bombs, arrows,charge;
+
 private:
 	Text* hp_text;
 	Text* attack_text;
@@ -64,7 +72,8 @@ private:
 
 	bool Camera_follow_player;
 	bool changeResolution;
-
+	DIRECTION current_direction = D_DOWN;
+	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 };
 
 

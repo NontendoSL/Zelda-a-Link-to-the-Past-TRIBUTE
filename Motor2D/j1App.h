@@ -24,6 +24,7 @@ class j1Gui;
 class j1EntityElementScene;
 class j1AnimationManager;
 class j1Collision;
+class InputManager;
 
 class j1App
 {
@@ -90,6 +91,7 @@ public:
 	// Modules
 	j1Window*				win = NULL;
 	j1Input*				input = NULL;
+	InputManager*			input_manager = NULL;
 	j1Render*				render = NULL;
 	j1Textures*				tex = NULL;
 	j1Audio*				audio = NULL;
