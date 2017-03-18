@@ -72,7 +72,11 @@ bool j1EntityElementScene::Update(float dt)
 		item._Ptr->_Myval->Draw();
 		item--;
 	}
-	item._Ptr->_Myval->Draw();
+	if (elementscene.size() > 0)
+	{
+		item._Ptr->_Myval->Draw();
+	}
+
 	return ret;
 }
 

@@ -38,36 +38,8 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	//UI
-	charge = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 });
-	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 });
-	charge->elements.push_back(force);
-	item = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 });
-	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
-	bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
-	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
-	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-	arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
-	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
-	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-	life = App->gui->CreateImage({ 178,15,44,7 }, { 178,15 });
-	/*dialog = App->gui->CreateDialogue({ 40,150 }, "Hi Link! Whatsapp Bro?");
-	dialog->AddLine("-Ameisin");
-	dialog->AddLine("U wot m8");
-	dialog->AddLine("visible test");
-	dialog->AddLine("nontendo switch");*/
-
-	//Create First level
-	player = App->entity_elements->CreatePlayer();
-	App->map->Load("TiledLinkHouse.tmx");
-	int scale = App->win->GetScale();
-	App->render->camera.x = -((player->position.x - (256 / 2)) * scale);//TODO LOW -> No Magic Numbers
-	App->render->camera.y = -((player->position.y - (224 / 2)) * scale);
-
-	//Load_new_map(1);
+	TitleScreen_letters=App->tex->Load("gui/title_screen/letters.png");
+	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg");
 	switch_map = 0;
 	return true;
 }
@@ -84,86 +56,102 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	AssignValues(gems, player->gems);
-	AssignValues(bombs, player->bombs);
-	AssignValues(arrows, player->arrows);
+	if (ingame==true)
+	{
+		AssignValues(gems, player->gems);
+		AssignValues(bombs, player->bombs);
+		AssignValues(arrows, player->arrows);
 		force->Hitbox.w = player->charge;
-	App->map->Draw();
-	/*if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
-	{
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-			App->render->camera.x += 2;
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-			App->render->camera.y -= 2;
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-			App->render->camera.y += 2;
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-			App->render->camera.x -= 2;
-	}*/
+		App->map->Draw();
 
-	if (enemy.size() > 0 && enemy.begin()._Ptr->_Myval != NULL)//TODO HIGH -> when enemy die on put this code?
-	{
-		if (enemy.begin()._Ptr->_Myval->hp == 0)
-		{
-			items.push_back(App->entity_elements->CreateItem(1));
-			enemy.begin()._Ptr->_Myval->AddItem(items.begin()._Ptr->_Myval);
-			enemy.begin()._Ptr->_Myval->Drop_item();
-			App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
-			enemy.begin()._Ptr->_Myval = NULL;
-		}
-	}
 
-	//enemy.push_back(App->entity_elements->CreateEnemy(iPoint(80, 70), 1));
-	if (switch_map == 2)
-	{
-		//TODO need destroy all enemies and items
-		if (App->map->CleanUp())
+		if (enemy.size() > 0 && enemy.begin()._Ptr->_Myval != NULL)//TODO HIGH -> when enemy die on put this code?
 		{
-			Load_new_map(2);
-			/*dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
-			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
-			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 289), 4));
-			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 273), 4));
-			dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 289), 4));*/
-		}
-
-		switch_map = 0;
-	}
-	if (switch_map == 1)
-	{
-		if (App->map->CleanUp())
-		{
-			App->collision->EreseAllColiderPlayer();
-			App->entity_elements->DelteElements();
-			//App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
-			
-			std::list<Soldier*>::iterator item = enemy.begin();
-			if (enemy.size() > 0)
+			if (enemy.begin()._Ptr->_Myval->hp == 0)
 			{
-				while (item != enemy.end())
-				{
-					enemy.pop_back();
-					item++;
-				}
-				enemy.clear();
+				items.push_back(App->entity_elements->CreateItem(1));
+				enemy.begin()._Ptr->_Myval->AddItem(items.begin()._Ptr->_Myval);
+				enemy.begin()._Ptr->_Myval->Drop_item();
+				App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
+				enemy.begin()._Ptr->_Myval = NULL;
 			}
-			std::list<Item*>::iterator item_s = items.begin();
-			if (items.size() > 0)
-			{
-				while (item_s != items.end())
-				{
-					items.pop_back();
-					item_s++;
-				}
-				items.clear();
-			}
-			Load_new_map(1);
 		}
-		switch_map = 0;
+
+		//enemy.push_back(App->entity_elements->CreateEnemy(iPoint(80, 70), 1));
+		if (switch_map == 2)
+		{
+			//TODO need destroy all enemies and items
+			if (App->map->CleanUp())
+			{
+				Load_new_map(2);
+				/*dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
+				dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
+				dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 289), 4));
+				dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 273), 4));
+				dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 289), 4));*/
+			}
+
+			switch_map = 0;
+		}
+		if (switch_map == 1)
+		{
+			if (App->map->CleanUp())
+			{
+				App->collision->EreseAllColiderPlayer();
+				App->entity_elements->DelteElements();
+				//App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
+
+				std::list<Soldier*>::iterator item = enemy.begin();
+				if (enemy.size() > 0)
+				{
+					while (item != enemy.end())
+					{
+						enemy.pop_back();
+						item++;
+					}
+					enemy.clear();
+				}
+				std::list<Item*>::iterator item_s = items.begin();
+				if (items.size() > 0)
+				{
+					while (item_s != items.end())
+					{
+						items.pop_back();
+						item_s++;
+					}
+					items.clear();
+				}
+				Load_new_map(1);
+			}
+			switch_map = 0;
+		}
+
+
 	}
-
-
-
+	else {
+		if (bg_anim < -120 ) {
+			right=true;
+		}
+		if (bg_anim > 0) {
+			right=false;
+		}
+		if (right)
+		{
+			bg_anim+=0.5;
+		}
+		else 
+		{
+			bg_anim-=0.5;
+		}
+		App->render->Blit(TitleScreen_bg, bg_anim, 0, NULL, NULL, false);
+		App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			Load_new_map(0);
+			ingame = true;
+		}
+	}
+	
 	return true;
 }
 
@@ -207,6 +195,32 @@ void j1Scene::AssignValues(Image* assigner, uint var)
 
 bool j1Scene::Load_new_map(int n)
 {
+	if (n == 0)
+	{ //inicial state ouf of main menu
+		//UI
+		charge = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 });
+		force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 });
+		charge->elements.push_back(force);
+		item = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 });
+		gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
+		gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
+		gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
+		gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
+		bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
+		bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
+		bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
+		arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
+		arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
+		arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
+		life = App->gui->CreateImage({ 178,15,44,7 }, { 178,15 });
+		//House load
+		player = App->entity_elements->CreatePlayer();
+		App->map->Load("TiledLinkHouse.tmx");
+		int scale = App->win->GetScale();
+		App->render->camera.x = -((player->position.x - (256 / 2)) * scale);//TODO LOW -> No Magic Numbers
+		App->render->camera.y = -((player->position.y - (224 / 2)) * scale);
+	}
+	else {// for all the other maps
 	bool stop_rearch = false;
 
 	pugi::xml_document	config_file;
@@ -252,7 +266,7 @@ bool j1Scene::Load_new_map(int n)
 	//
 	//enemy->AddItem(items);
 
-
+	}
 	return true;
 }
 

@@ -252,8 +252,14 @@ void j1App::FinishUpdate()
 	static char title[256];
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	sprintf_s(title, 256, "Coords: X:%i Y:%i  ---  camX: %i camY: %i",
-			  App->scene->player->position.x, App->scene->player->position.y, App->render->camera.x, App->render->camera.y);
+	if (scene->player != nullptr)
+	{
+		sprintf_s(title, 256, "Coords: X:%i Y:%i  ---  camX: %i camY: %i",
+			App->scene->player->position.x, App->scene->player->position.y, App->render->camera.x, App->render->camera.y);
+	}
+	else {
+		sprintf_s(title, 256, "The legend of Zelda: A link to Pokemon World");
+	}
 	App->win->SetTitle(title);
 
 	if(capped_ms > 0 && last_frame_ms < capped_ms)

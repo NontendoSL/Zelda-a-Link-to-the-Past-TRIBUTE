@@ -66,10 +66,13 @@ bool j1Gui::PostUpdate()
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
-	for (uint i = entities.size() - 1; i > 0; i--) {
-		delete entities[i];
+	if (entities.size() > 0)
+	{
+		for (uint i = entities.size() - 1; i > 0; i--) {
+			delete entities[i];
+		}
+		entities.clear();
 	}
-	entities.clear();
 	return true;
 }
 

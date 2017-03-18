@@ -52,11 +52,17 @@ private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 
 public:
-	Image* charge,* force;;
+	//Start screen
+	SDL_Texture* TitleScreen_letters;
+	SDL_Texture* TitleScreen_bg;
+	float bg_anim;
+	bool right;
+	//Ingame
+	Image* charge,* force;
 	Image* item;
 	Image* gems;
 	Image* bombs;//TODO LOW: Agrupar imatges bomba, rupias vida i fletxes en una sola Imatge*
-	Image* arrows; //TODO MID: Group all ui in lists
+	Image* arrows; //TODO HIGH: Organize all this in less code;
 	Image* life;
 	Text* test;
 	Player* player;
@@ -67,7 +73,7 @@ public:
 
 	pugi::xml_node		config;
 
-
+	bool ingame;
 	int switch_map;
 };
 
