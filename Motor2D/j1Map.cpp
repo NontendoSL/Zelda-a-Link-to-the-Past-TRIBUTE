@@ -108,8 +108,7 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 {
 	int ret = 0;
 	int red_wal = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1;
-	int yellow_wal = red_wal + 1;
-	int blue_wal = red_wal + 4;
+	int blue_wal = red_wal + 7;
 	if (dir == UP)
 	{
 		iPoint ptemp = WorldToMap(x, y);
@@ -124,10 +123,6 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
-		}
-		else if (id_1 == yellow_wal || id_2 == yellow_wal || id_3 == yellow_wal)
-		{
-			ret = 2;
 		}
 		else if (id_1 == blue_wal)
 		{
@@ -152,10 +147,6 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		{
 			ret = 1;
 		}
-		else if (id_1 == yellow_wal || id_2 == yellow_wal || id_3 == yellow_wal)
-		{
-			ret = 2;
-		}
 		else
 			ret = 0;
 	}
@@ -174,10 +165,6 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		{
 			ret = 1;
 		}
-		else if (id_1 == yellow_wal || id_2 == yellow_wal || id_3 == yellow_wal)
-		{
-			ret = 2;
-		}
 		else
 			ret = 0;
 	}
@@ -195,10 +182,6 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
-		}
-		else if (id_1 == yellow_wal || id_2 == yellow_wal || id_3 == yellow_wal)
-		{
-			ret = 2;
 		}
 		else if (id_1 == blue_wal)
 		{
@@ -310,7 +293,7 @@ bool j1Map::CleanUp()
 }
 
 // Load new map
-bool j1Map::Load(const char* file_name)
+bool j1Map::Load(const char* file_name, uint id_map)
 {
 	bool ret = true;
 	std::string tmp(folder.c_str());
@@ -394,10 +377,56 @@ bool j1Map::Load(const char* file_name)
 			item_layer++;
 		}
 	}
+	//TODO Create all DynObjects from Tiled
+	if (id_map > 0)
+	{
+		DynObjectFromTiled(id_map);
+	}
+
 
 	map_loaded = ret;
 
 	return ret;
+}
+
+void j1Map::DynObjectFromTiled(uint id_map)
+{
+	int yellowid_1 = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 2;
+	int yellowid_2 = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 3;
+	int yellowid_3 = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 4;
+	int yellowid_4 = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 5;
+
+	std::list<MapLayer*>::const_iterator item = data.layers.end();
+	item--;
+
+	for (int y = 0; y < data.height; ++y)
+	{
+		for (int x = 0; x < data.width; ++x)
+		{
+			int tile_id = item._Ptr->_Myval->Get(x, y);
+			iPoint positionObject = MapToWorld(x, y);
+			if (tile_id == yellowid_1)
+			{
+				LOG("DynObject 1");
+				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 1, id_map));
+			}
+			if (tile_id == yellowid_2)
+			{
+				LOG("DynObject 2");
+				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 2, id_map));
+			}
+			if (tile_id == yellowid_3)
+			{
+				LOG("DynObject 3");
+				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 3, id_map));
+			}
+			if (tile_id == yellowid_4)
+			{
+				LOG("DynObject 4");
+				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
+			}
+		}
+	}
 }
 
 // Load map general properties

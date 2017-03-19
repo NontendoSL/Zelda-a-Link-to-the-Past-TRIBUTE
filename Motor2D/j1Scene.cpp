@@ -85,11 +85,11 @@ bool j1Scene::Update(float dt)
 			if (App->map->CleanUp())
 			{
 				Load_new_map(2);
-				/*dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
-				dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
-				dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(224, 289), 4));
-				dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 273), 4));
-				dynitems.push_back(App->entity_elements->CreateDynObject(iPoint(240, 289), 4));*/
+				/*dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
+				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
+				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(224, 289), 4));
+				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(240, 273), 4));
+				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(240, 289), 4));*/
 			}
 
 			switch_map = 0;
@@ -149,7 +149,8 @@ bool j1Scene::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			App->audio->FadeMusic(2);
-			Load_new_map(0);
+			LoadUi();
+			Load_new_map(1);
 			ingame = true;
 		}
 	}
@@ -195,40 +196,41 @@ void j1Scene::AssignValues(Image* assigner, uint var)
 
 }
 
+void j1Scene::LoadUi()
+{
+	//UI
+	charge = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 }, "charge");
+	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 });
+	charge->elements.push_back(force);
+	item = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 });
+	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
+	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
+	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
+	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
+	bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
+	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
+	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
+	arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
+	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
+	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
+	life = App->gui->CreateImage({ 178,15,44,7 }, { 178,15 });
+	//House load
+	//	else {// for all the other maps
+}
+
 bool j1Scene::Load_new_map(int n)
 {
-	if (n == 0)
-	{ //inicial state ouf of main menu
-		//UI
-		charge = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 }, "charge");
-		force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 });
-		charge->elements.push_back(force);
-		item = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 });
-		gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
-		gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
-		gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
-		gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
-		bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
-		bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
-		bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-		arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
-		arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
-		arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-		life = App->gui->CreateImage({ 178,15,44,7 }, { 178,15 });
-		//House load
+	if (player == NULL)
+	{
 		player = App->entity_elements->CreatePlayer();
-		App->map->Load("TiledLinkHouse.tmx");
-		int scale = App->win->GetScale();
-		App->render->camera.x = -((player->position.x - (256 / 2)) * scale);//TODO LOW -> No Magic Numbers
-		App->render->camera.y = -((player->position.y - (224 / 2)) * scale);
 	}
-	else {// for all the other maps
+
 	bool stop_rearch = false;
 
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
-	
+
 	for (pugi::xml_node temp = config.child("maps").child("map"); stop_rearch == false; temp = temp.next_sibling())
 	{
 		if (temp.attribute("n").as_int(0) == n)
@@ -245,12 +247,9 @@ bool j1Scene::Load_new_map(int n)
 				temp_enemy = temp_enemy.next_sibling();
 			}
 
-			//items
-			//Dynamic items (not implmeneted yet)
-
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
-			App->map->Load(name_map.c_str());
+			App->map->Load(name_map.c_str(), n);
 
 			//Camera position
 			int scale = App->win->GetScale();
@@ -261,16 +260,16 @@ bool j1Scene::Load_new_map(int n)
 			stop_rearch = true;
 		}
 	}
-	
+
 
 	//enemy = App->entity_elements->CreateEnemy(iPoint(200, 400), 1);
 	//items = App->entity_elements->CreateItem(iPoint(300, 200), 1);
 	//
 	//enemy->AddItem(items);
-
-	}
 	return true;
 }
+
+
 
 
 // ---------------------------------------------

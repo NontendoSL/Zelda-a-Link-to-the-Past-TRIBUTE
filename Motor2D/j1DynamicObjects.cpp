@@ -1,6 +1,7 @@
 #include "j1DynamicObjects.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Collision.h"
 
 DynamicObjects::DynamicObjects() :SceneElement()
 {
@@ -13,28 +14,35 @@ DynamicObjects::~DynamicObjects()
 
 }
 
-bool DynamicObjects::Awake(pugi::xml_node &conf, uint id)
+bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 {
 	bool stop_search = false;
-	pugi::xml_node temp = conf;
-	for (int s_id = temp.attribute("id").as_int(0); stop_search == false; s_id = temp.attribute("id").as_int(0))
+	pugi::xml_node temp = conf.child("dynObjects").child("dynobject");
+	if (temp != NULL)
 	{
-		if (id == s_id)
+		for (int s_id = temp.attribute("id").as_int(0); stop_search == false; s_id = temp.attribute("id").as_int(0))
 		{
-			name = temp.attribute("name").as_string("");
-			std::string es = temp.attribute("file").as_string("");
-			texture = App->tex->Load(es.c_str());
-			canBlit = true;
-			stop_search = true;
+			if (id == s_id)
+			{
+				name = temp.attribute("name").as_string("");
+				std::string es = temp.attribute("file").as_string("");
+				texture = App->tex->Load(es.c_str());
+				position.x = pos.x;
+				position.y = pos.y;
+				canBlit = true;
+				stop_search = true;
+			}
+			temp = temp.next_sibling();
 		}
-		temp = temp.next_sibling();
 	}
+
 
 	return true;
 }
 
 bool DynamicObjects::Start()
 {
+	collision = App->collision->AddCollider({ position.x, position.y, 16, 16 }, COLLIDER_DYNOBJECT, this);
 	return true;
 }
 

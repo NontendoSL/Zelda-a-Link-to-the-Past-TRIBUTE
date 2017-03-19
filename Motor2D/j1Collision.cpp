@@ -18,6 +18,10 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
 
+	matrix[COLLIDER_ENEMY][COLLIDER_DYNOBJECT] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
+
+
 
 	matrix[COLLIDER_SPHERE_RIGHT][COLLIDER_WALL] = true;
 	matrix[COLLIDER_SPHERE_RIGHT][COLLIDER_SPHERE_RIGHT] = true;
@@ -144,6 +148,9 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 180, 125, alpha);
 			break;
 		case COLLIDER_ENEMY: // white
+			App->render->DrawQuad(colliders[i]->rect, 177, 255, 140, alpha);
+			break;
+		case COLLIDER_DYNOBJECT: // white
 			App->render->DrawQuad(colliders[i]->rect, 177, 255, 140, alpha);
 			break;
 		}

@@ -50,6 +50,7 @@ public:
 private:
 	SDL_Texture* debug_tex;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
+	void LoadUi();
 
 public:
 	//Start screen
@@ -69,7 +70,7 @@ public:
 	Player* player;
 	std::list<Soldier*> enemy;
 	std::list<Item*> items;
-	std::list<DynamicObjects*> dynitems;
+	std::list<DynamicObjects*> dynobjects;
 	Dialogue* dialog;
 
 	pugi::xml_node		config;

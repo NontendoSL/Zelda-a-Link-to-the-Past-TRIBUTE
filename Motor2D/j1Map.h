@@ -123,13 +123,15 @@ public:
 	bool CleanUp();
 
 	// Load new map
-	bool Load(const char* path);
+	bool Load(const char* path, uint id_map);
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 	int MovementCost(int x, int y, Direction dir) const;
 	void EditCost(int x, int y,int value);
+	void DynObjectFromTiled(uint id);
+
 private:
 
 	bool LoadMap();

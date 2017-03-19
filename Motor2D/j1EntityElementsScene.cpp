@@ -146,15 +146,27 @@ Item* j1EntityElementScene::CreateItem(uint id)
 	return element;
 }
 
-DynamicObjects* j1EntityElementScene::CreateDynObject(uint id)
+DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)
 {
 	DynamicObjects* element = new DynamicObjects();
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
-	element->Awake(config.child("maps").child("map").next_sibling().child(element->name.c_str()).child("dynobject"), id);
-	element->Start();
-	elementscene.push_back(element);
+	bool stop_rearch = false;
+	LOG("Create DynObjects");
+	config = config.child("maps").child("map");
+	for (; stop_rearch == false; config = config.next_sibling())
+	{
+		if (config.attribute("n").as_int(0) == id_map)
+		{
+			element->Awake(config, id, pos);
+			element->Start();
+			elementscene.push_back(element);
+			LOG("Created!!");
+			stop_rearch = true;
+		}
+	}
+
 
 	return element;
 }

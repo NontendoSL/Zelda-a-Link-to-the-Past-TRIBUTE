@@ -44,7 +44,7 @@ public:
 	Soldier* CreateSoldier(uint id, pugi::xml_node& );
 	bool DeleteEnemy(NPC* enemy);
 	Item* CreateItem(uint id);
-	DynamicObjects* CreateDynObject(uint id);
+	DynamicObjects* CreateDynObject(iPoint pos, uint id, uint id_map);
 	Player* CreatePlayer();
 
 	pugi::xml_node conf;

@@ -16,7 +16,7 @@ public:
 	~DynamicObjects();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&, uint);
+	bool Awake(pugi::xml_node&, uint, iPoint pos);
 
 	// Called before the first frame
 	bool Start();
@@ -39,7 +39,7 @@ public:
 
 public:
 	SDL_Texture* texture;
-
+	Collider* collision;
 
 };
 
