@@ -55,6 +55,7 @@ public:
 	//Start screen
 	SDL_Texture* TitleScreen_letters;
 	SDL_Texture* TitleScreen_bg;
+	
 	float bg_anim;
 	bool right;
 	//Ingame

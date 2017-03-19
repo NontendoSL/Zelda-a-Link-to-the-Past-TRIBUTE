@@ -14,7 +14,7 @@ public:
 	void Draw();
 
 public:
-	Image(SDL_Rect rectangle, iPoint position);
+	Image(SDL_Rect rectangle, iPoint position,std::string identifier="undefined", uint id=0);
 	~Image();
 	void AssignNumber(uint n);
 public:
@@ -31,7 +31,7 @@ public:
 	void Draw();
 	void Update();
 public:
-	Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos);
+	Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos, std::string identifier="undefined", uint id = 0);
 	~Button();
 
 public:
@@ -46,7 +46,7 @@ public:
 class Text : public j1GuiEntity
 {
 public:
-	Text(const char* write, iPoint pos, uint size);
+	Text(const char* write, iPoint pos, uint size, std::string identifier="undefined", uint id=0);
 	~Text();
 
 public:
@@ -77,5 +77,7 @@ public:
 	bool push;
 	uint timer;
 };
+
+// ------------------------------------------------------
 
 #endif // __j1GUIELEMENTS_H__

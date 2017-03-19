@@ -41,6 +41,7 @@ bool j1Scene::Start()
 	TitleScreen_letters=App->tex->Load("gui/title_screen/letters.png");
 	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg");
 	switch_map = 0;
+	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	return true;
 }
 
@@ -147,6 +148,7 @@ bool j1Scene::Update(float dt)
 		App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
+			App->audio->FadeMusic(2);
 			Load_new_map(0);
 			ingame = true;
 		}
@@ -198,7 +200,7 @@ bool j1Scene::Load_new_map(int n)
 	if (n == 0)
 	{ //inicial state ouf of main menu
 		//UI
-		charge = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 });
+		charge = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 }, "charge");
 		force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 });
 		charge->elements.push_back(force);
 		item = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 });

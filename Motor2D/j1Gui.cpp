@@ -83,27 +83,27 @@ const SDL_Texture* j1Gui::GetAtlas() const
 }
 
 
-Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos) {
+Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos, std::string identifier, uint id) {
 
-	Image* element = new Image(rect, pos);
+	Image* element = new Image(rect, pos, identifier, id);
 
 	entities.push_back(element);
 
 	return element;
 }
 
-Text* j1Gui::CreateText(const char* string, iPoint pos, uint size, bool addelement) {
+Text* j1Gui::CreateText(const char* string, iPoint pos, uint size, bool addelement, std::string identifier, uint id) {
 
-	Text* element = new Text(string, pos, size);
+	Text* element = new Text(string, pos, size, identifier, id);
 	if (addelement)
 		entities.push_back(element);
 
 	return element;
 }
 
-Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, const char* textstring, uint textsize, iPoint textpos) {
+Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, const char* textstring, uint textsize, iPoint textpos, std::string identifier, uint id) {
 
-	Button* element = new Button(rect, pos, text2, text3, textstring, textsize, textpos);
+	Button* element = new Button(rect, pos, text2, text3, textstring, textsize, textpos, identifier, id);
 
 	entities.push_back(element);
 

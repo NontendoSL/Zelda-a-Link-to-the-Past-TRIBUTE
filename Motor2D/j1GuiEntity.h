@@ -11,7 +11,7 @@ class j1GuiEntity //: public j1Gui
 public:
 
 	j1GuiEntity();
-	j1GuiEntity(SDL_Rect rectangle, iPoint position);
+	j1GuiEntity(SDL_Rect rectangle, iPoint position,std::string identifier="undefined", uint id=0);
 
 	// Destructor
 	virtual ~j1GuiEntity();
@@ -28,10 +28,10 @@ public:
 	SDL_Rect Hitbox;
 	iPoint position, diferential;
 	bool visible = true;
+	bool selected;
+	uint id;
+	std::string identifier;
 private:
-
-	//int id;
-	int size;
 
 };
 

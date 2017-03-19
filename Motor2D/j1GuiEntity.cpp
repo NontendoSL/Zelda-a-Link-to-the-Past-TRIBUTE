@@ -11,7 +11,7 @@
 j1GuiEntity::j1GuiEntity() {
 	//id = Next_id++;
 }
-j1GuiEntity::j1GuiEntity(SDL_Rect rectangle, iPoint position): Hitbox(rectangle), position(position){
+j1GuiEntity::j1GuiEntity(SDL_Rect rectangle, iPoint position,std::string identifier,uint id): Hitbox(rectangle), position(position),identifier(identifier), id(id){
 	//id = Next_id++;
 
 }

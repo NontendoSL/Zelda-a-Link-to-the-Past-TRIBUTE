@@ -11,7 +11,7 @@
 
 /////////////////////////////// IMAGE METHODS ///////////////////////////////
 
-Image::Image(SDL_Rect rectangle, iPoint position) : j1GuiEntity(rectangle, position) {
+Image::Image(SDL_Rect rectangle, iPoint position, std::string identifier, uint id) : j1GuiEntity(rectangle, position,identifier,id) {
 
 	type = IMAGE;
 	start = true;
@@ -122,7 +122,7 @@ Image::~Image()
 
 /////////////////////////////// TEXT METHODS ///////////////////////////////
 
-Text::Text(const char* write, iPoint pos, uint size) :text(write), j1GuiEntity({ 0,0,0,0 }, pos)
+Text::Text(const char* write, iPoint pos, uint size, std::string identifier, uint id) :text(write), j1GuiEntity({ 0,0,0,0 }, pos, identifier, id)
 {
 
 	type = TEXT;
@@ -161,7 +161,7 @@ Text::~Text() {
 }
 
 /////////////////////////////// BUTTON METHODS ///////////////////////////////
-Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos) :j1GuiEntity(rectangle, pos)
+Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos, std::string identifier, uint id) :j1GuiEntity(rectangle, pos,identifier,id)
 {
 	type = BUTTON;
 	state = normal;
@@ -195,31 +195,14 @@ void Button::Draw()
 
 void Button::Update()
 {
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	if (start == true)
+	if (selected == true)
 	{
-		buttontext->position.x += position.x;
-		buttontext->position.y += position.y;
-		start = false;
-	}
-	if (x >= position.x && x <= (position.x + Hitbox.w) && y >= position.y  && y <= (position.y + Hitbox.h))
-	{
-		if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
-		{
-			state = clicked;
-		}
-		else
-		{
-			state = over;
-		}
+		state = over;
 	}
 	else
 	{
 		state = normal;
 	}
-
 }
 
 Button::~Button()
