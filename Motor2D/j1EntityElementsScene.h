@@ -40,7 +40,6 @@ public:
 	// delete elements witout player
 	bool DelteElements();
 
-
 	//TODO LOW
 	Soldier* CreateSoldier(uint id, pugi::xml_node& );
 	bool DeleteEnemy(NPC* enemy);

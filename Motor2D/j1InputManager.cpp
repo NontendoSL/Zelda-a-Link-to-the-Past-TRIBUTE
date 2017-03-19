@@ -26,10 +26,10 @@ bool InputManager::Awake(pugi::xml_node& conf)
 	//TODO 4 quit the comment when doned
 	for (pugi::xml_node tmp = conf.child("action"); tmp != nullptr; tmp = tmp.next_sibling())
 	{
-	std::pair<int, INPUTEVENT> new_action;
-	new_action.first = tmp.attribute("button").as_int();
-	new_action.second = (INPUTEVENT)tmp.attribute("event").as_int();
-	actions.insert(new_action);
+		std::pair<int, INPUTEVENT> new_action;
+		new_action.first = tmp.attribute("button").as_int();
+		new_action.second = (INPUTEVENT)tmp.attribute("event").as_int();
+		actions.insert(new_action);
 	}
 
 	return ret;
@@ -44,20 +44,18 @@ bool InputManager::PreUpdate()
 
 bool InputManager::Update(float dt)
 {
-	CallListeners();
-
 	//TODO 7 uncomment this after doned
 	/*if (EventPressed(PAUSE) == E_DOWN)
 	{
 		ChangeInputEvent(MUP);
 	}*/
-
 	return true;
 }
 
 // Called after all Updates
 bool InputManager::PostUpdate()
 {
+	CallListeners();
 	//TODO 6 frame has gone clean your actions
 	if (!current_action.empty())
 	{

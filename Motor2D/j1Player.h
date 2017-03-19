@@ -12,6 +12,13 @@ enum DIRECTION
 	D_LEFT
 };
 
+/*enum PLAYER_STATE
+{
+	IDLE,
+	WALKING,
+	ATTACKING
+};*/
+
 class Text;
 
 class Player : public SceneElement
@@ -75,8 +82,6 @@ private:
 	DIRECTION current_direction = D_DOWN;
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 };
-
-
 
 
 

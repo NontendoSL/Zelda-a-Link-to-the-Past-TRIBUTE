@@ -110,10 +110,8 @@ bool j1Input::PreUpdate()
 		{
 			controller_buttons[i] = KEY_REPEAT;
 			App->input_manager->InputDetected(i, EVENTSTATE::E_REPEAT);
-
 		}
 			
-
 		if (controller_buttons[i] == KEY_UP)
 		{
 			controller_buttons[i] = KEY_IDLE;
@@ -211,7 +209,6 @@ bool j1Input::PreUpdate()
 			break;
 		}
 	}
-
 	return true;
 }
 
