@@ -84,6 +84,7 @@ bool j1Scene::Update(float dt)
 			//TODO need destroy all enemies and items
 			if (App->map->CleanUp())
 			{
+				App->entity_elements->DelteElements();
 				Load_new_map(2);
 				/*dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
 				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
