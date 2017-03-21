@@ -3,7 +3,7 @@
 BCTrooper::BCTrooper() :NPC()
 {
 	name = "BCTrooper";
-	type = ENEMY;
+	type = CREATURE;
 }
 
 BCTrooper::~BCTrooper()

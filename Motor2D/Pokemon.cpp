@@ -3,7 +3,7 @@
 Pokemon::Pokemon() :NPC()
 {
 	name = "Pokemon";
-	type = ENEMY;
+	type = CREATURE;
 }
 
 Pokemon::~Pokemon()

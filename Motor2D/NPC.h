@@ -3,11 +3,12 @@
 #define __NPC_H_
 
 #include "SceneElements.h"
+#include "j1Creature.h"
 
-class NPC : public SceneElement
+class NPC : public Creature
 {
 public:
-	NPC() : SceneElement()
+	NPC() : Creature()
 	{}
 
 	~NPC()
@@ -19,9 +20,6 @@ public:
 	}
 
 public:
-	uint hp;
-	uint attack_dmg;
-	uint speed;
 	bool indestructive;
 	bool movable;
 	bool canattack;

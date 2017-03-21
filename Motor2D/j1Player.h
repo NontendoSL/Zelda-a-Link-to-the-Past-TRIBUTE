@@ -3,6 +3,11 @@
 #define __PLAYER_H_
 
 #include "SceneElements.h"
+#include"j1Creature.h"
+#include "j1InputManager.h"
+
+class Creature;
+class InputListener;
 
 enum DIRECTION
 {
@@ -12,16 +17,17 @@ enum DIRECTION
 	D_LEFT
 };
 
-/*enum PLAYER_STATE
+enum PLAYER_STATE
 {
-	IDLE,
-	WALKING,
-	ATTACKING
-};*/
+	P_IDLE,
+	P_WALKING,
+	P_ATTACKING,
+	P_DYING
+};
 
 class Text;
 
-class Player : public SceneElement
+class Player : public Creature, public InputListener
 {
 public:
 	Player();
@@ -42,6 +48,7 @@ public:
 	bool Update();
 
 	void Draw();
+
 	// Called before all Updates
 	bool PostUpdate();
 
@@ -54,6 +61,16 @@ public:
 
 	bool Camera_inside();
 
+	bool Idle();
+
+	bool Walking();
+
+	bool Move();
+
+	bool CheckOrientation();
+
+	void OnInputCallback(INPUTEVENT, EVENTSTATE);
+
 public:
 	SDL_Texture* player_texture;
 	SDL_Texture* maptex;
@@ -63,12 +80,11 @@ public:
 	std::string texmapfile_name;
 	std::string file_hit;
 
-	uint gems, bombs, arrows,charge;
+	uint gems, bombs, arrows, charge;
 
 private:
 	Text* hp_text;
 	Text* attack_text;
-	int attack;
 
 	std::list<Item*> bag;
 
@@ -80,7 +96,8 @@ private:
 	bool Camera_follow_player;
 	bool changeResolution;
 	DIRECTION current_direction = D_DOWN;
-	void OnInputCallback(INPUTEVENT, EVENTSTATE);
+	PLAYER_STATE curr_state = P_IDLE;
+
 };
 
 

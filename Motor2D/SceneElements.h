@@ -12,9 +12,9 @@
 
 class Item;
 
-enum ElementType{PLAYER, ENEMY, ITEM, DYNITEMS};
+enum ElementType{ CREATURE, ITEM, DYNOBJECT };
 // ---------------------------------------------------
-class SceneElement: public InputListener //TODO MEDIUM -> inputlistener removed from here
+class SceneElement 
 {
 public:
 
@@ -57,11 +57,9 @@ public:
 public:
 	iPoint position;
 	AnimationState state;
-	Direction dir;
 	ElementType type;
 	uint speed;
 
-	uint hp;
 	int width;
 	int height;
 

@@ -5,7 +5,7 @@
 
 DynamicObjects::DynamicObjects() :SceneElement()
 {
-	type = DYNITEMS;
+	type = DYNOBJECT;
 	name = "dynObjects";
 }
 

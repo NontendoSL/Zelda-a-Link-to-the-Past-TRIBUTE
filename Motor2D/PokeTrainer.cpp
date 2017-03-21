@@ -3,7 +3,7 @@
 PokeTrainer::PokeTrainer() :NPC()
 {
 	name = "PokeTrainer";
-	type = ENEMY;
+	type = CREATURE;
 }
 
 PokeTrainer::~PokeTrainer()

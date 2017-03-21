@@ -16,11 +16,12 @@
 #include "j1AnimationManager.h"
 #include "j1Collision.h"
 #include "j1InputManager.h"
+#include "j1Creature.h"
 
 //Constructor
-Player::Player() :SceneElement()
+Player::Player() : Creature()
 {
-	type = PLAYER;
+	type = CREATURE;
 	name = "player";
 }
 
@@ -56,10 +57,11 @@ bool Player::Start()
 	maptex = App->tex->Load(texmapfile_name.c_str());
 	hit_tex = App->tex->Load(file_hit.c_str());
 	dir = UP;
-	
+
 	scale = App->win->GetScale();
 	width = 15;
 	height = 15;
+
 	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
 	/*stats_temp.clear();
 	stats_temp = std::to_string(hp);
@@ -86,114 +88,61 @@ bool Player::PreUpdate()
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
 	bool ret = true;
-	//TEST MOVE LINK
+
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		Camera_follow_player = !Camera_follow_player;
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_UP)
+	// STATE MACHINE ------------------
+	switch (curr_state)
 	{
-		state = IDLE;
-		dir = LEFT;
+	case P_IDLE:
+	{
+		Idle();
+		break;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_UP)
+	case P_WALKING:
 	{
-		state = IDLE;
-		dir = RIGHT;
+		Walking();
+		break;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_UP)
+	default:
 	{
-		state = IDLE;
-		dir = UP;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_UP)
-	{
-		state = IDLE;
-		dir = DOWN;
+		break;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
-	{
-		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
-		{
-			state = WALKING;
-			dir = LEFT;
-			if (Camera_inside())
-				App->render->camera.x += speed * scale;
-			position.x -= speed;
-			state = WALKING;
-			dir = LEFT;
-		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
-	{
-		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
-		{
-			state = WALKING;
-			dir = DOWN;
-			if (Camera_inside())
-				App->render->camera.y -= speed * scale;
-			position.y += speed;
-		}
-		state = WALKING;
-		dir = DOWN;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
-	{
-		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
-		{
-			state = WALKING;
-			dir = RIGHT;
-			if (Camera_inside())
-				App->render->camera.x -= speed * scale;
-			position.x += speed;
-		}
-		state = WALKING;
-		dir = RIGHT;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
-	{
-		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
-		{
-			state = WALKING;
-			dir = UP;
-			if (Camera_inside())
-				App->render->camera.y += speed * scale;
-			position.y -= speed;
-		}
-		state = WALKING;
-		dir = UP;
-	}
+
 	/*if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
 
-		App->render->camera.h;
-			switch (dir) 
-			{
-			case UP:
-				if (App->map->MovementCost(position.x, position.y - speed, UP) == 2)
-				{
-					App->map->EditCost(position.x + 8, position.y - speed, 0);
-				}
-				break;
-			case DOWN:
-				if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 2)
-				{
-					App->map->EditCost(position.x + 8, position.y + (speed + height), 0);
-				}
-				break;
-			case LEFT:
-				if (App->map->MovementCost(position.x - speed, position.y, UP) == 2)
-				{
-					App->map->EditCost(position.x - speed, position.y + 8, 0);
-				}
-				break;
-			case RIGHT:
-				if (App->map->MovementCost(position.x + (speed + width), position.y , UP) == 2)
-				{
-					App->map->EditCost(position.x , position.y + 8, 0);
-				}
-				break;
-			}
+	App->render->camera.h;
+	switch (dir)
+	{
+	case UP:
+	if (App->map->MovementCost(position.x, position.y - speed, UP) == 2)
+	{
+	App->map->EditCost(position.x + 8, position.y - speed, 0);
+	}
+	break;
+	case DOWN:
+	if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 2)
+	{
+	App->map->EditCost(position.x + 8, position.y + (speed + height), 0);
+	}
+	break;
+	case LEFT:
+	if (App->map->MovementCost(position.x - speed, position.y, UP) == 2)
+	{
+	App->map->EditCost(position.x - speed, position.y + 8, 0);
+	}
+	break;
+	case RIGHT:
+	if (App->map->MovementCost(position.x + (speed + width), position.y , UP) == 2)
+	{
+	App->map->EditCost(position.x , position.y + 8, 0);
+	}
+	break;
+	}
 	}*/
 
 	//Provisional gem provider
@@ -225,57 +174,57 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	/*//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		changeResolution = !changeResolution;
+	changeResolution = !changeResolution;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
 	{
-		App->render->Blit(maptex, -App->render->camera.x, -App->render->camera.y);
+	App->render->Blit(maptex, -App->render->camera.x, -App->render->camera.y);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
-		SDL_RenderSetLogicalSize(App->render->renderer, 800, 400);
-		if (changeResolution)
-			SDL_SetWindowSize(App->win->window, 800, 400);
+	SDL_RenderSetLogicalSize(App->render->renderer, 800, 400);
+	if (changeResolution)
+	SDL_SetWindowSize(App->win->window, 800, 400);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		SDL_RenderSetLogicalSize(App->render->renderer, 300, 300);
-		if (changeResolution)
-			SDL_SetWindowSize(App->win->window, 300, 300);
+	SDL_RenderSetLogicalSize(App->render->renderer, 300, 300);
+	if (changeResolution)
+	SDL_SetWindowSize(App->win->window, 300, 300);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
-		SDL_RenderSetLogicalSize(App->render->renderer, 500, 200);
-		if (changeResolution)
-			SDL_SetWindowSize(App->win->window, 500, 200);
+	SDL_RenderSetLogicalSize(App->render->renderer, 500, 200);
+	if (changeResolution)
+	SDL_SetWindowSize(App->win->window, 500, 200);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
-		SDL_RenderSetLogicalSize(App->render->renderer, 1200, 500);
-		if (changeResolution)
-			SDL_SetWindowSize(App->win->window, 1200, 500);
+	SDL_RenderSetLogicalSize(App->render->renderer, 1200, 500);
+	if (changeResolution)
+	SDL_SetWindowSize(App->win->window, 1200, 500);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{
-		SDL_RenderSetLogicalSize(App->render->renderer, 1300, 800);
-		if (changeResolution)
-			SDL_SetWindowSize(App->win->window, 1300, 800);
+	SDL_RenderSetLogicalSize(App->render->renderer, 1300, 800);
+	if (changeResolution)
+	SDL_SetWindowSize(App->win->window, 1300, 800);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
-		SDL_SetWindowSize(App->win->window, 800, 300);
+	SDL_SetWindowSize(App->win->window, 800, 300);
 	}
 	*/
 
 
-	/*//TEST DRAW LIVE OF LINK 
+	/*//TEST DRAW LIVE OF LINK
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-		hp -= 2;
+	hp -= 2;
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		attack *= 2;
+	attack *= 2;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		Save();*/
+	Save();*/
 
 	//TODO MID -> I thing that use a stats_temp all time clear and insert, clear-insert, is not a good idea...
 	/*stats_temp.clear();
@@ -287,7 +236,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	stats_temp.insert(0, "ATTACK OF LINK -> ");
 	attack_text->Write(stats_temp.c_str());*/
 
-	//Collision follow the Ms Pac Man
+	//Collision follow the player
 	collision_player->SetPos(position.x, position.y);
 
 	return ret;
@@ -397,14 +346,135 @@ bool Player::Camera_inside()
 	return true;
 }
 
+bool Player::Idle()
+{
+	//TEST MOVE LINK
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT ||
+		App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT ||
+		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT ||
+		App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
+	{
+		curr_state = P_WALKING;
+		CheckOrientation();
+	}
+
+	else
+	{
+		state = IDLE;
+		curr_state = P_IDLE;
+	}
+
+	return true;
+}
+
+bool Player::Walking()
+{
+	walking = false;
+	Move();
+
+	if (walking == false)
+	{
+		state = IDLE;
+		curr_state = P_IDLE;
+	}
+
+	else
+	{
+		state = WALKING;
+		curr_state = P_WALKING;
+	}
+	return false;
+}
+
 void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 {
 	/*switch (action)
 	{
 	case JUMP:
 
-		if (state == E_DOWN)
-			position.y += 20;
-		break;
+	if (state == E_DOWN)
+	position.y += 20;
+	break;
 	}*/
+}
+
+bool Player::Move()
+{
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
+	{
+		dir = LEFT;
+		current_direction = D_LEFT;
+		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
+		{
+			if (Camera_inside())
+				App->render->camera.x += speed * scale;
+			position.x -= speed;
+			walking = true;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
+	{
+		dir = DOWN;
+		current_direction = D_DOWN;
+		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
+		{
+			if (Camera_inside())
+				App->render->camera.y -= speed * scale;
+			position.y += speed;
+			walking = true;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
+	{
+		dir = RIGHT;
+		current_direction = D_RIGHT;
+		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
+		{
+			if (Camera_inside())
+				App->render->camera.x -= speed * scale;
+			position.x += speed;
+			walking = true;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
+	{
+		dir = UP;
+		current_direction = D_UP;
+		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
+		{
+			if (Camera_inside())
+				App->render->camera.y += speed * scale;
+			position.y -= speed;
+			walking = true;
+		}
+	}
+	return walking;
+}
+
+bool Player::CheckOrientation()
+{
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
+	{
+		dir = LEFT;
+		current_direction = D_LEFT;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
+	{
+		dir = RIGHT;
+		current_direction = D_RIGHT;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
+	{
+		dir = UP;
+		current_direction = D_UP;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
+	{
+		dir = DOWN;
+		current_direction = D_DOWN;
+	}
+	return true;
 }

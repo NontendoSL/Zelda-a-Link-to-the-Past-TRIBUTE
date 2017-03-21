@@ -94,6 +94,9 @@
     <ClCompile Include="j1InputManager.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Creature.cpp">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="j1InputManager.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Creature.h">
+      <Filter>Desenvolupament  ========\ElementsScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

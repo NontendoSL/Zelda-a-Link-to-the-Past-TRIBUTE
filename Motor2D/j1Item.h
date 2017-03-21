@@ -5,7 +5,7 @@
 #include "SceneElements.h"
 
 
-enum itemtype{ZELDA, POKEMON};
+enum itemtype{ ZELDA_W, POKEMON_W };
 
 class Item : public SceneElement
 {

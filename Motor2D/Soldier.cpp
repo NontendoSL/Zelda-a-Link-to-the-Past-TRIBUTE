@@ -10,7 +10,7 @@
 Soldier::Soldier():NPC()
 {
 	name = "enemies"; //TODO need change name to "Soldier".
-	type = ENEMY;
+	type = CREATURE;
 }
 
 Soldier::~Soldier()

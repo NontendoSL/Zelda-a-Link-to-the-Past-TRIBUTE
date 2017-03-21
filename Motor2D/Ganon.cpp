@@ -3,7 +3,7 @@
 Ganon::Ganon() :NPC()
 {
 	name = "Ganon";
-	type = ENEMY;
+	type = CREATURE;
 }
 
 Ganon::~Ganon()
