@@ -32,8 +32,8 @@
 				<item id="2" name="bomb_2" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 			</items>
       <dynObjects>
-        <dynobject id="3" name="vase" type="ZELDA" file="textures/Door_House_link.png" />
-        <dynobject id="4" name="chest" type="ZELDA" file="textures/Bush_plant.png" />
+        <dynobject id="3" name="vase" type="ZELDA" file="textures/pot.png" />
+        <dynobject id="4" name="chest" type="ZELDA" file="textures/chest.png" />
       </dynObjects>
 			<enemies num="0" />
 		</map>
@@ -64,8 +64,8 @@
 				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 			</items>
 			<dynObjects>
-				<dynobject id="1" name="door_house_link" type="ZELDA" file="textures/Door_House_link.png" />
-				<dynobject id="2" name="bush_plant" type="ZELDA" file="textures/Bush_plant.png" />
+				<dynobject id="1" name="door_house_link" type="ZELDA" file="textures/closeddoor.png" />
+				<dynobject id="2" name="bush_plant" type="ZELDA" file="textures/bush.png" />
 			</dynObjects>
 			<switch blue="1" yellow="3" />
 		</map>
