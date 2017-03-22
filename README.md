@@ -9,6 +9,15 @@ v0.1:
 	Printed enemies are used as walls. They're not functional yet.
 	Enemy and map collisions implemented.
 	Link's house door doesn't get printed at the moment.
+	
+v0.2:
+
+	Added static enemies with collisions (they don't have neither hitboxes nor hurtboxes).
+	Added charging bar.
+	Dynamic Objects have been implemented but they are not functional yet (they only have colliders).
+	Game Intro has been added with provisional menu theme.
+	Added Gamepad interaction (tested with Xbox 360 and PS3 so far).
+	Basic UI interaction regarding rupees, arrows and bombs.
 
 What is The Legend of Zelda: A Link to Pokemon World?
 	
@@ -19,8 +28,16 @@ What is The Legend of Zelda: A Link to Pokemon World?
 
 Controls:
 
-	Arrow Keys -> move in any of the 8 directions.
-	Space -> Add rupees to your inventory.	
+	Keyboard:
+	
+		Arrow Keys -> move in any of the 8 directions.
+		B -> Add rupees to your inventory.
+		N -> Add arrows to your inventory.
+		M -> Add bombs to your inventory.
+
+	Controller:
+	
+		D-Pad -> move in any of the 8 directions.
 
 Authors:
 
