@@ -57,26 +57,26 @@ public:
 	SDL_Texture* TitleScreen_letters;
 	SDL_Texture* TitleScreen_bg;
 	
-	float bg_anim;
-	bool right;
+	float bg_anim = 0;
+	bool right = false;
 	//Ingame
-	Image* charge,* force;
-	Image* item;
-	Image* gems;
-	Image* bombs;//TODO LOW: Agrupar imatges bomba, rupias vida i fletxes en una sola Imatge*
-	Image* arrows; //TODO HIGH: Organize all this in less code;
-	Image* life;
-	Text* test;
+	Image* charge = nullptr,* force = nullptr;
+	Image* item = nullptr;
+	Image* gems = nullptr;
+	Image* bombs = nullptr;//TODO LOW: Agrupar imatges bomba, rupias vida i fletxes en una sola Imatge*
+	Image* arrows = nullptr; //TODO HIGH: Organize all this in less code;
+	Image* life = nullptr;
+	Text* test = nullptr;
 	Player* player = nullptr;
 	std::list<Soldier*> enemy;
 	std::list<Item*> items;
 	std::list<DynamicObjects*> dynobjects;
-	Dialogue* dialog;
+	Dialogue* dialog = nullptr;
 
 	pugi::xml_node		config;
 
-	bool ingame;
-	int switch_map;
+	bool ingame = false;
+	int switch_map = 0;
 };
 
 #endif // __j1SCENE_H__
