@@ -16,7 +16,8 @@ v0.2:
 	Added charging bar.
 	Dynamic Objects have been implemented but they are not functional yet (they only have colliders).
 	Game Intro has been added with provisional menu theme.
-	Added Gamepad interaction (tested with Xbox 360 and PS3 so far) *Notice that you need to have your controller plugged in before starting the game or else it will not work.
+	Added Gamepad interaction (tested with Xbox 360 and PS3 so far) *Notice that you need to have your 
+	controller plugged in before starting the game or else it will not work.
 	Basic UI interaction regarding rupees, arrows and bombs.
 
 What is The Legend of Zelda: A Link to Pokemon World?
