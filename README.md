@@ -1,26 +1,4 @@
-The Legend of Zelda: A Link to Pokemon World
-
-Changelog:
-
-v0.1:
-
-	Added Link house map and surroundings.
-	You can move using the arrow keys in the keyboard.
-	Printed enemies are used as walls. They're not functional yet.
-	Enemy and map collisions implemented.
-	Link's house door doesn't get printed at the moment.
-	
-v0.2:
-
-	Added static enemies with collisions (they don't have neither hitboxes nor hurtboxes).
-	Added charging bar.
-	Dynamic Objects have been implemented but they are not functional yet (they only have colliders).
-	Game Intro has been added with provisional menu theme.
-	Added Gamepad interaction (tested with Xbox 360 and PS3 so far) *Notice that you need to have your 
-	controller plugged in before starting the game or else it will not work.
-	Basic UI interaction regarding rupees, arrows and bombs.
-
-What is The Legend of Zelda: A Link to Pokemon World?
+﻿What is The Legend of Zelda: A Link to Pokemon World?
 	
 	It's a project for a subject called Project 2 of Video Games Design and Development  
 	degree at Centre de la Imatge i Multimèdia (CITM), Terrassa. 
@@ -31,7 +9,8 @@ What is The Legend of Zelda: A Link to Pokemon World?
 	trainer after fighting against some of them with his sword on his hand. Ganon has rapped the princess 
 	Zelda and you will have to do this travel to rescue her.
 
-Controls:
+
+CONTROLS
 
 	Keyboard:
 	
@@ -50,8 +29,30 @@ Controls:
 		B -> Add rupees to your inventory.
 		N -> Add arrows to your inventory.
 		M -> Add bombs to your inventory.
-		
-Authors:
+
+
+CHANGELOG
+
+v0.1:
+
+	Added Link house map and surroundings.
+	You can move using the arrow keys in the keyboard.
+	Printed enemies are used as walls. They're not functional yet.
+	Enemy and map collisions implemented.
+	Link's house door doesn't get printed at the moment.
+	
+v0.2:
+
+	Added static enemies with collisions (they don't have neither hitboxes nor hurtboxes).
+	Added charging bar.
+	Dynamic Objects have been implemented but they are not functional yet (they only have colliders).
+	Game Intro has been added with provisional menu theme.
+	Added Gamepad interaction (tested with Xbox 360 and PS3 so far) *Notice that you need to have your 
+	controller plugged in before starting the game or else it will not work.
+	Basic UI interaction regarding rupees, arrows and bombs.
+	
+	
+AUTHORS
 
 	We are a group of Video Games students from CITM, UPC fundation in Terrassa. Our members are:
 		
@@ -62,3 +63,9 @@ Authors:
 		Yabel Rodríguez
 		Albert Llopart
 		Marc Fabián
+
+NOTES
+
+	This project is made with SDL libraries.
+	We implement pugixml library to manage our .tmx & .xml files.
+	Brofiler is implemented to manage timmings in our game.
