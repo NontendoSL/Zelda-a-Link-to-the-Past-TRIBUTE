@@ -254,10 +254,17 @@ bool j1Scene::Load_new_map(int n)
 
 			//Camera position
 			int scale = App->win->GetScale();
-			App->render->camera.x = -((temp.child("player").attribute("pos_x").as_int(0) - (256 / 2)) * scale);
-			App->render->camera.y = -((temp.child("player").attribute("pos_y").as_int(0) - (224 / 2)) * scale);
-
-
+			if (temp.child("camera").attribute("follow").as_bool() == true)
+			{
+				App->render->camera.x = -((temp.child("player").attribute("pos_x").as_int(0) - (256 / 2)) * scale);
+				App->render->camera.y = -((temp.child("player").attribute("pos_y").as_int(0) - (224 / 2)) * scale);
+			}
+			else
+			{
+				iPoint size_pos = App->map->MapToWorld(App->map->data.width, App->map->data.height);
+				App->render->camera.x = (256 - size_pos.x);
+				App->render->camera.y = (224 - size_pos.y);
+			}
 			stop_rearch = true;
 		}
 	}

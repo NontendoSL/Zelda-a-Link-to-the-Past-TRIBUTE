@@ -293,7 +293,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 bool Player::Camera_inside()
 {
 	//256x224
-	iPoint temp = App->map->MapToWorld(App->map->data.height, App->map->data.width);
+	iPoint temp = App->map->MapToWorld(App->map->data.width, App->map->data.height);
 	if (dir == UP)
 	{
 		if (position.y < temp.y - (224 / 2))
