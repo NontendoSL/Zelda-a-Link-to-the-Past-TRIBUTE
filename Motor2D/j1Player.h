@@ -72,19 +72,22 @@ public:
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
 public:
-	SDL_Texture* player_texture;
-	SDL_Texture* maptex;
-	SDL_Texture* hit_tex;
+	SDL_Texture* player_texture = nullptr;
+	SDL_Texture* maptex = nullptr;
+	SDL_Texture* hit_tex = nullptr;
 	SDL_Rect Rect_player;
 	std::string tex_player_file_name;
 	std::string texmapfile_name;
 	std::string file_hit;
 
-	uint gems, bombs, arrows, charge;
+	uint gems = 0;
+	uint bombs = 0;
+	uint arrows = 0;
+	uint charge = 0;
 
 private:
-	Text* hp_text;
-	Text* attack_text;
+	Text* hp_text = nullptr;
+	Text* attack_text = nullptr;
 
 	std::list<Item*> bag;
 
@@ -93,8 +96,8 @@ private:
 	//TEST
 	std::string stats_temp;
 
-	bool Camera_follow_player;
-	bool changeResolution;
+	bool Camera_follow_player = true;
+	bool changeResolution = false;
 	DIRECTION current_direction = D_DOWN;
 	PLAYER_STATE curr_state = P_IDLE;
 

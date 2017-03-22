@@ -44,6 +44,7 @@ bool Player::Awake(pugi::xml_node& conf)
 	position.x = conf.child("stats").attribute("pos_x").as_int(0);
 	position.y = conf.child("stats").attribute("pos_y").as_int(0);
 
+
 	return ret;
 }
 
@@ -57,6 +58,8 @@ bool Player::Start()
 	maptex = App->tex->Load(texmapfile_name.c_str());
 	hit_tex = App->tex->Load(file_hit.c_str());
 	dir = UP;
+	curr_state = P_IDLE;
+	current_direction = D_UP;
 
 	scale = App->win->GetScale();
 	width = 15;

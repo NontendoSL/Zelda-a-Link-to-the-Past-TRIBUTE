@@ -37,8 +37,10 @@ public:
 	bool Save();
 
 private:
-	bool picked=false, equiped, equipable;
-	SDL_Texture* texture;
+	bool picked = false;
+	bool equiped = false;
+	bool equipable = false;
+	SDL_Texture* texture = nullptr;
 };
 
 #endif

@@ -48,10 +48,10 @@ private:
 	SDL_Rect soldier_up_2;
 	SDL_Rect soldier_down_2;
 	//Item* drop;
-	bool stunned=false;
-	Item* item_inside;
-	SDL_Texture* texture;
-	Collider* collision_enemy;
+	bool stunned = false;
+	Item* item_inside = nullptr;
+	SDL_Texture* texture = nullptr;
+	Collider* collision_enemy = nullptr;
 };
 
 #endif //__SOLDIER_H_

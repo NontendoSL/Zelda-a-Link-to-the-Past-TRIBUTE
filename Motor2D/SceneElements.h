@@ -63,7 +63,7 @@ public:
 	int width;
 	int height;
 
-	bool canBlit;
+	bool canBlit = false;
 	std::string	name;
 
 	uint scale;

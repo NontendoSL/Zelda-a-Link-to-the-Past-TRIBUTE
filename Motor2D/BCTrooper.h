@@ -39,9 +39,9 @@ private:
 
 	//Item* drop;
 	bool stunned = false;
-	Item* item_inside;
-	SDL_Texture* texture;
-	Collider* collision_enemy;
+	Item* item_inside = nullptr;
+	SDL_Texture* texture = nullptr;
+	Collider* collision_enemy = nullptr;
 };
 
 #endif//__BCTROOPER_H_

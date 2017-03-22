@@ -38,8 +38,8 @@ public:
 
 
 public:
-	SDL_Texture* texture;
-	Collider* collision;
+	SDL_Texture* texture = nullptr;
+	Collider* collision = nullptr;
 
 };
 
