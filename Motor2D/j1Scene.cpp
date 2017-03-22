@@ -147,7 +147,7 @@ bool j1Scene::Update(float dt)
 		}
 		App->render->Blit(TitleScreen_bg, bg_anim, 0, NULL, NULL, false);
 		App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			App->audio->FadeMusic(2);
 			LoadUi();
