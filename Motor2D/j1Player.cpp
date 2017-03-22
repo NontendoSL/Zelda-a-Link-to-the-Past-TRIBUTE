@@ -265,7 +265,7 @@ bool Player::Save()
 
 void Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
+	/*if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
 	{
 		if (c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + 1 >= c2->rect.y + c2->rect.h)
 		{
@@ -287,7 +287,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			App->render->camera.x -= speed * 2;
 			position.x = position.x + 1;
 		}
-	}
+	}*/
 }
 
 bool Player::Camera_inside()
