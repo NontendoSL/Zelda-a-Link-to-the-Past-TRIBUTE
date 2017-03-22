@@ -148,6 +148,7 @@ public:
 
 private:
 
+	bool navigation_map = false;
 	pugi::xml_document	map_file;
 	std::string folder;
 	bool				map_loaded;

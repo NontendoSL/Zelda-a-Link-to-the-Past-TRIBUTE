@@ -67,7 +67,7 @@ public:
 	Image* arrows; //TODO HIGH: Organize all this in less code;
 	Image* life;
 	Text* test;
-	Player* player;
+	Player* player = nullptr;
 	std::list<Soldier*> enemy;
 	std::list<Item*> items;
 	std::list<DynamicObjects*> dynobjects;

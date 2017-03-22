@@ -22,7 +22,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Map Parser");
 	bool ret = true;
-
+	navigation_map = false;
 	folder=config.child("folder").child_value();
 
 	return ret;
@@ -36,11 +36,14 @@ void j1Map::Draw()
 	//p2List_item<MapLayer*>* item = data.layers.start;
 	std::list<MapLayer*>::iterator item = data.layers.begin();
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		navigation_map = !navigation_map;
+
 	for(; item != data.layers.end(); item++)
 	{
 		MapLayer* layer = item._Ptr->_Myval;
 
-		if(layer->properties.Get("Draw") != 0)
+		if(layer->properties.Get("Draw") != 0 && navigation_map == false)
 			continue;
 
 		for(int y = 0; y < data.height; ++y)
