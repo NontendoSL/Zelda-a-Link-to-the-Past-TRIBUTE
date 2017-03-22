@@ -45,11 +45,11 @@ public:
 	// create img
 	Image* CreateImage(SDL_Rect rect, iPoint pos, std::string identifier="undefined", uint id=0);
 	// create text
-	Text* CreateText(const char* string, iPoint pos, uint size, bool addelement = true, std::string identifier = NULL, uint id = 0);
+	Text* CreateText(const char* string, iPoint pos, uint size, bool addelement = true, std::string identifier = "undefined", uint id = 0);
 	// create button
-	Button* CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 }, std::string identifier = NULL, uint id = 0);
+	Button* CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 }, std::string identifier = "undefined", uint id = 0);
 
-	Dialogue* CreateDialogue(iPoint pos, const char* string);
+	Dialogue* CreateDialogue(const char* string);
 public:
 	int Next_id = 0;
 

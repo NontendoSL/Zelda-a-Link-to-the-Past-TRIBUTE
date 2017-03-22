@@ -65,7 +65,7 @@ private:
 class Dialogue :public j1GuiEntity
 {
 public:
-	Dialogue(iPoint pos, const char* string);
+	Dialogue(const char* string);
 	~Dialogue();
 public:
 	void Draw();

@@ -213,7 +213,7 @@ Button::~Button()
 
 /////////////////////////////// DIALOGUE METHODS ///////////////////////////////
 
-Dialogue::Dialogue(iPoint pos, const char*string) :j1GuiEntity({ 0,82,190,62 }, pos)
+Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, {40,150})
 {
 	//TODO MID: Actual font needs a blue outline to match the original one, need to code that or edit the font creating the outline
 	type = DIALOGUE;
