@@ -22,27 +22,38 @@ v0.2:
 
 What is The Legend of Zelda: A Link to Pokemon World?
 	
-	It's a project for the Project 2 subject of the Design and Development of 
-	Video Games degree at Centre de la Imatge i Multimèdia (CITM), Terrassa. 
-	It's an action RPG game based on the original "A Link to The past" (1991, SNES). 
-	We use the SDL library and XML to manage dynamic items and enemies.
+	It's a project for a subject called Project 2 of Video Games Design and Development  
+	degree at Centre de la Imatge i Multimèdia (CITM), Terrassa. 
+	It's an action RPG game based on the original "A Link to The past" (1991, SNES)
+	and mixed with Pokémon Emerald (2004, GBA). 
+	We have taken the essence of Zelda: a Link to the Past and 
+	added our personal touch: an amazing journey to the Pokémon World. Link will become the best Pokémon 
+	trainer after fighting against some of them with his sword on his hand. Ganon has rapped the princess 
+	Zelda and you will have to do this travel to rescue her.
 
 Controls:
 
 	Keyboard:
 	
-		Arrow Keys -> move in any of the 8 directions.
-		B -> Add rupees to your inventory.
-		N -> Add arrows to your inventory.
-		M -> Add bombs to your inventory.
-
+		Arrow Keys -> Move in any of the 8 directions.
+		Enter -> Start game from menu.
+		Spacebar -> Hold it to charge the stamina bar.
+		
 	Controller:
 	
 		D-Pad -> move in any of the 8 directions.
 
+	DEBUG MODE:
+	
+		F1 -> Display navigation map.
+		F10 -> Display colliders.
+		B -> Add rupees to your inventory.
+		N -> Add arrows to your inventory.
+		M -> Add bombs to your inventory.
+		
 Authors:
 
-	We are a group of Video Games students. Our members are:
+	We are a group of Video Games students from CITM, UPC fundation in Terrassa. Our members are:
 		
 		Jordi Oña
 		Elliot Jiménez
