@@ -48,13 +48,11 @@ public:
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
+	//All Files
 	std::list<std::string> file_names;
 
-	//BIG
+	//All animations of the game
 	std::vector<AnimationStruct> animat;
-
-	Animation* current_animation;
-
 
 	int range_link;
 };
