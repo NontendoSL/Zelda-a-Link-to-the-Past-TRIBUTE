@@ -14,7 +14,7 @@
 	</font>
   
 	<gui>
-		<atlas file="gui/82158.png" />
+		<atlas file="gui/atlas.png" />
 	</gui>
 
   <Link>
