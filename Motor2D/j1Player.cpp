@@ -22,7 +22,7 @@
 Player::Player() : Creature()
 {
 	type = CREATURE;
-	name = "player";
+	name = "Link";
 }
 
 // Destructor
@@ -246,7 +246,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 void Player::Draw()
 {
-	App->anim_manager->PlayerSelector(state, direction, position);
+	App->anim_manager->Drawing_Manager(state, direction, position, name);
 	//App->render->Blit(player_texture, position.x, position.y/*, &Rect_player);
 }
 
@@ -260,7 +260,7 @@ bool Player::CleanUp()
 
 bool Player::Save()
 {
-	App->entity_elements->XML.child("config").child("player").child("stats").attribute("hp").set_value(hp);
+	App->entity_elements->XML.child("config").child("Link").child("stats").attribute("hp").set_value(hp);
 	App->entity_elements->XML.save_file("config.xml");
 	return true;
 }
@@ -407,8 +407,9 @@ bool Player::Move()
 			if (Camera_inside())
 				App->render->camera.x += speed * scale;
 			position.x -= speed;
-			walking = true;
+
 		}
+		walking = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
@@ -419,8 +420,8 @@ bool Player::Move()
 			if (Camera_inside())
 				App->render->camera.y -= speed * scale;
 			position.y += speed;
-			walking = true;
 		}
+		walking = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
@@ -431,8 +432,8 @@ bool Player::Move()
 			if (Camera_inside())
 				App->render->camera.x -= speed * scale;
 			position.x += speed;
-			walking = true;
 		}
+		walking = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
@@ -443,8 +444,8 @@ bool Player::Move()
 			if (Camera_inside())
 				App->render->camera.y += speed * scale;
 			position.y -= speed;
-			walking = true;
 		}
+		walking = true;
 	}
 	return walking;
 }

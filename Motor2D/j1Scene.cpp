@@ -215,8 +215,8 @@ bool j1Scene::Load_new_map(int n)
 		if (temp.attribute("n").as_int(0) == n)
 		{
 			//player position
-			player->position.x = temp.child("player").attribute("pos_x").as_int(0);
-			player->position.y = temp.child("player").attribute("pos_y").as_int(0);
+			player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
+			player->position.y = temp.child("Link").attribute("pos_y").as_int(0);
 
 			//Enemies
 			pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
@@ -234,8 +234,8 @@ bool j1Scene::Load_new_map(int n)
 			int scale = App->win->GetScale();
 			if (temp.child("camera").attribute("follow").as_bool() == true)
 			{
-				App->render->camera.x = -((temp.child("player").attribute("pos_x").as_int(0) - (256 / 2)) * scale);
-				App->render->camera.y = -((temp.child("player").attribute("pos_y").as_int(0) - (224 / 2)) * scale);
+				App->render->camera.x = -((temp.child("Link").attribute("pos_x").as_int(0) - (256 / 2)) * scale);
+				App->render->camera.y = -((temp.child("Link").attribute("pos_y").as_int(0) - (224 / 2)) * scale);
 			}
 			else
 			{

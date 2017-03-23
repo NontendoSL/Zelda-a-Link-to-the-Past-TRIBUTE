@@ -12,6 +12,9 @@
 enum ActionState;
 enum Direction;
 
+#define WALK 0
+#define ATTAKER 1
+#define SPECIALWALK 2
 
 struct AnimDirect
 {
@@ -19,13 +22,13 @@ struct AnimDirect
 	Animation North_action;
 	Animation West_action;
 	Animation South_action;
-	float speed;
 };
 
 struct AnimationStruct
 {
 	std::vector<AnimDirect> anim;
 	std::string name;
+	SDL_Texture* graphics = nullptr;
 };
 
 class j1AnimationManager : public j1Module
@@ -45,25 +48,19 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void PlayerSelector(ActionState status, Direction dir, iPoint position);
+	void Drawing_Manager(ActionState status, Direction dir, iPoint position, std::string name);
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
-	std::vector<Animation> link_anim;
 	std::list<std::string> file_names;
-	Animation link_walk_east;
-	Animation link_walk_north;
-	Animation link_walk_west;
-	Animation link_walk_south;
 
-	std::vector<AnimationStruct> anim;
+	//BIG
+	std::vector<AnimationStruct> animat;
 
 	Animation* current_animation;
-	SDL_Texture* graphics = nullptr;
+
 
 	int range_link;
-
-	std::string file_texture;
 };
 
 #endif //__j1ANIMATION_H_

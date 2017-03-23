@@ -257,13 +257,19 @@
     <Filter Include="Desenvolupament  ========\ElementsScene\NPCs">
       <UniqueIdentifier>{f1b3e4aa-26f2-45ab-a125-5ac7b95718a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Desenvolupament  ========\XML">
+      <UniqueIdentifier>{6a882597-537e-47fe-8328-a787353c0983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Animation\XML">
+      <UniqueIdentifier>{491a1a23-3b91-41e6-90ce-912a6543da05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml">
-      <Filter>Desenvolupament  ========\Tools</Filter>
+      <Filter>Desenvolupament  ========\XML</Filter>
     </Xml>
     <Xml Include="..\Game\LinkWalkingSprites.xml">
-      <Filter>Desenvolupament  ========\Animation</Filter>
+      <Filter>Desenvolupament  ========\Animation\XML</Filter>
     </Xml>
   </ItemGroup>
 </Project>

@@ -21,8 +21,6 @@ j1AnimationManager::~j1AnimationManager()
 
 bool j1AnimationManager::Awake(pugi::xml_node& test)
 {
-	file_texture = test.child("sprite").attribute("file").as_string();
-
 	for (pugi::xml_node temp = test.child("file"); temp.next_sibling() != NULL; temp = temp.next_sibling())
 	{
 		file_names.push_back(temp.attribute("file").as_string(""));
@@ -33,57 +31,64 @@ bool j1AnimationManager::Awake(pugi::xml_node& test)
 
 bool j1AnimationManager::Start()
 {
-
-	graphics = App->tex->Load(file_texture.c_str());
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
+	pugi::xml_node		state;
 	std::list<std::string>::iterator file = file_names.begin();
-
+	uint cont = 0;
 	for (; file != file_names.end(); file++)
 	{
-		/*Animation link_walk_east;
-		Animation link_walk_north;
-		Animation link_walk_west;
-		Animation link_walk_south;*/
+		//Load config
 		config = LoadConfig(config_file, file._Ptr->_Myval);
 
-		//config.child("")
-		bool stop_rearch = false;
-		std::string dir;
-		for (pugi::xml_node temp = config.child("sprite"); stop_rearch == false; temp = temp.next_sibling())
-		{
-			dir = temp.attribute("dir").as_string("");
-			if (dir == "East")
-			{
-				link_walk_east.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
-			}
-			else if (dir == "North")
-			{
-				link_walk_north.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
-			}
-			else if (dir == "West")
-			{
-				link_walk_west.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
-			}
-			else if (dir == "South")
-			{
-				link_walk_south.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
-			}
-			else
-			{
-				stop_rearch = true;
-				//graphics = App->tex->Load(config.attribute("imagePath").as_string(""));
-				link_walk_east.speed = 0.3f;
-				link_walk_north.speed = 0.3f;
-				link_walk_west.speed = 0.3f;
-				link_walk_south.speed = 0.3f;
-			}
+		//Create AnimationStruct temp --------------------------------
+		AnimationStruct temp_animat;
+		temp_animat.name = config.attribute("name").as_string("");
+		temp_animat.graphics = App->tex->Load(config.attribute("imagePath").as_string(""));
 
+		//Add all AnimDirect in animat.
+		state = config.child("state");
+		for (int i = 0; i < config.attribute("numberStates").as_int(0); i++)
+		{
+			bool stop_rearch = false;
+			std::string dir;
+			AnimDirect stanim;
+			for (pugi::xml_node temp = state.child("sprite"); stop_rearch == false; temp = temp.next_sibling())
+			{
+				dir = temp.attribute("dir").as_string("");
+				if (dir == "East")
+				{
+					stanim.East_action.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
+				}
+				else if (dir == "North")
+				{
+					stanim.North_action.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
+				}
+				else if (dir == "West")
+				{
+					stanim.West_action.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
+				}
+				else if (dir == "South")
+				{
+					stanim.South_action.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
+				}
+				else
+				{
+					stop_rearch = true;
+					stanim.East_action.speed = state.attribute("speed").as_float(0);
+					stanim.North_action.speed = state.attribute("speed").as_float(0);
+					stanim.South_action.speed = state.attribute("speed").as_float(0);
+					stanim.West_action.speed = state.attribute("speed").as_float(0);
+				}
+			}
+			temp_animat.anim.push_back(stanim);
+			state = state.next_sibling();
 		}
+		//Add new AnimationStruct in animat -------------------------
+		animat.push_back(temp_animat);
+		cont++;
 	}
 	range_link = 8;
-
-	/*link.speed = 0.3f;*/
 
 
 	return true;
@@ -94,92 +99,95 @@ bool j1AnimationManager::CleanUp()
 	return true;
 }
 
-void j1AnimationManager::PlayerSelector(ActionState status, Direction dir, iPoint position) 
+void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, std::string name) 
 {
-	if (dir == UP)
+	for (int i = 0; i < animat.size(); i++)
 	{
-		if (status == IDLE)
+		if (animat[i].name == name)
 		{
-			App->render->Blit(App->scene->player->player_texture, position.x, position.y - range_link, &link_walk_north.frames[3]);
-		}
-		else if (status == ATTACK)
-		{
+			if (dir == UP)
+			{
+				if (status == IDLE)
+				{
+					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].North_action.frames[0]);
+				}
+				else if (status == ATTACK)
+				{
 
-		}
-		else if (status == WALKING)
-		{
-			current_animation = &link_walk_north;
-			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(App->scene->player->player_texture, position.x, position.y - range_link, &r);
-		}
-		else
-		{
+				}
+				else if (status == WALKING)
+				{
+					SDL_Rect r = animat[i].anim[WALKING].North_action.GetCurrentFrame();
+					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &r);
+				}
+				else
+				{
 
+				}
+			}
+			else if (dir == DOWN)
+			{
+				if (status == IDLE)
+				{
+					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].South_action.frames[0]);
+				}
+				else if (status == ATTACK)
+				{
+
+				}
+				else if (status == WALKING)
+				{
+					SDL_Rect r = animat[i].anim[WALKING].South_action.GetCurrentFrame();
+					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &r);
+				}
+				else
+				{
+
+				}
+			}
+			else if (dir == LEFT)
+			{
+				if (status == IDLE)
+				{
+					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].West_action.frames[0]);
+				}
+				else if (status == ATTACK)
+				{
+
+				}
+				else if (status == WALKING)
+				{
+					SDL_Rect r = animat[i].anim[WALKING].West_action.GetCurrentFrame();
+					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &r);
+				}
+				else
+				{
+
+				}
+			}
+			else if (dir == RIGHT)
+			{
+				if (status == IDLE)
+				{
+					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].East_action.frames[0]);
+				}
+				else if (status == ATTACK)
+				{
+
+				}
+				else if (status == WALKING)
+				{
+					SDL_Rect r = animat[i].anim[WALKING].East_action.GetCurrentFrame();
+					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &r);
+				}
+				else
+				{
+
+				}
+			}
 		}
 	}
-	else if (dir == DOWN)
-	{
-		if (status == IDLE)
-		{
-			App->render->Blit(graphics, position.x, position.y - range_link, &link_walk_south.frames[3]);
-		}
-		else if (status == ATTACK)
-		{
 
-		}
-		else if (status == WALKING)
-		{
-			current_animation = &link_walk_south;
-			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(graphics, position.x, position.y - range_link, &r);
-		}
-		else
-		{
-
-		}
-	}
-	else if (dir == LEFT)
-	{
-		if (status == IDLE)
-		{
-			App->render->Blit(graphics, position.x, position.y - range_link, &link_walk_west.frames[3]);
-		}
-		else if (status == ATTACK)
-		{
-
-		}
-		else if (status == WALKING)
-		{
-			current_animation = &link_walk_west;
-			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(graphics, position.x, position.y - range_link, &r);
-		}
-		else
-		{
-
-		}
-	}
-	else if (dir == RIGHT)
-	{
-		if (status == IDLE)
-		{
-			App->render->Blit(graphics, position.x, position.y - range_link, &link_walk_east.frames[3]);
-		}
-		else if (status == ATTACK)
-		{
-
-		}
-		else if (status == WALKING)
-		{
-			current_animation = &link_walk_east;
-			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(graphics, position.x, position.y - range_link, &r);
-		}
-		else
-		{
-
-		}
-	}
 
 }
 
@@ -197,7 +205,7 @@ pugi::xml_node j1AnimationManager::LoadConfig(pugi::xml_document& config_file, s
 	if (result == NULL)
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
 	else
-		ret = config_file.child("TextureAtlas");
+		ret = config_file.child("Animation");
 
 	return ret;
 }
