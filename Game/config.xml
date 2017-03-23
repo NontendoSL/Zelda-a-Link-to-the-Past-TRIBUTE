@@ -16,18 +16,18 @@
 	<gui>
 		<atlas file="gui/82158.png" />
 	</gui>
-  
-	<player>
+
+  <Link>
 		<atlas file="textures/LinkWalkingSprites.png" />
 		<hit file="textures/hit.png" />
 		<day-night file="gui/test.png" />
 		<stats hp="74" attack="10" speed="1" pos_x="100" pos_y="90" />
-	</player>
+	</Link>
   
 	<maps>    
 		<map n="1" file="TiledLinkHouse.tmx">
       <camera follow="false"/>
-			<player pos_x="104" pos_y="150" />
+      <Link pos_x="104" pos_y="150" />
 			<items>
 				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 				<item id="2" name="bomb_2" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
@@ -41,7 +41,7 @@
     
 		<map n="2" file="LinkHouseOutdoor.tmx">
       <camera follow="true"/>
-			<player pos_x="184" pos_y="265" />
+      <Link pos_x="184" pos_y="265" />
 			<enemies num="18">
 				<enemy id="1" pos_x="160" pos_y="12" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
 				<enemy id="1" pos_x="184" pos_y="12" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
@@ -74,7 +74,7 @@
     
     <map n="3" file="Test_Slice.tmx">
       <camera follow="true"/>
-      <player pos_x="150" pos_y="100" />
+      <Link pos_x="150" pos_y="100" />
     </map>
 	</maps>
   
