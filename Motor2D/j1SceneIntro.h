@@ -48,8 +48,9 @@ private:
 	//Start screen
 	SDL_Texture* TitleScreen_letters;
 	SDL_Texture* TitleScreen_bg;
+	SDL_Texture* Menu_bg;
 	float bg_anim = 0;
-	bool right = false;
+	bool right = false, menu=false;
 
 };
 

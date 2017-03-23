@@ -41,6 +41,7 @@ bool j1SceneIntro::Start()
 {
 	TitleScreen_letters = App->tex->Load("gui/title_screen/letters.png");
 	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg");
+	Menu_bg= App->tex->Load("gui/title_screen/menu_bg.jpg");
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	return true;
 }
@@ -58,22 +59,33 @@ bool j1SceneIntro::Update(float dt)
 {
 	if (App->scene->ingame == false)
 	{
-		if (bg_anim < -120) {
-			right = true;
-		}
-		if (bg_anim > 0) {
-			right = false;
-		}
-		if (right)
+		if (menu == false)
 		{
-			bg_anim += 0.5;
+			if (bg_anim < -120) {
+				right = true;
+			}
+			if (bg_anim > 0) {
+				right = false;
+			}
+			if (right)
+			{
+				bg_anim += 0.4;
+			}
+			else
+			{
+				bg_anim -= 0.4;
+			}
+			App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
+			App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
 		}
 		else
 		{
-			bg_anim -= 0.5;
+			if (bg_anim > -70) {
+				bg_anim -= 0.2;
+			}
+			App->render->Blit(Menu_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
+			App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
 		}
-		App->render->Blit(TitleScreen_bg, bg_anim, 0, NULL, NULL, false);
-		App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
 	}
 
 	return true;
@@ -90,9 +102,18 @@ bool j1SceneIntro::PostUpdate()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		App->audio->FadeMusic(2);
-		App->scene->ingame = true;
-		App->scene->Start();
+		if (menu == false)
+		{
+			menu=true;
+			bg_anim = 0;
+			TitleScreen_letters= App->tex->Load("gui/title_screen/letters_menu.png");
+		}
+		else
+		{
+			App->audio->FadeMusic(2);
+			App->scene->ingame = true;
+			App->scene->Start();
+		}
 	}
 	return ret;
 }
