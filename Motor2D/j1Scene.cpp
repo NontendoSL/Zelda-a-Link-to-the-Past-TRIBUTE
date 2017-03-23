@@ -38,10 +38,12 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	TitleScreen_letters=App->tex->Load("gui/title_screen/letters.png");
-	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg");
+	if (ingame == true)
+	{
+		LoadUi();
+		Load_new_map(1);
+	}
 	switch_map = 0;
-	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	return true;
 }
 
@@ -130,32 +132,8 @@ bool j1Scene::Update(float dt)
 
 
 	}
-	else {
-		if (bg_anim < -120 ) {
-			right=true;
-		}
-		if (bg_anim > 0) {
-			right=false;
-		}
-		if (right)
-		{
-			bg_anim+=0.5;
-		}
-		else 
-		{
-			bg_anim-=0.5;
-		}
-		App->render->Blit(TitleScreen_bg, bg_anim, 0, NULL, NULL, false);
-		App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			App->audio->FadeMusic(2);
-			LoadUi();
-			Load_new_map(1);
-			ingame = true;
-		}
-	}
 	
+
 	return true;
 }
 

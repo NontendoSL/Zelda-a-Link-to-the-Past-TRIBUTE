@@ -53,12 +53,8 @@ private:
 	void LoadUi();
 
 public:
-	//Start screen
-	SDL_Texture* TitleScreen_letters;
-	SDL_Texture* TitleScreen_bg;
-	
-	float bg_anim = 0;
-	bool right = false;
+
+
 	//Ingame
 	Image* charge = nullptr,* force = nullptr;
 	Image* item = nullptr;
