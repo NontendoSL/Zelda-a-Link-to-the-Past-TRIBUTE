@@ -19,7 +19,13 @@ struct AnimDirect
 	Animation West_action;
 	Animation South_action;
 	float speed;
-	std::string action;
+	AnimationState state;
+};
+
+struct AnimationStruct
+{
+	std::vector<AnimDirect> anim;
+	std::string name;
 };
 
 class j1AnimationManager : public j1Module
@@ -45,11 +51,12 @@ private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
 	std::vector<Animation> link_anim;
 	std::list<std::string> file_names;
-	std::vector<std::vector<AnimDirect>> animdirect;//TODO LOW -> need implemented
 	Animation link_walk_east;
 	Animation link_walk_north;
 	Animation link_walk_west;
 	Animation link_walk_south;
+
+	std::vector<AnimationStruct> anim;
 
 	Animation* current_animation;
 	SDL_Texture* graphics = nullptr;
