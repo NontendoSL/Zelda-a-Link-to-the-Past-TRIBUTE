@@ -9,22 +9,6 @@
 class Creature;
 class InputListener;
 
-enum DIRECTION
-{
-	D_UP,
-	D_DOWN,
-	D_RIGHT,
-	D_LEFT
-};
-
-enum PLAYER_STATE
-{
-	P_IDLE,
-	P_WALKING,
-	P_ATTACKING,
-	P_DYING
-};
-
 class Text;
 
 class Player : public Creature, public InputListener
@@ -98,9 +82,6 @@ private:
 
 	bool Camera_follow_player = true;
 	bool changeResolution = false;
-	DIRECTION current_direction = D_DOWN;
-	PLAYER_STATE curr_state = P_IDLE;
-
 };
 
 

@@ -6,7 +6,7 @@
 #include "SDL/include/SDL_rect.h"
 
 enum CreatureType { PLAYER, POKEMON, GANON, SOLDIER, BCTROOPER, POKETRAINER };
-//enum ActionState { IDLE, WALKING, ATTACKING, DYING };
+enum ActionState { IDLE, WALKING, ATTACK, DYING };
 // ---------------------------------------------------
 class Creature : public SceneElement
 {
@@ -32,9 +32,8 @@ public:
 
 
 public:
-	Direction dir;
 	CreatureType c_type;
-	//ActionState state;
+	ActionState state;
 	uint hp;
 	bool walking = false;
 	int attack;

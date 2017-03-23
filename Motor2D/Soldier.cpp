@@ -30,13 +30,13 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 			position.y = conf.attribute("pos_y").as_int(0);
 			temp = conf.attribute("dir").as_string("");
 			if (temp == "up")
-				dir = UP;
+				direction = UP;
 			else if (temp == "down")
-				dir = DOWN;
+				direction = DOWN;
 			else if (temp == "left")
-				dir = LEFT;
+				direction = LEFT;
 			else
-				dir = RIGHT;
+				direction = RIGHT;
 
 			npc_id = id;
 			stop_search = true;
@@ -96,19 +96,19 @@ void Soldier::Draw()
 	{
 		if (hp > 0)
 		{
-			if (dir == UP)
+			if (direction == UP)
 			{
 				App->render->Blit(texture, position.x, position.y - marge, &soldier_up);
 			}
-			if (dir == DOWN)
+			if (direction == DOWN)
 			{
 				App->render->Blit(texture, position.x, position.y - marge, &soldier_down);
 			}
-			if (dir == RIGHT)
+			if (direction == RIGHT)
 			{
 				App->render->Blit(texture, position.x, position.y - marge, &soldier_right);
 			}
-			if (dir == LEFT)
+			if (direction == LEFT)
 			{
 				App->render->Blit(texture, position.x, position.y - marge, &soldier_left);
 			}
@@ -118,19 +118,19 @@ void Soldier::Draw()
 	{
 		if (hp > 0)
 		{
-			if (dir == UP)
+			if (direction == UP)
 			{
 				App->render->Blit(texture, position.x, position.y - marge, &soldier_up_2);
 			}
-			if (dir == DOWN)
+			if (direction == DOWN)
 			{
 				App->render->Blit(texture, position.x, position.y - marge, &soldier_down_2);
 			}
-			if (dir == RIGHT)
+			if (direction == RIGHT)
 			{
 				App->render->Blit(texture, position.x, position.y - marge, &soldier_right_2);
 			}
-			if (dir == LEFT)
+			if (direction == LEFT)
 			{
 				App->render->Blit(texture, position.x, position.y - marge, &soldier_left_2);
 			}

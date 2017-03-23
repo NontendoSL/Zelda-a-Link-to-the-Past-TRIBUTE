@@ -9,8 +9,9 @@
 #include "j1Render.h"
 #include "p2Defs.h"
 
-enum AnimationState{IDLE,WALKING,ATTACK};
-enum Direction{UP,DOWN,LEFT,RIGHT};
+enum ActionState;
+enum Direction;
+
 
 struct AnimDirect
 {
@@ -19,7 +20,6 @@ struct AnimDirect
 	Animation West_action;
 	Animation South_action;
 	float speed;
-	AnimationState state;
 };
 
 struct AnimationStruct
@@ -45,7 +45,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void PlayerSelector(AnimationState status, Direction dir, iPoint position);
+	void PlayerSelector(ActionState status, Direction dir, iPoint position);
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;

@@ -8,6 +8,7 @@
 #include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1EntityElementsScene.h"
+#include "j1Creature.h"
 
 j1AnimationManager::j1AnimationManager()
 {
@@ -93,7 +94,7 @@ bool j1AnimationManager::CleanUp()
 	return true;
 }
 
-void j1AnimationManager::PlayerSelector(AnimationState status, Direction dir, iPoint position) 
+void j1AnimationManager::PlayerSelector(ActionState status, Direction dir, iPoint position) 
 {
 	if (dir == UP)
 	{

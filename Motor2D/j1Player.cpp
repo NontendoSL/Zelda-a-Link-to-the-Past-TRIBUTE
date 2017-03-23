@@ -57,9 +57,8 @@ bool Player::Start()
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
 	maptex = App->tex->Load(texmapfile_name.c_str());
 	hit_tex = App->tex->Load(file_hit.c_str());
-	dir = UP;
-	curr_state = P_IDLE;
-	current_direction = D_UP;
+	direction = UP;
+	state = IDLE;
 
 	scale = App->win->GetScale();
 	width = 15;
@@ -96,14 +95,14 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		Camera_follow_player = !Camera_follow_player;
 
 	// STATE MACHINE ------------------
-	switch (curr_state)
+	switch (state)
 	{
-	case P_IDLE:
+	case IDLE:
 	{
 		Idle();
 		break;
 	}
-	case P_WALKING:
+	case WALKING:
 	{
 		Walking();
 		break;
@@ -247,7 +246,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 void Player::Draw()
 {
-	App->anim_manager->PlayerSelector(state, dir, position);
+	App->anim_manager->PlayerSelector(state, direction, position);
 	//App->render->Blit(player_texture, position.x, position.y/*, &Rect_player);
 }
 
@@ -297,7 +296,7 @@ bool Player::Camera_inside()
 {
 	//256x224
 	iPoint temp = App->map->MapToWorld(App->map->data.width, App->map->data.height);
-	if (dir == UP)
+	if (direction == UP)
 	{
 		if (position.y < temp.y - (224 / 2))
 		{
@@ -309,7 +308,7 @@ bool Player::Camera_inside()
 		else
 			return false;
 	}
-	if (dir == DOWN)
+	if (direction == DOWN)
 	{
 		if (position.y > 110)
 		{
@@ -322,7 +321,7 @@ bool Player::Camera_inside()
 			return false;
 
 	}
-	if (dir == LEFT)
+	if (direction == LEFT)
 	{
 		if (position.x < temp.x - 130)
 		{
@@ -334,7 +333,7 @@ bool Player::Camera_inside()
 		else
 			return false;
 	}
-	if (dir == RIGHT)
+	if (direction == RIGHT)
 	{
 		if (position.x > 128)
 		{
@@ -357,14 +356,13 @@ bool Player::Idle()
 		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT ||
 		App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
-		curr_state = P_WALKING;
+		state = WALKING;
 		CheckOrientation();
 	}
 
 	else
 	{
 		state = IDLE;
-		curr_state = P_IDLE;
 	}
 
 	return true;
@@ -378,13 +376,11 @@ bool Player::Walking()
 	if (walking == false)
 	{
 		state = IDLE;
-		curr_state = P_IDLE;
 	}
 
 	else
 	{
 		state = WALKING;
-		curr_state = P_WALKING;
 	}
 	return false;
 }
@@ -405,8 +401,7 @@ bool Player::Move()
 {
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
-		dir = LEFT;
-		current_direction = D_LEFT;
+		direction = LEFT;
 		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
 		{
 			if (Camera_inside())
@@ -418,8 +413,7 @@ bool Player::Move()
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 	{
-		dir = DOWN;
-		current_direction = D_DOWN;
+		direction = DOWN;
 		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
 		{
 			if (Camera_inside())
@@ -431,8 +425,7 @@ bool Player::Move()
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
-		dir = RIGHT;
-		current_direction = D_RIGHT;
+		direction = RIGHT;
 		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
 		{
 			if (Camera_inside())
@@ -444,8 +437,7 @@ bool Player::Move()
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
-		dir = UP;
-		current_direction = D_UP;
+		direction = UP;
 		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
 		{
 			if (Camera_inside())
@@ -461,23 +453,19 @@ bool Player::CheckOrientation()
 {
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
-		dir = LEFT;
-		current_direction = D_LEFT;
+		direction = LEFT;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
-		dir = RIGHT;
-		current_direction = D_RIGHT;
+		direction = RIGHT;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
-		dir = UP;
-		current_direction = D_UP;
+		direction = UP;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 	{
-		dir = DOWN;
-		current_direction = D_DOWN;
+		direction = DOWN;
 	}
 	return true;
 }
