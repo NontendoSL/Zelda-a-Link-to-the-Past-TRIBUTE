@@ -89,8 +89,6 @@ bool j1AnimationManager::Start()
 		cont++;
 	}
 	range_link = 8;
-
-
 	return true;
 }
 

@@ -12,10 +12,6 @@
 enum ActionState;
 enum Direction;
 
-#define WALK 0
-#define ATTAKER 1
-#define SPECIALWALK 2
-
 struct AnimDirect
 {
 	Animation East_action;
