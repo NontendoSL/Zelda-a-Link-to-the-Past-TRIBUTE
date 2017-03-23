@@ -153,7 +153,6 @@ EVENTSTATE InputManager::EventPressed(INPUTEVENT action) const
 void InputManager::AddListener(InputListener* new_listener)
 {
 	//To improve this: Search if the listener is actually in the list
-
 	if (new_listener)
 	{
 		new_listener->input_active = true;

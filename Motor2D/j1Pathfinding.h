@@ -3,7 +3,6 @@
 
 #include "j1Module.h"
 #include "p2Point.h"
-//#include "p2DynArray.h"
 #include <vector>
 
 #define DEFAULT_PATH_LENGTH 50
@@ -34,8 +33,7 @@ public:
 	int CreatePath(const iPoint& origin, const iPoint& destination);
 
 	// To request all tiles involved in the last generated path
-	//const p2DynArray<iPoint>* GetLastPath() const;
-	const std::vector<iPoint>::iterator GetLastPath() const;
+	std::vector<iPoint>* GetLastPath();
 
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
@@ -51,10 +49,11 @@ private:
 	// size of the map
 	uint width;
 	uint height;
+
 	// all map walkability values [0..255]
 	uchar* map;
+
 	// we store the created path here
-	//p2DynArray<iPoint> last_path;
 	std::vector<iPoint> last_path;
 };
 
@@ -73,10 +72,16 @@ struct PathNode
 
 	// Fills a list (PathList) of all valid adjacent pathnodes
 	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+
+	// Fills a list (PathList) of all valid adjacent pathnodes with all cardinal points
+	uint FindWalkableAdjacents_D(PathList& list_to_fill) const;
+
 	// Calculates this tile score
 	int Score() const;
+
 	// Calculate the F for a specific destination tile
 	int CalculateF(const iPoint& destination);
+	float CalculateF_D(const iPoint& destination);
 
 	// -----------
 	int g;
@@ -92,14 +97,13 @@ struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
 	//p2List_item<PathNode>* Find(const iPoint& point) const; TODO - p2list
-	std::list<PathNode>::const_iterator Find(const iPoint& point)const;
+	std::list<PathNode>::iterator Find(const iPoint& point);
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
 	//p2List_item<PathNode>* GetNodeLowestScore() const;
 	std::list<PathNode>::const_iterator GetNodeLowestScore() const;
 	// -----------
 	// The list itself, note they are not pointers!
-	//p2List<PathNode> list;
 	std::list<PathNode> list;
 };
 
