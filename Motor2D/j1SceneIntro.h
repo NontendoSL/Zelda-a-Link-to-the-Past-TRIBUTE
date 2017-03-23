@@ -11,6 +11,7 @@ class Image;
 class Text;
 class Button;
 class Dialogue;
+class Menu;
 
 class Player;
 class Item;
@@ -44,6 +45,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void LoadMainMenu();
 private:
 	//Start screen
 	SDL_Texture* TitleScreen_letters;
@@ -52,6 +54,7 @@ private:
 	float bg_anim = 0;
 	bool right = false, menu=false;
 
+	Menu* main_menu;
 };
 
 #endif

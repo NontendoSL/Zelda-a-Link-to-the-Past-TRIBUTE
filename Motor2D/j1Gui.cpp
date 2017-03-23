@@ -43,8 +43,10 @@ bool j1Gui::Start()
 bool j1Gui::PreUpdate()
 {
 	for (uint i = 0; i < entities.size(); i++) {
-		entities[i]->Update();
-		entities[i]->Handle_Input();
+		if (entities[i]->visible == true) {
+			entities[i]->Update();
+			entities[i]->Handle_Input();
+		}
 	}
 	return true;
 }
@@ -101,9 +103,9 @@ Text* j1Gui::CreateText(const char* string, iPoint pos, uint size, bool addeleme
 	return element;
 }
 
-Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, const char* textstring, uint textsize, iPoint textpos, std::string identifier, uint id) {
+Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated, const char* textstring, uint textsize, iPoint textpos, std::string identifier, uint id) {
 
-	Button* element = new Button(rect, pos, text2, text3, textstring, textsize, textpos, identifier, id);
+	Button* element = new Button(rect, pos, text2, text3, animated, textstring, textsize, textpos, identifier, id);
 
 	entities.push_back(element);
 

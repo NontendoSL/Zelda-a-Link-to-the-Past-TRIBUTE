@@ -5,6 +5,7 @@
 
 enum ButtonState{normal, over, clicked};
 struct 	_TTF_Font;
+class Animation;
 // ---------------------------------------------------
 
 class Image : public j1GuiEntity
@@ -31,7 +32,7 @@ public:
 	void Draw();
 	void Update();
 public:
-	Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos, std::string identifier="undefined", uint id = 0);
+	Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool animated, const char* textstring, uint textsize, iPoint textpos, std::string identifier="undefined", uint id = 0);
 	~Button();
 
 public:
@@ -39,6 +40,8 @@ public:
 	ButtonState state;
 	SDL_Rect texture2, texture3;
 	Text* buttontext;
+	Animation* anim=nullptr;
+	bool resize = true;
 };
 
 // -----------------------------------------------------
@@ -62,7 +65,7 @@ private:
 
 // -------------------------------------------------------
 
-class Dialogue :public j1GuiEntity
+class Dialogue: public j1GuiEntity
 {
 public:
 	Dialogue(const char* string);
@@ -79,5 +82,21 @@ public:
 };
 
 // ------------------------------------------------------
+
+class Menu :public j1GuiEntity
+{
+public:
+	Menu();
+	~Menu();
+public:
+	void AddElement(j1GuiEntity* element);
+	void Select(int value);
+	void Open();
+	void Close();
+private:
+	std::vector<j1GuiEntity*>menu_elements;
+public:
+	uint id_selected;
+};
 
 #endif // __j1GUIELEMENTS_H__

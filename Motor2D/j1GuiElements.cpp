@@ -5,9 +5,11 @@
 #include "j1Textures.h"
 #include "j1Fonts.h"
 #include "j1Input.h"
+#include "Animation.h"
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
+#include <assert.h>
 
 /////////////////////////////// IMAGE METHODS ///////////////////////////////
 
@@ -161,7 +163,7 @@ Text::~Text() {
 }
 
 /////////////////////////////// BUTTON METHODS ///////////////////////////////
-Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const char* textstring, uint textsize, iPoint textpos, std::string identifier, uint id) :j1GuiEntity(rectangle, pos,identifier,id)
+Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool animated, const char* textstring, uint textsize, iPoint textpos, std::string identifier, uint id) :j1GuiEntity(rectangle, pos,identifier,id)
 {
 	type = BUTTON;
 	state = normal;
@@ -173,6 +175,10 @@ Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, const
 	texture2.h = texture3.h = Hitbox.h;
 	buttontext = new Text(textstring, { textpos.x,textpos.y }, textsize);
 	start = true;
+	if (animated==true) {
+		anim = new Animation();
+	}
+
 }
 
 void Button::Draw()
@@ -181,13 +187,13 @@ void Button::Draw()
 	switch (state)
 	{
 	case normal:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0,resize);
 		break;
 	case over:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture2, 0);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture2, 0, resize);
 		break;
 	case clicked:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture3, 0);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture3, 0, resize);
 		break;
 	}
 	buttontext->Draw();
@@ -195,6 +201,9 @@ void Button::Draw()
 
 void Button::Update()
 {
+	if (anim != nullptr) {
+		texture2 = anim->GetCurrentFrame();
+	}
 	if (selected == true)
 	{
 		state = over;
@@ -272,4 +281,49 @@ Dialogue::~Dialogue()
 {
 	//need to clear list;
 }
+
+/////////////////////////////// MENU METHODS ///////////////////////////////
+
+Menu::Menu()
+{
+	id_selected = 1;
+	visible = false;
+}
+
+void Menu::AddElement(j1GuiEntity* element)
+{
+	element->id = menu_elements.size()+1;
+	menu_elements.push_back(element);
+}
+
+void Menu::Select(int value)
+{
+	//assert(id_selected + value < menu_elements.size() + 1 || id_selected + value >0);
+	if (id_selected + value < menu_elements.size() && id_selected + value >=0)
+	{
+		menu_elements[id_selected]->selected = false;
+		id_selected += value;
+		menu_elements[id_selected]->selected = true;
+	}
+}
+
+void Menu::Open()
+{
+	for (uint i = 0; i < menu_elements.size(); i++) {
+		menu_elements[i]->visible = true;
+	}
+}
+
+void Menu::Close()
+{
+	for (uint i = 0; i < menu_elements.size(); i++) {
+		menu_elements[i]->visible = false;
+	}
+}
+
+Menu::~Menu()
+{
+	//need to clear vector;
+}
+
 // Entity Elements ---------------------------------------------------

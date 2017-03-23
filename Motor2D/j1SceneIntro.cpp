@@ -43,6 +43,7 @@ bool j1SceneIntro::Start()
 	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg");
 	Menu_bg= App->tex->Load("gui/title_screen/menu_bg.jpg");
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
+
 	return true;
 }
 
@@ -95,27 +96,76 @@ bool j1SceneIntro::Update(float dt)
 bool j1SceneIntro::PostUpdate()
 {
 	bool ret = true;
-
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->scene->ingame == false)
 	{
-		ret = false;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		if (menu == false)
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 		{
-			menu=true;
-			bg_anim = 0;
-			TitleScreen_letters= App->tex->Load("gui/title_screen/letters_menu.png");
+			main_menu->Select(1);
 		}
-		else
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 		{
-			App->audio->FadeMusic(2);
-			App->scene->ingame = true;
-			App->scene->Start();
+			main_menu->Select(-1);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			ret = false;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			if (menu == false)
+			{
+				menu = true;
+				bg_anim = 0;
+				TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
+				LoadMainMenu();
+			}
+			if (main_menu->id_selected == 1)
+			{
+				App->audio->FadeMusic(2);
+				App->scene->ingame = true;
+				App->scene->Start();
+				main_menu->Close();
+			}
 		}
 	}
+	
 	return ret;
+}
+
+void j1SceneIntro::LoadMainMenu()
+{
+	main_menu = new Menu();
+	Button* menu_button=App->gui->CreateButton({ 1,146,110,17 }, { 172 / 2,180 / 2 }, { 0,0 }, { 112,164 }, true);
+	menu_button->anim->PushBack({ 112,146,110,17 });
+	menu_button->anim->PushBack({ 223,146,110,17 });
+	menu_button->anim->PushBack({ 334,146,110,17 });
+	menu_button->anim->PushBack({ 1,164,110,17 });
+	menu_button->anim->PushBack({ 334,146,110,17 });
+	menu_button->anim->PushBack({ 223,146,110,17 });
+	menu_button->anim->speed = 0.25f;
+	menu_button->resize = false;
+	main_menu->AddElement(menu_button);
+	menu_button= App->gui->CreateButton({ 1,182,125,17 }, { 172 / 2,210 / 2 }, { 0,0 }, { 127,200 }, true);
+	menu_button->anim->PushBack({ 127,182,125,17 });
+	menu_button->anim->PushBack({ 253,182,125,17 });
+	menu_button->anim->PushBack({ 379,182,125,17 });
+	menu_button->anim->PushBack({ 1,200,125,17 });
+	menu_button->anim->PushBack({ 379,182,125,17 });
+	menu_button->anim->PushBack({ 253,182,125,17 });
+	menu_button->anim->speed = 0.25f;
+	menu_button->resize = false;
+	main_menu->AddElement(menu_button);
+	menu_button = App->gui->CreateButton({ 1,218,110,17 }, { 172 / 2, 240/ 2 }, { 0,0 }, { 112,236 }, true);
+	menu_button->anim->PushBack({ 112,218,110,17 });
+	menu_button->anim->PushBack({ 223,218,110,17 });
+	menu_button->anim->PushBack({ 334,218,110,17 });
+	menu_button->anim->PushBack({ 1,236,110,17 });
+	menu_button->anim->PushBack({ 334,218,110,17 });
+	menu_button->anim->PushBack({ 223,218,110,17 });
+	menu_button->anim->speed = 0.25f;
+	menu_button->resize = false;
+	main_menu->AddElement(menu_button);
+	main_menu->Select(-1);
 }
 
 // Called before quitting
