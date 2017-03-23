@@ -32,6 +32,7 @@ bool j1Scene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
+	ingame = false;
 	return ret;
 }
 

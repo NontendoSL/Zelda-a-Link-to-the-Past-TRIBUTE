@@ -98,7 +98,7 @@ bool j1SceneIntro::Update(float dt)
 bool j1SceneIntro::PostUpdate()
 {
 	bool ret = true;
-	if (App->scene->ingame == false)
+	if (App->scene->ingame == false )
 	{
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 		{
@@ -177,13 +177,19 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 		switch (action)
 		{
 		case MUP:
-			if (state == E_DOWN)
-			main_menu->Select(-1);
+			if (menu == true)
+			{
+				if (state == E_DOWN)
+					main_menu->Select(-1);
+			}
 			break;
 
 		case MDOWN:
-			if (state == E_DOWN)
-			main_menu->Select(1);
+			if (menu == true)
+			{
+				if (state == E_DOWN)
+					main_menu->Select(1);
+			}
 			break;
 
 		case BUTTON_B:
