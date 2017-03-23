@@ -170,7 +170,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
-		App->scene->dialog->PushLine(true);
+		//App->scene->dialog->PushLine(true);
 	}
 
 	/*//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
@@ -387,14 +387,16 @@ bool Player::Walking()
 
 void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 {
-	/*switch (action)
+	switch (action)
 	{
-	case JUMP:
-
-	if (state == E_DOWN)
-	position.y += 20;
+	case BUTTON_B:
+		if (state == E_DOWN)
+		{
+			App->render->DrawQuad({ position.x,position.y, 8, 8 }, 255, 255, 255);
+			LOG("ATTACK!");
+		}		
 	break;
-	}*/
+	}
 }
 
 bool Player::Move()

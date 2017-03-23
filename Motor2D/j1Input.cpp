@@ -30,7 +30,6 @@ bool j1Input::Awake(pugi::xml_node& config)
 	bool ret = true;
 	SDL_Init(0);
 
-	//TODO 1 Init SDL_INIT_GAMECONTROLLER
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
@@ -48,7 +47,6 @@ bool j1Input::Start()
 	SDL_StartTextInput();
 	//SDL_StopTextInput();
 
-	//TODO 2 open the game controller pointer
 	/* Open the first available controller. */
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) 
 	{
@@ -73,6 +71,7 @@ bool j1Input::PreUpdate()
 {
 	mouse_motion_x = 0;
 	mouse_motion_y = 0;
+
 	static SDL_Event event;
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
@@ -105,7 +104,6 @@ bool j1Input::PreUpdate()
 	}
 	for (int i = 0; i < NUM_CONTROLLER_BUTTONS; ++i)
 	{
-		//TODO 3 Fill this
 		if (controller_buttons[i] == KEY_DOWN || controller_buttons[i] == KEY_REPEAT)
 		{
 			controller_buttons[i] = KEY_REPEAT;
@@ -116,9 +114,6 @@ bool j1Input::PreUpdate()
 		{
 			controller_buttons[i] = KEY_IDLE;
 		}
-
-		//TODO 5 Call it here too 
-
 	}
 
 	while (SDL_PollEvent(&event) != 0)
@@ -171,22 +166,16 @@ bool j1Input::PreUpdate()
 			mouse_motion_y = event.motion.yrel / scale;
 			mouse_x = event.motion.x / scale;
 			mouse_y = event.motion.y / scale;
-			//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
 		}
-		
 
 		case SDL_CONTROLLERBUTTONDOWN:
-			//TODO 3 case DOWN
 			controller_buttons[event.cbutton.button] = KEY_DOWN;
-			//TODO 5 Call it here
 			App->input_manager->InputDetected(event.cbutton.button, EVENTSTATE::E_DOWN);
 			break;
 
 		case SDL_CONTROLLERBUTTONUP:
-			//TODO 3 case UP
 			controller_buttons[event.cbutton.button] = KEY_UP;
-			//TODO 5 and here
 			App->input_manager->InputDetected(event.cbutton.button, EVENTSTATE::E_UP);
 			break;
 

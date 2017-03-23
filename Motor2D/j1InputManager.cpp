@@ -21,9 +21,6 @@ InputManager::~InputManager()
 bool InputManager::Awake(pugi::xml_node& conf)
 {
 	bool ret = true;
-
-	//Load All actions
-	//TODO 4 quit the comment when doned
 	for (pugi::xml_node tmp = conf.child("action"); tmp != nullptr; tmp = tmp.next_sibling())
 	{
 		std::pair<int, INPUTEVENT> new_action;
@@ -56,7 +53,6 @@ bool InputManager::Update(float dt)
 bool InputManager::PostUpdate()
 {
 	CallListeners();
-	//TODO 6 frame has gone clean your actions
 	if (!current_action.empty())
 	{
 		current_action.clear();
@@ -78,9 +74,7 @@ void InputManager::InputDetected(int button, EVENTSTATE state)
 {
 	if (next_input_change == false)
 	{
-		//TODO 5 goes here
 		std::multimap<int, INPUTEVENT>::iterator tmp = actions.find(button);
-		//If more than one action per button we must iterate until the end
 		if (tmp != actions.end())
 		{
 			std::pair<INPUTEVENT, EVENTSTATE> new_current_action;
@@ -105,8 +99,6 @@ bool InputManager::ChangeEventButton(int new_button)
 {
 	bool ret = false;
 
-	//TODO 7
-	//Look if the new button is actually asigned
 	std::multimap<int, INPUTEVENT>::iterator tmp = actions.find(new_button);
 	if (tmp != actions.end())
 	{
@@ -139,7 +131,6 @@ bool InputManager::ChangeEventButton(int new_button)
 
 EVENTSTATE InputManager::EventPressed(INPUTEVENT action) const
 {
-	//TODO 6 Look if the "action" have been activated
 	std::multimap<INPUTEVENT, EVENTSTATE>::const_iterator tmp = current_action.find(action);
 
 	if (tmp != current_action.end())
@@ -152,7 +143,6 @@ EVENTSTATE InputManager::EventPressed(INPUTEVENT action) const
 
 void InputManager::AddListener(InputListener* new_listener)
 {
-	//To improve this: Search if the listener is actually in the list
 	if (new_listener)
 	{
 		new_listener->input_active = true;

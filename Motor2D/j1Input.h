@@ -31,7 +31,6 @@ enum j1KeyState
 
 class j1Input : public j1Module
 {
-
 public:
 
 	j1Input();
@@ -86,13 +85,10 @@ private:
 	int			mouse_x;
 	int			mouse_y;
 
-	SDL_Joystick*		joystick = nullptr;
-
-	//TODO 1 Create the game controller pointer
+	// GAMEPAD ------------
 	SDL_GameController*	controller = nullptr;
-
-	//TODO 3 Create an array for the button handling (Similar to Mouse)
-	j1KeyState	controller_buttons[NUM_CONTROLLER_BUTTONS];
+	SDL_Joystick*		joystick = nullptr;
+	j1KeyState			controller_buttons[NUM_CONTROLLER_BUTTONS];
 };
 
 #endif // __j1INPUT_H__

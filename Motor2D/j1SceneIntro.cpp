@@ -19,6 +19,7 @@
 #include "j1DynamicObjects.h"
 #include "j1FileSystem.h"
 #include "j1Collision.h"
+#include "j1AnimationManager.h"
 
 j1SceneIntro::j1SceneIntro() : j1Module()
 {
@@ -44,7 +45,7 @@ bool j1SceneIntro::Start()
 	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg");
 	Menu_bg= App->tex->Load("gui/title_screen/menu_bg.jpg");
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
-
+	App->input_manager->AddListener(this);
 	return true;
 }
 
@@ -167,6 +168,45 @@ void j1SceneIntro::LoadMainMenu()
 	menu_button->resize = false;
 	main_menu->AddElement(menu_button);
 	main_menu->Select(-1);
+}
+
+void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
+{
+	if (App->scene->ingame == false)
+	{
+		switch (action)
+		{
+		case MUP:
+			if (state == E_DOWN)
+			main_menu->Select(-1);
+			break;
+
+		case MDOWN:
+			if (state == E_DOWN)
+			main_menu->Select(1);
+			break;
+
+		case BUTTON_B:
+			if (state == E_DOWN)
+			{
+				if (menu == false)
+				{
+					menu = true;
+					bg_anim = 0;
+					TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
+					LoadMainMenu();
+				}
+				if (main_menu->id_selected == 1)
+				{
+					App->audio->FadeMusic(2);
+					App->scene->ingame = true;
+					App->scene->Start();
+					main_menu->Close();
+				}
+			}
+			break;
+		}
+	}
 }
 
 // Called before quitting

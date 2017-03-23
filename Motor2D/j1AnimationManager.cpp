@@ -109,7 +109,7 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 				{
 					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].North_action.frames[0]);
 				}
-				else if (status == ATTACK)
+				else if (status == ATTACKING)
 				{
 
 				}
@@ -129,7 +129,7 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 				{
 					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].South_action.frames[0]);
 				}
-				else if (status == ATTACK)
+				else if (status == ATTACKING)
 				{
 
 				}
@@ -149,7 +149,7 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 				{
 					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].West_action.frames[0]);
 				}
-				else if (status == ATTACK)
+				else if (status == ATTACKING)
 				{
 
 				}
@@ -169,7 +169,7 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 				{
 					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].East_action.frames[0]);
 				}
-				else if (status == ATTACK)
+				else if (status == ATTACKING)
 				{
 
 				}

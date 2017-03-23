@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "j1EntityElementsScene.h"
+#include "j1InputManager.h"
 
 struct SDL_Texture;
 
@@ -12,13 +13,13 @@ class Text;
 class Button;
 class Dialogue;
 class Menu;
-
 class Player;
 class Item;
 class Soldier;
 class DynamicObjects;
+class InputListener;
 
-class j1SceneIntro : public j1Module
+class j1SceneIntro : public j1Module, public InputListener
 {
 public:
 
@@ -46,15 +47,19 @@ public:
 	bool CleanUp();
 
 	void LoadMainMenu();
+
+	void OnInputCallback(INPUTEVENT, EVENTSTATE);
+
 private:
 	//Start screen
-	SDL_Texture* TitleScreen_letters;
-	SDL_Texture* TitleScreen_bg;
-	SDL_Texture* Menu_bg;
-	float bg_anim = 0;
-	bool right = false, menu=false;
+	SDL_Texture*	TitleScreen_letters;
+	SDL_Texture*	TitleScreen_bg;
+	SDL_Texture*	Menu_bg;
+	float			bg_anim = 0;
+	bool			right = false;
+	bool			menu = false;
 
-	Menu* main_menu;
+	Menu*			main_menu;
 };
 
 #endif

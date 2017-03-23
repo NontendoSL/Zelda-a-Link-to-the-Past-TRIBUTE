@@ -18,7 +18,7 @@ enum INPUTEVENT
 	MDOWN,
 	MLEFT,
 	MRIGHT,
-	PAUSE,
+	BUTTON_B,
 };
 
 enum EVENTSTATE
@@ -75,8 +75,6 @@ public:
 
 private:
 
-	//Maps are fun
-	//TODO 4 create 2 Multimaps
 	std::multimap<int, INPUTEVENT> actions;
 	std::multimap<INPUTEVENT, EVENTSTATE> current_action;
 
