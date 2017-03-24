@@ -32,6 +32,9 @@ bool j1Input::Awake(pugi::xml_node& config)
 
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
+	SDL_GameControllerAddMapping(config.child("controller").attribute("file").as_string(""));
+
+
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
