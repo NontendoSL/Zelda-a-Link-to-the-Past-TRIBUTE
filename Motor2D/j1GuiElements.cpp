@@ -173,7 +173,9 @@ Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool 
 	texture3.y = stat3.y;
 	texture2.w = texture3.w = Hitbox.w;
 	texture2.h = texture3.h = Hitbox.h;
-	buttontext = new Text(textstring, { textpos.x,textpos.y }, textsize);
+	if (textstring != nullptr) {
+		buttontext = new Text(textstring, { textpos.x,textpos.y }, textsize);
+	}
 	start = true;
 	if (animated==true) {
 		anim = new Animation();
@@ -196,7 +198,10 @@ void Button::Draw()
 		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &texture3, 0, resize);
 		break;
 	}
-	buttontext->Draw();
+	if (buttontext!=nullptr) {
+		buttontext->Draw();
+	}
+
 }
 
 void Button::Update()
