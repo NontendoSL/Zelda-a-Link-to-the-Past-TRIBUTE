@@ -39,7 +39,7 @@ public:
 	bool start;
 	ButtonState state;
 	SDL_Rect texture2, texture3;
-	Text* buttontext;
+	Text* buttontext = nullptr;;
 	Animation* anim=nullptr;
 	bool resize = true;
 };
