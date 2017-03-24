@@ -34,7 +34,6 @@ bool j1Input::Awake(pugi::xml_node& config)
 
 	SDL_GameControllerAddMapping(config.child("controller").attribute("file").as_string(""));
 
-
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -213,7 +212,8 @@ bool j1Input::CleanUp()
 	/* Attempt to open every controller. */
 	if (controller)
 	{
-		SDL_GameControllerClose(controller);
+		//TODO MID
+		//SDL_GameControllerClose(controller);
 	}
 
 	//TODO 1 Close it be polite

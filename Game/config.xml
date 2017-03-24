@@ -27,6 +27,10 @@
 		<day-night file="gui/test.png" />
 		<stats hp="74" attack="10" speed="1" pos_x="100" pos_y="90" />
 	</Link>
+
+  <items>
+    <item id="1" name="rupee" file="textures/GreenRupee.png"/>
+  </items>
   
 	<maps>    
 		<map n="1" file="TiledLinkHouse.tmx">

@@ -43,6 +43,7 @@ public:
 	//TODO LOW
 	Soldier* CreateSoldier(uint id, pugi::xml_node& );
 	bool DeleteEnemy(NPC* enemy);
+	bool DeleteDynObject(SceneElement* dynobject);
 	Item* CreateItem(uint id);
 	DynamicObjects* CreateDynObject(iPoint pos, uint id, uint id_map);
 	Player* CreatePlayer();

@@ -3,6 +3,7 @@
 #include "j1Item.h"
 #include "j1Player.h"
 #include "j1DynamicObjects.h"
+#include "j1Scene.h"
 #include "j1App.h"
 #include "j1Input.h"
 #include "p2Log.h"
@@ -129,6 +130,14 @@ bool j1EntityElementScene::DeleteEnemy(NPC* enemy)
 {
 	elementscene.remove(enemy);
 	LOG("Enemy DELETE!");
+	return true;
+}
+
+bool j1EntityElementScene::DeleteDynObject(SceneElement* dynobject)
+{
+	elementscene.remove(dynobject);
+	App->scene->dynobjects.remove((DynamicObjects*)dynobject);
+	delete dynobject;
 	return true;
 }
 

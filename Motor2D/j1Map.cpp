@@ -103,8 +103,7 @@ void j1Map::EditCost(int x, int y, int value)
 {
 	std::list<MapLayer*>::const_iterator item = data.layers.end();
 	item--;
-	iPoint coords = WorldToMap(x, y);
-	item._Ptr->_Myval->data[(coords.y*item._Ptr->_Myval->width) + coords.x] = value;
+	item._Ptr->_Myval->data[(y*item._Ptr->_Myval->width) + x] = value;
 }
 
 int j1Map::MovementCost(int x, int y, Direction dir) const //TODO 
@@ -412,21 +411,25 @@ void j1Map::DynObjectFromTiled(uint id_map)
 			{
 				LOG("DynObject 1");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 1, id_map));
+				EditCost(x, y, data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1);
 			}
 			if (tile_id == yellowid_2)
 			{
 				LOG("DynObject 2");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 2, id_map));
+				EditCost(x, y, data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1);
 			}
 			if (tile_id == yellowid_3)
 			{
 				LOG("DynObject 3");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 3, id_map));
+				EditCost(x, y, data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1);
 			}
 			if (tile_id == yellowid_4)
 			{
 				LOG("DynObject 4");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
+				EditCost(x, y, data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1);
 			}
 		}
 	}

@@ -87,7 +87,13 @@ bool j1Scene::Update(float dt)
 			//TODO need destroy all enemies and items
 			if (App->map->CleanUp())
 			{
+				App->collision->EreseAllColiderPlayer();
 				App->entity_elements->DelteElements();
+				if (dynobjects.size() > 0)
+				{
+					dynobjects.clear();
+				}
+
 				Load_new_map(2);
 				/*dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
 				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
@@ -104,27 +110,18 @@ bool j1Scene::Update(float dt)
 			{
 				App->collision->EreseAllColiderPlayer();
 				App->entity_elements->DelteElements();
-				//App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
 
-				std::list<Soldier*>::iterator item = enemy.begin();
 				if (enemy.size() > 0)
 				{
-					while (item != enemy.end())
-					{
-						enemy.pop_back();
-						item++;
-					}
 					enemy.clear();
 				}
-				std::list<Item*>::iterator item_s = items.begin();
 				if (items.size() > 0)
 				{
-					while (item_s != items.end())
-					{
-						items.pop_back();
-						item_s++;
-					}
 					items.clear();
+				}
+				if (dynobjects.size() > 0)
+				{
+					dynobjects.clear();
 				}
 				Load_new_map(1);
 			}

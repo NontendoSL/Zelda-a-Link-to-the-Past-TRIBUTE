@@ -76,6 +76,9 @@ private:
 	std::list<Item*> bag;
 
 	Collider* collision_player;
+	Collider* collision_attack;
+	bool attacker;
+	int attack_time;
 
 	//TEST
 	std::string stats_temp;

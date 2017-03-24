@@ -54,6 +54,7 @@ bool Player::Start()
 	bool ret = true;
 	Camera_follow_player = true;
 	changeResolution = false;
+	attacker = false;
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
 	maptex = App->tex->Load(texmapfile_name.c_str());
 	hit_tex = App->tex->Load(file_hit.c_str());
@@ -114,38 +115,13 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 	}
 
-	/*if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	if (attacker && SDL_GetTicks() - attack_time > 200)
 	{
+		App->collision->EraseCollider(collision_attack);
+		attacker = false;
+	}
 
-	App->render->camera.h;
-	switch (dir)
-	{
-	case UP:
-	if (App->map->MovementCost(position.x, position.y - speed, UP) == 2)
-	{
-	App->map->EditCost(position.x + 8, position.y - speed, 0);
-	}
-	break;
-	case DOWN:
-	if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 2)
-	{
-	App->map->EditCost(position.x + 8, position.y + (speed + height), 0);
-	}
-	break;
-	case LEFT:
-	if (App->map->MovementCost(position.x - speed, position.y, UP) == 2)
-	{
-	App->map->EditCost(position.x - speed, position.y + 8, 0);
-	}
-	break;
-	case RIGHT:
-	if (App->map->MovementCost(position.x + (speed + width), position.y , UP) == 2)
-	{
-	App->map->EditCost(position.x , position.y + 8, 0);
-	}
-	break;
-	}
-	}*/
+
 
 	//Provisional gem provider
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && charge <= 34)
@@ -173,70 +149,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		//App->scene->dialog->PushLine(true);
 	}
 
-	/*//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-	changeResolution = !changeResolution;
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-	{
-	App->render->Blit(maptex, -App->render->camera.x, -App->render->camera.y);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-	{
-	SDL_RenderSetLogicalSize(App->render->renderer, 800, 400);
-	if (changeResolution)
-	SDL_SetWindowSize(App->win->window, 800, 400);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-	SDL_RenderSetLogicalSize(App->render->renderer, 300, 300);
-	if (changeResolution)
-	SDL_SetWindowSize(App->win->window, 300, 300);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-	SDL_RenderSetLogicalSize(App->render->renderer, 500, 200);
-	if (changeResolution)
-	SDL_SetWindowSize(App->win->window, 500, 200);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-	SDL_RenderSetLogicalSize(App->render->renderer, 1200, 500);
-	if (changeResolution)
-	SDL_SetWindowSize(App->win->window, 1200, 500);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
-	{
-	SDL_RenderSetLogicalSize(App->render->renderer, 1300, 800);
-	if (changeResolution)
-	SDL_SetWindowSize(App->win->window, 1300, 800);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-	SDL_SetWindowSize(App->win->window, 800, 300);
-	}
-	*/
-
-
-	/*//TEST DRAW LIVE OF LINK
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-	hp -= 2;
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-	attack *= 2;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-	Save();*/
-
-	//TODO MID -> I thing that use a stats_temp all time clear and insert, clear-insert, is not a good idea...
-	/*stats_temp.clear();
-	stats_temp = std::to_string(hp);
-	stats_temp.insert(0, "HP LINK -> ");
-	hp_text->Write(stats_temp.c_str());
-	stats_temp.clear();
-	stats_temp = std::to_string(attack);
-	stats_temp.insert(0, "ATTACK OF LINK -> ");
-	attack_text->Write(stats_temp.c_str());*/
 
 	//Collision follow the player
 	collision_player->SetPos(position.x, position.y);
@@ -267,6 +180,17 @@ bool Player::Save()
 
 void Player::OnCollision(Collider* c1, Collider* c2)
 {
+	if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT)
+	{
+		iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
+		App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
+		App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
+		App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
+		App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
+		App->entity_elements->DeleteDynObject(c2->callback);
+		App->collision->EraseCollider(c2);
+		//App->scene->dynobjects.remove(c2->callback);
+	}
 	/*if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
 	{
 		if (c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + 1 >= c2->rect.y + c2->rect.h)
@@ -392,8 +316,33 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 	case BUTTON_B:
 		if (state == E_DOWN)
 		{
-			App->render->DrawQuad({ position.x,position.y, 8, 8 }, 255, 255, 255);
-			LOG("ATTACK!");
+			if (attacker)
+			{
+				attack_time = SDL_GetTicks();
+			}
+			else
+			{
+				attack_time = SDL_GetTicks();
+				attacker = true;
+				if (direction == UP)
+				{
+					collision_attack = App->collision->AddCollider({ position.x + 4, position.y - 10, 20, 12 }, COLLIDER_PLAYER, this);
+				}
+				else if (direction == RIGHT)
+				{
+					collision_attack = App->collision->AddCollider({ position.x + 8, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+				}
+				else if (direction == DOWN)
+				{
+					collision_attack = App->collision->AddCollider({ position.x + 4, position.y + 6, 20, 12 }, COLLIDER_PLAYER, this);
+				}
+				else if (direction == LEFT)
+				{
+					collision_attack = App->collision->AddCollider({ position.x - 8, position.y + 4, 20, 12 }, COLLIDER_PLAYER, this);
+				}
+				//App->render->DrawQuad({ position.x,position.y, 8, 12 }, 255, 255, 255);
+				LOG("ATTACK!");
+			}
 		}		
 	break;
 	}

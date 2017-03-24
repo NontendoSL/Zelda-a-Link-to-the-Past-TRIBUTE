@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BCTrooper.cpp" />
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Ganon.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Creature.cpp" />

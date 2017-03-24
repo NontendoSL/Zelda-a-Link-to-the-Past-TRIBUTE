@@ -100,6 +100,9 @@
     <ClCompile Include="j1SceneIntro.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Functions.cpp">
+      <Filter>Desenvolupament  ========\Animation\XML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
