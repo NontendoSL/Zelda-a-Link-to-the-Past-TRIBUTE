@@ -15,6 +15,8 @@ class Item;
 enum ElementType{ CREATURE, ITEM, DYNOBJECT };
 enum Direction { UP, DOWN, LEFT, RIGHT };
 
+enum GameState{INGAME, INMENU, TIMETOPLAY};
+
 // ---------------------------------------------------
 class SceneElement 
 {
@@ -59,6 +61,7 @@ public:
 public:
 	iPoint position;
 	Direction direction;
+	GameState gamestate;
 	ElementType type;
 	uint speed;
 

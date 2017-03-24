@@ -51,6 +51,8 @@ public:
 
 	bool Move();
 
+	bool Attack();
+
 	bool CheckOrientation();
 
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
@@ -79,6 +81,9 @@ private:
 	Collider* collision_attack;
 	bool attacker;
 	int attack_time;
+
+	//Timer
+	int timetoplay;
 
 	//TEST
 	std::string stats_temp;

@@ -63,11 +63,11 @@ bool Player::Start()
 	hit_tex = App->tex->Load(file_hit.c_str());
 	direction = UP;
 	state = IDLE;
-
 	scale = App->win->GetScale();
 	width = 15;
 	height = 15;
-
+	gamestate = TIMETOPLAY;
+	timetoplay = SDL_GetTicks();
 	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
 	/*stats_temp.clear();
 	stats_temp = std::to_string(hp);
@@ -99,31 +99,43 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		Camera_follow_player = !Camera_follow_player;
 
 	// STATE MACHINE ------------------
-	switch (state)
+	if (gamestate == INGAME)
 	{
-	case IDLE:
-	{
-		Idle();
-		break;
+		switch (state)
+		{
+		case IDLE:
+		{
+			Idle();
+			break;
+		}
+		case WALKING:
+		{
+			Walking();
+			break;
+		}
+		case ATTACKING:
+		{
+			Attack();
+			break;
+		}
+		default:
+		{
+			break;
+		}
+
+		}
 	}
-	case WALKING:
+	else if (gamestate == INMENU)
 	{
-		Walking();
-		break;
-	}
-	default:
-	{
-		break;
-	}
 
 	}
-
-	if (attacker && SDL_GetTicks() - attack_time > 200)
+	else if (gamestate == TIMETOPLAY)
 	{
-		App->collision->EraseCollider(collision_attack);
-		attacker = false;
+		if (SDL_GetTicks() - timetoplay > 1000)
+		{
+			gamestate = INGAME;
+		}
 	}
-
 
 
 	//Provisional gem provider
@@ -335,42 +347,57 @@ bool Player::Walking()
 	return false;
 }
 
-void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
+bool Player::Attack()
 {
-	switch (action)
+	if (attacker)
 	{
-	case BUTTON_B:
-		if (state == E_DOWN)
+		if (SDL_GetTicks() - attack_time > 200)
 		{
-			if (attacker)
+			App->collision->EraseCollider(collision_attack);
+			attacker = false;
+			state = IDLE;
+		}
+	}
+	else
+	{
+		attack_time = SDL_GetTicks();
+		attacker = true;
+		if (direction == UP)
+		{
+			collision_attack = App->collision->AddCollider({ position.x + 4, position.y - 10, 20, 12 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == RIGHT)
+		{
+			collision_attack = App->collision->AddCollider({ position.x + 8, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == DOWN)
+		{
+			collision_attack = App->collision->AddCollider({ position.x + 4, position.y + 6, 20, 12 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == LEFT)
+		{
+			collision_attack = App->collision->AddCollider({ position.x - 8, position.y + 4, 20, 12 }, COLLIDER_PLAYER, this);
+		}
+		LOG("ATTACK!");
+	}
+
+	return true;
+}
+
+void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
+{
+	if (gamestate == INGAME)
+	{
+		switch (action)
+		{
+		case BUTTON_B:
+			if (e_state == E_DOWN)
 			{
+				state = ATTACKING;
 				attack_time = SDL_GetTicks();
 			}
-			else
-			{
-				attack_time = SDL_GetTicks();
-				attacker = true;
-				if (direction == UP)
-				{
-					collision_attack = App->collision->AddCollider({ position.x + 4, position.y - 10, 20, 12 }, COLLIDER_PLAYER, this);
-				}
-				else if (direction == RIGHT)
-				{
-					collision_attack = App->collision->AddCollider({ position.x + 8, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
-				}
-				else if (direction == DOWN)
-				{
-					collision_attack = App->collision->AddCollider({ position.x + 4, position.y + 6, 20, 12 }, COLLIDER_PLAYER, this);
-				}
-				else if (direction == LEFT)
-				{
-					collision_attack = App->collision->AddCollider({ position.x - 8, position.y + 4, 20, 12 }, COLLIDER_PLAYER, this);
-				}
-				//App->render->DrawQuad({ position.x,position.y, 8, 12 }, 255, 255, 255);
-				LOG("ATTACK!");
-			}
-		}		
-	break;
+			break;
+		}
 	}
 }
 
