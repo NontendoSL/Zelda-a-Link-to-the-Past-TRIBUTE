@@ -27,8 +27,7 @@ public:
 	GuiType type;
 	SDL_Rect Hitbox;
 	iPoint position, diferential;
-	bool visible = true;
-	bool selected;
+	bool visible = true, selected, resize;
 	uint id;
 	std::string identifier;
 private:

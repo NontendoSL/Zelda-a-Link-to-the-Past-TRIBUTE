@@ -88,6 +88,7 @@ bool j1SceneIntro::Update(float dt)
 			}
 			App->render->Blit(Menu_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
 			App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
+					
 		}
 	}
 

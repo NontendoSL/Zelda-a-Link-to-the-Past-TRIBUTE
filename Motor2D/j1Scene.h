@@ -48,6 +48,8 @@ public:
 	bool Load_new_map(int n);
 
 	void AssignValues(Image* assigner,uint var);
+
+	void SwitchMenu(bool direction);
 private:
 	SDL_Texture* debug_tex;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
@@ -57,7 +59,7 @@ public:
 
 
 	//Ingame
-	Menu* hud;
+	Menu* hud=nullptr,*start_menu=nullptr;
 	Image* force, *gems, *bombs, *arrows;
 	Player* player = nullptr;
 	std::list<Soldier*> enemy; //TODO LOW -> change to std::list<NPC*> enemies;
@@ -67,7 +69,7 @@ public:
 
 	pugi::xml_node		config;
 
-	bool ingame = false;
+	bool ingame = false, switch_menu=false, inventory=true;
 	int switch_map = 0;
 };
 

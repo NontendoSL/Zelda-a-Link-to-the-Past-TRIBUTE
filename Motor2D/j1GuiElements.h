@@ -41,7 +41,6 @@ public:
 	SDL_Rect texture2, texture3;
 	Text* buttontext = nullptr;;
 	Animation* anim=nullptr;
-	bool resize = true;
 };
 
 // -----------------------------------------------------
@@ -93,6 +92,7 @@ public:
 	void Select(int value);
 	void Open();
 	void Close();
+	void Move(bool axis, float speed);
 private:
 	std::vector<j1GuiEntity*>menu_elements;
 public:

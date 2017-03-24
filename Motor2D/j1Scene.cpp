@@ -128,7 +128,10 @@ bool j1Scene::Update(float dt)
 			switch_map = 0;
 		}
 
-
+		if (switch_menu)
+		{
+			SwitchMenu(inventory);
+		}
 	}
 	
 
@@ -140,8 +143,11 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
 		ret = false;
+	}
+
 
 	return ret;
 }
@@ -196,6 +202,48 @@ void j1Scene::LoadUi()
 	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
 	hud->AddElement(arrows);//adding arrows
 	hud->AddElement(App->gui->CreateImage({ 178,15,44,7 }, { 178,15 }, "life"));
+	hud->position = { 0,0 };
+	//Start Menu
+	start_menu = new Menu();
+	Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg");
+	start_menu->AddElement(Sprite);
+	start_menu->position = { 0,-224 };
+	start_menu->Close();
+}
+
+void j1Scene::SwitchMenu(bool direction)//true for down, false for up
+{
+	if (direction)
+	{
+		if (start_menu->position.y < 0)
+		{
+			start_menu->Open();
+			start_menu->Move(false, 2.0);
+			hud->Move(false, 2.0);
+		}
+		else
+		{
+			hud->Close();
+			switch_menu = false;
+			inventory = false;
+		}
+	}
+	else
+	{
+		if (hud->position.y > 0)
+		{
+			hud->Open();
+			start_menu->Move(false, -2.0);
+			hud->Move(false, -2.0);
+		}
+		else
+		{
+			start_menu->Close();
+			switch_menu = false;
+			inventory = true;
+		}
+	}
+
 }
 
 bool j1Scene::Load_new_map(int n)

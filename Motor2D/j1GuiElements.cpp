@@ -17,6 +17,7 @@ Image::Image(SDL_Rect rectangle, iPoint position, std::string identifier, uint i
 
 	type = IMAGE;
 	start = true;
+	resize = true;
 }
 
 
@@ -312,19 +313,39 @@ void Menu::Select(int value)
 	}
 }
 
-
-
 void Menu::Open()
 {
 	for (uint i = 0; i < menu_elements.size(); i++) {
 		menu_elements[i]->visible = true;
 	}
+	visible = true;
 }
 
 void Menu::Close()
 {
 	for (uint i = 0; i < menu_elements.size(); i++) {
 		menu_elements[i]->visible = false;
+	}
+	visible = false;
+}
+
+void Menu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis do we move (x=true/y=false)
+{
+	if (x_axis)
+	{
+		for (int i = 0; i < menu_elements.size(); i++)
+		{
+			menu_elements[i]->position.x += speed;
+		}
+		position.x += speed;
+	}
+	else 
+	{
+		for (int i = 0; i < menu_elements.size(); i++)
+		{
+			menu_elements[i]->position.y += speed;
+		}
+		position.y += speed;
 	}
 }
 
