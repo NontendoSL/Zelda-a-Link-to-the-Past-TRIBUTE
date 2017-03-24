@@ -15,7 +15,7 @@ public:
 	~Item();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&, uint);
+	bool Awake(pugi::xml_node&, uint, iPoint );
 
 	// Called before the first frame
 	bool Start();
@@ -41,6 +41,7 @@ private:
 	bool equiped = false;
 	bool equipable = false;
 	SDL_Texture* texture = nullptr;
+	Collider* collision;
 };
 
 #endif

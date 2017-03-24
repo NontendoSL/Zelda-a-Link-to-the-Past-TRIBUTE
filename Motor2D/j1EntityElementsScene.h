@@ -40,13 +40,16 @@ public:
 	// delete elements witout player
 	bool DelteElements();
 
-	//TODO LOW
+	//Create Functions 
 	Soldier* CreateSoldier(uint id, pugi::xml_node& );
-	bool DeleteEnemy(NPC* enemy);
-	bool DeleteDynObject(SceneElement* dynobject);
-	Item* CreateItem(uint id);
+	Item* CreateItem(uint id, iPoint position);
 	DynamicObjects* CreateDynObject(iPoint pos, uint id, uint id_map);
 	Player* CreatePlayer();
+
+	//Delete Functions
+	bool DeleteEnemy(NPC* enemy);
+	bool DeleteDynObject(DynamicObjects* dynobject);
+	bool DeleteItem(Item* enemy);
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;

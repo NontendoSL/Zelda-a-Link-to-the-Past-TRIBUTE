@@ -64,7 +64,7 @@ public:
 	Image* life = nullptr;
 	Text* test = nullptr;
 	Player* player = nullptr;
-	std::list<Soldier*> enemy;
+	std::list<Soldier*> enemy; //TODO LOW -> change to std::list<NPC*> enemies;
 	std::list<Item*> items;
 	std::list<DynamicObjects*> dynobjects;
 	Dialogue* dialog = nullptr;

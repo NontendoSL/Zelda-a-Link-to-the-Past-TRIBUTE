@@ -73,7 +73,7 @@ bool j1Scene::Update(float dt)
 		{
 			if (enemy.begin()._Ptr->_Myval->hp == 0)
 			{
-				items.push_back(App->entity_elements->CreateItem(1));
+				//items.push_back(App->entity_elements->CreateItem(1));
 				enemy.begin()._Ptr->_Myval->AddItem(items.begin()._Ptr->_Myval);
 				enemy.begin()._Ptr->_Myval->Drop_item();
 				App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);

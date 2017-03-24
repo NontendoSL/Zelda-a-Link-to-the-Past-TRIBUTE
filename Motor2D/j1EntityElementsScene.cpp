@@ -129,26 +129,38 @@ Soldier* j1EntityElementScene::CreateSoldier(uint id, pugi::xml_node& config)
 bool j1EntityElementScene::DeleteEnemy(NPC* enemy)
 {
 	elementscene.remove(enemy);
+	App->scene->enemy.remove((Soldier*)enemy);
+	delete enemy;
 	LOG("Enemy DELETE!");
 	return true;
 }
 
-bool j1EntityElementScene::DeleteDynObject(SceneElement* dynobject)
+bool j1EntityElementScene::DeleteDynObject(DynamicObjects* dynobject)
 {
 	elementscene.remove(dynobject);
-	App->scene->dynobjects.remove((DynamicObjects*)dynobject);
+	App->scene->dynobjects.remove(dynobject);
 	delete dynobject;
+	LOG("DynObject DELETE!");
 	return true;
 }
 
-Item* j1EntityElementScene::CreateItem(uint id) 
+bool j1EntityElementScene::DeleteItem(Item* item)
+{
+	elementscene.remove(item);
+	App->scene->items.remove(item);
+	delete item;
+	LOG("Item DELETE!");
+	return true;
+}
+
+Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 {
 
 	Item* element = new Item();
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
-	element->Awake(config.child("maps").child("map").next_sibling().child(element->name.c_str()), id);
+	element->Awake(config.child(element->name.c_str()), id, position);
 	element->Start();
 	elementscene.push_back(element);
 

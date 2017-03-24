@@ -16,6 +16,9 @@
 #include "j1AnimationManager.h"
 #include "j1Collision.h"
 #include "j1InputManager.h"
+#include "j1Item.h"
+#include "j1DynamicObjects.h"
+#include "time.h"
 #include "j1Creature.h"
 
 //Constructor
@@ -183,14 +186,37 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 	if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT)
 	{
 		iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
+		//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
+		int canDrop = 1;
+		if (canDrop == 1)
+		{
+			iPoint position;
+			position.x = c2->callback->position.x + 4;
+			position.y = c2->callback->position.y;
+			App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
+
+		}
+
 		App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
 		App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
 		App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
 		App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
-		App->entity_elements->DeleteDynObject(c2->callback);
+		App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 		App->collision->EraseCollider(c2);
-		//App->scene->dynobjects.remove(c2->callback);
 	}
+
+	if (c1 == collision_player && c2->type == COLLIDER_ITEM)
+	{
+		if (c2->callback->name == "rupee")
+		{
+			gems++;
+		}
+		App->entity_elements->DeleteItem((Item*)c2->callback);
+		App->collision->EraseCollider(c2);
+	}
+
+
+
 	/*if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
 	{
 		if (c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + 1 >= c2->rect.y + c2->rect.h)

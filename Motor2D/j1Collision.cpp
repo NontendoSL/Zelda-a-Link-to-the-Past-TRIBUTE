@@ -15,8 +15,9 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_WALL][COLLIDER_LATERAL_WALL] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
-
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
+
+	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_DYNOBJECT] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
