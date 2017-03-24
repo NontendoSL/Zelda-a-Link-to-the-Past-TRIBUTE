@@ -11,6 +11,7 @@ class Image;
 class Text;
 class Button;
 class Dialogue;
+class Menu;
 
 class Player;
 class Item;
@@ -56,13 +57,8 @@ public:
 
 
 	//Ingame
-	Image* charge = nullptr,* force = nullptr;
-	Image* item = nullptr;
-	Image* gems = nullptr;
-	Image* bombs = nullptr;//TODO LOW: Agrupar imatges bomba, rupias vida i fletxes en una sola Imatge*
-	Image* arrows = nullptr; //TODO HIGH: Organize all this in less code;
-	Image* life = nullptr;
-	Text* test = nullptr;
+	Menu* hud;
+	Image* force, *gems, *bombs, *arrows;
 	Player* player = nullptr;
 	std::list<Soldier*> enemy; //TODO LOW -> change to std::list<NPC*> enemies;
 	std::list<Item*> items;

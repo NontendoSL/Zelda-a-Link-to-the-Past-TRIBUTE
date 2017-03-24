@@ -176,23 +176,26 @@ void j1Scene::AssignValues(Image* assigner, uint var)
 void j1Scene::LoadUi()
 {
 	//UI
-	charge = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 }, "charge");
-	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 });
-	charge->elements.push_back(force);
-	item = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 });
-	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 });
+	hud = new Menu();
+	Image* Sprite = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 }, "charge");
+	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 }, "force");
+	Sprite->elements.push_back(force);
+	hud->AddElement(Sprite);//[0] adding charge bar
+	hud->AddElement(App->gui->CreateImage({ 37,20,22,22 }, { 22,12 }, "item"));
+	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 }, "gems"); //Gems and value
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
-	bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 });
+	hud->AddElement(gems); //adding gems [2]
+	bombs= App->gui->CreateImage({ 100,15,8,8 }, { 100,15 }, "bombs");
 	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
 	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-	arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 });
+	hud->AddElement(bombs);// adding bombs
+	arrows= App->gui->CreateImage({ 121,15,14,8 }, { 121,15 },"arrows");
 	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
 	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-	life = App->gui->CreateImage({ 178,15,44,7 }, { 178,15 });
-	//House load
-	//	else {// for all the other maps
+	hud->AddElement(arrows);//adding arrows
+	hud->AddElement(App->gui->CreateImage({ 178,15,44,7 }, { 178,15 }, "life"));
 }
 
 bool j1Scene::Load_new_map(int n)
