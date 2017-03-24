@@ -32,6 +32,7 @@ bool j1Input::Awake(pugi::xml_node& config)
 
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
+	//Add mapping from config.xml
 	SDL_GameControllerAddMapping(config.child("controller").attribute("file").as_string(""));
 
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)

@@ -213,14 +213,14 @@ pugi::xml_node j1EntityElementScene::LoadConfig(pugi::xml_document& config_file)
 	pugi::xml_node ret;
 
 	char* buf;
-	int size = App->fs->Load("config.xml", &buf);
+	int size = App->fs->Load("Levels.xml", &buf);
 	pugi::xml_parse_result result = config_file.load_buffer(buf, size);
 	RELEASE(buf);
 
 	if (result == NULL)
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
 	else
-		ret = config_file.child("config");
+		ret = config_file.child("levels");
 
 	return ret;
 }
