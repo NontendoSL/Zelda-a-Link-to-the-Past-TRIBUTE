@@ -140,7 +140,7 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 		}
 
 		//DRAW
-		App->render->Blit(animat[i].graphics, position.x - pivot.x, position.y - range_link - pivot.y, &r);
+		App->render->Blit(animat[i].graphics, position.x - pivot.x + 8, position.y - pivot.y + 11, &r);
 	}
 }
 
