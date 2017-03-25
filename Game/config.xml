@@ -24,8 +24,8 @@
 	<maps file="Levels.xml"/>    
   
 	<animation>
-		<file file="animation/LinkWalkingSprites.xml" />
-		<sprite file="textures/LinkWalkingSprites.png" />
+		<file file="animation/LinkAnimations.xml" />
+		<sprite file="textures/LinkAnimations.png" />
 	</animation>
   
 	<window>
