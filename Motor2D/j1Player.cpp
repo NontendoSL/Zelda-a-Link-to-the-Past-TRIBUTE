@@ -166,6 +166,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		App->scene->switch_menu = true;
+		gamestate = INMENU;
 	}
 
 

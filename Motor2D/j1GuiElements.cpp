@@ -27,25 +27,20 @@ void Image::Update()
 	if (start == true)
 	{
 
-		std::list<Image*>::iterator iterator = elements.begin();
-		while (iterator != elements.end())
+		for(int i=0;i<elements.size();i++)
 		{
-			iterator._Ptr->_Myval->position.x += position.x;
-			iterator._Ptr->_Myval->position.y += position.y;
-			iterator._Ptr->_Myval->diferential.x = (iterator._Ptr->_Myval->position.x - position.x);
-			iterator._Ptr->_Myval->diferential.y = (iterator._Ptr->_Myval->position.y - position.y);
-			iterator++;
+			elements[i]->position.x += position.x;
+			elements[i]->position.y += position.y;
+			elements[i]->diferential.x = (elements[i]->position.x - position.x);
+			elements[i]->diferential.y = (elements[i]->position.y - position.y);
 		}
 		start = false;
 	}
 
-	std::list<Image*>::iterator iterator = elements.begin();
-	while (iterator != elements.end())
+	for (int i = 0; i<elements.size(); i++)
 	{
-		iterator._Ptr->_Myval->Update();
-		iterator._Ptr->_Myval->position.x = position.x + iterator._Ptr->_Myval->diferential.x;
-		iterator._Ptr->_Myval->position.y = position.y + iterator._Ptr->_Myval->diferential.y;
-		iterator++;
+		elements[i]->position.x = position.x + elements[i]->diferential.x;
+		elements[i]->position.y = position.y + elements[i]->diferential.y;
 	}
 }
 
@@ -54,12 +49,7 @@ void Image::Draw()
 {
 
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
-	std::list<Image*>::iterator iterator = elements.begin();
-	while (iterator != elements.end())
-	{
-		iterator._Ptr->_Myval->Draw();
-		iterator++;
-	}
+
 }
 
 void Image::AssignNumber(uint n)
@@ -69,7 +59,7 @@ void Image::AssignNumber(uint n)
 	case 0:
 		Hitbox.x = 259;
 		Hitbox.y = 13;
-		break; 
+		break;
 	case 1:
 		Hitbox.x = 267;
 		Hitbox.y = 13;
@@ -112,14 +102,6 @@ void Image::AssignNumber(uint n)
 
 Image::~Image()
 {
-	std::list<Image*>::iterator iterator = elements.end();
-	iterator--;
-	if (iterator._Ptr->_Myval != nullptr)
-		while (elements.size()>0)
-		{
-			elements.remove(iterator._Ptr->_Myval);
-			iterator--;
-		}
 	elements.clear();
 }
 
@@ -307,9 +289,12 @@ void Menu::Select(int value)
 	//assert(id_selected + value < menu_elements.size() + 1 || id_selected + value >0);
 	if (id_selected + value < menu_elements.size() && id_selected + value >=0)
 	{
-		menu_elements[id_selected]->selected = false;
-		id_selected += value;
-		menu_elements[id_selected]->selected = true;
+		if (menu_elements.size() > 1) 
+		{
+			menu_elements[id_selected]->selected = false;
+			id_selected += value;
+			menu_elements[id_selected]->selected = true;
+		}
 	}
 }
 
@@ -317,6 +302,13 @@ void Menu::Open()
 {
 	for (uint i = 0; i < menu_elements.size(); i++) {
 		menu_elements[i]->visible = true;
+		if (menu_elements[i]->elements.size() > 0)
+		{
+			for (int j = 0; j < menu_elements[i]->elements.size(); j++)
+			{
+				menu_elements[i]->elements[j]->visible = true;
+			}
+		}
 	}
 	visible = true;
 }
@@ -325,6 +317,13 @@ void Menu::Close()
 {
 	for (uint i = 0; i < menu_elements.size(); i++) {
 		menu_elements[i]->visible = false;
+		if (menu_elements[i]->elements.size() > 0)
+		{
+			for (int j = 0; j < menu_elements[i]->elements.size(); j++)
+			{
+				menu_elements[i]->elements[j]->visible = false;
+			}
+		}
 	}
 	visible = false;
 }

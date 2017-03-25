@@ -20,7 +20,7 @@ public:
 	void AssignNumber(uint n);
 public:
 	bool start;
-	std::list<Image*> elements;
+
 
 };
 
@@ -37,7 +37,7 @@ public:
 
 public:
 	bool start;
-	ButtonState state;
+	ButtonState state=normal;
 	SDL_Rect texture2, texture3;
 	Text* buttontext = nullptr;;
 	Animation* anim=nullptr;

@@ -148,7 +148,6 @@ bool j1Scene::PostUpdate()
 		ret = false;
 	}
 
-
 	return ret;
 }
 
@@ -162,19 +161,16 @@ bool j1Scene::CleanUp()
 
 void j1Scene::AssignValues(Image* assigner, uint var)
 {
-	std::list<Image*>::iterator value = assigner->elements.end();
-	value--;
-	int number = var % 10;
-	value._Ptr->_Myval->AssignNumber(number);
-	value--;
+
+	int number = var % 10, i= assigner->elements.size()-1;
+	assigner->elements[i--]->AssignNumber(number);
 	number = var / 10;
 	number %= 10;
-	value._Ptr->_Myval->AssignNumber(number);
-	value--;
+	assigner->elements[i--]->AssignNumber(number);
 	if (assigner->elements.size() > 2)
 	{
 		number = var/ 100;
-		value._Ptr->_Myval->AssignNumber(number);
+		assigner->elements[i]->AssignNumber(number);
 	}
 
 }
@@ -206,8 +202,12 @@ void j1Scene::LoadUi()
 	//Start Menu
 	start_menu = new Menu();
 	Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg");
+	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21 }, { 304,268 }, { 337,268 }, false, "1stITEM");
+	hotfix->selected = true;
+	Sprite->elements.push_back(hotfix);
 	start_menu->AddElement(Sprite);
 	start_menu->position = { 0,-224 };
+
 	start_menu->Close();
 }
 
@@ -226,6 +226,7 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 			hud->Close();
 			switch_menu = false;
 			inventory = false;
+			player->gamestate = INGAME;
 		}
 	}
 	else
@@ -241,6 +242,7 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 			start_menu->Close();
 			switch_menu = false;
 			inventory = true;
+			player->gamestate = INGAME;
 		}
 	}
 

@@ -11,7 +11,7 @@ class j1GuiEntity //: public j1Gui
 public:
 
 	j1GuiEntity();
-	j1GuiEntity(SDL_Rect rectangle, iPoint position,std::string identifier="undefined", uint id=0);
+	j1GuiEntity(SDL_Rect rectangle, iPoint position,std::string identifier="undefined", uint id=0,bool resize=true);
 
 	// Destructor
 	virtual ~j1GuiEntity();
@@ -22,6 +22,8 @@ public:
 
 	virtual void Handle_Input();
 
+	virtual void AssignNumber(uint n);
+
 public:
 
 	GuiType type;
@@ -30,8 +32,7 @@ public:
 	bool visible = true, selected, resize;
 	uint id;
 	std::string identifier;
-private:
-
+	std::vector<j1GuiEntity*> elements;
 };
 
 #endif // __j1GUIENTITY_H__

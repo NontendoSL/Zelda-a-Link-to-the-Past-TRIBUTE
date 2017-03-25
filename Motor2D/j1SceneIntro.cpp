@@ -101,13 +101,16 @@ bool j1SceneIntro::PostUpdate()
 	bool ret = true;
 	if (App->scene->ingame == false )
 	{
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
+		if (menu)
 		{
-			main_menu->Select(1);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
-		{
-			main_menu->Select(-1);
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
+			{
+				main_menu->Select(1);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
+			{
+				main_menu->Select(-1);
+			}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{

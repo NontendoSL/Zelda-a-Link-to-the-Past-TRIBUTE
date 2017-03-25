@@ -44,9 +44,9 @@ bool j1Gui::PreUpdate()
 {
 	for (uint i = 0; i < entities.size(); i++) {
 		if (entities[i]->visible == true) {
-			entities[i]->Update();
 			entities[i]->Handle_Input();
 		}
+		entities[i]->Update();
 	}
 	return true;
 }
