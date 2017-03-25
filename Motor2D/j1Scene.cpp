@@ -44,6 +44,7 @@ bool j1Scene::Start()
 		LoadUi();
 		Load_new_map(1);
 	}
+	inventory = false;
 	switch_map = 0;
 	return true;
 }
@@ -130,7 +131,7 @@ bool j1Scene::Update(float dt)
 
 		if (switch_menu)
 		{
-			SwitchMenu(inventory);
+			SwitchMenu(!inventory);
 		}
 	}
 	
@@ -146,6 +147,25 @@ bool j1Scene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		ret = false;
+	}
+	if (inventory==true&&ingame==true)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		{
+			start_menu->Select(1);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		{
+			start_menu->Select(-1);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			start_menu->Click();
+		}
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		{
+			start_menu->UnClick(); //TODO LOW-> fix mini bugs
+		}
 	}
 
 	return ret;
@@ -202,13 +222,14 @@ void j1Scene::LoadUi()
 	//Start Menu
 	start_menu = new Menu();
 	Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg");
-	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21 }, { 304,268 }, { 337,268 }, false, "1stITEM");
+	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21-224 }, { 304,268 }, { 337,268 }, false, "1stITEM");
 	hotfix->selected = true;
-	Sprite->elements.push_back(hotfix);
+	start_menu->AddElement(hotfix);
+	start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21-224 }, { 304,301 }, { 337,301 },false, "2ndITEM"));
 	start_menu->AddElement(Sprite);
 	start_menu->position = { 0,-224 };
-
 	start_menu->Close();
+//	hotfix->identifier = "JODER";
 }
 
 void j1Scene::SwitchMenu(bool direction)//true for down, false for up
@@ -225,8 +246,8 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 		{
 			hud->Close();
 			switch_menu = false;
-			inventory = false;
-			player->gamestate = INGAME;
+			inventory = true;
+			player->gamestate = INMENU;
 		}
 	}
 	else
@@ -241,7 +262,7 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 		{
 			start_menu->Close();
 			switch_menu = false;
-			inventory = true;
+			inventory = false;
 			player->gamestate = INGAME;
 		}
 	}

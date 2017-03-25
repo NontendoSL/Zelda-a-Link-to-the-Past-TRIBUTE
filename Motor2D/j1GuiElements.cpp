@@ -194,7 +194,14 @@ void Button::Update()
 	}
 	if (selected == true)
 	{
-		state = over;
+		if (click == true) 
+		{
+			state = clicked;
+		}
+		else 
+		{
+			state = over;
+		}
 	}
 	else
 	{
@@ -274,54 +281,75 @@ Dialogue::~Dialogue()
 
 Menu::Menu()
 {
-	id_selected = 1;
+	id_selected = 0;
 	visible = false;
 }
 
 void Menu::AddElement(j1GuiEntity* element)
 {
-	element->id = menu_elements.size()+1;
-	menu_elements.push_back(element);
+	if (element->type == BUTTON) {
+		element->id = menu_buttons.size() + 1;
+		menu_buttons.push_back((Button*)element);
+	}
+	else 
+	{
+		menu_images.push_back((Image*)element);
+	}
+	
 }
 
 void Menu::Select(int value)
 {
 	//assert(id_selected + value < menu_elements.size() + 1 || id_selected + value >0);
-	if (id_selected + value < menu_elements.size() && id_selected + value >=0)
+	if (id_selected + value < menu_buttons.size() && id_selected + value >=0)
 	{
-		if (menu_elements.size() > 1) 
-		{
-			menu_elements[id_selected]->selected = false;
+			menu_buttons[id_selected]->selected = false;
 			id_selected += value;
-			menu_elements[id_selected]->selected = true;
-		}
+			menu_buttons[id_selected]->selected = true;
 	}
+}
+
+void Menu::Click()
+{
+	menu_buttons[id_selected]->click = true;
+}
+
+void Menu::UnClick()
+{
+	menu_buttons[id_selected]->click = false;
 }
 
 void Menu::Open()
 {
-	for (uint i = 0; i < menu_elements.size(); i++) {
-		menu_elements[i]->visible = true;
-		if (menu_elements[i]->elements.size() > 0)
+	for (uint i = 0; i < menu_buttons.size(); i++) {
+		menu_buttons[i]->visible = true;
+	}
+	for (uint i = 0; i < menu_images.size(); i++) {
+		menu_images[i]->visible = true;
+		if (menu_images[i]->elements.size() > 0)
 		{
-			for (int j = 0; j < menu_elements[i]->elements.size(); j++)
+			for (int j = 0; j < menu_images[i]->elements.size(); j++)
 			{
-				menu_elements[i]->elements[j]->visible = true;
+				menu_images[i]->elements[j]->visible = true;
 			}
 		}
 	}
+	
 	visible = true;
 }
 
 void Menu::Close()
 {
-	for (uint i = 0; i < menu_elements.size(); i++) {
-		menu_elements[i]->visible = false;
-		if (menu_elements[i]->elements.size() > 0)
+	for (uint i = 0; i < menu_buttons.size(); i++) {
+		menu_buttons[i]->visible = false;
+	}
+	for (uint i = 0; i < menu_images.size(); i++) {
+		menu_images[i]->visible = false;
+		if (menu_images[i]->elements.size() > 0)
 		{
-			for (int j = 0; j < menu_elements[i]->elements.size(); j++)
+			for (int j = 0; j < menu_images[i]->elements.size(); j++)
 			{
-				menu_elements[i]->elements[j]->visible = false;
+				menu_images[i]->elements[j]->visible = false;
 			}
 		}
 	}
@@ -332,17 +360,25 @@ void Menu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis 
 {
 	if (x_axis)
 	{
-		for (int i = 0; i < menu_elements.size(); i++)
+		for (int i = 0; i < menu_buttons.size(); i++)
 		{
-			menu_elements[i]->position.x += speed;
+			menu_buttons[i]->position.x += speed;
+		}
+		for (int i = 0; i < menu_images.size(); i++)
+		{
+			menu_images[i]->position.x += speed;
 		}
 		position.x += speed;
 	}
 	else 
 	{
-		for (int i = 0; i < menu_elements.size(); i++)
+		for (int i = 0; i < menu_buttons.size(); i++)
 		{
-			menu_elements[i]->position.y += speed;
+			menu_buttons[i]->position.y += speed;
+		}
+		for (int i = 0; i < menu_images.size(); i++)
+		{
+			menu_images[i]->position.y += speed;
 		}
 		position.y += speed;
 	}

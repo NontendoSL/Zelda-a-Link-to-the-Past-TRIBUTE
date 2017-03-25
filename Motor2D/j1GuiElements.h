@@ -36,7 +36,7 @@ public:
 	~Button();
 
 public:
-	bool start;
+	bool start, click;
 	ButtonState state=normal;
 	SDL_Rect texture2, texture3;
 	Text* buttontext = nullptr;;
@@ -93,8 +93,11 @@ public:
 	void Open();
 	void Close();
 	void Move(bool axis, float speed);
+	void Click();
+	void UnClick();
 private:
-	std::vector<j1GuiEntity*>menu_elements;
+	std::vector<Button*>menu_buttons;
+	std::vector<Image*>menu_images;
 public:
 	uint id_selected;
 };

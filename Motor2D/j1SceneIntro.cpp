@@ -142,6 +142,7 @@ void j1SceneIntro::LoadMainMenu()
 {
 	main_menu = new Menu();
 	Button* menu_button=App->gui->CreateButton({ 1,146,110,17 }, { 172 / 2,180 / 2 }, { 0,0 }, { 112,164 }, true);
+	menu_button->selected = true;
 	menu_button->anim->PushBack({ 112,146,110,17 });
 	menu_button->anim->PushBack({ 223,146,110,17 });
 	menu_button->anim->PushBack({ 334,146,110,17 });
@@ -171,7 +172,6 @@ void j1SceneIntro::LoadMainMenu()
 	menu_button->anim->speed = 0.25f;
 	menu_button->resize = false;
 	main_menu->AddElement(menu_button);
-	main_menu->Select(-1);
 }
 
 void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
