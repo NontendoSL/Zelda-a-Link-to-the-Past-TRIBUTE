@@ -11,6 +11,7 @@ Soldier::Soldier():NPC()
 {
 	name = "enemies"; //TODO need change name to "Soldier".
 	type = CREATURE;
+	srand(time(NULL));
 }
 
 Soldier::~Soldier()
@@ -60,33 +61,72 @@ bool Soldier::Start()
 	soldier_up_2 = {48,20,25,28};
 	soldier_down_2 = {0,18,25,30};
 	marge = 12;
+	gamestate = TIMETOPLAY;
+	status_action = GUARD;
+	speed = 1;
+	height = 15;
+	width = 15;
+	timetoplay = SDL_GetTicks();
+	reset_distance = true;
+	reset_run = false;
 	return true;
 }
 
 bool Soldier::Update()
 {
-	/*if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+	// STATE MACHINE ------------------
+	if (gamestate == INGAME)
 	{
-		position.x -= 2;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	{
-		position.y += 2;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-	{
-		position.x += 2;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
-	{
-		position.y -= 2;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-	{
-		hp -= 2;
-	}
-	*/
+		if (status_action == GUARD)
+		{
+			switch (state)
+			{
+			case IDLE:
+			{
+				Idle();
+				break;
+			}
+			case WALKING:
+			{
+				Walking();
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+		}
+		else if (status_action == HUNT)
+		{
+			switch (state)
+			{
+			case ATTACKING:
+			{
+				Attack();
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+		}
 
+	}
+	else if (gamestate == INMENU)
+	{
+
+	}
+	else if (gamestate == TIMETOPLAY)
+	{
+		if (SDL_GetTicks() - timetoplay > 1000)
+		{
+			gamestate = INGAME;
+		}
+	}
+
+	collision_enemy->SetPos(position.x, position.y);
 	return true;
 }
 
@@ -151,6 +191,140 @@ void Soldier::Drop_item()
 	item_inside->position.x = position.x;
 	item_inside->position.y = position.y;
 	item_inside = NULL;
+}
+
+bool Soldier::Idle()
+{
+	if (reset_run)
+	{
+		timetorun = SDL_GetTicks();
+		reset_run = false;
+	}
+	else
+	{
+		if (SDL_GetTicks() - timetorun > 2000)
+		{
+			int direc_select = rand() % 4 + 1;
+			if (direc_select == 1)
+			{
+				direction = UP;
+			}
+			else if (direc_select == 2)
+			{
+				direction = DOWN;
+			}
+			else if (direc_select == 3)
+			{
+				direction = LEFT;
+			}
+			else if (direc_select == 4)
+			{
+				direction = RIGHT;
+			}
+			state = WALKING;
+			reset_distance = true;
+		}
+	}
+
+	return true;
+}
+
+bool Soldier::Walking()
+{
+	walking = false;
+	if (reset_distance)
+	{
+		distance = rand() % 100 + 20;
+		dis_moved = 0;
+		reset_distance = false;
+	}
+	Move();
+
+	if(dis_moved >= distance)
+	{
+		walking = false;
+		reset_run = true;
+	}
+
+
+	if (walking == false)
+	{
+		state = IDLE;
+	}
+
+	else
+	{
+		state = WALKING;
+	}
+
+	return true;
+}
+
+bool Soldier::Move()
+{
+	if (direction == LEFT)
+	{
+		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
+		{
+			position.x -= speed;
+			dis_moved++;
+		}
+		else
+		{
+			//Function to change direction
+			dis_moved++;
+		}
+		walking = true; 
+	}
+
+	if (direction == RIGHT)
+	{
+		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
+		{
+			position.x += speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	if (direction == UP)
+	{
+		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
+		{
+			position.y -= speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	if (direction == DOWN)
+	{
+		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
+		{
+			position.y += speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+
+	return true;
+}
+
+bool Soldier::Attack()
+{
+
+
+	return true;
 }
 
 bool Soldier::CleanUp()
