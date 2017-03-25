@@ -35,6 +35,14 @@ public:
 
 	void Drop_item();
 
+	bool Idle();
+
+	bool Walking();
+
+	bool Move();
+
+	bool Attack();
+
 private:
 
 	//Soldier Test for Release 0.1
@@ -52,6 +60,14 @@ private:
 	Item* item_inside = nullptr;
 	SDL_Texture* texture = nullptr;
 	Collider* collision_enemy = nullptr;
+
+	int timetoplay;
+
+	int timetorun;
+	bool reset_run;
+	int distance;
+	int dis_moved;
+	bool reset_distance;
 };
 
 #endif //__SOLDIER_H_

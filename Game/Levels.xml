@@ -30,7 +30,7 @@
 		<map n="2" file="LinkHouseOutdoor.tmx">
       <camera follow="true"/>
       <Link pos_x="184" pos_y="265" />
-			<enemies num="18">
+			<enemies num="19">
 				<enemy id="1" pos_x="160" pos_y="12" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
 				<enemy id="1" pos_x="184" pos_y="12" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
 				<enemy id="1" pos_x="208" pos_y="12" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
@@ -49,6 +49,7 @@
         <enemy id="1" pos_x="235" pos_y="496" hp="10" attack="10" dir="up" file="textures/Soldiers.png" />
         <enemy id="1" pos_x="493" pos_y="410" hp="10" attack="10" dir="left" file="textures/Soldiers.png" />
         <enemy id="1" pos_x="493" pos_y="388" hp="10" attack="10" dir="left" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="218" pos_y="414" hp="10" attack="10" dir="left" file="textures/Soldiers.png" />
 			</enemies>
 			<items>
 				<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
@@ -60,9 +61,23 @@
 			<switch blue="1" yellow="3" />
 		</map>
     
-    <map n="3" file="Test_Slice.tmx">
+    <map n="3" file="Test_enemies.tmx">
       <camera follow="true"/>
-      <Link pos_x="150" pos_y="100" />
+      <Link pos_x="150" pos_y="150" />
+      <enemies num="12">
+        <enemy id="1" pos_x="160" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="184" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="208" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="232" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="256" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="280" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="304" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="328" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="352" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="376" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="400" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="424" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+      </enemies>
     </map>
 	</maps>
  

@@ -82,36 +82,16 @@ bool j1Scene::Update(float dt)
 			}
 		}
 
-		//enemy.push_back(App->entity_elements->CreateEnemy(iPoint(80, 70), 1));
-		if (switch_map == 2)
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		{
-			//TODO need destroy all enemies and items
-			if (App->map->CleanUp())
-			{
-				App->collision->EreseAllColiderPlayer();
-				App->entity_elements->DelteElements();
-				if (dynobjects.size() > 0)
-				{
-					dynobjects.clear();
-				}
-
-				Load_new_map(2);
-				/*dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(176, 245), 3));
-				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(224, 273), 4));
-				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(224, 289), 4));
-				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(240, 273), 4));
-				dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(240, 289), 4));*/
-			}
-
-			switch_map = 0;
+			switch_map = 3;
 		}
-		if (switch_map == 1)
+		if (switch_map != 0)
 		{
 			if (App->map->CleanUp())
 			{
 				App->collision->EreseAllColiderPlayer();
 				App->entity_elements->DelteElements();
-
 				if (enemy.size() > 0)
 				{
 					enemy.clear();
@@ -124,7 +104,8 @@ bool j1Scene::Update(float dt)
 				{
 					dynobjects.clear();
 				}
-				Load_new_map(1);
+
+				Load_new_map(switch_map);
 			}
 			switch_map = 0;
 		}

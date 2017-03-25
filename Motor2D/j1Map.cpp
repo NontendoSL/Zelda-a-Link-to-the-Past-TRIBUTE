@@ -106,7 +106,7 @@ void j1Map::EditCost(int x, int y, int value)
 	item._Ptr->_Myval->data[(y*item._Ptr->_Myval->width) + x] = value;
 }
 
-int j1Map::MovementCost(int x, int y, Direction dir) const //TODO 
+int j1Map::MovementCost(int x, int y, Direction dir) const 
 {
 	int ret = 0;
 	int red_wal = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1;
@@ -126,7 +126,7 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		{
 			ret = 1;
 		}
-		else if (id_1 == blue_wal)
+		else if (id_1 == blue_wal)//TODO HIGH-> Only player enter
 		{
 			App->scene->switch_map = 1;
 		}
@@ -185,7 +185,7 @@ int j1Map::MovementCost(int x, int y, Direction dir) const //TODO
 		{
 			ret = 1;
 		}
-		else if (id_1 == blue_wal)
+		else if (id_1 == blue_wal)//TODO HIGH-> Only player enter
 		{
 			App->scene->switch_map = 2;
 		}

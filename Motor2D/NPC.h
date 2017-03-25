@@ -5,6 +5,8 @@
 #include "SceneElements.h"
 #include "j1Creature.h"
 
+enum StatusAction {GUARD, HUNT};
+
 class NPC : public Creature
 {
 public:
@@ -26,6 +28,7 @@ public:
 
 	int npc_id;
 	uint marge;
+	StatusAction status_action;
 
 
 };
