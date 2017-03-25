@@ -4,6 +4,8 @@
 #include "j1Module.h"
 #include "SceneElements.h"
 #include "SDL/include/SDL_rect.h"
+#include "j1Map.h"
+#include "time.h"
 
 enum CreatureType { PLAYER, POKEMON, GANON, SOLDIER, BCTROOPER, POKETRAINER };
 enum ActionState { IDLE = 0, WALKING, ATTACKING, DYING };

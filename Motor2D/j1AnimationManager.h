@@ -4,13 +4,14 @@
 
 #include "j1Module.h"
 #include <vector>
-#include "Animation.h"
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "p2Defs.h"
+#include "Animation.h"
 
 enum ActionState;
 enum Direction;
+
 
 struct AnimDirect
 {
@@ -46,10 +47,11 @@ public:
 
 	void Drawing_Manager(ActionState status, Direction dir, iPoint position, std::string name);
 
-	Direction CheckDir(Direction);
+	Animation* GetAnimation(ActionState status, Direction dir, std::string name);
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
+
 	//All Files
 	std::list<std::string> file_names;
 
@@ -57,6 +59,9 @@ private:
 	std::vector<AnimationStruct> animat;
 
 	int range_link;
+	iPoint pivot;
+	SDL_Rect r;
+	Animation* current_animation = nullptr;
 };
 
 #endif //__j1ANIMATION_H_

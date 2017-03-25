@@ -8,7 +8,7 @@
 
 class Creature;
 class InputListener;
-
+class Animation;
 class Text;
 
 class Player : public Creature, public InputListener
@@ -90,6 +90,8 @@ private:
 
 	bool Camera_follow_player = true;
 	bool changeResolution = false;
+
+	Animation* current_animation = nullptr;
 };
 
 

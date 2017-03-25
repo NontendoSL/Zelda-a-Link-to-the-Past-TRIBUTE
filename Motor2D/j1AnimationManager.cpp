@@ -25,7 +25,8 @@ bool j1AnimationManager::Awake(pugi::xml_node& test)
 	{
 		file_names.push_back(temp.attribute("file").as_string(""));
 	}
-
+	pivot = { 0, 0 };
+	r = { 0, 0, 0, 0 };
 	return true;
 }
 
@@ -85,9 +86,13 @@ bool j1AnimationManager::Start()
 				{
 					stop_rearch = true;
 					stanim.East_action.speed = state.attribute("speed").as_float(0);
+					stanim.East_action.loop = state.attribute("loop").as_bool(false);
 					stanim.North_action.speed = state.attribute("speed").as_float(0);
+					stanim.North_action.loop = state.attribute("loop").as_bool(false);
 					stanim.South_action.speed = state.attribute("speed").as_float(0);
+					stanim.South_action.loop = state.attribute("loop").as_bool(false);
 					stanim.West_action.speed = state.attribute("speed").as_float(0);
+					stanim.West_action.loop = state.attribute("loop").as_bool(false);
 				}
 			}
 			temp_animat.anim.push_back(stanim);
@@ -108,8 +113,7 @@ bool j1AnimationManager::CleanUp()
 
 void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, std::string name) 
 {
-	iPoint pivot(0, 0);
-	SDL_Rect r = { 0, 0, 0, 0 };
+
 	for (int i = 0; i < animat.size(); i++)
 	{
 		if (animat[i].name == name && status <= DYING)
@@ -143,6 +147,38 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 		App->render->Blit(animat[i].graphics, position.x - pivot.x + 8, position.y - pivot.y + 11, &r);
 	}
 }
+
+Animation * j1AnimationManager::GetAnimation(ActionState status, Direction dir, std::string name)
+{
+	for (int i = 0; i < animat.size(); i++)
+	{
+		if (animat[i].name == name && status <= DYING)
+		{
+			if (dir == UP)
+			{
+				current_animation = &animat[i].anim[status].North_action;
+			}
+
+			else if (dir == DOWN)
+			{
+				current_animation = &animat[i].anim[status].South_action;
+			}
+
+			else if (dir == LEFT)
+			{
+				current_animation = &animat[i].anim[status].West_action;
+			}
+
+			else if (dir == RIGHT)
+			{
+				current_animation = &animat[i].anim[status].East_action;
+			}
+		}
+	}
+
+	return current_animation;
+}
+
 
 
 // ---------------------------------------------

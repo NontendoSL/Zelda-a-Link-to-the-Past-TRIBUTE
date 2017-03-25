@@ -6,7 +6,6 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
-#include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
@@ -18,8 +17,8 @@
 #include "j1InputManager.h"
 #include "j1Item.h"
 #include "j1DynamicObjects.h"
-#include "time.h"
 #include "j1Creature.h"
+#include "Animation.h"
 
 //Constructor
 Player::Player() : Creature()
@@ -355,16 +354,17 @@ bool Player::Attack()
 {
 	if (attacker)
 	{
-		if (SDL_GetTicks() - attack_time > 200)
+		if (current_animation->Finished())
 		{
 			App->collision->EraseCollider(collision_attack);
 			attacker = false;
+			current_animation->Reset();
+			current_animation = nullptr;
 			state = IDLE;
 		}
 	}
 	else
 	{
-		attack_time = SDL_GetTicks();
 		attacker = true;
 		if (direction == UP)
 		{
@@ -382,9 +382,7 @@ bool Player::Attack()
 		{
 			collision_attack = App->collision->AddCollider({ position.x - 8, position.y + 4, 20, 12 }, COLLIDER_PLAYER, this);
 		}
-		LOG("ATTACK!");
 	}
-
 	return true;
 }
 
@@ -398,7 +396,8 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 			if (e_state == E_DOWN)
 			{
 				state = ATTACKING;
-				attack_time = SDL_GetTicks();
+				current_animation = App->anim_manager->GetAnimation(state, direction, name);
+				current_animation->Reset();
 			}
 			break;
 		}

@@ -271,8 +271,5 @@
     <Xml Include="..\Game\config.xml">
       <Filter>Desenvolupament  ========\XML</Filter>
     </Xml>
-    <Xml Include="..\Game\LinkWalkingSprites.xml">
-      <Filter>Desenvolupament  ========\Animation\XML</Filter>
-    </Xml>
   </ItemGroup>
 </Project>
