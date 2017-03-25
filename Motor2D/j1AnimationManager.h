@@ -46,6 +46,8 @@ public:
 
 	void Drawing_Manager(ActionState status, Direction dir, iPoint position, std::string name);
 
+	Direction CheckDir(Direction);
+
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
 	//All Files

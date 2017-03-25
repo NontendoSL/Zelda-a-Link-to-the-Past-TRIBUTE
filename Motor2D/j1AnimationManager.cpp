@@ -56,21 +56,30 @@ bool j1AnimationManager::Start()
 			for (pugi::xml_node temp = state.child("sprite"); stop_rearch == false; temp = temp.next_sibling())
 			{
 				dir = temp.attribute("dir").as_string("");
+				SDL_Rect tex_rect = { temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) };
+				
+				//PIVOT POINT --------------
+				float pivotX = temp.attribute("pX").as_float(0) * tex_rect.w;
+				float pivotY = temp.attribute("pY").as_float(0) * tex_rect.h;
+				pivotX = (pivotX > (floor(pivotX) + 0.5f)) ? ceil(pivotX) : floor(pivotX);
+				pivotY = (pivotY > (floor(pivotY) + 0.5f)) ? ceil(pivotY) : floor(pivotY);
+				iPoint offset(pivotX, pivotY);
+
 				if (dir == "East")
 				{
-					stanim.East_action.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
+					stanim.East_action.PushBack(tex_rect, offset);
 				}
 				else if (dir == "North")
 				{
-					stanim.North_action.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
+					stanim.North_action.PushBack(tex_rect, offset);
 				}
 				else if (dir == "West")
 				{
-					stanim.West_action.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
+					stanim.West_action.PushBack(tex_rect, offset);
 				}
 				else if (dir == "South")
 				{
-					stanim.South_action.PushBack({ temp.attribute("x").as_int(0), temp.attribute("y").as_int(0), temp.attribute("w").as_int(0), temp.attribute("h").as_int(0) });
+					stanim.South_action.PushBack(tex_rect, offset);
 				}
 				else
 				{
@@ -99,94 +108,40 @@ bool j1AnimationManager::CleanUp()
 
 void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, std::string name) 
 {
+	iPoint pivot(0, 0);
+	SDL_Rect r = { 0, 0, 0, 0 };
 	for (int i = 0; i < animat.size(); i++)
 	{
-		if (animat[i].name == name)
+		if (animat[i].name == name && status <= DYING)
 		{
 			if (dir == UP)
 			{
-				if (status == IDLE)
-				{
-					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].North_action.frames[0]);
-				}
-				else if (status == ATTACKING)
-				{
-
-				}
-				else if (status == WALKING)
-				{
-					SDL_Rect r = animat[i].anim[WALKING].North_action.GetCurrentFrame();
-					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &r);
-				}
-				else
-				{
-
-				}
+				r = animat[i].anim[status].North_action.GetCurrentFrame();
+				pivot = animat[i].anim[status].North_action.GetCurrentOffset();
 			}
+
 			else if (dir == DOWN)
 			{
-				if (status == IDLE)
-				{
-					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].South_action.frames[0]);
-				}
-				else if (status == ATTACKING)
-				{
-
-				}
-				else if (status == WALKING)
-				{
-					SDL_Rect r = animat[i].anim[WALKING].South_action.GetCurrentFrame();
-					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &r);
-				}
-				else
-				{
-
-				}
+				r = animat[i].anim[status].South_action.GetCurrentFrame();
+				pivot = animat[i].anim[status].South_action.GetCurrentOffset();
 			}
+
 			else if (dir == LEFT)
 			{
-				if (status == IDLE)
-				{
-					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].West_action.frames[0]);
-				}
-				else if (status == ATTACKING)
-				{
-
-				}
-				else if (status == WALKING)
-				{
-					SDL_Rect r = animat[i].anim[WALKING].West_action.GetCurrentFrame();
-					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &r);
-				}
-				else
-				{
-
-				}
+				r = animat[i].anim[status].West_action.GetCurrentFrame();
+				pivot = animat[i].anim[status].West_action.GetCurrentOffset();
 			}
+
 			else if (dir == RIGHT)
 			{
-				if (status == IDLE)
-				{
-					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &animat[i].anim[IDLE].East_action.frames[0]);
-				}
-				else if (status == ATTACKING)
-				{
-
-				}
-				else if (status == WALKING)
-				{
-					SDL_Rect r = animat[i].anim[WALKING].East_action.GetCurrentFrame();
-					App->render->Blit(animat[i].graphics, position.x, position.y - range_link, &r);
-				}
-				else
-				{
-
-				}
+				r = animat[i].anim[status].East_action.GetCurrentFrame();
+				pivot = animat[i].anim[status].East_action.GetCurrentOffset();
 			}
 		}
+
+		//DRAW
+		App->render->Blit(animat[i].graphics, position.x - pivot.x, position.y - range_link - pivot.y, &r);
 	}
-
-
 }
 
 
