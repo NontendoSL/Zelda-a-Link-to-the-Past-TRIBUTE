@@ -15,7 +15,7 @@ public:
 	void Draw();
 
 public:
-	Image(SDL_Rect rectangle, iPoint position,std::string identifier="undefined", uint id=0);
+	Image(SDL_Rect rectangle, iPoint position,std::string identifier, uint id);
 	~Image();
 	void AssignNumber(uint n);
 public:
@@ -32,7 +32,7 @@ public:
 	void Draw();
 	void Update();
 public:
-	Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool animated, const char* textstring, uint textsize, iPoint textpos, std::string identifier="undefined", uint id = 0);
+	Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool animated, std::string identifier, uint id, const char* textstring, uint textsize, iPoint textpos);
 	~Button();
 
 public:
@@ -48,7 +48,7 @@ public:
 class Text : public j1GuiEntity
 {
 public:
-	Text(const char* write, iPoint pos, uint size, std::string identifier="undefined", uint id=0);
+	Text(const char* write, iPoint pos, uint size, std::string identifier, uint id);
 	~Text();
 
 public:
@@ -95,6 +95,9 @@ public:
 	void Move(bool axis, float speed);
 	void Click();
 	void UnClick();
+	void Do();
+	Image* GetImage(uint id);
+	Button* GetSelected();
 private:
 	std::vector<Button*>menu_buttons;
 	std::vector<Image*>menu_images;

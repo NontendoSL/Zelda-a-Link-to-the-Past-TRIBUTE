@@ -184,7 +184,9 @@ void j1Scene::LoadUi()
 	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 }, "force");
 	Sprite->elements.push_back(force);
 	hud->AddElement(Sprite);//[0] adding charge bar
-	hud->AddElement(App->gui->CreateImage({ 37,20,22,22 }, { 22,12 }, "item"));
+	Sprite = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 }, "item");
+	Sprite->elements.push_back(App->gui->CreateImage({ 279,257,16,16 }, { 3,3 }, "item_picked"));
+	hud->AddElement(Sprite);
 	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 }, "gems"); //Gems and value
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
@@ -203,14 +205,14 @@ void j1Scene::LoadUi()
 	//Start Menu
 	start_menu = new Menu();
 	Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg");
-	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21-224 }, { 304,268 }, { 337,268 }, false, "1stITEM");
+	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21-224 }, { 304,268 }, { 337,268 }, false,"bow");
 	hotfix->selected = true;
 	start_menu->AddElement(hotfix);
-	start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21-224 }, { 304,301 }, { 337,301 },false, "2ndITEM"));
+	start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21-224 }, { 304,301 }, { 337,301 },false, "hookshot"));
 	start_menu->AddElement(Sprite);
+	start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
 	start_menu->position = { 0,-224 };
 	start_menu->Close();
-//	hotfix->identifier = "JODER";
 }
 
 void j1Scene::SwitchMenu(bool direction)//true for down, false for up

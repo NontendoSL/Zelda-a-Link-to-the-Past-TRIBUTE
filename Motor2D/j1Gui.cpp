@@ -103,9 +103,9 @@ Text* j1Gui::CreateText(const char* string, iPoint pos, uint size, bool addeleme
 	return element;
 }
 
-Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated, const char* textstring, uint textsize, iPoint textpos, std::string identifier, uint id) {
+Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated, std::string identifier, uint id, const char* textstring, uint textsize, iPoint textpos) {
 
-	Button* element = new Button(rect, pos, text2, text3, animated, textstring, textsize, textpos, identifier, id);
+	Button* element = new Button(rect, pos, text2, text3, animated, identifier, id, textstring, textsize, textpos);
 
 	entities.push_back(element);
 

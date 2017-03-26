@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "Animation.h"
+#include "j1Scene.h"
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
@@ -146,7 +147,7 @@ Text::~Text() {
 }
 
 /////////////////////////////// BUTTON METHODS ///////////////////////////////
-Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool animated, const char* textstring, uint textsize, iPoint textpos, std::string identifier, uint id) :j1GuiEntity(rectangle, pos,identifier,id)
+Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool animated, std::string identifier, uint id, const char* textstring, uint textsize, iPoint textpos) :j1GuiEntity(rectangle, pos,identifier,id)
 {
 	type = BUTTON;
 	state = normal;
@@ -157,7 +158,7 @@ Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool 
 	texture2.w = texture3.w = Hitbox.w;
 	texture2.h = texture3.h = Hitbox.h;
 	if (textstring != nullptr) {
-		buttontext = new Text(textstring, { textpos.x,textpos.y }, textsize);
+		buttontext = new Text(textstring, { textpos.x,textpos.y }, textsize,"undefined",0);
 	}
 
 	start = true;
@@ -300,6 +301,7 @@ void Menu::AddElement(j1GuiEntity* element)
 
 void Menu::Select(int value)
 {
+	menu_buttons[id_selected]->click = false;
 	//assert(id_selected + value < menu_elements.size() + 1 || id_selected + value >0);
 	if (id_selected + value < menu_buttons.size() && id_selected + value >=0)
 	{
@@ -312,6 +314,35 @@ void Menu::Select(int value)
 void Menu::Click()
 {
 	menu_buttons[id_selected]->click = true;
+	Do();
+}
+
+void Menu :: Do()
+{
+	std::string i_name = App->scene->start_menu->GetSelected()->identifier;
+	Image* item = App->scene->hud->GetImage(1);
+	if (i_name == "bow")
+	{
+		item->elements[0]->Hitbox.y = 276;
+	}
+	else if (i_name == "hookshot")
+	{
+		item->elements[0]->Hitbox.y = 309;
+	}
+	else if (i_name == "bomb")
+	{
+		item->elements[0]->Hitbox.y = 344;
+	}
+}
+
+Image* Menu::GetImage(uint id)
+{
+	return menu_images[id];
+}
+
+Button* Menu::GetSelected()
+{
+	return menu_buttons[id_selected];
 }
 
 void Menu::UnClick()
@@ -367,6 +398,13 @@ void Menu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis 
 		for (int i = 0; i < menu_images.size(); i++)
 		{
 			menu_images[i]->position.x += speed;
+			if (menu_images[i]->elements.size() > 0)
+			{
+				for (int j = 0; j < menu_images[i]->elements.size(); j++)
+				{
+					menu_images[i]->elements[j]->position.x += speed;
+				}
+			}
 		}
 		position.x += speed;
 	}
@@ -379,6 +417,13 @@ void Menu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis 
 		for (int i = 0; i < menu_images.size(); i++)
 		{
 			menu_images[i]->position.y += speed;
+			if (menu_images[i]->elements.size() > 0)
+			{
+				for (int j = 0; j < menu_images[i]->elements.size(); j++)
+				{
+					menu_images[i]->elements[j]->position.y += speed;
+				}
+			}
 		}
 		position.y += speed;
 	}
