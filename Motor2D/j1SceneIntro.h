@@ -52,14 +52,14 @@ public:
 
 private:
 	//Start screen
-	SDL_Texture*	TitleScreen_letters;
-	SDL_Texture*	TitleScreen_bg;
-	SDL_Texture*	Menu_bg;
+	SDL_Texture*	TitleScreen_letters = nullptr;
+	SDL_Texture*	TitleScreen_bg = nullptr;
+	SDL_Texture*	Menu_bg = nullptr;
 	float			bg_anim = 0;
 	bool			right = false;
 	bool			menu = false;
 
-	ZeldaMenu*			main_menu;
+	ZeldaMenu*			main_menu = nullptr;
 };
 
 #endif

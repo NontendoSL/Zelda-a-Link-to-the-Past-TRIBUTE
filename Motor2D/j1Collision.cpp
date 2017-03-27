@@ -6,39 +6,18 @@
 
 j1Collision::j1Collision()
 {
+	name = "collision";
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
-	matrix[COLLIDER_WALL][COLLIDER_SPHERE_RIGHT] = true;
-	matrix[COLLIDER_WALL][COLLIDER_SPHERE_LEFT] = true;
-	matrix[COLLIDER_WALL][COLLIDER_LATERAL_WALL] = false;
-
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
-
-	matrix[COLLIDER_ENEMY][COLLIDER_DYNOBJECT] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_DYNOBJECT] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
-
-
-
-	matrix[COLLIDER_SPHERE_RIGHT][COLLIDER_WALL] = true;
-	matrix[COLLIDER_SPHERE_RIGHT][COLLIDER_SPHERE_RIGHT] = true;
-	matrix[COLLIDER_SPHERE_RIGHT][COLLIDER_LATERAL_WALL] = true;
-	matrix[COLLIDER_SPHERE_RIGHT][COLLIDER_SPHERE_LEFT] = true;
-
-	matrix[COLLIDER_LATERAL_WALL][COLLIDER_WALL] = false;
-	matrix[COLLIDER_LATERAL_WALL][COLLIDER_SPHERE_RIGHT] = true;
-	matrix[COLLIDER_LATERAL_WALL][COLLIDER_SPHERE_LEFT] = true;
-	matrix[COLLIDER_LATERAL_WALL][COLLIDER_LATERAL_WALL] = false;
-
-	matrix[COLLIDER_SPHERE_LEFT][COLLIDER_SPHERE_LEFT] = true;
-	matrix[COLLIDER_SPHERE_LEFT][COLLIDER_SPHERE_RIGHT] = false;
-	matrix[COLLIDER_SPHERE_LEFT][COLLIDER_WALL] = true;
-	matrix[COLLIDER_SPHERE_LEFT][COLLIDER_LATERAL_WALL] = true;
-
 }
 j1Collision::~j1Collision() {}
 
@@ -69,8 +48,8 @@ bool j1Collision::PreUpdate()
 bool j1Collision::Update(float dt)
 {
 	// Called before render is available
-	Collider* c1;
-	Collider* c2;
+	Collider* c1 = nullptr;
+	Collider* c2 = nullptr;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -91,11 +70,15 @@ bool j1Collision::Update(float dt)
 
 			if (c1->CheckCollision(c2) == true)
 			{
-				if (matrix[c1->type][c2->type] && c1->callback)
+				if (matrix[c1->type][c2->type] == true && c1->callback)
+				{
 					c1->callback->OnCollision(c1, c2);
+				}
 
-				if (matrix[c2->type][c1->type] && c2->callback)
+				if (matrix[c2->type][c1->type] == true && c2->callback)
+				{
 					c2->callback->OnCollision(c2, c1);
+				}
 			}
 		}
 	}

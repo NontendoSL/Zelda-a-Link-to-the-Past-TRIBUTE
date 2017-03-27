@@ -188,37 +188,47 @@ bool Player::Save()
 
 void Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT)
+	if (c1 != nullptr && c2 != nullptr)
 	{
-		iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
-		//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
-		int canDrop = 1;
-		if (canDrop == 1)
+		if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT)
 		{
-			iPoint position;
-			position.x = c2->callback->position.x + 4;
-			position.y = c2->callback->position.y;
-			App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
+			iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
+			//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
+			int canDrop = 1;
+			if (canDrop == 1)
+			{
+				iPoint position;
+				position.x = c2->callback->position.x + 4;
+				position.y = c2->callback->position.y;
+				App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
 
+			}
+
+			App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
+			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
+			App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
+			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
+			App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
+			App->collision->EraseCollider(c2);
 		}
 
-		App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
-		App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
-		App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
-		App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
-		App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
-		App->collision->EraseCollider(c2);
-	}
-
-	if (c1 == collision_player && c2->type == COLLIDER_ITEM)
-	{
-		if (c2->callback->name == "rupee")
+		if (c1 == collision_player && c2->type == COLLIDER_ITEM)
 		{
-			gems++;
-			App->entity_elements->DeleteItem((Item*)c2->callback);
+			if (c2->callback->name == "rupee")
+			{
+				gems++;
+				App->entity_elements->DeleteItem((Item*)c2->callback);
+				App->collision->EraseCollider(c2);
+			}
+		}
+
+		if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
+		{
+			App->entity_elements->DeleteEnemy((Soldier*)c2->callback);
 			App->collision->EraseCollider(c2);
 		}
 	}
+
 
 
 	/*if (c1 == collision_player && c2->type == COLLIDER_ENEMY)

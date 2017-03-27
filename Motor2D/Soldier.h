@@ -59,7 +59,6 @@ private:
 	bool stunned = false;
 	Item* item_inside = nullptr;
 	SDL_Texture* texture = nullptr;
-	Collider* collision_enemy = nullptr;
 
 	int timetoplay;
 

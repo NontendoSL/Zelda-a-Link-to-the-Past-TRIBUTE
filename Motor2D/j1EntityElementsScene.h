@@ -47,7 +47,7 @@ public:
 	Player* CreatePlayer();
 
 	//Delete Functions
-	bool DeleteEnemy(NPC* enemy);
+	bool DeleteEnemy(Soldier* enemy);
 	bool DeleteDynObject(DynamicObjects* dynobject);
 	bool DeleteItem(Item* enemy);
 

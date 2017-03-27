@@ -29,6 +29,7 @@ public:
 	int npc_id;
 	uint marge;
 	StatusAction status_action;
+	Collider* collision_enemy = nullptr;
 
 
 };

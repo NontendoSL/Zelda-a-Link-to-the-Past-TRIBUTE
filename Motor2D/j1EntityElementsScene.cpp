@@ -9,6 +9,7 @@
 #include "p2Log.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
+#include "j1Collision.h"
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1FileSystem.h"
@@ -126,12 +127,17 @@ Soldier* j1EntityElementScene::CreateSoldier(uint id, pugi::xml_node& config)
 	return element;
 }
 
-bool j1EntityElementScene::DeleteEnemy(NPC* enemy)
+bool j1EntityElementScene::DeleteEnemy(Soldier* enemy)
 {
-	elementscene.remove(enemy);
-	App->scene->enemy.remove((Soldier*)enemy);
-	delete enemy;
-	LOG("Enemy DELETE!");
+	if (enemy != nullptr)
+	{
+		elementscene.remove(enemy);
+		App->scene->enemy.remove(enemy);
+		enemy = nullptr;
+		delete enemy;
+		LOG("Enemy DELETE!");
+	}
+
 	return true;
 }
 
@@ -139,7 +145,10 @@ bool j1EntityElementScene::DeleteDynObject(DynamicObjects* dynobject)
 {
 	elementscene.remove(dynobject);
 	App->scene->dynobjects.remove(dynobject);
+	dynobject->collision->to_delete = true;
+	dynobject = nullptr;
 	delete dynobject;
+
 	LOG("DynObject DELETE!");
 	return true;
 }
@@ -148,6 +157,7 @@ bool j1EntityElementScene::DeleteItem(Item* item)
 {
 	elementscene.remove(item);
 	App->scene->items.remove(item);
+	item = nullptr;
 	delete item;
 	LOG("Item DELETE!");
 	return true;
