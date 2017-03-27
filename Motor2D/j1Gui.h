@@ -6,14 +6,15 @@
 #include <vector>
 
 #define CURSOR_WIDTH 2
-enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE, DIALOGUE };
-
+enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE, DIALOGUE,MENU };
+enum FontName;
 // TODO 1: Create your structure of classes
 class j1GuiEntity;
 class Image;
 class Text;
 class Button;
 class Dialogue;
+class ZeldaMenu;
 
 // ---------------------------------------------------
 class j1Gui : public j1Module
@@ -45,11 +46,14 @@ public:
 	// create img
 	Image* CreateImage(SDL_Rect rect, iPoint pos, std::string identifier="undefined", uint id=0);
 	// create text
-	Text* CreateText(const char* string, iPoint pos, uint size, bool addelement = true, std::string identifier = "undefined", uint id = 0);
+	Text* CreateText(FontName search, const char* string, iPoint pos, uint size, bool addelement = true, std::string identifier = "undefined", uint id = 0);
 	// create button
 	Button* CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated = false, std::string identifier = "undefined", uint id = 0, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
 
 	Dialogue* CreateDialogue(const char* string);
+
+	ZeldaMenu* CreateZeldaMenu();
+
 public:
 	int Next_id = 0;
 

@@ -12,7 +12,7 @@ class Image;
 class Text;
 class Button;
 class Dialogue;
-class Menu;
+class ZeldaMenu;
 class Player;
 class Item;
 class Soldier;
@@ -59,7 +59,7 @@ private:
 	bool			right = false;
 	bool			menu = false;
 
-	Menu*			main_menu;
+	ZeldaMenu*			main_menu;
 };
 
 #endif

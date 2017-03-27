@@ -108,11 +108,25 @@ Image::~Image()
 
 /////////////////////////////// TEXT METHODS ///////////////////////////////
 
-Text::Text(const char* write, iPoint pos, uint size, std::string identifier, uint id) :text(write), j1GuiEntity({ 0,0,0,0 }, pos, identifier, id)
+Text::Text(FontName search,const char* write, iPoint pos, uint size, std::string identifier, uint id) :text(write), j1GuiEntity({ 0,0,0,0 }, pos, identifier, id)
 {
-
 	type = TEXT;
-	font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", size);
+	switch (search)
+	{
+		case GANONF:
+			font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", size);
+			break;
+		case PIXEL:
+			font = App->font->Load("fonts/zelda_fonts/Pixeled.ttf", size);
+			break;
+		case PIXELMORE:
+			font = App->font->Load("fonts/zelda_fonts/PixeledMore.ttf", size);
+			break;
+		default:
+			font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", size);
+			break;
+	}
+
 	text_texture = App->font->Print(text, { (255),(255),(255),(255) }, font);
 	App->font->CalcSize(write, Hitbox.w, Hitbox.h, font);
 	Hitbox.w /= 2; //TODO MID Adapt functions to resolution scale
@@ -137,7 +151,7 @@ void Text::Write(const char* string)
 {
 
 	text = string;
-	font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", 23);
+	//font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", 23);
 	text_texture = App->font->Print(text, { (255),(255),(255),(255) }, font);
 
 }
@@ -158,7 +172,7 @@ Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool 
 	texture2.w = texture3.w = Hitbox.w;
 	texture2.h = texture3.h = Hitbox.h;
 	if (textstring != nullptr) {
-		buttontext = new Text(textstring, { textpos.x,textpos.y }, textsize,"undefined",0);
+		buttontext = new Text(GANONF,textstring, { textpos.x,textpos.y }, textsize,"undefined",0);
 	}
 
 	start = true;
@@ -222,7 +236,7 @@ Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, {40,150})
 {
 	//TODO MID: Actual font needs a blue outline to match the original one, need to code that or edit the font creating the outline
 	type = DIALOGUE;
-	text_lines.push_back(App->gui->CreateText(string, { position.x + 10, 0 }, 30, false));
+	text_lines.push_back(App->gui->CreateText(GANONF,string, { position.x + 10, 0 }, 30, false));
 
 }
 
@@ -258,7 +272,7 @@ void Dialogue::AddLine(const char* string)
 	std::list<Text*>::iterator iterator = text_lines.end();
 	iterator--;
 	iPoint pos = { position.x + 10,iterator._Ptr->_Myval->position.y + (iterator._Ptr->_Myval->Hitbox.h) }; // Hitbox/2 is for the resolution scale
-	text_lines.push_back(App->gui->CreateText(string, { pos.x,pos.y }, 30, false));
+	text_lines.push_back(App->gui->CreateText(GANONF,string, { pos.x,pos.y }, 30, false));
 }
 
 void Dialogue::PushLine(bool push)
@@ -280,26 +294,31 @@ Dialogue::~Dialogue()
 
 /////////////////////////////// MENU METHODS ///////////////////////////////
 
-Menu::Menu()
+ZeldaMenu::ZeldaMenu()
 {
 	id_selected = 0;
 	visible = false;
+	type = MENU;
 }
 
-void Menu::AddElement(j1GuiEntity* element)
+void ZeldaMenu::AddElement(j1GuiEntity* element)
 {
 	if (element->type == BUTTON) {
 		element->id = menu_buttons.size() + 1;
 		menu_buttons.push_back((Button*)element);
 	}
-	else 
+	if(element->type == IMAGE)
 	{
 		menu_images.push_back((Image*)element);
+	}
+	if (element->type == TEXT)
+	{
+		menu_texts.push_back((Text*)element);
 	}
 	
 }
 
-void Menu::Select(int value)
+void ZeldaMenu::Select(int value)
 {
 	menu_buttons[id_selected]->click = false;
 	//assert(id_selected + value < menu_elements.size() + 1 || id_selected + value >0);
@@ -308,16 +327,21 @@ void Menu::Select(int value)
 			menu_buttons[id_selected]->selected = false;
 			id_selected += value;
 			menu_buttons[id_selected]->selected = true;
+			if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
+			{
+				ShowItemInfo();
+			}
+
 	}
 }
 
-void Menu::Click()
+void ZeldaMenu::Click()
 {
 	menu_buttons[id_selected]->click = true;
 	Do();
 }
 
-void Menu :: Do()
+void ZeldaMenu:: Do()
 {
 	std::string i_name = App->scene->start_menu->GetSelected()->identifier;
 	Image* item = App->scene->hud->GetImage(1);
@@ -335,22 +359,22 @@ void Menu :: Do()
 	}
 }
 
-Image* Menu::GetImage(uint id)
+Image* ZeldaMenu::GetImage(uint id)
 {
 	return menu_images[id];
 }
 
-Button* Menu::GetSelected()
+Button* ZeldaMenu::GetSelected()
 {
 	return menu_buttons[id_selected];
 }
 
-void Menu::UnClick()
+void ZeldaMenu::UnClick()
 {
 	menu_buttons[id_selected]->click = false;
 }
 
-void Menu::Open()
+void ZeldaMenu::Open()
 {
 	for (uint i = 0; i < menu_buttons.size(); i++) {
 		menu_buttons[i]->visible = true;
@@ -368,8 +392,37 @@ void Menu::Open()
 	
 	visible = true;
 }
+void ZeldaMenu::Update()
+{
 
-void Menu::Close()
+	
+
+}
+
+void ZeldaMenu::Handle_Input()
+{
+	if (App->scene->inventory == true && App->scene->ingame == true&&this->identifier=="start_menu")
+	{
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		{
+			Select(1);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		{
+			Select(-1);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			Click();
+		}
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		{
+			UnClick(); 
+		}
+	}
+}
+
+void ZeldaMenu::Close()
 {
 	for (uint i = 0; i < menu_buttons.size(); i++) {
 		menu_buttons[i]->visible = false;
@@ -387,7 +440,7 @@ void Menu::Close()
 	visible = false;
 }
 
-void Menu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis do we move (x=true/y=false)
+void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis do we move (x=true/y=false)
 {
 	if (x_axis)
 	{
@@ -405,6 +458,10 @@ void Menu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis 
 					menu_images[i]->elements[j]->position.x += speed;
 				}
 			}
+		}
+		for (int i = 0; i < menu_texts.size(); i++)
+		{
+			menu_texts[i]->position.x += speed;
 		}
 		position.x += speed;
 	}
@@ -425,11 +482,35 @@ void Menu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis 
 				}
 			}
 		}
+		for (int i = 0; i < menu_texts.size(); i++)
+		{
+			menu_texts[i]->position.y += speed;
+		}
 		position.y += speed;
 	}
 }
 
-Menu::~Menu()
+void ZeldaMenu::ShowItemInfo()
+{
+	switch (id_selected)
+	{
+	case 0:
+		menu_images[1]->Hitbox.y = 268;
+		menu_texts[0]->Write("BOW ARROWS");
+		break;
+	case 1:
+		menu_images[1]->Hitbox.y = 301;
+		menu_texts[0]->Write("HOOKSHOT");
+		break;
+	case 2:
+		menu_images[1]->Hitbox.y = 336;
+		menu_texts[0]->Write("BOMBS");
+		break;
+	}
+
+}
+
+ZeldaMenu::~ZeldaMenu()
 {
 	//need to clear vector;
 }

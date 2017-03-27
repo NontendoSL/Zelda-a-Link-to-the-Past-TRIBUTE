@@ -43,9 +43,7 @@ bool j1Gui::Start()
 bool j1Gui::PreUpdate()
 {
 	for (uint i = 0; i < entities.size(); i++) {
-		if (entities[i]->visible == true) {
-			entities[i]->Handle_Input();
-		}
+		entities[i]->Handle_Input();
 		entities[i]->Update();
 	}
 	return true;
@@ -94,9 +92,9 @@ Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos, std::string identifier, uin
 	return element;
 }
 
-Text* j1Gui::CreateText(const char* string, iPoint pos, uint size, bool addelement, std::string identifier, uint id) {
+Text* j1Gui::CreateText(FontName search, const char* string, iPoint pos, uint size, bool addelement, std::string identifier, uint id) {
 
-	Text* element = new Text(string, pos, size, identifier, id);
+	Text* element = new Text(search,string, pos, size, identifier, id);
 	if (addelement)
 		entities.push_back(element);
 
@@ -118,6 +116,12 @@ Dialogue* j1Gui::CreateDialogue(const char* string) {
 
 	entities.push_back(element);
 
+	return element;
+}
+
+ZeldaMenu* j1Gui::CreateZeldaMenu() {
+	ZeldaMenu* element = new ZeldaMenu();
+	entities.push_back(element);
 	return element;
 }
 // class Gui ---------------------------------------------------

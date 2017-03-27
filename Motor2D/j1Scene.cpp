@@ -63,6 +63,7 @@ bool j1Scene::Update(float dt)
 {
 	if (ingame==true)
 	{
+		//TODO AssignValues to only interact when picking/droping items
 		AssignValues(gems, player->gems);
 		AssignValues(bombs, player->bombs);
 		AssignValues(arrows, player->arrows);
@@ -129,25 +130,6 @@ bool j1Scene::PostUpdate()
 	{
 		ret = false;
 	}
-	if (inventory==true&&ingame==true)
-	{
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
-		{
-			start_menu->Select(1);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-		{
-			start_menu->Select(-1);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			start_menu->Click();
-		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-		{
-			start_menu->UnClick(); //TODO LOW-> fix mini bugs
-		}
-	}
 
 	return ret;
 }
@@ -162,7 +144,6 @@ bool j1Scene::CleanUp()
 
 void j1Scene::AssignValues(Image* assigner, uint var)
 {
-
 	int number = var % 10, i= assigner->elements.size()-1;
 	assigner->elements[i--]->AssignNumber(number);
 	number = var / 10;
@@ -173,13 +154,12 @@ void j1Scene::AssignValues(Image* assigner, uint var)
 		number = var/ 100;
 		assigner->elements[i]->AssignNumber(number);
 	}
-
 }
 
 void j1Scene::LoadUi()
 {
 	//UI
-	hud = new Menu();
+	hud = App->gui->CreateZeldaMenu();
 	Image* Sprite = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 }, "charge");
 	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 }, "force");
 	Sprite->elements.push_back(force);
@@ -191,19 +171,23 @@ void j1Scene::LoadUi()
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
 	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
-	hud->AddElement(gems); //adding gems [2]
+	hud->AddElement(gems); 
+	//adding gems [2]
 	bombs= App->gui->CreateImage({ 100,15,8,8 }, { 100,15 }, "bombs");
 	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
 	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-	hud->AddElement(bombs);// adding bombs
+	hud->AddElement(bombs);
+	// adding bombs
 	arrows= App->gui->CreateImage({ 121,15,14,8 }, { 121,15 },"arrows");
 	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
 	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-	hud->AddElement(arrows);//adding arrows
+	hud->AddElement(arrows);
+	//adding arrows
 	hud->AddElement(App->gui->CreateImage({ 178,15,44,7 }, { 178,15 }, "life"));
 	hud->position = { 0,0 };
+	hud->identifier = "hud";
 	//Start Menu
-	start_menu = new Menu();
+	start_menu = App->gui->CreateZeldaMenu();
 	Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg");
 	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21-224 }, { 304,268 }, { 337,268 }, false,"bow");
 	hotfix->selected = true;
@@ -211,8 +195,11 @@ void j1Scene::LoadUi()
 	start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21-224 }, { 304,301 }, { 337,301 },false, "hookshot"));
 	start_menu->AddElement(Sprite);
 	start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+	start_menu->AddElement(App->gui->CreateImage({ 370,268,32,32 }, { 18,154 - 224 }, "item_info"));
+	start_menu->AddElement(App->gui->CreateText(PIXEL, "BOW ARROWS", { 19,193 - 224 }, 10));
 	start_menu->position = { 0,-224 };
 	start_menu->Close();
+	start_menu->identifier = "start_menu";
 }
 
 void j1Scene::SwitchMenu(bool direction)//true for down, false for up

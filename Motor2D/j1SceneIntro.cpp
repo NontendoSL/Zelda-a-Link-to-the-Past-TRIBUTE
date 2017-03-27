@@ -140,7 +140,7 @@ bool j1SceneIntro::PostUpdate()
 
 void j1SceneIntro::LoadMainMenu()
 {
-	main_menu = new Menu();
+	main_menu = App->gui->CreateZeldaMenu();
 	Button* menu_button=App->gui->CreateButton({ 1,146,110,17 }, { 172 / 2,180 / 2 }, { 0,0 }, { 112,164 }, true);
 	menu_button->selected = true;
 	menu_button->anim->PushBack({ 112,146,110,17 });

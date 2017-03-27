@@ -4,6 +4,7 @@
 #include "j1Module.h"
 
 enum ButtonState{normal, over, clicked};
+enum FontName{GANONF,PIXEL,PIXELMORE};
 struct 	_TTF_Font;
 class Animation;
 // ---------------------------------------------------
@@ -48,7 +49,7 @@ public:
 class Text : public j1GuiEntity
 {
 public:
-	Text(const char* write, iPoint pos, uint size, std::string identifier, uint id);
+	Text(FontName search, const char* write, iPoint pos, uint size, std::string identifier, uint id);
 	~Text();
 
 public:
@@ -82,11 +83,14 @@ public:
 
 // ------------------------------------------------------
 
-class Menu :public j1GuiEntity
+class ZeldaMenu :public j1GuiEntity
 {
 public:
-	Menu();
-	~Menu();
+	ZeldaMenu();
+	~ZeldaMenu();
+public:
+	void Update();
+	void Handle_Input();
 public:
 	void AddElement(j1GuiEntity* element);
 	void Select(int value);
@@ -98,9 +102,11 @@ public:
 	void Do();
 	Image* GetImage(uint id);
 	Button* GetSelected();
+	void ShowItemInfo();
 private:
 	std::vector<Button*>menu_buttons;
 	std::vector<Image*>menu_images;
+	std::vector<Text*>menu_texts;
 public:
 	uint id_selected;
 };

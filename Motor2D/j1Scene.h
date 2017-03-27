@@ -11,7 +11,7 @@ class Image;
 class Text;
 class Button;
 class Dialogue;
-class Menu;
+class ZeldaMenu;
 
 class Player;
 class Item;
@@ -59,7 +59,7 @@ public:
 
 
 	//Ingame
-	Menu* hud=nullptr,*start_menu=nullptr;
+	ZeldaMenu* hud=nullptr,*start_menu=nullptr;
 	Image* force, *gems, *bombs, *arrows;
 	Player* player = nullptr;
 	std::list<Soldier*> enemy; //TODO LOW -> change to std::list<NPC*> enemies;

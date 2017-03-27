@@ -67,16 +67,6 @@ bool Player::Start()
 	height = 15;
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
-	//TEST TAKE STATS BY CONFIG.XML AND IMPLEMENTED IN GAME
-	/*stats_temp.clear();
-	stats_temp = std::to_string(hp);
-	stats_temp.insert(0, "HP LINK -> ");
-	hp_text = App->gui->CreateText(stats_temp.c_str(), { 300,150 }, 23);
-	stats_temp.clear();//Delete string temp
-	stats_temp = std::to_string(attack);
-	stats_temp.insert(0, "ATTACK OF LINK -> ");
-	attack_text = App->gui->CreateText(stats_temp.c_str(), { 300,200 }, 23);
-	*/
 
 	collision_player = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
