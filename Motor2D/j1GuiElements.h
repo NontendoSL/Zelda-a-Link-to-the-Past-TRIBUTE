@@ -57,6 +57,7 @@ public:
 	void Update();
 	void Write(const char* string);
 	void CheckString(std::string string);
+	void Visible(bool yes);
 private:
 	std::string text;
 	_TTF_Font* font;
