@@ -122,6 +122,7 @@
     <ClInclude Include="j1DynamicObjects.h" />
     <ClInclude Include="j1InputManager.h" />
     <ClInclude Include="j1Item.h" />
+    <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="j1AnimationManager.h" />
     <ClInclude Include="j1EntityElementsScene.h" />

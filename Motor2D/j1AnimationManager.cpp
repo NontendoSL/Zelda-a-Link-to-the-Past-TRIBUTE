@@ -111,68 +111,62 @@ bool j1AnimationManager::CleanUp()
 	return true;
 }
 
-void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, std::string name) 
+void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, uint id) 
 {
-
-	for (int i = 0; i < animat.size(); i++)
+	//INFO ID:  1-> Player // 2-> Soldier // 3-> unknown // 4-> unknown // 5-> unknown
+	if (status <= DYING)
 	{
-		if (animat[i].name == name && status <= DYING)
+		if (dir == UP)
 		{
-			if (dir == UP)
-			{
-				r = animat[i].anim[status].North_action.GetCurrentFrame();
-				pivot = animat[i].anim[status].North_action.GetCurrentOffset();
-			}
-
-			else if (dir == DOWN)
-			{
-				r = animat[i].anim[status].South_action.GetCurrentFrame();
-				pivot = animat[i].anim[status].South_action.GetCurrentOffset();
-			}
-
-			else if (dir == LEFT)
-			{
-				r = animat[i].anim[status].West_action.GetCurrentFrame();
-				pivot = animat[i].anim[status].West_action.GetCurrentOffset();
-			}
-
-			else if (dir == RIGHT)
-			{
-				r = animat[i].anim[status].East_action.GetCurrentFrame();
-				pivot = animat[i].anim[status].East_action.GetCurrentOffset();
-			}
+			r = animat[id].anim[status].North_action.GetCurrentFrame();
+			pivot = animat[id].anim[status].North_action.GetCurrentOffset();
 		}
 
-		//DRAW
-		App->render->Blit(animat[i].graphics, position.x - pivot.x + 8, position.y - pivot.y + 11, &r);
+		else if (dir == DOWN)
+		{
+			r = animat[id].anim[status].South_action.GetCurrentFrame();
+			pivot = animat[id].anim[status].South_action.GetCurrentOffset();
+		}
+
+		else if (dir == LEFT)
+		{
+			r = animat[id].anim[status].West_action.GetCurrentFrame();
+			pivot = animat[id].anim[status].West_action.GetCurrentOffset();
+		}
+
+		else if (dir == RIGHT)
+		{
+			r = animat[id].anim[status].East_action.GetCurrentFrame();
+			pivot = animat[id].anim[status].East_action.GetCurrentOffset();
+		}
 	}
+
+	//DRAW
+	App->render->Blit(animat[id].graphics, position.x - pivot.x + 8, position.y - pivot.y + 11, &r);
 }
 
-Animation * j1AnimationManager::GetAnimation(ActionState status, Direction dir, std::string name)
+Animation* j1AnimationManager::GetAnimation(ActionState status, Direction dir, uint id)
 {
-	for (int i = 0; i < animat.size(); i++)
+	if (status <= DYING)
 	{
-		if (animat[i].name == name && status <= DYING)
+		if (dir == UP)
 		{
-			if (dir == UP)
-			{
-				current_animation = &animat[i].anim[status].North_action;
-			}
+			current_animation = &animat[id].anim[status].North_action;
+		}
 
-			else if (dir == DOWN)
-			{
-				current_animation = &animat[i].anim[status].South_action;
-			}
+		else if (dir == DOWN)
+		{
+			current_animation = &animat[id].anim[status].South_action;
+		}
 
-			else if (dir == LEFT)
-			{
-				current_animation = &animat[i].anim[status].West_action;
-			}
+		else if (dir == LEFT)
+		{
+			current_animation = &animat[id].anim[status].West_action;
+		}
 
-			else if (dir == RIGHT)
-			{
-				current_animation = &animat[i].anim[status].East_action;
-			}
+		else if (dir == RIGHT)
+		{
+			current_animation = &animat[id].anim[status].East_action;
 		}
 	}
 

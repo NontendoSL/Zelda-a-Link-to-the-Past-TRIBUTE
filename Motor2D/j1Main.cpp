@@ -4,6 +4,8 @@
 #include "p2Log.h"
 #include "j1App.h"
 
+#include "MemLeaks.h"
+
 // This is needed here because SDL redefines main function
 // do not add any other libraries here, instead put them in their modules
 #include "SDL/include/SDL.h"
@@ -112,5 +114,6 @@ int main(int argc, char* args[])
 	LOG("Thanks for Playing!! :D\n");
 
 	// Dump memory leaks
+	ReportMemoryLeaks();
 	return result;
 }

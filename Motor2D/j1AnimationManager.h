@@ -45,9 +45,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void Drawing_Manager(ActionState status, Direction dir, iPoint position, std::string name);
+	void Drawing_Manager(ActionState status, Direction dir, iPoint position, uint id);
 
-	Animation* GetAnimation(ActionState status, Direction dir, std::string name);
+	Animation* GetAnimation(ActionState status, Direction dir, uint id);
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;

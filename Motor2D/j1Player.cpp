@@ -177,8 +177,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 void Player::Draw()
 {
-	App->anim_manager->Drawing_Manager(state, direction, position, name);
-	//App->render->Blit(player_texture, position.x, position.y/*, &Rect_player);
+	//Draw player
+	App->anim_manager->Drawing_Manager(state, direction, position, 0);  //TODO LOW-> ID magic number, need change!!
 }
 
 bool Player::CleanUp()
@@ -396,7 +396,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 			if (e_state == E_DOWN)
 			{
 				state = ATTACKING;
-				current_animation = App->anim_manager->GetAnimation(state, direction, name);
+				current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 				current_animation->Reset();
 			}
 			break;
