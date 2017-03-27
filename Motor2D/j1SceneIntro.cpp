@@ -196,7 +196,7 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 			}
 			break;
 
-		case BUTTON_B:
+		case BUTTON_START:
 			if (state == E_DOWN)
 			{
 				if (menu == false)
@@ -206,6 +206,12 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 					TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
 					LoadMainMenu();
 				}
+			}
+			break;
+
+		case BUTTON_A:
+			if (menu == true)
+			{
 				if (main_menu->id_selected == 1)
 				{
 					App->audio->FadeMusic(2);

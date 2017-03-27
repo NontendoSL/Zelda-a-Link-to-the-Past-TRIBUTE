@@ -401,7 +401,7 @@ void ZeldaMenu::Update()
 
 void ZeldaMenu::Handle_Input()
 {
-	if (App->scene->inventory == true && App->scene->ingame == true&&this->identifier=="start_menu")
+	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier=="start_menu")
 	{
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 		{

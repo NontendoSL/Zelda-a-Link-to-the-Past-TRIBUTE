@@ -257,7 +257,7 @@ void j1App::FinishUpdate()
 	if (scene->player != nullptr)
 	{
 		sprintf_s(title, 256, "Coords: X:%i Y:%i  ---  camX: %i camY: %i",
-			App->scene->player->position.x, App->scene->player->position.y, App->render->camera.x, App->render->camera.y);
+			App->scene->player->test, App->scene->player->position.y, App->render->camera.x, App->render->camera.y);
 	}
 	else {
 		sprintf_s(title, 256, "The legend of Zelda: A link to Pokemon World");

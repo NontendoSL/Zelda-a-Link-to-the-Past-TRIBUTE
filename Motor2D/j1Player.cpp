@@ -127,8 +127,8 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 
 
-	//Provisional gem provider
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && charge <= 34)
+	//CHARGE BAR --------------
+	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT)  && charge <= 34)
 	{
 		charge++;
 	}
@@ -152,7 +152,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		//App->scene->dialog->PushLine(true);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN) // TODO LOW -> place in OnInputCallback
 	{
 		App->scene->switch_menu = true;
 		gamestate = INMENU;
@@ -215,11 +215,10 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		if (c2->callback->name == "rupee")
 		{
 			gems++;
+			App->entity_elements->DeleteItem((Item*)c2->callback);
+			App->collision->EraseCollider(c2);
 		}
-		App->entity_elements->DeleteItem((Item*)c2->callback);
-		App->collision->EraseCollider(c2);
 	}
-
 
 
 	/*if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
@@ -315,6 +314,13 @@ bool Player::Idle()
 		CheckOrientation();
 	}
 
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		state = ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+		current_animation->Reset();
+	}
+
 	else
 	{
 		state = IDLE;
@@ -331,6 +337,13 @@ bool Player::Walking()
 	if (walking == false)
 	{
 		state = IDLE;
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		state = ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+		current_animation->Reset();
 	}
 
 	else
@@ -382,7 +395,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	{
 		switch (action)
 		{
-		case BUTTON_B:
+		case BUTTON_X:
 			if (e_state == E_DOWN)
 			{
 				state = ATTACKING;
@@ -390,6 +403,10 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 				current_animation->Reset();
 			}
 			break;
+		default:
+		{
+			break;
+		}
 		}
 	}
 }

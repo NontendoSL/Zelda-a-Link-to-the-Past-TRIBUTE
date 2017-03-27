@@ -45,11 +45,6 @@
 	</map>
 
   <inputManager>
-    <!--JUMP-->
-    <action  button="0" event="0" />
-    
-    
-    <action  button="1"  event="5" />
     
     <!--Move UP-->
     <action  button="11" event="1" />
@@ -62,6 +57,32 @@
 
     <!--Move RIGHT-->
     <action  button="14" event="4" />
+
+    <!--Button A-->
+    <action  button="0" event="5" />
+
+    <!--Button B-->
+    <action  button="1"  event="6" />
+
+    <!--Button X-->
+    <action  button="2"  event="7" />
+
+    <!--Button Y-->
+    <action  button="3"  event="8" />
+
+    <!--Button SELECT-->
+    <action  button="4"  event="9" />
+    
+    <!--Button START-->
+    <action  button="6"  event="10" />
+
+    <!--Button LB-->
+    <action  button="9"  event="11" />
+
+    <!--Button RB-->
+    <action  button="10"  event="12" />
+
+    
   </inputManager>
   
 </config>
