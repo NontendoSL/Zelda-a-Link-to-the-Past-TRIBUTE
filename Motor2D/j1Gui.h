@@ -46,7 +46,7 @@ public:
 	// create img
 	Image* CreateImage(SDL_Rect rect, iPoint pos, std::string identifier="undefined", uint id=0);
 	// create text
-	Text* CreateText(FontName search, const char* string, iPoint pos, uint size, bool addelement = true, std::string identifier = "undefined", uint id = 0);
+	Text* CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, bool addelement = true, std::string identifier = "undefined", uint id = 0);
 	// create button
 	Button* CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated = false, std::string identifier = "undefined", uint id = 0, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
 

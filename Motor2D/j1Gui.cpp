@@ -92,9 +92,9 @@ Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos, std::string identifier, uin
 	return element;
 }
 
-Text* j1Gui::CreateText(FontName search, const char* string, iPoint pos, uint size, bool addelement, std::string identifier, uint id) {
+Text* j1Gui::CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, bool addelement, std::string identifier, uint id) {
 
-	Text* element = new Text(search,string, pos, size, identifier, id);
+	Text* element = new Text(search,string, length, pos, size,addelement, identifier, id);
 	if (addelement)
 		entities.push_back(element);
 

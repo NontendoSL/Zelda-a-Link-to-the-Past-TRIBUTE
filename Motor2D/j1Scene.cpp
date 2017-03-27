@@ -196,10 +196,12 @@ void j1Scene::LoadUi()
 	start_menu->AddElement(Sprite);
 	start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
 	start_menu->AddElement(App->gui->CreateImage({ 370,268,32,32 }, { 18,154 - 224 }, "item_info"));
-	start_menu->AddElement(App->gui->CreateText(PIXEL, "BOW ARROWS", { 19,193 - 224 }, 10));
+	start_menu->AddElement(App->gui->CreateText(PIXEL, "BOW ARROWS",100, { 19,193 - 224 }, 10));
+	start_menu->AddElement(App->gui->CreateText(PIXELMORE, "-Los buenos guerreros, cargan el arco para disparar con más fuerza.",22, { 59,155 - 224 }, 20));
 	start_menu->position = { 0,-224 };
 	start_menu->Close();
 	start_menu->identifier = "start_menu";
+	dialog = App->gui->CreateDialogue("-Los buenos guerreros, cargan el arco para disparar con mas fuerza.");
 }
 
 void j1Scene::SwitchMenu(bool direction)//true for down, false for up

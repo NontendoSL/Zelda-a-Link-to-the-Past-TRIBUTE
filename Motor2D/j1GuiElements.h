@@ -49,18 +49,23 @@ public:
 class Text : public j1GuiEntity
 {
 public:
-	Text(FontName search, const char* write, iPoint pos, uint size, std::string identifier, uint id);
+	Text(FontName search, const char* write,uint length, iPoint pos, uint size,bool draw, std::string identifier, uint id);
 	~Text();
 
 public:
 	void Draw();
 	void Update();
 	void Write(const char* string);
+	void CheckString(std::string string);
 private:
-	const char* text;
+	std::string text;
 	_TTF_Font* font;
 	SDL_Texture* text_texture;
-
+	uint length, size;
+public:
+	Text* next_line = nullptr;
+	FontName font_name;
+	bool draw = true;
 };
 
 // -------------------------------------------------------
@@ -76,7 +81,8 @@ public:
 	void AddLine(const char* string);
 	void PushLine(bool push);
 public:
-	std::list<Text*>text_lines;
+	//std::list<Text*>text_lines;
+	Text* lines;
 	bool push;
 	uint timer;
 };
