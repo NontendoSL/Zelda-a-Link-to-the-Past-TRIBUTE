@@ -41,6 +41,8 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 			else
 				direction = RIGHT;
 
+			movable = conf.attribute("canMove").as_bool(false);
+			indestructible = conf.attribute("destructible").as_bool(false);
 			npc_id = id;
 			stop_search = true;
 		}
@@ -204,37 +206,39 @@ void Soldier::Drop_item()
 
 bool Soldier::Idle()
 {
-	if (reset_run)
+	if (movable)
 	{
-		timetorun = SDL_GetTicks();
-		reset_run = false;
-	}
-	else
-	{
-		if (SDL_GetTicks() - timetorun > 2000)
+		if (reset_run)
 		{
-			int direc_select = rand() % 4 + 1;
-			if (direc_select == 1)
+			timetorun = SDL_GetTicks();
+			reset_run = false;
+		}
+		else
+		{
+			if (SDL_GetTicks() - timetorun > 2000)
 			{
-				direction = UP;
+				int direc_select = rand() % 4 + 1;
+				if (direc_select == 1)
+				{
+					direction = UP;
+				}
+				else if (direc_select == 2)
+				{
+					direction = DOWN;
+				}
+				else if (direc_select == 3)
+				{
+					direction = LEFT;
+				}
+				else if (direc_select == 4)
+				{
+					direction = RIGHT;
+				}
+				state = WALKING;
+				reset_distance = true;
 			}
-			else if (direc_select == 2)
-			{
-				direction = DOWN;
-			}
-			else if (direc_select == 3)
-			{
-				direction = LEFT;
-			}
-			else if (direc_select == 4)
-			{
-				direction = RIGHT;
-			}
-			state = WALKING;
-			reset_distance = true;
 		}
 	}
-
 	return true;
 }
 

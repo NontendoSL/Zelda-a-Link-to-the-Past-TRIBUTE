@@ -15,6 +15,7 @@
 #include "j1AnimationManager.h"
 #include "j1Collision.h"
 #include "j1InputManager.h"
+#include "Soldier.h"
 #include "j1Item.h"
 #include "j1DynamicObjects.h"
 #include "j1Creature.h"
@@ -226,7 +227,11 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
 		{
-			c2->callback->state = DYING;
+			Soldier* test = (Soldier*)c2->callback;
+			if (test->indestructible)
+			{
+				c2->callback->state = DYING;
+			}
 		}
 	}
 

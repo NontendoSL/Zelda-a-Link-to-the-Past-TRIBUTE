@@ -471,7 +471,7 @@ void ZeldaMenu::Handle_Input()
 		{
 			Click();
 		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)//TODO LOW-> Check E_UP botton state
 		{
 			UnClick(); 
 		}

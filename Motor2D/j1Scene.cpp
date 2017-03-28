@@ -83,10 +83,10 @@ bool j1Scene::Update(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		{
 			switch_map = 3;
-		}
+		}*/
 		if (switch_map != 0)
 		{
 			if (App->map->CleanUp())
