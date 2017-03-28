@@ -14,15 +14,16 @@ CONTROLS
 
 	Keyboard:
 	
-		Arrow Keys -> Move in any of the 8 directions and select items in the menu.
-		Enter -> Start game from menu and open menu when in game.
-		Spacebar -> Hold it to charge the stamina bar.
+		Arrow Keys -> Move in any of the 8 directions and navigate through the menu.
+		Enter -> Start game from menu and open/close menu when in game.
+		Spacebar -> Hold it to charge the stamina bar and select items in the menu.
 		E -> Attack
 		
 	Controller:
 	
-		D-Pad -> move in any of the 8 directions.
+		D-Pad -> move in any of the 8 directions and navigate through the menu.
 		Start -> Navigate trhough game intro and open/close the ingame menu.
+		A -> Select items from the menu.
 		X -> Attack
 		B -> Hold it to charge the stamina bar.
 
@@ -39,10 +40,10 @@ CHANGELOG
 
 v0.3:
 
-	Enemies and Bushes now have hurtboxes.
+	Enemies, bushes, pots and chests now have hurtboxes.
 	Attack has been implemented and now the player can either kill soldiers or destroy bushes, pots
 	or the chest. They drop rupees when gone.
-	Soldiers now move randomly.
+	Some soldiers now move randomly.
 	UI has been updated. The player can now acces the item menu and can switch between weapons.
 
 v0.2:
@@ -74,6 +75,11 @@ AUTHORS
 		Yabel Rodríguez
 		Albert Llopart
 		Marc Fabián
+
+SOCIAL MEDIA
+
+Twitter -> https://twitter.com/nontendo_sl
+Github -> https://github.com/NontendoSL/Zelda-a-Link-to-the-Past-TRIBUTE
 
 NOTES
 
