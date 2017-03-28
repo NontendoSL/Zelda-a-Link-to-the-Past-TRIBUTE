@@ -65,12 +65,13 @@ bool Soldier::Start()
 	marge = 12;
 	gamestate = TIMETOPLAY;
 	status_action = GUARD;
+	state = IDLE;
 	speed = 1;
 	height = 15;
 	width = 15;
 	timetoplay = SDL_GetTicks();
-	reset_distance = true;
-	reset_run = false;
+	reset_distance = false;
+	reset_run = true;
 	return true;
 }
 

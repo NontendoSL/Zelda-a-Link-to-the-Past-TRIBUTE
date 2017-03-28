@@ -268,5 +268,8 @@
     <Xml Include="..\Game\config.xml">
       <Filter>Zelda Game\XML</Filter>
     </Xml>
+    <Xml Include="..\Game\Levels.xml">
+      <Filter>Zelda Game\XML</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
