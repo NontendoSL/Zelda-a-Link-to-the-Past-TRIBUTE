@@ -53,6 +53,7 @@ bool DynamicObjects::Update()
 
 void DynamicObjects::Draw()
 {
+	BROFILER_CATEGORY("Draw_DynObjects", Profiler::Color::Moccasin)
 	if (canBlit == true)
 	{
 		App->render->Blit(texture, position.x, position.y);

@@ -54,6 +54,7 @@ bool j1EntityElementScene::Start()
 
 bool j1EntityElementScene::PreUpdate()
 {
+	BROFILER_CATEGORY("PreUpdate_Elements", Profiler::Color::Cyan)
 	std::list<SceneElement*>::iterator item3 = elementscene.begin();
 	while (item3 != elementscene.end())
 	{
@@ -65,6 +66,7 @@ bool j1EntityElementScene::PreUpdate()
 
 bool j1EntityElementScene::Update(float dt)
 {
+	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Green)
 	bool ret = true;
 
 	std::list<SceneElement*>::iterator item = elementscene.end();

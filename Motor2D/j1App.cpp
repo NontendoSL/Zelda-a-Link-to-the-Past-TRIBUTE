@@ -186,7 +186,7 @@ bool j1App::Update()
 
 	if (ret == true)
 	{
-		BROFILER_FRAME("test");
+		
 	}
 
 	BROFILER_CATEGORY("UpdateLogic", Profiler::Color::Orchid)
@@ -246,12 +246,12 @@ void j1App::FinishUpdate()
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
-	/*static char title[256];
+	static char title[256];
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
 		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
-	App->win->SetTitle(title);*/
+	App->win->SetTitle(title);
 
-	static char title[256];
+	/*static char title[256];
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	if (scene->player != nullptr)
@@ -262,7 +262,7 @@ void j1App::FinishUpdate()
 	else {
 		sprintf_s(title, 256, "The legend of Zelda: A link to Pokemon World");
 	}
-	App->win->SetTitle(title);
+	App->win->SetTitle(title);*/
 
 	if(capped_ms > 0 && last_frame_ms < capped_ms)
 	{
@@ -275,6 +275,8 @@ void j1App::FinishUpdate()
 // Call modules before each loop iteration
 bool j1App::PreUpdate()
 {
+	BROFILER_CATEGORY("ProUpdate", Profiler::Color::Orchid)
+
 	bool ret = true;
 	//p2List_item<j1Module*>* item;
 	std::list<j1Module*>::iterator item;
@@ -298,6 +300,7 @@ bool j1App::PreUpdate()
 // Call modules on each loop iteration
 bool j1App::DoUpdate()
 {
+	BROFILER_CATEGORY("DoUpdate", Profiler::Color::Blue)
 	bool ret = true;
 	//p2List_item<j1Module*>* item;
 	std::list<j1Module*>::iterator item;
@@ -322,6 +325,7 @@ bool j1App::DoUpdate()
 // Call modules after each loop iteration
 bool j1App::PostUpdate()
 {
+	BROFILER_CATEGORY("PostUpdate", Profiler::Color::Ivory)
 	bool ret = true;
 	//p2List_item<j1Module*>* item;
 	std::list<j1Module*>::iterator item;

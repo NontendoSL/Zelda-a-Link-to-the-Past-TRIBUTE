@@ -113,6 +113,7 @@ bool j1AnimationManager::CleanUp()
 
 void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, uint id) 
 {
+	BROFILER_CATEGORY("Animation", Profiler::Color::DarkMagenta)
 	//INFO ID:  1-> Player // 2-> Soldier // 3-> unknown // 4-> unknown // 5-> unknown
 	if (status <= DYING)
 	{

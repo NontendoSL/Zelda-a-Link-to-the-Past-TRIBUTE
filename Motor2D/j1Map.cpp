@@ -30,6 +30,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("Draw_MAP", Profiler::Color::DarkOrange)
 	if(map_loaded == false)
 		return;
 
@@ -297,6 +298,7 @@ bool j1Map::CleanUp()
 // Load new map
 bool j1Map::Load(const char* file_name, uint id_map)
 {
+	BROFILER_CATEGORY("Load_Map", Profiler::Color::OrangeRed)
 	bool ret = true;
 	std::string tmp(folder.c_str());
 	tmp += file_name;

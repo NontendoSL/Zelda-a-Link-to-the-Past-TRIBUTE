@@ -38,6 +38,7 @@ int main(int argc, char* args[])
 
 	while(state != EXIT)
 	{
+		BROFILER_FRAME("MAIN");
 		switch(state)
 		{
 

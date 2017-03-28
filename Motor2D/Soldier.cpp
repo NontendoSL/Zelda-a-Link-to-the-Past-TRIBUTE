@@ -75,6 +75,7 @@ bool Soldier::Start()
 
 bool Soldier::Update()
 {
+	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Pink)
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)
 	{
@@ -137,6 +138,7 @@ bool Soldier::Update()
 
 void Soldier::Draw()
 {
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
 	if (npc_id == 1)
 	{
 		if (hp > 0)

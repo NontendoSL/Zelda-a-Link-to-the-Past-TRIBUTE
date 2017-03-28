@@ -75,6 +75,7 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	BROFILER_CATEGORY("PreUpdate_Player", Profiler::Color::RosyBrown)
 	bool ret = true;
 
 	return ret;
@@ -82,6 +83,7 @@ bool Player::PreUpdate()
 
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
+	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
 	bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
