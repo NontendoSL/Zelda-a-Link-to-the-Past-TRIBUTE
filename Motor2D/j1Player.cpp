@@ -382,19 +382,19 @@ bool Player::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 4, position.y - 10, 20, 12 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x + 4, position.y - 16, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 8, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x + 9, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 4, position.y + 6, 20, 12 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x + 4, position.y + 5, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 8, position.y + 4, 20, 12 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 13, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
 		}
 	}
 	return true;
@@ -402,30 +402,33 @@ bool Player::Attack()
 
 void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
-	if (gamestate == INGAME)
-	{
-		switch (action)
-		{
-		case BUTTON_X:
-			if (e_state == E_DOWN)
-			{
-				state = ATTACKING;
-				current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-				current_animation->Reset();
-			}
-			break;
 
-		case BUTTON_START:
-			App->scene->switch_menu = true;
-			gamestate = INMENU;
-			break;
-		default:
+	switch (action)
+	{
+		if (gamestate == INGAME)
 		{
-			break;
+	case BUTTON_X:
+	{
+		if (e_state == E_DOWN)
+		{
+			state = ATTACKING;
+			current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+			current_animation->Reset();
 		}
+		break;
+	}
 		}
+
+	case BUTTON_START:
+	{
+		App->scene->switch_menu = true;
+		gamestate = INMENU;
+		break;
+	}
+
 	}
 }
+
 
 bool Player::Move()
 {
