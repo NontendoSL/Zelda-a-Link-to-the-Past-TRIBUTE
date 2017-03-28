@@ -14,13 +14,17 @@ CONTROLS
 
 	Keyboard:
 	
-		Arrow Keys -> Move in any of the 8 directions.
-		Enter -> Start game from menu.
+		Arrow Keys -> Move in any of the 8 directions and select items in the menu.
+		Enter -> Start game from menu and open menu when in game.
 		Spacebar -> Hold it to charge the stamina bar.
+		E -> Attack
 		
 	Controller:
 	
 		D-Pad -> move in any of the 8 directions.
+		Start -> Navigate trhough game intro and open/close the ingame menu.
+		X -> Attack
+		B -> Hold it to charge the stamina bar.
 
 	DEBUG MODE:
 	
@@ -33,14 +37,14 @@ CONTROLS
 
 CHANGELOG
 
-v0.1:
+v0.3:
 
-	Added Link house map and surroundings.
-	You can move using the arrow keys in the keyboard.
-	Printed enemies are used as walls. They're not functional yet.
-	Enemy and map collisions implemented.
-	Link's house door doesn't get printed at the moment.
-	
+	Enemies and Bushes now have hurtboxes.
+	Attack has been implemented and now the player can either kill soldiers or destroy bushes, pots
+	or the chest. They drop rupees when gone.
+	Soldiers now move randomly.
+	UI has been updated. The player can now acces the item menu and can switch between weapons.
+
 v0.2:
 
 	Added static enemies with collisions (they don't have neither hitboxes nor hurtboxes).
@@ -50,7 +54,14 @@ v0.2:
 	Added Gamepad interaction (tested with Xbox 360 and PS3 so far) *Notice that you need to have your 
 	controller plugged in before starting the game or else it will not work.
 	Basic UI interaction regarding rupees, arrows and bombs.
-	
+
+v0.1:
+
+	Added Link house map and surroundings.
+	You can move using the arrow keys in the keyboard.
+	Printed enemies are used as walls. They're not functional yet.
+	Enemy and map collisions implemented.
+	Link's house door doesn't get printed at the moment.
 	
 AUTHORS
 
