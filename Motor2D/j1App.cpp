@@ -254,14 +254,15 @@ void j1App::FinishUpdate()
 	static char title[256];
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	if (scene->player != nullptr)
+	/*if (scene->player != nullptr)
 	{
 		sprintf_s(title, 256, "Coliders num= %i // ",
 			App->collision->num_colliders);
-	}
-	else {
+	}*/
+	/*else {
 		sprintf_s(title, 256, "The legend of Zelda: A link to Pokemon World");
-	}
+	}*/
+	sprintf_s(title, 256, "The legend of Zelda: A link to Pokemon World");
 	App->win->SetTitle(title);
 
 	if(capped_ms > 0 && last_frame_ms < capped_ms)
