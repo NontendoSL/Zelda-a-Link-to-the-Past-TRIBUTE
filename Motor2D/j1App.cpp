@@ -246,23 +246,23 @@ void j1App::FinishUpdate()
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
-	static char title[256];
+	/*static char title[256];
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
 		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
-	App->win->SetTitle(title);
+	App->win->SetTitle(title);*/
 
-	/*static char title[256];
+	static char title[256];
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	if (scene->player != nullptr)
 	{
-		sprintf_s(title, 256, "Coords: X:%i Y:%i  ---  camX: %i camY: %i",
-			App->scene->player->position.x, App->scene->player->position.y, App->render->camera.x, App->render->camera.y);
+		sprintf_s(title, 256, "Coliders num= %i // ",
+			App->collision->num_colliders);
 	}
 	else {
 		sprintf_s(title, 256, "The legend of Zelda: A link to Pokemon World");
 	}
-	App->win->SetTitle(title);*/
+	App->win->SetTitle(title);
 
 	if(capped_ms > 0 && last_frame_ms < capped_ms)
 	{

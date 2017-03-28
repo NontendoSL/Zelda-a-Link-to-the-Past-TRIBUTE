@@ -40,6 +40,8 @@ bool j1Collision::PreUpdate()
 		{
 			delete colliders[i];
 			colliders[i] = nullptr;
+			if(num_colliders > 1)
+				num_colliders--;
 		}
 	}
 	return true;
@@ -151,6 +153,10 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneEleme
 		if (colliders[i] == nullptr)
 		{
 			ret = colliders[i] = new ColliderRect(rect, type, callback);
+			if (colliders[i]->to_delete == true)
+			{
+				colliders[i]->to_delete = false;
+			}
 			num_colliders++;
 			break;
 		}
@@ -168,6 +174,8 @@ bool j1Collision::EraseCollider(Collider* collider)
 		{
 			delete colliders[i];
 			colliders[i] = nullptr;
+			if (num_colliders > 1)
+				num_colliders--;
 			return true;
 		}
 	}
@@ -176,15 +184,13 @@ bool j1Collision::EraseCollider(Collider* collider)
 
 void j1Collision::EreseAllColiderPlayer()
 {
-	for (uint i = 1; i < num_colliders; ++i)
+	for (uint i = 1; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] != nullptr)
 		{
-			delete colliders[i];
-			colliders[i] = nullptr;
+			colliders[i]->to_delete = true;
 		}
 	}
-	num_colliders = 1;
 }
 
 // -----------------------------------------------------

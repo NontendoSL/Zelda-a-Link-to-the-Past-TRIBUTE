@@ -85,12 +85,13 @@ public:
 	void EreseAllColiderPlayer();
 	void DebugDraw();
 
+	uint num_colliders = 0;
+
 private:
 
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
-	uint num_colliders = 0;
 };
 
 

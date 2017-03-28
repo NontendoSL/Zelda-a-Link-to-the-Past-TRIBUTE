@@ -3,6 +3,7 @@
 #include "j1Textures.h"
 #include "j1App.h"
 #include "p2Defs.h"
+#include "j1Scene.h"
 #include "j1Input.h"
 #include "j1Item.h"
 #include "j1Collision.h"
@@ -336,7 +337,7 @@ bool Soldier::Attack()
 
 bool Soldier::Die()
 {
-	App->collision->EraseCollider(collision_enemy);
+	App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
 	App->entity_elements->DeleteEnemy(this);
 	return true;
 }
