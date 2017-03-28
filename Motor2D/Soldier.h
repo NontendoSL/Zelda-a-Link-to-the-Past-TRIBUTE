@@ -43,6 +43,8 @@ public:
 
 	bool Attack();
 
+	bool Die();
+
 private:
 
 	//Soldier Test for Release 0.1

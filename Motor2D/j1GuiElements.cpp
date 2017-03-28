@@ -223,7 +223,6 @@ Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool 
 
 void Button::Draw()
 {
-
 	switch (state)
 	{
 	case normal:
@@ -355,6 +354,7 @@ ZeldaMenu::ZeldaMenu()
 	id_selected = 0;
 	visible = false;
 	type = MENU;
+	App->input_manager->AddListener(this);
 }
 
 void ZeldaMenu::AddElement(j1GuiEntity* element)
@@ -459,24 +459,47 @@ void ZeldaMenu::Handle_Input()
 {
 	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier=="start_menu")
 	{
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
 		{
 			Select(1);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
 		{
 			Select(-1);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
 		{
 			Click();
 		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
 		{
 			UnClick(); 
 		}
 	}
 }
+
+/*void ZeldaMenu::OnInputCallback(INPUTEVENT, EVENTSTATE)
+{
+	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
+	{
+		if (App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+		{
+			Select(1);
+		}
+		else if (App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+		{
+			Select(-1);
+		}
+		else if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+		{
+			Click();
+		}
+		if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
+		{
+			UnClick();
+		}
+	}
+}*/
 
 void ZeldaMenu::Close()
 {

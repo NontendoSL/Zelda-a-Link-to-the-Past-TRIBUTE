@@ -69,7 +69,9 @@ public:
 
 	pugi::xml_node		config;
 
-	bool ingame = false, switch_menu=false, inventory=false;
+	bool ingame = false;
+	bool switch_menu = false;
+	bool inventory = false;
 	int switch_map = 0;
 };
 

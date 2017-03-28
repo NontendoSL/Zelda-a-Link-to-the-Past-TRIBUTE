@@ -8,7 +8,7 @@
 #include "time.h"
 
 enum CreatureType { PLAYER, POKEMON, GANON, SOLDIER, BCTROOPER, POKETRAINER };
-enum ActionState { IDLE = 0, WALKING, ATTACKING, DYING };
+
 // ---------------------------------------------------
 class Creature : public SceneElement
 {
@@ -35,7 +35,6 @@ public:
 
 public:
 	CreatureType c_type;
-	ActionState state;
 	uint hp;
 	bool walking = false;
 	int attack;

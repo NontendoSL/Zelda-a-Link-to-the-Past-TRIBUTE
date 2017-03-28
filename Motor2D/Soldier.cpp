@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "j1Item.h"
 #include "j1Collision.h"
+#include "j1EntityElementsScene.h"
 
 Soldier::Soldier():NPC()
 {
@@ -90,6 +91,10 @@ bool Soldier::Update()
 			{
 				Walking();
 				break;
+			}
+			case DYING:
+			{
+				Die();
 			}
 			default:
 			{
@@ -324,6 +329,13 @@ bool Soldier::Attack()
 {
 
 
+	return true;
+}
+
+bool Soldier::Die()
+{
+	App->collision->EraseCollider(collision_enemy);
+	App->entity_elements->DeleteEnemy(this);
 	return true;
 }
 

@@ -41,6 +41,7 @@ private:
 	bool equiped = false;
 	bool equipable = false;
 	SDL_Texture* texture = nullptr;
+public:
 	Collider* collision = nullptr;
 };
 

@@ -152,7 +152,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		//App->scene->dialog->PushLine(true);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN) // TODO LOW -> place in OnInputCallback
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
 	{
 		App->scene->switch_menu = true;
 		gamestate = INMENU;
@@ -209,7 +209,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
 			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets.begin()._Ptr->_Next->_Myval->firstgid);
 			App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
-			App->collision->EraseCollider(c2);
+			//App->collision->EraseCollider(c2);
 		}
 
 		if (c1 == collision_player && c2->type == COLLIDER_ITEM)
@@ -218,14 +218,13 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			{
 				gems++;
 				App->entity_elements->DeleteItem((Item*)c2->callback);
-				App->collision->EraseCollider(c2);
+				//App->collision->EraseCollider(c2);
 			}
 		}
 
 		if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
 		{
-			App->entity_elements->DeleteEnemy((Soldier*)c2->callback);
-			App->collision->EraseCollider(c2);
+			c2->callback->state = DYING;
 		}
 	}
 
@@ -412,6 +411,11 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 				current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 				current_animation->Reset();
 			}
+			break;
+
+		case BUTTON_START:
+			App->scene->switch_menu = true;
+			gamestate = INMENU;
 			break;
 		default:
 		{

@@ -2,11 +2,13 @@
 #define __j1GUIELEMENTS_H__
 
 #include "j1Module.h"
+#include "j1InputManager.h"
 
 enum ButtonState{normal, over, clicked};
 enum FontName{GANONF,PIXEL,PIXELMORE};
 struct 	_TTF_Font;
 class Animation;
+class InputManager;
 // ---------------------------------------------------
 
 class Image : public j1GuiEntity
@@ -90,7 +92,7 @@ public:
 
 // ------------------------------------------------------
 
-class ZeldaMenu :public j1GuiEntity
+class ZeldaMenu :public j1GuiEntity, public InputListener
 {
 public:
 	ZeldaMenu();
@@ -98,6 +100,7 @@ public:
 public:
 	void Update();
 	void Handle_Input();
+	//void OnInputCallback(INPUTEVENT, EVENTSTATE); TOTO LOW -> check if its better to put button inputs here or not
 public:
 	void AddElement(j1GuiEntity* element);
 	void Select(int value);
