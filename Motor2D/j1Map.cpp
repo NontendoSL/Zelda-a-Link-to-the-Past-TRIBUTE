@@ -109,7 +109,7 @@ void j1Map::EditCost(int x, int y, int value)
 	item._Ptr->_Myval->data[(y*item._Ptr->_Myval->width) + x] = value;
 }
 
-int j1Map::MovementCost(int x, int y, Direction dir) const 
+int j1Map::MovementCost(int x, int y, Direction dir) const
 {
 	int ret = 0;
 	int red_wal = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1;
@@ -124,8 +124,16 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
 		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
 		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
-
-		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
+		
+		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
+		{
+			ret = 4;
+		}
+		else if (id_1 == 0 && id_2 == 0 && id_3 == red_wal)
+		{
+			ret = 3;
+		}
+		else if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
 		}
@@ -148,7 +156,15 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
 		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
-		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
+		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
+		{
+			ret = 4;//4 -> down
+		}
+		else if (id_1 == 0 && id_2 == 0 && id_3 == red_wal)
+		{
+			ret = 3;//3-> up
+		}
+		else if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
 		}
@@ -166,7 +182,15 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
 		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
-		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
+		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
+		{
+			ret = 3;
+		}
+		else if (id_1 == 0 && id_2 == 0 && id_3 == red_wal)
+		{
+			ret = 4;
+		}
+		else if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
 		}
@@ -184,7 +208,16 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
 		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
 
-		if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
+		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
+		{
+			ret = 4;
+		}
+		else if (id_1 == 0 && id_2 == 0 && id_3 == red_wal)
+		{
+			ret = 3;
+		}
+
+		else if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
 			ret = 1;
 		}

@@ -440,12 +440,28 @@ bool Player::Move()
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = LEFT;
-		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
+		int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
+		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.x += speed * scale;
 			position.x -= speed;
-
+		}
+		if (temp == 3)//up
+		{
+			direction = UP;
+			if (Camera_inside())
+				App->render->camera.y += speed * scale;
+			position.y -= speed;
+			direction = LEFT;
+		}
+		if (temp == 4)//down
+		{
+			direction = DOWN;
+			if (Camera_inside())
+				App->render->camera.y -= speed * scale;
+			position.y += speed;
+			direction = LEFT;
 		}
 		walking = true;
 	}
@@ -453,11 +469,28 @@ bool Player::Move()
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 	{
 		direction = DOWN;
-		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
+		int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
+		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.y -= speed * scale;
 			position.y += speed;
+		}
+		else if (temp == 3)//left
+		{
+			direction = LEFT;
+			if (Camera_inside())
+				App->render->camera.x += speed * scale;
+			position.x -= speed;
+			direction = DOWN;
+		}
+		else if (temp == 4)//right
+		{
+			direction = RIGHT;
+			if (Camera_inside())
+				App->render->camera.x -= speed * scale;
+			position.x += speed;
+			direction = DOWN;
 		}
 		walking = true;
 	}
@@ -465,11 +498,28 @@ bool Player::Move()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = RIGHT;
-		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
+		int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
+		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.x -= speed * scale;
 			position.x += speed;
+		}
+		if (temp == 4)//up
+		{
+			direction = UP;
+			if (Camera_inside())
+				App->render->camera.y += speed * scale;
+			position.y -= speed;
+			direction = RIGHT;
+		}
+		if (temp == 3)//down
+		{
+			direction = DOWN;
+			if (Camera_inside())
+				App->render->camera.y -= speed * scale;
+			position.y += speed;
+			direction = RIGHT;
 		}
 		walking = true;
 	}
@@ -477,11 +527,28 @@ bool Player::Move()
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
 		direction = UP;
-		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
+		int temp = App->map->MovementCost(position.x, position.y - speed, UP);
+		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.y += speed * scale;
 			position.y -= speed;
+		}
+		if (temp == 3)//left
+		{
+			direction = LEFT;
+			if (Camera_inside())
+				App->render->camera.x += speed * scale;
+			position.x -= speed;
+			direction = UP;
+		}
+		if (temp == 4)//right
+		{
+			direction = RIGHT;
+			if (Camera_inside())
+				App->render->camera.x -= speed * scale;
+			position.x += speed;
+			direction = UP;
 		}
 		walking = true;
 	}
