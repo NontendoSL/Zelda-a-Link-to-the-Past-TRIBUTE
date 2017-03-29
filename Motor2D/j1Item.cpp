@@ -66,4 +66,39 @@ bool Item::Save()
 	return true;
 }
 
+/*bool Hookshot::ReachObjective()
+{
+	switch (player_level)
+	{
+	case LEVEL_1:
+		if (orange tile touched)
+		{
+			return wall;
+		}
+		break;
+	case LEVEL_2:
+		if (yellow tile touched)
+		{
+			return wall;
+		}
+		break;
+	case LEVEL_3:
+		if (pink tile touched)
+		{
+			return wall;
+		}
+		break;
+	default:
+		break;
+	}
 
+	if (sudowoodo touched)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+*/

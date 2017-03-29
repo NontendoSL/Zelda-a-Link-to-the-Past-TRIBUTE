@@ -45,4 +45,19 @@ public:
 	Collider* collision = nullptr;
 };
 
+
+/*class Hookshot :public Item
+{
+public:
+	Hookshot();
+	~Hookshot();
+
+	//Check the tile at its position each X Updates
+	bool ReachObjective();
+
+private:
+	uint range = 0;
+
+};*/
+
 #endif
