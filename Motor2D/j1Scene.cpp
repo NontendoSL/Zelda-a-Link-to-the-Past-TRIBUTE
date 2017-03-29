@@ -199,8 +199,11 @@ void j1Scene::LoadUi()
 	start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
 	start_menu->AddElement(App->gui->CreateImage({ 370,268,32,32 }, { 18,154 - 224 }, "item_info"));
 	start_menu->AddElement(App->gui->CreateText(PIXEL, "BOW ARROWS",100, { 19,193 - 224 }, 10));
+	start_menu->AddElement(App->gui->CreateImage({ 279,256,16,16 }, { 200,23 - 224 }, "item_picked"));
+	start_menu->AddElement(App->gui->CreateText(PIXEL, "", 100, { 184,44 - 224 }, 10));
+	start_menu->AddElement(App->gui->CreateImage({ 450,273,64,48 }, { 176,77 - 224 }, "pendants"));
 	start_menu->AddElement(App->gui->CreateText(PIXELMORE, "Los buenos guerreros,  cargan el arco para disparar con más fuerza.",22, { 59,155 - 224 }, 20));
-	Text*line = App->gui->CreateText(PIXELMORE, "Este gancho cuanta mas fuerza se le de, mas lejos se enganchara", 22, { 59,155 - 224 }, 20);
+	Text*line = App->gui->CreateText(PIXELMORE, "Este gancho cuanta mas fuerza se le de, mas lejos se enganchara.", 22, { 59,155 - 224 }, 20);
 	line->Visible(false);
 	start_menu->AddElement(line);
 	line = App->gui->CreateText(PIXELMORE, "BOOOOOMBAAAAA", 22, { 59,155 - 224 }, 20);
@@ -209,7 +212,7 @@ void j1Scene::LoadUi()
 	start_menu->position = { 0,-224 };
 	start_menu->Close();
 	start_menu->identifier = "start_menu";
-	//dialog = App->gui->CreateDialogue("-Los buenos guerreros, cargan el arco para disparar con mas fuerza.");
+	
 }
 
 void j1Scene::SwitchMenu(bool direction)//true for down, false for up

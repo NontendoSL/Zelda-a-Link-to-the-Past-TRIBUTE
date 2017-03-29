@@ -401,17 +401,24 @@ void ZeldaMenu:: Do()
 {
 	std::string i_name = App->scene->start_menu->GetSelected()->identifier;
 	Image* item = App->scene->hud->GetImage(1);
+	Image* item_menu = App->scene->start_menu->GetImage(2);
 	if (i_name == "bow")
 	{
 		item->elements[0]->Hitbox.y = 276;
+		item_menu->Hitbox.y = 276;
+		menu_texts[1]->Write("BOW ARROWS");
 	}
 	else if (i_name == "hookshot")
 	{
 		item->elements[0]->Hitbox.y = 309;
+		item_menu->Hitbox.y = 309;
+		menu_texts[1]->Write(" HOOKSHOT");
 	}
 	else if (i_name == "bomb")
 	{
 		item->elements[0]->Hitbox.y = 344;
+		item_menu->Hitbox.y = 344;
+		menu_texts[1]->Write("      BOMBS");
 	}
 }
 
@@ -594,23 +601,23 @@ void ZeldaMenu::ShowItemInfo()
 	case 0:
 		menu_images[1]->Hitbox.y = 268;
 		menu_texts[0]->Write("BOW ARROWS");
-		menu_texts[1]->Visible(true);
-		menu_texts[2]->Visible(false);
+		menu_texts[2]->Visible(true);
 		menu_texts[3]->Visible(false);
+		menu_texts[4]->Visible(false);
 		break;
 	case 1:
 		menu_images[1]->Hitbox.y = 301;
 		menu_texts[0]->Write("HOOKSHOT");
-		menu_texts[1]->Visible(false);
-		menu_texts[2]->Visible(true);
-		menu_texts[3]->Visible(false);
+		menu_texts[2]->Visible(false);
+		menu_texts[3]->Visible(true);
+		menu_texts[4]->Visible(false);
 		break;
 	case 2:
 		menu_images[1]->Hitbox.y = 336;
 		menu_texts[0]->Write("BOMBS");
-		menu_texts[1]->Visible(false);
 		menu_texts[2]->Visible(false);
-		menu_texts[3]->Visible(true);
+		menu_texts[3]->Visible(false);
+		menu_texts[4]->Visible(true);
 		break;
 	}
 
