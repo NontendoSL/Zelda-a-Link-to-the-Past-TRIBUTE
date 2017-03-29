@@ -28,21 +28,19 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-void j1Map::Draw()
+void j1Map::Draw()  // TODO LOW -> maybe change pointers to const(?)
 {
 	BROFILER_CATEGORY("Draw_MAP", Profiler::Color::DarkOrange)
 	if(map_loaded == false)
 		return;
 
-	//p2List_item<MapLayer*>* item = data.layers.start;
-	std::list<MapLayer*>::iterator item = data.layers.begin();
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		navigation_map = !navigation_map;
 
-	for(; item != data.layers.end(); item++)
+	for (uint i = 0; i < data.layers.size(); i++)
 	{
-		MapLayer* layer = item._Ptr->_Myval;
+		MapLayer* layer = data.layers[i];
 
 		if(layer->properties.Get("Draw") != 0 && navigation_map == false)
 			continue;
@@ -70,8 +68,8 @@ void j1Map::Draw()
 
 int Properties::Get(const char* value, int default_value) const
 {
-	std::list<Property*>::const_iterator item = list.begin();
-	while(item != list.end())
+	std::list<Property*>::const_iterator item = properties.begin();
+	while(item != properties.end())
 	{
 		if(strcmp(item._Ptr->_Myval->name.c_str(), value) == 0)
 			return item._Ptr->_Myval->value;
@@ -83,47 +81,41 @@ int Properties::Get(const char* value, int default_value) const
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
-	//p2List_item<TileSet*>* item = data.tilesets.start;
-	std::list<TileSet*>::const_iterator item = data.tilesets.begin();
-	TileSet* set = item._Ptr->_Myval;
-
-	while(item != data.tilesets.end())
+	TileSet* set = data.tilesets[0];
+	for (uint i = 0; i < data.tilesets.size(); i++)
 	{
-		if(id < item._Ptr->_Myval->firstgid)
+		if (id < data.tilesets[i]->firstgid)
 		{
-			item--;
-			set = item._Ptr->_Myval;
+			set = data.tilesets[i - 1];
 			break;
 		}
-		set = item._Ptr->_Myval;
-		item++;
+		set = data.tilesets[i];
 	}
-
 	return set;
 }
 
 void j1Map::EditCost(int x, int y, int value)
 {
-	std::list<MapLayer*>::const_iterator item = data.layers.end();
-	item--;
-	item._Ptr->_Myval->data[(y*item._Ptr->_Myval->width) + x] = value;
+	MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+	meta_layer->data[y*meta_layer->width + x] = value;
 }
 
 int j1Map::MovementCost(int x, int y, Direction dir) const
 {
 	int ret = 0;
-	int red_wal = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1;
+	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
 	int blue_wal = red_wal + 7;
 	if (dir == UP)
 	{
 		iPoint ptemp = WorldToMap(x, y);
 		iPoint ptemp_2 = WorldToMap(x + 8, y);
 		iPoint ptemp_3 = WorldToMap(x + 15, y);
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
-		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
-		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
+
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+
+		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
+		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
+		int id_3 = meta_layer->Get(ptemp_3.x, ptemp_3.y);
 		
 		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
 		{
@@ -150,11 +142,12 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 		iPoint ptemp = WorldToMap(x, y);
 		iPoint ptemp_2 = WorldToMap(x, y + 8);
 		iPoint ptemp_3 = WorldToMap(x, y + 15);
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
-		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
-		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
+
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+
+		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
+		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
+		int id_3 = meta_layer->Get(ptemp_3.x, ptemp_3.y);
 
 		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
 		{
@@ -176,11 +169,11 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 		iPoint ptemp = WorldToMap(x, y);
 		iPoint ptemp_2 = WorldToMap(x, y + 8);
 		iPoint ptemp_3 = WorldToMap(x, y + 15);
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
-		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
-		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+
+		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
+		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
+		int id_3 = meta_layer->Get(ptemp_3.x, ptemp_3.y);
 
 		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
 		{
@@ -202,11 +195,11 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 		iPoint ptemp = WorldToMap(x, y);
 		iPoint ptemp_2 = WorldToMap(x + 8, y);
 		iPoint ptemp_3 = WorldToMap(x + 15, y);
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = item._Ptr->_Myval->Get(ptemp.x, ptemp.y);
-		int id_2 = item._Ptr->_Myval->Get(ptemp_2.x, ptemp_2.y);
-		int id_3 = item._Ptr->_Myval->Get(ptemp_3.x, ptemp_3.y);
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+
+		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
+		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
+		int id_3 = meta_layer->Get(ptemp_3.x, ptemp_3.y);
 
 		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
 		{
@@ -299,26 +292,17 @@ bool j1Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets
-	//p2List_item<TileSet*>* item;
-	std::list<TileSet*>::iterator item;
-	item = data.tilesets.begin();
-	while(item != data.tilesets.end())
+	for (uint i = 0; i < data.tilesets.size(); i++)
 	{
-		App->tex->UnLoad(item._Ptr->_Myval->texture);
-		RELEASE(item._Ptr->_Myval);
-		item++;
+		App->tex->UnLoad(data.tilesets[i]->texture);
+		RELEASE(data.tilesets[i]);
 	}
 	data.tilesets.clear();
 
 	// Remove all layers
-	//p2List_item<MapLayer*>* item2;
-	std::list<MapLayer*>::iterator item2;
-	item2 = data.layers.begin();
-
-	while(item2 != data.layers.end())
+	for (uint i = 0; i < data.layers.size(); i++)
 	{
-		RELEASE(item2._Ptr->_Myval);
-		item2++;
+		RELEASE(data.layers[i]);
 	}
 	data.layers.clear();
 
@@ -326,6 +310,8 @@ bool j1Map::CleanUp()
 
 	// Clean up the pugui tree
 	map_file.reset();
+
+	return true;
 
 	return true;
 }
@@ -393,27 +379,21 @@ bool j1Map::Load(const char* file_name, uint id_map)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
-		//p2List_item<TileSet*>* item = data.tilesets.start;
-		std::list<TileSet*>::iterator item = data.tilesets.begin();
-		while(item != data.tilesets.end())
+		for (uint i = 0; i < data.tilesets.size(); i++)
 		{
-			TileSet* s = item._Ptr->_Myval;
+			TileSet* s = data.tilesets[i];
 			LOG("Tileset ----");
 			LOG("name: %s firstgid: %d", s->name.c_str(), s->firstgid);
 			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
-			item++;
 		}
 
-		//p2List_item<MapLayer*>* item_layer = data.layers.start;
-		std::list<MapLayer*>::iterator item_layer = data.layers.begin();
-		while(item_layer != data.layers.end())
+		for (uint i = 0; i < data.layers.size(); i++)
 		{
-			MapLayer* l = item_layer._Ptr->_Myval;
+			MapLayer* l = data.layers[i];
 			LOG("Layer ----");
 			LOG("name: %s", l->name.c_str());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
-			item_layer++;
 		}
 	}
 	//TODO Create all DynObjects from Tiled
@@ -430,43 +410,42 @@ bool j1Map::Load(const char* file_name, uint id_map)
 
 void j1Map::DynObjectFromTiled(uint id_map)
 {
-	int yellowid_1 = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 2;
-	int yellowid_2 = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 3;
-	int yellowid_3 = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 4;
-	int yellowid_4 = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 5;
+	int yellowid_1 = data.tilesets[1]->firstgid + 2;
+	int yellowid_2 = data.tilesets[1]->firstgid + 3;
+	int yellowid_3 = data.tilesets[1]->firstgid + 4;
+	int yellowid_4 = data.tilesets[1]->firstgid + 5;
 
-	std::list<MapLayer*>::const_iterator item = data.layers.end();
-	item--;
+	MapLayer* temp = data.layers[data.layers.size() - 1];
 
 	for (int y = 0; y < data.height; ++y)
 	{
 		for (int x = 0; x < data.width; ++x)
 		{
-			int tile_id = item._Ptr->_Myval->Get(x, y);
+			int tile_id = temp->Get(x, y);
 			iPoint positionObject = MapToWorld(x, y);
 			if (tile_id == yellowid_1)
 			{
 				LOG("DynObject 1");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 1, id_map));
-				EditCost(x, y, data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1);
+				EditCost(x, y, data.tilesets[1]->firstgid + 1);
 			}
 			if (tile_id == yellowid_2)
 			{
 				LOG("DynObject 2");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 2, id_map));
-				EditCost(x, y, data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1);
+				EditCost(x, y, data.tilesets[1]->firstgid + 1);
 			}
 			if (tile_id == yellowid_3)
 			{
 				LOG("DynObject 3");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 3, id_map));
-				EditCost(x, y, data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1);
+				EditCost(x, y, data.tilesets[1]->firstgid + 1);
 			}
 			if (tile_id == yellowid_4)
 			{
 				LOG("DynObject 4");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets.begin()._Ptr->_Next->_Myval->firstgid + 1);
+				EditCost(x, y, data.tilesets[1]->firstgid + 1);
 			}
 		}
 	}
@@ -647,7 +626,7 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 			p->name = prop.attribute("name").as_string();
 			p->value = prop.attribute("value").as_int();
 
-			properties.list.push_back(p);
+			properties.properties.push_back(p);
 		}
 	}
 
@@ -658,13 +637,11 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 {
 	bool ret = false;
 	//p2List_item<MapLayer*>* item;
-	std::list<MapLayer*>::const_iterator item;
-	item = data.layers.begin();
 
-	for(; item != data.layers.end(); item++)
+
+	for (uint i = 0; i < data.layers.size(); i++)
 	{
-		MapLayer* layer = item._Ptr->_Myval;
-
+		MapLayer* layer = data.layers[i];
 		if(layer->properties.Get("Navigation", 0) == 0)
 			continue;
 

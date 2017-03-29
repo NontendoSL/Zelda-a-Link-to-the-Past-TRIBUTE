@@ -70,7 +70,9 @@ bool j1Scene::Update(float dt)
 		AssignValues(bombs, player->bombs);
 		AssignValues(arrows, player->arrows);
 		force->Hitbox.w = player->charge;
+		j1PerfTimer timer;
 		App->map->Draw();
+		LOG("Time: %.3f", timer.ReadMs());
 
 
 		if (enemy.size() > 0 && enemy.begin()._Ptr->_Myval != NULL)//TODO HIGH -> when enemy die on put this code?
