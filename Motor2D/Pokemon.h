@@ -7,41 +7,56 @@
 class Pokemon : public NPC
 {
 public:
-	Pokemon();
+	Pokemon()
+	{}
 
-	~Pokemon();
+	~Pokemon()
+	{}
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&, uint);
+	bool Awake(pugi::xml_node&, uint)
+	{
+		return true;
+	}
 
 	// Called before the first frame
-	bool Start();
+	bool Start()
+	{
+		return true;
+	}
 
 	// Called before all Updates
 	//bool PreUpdate();
 
 	// Called each loop iteration
-	bool Update();
+	bool Update()
+	{
+		return true;
+	}
 
 	// Called before all Updates
 	//bool PostUpdate();
 
-	void Draw();
+	void Draw()
+	{}
 
 	// Called before quitting
-	bool CleanUp();
+	bool CleanUp()
+	{
+		return true;
+	}
 
-	void AddItem(Item*);
+	void AddItem(Item*)
+	{}
 
-	void Drop_item();
+	void Drop_item()
+	{}
 
 private:
 
 	//Item* drop;
-	bool stunned = false;
 	Item* item_inside;
 	SDL_Texture* texture;
-	Collider* collision_enemy;
 };
 
 #endif //__POKEMON_H_

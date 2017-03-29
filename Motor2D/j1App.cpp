@@ -17,6 +17,7 @@
 #include "j1Pathfinding.h"
 #include "j1EntityElementsScene.h"
 #include "j1InputManager.h"
+#include "CombatManager.h"
 #include "j1AnimationManager.h"
 #include "j1Fonts.h"
 #include "j1Gui.h"
@@ -41,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	font = new j1Fonts();
 	gui = new j1Gui();
 	entity_elements = new j1EntityElementScene();
+	combatmanager = new CombatManager();
 	anim_manager = new j1AnimationManager();
 	collision = new j1Collision();
 	input_manager = new InputManager();
@@ -62,8 +64,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// scene last
 	AddModule(scene);
 	AddModule(intro);
-	//TODO MID 
+	//Add managers
 	AddModule(entity_elements);
+	AddModule(combatmanager);
 	//Player
 	//AddModule(player); //TODO LOW
 	AddModule(collision);

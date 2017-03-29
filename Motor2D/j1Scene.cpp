@@ -87,7 +87,11 @@ bool j1Scene::Update(float dt)
 
 		/*if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		{
-			switch_map = 3;
+			switch_map = 4;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		{
+			switch_map = 2;
 		}*/
 		if (switch_map != 0)
 		{

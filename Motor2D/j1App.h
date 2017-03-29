@@ -23,6 +23,7 @@ class j1PathFinding;
 class j1Fonts;
 class j1Gui;
 class j1EntityElementScene;
+class CombatManager;
 class j1AnimationManager;
 class j1Collision;
 class InputManager;
@@ -106,6 +107,7 @@ public:
 	j1EntityElementScene*	entity_elements = NULL;
 	j1AnimationManager*		anim_manager = NULL;
 	j1Collision*			collision = NULL;
+	CombatManager*			combatmanager = NULL;
 
 private:
 

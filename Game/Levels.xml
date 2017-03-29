@@ -93,6 +93,10 @@
         <enemy id="1" pos_x="424" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
       </enemies>
     </map>
+    <map n="4" file="Victory_Road.tmx">
+      <camera follow="true"/>
+      <Link pos_x="150" pos_y="150" />
+    </map>
 	</maps>
  
   
