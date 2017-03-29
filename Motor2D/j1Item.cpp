@@ -34,9 +34,10 @@ bool Item::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 	return true;
 }
 
+
 bool Item::Start()
 {
-	collision = App->collision->AddCollider({ position.x, position.y, 8,20 }, COLLIDER_ITEM, this);
+	collision = App->collision->AddCollider({ position.x, position.y, 8,14 }, COLLIDER_ITEM, this);
 	return true;
 }
 

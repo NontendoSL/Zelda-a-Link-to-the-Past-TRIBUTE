@@ -47,6 +47,8 @@ void j1Map::Draw()
 		if(layer->properties.Get("Draw") != 0 && navigation_map == false)
 			continue;
 
+		/*iPoint temp = WorldToMap(-(App->render->camera.x /2), -(App->render->camera.y/2));
+		iPoint te_size = WorldToMap(512/2, 448/2);*/
 		for(int y = 0; y < data.height; ++y)
 		{
 			for(int x = 0; x < data.width; ++x)

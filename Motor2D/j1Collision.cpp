@@ -49,6 +49,7 @@ bool j1Collision::PreUpdate()
 
 bool j1Collision::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange)
 	// Called before render is available
 	Collider* c1 = nullptr;
 	Collider* c2 = nullptr;
@@ -138,6 +139,9 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_DYNOBJECT: // white
 			App->render->DrawQuad(colliders[i]->rect, 177, 255, 140, alpha);
+			break;
+		case COLLIDER_ITEM: // white
+			App->render->DrawQuad(colliders[i]->rect, 120, 50, 140, alpha);
 			break;
 		}
 	}

@@ -61,6 +61,8 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Scene", Profiler::Color::DarkGreen)
+
 	if (ingame==true)
 	{
 		//TODO AssignValues to only interact when picking/droping items
