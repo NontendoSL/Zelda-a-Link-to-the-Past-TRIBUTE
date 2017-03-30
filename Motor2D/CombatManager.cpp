@@ -39,24 +39,31 @@ bool CombatManager::Start()
 
 bool CombatManager::PreUpdate()
 {
-	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
-		std::list<SceneElement*>::iterator item3 = elementscene.begin();
-	while (item3 != elementscene.end())
-	{
-		item3._Ptr->_Myval->Update();
-		item3++;
-	}
+
 	return true;
 }
 
 bool CombatManager::Update(float dt)
 {
+	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
+	std::list<SceneElement*>::iterator item3 = elementscene.begin();
+	while (item3 != elementscene.end())
+	{
+		item3._Ptr->_Myval->Update();
+		item3++;
+	}
+
+
+	return true;
+}
+
+bool CombatManager::PostUpdate()
+{
 	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green);
-		bool ret = true;
 
 	std::list<SceneElement*>::iterator item = elementscene.end();
 	item--;
-	while (item != elementscene.begin()) //TODO HIGH -> need inverse_iterator
+	while (item != elementscene.begin())
 	{
 		item._Ptr->_Myval->Draw();
 		item--;
@@ -65,13 +72,6 @@ bool CombatManager::Update(float dt)
 	{
 		item._Ptr->_Myval->Draw();
 	}
-
-	return ret;
-}
-
-bool CombatManager::PostUpdate()
-{
-
 	return true;
 }
 

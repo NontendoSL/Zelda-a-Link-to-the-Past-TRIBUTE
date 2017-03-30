@@ -12,7 +12,7 @@ public:
 	~Blaziken();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&, uint);
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
@@ -31,13 +31,24 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	/*void AddItem(Item*);
+	void OnCollision(Collider*, Collider*);
 
-	void Drop_item();*/
+	bool Idle();
+
+	bool Walking();
+
+	bool Move();
+
+	bool Attack();
+
+	bool CheckOrientation();
+
+	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
 private:
 
-
+	//Timer
+	int timetoplay;
 
 };
 
