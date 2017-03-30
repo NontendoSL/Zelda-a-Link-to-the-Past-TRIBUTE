@@ -57,6 +57,8 @@ public:
 
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
+	int GetnuminputUse();
+
 public:
 	SDL_Texture* player_texture = nullptr;
 	SDL_Texture* maptex = nullptr;

@@ -73,6 +73,9 @@ public:
 	bool switch_menu = false;
 	bool inventory = false;
 	int switch_map = 0;
+
+	bool fade = false;
+	bool now_switch = false;
 };
 
 #endif // __j1SCENE_H__

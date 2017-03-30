@@ -16,6 +16,7 @@
 #include "j1Player.h"
 #include "j1DynamicObjects.h"
 #include "j1FileSystem.h"
+#include "j1FadeToBlack.h"
 #include "j1Collision.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -87,6 +88,10 @@ bool j1Scene::Update(float dt)
 			}
 		}
 
+		if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		{
+			App->fadetoblack->FadeToBlack(4);
+		}
 		/*if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		{
 			switch_map = 4;
@@ -97,26 +102,44 @@ bool j1Scene::Update(float dt)
 		}*/
 		if (switch_map != 0)
 		{
-			if (App->map->CleanUp())
+			if (fade == false)
 			{
-				App->collision->EreseAllColiderPlayer();
-				App->entity_elements->DelteElements();
-				if (enemy.size() > 0)
-				{
-					enemy.clear();
-				}
-				if (items.size() > 0)
-				{
-					items.clear();
-				}
-				if (dynobjects.size() > 0)
-				{
-					dynobjects.clear();
-				}
-
-				Load_new_map(switch_map);
+				App->fadetoblack->FadeToBlack();
+				player->gamestate = INMENU;
+				player->state = IDLE;
+				fade = true;
+				now_switch = true;
 			}
-			switch_map = 0;
+
+			if (App->fadetoblack->Checkfadetoblack() && now_switch)
+			{
+				now_switch = false;
+				if (App->map->CleanUp())
+				{
+					App->collision->EreseAllColiderPlayer();
+					App->entity_elements->DelteElements();
+					if (enemy.size() > 0)
+					{
+						enemy.clear();
+					}
+					if (items.size() > 0)
+					{
+						items.clear();
+					}
+					if (dynobjects.size() > 0)
+					{
+						dynobjects.clear();
+					}
+
+					Load_new_map(switch_map);
+				}
+			}
+			if (App->fadetoblack->Checkfadefromblack())
+			{
+				switch_map = 0;
+				fade = false;
+				player->gamestate = INGAME;
+			}
 		}
 
 		if (switch_menu)

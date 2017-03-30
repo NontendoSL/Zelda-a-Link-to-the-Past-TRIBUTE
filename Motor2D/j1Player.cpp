@@ -206,11 +206,14 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
 
 			}
+			if (c2->callback->name != "chest")
+			{
+				App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
+				App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
+				App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
+				App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
+			}
 
-			App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
-			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
-			App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
-			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
 			App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 			//App->collision->EraseCollider(c2);
 		}
@@ -434,9 +437,31 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	}
 }
 
+int Player::GetnuminputUse()
+{
+	int ret = 0;
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
+	{
+		ret++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
+	{
+		ret++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
+	{
+		ret++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
+	{
+		ret++;
+	}
+	return ret;
+}
 
 bool Player::Move()
 {
+	int keysuse = GetnuminputUse();
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = LEFT;
@@ -447,22 +472,26 @@ bool Player::Move()
 				App->render->camera.x += speed * scale;
 			position.x -= speed;
 		}
-		if (temp == 3)//up
+		if (keysuse == 1) //if you pres a key left and up this if will do that dont move more fast
 		{
-			direction = UP;
-			if (Camera_inside())
-				App->render->camera.y += speed * scale;
-			position.y -= speed;
-			direction = LEFT;
+			if (temp == 3)//up
+			{
+				direction = UP;
+				if (Camera_inside())
+					App->render->camera.y += speed * scale;
+				position.y -= speed;
+				direction = LEFT;
+			}
+			if (temp == 4)//down
+			{
+				direction = DOWN;
+				if (Camera_inside())
+					App->render->camera.y -= speed * scale;
+				position.y += speed;
+				direction = LEFT;
+			}
 		}
-		if (temp == 4)//down
-		{
-			direction = DOWN;
-			if (Camera_inside())
-				App->render->camera.y -= speed * scale;
-			position.y += speed;
-			direction = LEFT;
-		}
+
 		walking = true;
 	}
 
@@ -476,22 +505,26 @@ bool Player::Move()
 				App->render->camera.y -= speed * scale;
 			position.y += speed;
 		}
-		else if (temp == 3)//left
+		if (keysuse == 1)
 		{
-			direction = LEFT;
-			if (Camera_inside())
-				App->render->camera.x += speed * scale;
-			position.x -= speed;
-			direction = DOWN;
+			if (temp == 3)//left
+			{
+				direction = LEFT;
+				if (Camera_inside())
+					App->render->camera.x += speed * scale;
+				position.x -= speed;
+				direction = DOWN;
+			}
+			if (temp == 4)//right
+			{
+				direction = RIGHT;
+				if (Camera_inside())
+					App->render->camera.x -= speed * scale;
+				position.x += speed;
+				direction = DOWN;
+			}
 		}
-		else if (temp == 4)//right
-		{
-			direction = RIGHT;
-			if (Camera_inside())
-				App->render->camera.x -= speed * scale;
-			position.x += speed;
-			direction = DOWN;
-		}
+
 		walking = true;
 	}
 
@@ -505,21 +538,24 @@ bool Player::Move()
 				App->render->camera.x -= speed * scale;
 			position.x += speed;
 		}
-		if (temp == 4)//up
+		if (keysuse == 1)
 		{
-			direction = UP;
-			if (Camera_inside())
-				App->render->camera.y += speed * scale;
-			position.y -= speed;
-			direction = RIGHT;
-		}
-		if (temp == 3)//down
-		{
-			direction = DOWN;
-			if (Camera_inside())
-				App->render->camera.y -= speed * scale;
-			position.y += speed;
-			direction = RIGHT;
+			if (temp == 4)//up
+			{
+				direction = UP;
+				if (Camera_inside())
+					App->render->camera.y += speed * scale;
+				position.y -= speed;
+				direction = RIGHT;
+			}
+			if (temp == 3)//down
+			{
+				direction = DOWN;
+				if (Camera_inside())
+					App->render->camera.y -= speed * scale;
+				position.y += speed;
+				direction = RIGHT;
+			}
 		}
 		walking = true;
 	}
@@ -534,21 +570,24 @@ bool Player::Move()
 				App->render->camera.y += speed * scale;
 			position.y -= speed;
 		}
-		if (temp == 3)//left
+		if (keysuse == 1)
 		{
-			direction = LEFT;
-			if (Camera_inside())
-				App->render->camera.x += speed * scale;
-			position.x -= speed;
-			direction = UP;
-		}
-		if (temp == 4)//right
-		{
-			direction = RIGHT;
-			if (Camera_inside())
-				App->render->camera.x -= speed * scale;
-			position.x += speed;
-			direction = UP;
+			if (temp == 3)//left
+			{
+				direction = LEFT;
+				if (Camera_inside())
+					App->render->camera.x += speed * scale;
+				position.x -= speed;
+				direction = UP;
+			}
+			if (temp == 4)//right
+			{
+				direction = RIGHT;
+				if (Camera_inside())
+					App->render->camera.x -= speed * scale;
+				position.x += speed;
+				direction = UP;
+			}
 		}
 		walking = true;
 	}

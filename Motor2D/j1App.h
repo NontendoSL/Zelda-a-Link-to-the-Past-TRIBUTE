@@ -26,6 +26,7 @@ class j1EntityElementScene;
 class CombatManager;
 class j1AnimationManager;
 class j1Collision;
+class j1FadeToBlack;
 class InputManager;
 
 class j1App
@@ -108,6 +109,7 @@ public:
 	j1AnimationManager*		anim_manager = NULL;
 	j1Collision*			collision = NULL;
 	CombatManager*			combatmanager = NULL;
+	j1FadeToBlack*			fadetoblack = NULL;
 
 private:
 

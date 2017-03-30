@@ -118,6 +118,9 @@
     <ClCompile Include="Functions.cpp">
       <Filter>Zelda Game\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="j1FadeToBlack.cpp">
+      <Filter>Zelda Game\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -260,6 +263,9 @@
     </ClInclude>
     <ClInclude Include="Sudowoodo.h">
       <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FadeToBlack.h">
+      <Filter>Zelda Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

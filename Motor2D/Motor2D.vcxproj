@@ -86,6 +86,7 @@
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1DynamicObjects.cpp" />
+    <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1InputManager.cpp" />
     <ClCompile Include="j1SceneIntro.cpp" />
     <ClCompile Include="Sceptyle.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="Ganon.h" />
     <ClInclude Include="Geodude.h" />
     <ClInclude Include="Golem.h" />
+    <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1SceneIntro.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1Creature.h" />

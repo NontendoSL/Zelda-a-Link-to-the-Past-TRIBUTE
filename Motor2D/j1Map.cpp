@@ -45,11 +45,11 @@ void j1Map::Draw()  // TODO LOW -> maybe change pointers to const(?)
 		if(layer->properties.Get("Draw") != 0 && navigation_map == false)
 			continue;
 
-		/*iPoint temp = WorldToMap(-(App->render->camera.x /2), -(App->render->camera.y/2));
-		iPoint te_size = WorldToMap(512/2, 448/2);*/
-		for(int y = 0; y < data.height; ++y)
+		int marge = Checkpositions();
+
+		for(int y = pos_camera.y; y < pos_camera.y + win_size.y + marge; ++y)
 		{
-			for(int x = 0; x < data.width; ++x)
+			for(int x = pos_camera.x; x < pos_camera.x + win_size.x + marge; ++x)
 			{
 				int tile_id = layer->Get(x, y);
 				if(tile_id > 0)
@@ -65,6 +65,42 @@ void j1Map::Draw()  // TODO LOW -> maybe change pointers to const(?)
 		}
 	}
 }
+
+int j1Map::Checkpositions()
+{
+	int ret = 0;
+	pos_camera = WorldToMap(-(App->render->camera.x / 2), -(App->render->camera.y / 2));
+	win_size = WorldToMap(512 / 2, 448 / 2);
+
+	if (pos_camera.x < 0)
+	{
+		pos_camera.x = 0;
+	}
+	if (pos_camera.y < 0)
+	{
+		pos_camera.y = 0;
+	}
+	if (win_size.x > data.width)
+	{
+		win_size.x = data.width;
+	}
+	else
+	{
+		ret = 1;
+	}
+	if (win_size.y > data.height)
+	{
+		win_size.y = data.height;
+	}
+	else
+	{
+		ret = 1;
+	}
+
+	return ret;
+}
+
+
 
 int Properties::Get(const char* value, int default_value) const
 {

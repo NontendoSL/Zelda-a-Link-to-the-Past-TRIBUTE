@@ -137,6 +137,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+	int Checkpositions();
 
 	TileSet* GetTilesetFromTileId(int id) const;
 
@@ -150,6 +151,9 @@ private:
 	pugi::xml_document	map_file;
 	std::string folder;
 	bool				map_loaded;
+
+	iPoint pos_camera;
+	iPoint win_size;
 };
 
 #endif // __j1MAP_H__

@@ -23,6 +23,7 @@
 #include "j1Gui.h"
 #include "j1App.h"
 #include "j1Player.h"
+#include "j1FadeToBlack.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -46,6 +47,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	anim_manager = new j1AnimationManager();
 	collision = new j1Collision();
 	input_manager = new InputManager();
+	fadetoblack = new j1FadeToBlack();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -75,6 +77,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// render last to swap buffer
 	AddModule(render);
+
+	AddModule(fadetoblack);
 
 	PERF_PEEK(ptimer);
 }
