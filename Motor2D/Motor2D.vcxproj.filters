@@ -281,12 +281,6 @@
     <Filter Include="Zelda Game\Scenes">
       <UniqueIdentifier>{e07660eb-d36f-4cc9-af59-324d31c2f2f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Zelda Game\Modules">
-      <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Zelda Game\Modules\GUI">
-      <UniqueIdentifier>{fff5abb1-d128-4071-a124-281ad1c0603e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Zelda Game\ElementsScene">
       <UniqueIdentifier>{e355e0ac-ad79-457e-b007-beef6e857e81}</UniqueIdentifier>
     </Filter>
@@ -307,6 +301,12 @@
     </Filter>
     <Filter Include="Zelda Game\Animation\XML">
       <UniqueIdentifier>{6a882597-537e-47fe-8328-a787353c0983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\Modules">
+      <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\Modules\GUI">
+      <UniqueIdentifier>{fff5abb1-d128-4071-a124-281ad1c0603e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

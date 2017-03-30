@@ -3,7 +3,6 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
-#include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
@@ -92,9 +91,9 @@ Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos, std::string identifier, uin
 	return element;
 }
 
-Text* j1Gui::CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, bool addelement, std::string identifier, uint id) {
+Text* j1Gui::CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Color color , bool addelement, std::string identifier, uint id) {
 
-	Text* element = new Text(search,string, length, pos, size,addelement, identifier, id);
+	Text* element = new Text(search,string,color, length, pos, size,addelement, identifier, id);
 	if (addelement)
 		entities.push_back(element);
 
@@ -124,5 +123,15 @@ ZeldaMenu* j1Gui::CreateZeldaMenu() {
 	entities.push_back(element);
 	return element;
 }
+
+PokemonCombatHud* j1Gui::CreatePokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2)
+{
+	PokemonCombatHud* element = new PokemonCombatHud(cd_time, hpbar1, hpbar2);
+	entities.push_back(element);
+	return element;
+}
+
+
+
 // class Gui ---------------------------------------------------
 

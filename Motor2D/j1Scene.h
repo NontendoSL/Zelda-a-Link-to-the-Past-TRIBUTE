@@ -12,6 +12,7 @@ class Text;
 class Button;
 class Dialogue;
 class ZeldaMenu;
+class PokemonCombatHud;
 
 class Player;
 class Item;
@@ -59,7 +60,8 @@ public:
 
 
 	//Ingame
-	ZeldaMenu* hud=nullptr,*start_menu=nullptr;
+	ZeldaMenu* hud=nullptr,*start_menu = nullptr;
+	PokemonCombatHud* pokecombat = nullptr;
 	Image* force, *gems, *bombs, *arrows;
 	Player* player = nullptr;
 	std::list<Soldier*> enemy; //TODO LOW -> change to std::list<NPC*> enemies;

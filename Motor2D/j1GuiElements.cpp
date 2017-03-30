@@ -108,10 +108,11 @@ Image::~Image()
 
 /////////////////////////////// TEXT METHODS ///////////////////////////////
 
-Text::Text(FontName search, const char* write, uint length, iPoint pos, uint size, bool draw, std::string identifier, uint id) :size(size), draw(draw), length(length), j1GuiEntity({ 0,0,0,0 }, pos, identifier, id)
+Text::Text(FontName search, const char* write, SDL_Color color, uint length, iPoint pos, uint size, bool draw, std::string identifier, uint id) :size(size), draw(draw), length(length), j1GuiEntity({ 0,0,0,0 }, pos, identifier, id)
 {
 	type = TEXT;
 	text = write;
+	this->color = color;
 	font_name = search;
 	switch (search)
 	{
@@ -124,13 +125,16 @@ Text::Text(FontName search, const char* write, uint length, iPoint pos, uint siz
 	case PIXELMORE:
 		font = App->font->Load("fonts/zelda_fonts/PixeledMore.ttf", size);
 		break;
+	case POKE1:
+		font = App->font->Load("fonts/poke_fonts/poke1.ttf", size);
+		break;
 	default:
 		font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", size);
 		break;
 	}
 
 	CheckString(std::string(write));
-	text_texture = App->font->Print(text.c_str(), { (255),(255),(255),(255) }, font);
+	text_texture = App->font->Print(text.c_str(), color, font);
 	Hitbox.w /= 2; //TODO MID Adapt functions to resolution scale
 	Hitbox.h /= 2;
 }
@@ -169,7 +173,7 @@ void Text::CheckString(std::string string)
 		if (text[length] != ' ') {
 			text += "-";
 		}
-		next_line = App->gui->CreateText(font_name, string.substr(length + 1, 100).c_str(), length, { position.x,position.y + volum.y / 2 }, size, draw);
+		next_line = App->gui->CreateText(font_name, string.substr(length + 1, 100).c_str(), length, { position.x,position.y + volum.y / 2 }, size, color,draw);
 	}
 }
 
@@ -191,7 +195,7 @@ void Text::Write(const char* string)
 
 	text = string;
 	//font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", 23);
-	text_texture = App->font->Print(text.c_str(), { (255),(255),(255),(255) }, font);
+	text_texture = App->font->Print(text.c_str(), color, font);
 
 }
 
@@ -211,7 +215,7 @@ Button::Button(SDL_Rect rectangle, iPoint pos, iPoint stat2, iPoint stat3, bool 
 	texture2.w = texture3.w = Hitbox.w;
 	texture2.h = texture3.h = Hitbox.h;
 	if (textstring != nullptr) {
-		buttontext = new Text(GANONF, textstring, 20, { textpos.x,textpos.y }, textsize, true, "undefined", 0);
+		buttontext = new Text(GANONF, textstring, { 255,255,255,255 }, 20, { textpos.x,textpos.y }, textsize, true, "undefined", 0);
 	}
 
 	start = true;
@@ -274,7 +278,7 @@ Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
 {
 	//TODO MID: Actual font needs a blue outline to match the original one, need to code that or edit the font creating the outline
 	type = DIALOGUE;
-	lines = App->gui->CreateText(GANONF, string, 29, { position.x + 10, 0 }, 30, false);
+	lines = App->gui->CreateText(GANONF, string, 29, { position.x + 10, 0 }, 30, { 255,255,255,255 }, false);
 
 }
 
@@ -627,5 +631,67 @@ ZeldaMenu::~ZeldaMenu()
 {
 	//need to clear vector;
 }
+
+
+/////////////////////////////////////POKEMON COMBAT HUD//////////////////////////
+
+PokemonCombatHud::PokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2)
+{
+	hud_images.push_back(App->gui->CreateImage({ 335,19,254,51 }, { 0,0 },"top hud"));
+	hud_images.push_back(App->gui->CreateImage({ 597,18,254,33 }, { 0,224-33 }, "bottom hud"));
+	ability = App->gui->CreateImage({ 561,85,30,30 }, { 3,0 }, "left ability");
+	hud_images[1]->elements.push_back(ability);
+	ability->elements.push_back(App->gui->CreateImage({ 525,85,30,0 }, { 0,0 }, "left cd"));
+	hud_images[1]->elements.push_back(App->gui->CreateImage({ 426,84,90,23 }, { 35,7 }, "left box"));
+	hp1= App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "left hp");
+	hud_images[1]->elements[1]->elements.push_back(hp1);
+	hud_images[1]->elements[1]->elements.push_back(App->gui->CreateText(POKE1, "SCEPTILE", 50, { 6,4 }, 15, { 0,0,0,255 }));
+	incd = false;
+	cdtime.x = cd_time;
+	this->hpbar1.x = hpbar1;
+	this->hpbar1.y = hpbar1;
+}
+
+
+void PokemonCombatHud::Handle_Input()
+{
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && incd==false) 
+	{
+		incd = true;
+		cdtime.y=cdtime.x;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT)
+	{
+		hpbar1.y--;
+	}
+}
+
+void PokemonCombatHud::Update()
+{
+	if (incd) //player cd update 
+	{
+		if (cdtime.y>0)
+		{
+			cdtime.y--;
+			ability->elements[0]->Hitbox.h = (cdtime.y*ability->elements[0]->Hitbox.w)/ cdtime.x;
+			LOG("setting cd");
+		}
+		else {
+			incd = false;
+		}
+	}
+	hp1->Hitbox.w = (hpbar1.y * 48) / hpbar1.x;//being 48 the max pixels hp can have (atlas)
+}
+
+void PokemonCombatHud::SetCd(uint newcd)
+{
+	cdtime.x = newcd;
+}
+
+PokemonCombatHud::~PokemonCombatHud()
+{
+
+}
+
 
 // Entity Elements ---------------------------------------------------

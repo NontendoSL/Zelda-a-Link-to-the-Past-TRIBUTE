@@ -5,7 +5,9 @@
 #include "j1InputManager.h"
 
 enum ButtonState{normal, over, clicked};
-enum FontName{GANONF,PIXEL,PIXELMORE};
+enum FontName{GANONF,PIXEL,PIXELMORE,POKE1};
+
+
 struct 	_TTF_Font;
 class Animation;
 class InputManager;
@@ -51,7 +53,7 @@ public:
 class Text : public j1GuiEntity
 {
 public:
-	Text(FontName search, const char* write,uint length, iPoint pos, uint size,bool draw, std::string identifier, uint id);
+	Text(FontName search, const char* write, SDL_Color color,uint length, iPoint pos, uint size,bool draw, std::string identifier, uint id);
 	~Text();
 
 public:
@@ -68,6 +70,7 @@ private:
 public:
 	Text* next_line = nullptr;
 	FontName font_name;
+	SDL_Color color;
 	bool draw = true;
 };
 
@@ -121,4 +124,23 @@ public:
 	uint id_selected;
 };
 
+
+class PokemonCombatHud :public j1GuiEntity
+{
+public:
+	PokemonCombatHud(uint cd_time,uint hpbar1,uint hpbar2);
+	~PokemonCombatHud();
+public:
+	void Handle_Input();
+	void Update();
+public:
+	void SetCd(uint newcd);
+private:
+	std::vector<Image*>hud_images;
+	bool incd;
+	Image* ability,*hp1,*hp2;
+	iPoint cdtime; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
+	iPoint hpbar1; //.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE)
+
+};
 #endif // __j1GUIELEMENTS_H__

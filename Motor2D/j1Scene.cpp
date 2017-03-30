@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Gui.h"
+#include "j1Fonts.h"
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
 #include "j1Scene.h"
@@ -162,6 +163,11 @@ bool j1Scene::PostUpdate()
 	{
 		ret = false;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+
+	}
+
 
 	return ret;
 }
@@ -242,7 +248,8 @@ void j1Scene::LoadUi()
 	start_menu->position = { 0,-224 };
 	start_menu->Close();
 	start_menu->identifier = "start_menu";
-	
+	//pokecombat
+	//pokecombat = App->gui->CreatePokemonCombatHud(450,100,300);
 }
 
 void j1Scene::SwitchMenu(bool direction)//true for down, false for up
