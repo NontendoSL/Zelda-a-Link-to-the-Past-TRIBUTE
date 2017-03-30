@@ -41,13 +41,6 @@ bool Item::Start()
 	return true;
 }
 
-bool Item::Update()
-{
-
-
-	return true;
-}
-
 void Item::Draw()
 {
 	if (canBlit == true)
@@ -66,39 +59,64 @@ bool Item::Save()
 	return true;
 }
 
+//HOOKSHOT ------------------
+Hookshot::Hookshot(bool equip)
+{
+	equipable = equip;
+}
+
+
+Hookshot::~Hookshot()
+{
+}
+
+bool Hookshot::Update()
+{
+
+	return true;
+}
+
+void Hookshot::SetRange(uint charge)
+{
+	range = charge * 0.5;
+}
+
+
+
 /*bool Hookshot::ReachObjective()
 {
-	switch (player_level)
-	{
-	case LEVEL_1:
-		if (orange tile touched)
-		{
-			return wall;
-		}
-		break;
-	case LEVEL_2:
-		if (yellow tile touched)
-		{
-			return wall;
-		}
-		break;
-	case LEVEL_3:
-		if (pink tile touched)
-		{
-			return wall;
-		}
-		break;
-	default:
-		break;
-	}
-
-	if (sudowoodo touched)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+{
+switch (player_level)
+{
+case LEVEL_1:
+if (orange tile touched)
+{
+return wall;
 }
-*/
+break;
+case LEVEL_2:
+if (yellow tile touched)
+{
+return wall;
+}
+break;
+case LEVEL_3:
+if (pink tile touched)
+{
+return wall;
+}
+break;
+default:
+break;
+}
+
+if (sudowoodo touched)
+{
+return true;
+}
+else
+{
+return false;
+}
+}*/
+// -------------------

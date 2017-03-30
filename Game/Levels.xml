@@ -8,8 +8,10 @@
     <stats hp="74" attack="10" speed="1" pos_x="100" pos_y="90" />
   </Link>
 
+  <!--LOAD ITEMS INFO-->
   <items>
     <item id="1" name="rupee" file="textures/GreenRupee.png"/>
+    <item id="5" name="hookshot" file="textures/Hook.png"/>
   </items>
 
   <maps>
@@ -65,9 +67,7 @@
         <enemy id="1" pos_x="88" pos_y="329" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" />
         <enemy id="1" pos_x="182" pos_y="149" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" />
       </enemies>
-      <items>
-        <item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
-      </items>
+
       <dynObjects>
         <dynobject id="1" name="door_house_link" type="ZELDA" file="textures/closeddoor.png" />
         <dynobject id="2" name="bush_plant" type="ZELDA" file="textures/bush.png" />

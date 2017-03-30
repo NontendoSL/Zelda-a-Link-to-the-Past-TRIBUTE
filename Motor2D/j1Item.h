@@ -6,6 +6,7 @@
 
 
 enum itemtype{ ZELDA_W, POKEMON_W };
+//enum ItemID { NO_ITEM, RUPEE, BOMB, ARROW, BOW, HOOKSHOT };
 
 class Item : public SceneElement
 {
@@ -24,7 +25,7 @@ public:
 	//bool PreUpdate();
 
 	// Called each loop iteration
-	bool Update();
+	//bool Update();
 
 	// Called before all Updates
 	//bool PostUpdate();
@@ -37,27 +38,33 @@ public:
 	bool Save();
 
 private:
-	bool picked = false;
-	bool equiped = false;
-	bool equipable = false;
 	SDL_Texture* texture = nullptr;
+
 public:
 	Collider* collision = nullptr;
+	//bool picked = false;
+	bool equiped = false;
+	bool equipable = false;
 };
 
 
-/*class Hookshot :public Item
+class Hookshot :public Item
 {
 public:
-	Hookshot();
+	Hookshot(bool equipable);
 	~Hookshot();
+
+	bool Update();
+
+	void SetRange(uint charge);
 
 	//Check the tile at its position each X Updates
 	bool ReachObjective();
 
 private:
 	uint range = 0;
+	//std::vector<iPoint
 
-};*/
+};
 
 #endif

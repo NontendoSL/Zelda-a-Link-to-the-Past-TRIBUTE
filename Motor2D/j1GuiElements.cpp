@@ -10,6 +10,7 @@
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
+#include "j1Player.h"
 #include <assert.h>
 
 /////////////////////////////// IMAGE METHODS ///////////////////////////////
@@ -411,18 +412,24 @@ void ZeldaMenu:: Do()
 		item->elements[0]->Hitbox.y = 276;
 		item_menu->Hitbox.y = 276;
 		menu_texts[1]->Write("BOW ARROWS");
+		App->scene->player->Unequip();
+		//App->scene->player->Equip(bow);
 	}
 	else if (i_name == "hookshot")
 	{
 		item->elements[0]->Hitbox.y = 309;
 		item_menu->Hitbox.y = 309;
 		menu_texts[1]->Write(" HOOKSHOT");
+		App->scene->player->Unequip();
+		App->scene->player->Equip((Item*)App->scene->player->hook);
 	}
 	else if (i_name == "bomb")
 	{
 		item->elements[0]->Hitbox.y = 344;
 		item_menu->Hitbox.y = 344;
 		menu_texts[1]->Write("      BOMBS");
+		App->scene->player->Unequip();
+		//App->scene->player->Equip(bombs);
 	}
 }
 
@@ -478,11 +485,11 @@ void ZeldaMenu::Handle_Input()
 		{
 			Select(-1);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
 		{
 			Click();
 		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)//TODO LOW-> Check E_UP botton state
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)//TODO MED-> Check E_UP botton state
 		{
 			UnClick(); 
 		}

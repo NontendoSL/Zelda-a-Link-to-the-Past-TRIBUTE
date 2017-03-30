@@ -71,7 +71,7 @@ int j1Map::Checkpositions()
 	int ret = 0;
 	int scale = App->win->GetScale();
 	pos_camera = WorldToMap(-(App->render->camera.x / scale), -(App->render->camera.y / scale));
-	win_size = WorldToMap(App->win->GetWidth() / scale, App->win->GetHeight / scale);
+	win_size = WorldToMap(App->win->GetWidth() / scale, App->win->GetHeight() / scale);
 
 	if (pos_camera.x < 0)
 	{

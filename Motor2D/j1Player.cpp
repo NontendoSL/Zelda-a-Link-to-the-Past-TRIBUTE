@@ -131,13 +131,21 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 
 	//CHARGE BAR --------------
-	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT)  && charge <= 34)
+	if (equiped_item == hook)
 	{
-		charge++;
-	}
-	else if (charge != 0)
-	{
-		charge--;
+		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT) && charge <= 34)
+		{
+			charge++;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		{
+			state = HOOKTHROWN;
+			ThrowHookshot(charge);
+		}
+		else if (charge > 0)
+		{
+			charge--;
+		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT && gems<999)
 	{
@@ -421,6 +429,39 @@ bool Player::Attack()
 	return true;
 }
 
+bool Player::Equip(Item* to_equip)
+{
+	bool ret = false;
+	if (equiped_item != to_equip && to_equip->equipable == true)
+	{
+		equiped_item = to_equip;
+		equiped_item->equiped = true;
+		LOG("Equiped %s", equiped_item->name.c_str());
+		ret = true;
+	}
+	else
+	{
+		LOG("Can't equip %s", to_equip->name.c_str());
+	}
+	return ret;
+}
+
+bool Player::Unequip()
+{
+	bool ret = false;
+	if (equiped_item == nullptr)
+	{
+		LOG("Nothing equiped");
+	}
+	else
+	{
+		LOG("Unequiped %s", equiped_item->name.c_str());
+		equiped_item->equiped = false;
+		equiped_item = nullptr;
+	}
+	return ret;
+}
+
 void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
 
@@ -470,6 +511,11 @@ int Player::GetnuminputUse()
 		ret++;
 	}
 	return ret;
+}
+
+void Player::ThrowHookshot(uint charge)
+{
+	hook->SetRange(charge);
 }
 
 bool Player::Move()

@@ -187,6 +187,15 @@ Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 	return element;
 }
 
+Hookshot* j1EntityElementScene::CreateHookshot()
+{
+	Hookshot* hook = new Hookshot(true);
+	hook->name = "hookshot";
+	hook->Start();
+	elementscene.push_back(hook);
+	return hook;
+}
+
 DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)
 {
 	DynamicObjects* element = new DynamicObjects();

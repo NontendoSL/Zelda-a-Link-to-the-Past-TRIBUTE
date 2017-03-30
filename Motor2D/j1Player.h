@@ -54,6 +54,11 @@ public:
 
 	bool Attack();
 
+	bool Equip(Item* to_equip);
+	bool Unequip();
+
+	void ThrowHookshot(uint charge);
+
 	bool CheckOrientation();
 
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
@@ -69,10 +74,14 @@ public:
 	std::string texmapfile_name;
 	std::string file_hit;
 
+	//ITEMS ----------
 	uint gems = 0;
 	uint bombs = 0;
 	uint arrows = 0;
 	uint charge = 0;
+
+	Hookshot* hook = nullptr;
+	Item* equiped_item = nullptr;
 
 	//Pokemons has Link
 	std::list<Pokemon*> pokedex;

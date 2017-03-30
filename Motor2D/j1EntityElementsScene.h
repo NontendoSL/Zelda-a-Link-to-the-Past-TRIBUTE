@@ -12,6 +12,8 @@ class Item;
 class Player;
 class DynamicObjects;
 class NPC;
+class Hookshot;
+
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
 {
@@ -43,8 +45,10 @@ public:
 	//Create Functions 
 	Soldier* CreateSoldier(uint id, pugi::xml_node& );
 	Item* CreateItem(uint id, iPoint position);
+	Hookshot* CreateHookshot();
 	DynamicObjects* CreateDynObject(iPoint pos, uint id, uint id_map);
 	Player* CreatePlayer();
+
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);

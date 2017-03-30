@@ -321,6 +321,7 @@ bool j1Scene::Load_new_map(int n)
 	if (player == NULL)
 	{
 		player = App->entity_elements->CreatePlayer();
+		player->hook = App->entity_elements->CreateHookshot(); // TODO MEDIUM -> Hookshot pointer not created here
 	}
 
 	bool stop_rearch = false;
