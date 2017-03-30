@@ -19,6 +19,9 @@ public:
 
 	bool Update(float dt);
 
+	// Call modules after each loop iteration
+	bool PostUpdate();
+
 	bool FadeToBlack(float time = 2.0f);
 
 	bool Checkfadetoblack();
@@ -26,6 +29,7 @@ public:
 
 private:
 
+	float normalized = 0;
 	enum fade_step
 	{
 		none,

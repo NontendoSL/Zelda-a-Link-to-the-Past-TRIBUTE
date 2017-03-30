@@ -33,21 +33,13 @@ bool CombatManager::Awake(pugi::xml_node &config)
 bool CombatManager::Start()
 {
 	bool ret = true;
-	std::list<SceneElement*>::iterator item = elementscene.begin();
-	while (item != elementscene.end())
-	{
-		//item._Ptr->_Myval->Start();
-		item++;
-	}
-	char* buf;
-	int size = App->fs->Load("config.xml", &buf);
-	XML.load_buffer(buf, size);
+
 	return ret;
 }
 
 bool CombatManager::PreUpdate()
 {
-	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan)
+	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
 		std::list<SceneElement*>::iterator item3 = elementscene.begin();
 	while (item3 != elementscene.end())
 	{
@@ -59,7 +51,7 @@ bool CombatManager::PreUpdate()
 
 bool CombatManager::Update(float dt)
 {
-	BROFILER_CATEGORY("Draw_Elements", Profiler::Color::Green)
+	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green);
 		bool ret = true;
 
 	std::list<SceneElement*>::iterator item = elementscene.end();

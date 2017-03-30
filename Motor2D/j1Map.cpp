@@ -46,7 +46,6 @@ void j1Map::Draw()  // TODO LOW -> maybe change pointers to const(?)
 			continue;
 
 		int marge = Checkpositions();
-
 		for(int y = pos_camera.y; y < pos_camera.y + win_size.y + marge; ++y)
 		{
 			for(int x = pos_camera.x; x < pos_camera.x + win_size.x + marge; ++x)

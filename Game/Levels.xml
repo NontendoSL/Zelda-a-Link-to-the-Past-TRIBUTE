@@ -97,7 +97,11 @@
       <camera follow="true"/>
       <Link pos_x="150" pos_y="150" />
     </map>
-	</maps>
+    <map n="5" file="Test_combat_pokemon.tmx">
+      <camera follow="false"/>
+      <Link pos_x="135" pos_y="112" />
+    </map>
+  </maps>
  
   
 </levels>
