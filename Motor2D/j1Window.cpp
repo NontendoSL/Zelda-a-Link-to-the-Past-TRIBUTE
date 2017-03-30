@@ -112,3 +112,13 @@ uint j1Window::GetScale() const
 {
 	return scale;
 }
+
+uint j1Window::GetWidth() const
+{
+	return width;
+}
+
+uint j1Window::GetHeight() const
+{
+	return height;
+}

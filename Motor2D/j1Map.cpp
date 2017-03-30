@@ -5,6 +5,7 @@
 #include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Window.h"
 #include "j1Scene.h"
 #include <math.h>
 
@@ -68,8 +69,9 @@ void j1Map::Draw()  // TODO LOW -> maybe change pointers to const(?)
 int j1Map::Checkpositions()
 {
 	int ret = 0;
-	pos_camera = WorldToMap(-(App->render->camera.x / 2), -(App->render->camera.y / 2));
-	win_size = WorldToMap(512 / 2, 448 / 2);
+	int scale = App->win->GetScale();
+	pos_camera = WorldToMap(-(App->render->camera.x / scale), -(App->render->camera.y / scale));
+	win_size = WorldToMap(App->win->GetWidth() / scale, App->win->GetHeight / scale);
 
 	if (pos_camera.x < 0)
 	{
