@@ -1,5 +1,4 @@
 #include "CombatManager.h"
-#include "Soldier.h"
 #include "j1Item.h"
 #include "j1Player.h"
 #include "j1DynamicObjects.h"
@@ -9,10 +8,14 @@
 #include "p2Log.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
+#include "j1Creature.h"
 #include "j1Collision.h"
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1FileSystem.h"
+#include "Pokemon.h"
+#include "Blaziken.h"
+#include "PokeTrainer.h"
 
 
 CombatManager::CombatManager()
@@ -46,14 +49,16 @@ bool CombatManager::PreUpdate()
 bool CombatManager::Update(float dt)
 {
 	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
-	std::list<SceneElement*>::iterator item3 = elementscene.begin();
-	while (item3 != elementscene.end())
+	std::list<SceneElement*>::iterator item = elementcombat.begin();
+	while (item != elementcombat.end())
 	{
-		item3._Ptr->_Myval->Update();
-		item3++;
+		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+		if (temp->active)
+		{
+			item._Ptr->_Myval->Update();
+		}
+		item++;
 	}
-
-
 	return true;
 }
 
@@ -61,16 +66,15 @@ bool CombatManager::PostUpdate()
 {
 	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green);
 
-	std::list<SceneElement*>::iterator item = elementscene.end();
-	item--;
-	while (item != elementscene.begin())
+	std::list<SceneElement*>::iterator item = elementcombat.begin();
+	while (item != elementcombat.end())
 	{
-		item._Ptr->_Myval->Draw();
-		item--;
-	}
-	if (elementscene.size() > 0)
-	{
-		item._Ptr->_Myval->Draw();
+		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+		if (temp->active)
+		{
+			item._Ptr->_Myval->Draw();
+		}
+		item++;
 	}
 	return true;
 }
@@ -78,13 +82,45 @@ bool CombatManager::PostUpdate()
 bool CombatManager::CleanUp()
 {
 	bool ret = true;
-	std::list<SceneElement*>::iterator item = elementscene.begin();
-	while (item != elementscene.end())
+	std::list<SceneElement*>::iterator item = elementcombat.begin();
+	while (item != elementcombat.end())
 	{
 		item._Ptr->_Myval->CleanUp();
 		item++;
 	}
 	return ret;
+}
+
+void CombatManager::CreateTargets()
+{
+	/*std::list<SceneElement*>::iterator item = elementcombat.begin();
+	while (item != elementcombat.end())
+	{
+		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+		if (temp->active)
+		{
+			item._Ptr->_Myval->Draw();
+		}
+		item++;
+	}*/
+}
+
+Pokemon* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
+{
+	Blaziken* temp = new Blaziken();
+	temp->Awake(conf);
+	temp->Start();
+	elementcombat.push_back(temp);
+	return temp;
+}
+
+bool CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)
+{
+	PokeTrainer* temp = new PokeTrainer();
+	temp->Awake(conf);
+	temp->Start();
+	elementcombat.push_back(temp);
+	return false;
 }
 
 

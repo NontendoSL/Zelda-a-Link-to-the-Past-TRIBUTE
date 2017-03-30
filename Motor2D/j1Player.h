@@ -10,6 +10,7 @@ class Creature;
 class InputListener;
 class Animation;
 class Text;
+class Pokemon;
 
 class Player : public Creature, public InputListener
 {
@@ -34,7 +35,7 @@ public:
 	void Draw();
 
 	// Called before all Updates
-	bool PostUpdate();
+	//bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
@@ -72,6 +73,9 @@ public:
 	uint bombs = 0;
 	uint arrows = 0;
 	uint charge = 0;
+
+	//Pokemons has Link
+	std::list<Pokemon*> pokedex;
 
 private:
 	Text* hp_text = nullptr;

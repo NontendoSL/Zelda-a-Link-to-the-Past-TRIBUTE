@@ -85,13 +85,13 @@ bool j1Collision::Update(float dt)
 			}
 		}
 	}
-	DebugDraw();
 
 	return true;
 }
 
 bool j1Collision::PostUpdate()
 {
+	DebugDraw();
 	return true;
 }
 

@@ -1,10 +1,10 @@
 #include "Blaziken.h"
-
+#include "j1App.h"
+#include "j1Pathfinding.h"
 
 Blaziken::Blaziken()
 {
-	type = CREATURE;
-	name = "Link";
+	c_type = POKEMON;
 }
 
 Blaziken::~Blaziken()
@@ -13,57 +13,102 @@ Blaziken::~Blaziken()
 
 bool Blaziken::Awake(pugi::xml_node &conf)
 {
-	hp = conf.child("stats").attribute("hp").as_int(0);
-	attack = conf.child("stats").attribute("attack").as_int(0);
-	speed = conf.child("stats").attribute("speed").as_int(0);
-	position.x = conf.child("stats").attribute("pos_x").as_int(0);
-	position.y = conf.child("stats").attribute("pos_y").as_int(0);
+	std::string temp = conf.attribute("dir").as_string("");
+	if (temp == "up")
+		direction = UP;
+	else if (temp == "down")
+		direction = DOWN;
+	else if (temp == "left")
+		direction = LEFT;
+	else
+		direction = RIGHT;
+	hp = conf.attribute("hp").as_int(0);
+	attack = conf.attribute("attack").as_int(0);
+	speed = conf.attribute("speed").as_int(0);
+	name = conf.attribute("name").as_string("");
+	position.x = conf.attribute("pos_x").as_int(0);
+	position.y = conf.attribute("pos_y").as_int(0);
+	active = conf.attribute("active").as_bool(false);
 	return true;
 }
 
 bool Blaziken::Start()
 {
-	direction = LEFT;
+	pokemon_player = true;
 	state = IDLE;
 	scale = App->win->GetScale();
 	width = 15;
 	height = 15;
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
-
+	movable = true;
 	collision_enemy = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_PLAYER, this);
-
+	timetoplay = SDL_GetTicks();
+	reset_distance = false;
+	reset_run = true;
 	return true;
 }
 
-bool Blaziken::Update(float dt)
+bool Blaziken::Update()
 {
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)
 	{
-		switch (state)
+		if (pokemon_player)
 		{
-		case IDLE:
-		{
-			Idle();
-			break;
+			//pokemon controlled by player
+			switch (state)
+			{
+			case IDLE:
+			{
+				Idle();
+				break;
+			}
+			case WALKING:
+			{
+				Walking();
+				break;
+			}
+			case ATTACKING:
+			{
+				Attack();
+				break;
+			}
+			default:
+			{
+				break;
+			}
+
+			}
 		}
-		case WALKING:
+		else
 		{
-			Walking();
-			break;
-		}
-		case ATTACKING:
-		{
-			Attack();
-			break;
-		}
-		default:
-		{
-			break;
+			//Pokemon IA
+			switch (state)
+			{
+			case IDLE:
+			{
+				Idle_IA();
+				break;
+			}
+			case WALKING:
+			{
+				Walking_IA();
+				break;
+			}
+			case ATTACKING:
+			{
+				Attack_IA();
+				break;
+			}
+			default:
+			{
+				break;
+			}
+
+			}
 		}
 
-		}
 	}
 	else if (gamestate == INMENU)
 	{
@@ -209,8 +254,89 @@ bool Blaziken::Attack()
 	return true;
 }
 
+bool Blaziken::Idle_IA()
+{
+	if (movable)
+	{
+		if (reset_run)
+		{
+			timetorun = SDL_GetTicks();
+			reset_run = false;
+		}
+		else
+		{
+			if (SDL_GetTicks() - timetorun > 200)
+			{
+				int direc_select = rand() % 4 + 1;
+				if (direc_select == 1)
+				{
+					direction = UP;
+				}
+				else if (direc_select == 2)
+				{
+					direction = DOWN;
+				}
+				else if (direc_select == 3)
+				{
+					direction = LEFT;
+				}
+				else if (direc_select == 4)
+				{
+					direction = RIGHT;
+				}
+				state = WALKING;
+				reset_distance = true;
+			}
+		}
+	}
+	return true;
+}
+
+bool Blaziken::Walking_IA()
+{
+	walking = false;
+	if (reset_distance)
+	{
+		distance = rand() % 60 + 20;
+		dis_moved = 0;
+		reset_distance = false;
+	}
+	Move_IA();
+
+	if (dis_moved >= distance)
+	{
+		walking = false;
+		reset_run = true;
+	}
+
+
+	if (walking == false)
+	{
+		state = IDLE;
+	}
+
+	else
+	{
+		state = WALKING;
+	}
+	return true;
+}
+
+bool Blaziken::Move_IA()
+{
+	App->pathfinding->CreatePath(position, target->Getposition());
+	return true;
+}
+
+bool Blaziken::Attack_IA()
+{
+
+	return true;
+}
+
 bool Blaziken::CheckOrientation()
 {
+
 	return true;
 }
 

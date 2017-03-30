@@ -3,7 +3,7 @@
 #define __POKETRAINER_H_
 
 #include "NPC.h"
-
+#include "Pokemon.h"
 class PokeTrainer : public NPC
 {
 public:
@@ -12,7 +12,7 @@ public:
 	~PokeTrainer();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&, uint);
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
@@ -39,9 +39,7 @@ private:
 
 	//Item* drop;
 	bool stunned = false;
-	Item* item_inside = nullptr;
-	SDL_Texture* texture = nullptr;
-	Collider* collision_enemy = nullptr;
+	std::list<Pokemon*> pokedex;
 };
 
 #endif //__POKETRAINER_H_

@@ -54,11 +54,24 @@ public:
 	void Drop_item()
 	{}
 
-private:
+	iPoint Getposition() const
+	{
+		return position;
+	}
+
+public:
+
+	bool active;
+	bool dead;
+	bool pokemon_player;
+
+protected:
 
 	//Item* drop;
 	Item* item_inside;
-	SDL_Texture* texture;
+	Pokemon* target = nullptr;
+
+
 };
 
 #endif //__POKEMON_H_

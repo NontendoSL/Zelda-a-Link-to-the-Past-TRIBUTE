@@ -9,6 +9,7 @@
 
 class Player;
 class NPC;
+class Pokemon;
 // ---------------------------------------------------
 class CombatManager : public j1Module
 {
@@ -34,18 +35,17 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// delete elements witout player
-	bool DelteElements();
-
+	void CreateTargets();
 	//Create Functions 
-
+	Pokemon* CreatePokemon(pugi::xml_node&, uint id);
+	bool CreateTrainer(pugi::xml_node&, uint id);
 	//Delete Functions
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;
 
 private:
-	std::list<SceneElement*> elementscene;
+	std::list<SceneElement*> elementcombat;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const; //TODO LOW ->We hace this function in App but was with private
 																	  //Delete
 

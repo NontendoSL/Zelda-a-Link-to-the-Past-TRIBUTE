@@ -63,30 +63,35 @@ bool j1EntityElementScene::Update(float dt)
 {
 	bool ret = true;
 	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
-	
-	std::list<SceneElement*>::iterator item3 = elementscene.begin();
-	while (item3 != elementscene.end())
+	if (App->scene->combat == false)
 	{
-		item3._Ptr->_Myval->Update();
-		item3++;
+		std::list<SceneElement*>::iterator item3 = elementscene.begin();
+		while (item3 != elementscene.end())
+		{
+			item3._Ptr->_Myval->Update();
+			item3++;
+		}
 	}
+
 	return ret;
 }
 
 bool j1EntityElementScene::PostUpdate()
 {
 	BROFILER_CATEGORY("Draw_Elements", Profiler::Color::Green);
-
-	std::list<SceneElement*>::iterator item = elementscene.end();
-	item--;
-	while (item != elementscene.begin()) //TODO HIGH -> need inverse_iterator
+	if (App->scene->combat == false)
 	{
-		item._Ptr->_Myval->Draw();
+		std::list<SceneElement*>::iterator item = elementscene.end();
 		item--;
-	}
-	if (elementscene.size() > 0)
-	{
-		item._Ptr->_Myval->Draw();
+		while (item != elementscene.begin()) //TODO HIGH -> need inverse_iterator
+		{
+			item._Ptr->_Myval->Draw();
+			item--;
+		}
+		if (elementscene.size() > 0)
+		{
+			item._Ptr->_Myval->Draw();
+		}
 	}
 	return true;
 }
