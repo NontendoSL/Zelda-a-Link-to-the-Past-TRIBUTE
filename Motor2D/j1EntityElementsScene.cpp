@@ -54,20 +54,28 @@ bool j1EntityElementScene::Start()
 
 bool j1EntityElementScene::PreUpdate()
 {
-	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan)
+	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
+
+	return true;
+}
+
+bool j1EntityElementScene::Update(float dt)
+{
+	bool ret = true;
+	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
+	
 	std::list<SceneElement*>::iterator item3 = elementscene.begin();
 	while (item3 != elementscene.end())
 	{
 		item3._Ptr->_Myval->Update();
 		item3++;
 	}
-	return true;
+	return ret;
 }
 
-bool j1EntityElementScene::Update(float dt)
+bool j1EntityElementScene::PostUpdate()
 {
-	BROFILER_CATEGORY("Draw_Elements", Profiler::Color::Green)
-	bool ret = true;
+	BROFILER_CATEGORY("Draw_Elements", Profiler::Color::Green);
 
 	std::list<SceneElement*>::iterator item = elementscene.end();
 	item--;
@@ -80,13 +88,6 @@ bool j1EntityElementScene::Update(float dt)
 	{
 		item._Ptr->_Myval->Draw();
 	}
-
-	return ret;
-}
-
-bool j1EntityElementScene::PostUpdate()
-{
-
 	return true;
 }
 

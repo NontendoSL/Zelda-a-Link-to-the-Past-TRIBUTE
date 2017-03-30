@@ -3,6 +3,8 @@
 #define __POKEMON_H_
 
 #include "NPC.h"
+#include "j1Window.h"
+#include "j1Collision.h"
 
 class Pokemon : public NPC
 {

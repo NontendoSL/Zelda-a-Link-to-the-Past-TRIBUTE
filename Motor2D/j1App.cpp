@@ -54,7 +54,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fs);
 	AddModule(input);
 	AddModule(input_manager);
-	AddModule(gui);//
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
@@ -69,6 +68,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//Add managers
 	AddModule(entity_elements);
 	AddModule(combatmanager);
+	//UI
+	AddModule(gui);//
 	//Player
 	//AddModule(player); //TODO LOW
 	AddModule(collision);
@@ -76,9 +77,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(anim_manager);
 
 	// render last to swap buffer
+	AddModule(fadetoblack);
 	AddModule(render);
 
-	AddModule(fadetoblack);
+
 
 	PERF_PEEK(ptimer);
 }
