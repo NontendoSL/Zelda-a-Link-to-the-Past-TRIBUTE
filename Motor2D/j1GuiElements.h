@@ -121,13 +121,4 @@ public:
 	uint id_selected;
 };
 
-class PokemonCombatHud :public j1GuiEntity
-{
-public:
-	PokemonCombatHud();
-	~PokemonCombatHud();
-public:
-	std::vector<Image*>hud_images;
-};
-
 #endif // __j1GUIELEMENTS_H__
