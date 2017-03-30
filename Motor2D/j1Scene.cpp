@@ -17,6 +17,7 @@
 #include "j1Player.h"
 #include "j1DynamicObjects.h"
 #include "j1FileSystem.h"
+#include "CombatManager.h"
 #include "j1FadeToBlack.h"
 #include "j1Collision.h"
 
@@ -65,88 +66,114 @@ bool j1Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("Update_Scene", Profiler::Color::DarkGreen)
 
-	if (ingame==true)
-	{
-		//TODO AssignValues to only interact when picking/droping items
-		AssignValues(gems, player->gems);
-		AssignValues(bombs, player->bombs);
-		AssignValues(arrows, player->arrows);
-		force->Hitbox.w = player->charge;
-
-
-
-		if (enemy.size() > 0 && enemy.begin()._Ptr->_Myval != NULL)//TODO HIGH -> when enemy die on put this code?
+		if (ingame == true)
 		{
-			if (enemy.begin()._Ptr->_Myval->hp == 0)
+			//TODO AssignValues to only interact when picking/droping items
+			AssignValues(gems, player->gems);
+			AssignValues(bombs, player->bombs);
+			AssignValues(arrows, player->arrows);
+			force->Hitbox.w = player->charge;
+
+			/*if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 			{
-				//items.push_back(App->entity_elements->CreateItem(1));
-				enemy.begin()._Ptr->_Myval->AddItem(items.begin()._Ptr->_Myval);
-				enemy.begin()._Ptr->_Myval->Drop_item();
-				App->entity_elements->DeleteEnemy(enemy.begin()._Ptr->_Myval);
-				enemy.begin()._Ptr->_Myval = NULL;
+				App->fadetoblack->FadeToBlack(4);
 			}
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		{
-			App->fadetoblack->FadeToBlack(4);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		{
-			switch_map = 5;
-		}
-		/*if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-		{
-			switch_map = 2;
-		}*/
-		if (switch_map != 0)
-		{
-			if (fade == false)
+			if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 			{
-				App->fadetoblack->FadeToBlack();
-				player->gamestate = INMENU;
-				player->state = IDLE;
-				fade = true;
-				now_switch = true;
+				switch_map = 10;
 			}
-
-			if (App->fadetoblack->Checkfadetoblack() && now_switch)
+			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
-				now_switch = false;
-				if (App->map->CleanUp())
+				switch_map = 2;
+			}
+			if (switch_map == 10)
+			{
+				if (fade == false)
 				{
-					App->collision->EreseAllColiderPlayer();
-					App->entity_elements->DelteElements();
-					if (enemy.size() > 0)
-					{
-						enemy.clear();
-					}
-					if (items.size() > 0)
-					{
-						items.clear();
-					}
-					if (dynobjects.size() > 0)
-					{
-						dynobjects.clear();
-					}
+					App->fadetoblack->FadeToBlack();
+					fade = true;
+					now_switch = true;
+				}
 
-					Load_new_map(switch_map);
+				if (App->fadetoblack->Checkfadetoblack() && now_switch)
+				{
+					combat = true;
+					now_switch = false;
+					if (App->map->CleanUp())
+					{
+						App->collision->EreseAllColiderPlayer();
+						App->entity_elements->DelteElements();
+						if (enemy.size() > 0)
+						{
+							enemy.clear();
+						}
+						if (items.size() > 0)
+						{
+							items.clear();
+						}
+						if (dynobjects.size() > 0)
+						{
+							dynobjects.clear();
+						}
+
+						Load_Combat_map(1);
+					}
+				}
+				if (App->fadetoblack->Checkfadefromblack())
+				{
+					fade = false;
+					switch_map = 0;
+				}
+			}*/
+
+			if (switch_map != 0)
+			{
+				if (fade == false)
+				{
+					App->fadetoblack->FadeToBlack();
+					player->gamestate = INMENU;
+					player->state = IDLE;
+					fade = true;
+					now_switch = true;
+				}
+
+				if (App->fadetoblack->Checkfadetoblack() && now_switch)
+				{
+					now_switch = false;
+					if (App->map->CleanUp())
+					{
+						App->collision->EreseAllColiderPlayer();
+						App->entity_elements->DelteElements();
+						if (enemy.size() > 0)
+						{
+							enemy.clear();
+						}
+						if (items.size() > 0)
+						{
+							items.clear();
+						}
+						if (dynobjects.size() > 0)
+						{
+							dynobjects.clear();
+						}
+
+						Load_new_map(switch_map);
+					}
+				}
+				if (App->fadetoblack->Checkfadefromblack())
+				{
+					switch_map = 0;
+					fade = false;
+					player->gamestate = INGAME;
 				}
 			}
-			if (App->fadetoblack->Checkfadefromblack())
+
+			if (switch_menu)
 			{
-				switch_map = 0;
-				fade = false;
-				player->gamestate = INGAME;
+				SwitchMenu(!inventory);
 			}
 		}
 
-		if (switch_menu)
-		{
-			SwitchMenu(!inventory);
-		}
-	}
-	
 
 	return true;
 }
@@ -338,16 +365,43 @@ bool j1Scene::Load_new_map(int n)
 			stop_rearch = true;
 		}
 	}
-
-
-	//enemy = App->entity_elements->CreateEnemy(iPoint(200, 400), 1);
-	//items = App->entity_elements->CreateItem(iPoint(300, 200), 1);
-	//
-	//enemy->AddItem(items);
 	return true;
 }
 
 
+bool j1Scene::Load_Combat_map(int n)
+{
+	bool stop_rearch = false;
+
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	config = LoadConfig(config_file);
+
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
+
+	for (pugi::xml_node temp = config.child("map_combat").child("map"); stop_rearch == false; temp = temp.next_sibling())
+	{
+		if (temp.attribute("n").as_int(0) == n)
+		{
+			//trainer
+			App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
+			//Pokemon Link
+			if (n == 1)
+			{
+				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon"), 1));
+			}
+
+			//map
+			std::string name_map = temp.attribute("file").as_string("");
+			App->map->Load(name_map.c_str(), n);
+
+			//Load UI (?)
+			stop_rearch = true;
+		}
+	}
+	return true;
+}
 
 
 // ---------------------------------------------

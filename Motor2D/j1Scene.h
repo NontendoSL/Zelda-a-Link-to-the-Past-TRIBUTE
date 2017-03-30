@@ -46,7 +46,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Load Maps
 	bool Load_new_map(int n);
+	//Load CombatMaps
+	bool Load_Combat_map(int n);
 
 	void AssignValues(Image* assigner,uint var);
 
@@ -58,7 +61,8 @@ private:
 
 public:
 
-
+	//Combat or not
+	bool combat = false;
 	//Ingame
 	ZeldaMenu* hud=nullptr,*start_menu = nullptr;
 	PokemonCombatHud* pokecombat = nullptr;

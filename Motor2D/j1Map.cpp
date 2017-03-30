@@ -42,7 +42,7 @@ void j1Map::Draw()  // TODO LOW -> maybe change pointers to const(?)
 	{
 		MapLayer* layer = data.layers[i];
 
-		if(layer->properties.Get("Draw") != 0 && navigation_map == false)
+		if(layer->properties.Get("NoDraw") != 0 && navigation_map == false)
 			continue;
 
 		int marge = Checkpositions();
