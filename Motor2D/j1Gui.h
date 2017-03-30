@@ -15,6 +15,7 @@ class Text;
 class Button;
 class Dialogue;
 class ZeldaMenu;
+class PokemonCombatHud;
 
 // ---------------------------------------------------
 class j1Gui : public j1Module
@@ -54,6 +55,7 @@ public:
 
 	ZeldaMenu* CreateZeldaMenu();
 
+	PokemonCombatHud* CreatePokemonCombatHud();
 public:
 	int Next_id = 0;
 

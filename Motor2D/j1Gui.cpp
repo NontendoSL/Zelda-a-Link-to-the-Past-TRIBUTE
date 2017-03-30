@@ -124,5 +124,11 @@ ZeldaMenu* j1Gui::CreateZeldaMenu() {
 	entities.push_back(element);
 	return element;
 }
+
+PokemonCombatHud* j1Gui::CreatePokemonCombatHud() {
+	PokemonCombatHud* element = new PokemonCombatHud();
+	entities.push_back(element);
+	return element;
+}
 // class Gui ---------------------------------------------------
 

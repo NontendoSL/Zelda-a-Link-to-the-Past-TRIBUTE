@@ -161,6 +161,10 @@ bool j1Scene::PostUpdate()
 	{
 		ret = false;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+		App->gui->CreatePokemonCombatHud();
+	}
 
 	return ret;
 }

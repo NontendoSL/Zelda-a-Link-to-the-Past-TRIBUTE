@@ -628,4 +628,23 @@ ZeldaMenu::~ZeldaMenu()
 	//need to clear vector;
 }
 
+/////////////////////////////POKEMON COMBAT HUD///////////////////////////
+
+
+PokemonCombatHud::PokemonCombatHud()
+{
+	hud_images.push_back(App->gui->CreateImage({ 335,19,254,51 }, { 0,0 },"top hud"));
+	hud_images.push_back(App->gui->CreateImage({ 597,18,254,33 }, { 0,224 - 33 }, "bottom hud"));
+	hud_images[1]->elements.push_back(App->gui->CreateImage({ 561,85,30,30 }, { 3,0 }, "left ability"));
+	hud_images[1]->elements.push_back(App->gui->CreateImage({ 525,85,30,30 }, { 3,0 }, "left ability cd"));
+
+}
+
+
+
+PokemonCombatHud::~PokemonCombatHud()
+{
+
+}
+
 // Entity Elements ---------------------------------------------------
