@@ -42,12 +42,17 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 				direction = RIGHT;
 
 			movable = conf.attribute("canMove").as_bool(false);
-			indestructible = conf.attribute("destructible").as_bool(false);
+			destructible = conf.attribute("destructible").as_bool(false);
 			npc_id = id;
 			stop_search = true;
 		}
 	}
 
+	return true;
+}
+
+bool Soldier::CleanUp()
+{
 	return true;
 }
 
@@ -100,6 +105,10 @@ bool Soldier::Update()
 			case DYING:
 			{
 				Die();
+			}
+			case HIT:
+			{
+				Movebyhit();
 			}
 			default:
 			{
@@ -347,11 +356,62 @@ bool Soldier::Die()
 	return true;
 }
 
-bool Soldier::CleanUp()
+bool Soldier::Movebyhit()
 {
+	if (dir_hit == UP)
+	{
+		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
+		{
+			position.y -= 4;
+		}
+		if (position.y < (previus_position.y - 30))
+		{
+			state = IDLE;
+		}
+	}
+	if (dir_hit == DOWN)
+	{
+		if (App->map->MovementCost(position.x, position.y + (4 + height), DOWN) == 0)
+		{
+			position.y += 4;
+		}
+
+		if (position.y > (previus_position.y + 30))
+		{
+			state = IDLE;
+		}
+	}
+	if (dir_hit == LEFT)
+	{
+		if (App->map->MovementCost(position.x - 4, position.y, LEFT) == 0)
+		{
+			position.x -= 4;
+		}
+
+		if (position.x < (previus_position.x - 30))
+		{
+			state = IDLE;
+		}
+	}
+	if (dir_hit == RIGHT)
+	{
+		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
+		{
+			position.x += 4;
+		}
+		if (position.x > (previus_position.x + 30))
+		{
+			state = IDLE;
+		}
+	}
+	/*if (position.x > (previus_position.x + 65) ||
+		position.x < (previus_position.x + 65) ||
+		position.y >(previus_position.y + 65) ||
+		position.y < (previus_position.y + 65))
+	{
+		state = IDLE;
+	}*/
 	return true;
 }
-
-
 
 

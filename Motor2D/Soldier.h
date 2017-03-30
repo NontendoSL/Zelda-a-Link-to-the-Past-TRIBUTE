@@ -45,6 +45,11 @@ public:
 
 	bool Die();
 
+	//hit enemy
+	bool Movebyhit();
+	Direction dir_hit;
+	iPoint previus_position;
+
 private:
 
 	//Soldier Test for Release 0.1

@@ -22,7 +22,7 @@ public:
 	}
 
 public:
-	bool indestructible;
+	bool destructible;
 	bool movable;
 	bool canattack;
 

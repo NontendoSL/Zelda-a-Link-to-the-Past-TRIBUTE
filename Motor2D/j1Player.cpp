@@ -230,10 +230,23 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
 		{
-			Soldier* test = (Soldier*)c2->callback;
-			if (test->indestructible)
+			Soldier* soldier = (Soldier*)c2->callback;
+			soldier->hp--;
+			if (soldier->hp == 0)
 			{
-				c2->callback->state = DYING;
+				if (soldier->destructible)
+				{
+					c2->callback->state = DYING;
+				}
+			}
+			else
+			{
+				if (soldier->destructible)
+				{
+					soldier->state = HIT;
+					soldier->dir_hit = c1->callback->direction;
+					soldier->previus_position = soldier->position;
+				}
 			}
 		}
 	}
