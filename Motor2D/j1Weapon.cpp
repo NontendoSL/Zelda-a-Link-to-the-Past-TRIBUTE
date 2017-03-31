@@ -93,7 +93,7 @@ void Hookshot::Draw()
 {
 	if (in_use == true)
 	{
-		App->anim_manager->Drawing_Manager(state, direction, position, 1); //id 1 = hookshot animation xml
+		App->anim_manager->Drawing_Manager(state, direction, position, 2); //id 2 = hookshot animation xml
 	}
 }
 
