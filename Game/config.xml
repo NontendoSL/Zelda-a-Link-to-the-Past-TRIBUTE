@@ -30,7 +30,6 @@
     <file file="animation/BlazikenAnimations.xml"/>
     <file file="animation/Hookshot.xml"/>
     <file file="animation/Bomb.xml"/>
-    <file file="animation/GeodudeAnimations.xml"/>
 	</animation>
   
 	<window>
