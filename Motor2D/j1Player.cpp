@@ -190,14 +190,14 @@ void Player::Draw()
 
 	if (direction == UP || direction == DOWN)
 	{
-		width = 7;
-		height = 16;
+		width = 12;
+		height = 8;
 	}
 
 	else if (direction == LEFT || direction == RIGHT)
 	{
-		width = 16;
-		height = 7;
+		width = 8;
+		height = 12;
 	}
 	if (hook->in_use == true)
 	{
@@ -542,29 +542,29 @@ void Player::ThrowHookshot(uint charge)
 	//CHECK DIRECTION
 	if (direction == UP)
 	{
-		iPoint pos(position.x + 4, position.y - 16);
-		hook->collision = App->collision->AddCollider({ pos.x, pos.y, 7, 16 }, COLLIDER_HOOKSHOT, hook);
+		iPoint pos(position.x + 2, position.y - 16);
+		hook->collision = App->collision->AddCollider({ pos.x, pos.y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
 		hook->direction = UP;
 		hook->SetPos(pos);
 	}
 	else if (direction == RIGHT)
 	{
-		iPoint pos(position.x + 9, position.y + 4);
-		hook->collision = App->collision->AddCollider({ position.x + 9, position.y + 4, 16, 7 }, COLLIDER_HOOKSHOT, hook);
+		iPoint pos(position.x + 9, position.y + 2);
+		hook->collision = App->collision->AddCollider({ position.x + 9, position.y + 4, 8, 12 }, COLLIDER_HOOKSHOT, hook);
 		hook->direction = RIGHT;
 		hook->SetPos(pos);
 	}
 	else if (direction == DOWN)
 	{
-		iPoint pos(position.x + 4, position.y + 5);
-		hook->collision = App->collision->AddCollider({ position.x + 4, position.y + 5, 7, 16 }, COLLIDER_HOOKSHOT, hook);
+		iPoint pos(position.x + 2, position.y + 5);
+		hook->collision = App->collision->AddCollider({ position.x + 4, position.y + 5, 12, 8 }, COLLIDER_HOOKSHOT, hook);
 		hook->direction = DOWN;
 		hook->SetPos(pos);
 	}
 	else if (direction == LEFT)
 	{
-		iPoint pos(position.x - 13, position.y + 4);
-		hook->collision = App->collision->AddCollider({ position.x - 13, position.y + 4, 16, 7 }, COLLIDER_HOOKSHOT, hook);
+		iPoint pos(position.x - 9, position.y + 2);
+		hook->collision = App->collision->AddCollider({ position.x - 13, position.y + 4, 8, 12 }, COLLIDER_HOOKSHOT, hook);
 		hook->direction = LEFT;
 		hook->SetPos(pos);
 	}
@@ -632,7 +632,7 @@ void Player::PickUpHook()
 	{
 	case UP:
 		hook->position.y += hook->speed;
-		if (hook->position.y >= collision_player->rect.y)
+		if (hook->position.y + hook->height >= collision_player->rect.y)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -640,7 +640,7 @@ void Player::PickUpHook()
 		break;
 	case DOWN:
 		hook->position.y -= hook->speed;
-		if (hook->position.y <= collision_player->rect.y)
+		if (hook->position.y <= collision_player->rect.y + collision_player->rect.h)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -648,7 +648,7 @@ void Player::PickUpHook()
 		break;
 	case LEFT:
 		hook->position.x += hook->speed;
-		if (hook->position.x >= collision_player->rect.y)
+		if (hook->position.x + hook->width >= collision_player->rect.x)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -656,7 +656,7 @@ void Player::PickUpHook()
 		break;
 	case RIGHT:
 		hook->position.x -= hook->speed;
-		if (hook->position.x <= collision_player->rect.y)
+		if (hook->position.x <= collision_player->rect.x + collision_player->rect.w)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -673,7 +673,7 @@ void Player::MoveTo(const iPoint& pos)
 	{
 	case UP:
 	{
-		int temp = App->map->MovementCost(position.x, position.y - speed, UP);
+		int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
 		if (temp == 0)
 		{
 			if (Camera_inside())
@@ -690,7 +690,7 @@ void Player::MoveTo(const iPoint& pos)
 
 	case DOWN:
 	{
-		int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
+		int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN);
 		if (temp == 0)
 		{
 			if (Camera_inside())
@@ -707,7 +707,7 @@ void Player::MoveTo(const iPoint& pos)
 
 	case LEFT:
 	{
-		int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
+		int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
 		if (temp == 0)
 		{
 			if (Camera_inside())
@@ -724,7 +724,7 @@ void Player::MoveTo(const iPoint& pos)
 
 	case RIGHT:
 	{
-		int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
+		int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT);
 		if (temp == 0)
 		{
 			if (Camera_inside())

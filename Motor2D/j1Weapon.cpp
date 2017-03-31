@@ -62,7 +62,7 @@ void Hookshot::SetRange(uint charge)
 
 HookState Hookshot::ReachObjective()
 {
-	if (App->map->MovementCost(position.x, position.y, direction) == 1)
+	if (App->map->MovementCost(position.x, position.y, direction) == T_WALL)
 	{
 		target_reached = true;
 		hook_state = TARGET;
