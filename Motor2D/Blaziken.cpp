@@ -129,7 +129,7 @@ bool Blaziken::Update()
 
 void Blaziken::Draw()
 {
-	App->anim_manager->Drawing_Manager(state, direction, position, 0);  //TODO LOW-> ID magic number, need change!!
+	App->anim_manager->Drawing_Manager(state, direction, position, 1);  //TODO LOW-> ID magic number, need change!!
 
 }
 
@@ -163,9 +163,9 @@ bool Blaziken::Idle()
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		/*state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-		current_animation->Reset();*/
+		state = ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(state, direction, 1);
+		current_animation->Reset();
 	}
 
 	else
@@ -187,9 +187,9 @@ bool Blaziken::Walking()
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		/*state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-		current_animation->Reset();*/
+		state = ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(state, direction, 1);
+		current_animation->Reset();
 	}
 
 	else
@@ -251,6 +251,37 @@ bool Blaziken::Move()
 
 bool Blaziken::Attack()
 {
+	if (attacker)
+	{
+		if (current_animation->Finished())
+		{
+			App->collision->EraseCollider(collision_attack);
+			attacker = false;
+			current_animation->Reset();
+			current_animation = nullptr;
+			state = IDLE;
+		}
+	}
+	else
+	{
+		attacker = true;
+		if (direction == UP)
+		{
+			collision_attack = App->collision->AddCollider({ position.x + 4, position.y - 16, 8, 20 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == RIGHT)
+		{
+			collision_attack = App->collision->AddCollider({ position.x + 9, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == DOWN)
+		{
+			collision_attack = App->collision->AddCollider({ position.x + 4, position.y + 5, 8, 20 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == LEFT)
+		{
+			collision_attack = App->collision->AddCollider({ position.x - 13, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+		}
+	}
 	return true;
 }
 
@@ -324,7 +355,7 @@ bool Blaziken::Walking_IA()
 
 bool Blaziken::Move_IA()
 {
-	App->pathfinding->CreatePath(position, target->Getposition());
+	//App->pathfinding->CreatePath(position, target->Getposition());
 	return true;
 }
 

@@ -26,8 +26,8 @@
 	<maps file="Levels.xml"/>    
   
 	<animation>
-		<file file="animation/LinkAnimations.xml" />
-    <file file="BlazikenAnimations.xml" />
+		<file file="animation/LinkAnimations.xml"/>
+    <file file="animation/BlazikenAnimations.xml"/>
 	</animation>
   
 	<window>

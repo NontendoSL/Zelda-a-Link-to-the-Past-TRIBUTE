@@ -70,8 +70,11 @@ protected:
 	//Item* drop;
 	Item* item_inside;
 	Pokemon* target = nullptr;
+	Animation* current_animation = nullptr;
 
+	bool attacker = false;
 
+	Collider* collision_attack;
 };
 
 #endif //__POKEMON_H_

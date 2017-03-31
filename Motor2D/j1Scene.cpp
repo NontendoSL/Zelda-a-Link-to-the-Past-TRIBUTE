@@ -74,7 +74,7 @@ bool j1Scene::Update(float dt)
 			AssignValues(arrows, player->arrows);
 			force->Hitbox.w = player->charge;
 
-			/*if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 			{
 				App->fadetoblack->FadeToBlack(4);
 			}
@@ -84,7 +84,7 @@ bool j1Scene::Update(float dt)
 			}
 			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
-				switch_map = 2;
+				switch_map = 4;
 			}
 			if (switch_map == 10)
 			{
@@ -124,7 +124,7 @@ bool j1Scene::Update(float dt)
 					fade = false;
 					switch_map = 0;
 				}
-			}*/
+			}
 
 			if (switch_map != 0)
 			{
