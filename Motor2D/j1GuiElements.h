@@ -138,9 +138,11 @@ public:
 private:
 	std::vector<Image*>hud_images;
 	bool incd;
-	Image* ability,*hp1,*hp2;
+	Image* ability, *hp1, *hp2;
+	Text* hp_print;
 	iPoint cdtime; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
-	iPoint hpbar1; //.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE)
+	iPoint hpbar1; //.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE) used for triangle operations with atlas pixels
+	char buffer[25]; //hp
 
 };
 #endif // __j1GUIELEMENTS_H__

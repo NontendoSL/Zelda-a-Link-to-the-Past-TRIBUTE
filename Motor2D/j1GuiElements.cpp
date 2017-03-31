@@ -654,6 +654,12 @@ PokemonCombatHud::PokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2)
 	hp1= App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "left hp");
 	hud_images[1]->elements[1]->elements.push_back(hp1);
 	hud_images[1]->elements[1]->elements.push_back(App->gui->CreateText(POKE1, "SCEPTILE", 50, { 6,4 }, 15, { 0,0,0,255 }));
+	//
+	sprintf_s(buffer, 25, "%i/%i", hpbar1, hpbar1);
+	hp_print = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 });
+	hud_images[1]->elements[1]->elements.push_back(hp_print);
+	hud_images[1]->elements.push_back(App->gui->CreateImage({ 525,85,30,30 }, { 221,0 }, "right ability"));
+	hud_images[1]->elements.push_back(App->gui->CreateImage({ 426,84,90,23 }, { 129,7 }, "right box"));
 	incd = false;
 	cdtime.x = cd_time;
 	this->hpbar1.x = hpbar1;
@@ -668,7 +674,7 @@ void PokemonCombatHud::Handle_Input()
 		incd = true;
 		cdtime.y=cdtime.x;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT&&hpbar1.y>0)
 	{
 		hpbar1.y--;
 	}
@@ -688,6 +694,8 @@ void PokemonCombatHud::Update()
 			incd = false;
 		}
 	}
+	sprintf_s(buffer, 25, "%i/%i", hpbar1.y, hpbar1.x);
+	hp_print->Write(buffer);
 	hp1->Hitbox.w = (hpbar1.y * 48) / hpbar1.x;//being 48 the max pixels hp can have (atlas)
 }
 
