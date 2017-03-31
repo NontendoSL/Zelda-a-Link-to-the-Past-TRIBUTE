@@ -62,6 +62,8 @@ private:
 	iPoint pivot;
 	SDL_Rect r;
 	Animation* current_animation = nullptr;
+
+	ActionState test_state; //TODO_LOW -> REMOVE THIS
 };
 
 #endif //__j1ANIMATION_H_

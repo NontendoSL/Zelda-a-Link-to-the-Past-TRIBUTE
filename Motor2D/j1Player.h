@@ -73,13 +73,6 @@ public:
 	int GetnuminputUse();
 
 public:
-	SDL_Texture* player_texture = nullptr;
-	SDL_Texture* maptex = nullptr;
-	SDL_Texture* hit_tex = nullptr;
-	SDL_Rect Rect_player;
-	std::string tex_player_file_name;
-	std::string texmapfile_name;
-	std::string file_hit;
 
 	//ITEMS ----------
 	uint gems = 0;

@@ -15,7 +15,7 @@ class Item;
 enum ElementType{ CREATURE, ITEM, DYNOBJECT, WEAPON };
 enum Direction { UP, DOWN, LEFT, RIGHT };
 enum GameState{INGAME, INMENU, TIMETOPLAY};
-enum ActionState { IDLE = 0, WALKING, ATTACKING, DYING, HOOKTHROWN, HIT };
+enum ActionState { IDLE = 0, WALKING, ATTACKING, HOOKTHROWN, HIT, DYING}; //DYING ALWAYS LAST STATE
 
 
 // ---------------------------------------------------

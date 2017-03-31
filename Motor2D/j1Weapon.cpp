@@ -23,9 +23,6 @@ bool Weapon::Awake(pugi::xml_node &conf, uint id)
 			name = conf.child("weapon").attribute("name").as_string("");
 			position.x = 0;
 			position.y = 0; 
-			std::string es = conf.child("weapon").attribute("file").as_string("");
-			texture = App->tex->Load(es.c_str());
-			canBlit = true;
 			stop_search = true;
 		}
 	}
@@ -46,6 +43,7 @@ Hookshot::~Hookshot()
 bool Hookshot::Start()
 {
 	speed = 2;
+	state = IDLE;
 	return true;
 }
 
@@ -95,7 +93,7 @@ void Hookshot::Draw()
 {
 	if (in_use == true)
 	{
-
+		App->anim_manager->Drawing_Manager(state, direction, position, 2); //id 2 = hookshot animation xml
 	}
 }
 

@@ -117,28 +117,33 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 	//INFO ID:  1-> Player // 2-> Soldier // 3-> Blaziken // 4-> unknown // 5-> unknown
 	if (status <= DYING)
 	{
+		test_state = status;
+		if (test_state == HOOKTHROWN)
+		{
+			test_state = IDLE; //TEST BECAUSE WE DON'T HAVE HOOKING ANIMATION YET.
+		}
 		if (dir == UP)
 		{
-			r = animat[id].anim[status].North_action.GetCurrentFrame();
-			pivot = animat[id].anim[status].North_action.GetCurrentOffset();
+			r = animat[id].anim[test_state].North_action.GetCurrentFrame();
+			pivot = animat[id].anim[test_state].North_action.GetCurrentOffset();
 		}
 
 		else if (dir == DOWN)
 		{
-			r = animat[id].anim[status].South_action.GetCurrentFrame();
-			pivot = animat[id].anim[status].South_action.GetCurrentOffset();
+			r = animat[id].anim[test_state].South_action.GetCurrentFrame();
+			pivot = animat[id].anim[test_state].South_action.GetCurrentOffset();
 		}
 
 		else if (dir == LEFT)
 		{
-			r = animat[id].anim[status].West_action.GetCurrentFrame();
-			pivot = animat[id].anim[status].West_action.GetCurrentOffset();
+			r = animat[id].anim[test_state].West_action.GetCurrentFrame();
+			pivot = animat[id].anim[test_state].West_action.GetCurrentOffset();
 		}
 
 		else if (dir == RIGHT)
 		{
-			r = animat[id].anim[status].East_action.GetCurrentFrame();
-			pivot = animat[id].anim[status].East_action.GetCurrentOffset();
+			r = animat[id].anim[test_state].East_action.GetCurrentFrame();
+			pivot = animat[id].anim[test_state].East_action.GetCurrentOffset();
 		}
 	}
 
