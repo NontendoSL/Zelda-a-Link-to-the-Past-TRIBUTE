@@ -56,6 +56,8 @@ public:
 
 	bool Update();
 
+	void Draw();
+
 	void SetRange(uint charge);
 
 	//Check the tile at its position each X Updates

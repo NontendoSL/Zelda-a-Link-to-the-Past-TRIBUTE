@@ -8,6 +8,8 @@
 #include "j1Module.h"
 #include "j1AnimationManager.h"
 
+enum TileDirection { T_CONTINUE, T_WALL, T_UP, T_DOWN, T_LEFT, T_RIGHT };
+
 // ----------------------------------------------------
 struct Properties
 {
@@ -126,7 +128,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
-	int MovementCost(int x, int y, Direction dir) const;
+	TileDirection MovementCost(int x, int y, Direction dir) const;
 	void EditCost(int x, int y,int value);
 	void DynObjectFromTiled(uint id);
 

@@ -176,7 +176,6 @@ bool j1EntityElementScene::DeleteItem(Item* item)
 
 Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 {
-
 	Item* element = new Item();
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
@@ -184,7 +183,6 @@ Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 	element->Awake(config.child(element->name.c_str()), id, position);
 	element->Start();
 	elementscene.push_back(element);
-
 	return element;
 }
 

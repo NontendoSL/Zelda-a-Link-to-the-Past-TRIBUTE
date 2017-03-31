@@ -91,6 +91,14 @@ void Hookshot::Reset()
 	in_use = false;
 }
 
+void Hookshot::Draw()
+{
+	if (in_use == true)
+	{
+
+	}
+}
+
 
 /*{
 switch (player_level)

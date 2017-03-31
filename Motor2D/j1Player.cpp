@@ -752,7 +752,7 @@ bool Player::Move()
 	{
 		direction = LEFT;
 		int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
-		if (temp == 0)
+		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
 				App->render->camera.x += speed * scale;
@@ -760,7 +760,7 @@ bool Player::Move()
 		}
 		if (keysuse == 1) //if you pres a key left and up this if will do that dont move more fast
 		{
-			if (temp == 3)//up
+			if (temp == T_UP)//up
 			{
 				direction = UP;
 				if (Camera_inside())
@@ -768,7 +768,7 @@ bool Player::Move()
 				position.y -= speed;
 				direction = LEFT;
 			}
-			if (temp == 4)//down
+			if (temp == T_DOWN)//down
 			{
 				direction = DOWN;
 				if (Camera_inside())
@@ -785,7 +785,7 @@ bool Player::Move()
 	{
 		direction = DOWN;
 		int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
-		if (temp == 0)
+		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
 				App->render->camera.y -= speed * scale;
@@ -793,7 +793,7 @@ bool Player::Move()
 		}
 		if (keysuse == 1)
 		{
-			if (temp == 3)//left
+			if (temp == T_LEFT)//left
 			{
 				direction = LEFT;
 				if (Camera_inside())
@@ -801,7 +801,7 @@ bool Player::Move()
 				position.x -= speed;
 				direction = DOWN;
 			}
-			if (temp == 4)//right
+			if (temp == T_RIGHT)//right
 			{
 				direction = RIGHT;
 				if (Camera_inside())
@@ -818,7 +818,7 @@ bool Player::Move()
 	{
 		direction = RIGHT;
 		int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
-		if (temp == 0)
+		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
 				App->render->camera.x -= speed * scale;
@@ -826,7 +826,7 @@ bool Player::Move()
 		}
 		if (keysuse == 1)
 		{
-			if (temp == 4)//up
+			if (temp == T_UP)//up
 			{
 				direction = UP;
 				if (Camera_inside())
@@ -834,7 +834,7 @@ bool Player::Move()
 				position.y -= speed;
 				direction = RIGHT;
 			}
-			if (temp == 3)//down
+			if (temp == T_DOWN)//down
 			{
 				direction = DOWN;
 				if (Camera_inside())
@@ -843,6 +843,7 @@ bool Player::Move()
 				direction = RIGHT;
 			}
 		}
+
 		walking = true;
 	}
 
@@ -850,7 +851,7 @@ bool Player::Move()
 	{
 		direction = UP;
 		int temp = App->map->MovementCost(position.x, position.y - speed, UP);
-		if (temp == 0)
+		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
 				App->render->camera.y += speed * scale;
@@ -858,7 +859,7 @@ bool Player::Move()
 		}
 		if (keysuse == 1)
 		{
-			if (temp == 3)//left
+			if (temp == T_LEFT)//left
 			{
 				direction = LEFT;
 				if (Camera_inside())
@@ -866,7 +867,7 @@ bool Player::Move()
 				position.x -= speed;
 				direction = UP;
 			}
-			if (temp == 4)//right
+			if (temp == T_RIGHT)//right
 			{
 				direction = RIGHT;
 				if (Camera_inside())

@@ -137,9 +137,9 @@ void j1Map::EditCost(int x, int y, int value)
 	meta_layer->data[y*meta_layer->width + x] = value;
 }
 
-int j1Map::MovementCost(int x, int y, Direction dir) const
+TileDirection j1Map::MovementCost(int x, int y, Direction dir) const
 {
-	int ret = 0;
+	TileDirection ret = T_CONTINUE;
 	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
 	int blue_wal = red_wal + 7;
 	if (dir == UP)
@@ -156,22 +156,22 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 		
 		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
 		{
-			ret = 4;
+			ret = T_RIGHT;
 		}
 		else if (id_1 == 0 && id_2 == 0 && id_3 == red_wal)
 		{
-			ret = 3;
+			ret = T_LEFT;
 		}
 		else if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
-			ret = 1;
+			ret = T_WALL; 
 		}
 		else if (id_1 == blue_wal)//TODO HIGH-> Only player enter
 		{
 			App->scene->switch_map = 1;
 		}
 		else
-			ret = 0;
+			ret = T_CONTINUE;
 
 	}
 	if (dir == LEFT)
@@ -188,18 +188,18 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 
 		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
 		{
-			ret = 4;//4 -> down
+			ret = T_DOWN;//4 -> down
 		}
 		else if (id_1 == 0 && id_2 == 0 && id_3 == red_wal)
 		{
-			ret = 3;//3-> up
+			ret = T_UP;//3-> up
 		}
 		else if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
-			ret = 1;
+			ret = T_WALL;
 		}
 		else
-			ret = 0;
+			ret = T_CONTINUE;
 	}
 	if (dir == RIGHT)
 	{
@@ -214,18 +214,18 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 
 		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
 		{
-			ret = 3;
+			ret = T_DOWN; //DOWN
 		}
 		else if (id_1 == 0 && id_2 == 0 && id_3 == red_wal)
 		{
-			ret = 4;
+			ret = T_UP; //UP
 		}
 		else if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
-			ret = 1;
+			ret = T_WALL;
 		}
 		else
-			ret = 0;
+			ret = T_CONTINUE;
 	}
 	if (dir == DOWN)
 	{
@@ -240,23 +240,23 @@ int j1Map::MovementCost(int x, int y, Direction dir) const
 
 		if (id_1 == red_wal && id_2 == 0 && id_3 == 0)
 		{
-			ret = 4;
+			ret = T_RIGHT;
 		}
 		else if (id_1 == 0 && id_2 == 0 && id_3 == red_wal)
 		{
-			ret = 3;
+			ret = T_LEFT;
 		}
 
 		else if (id_1 == red_wal || id_2 == red_wal || id_3 == red_wal)
 		{
-			ret = 1;
+			ret = T_WALL;
 		}
 		else if (id_1 == blue_wal)//TODO HIGH-> Only player enter
 		{
 			App->scene->switch_map = 2;
 		}
 		else
-			ret = 0;
+			ret = T_CONTINUE;
 	}
 
 	return ret;
