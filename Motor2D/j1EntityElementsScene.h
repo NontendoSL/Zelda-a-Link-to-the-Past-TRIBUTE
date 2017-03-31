@@ -13,6 +13,7 @@ class Player;
 class DynamicObjects;
 class NPC;
 class Hookshot;
+class Weapon;
 
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module

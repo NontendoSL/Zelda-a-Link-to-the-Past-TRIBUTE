@@ -143,6 +143,9 @@ void j1Collision::DebugDraw()
 		case COLLIDER_ITEM: // white
 			App->render->DrawQuad(colliders[i]->rect, 120, 50, 140, alpha);
 			break;
+		case COLLIDER_HOOKSHOT: // white
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+
 		}
 	}
 }

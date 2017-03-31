@@ -37,7 +37,7 @@ bool Item::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 
 bool Item::Start()
 {
-	collision = App->collision->AddCollider({ position.x, position.y, 8,14 }, COLLIDER_ITEM, this);
+	collision = App->collision->AddCollider({ position.x, position.y, 8, 14 }, COLLIDER_ITEM, this);
 	return true;
 }
 
@@ -58,65 +58,3 @@ bool Item::Save()
 {
 	return true;
 }
-
-//HOOKSHOT ------------------
-Hookshot::Hookshot(bool equip)
-{
-	equipable = equip;
-}
-
-
-Hookshot::~Hookshot()
-{
-}
-
-bool Hookshot::Update()
-{
-
-	return true;
-}
-
-void Hookshot::SetRange(uint charge)
-{
-	range = charge * 0.5;
-}
-
-
-
-/*bool Hookshot::ReachObjective()
-{
-{
-switch (player_level)
-{
-case LEVEL_1:
-if (orange tile touched)
-{
-return wall;
-}
-break;
-case LEVEL_2:
-if (yellow tile touched)
-{
-return wall;
-}
-break;
-case LEVEL_3:
-if (pink tile touched)
-{
-return wall;
-}
-break;
-default:
-break;
-}
-
-if (sudowoodo touched)
-{
-return true;
-}
-else
-{
-return false;
-}
-}*/
-// -------------------

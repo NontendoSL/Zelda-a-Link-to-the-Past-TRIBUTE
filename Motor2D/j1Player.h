@@ -11,6 +11,8 @@ class InputListener;
 class Animation;
 class Text;
 class Pokemon;
+class Hookshot;
+class Weapon;
 
 class Player : public Creature, public InputListener
 {
@@ -54,10 +56,15 @@ public:
 
 	bool Attack();
 
-	bool Equip(Item* to_equip);
+	bool Equip(Weapon* to_equip);
 	bool Unequip();
 
+	//HOOKSHOT FUNCTIONALITY
 	void ThrowHookshot(uint charge);
+	bool Hooking();
+	void KeepGoing();
+	void PickUpHook();
+	void MoveTo(const iPoint& pos);
 
 	bool CheckOrientation();
 
@@ -81,7 +88,7 @@ public:
 	uint charge = 0;
 
 	Hookshot* hook = nullptr;
-	Item* equiped_item = nullptr;
+	Weapon* equiped_item = nullptr;
 
 	//Pokemons has Link
 	std::list<Pokemon*> pokedex;
@@ -94,6 +101,7 @@ private:
 
 	Collider* collision_player;
 	Collider* collision_attack;
+
 	bool attacker;
 	int attack_time;
 

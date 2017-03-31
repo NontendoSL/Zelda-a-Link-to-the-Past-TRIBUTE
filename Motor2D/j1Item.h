@@ -42,28 +42,6 @@ private:
 
 public:
 	Collider* collision = nullptr;
-	//bool picked = false;
-	bool equiped = false;
-	bool equipable = false;
-};
-
-
-class Hookshot :public Item
-{
-public:
-	Hookshot(bool equipable);
-	~Hookshot();
-
-	bool Update();
-
-	void SetRange(uint charge);
-
-	//Check the tile at its position each X Updates
-	bool ReachObjective();
-
-private:
-	uint range = 0;
-	//std::vector<iPoint
 
 };
 

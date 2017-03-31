@@ -1,0 +1,128 @@
+#include "j1Weapon.h"
+#include "j1Textures.h"
+#include "j1Render.h"
+#include "j1App.h"
+#include "j1Collision.h"
+#include "j1Map.h"
+
+Weapon::Weapon() :SceneElement()
+{
+	name = "weapons";
+	type = WEAPON;
+}
+
+Weapon::~Weapon(){}
+
+bool Weapon::Awake(pugi::xml_node &conf, uint id)
+{
+	bool stop_search = false;
+	for (int s_id = conf.child("weapon").attribute("id").as_int(0); stop_search == false; s_id = conf.child("weapon").next_sibling().attribute("id").as_int(0))
+	{
+		if (id == s_id)
+		{
+			name = conf.child("weapon").attribute("name").as_string("");
+			position.x = 0;
+			position.y = 0; 
+			std::string es = conf.child("weapon").attribute("file").as_string("");
+			texture = App->tex->Load(es.c_str());
+			canBlit = true;
+			stop_search = true;
+		}
+	}
+	return true;
+}
+
+//HOOKSHOT ------------------
+Hookshot::Hookshot(bool equip)
+{
+	equipable = equip;
+}
+
+
+Hookshot::~Hookshot()
+{
+}
+
+bool Hookshot::Start()
+{
+	speed = 2;
+	return true;
+}
+
+bool Hookshot::Update()
+{
+
+	return true;
+}
+
+void Hookshot::SetRange(uint charge)
+{
+	range = charge;
+}
+
+HookState Hookshot::ReachObjective()
+{
+	if (App->map->MovementCost(position.x, position.y, direction) == 1)
+	{
+		target_reached = true;
+		hook_state = TARGET;
+	}
+	else
+	{
+		target_reached = false;
+		hook_state = MISS;
+	}
+
+	return hook_state;
+}
+
+HookState Hookshot::GetState()
+{
+	return hook_state;
+}
+
+void Hookshot::Reset()
+{
+	target_reached = false;
+	actual_range_pos = 0;
+	range = 0;
+	collision->to_delete = true;
+	hook_state = MISS;
+	in_use = false;
+}
+
+/*{
+switch (player_level)
+{
+case LEVEL_1:
+if (orange tile touched)
+{
+return wall;
+}
+break;
+case LEVEL_2:
+if (yellow tile touched)
+{
+return wall;
+}
+break;
+case LEVEL_3:
+if (pink tile touched)
+{
+return wall;
+}
+break;
+default:
+break;
+}
+
+if (sudowoodo touched)
+{
+return true;
+}
+else
+{
+return false;
+}*/
+
+// -------------------

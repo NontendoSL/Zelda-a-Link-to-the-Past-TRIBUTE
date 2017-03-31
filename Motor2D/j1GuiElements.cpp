@@ -11,6 +11,7 @@
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
 #include "j1Player.h"
+#include "j1Weapon.h"
 #include <assert.h>
 
 /////////////////////////////// IMAGE METHODS ///////////////////////////////
@@ -421,7 +422,7 @@ void ZeldaMenu:: Do()
 		item_menu->Hitbox.y = 309;
 		menu_texts[1]->Write(" HOOKSHOT");
 		App->scene->player->Unequip();
-		App->scene->player->Equip((Item*)App->scene->player->hook);
+		App->scene->player->Equip((Weapon*)App->scene->player->hook);
 	}
 	else if (i_name == "bomb")
 	{

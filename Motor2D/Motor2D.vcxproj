@@ -89,6 +89,8 @@
     <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1InputManager.cpp" />
     <ClCompile Include="j1SceneIntro.cpp" />
+    <ClCompile Include="j1Weapon.cpp" />
+    <ClCompile Include="SceneElements.cpp" />
     <ClCompile Include="Sceptyle.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="j1Item.cpp" />
@@ -133,6 +135,7 @@
     <ClInclude Include="j1DynamicObjects.h" />
     <ClInclude Include="j1InputManager.h" />
     <ClInclude Include="j1Item.h" />
+    <ClInclude Include="j1Weapon.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Sceptyle.h" />
     <ClInclude Include="Soldier.h" />

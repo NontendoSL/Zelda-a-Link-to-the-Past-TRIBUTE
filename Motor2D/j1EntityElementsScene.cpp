@@ -13,6 +13,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1FileSystem.h"
+#include "j1Weapon.h"
 
 
 j1EntityElementScene::j1EntityElementScene()

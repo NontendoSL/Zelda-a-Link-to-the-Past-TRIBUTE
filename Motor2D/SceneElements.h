@@ -12,7 +12,7 @@
 
 class Item;
 
-enum ElementType{ CREATURE, ITEM, DYNOBJECT };
+enum ElementType{ CREATURE, ITEM, DYNOBJECT, WEAPON };
 enum Direction { UP, DOWN, LEFT, RIGHT };
 enum GameState{INGAME, INMENU, TIMETOPLAY};
 enum ActionState { IDLE = 0, WALKING, ATTACKING, DYING, HOOKTHROWN, HIT };
@@ -58,6 +58,8 @@ public:
 	virtual bool Save() { return false; };
 
 	virtual void OnCollision(Collider*, Collider*) {}
+
+	void SetPos(const iPoint& pos);
 
 public:
 	iPoint position;

@@ -19,6 +19,7 @@
 #include "j1Item.h"
 #include "j1DynamicObjects.h"
 #include "j1Creature.h"
+#include "j1Weapon.h"
 #include "Animation.h"
 
 //Constructor
@@ -110,6 +111,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			Attack();
 			break;
 		}
+		case HOOKTHROWN:
+		{
+			Hooking();
+			break;
+		}
 		default:
 		{
 			break;
@@ -147,6 +153,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			charge--;
 		}
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT && gems<999)
 	{
 		gems++;
@@ -169,7 +176,6 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		gamestate = INMENU;
 	}
 
-
 	//Collision follow the player
 	collision_player->SetPos(position.x, position.y);
 
@@ -180,6 +186,23 @@ void Player::Draw()
 {
 	//Draw player
 	App->anim_manager->Drawing_Manager(state, direction, position, 0);  //TODO LOW-> ID magic number, need change!!
+	int width, height;
+
+	if (direction == UP || direction == DOWN)
+	{
+		width = 7;
+		height = 16;
+	}
+
+	else if (direction == LEFT || direction == RIGHT)
+	{
+		width = 16;
+		height = 7;
+	}
+	if (hook->in_use == true)
+	{
+		App->render->DrawQuad(SDL_Rect{ hook->position.x,hook->position.y, width, height }, 255, 255, 255);
+	}
 }
 
 bool Player::CleanUp()
@@ -429,7 +452,7 @@ bool Player::Attack()
 	return true;
 }
 
-bool Player::Equip(Item* to_equip)
+bool Player::Equip(Weapon* to_equip)
 {
 	bool ret = false;
 	if (equiped_item != to_equip && to_equip->equipable == true)
@@ -515,8 +538,212 @@ int Player::GetnuminputUse()
 
 void Player::ThrowHookshot(uint charge)
 {
+	hook->in_use = true;
+	//CHECK DIRECTION
+	if (direction == UP)
+	{
+		iPoint pos(position.x + 4, position.y - 16);
+		hook->collision = App->collision->AddCollider({ pos.x, pos.y, 7, 16 }, COLLIDER_HOOKSHOT, hook);
+		hook->direction = UP;
+		hook->SetPos(pos);
+	}
+	else if (direction == RIGHT)
+	{
+		iPoint pos(position.x + 9, position.y + 4);
+		hook->collision = App->collision->AddCollider({ position.x + 9, position.y + 4, 16, 7 }, COLLIDER_HOOKSHOT, hook);
+		hook->direction = RIGHT;
+		hook->SetPos(pos);
+	}
+	else if (direction == DOWN)
+	{
+		iPoint pos(position.x + 4, position.y + 5);
+		hook->collision = App->collision->AddCollider({ position.x + 4, position.y + 5, 7, 16 }, COLLIDER_HOOKSHOT, hook);
+		hook->direction = DOWN;
+		hook->SetPos(pos);
+	}
+	else if (direction == LEFT)
+	{
+		iPoint pos(position.x - 13, position.y + 4);
+		hook->collision = App->collision->AddCollider({ position.x - 13, position.y + 4, 16, 7 }, COLLIDER_HOOKSHOT, hook);
+		hook->direction = LEFT;
+		hook->SetPos(pos);
+	}
+
+	//SET MAX RANGE
 	hook->SetRange(charge);
 }
+
+bool Player::Hooking()
+{
+	//collider follows the hookshot
+	hook->collision->SetPos(hook->position.x, hook->position.y);
+	HookState stat = hook->GetState();
+
+	if (hook->actual_range_pos < hook->range)
+	{
+		if (stat == MISS)
+		{
+			HookState stat = hook->ReachObjective();
+			KeepGoing();
+			hook->actual_range_pos++;
+		}
+		else if (hook->GetState() == TARGET)
+		{
+			MoveTo(hook->position);
+		}
+		else if (hook->GetState() == OBSTACLE)
+		{
+			PickUpHook();
+		}
+	}
+
+	else
+	{
+		PickUpHook();
+	}
+
+	return true;
+}
+
+void Player::KeepGoing()
+{
+	switch (direction)
+	{
+	case UP:
+		hook->position.y-= hook->speed;
+		break;
+	case DOWN:
+		hook->position.y += hook->speed;
+		break;
+	case LEFT:
+		hook->position.x -= hook->speed;
+		break;
+	case RIGHT:
+		hook->position.x += hook->speed;
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::PickUpHook()
+{
+	switch (direction)
+	{
+	case UP:
+		hook->position.y += hook->speed;
+		if (hook->position.y >= collision_player->rect.y)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	case DOWN:
+		hook->position.y -= hook->speed;
+		if (hook->position.y <= collision_player->rect.y)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	case LEFT:
+		hook->position.x += hook->speed;
+		if (hook->position.x >= collision_player->rect.y)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	case RIGHT:
+		hook->position.x -= hook->speed;
+		if (hook->position.x <= collision_player->rect.y)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::MoveTo(const iPoint& pos)
+{
+	switch (direction)
+	{
+	case UP:
+	{
+		int temp = App->map->MovementCost(position.x, position.y - speed, UP);
+		if (temp == 0)
+		{
+			if (Camera_inside())
+				App->render->camera.y += hook->speed * scale;
+			position.y -= hook->speed;
+		}
+		else if (hook->position.y + hook->height >= collision_player->rect.y || temp !=0)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	}
+
+	case DOWN:
+	{
+		int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
+		if (temp == 0)
+		{
+			if (Camera_inside())
+				App->render->camera.y -= hook->speed * scale;
+			position.y += hook->speed;
+		}
+		else if (hook->position.y <= collision_player->rect.y || temp != 0)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	}
+
+	case LEFT:
+	{
+		int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
+		if (temp == 0)
+		{
+			if (Camera_inside())
+				App->render->camera.x = hook->speed * scale;
+			position.x -= hook->speed;
+		}
+		else if (hook->position.x + hook->width >= collision_player->rect.x || temp != 0)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	}
+
+	case RIGHT:
+	{
+		int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
+		if (temp == 0)
+		{
+			if (Camera_inside())
+				App->render->camera.x -= hook->speed * scale;
+			position.x += hook->speed;
+		}
+		else if (hook->position.x <= collision_player->rect.x || temp != 0)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	}
+
+	default:
+		break;
+	}
+}
+
 
 bool Player::Move()
 {

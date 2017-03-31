@@ -121,6 +121,10 @@
     <ClCompile Include="j1FadeToBlack.cpp">
       <Filter>Zelda Game\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Weapon.cpp">
+      <Filter>Zelda Game\ElementsScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneElements.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -266,6 +270,9 @@
     </ClInclude>
     <ClInclude Include="j1FadeToBlack.h">
       <Filter>Zelda Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Weapon.h">
+      <Filter>Zelda Game\ElementsScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
