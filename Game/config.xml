@@ -26,9 +26,12 @@
 	<maps file="Levels.xml"/>    
   
 	<animation>
-		<file file="animation/LinkAnimations.xml"/>
+    <file file="animation/LinkAnimations.xml"/>
     <file file="animation/BlazikenAnimations.xml"/>
+    <file file="animation/Hookshot.xml"/>
+    <file file="animation/Bomb.xml"/>
     <file file="animation/GeodudeAnimations.xml"/>
+    <file file="animation/GolemAnimations.xml"/>
 	</animation>
   
 	<window>

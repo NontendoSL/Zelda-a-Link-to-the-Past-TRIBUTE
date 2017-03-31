@@ -34,9 +34,6 @@ public:
 
 	//bool Save();
 
-private:
-	SDL_Texture* texture = nullptr;
-
 public:
 	//bool picked = false;
 	bool equiped = false;

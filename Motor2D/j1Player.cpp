@@ -38,10 +38,6 @@ bool Player::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading Texture Player");
 	bool ret = true;
-
-	tex_player_file_name = conf.child("atlas").attribute("file").as_string("");
-	file_hit = conf.child("hit").attribute("file").as_string("");
-	texmapfile_name = conf.child("day-night").attribute("file").as_string("");
 	hp = conf.child("stats").attribute("hp").as_int(0);
 	attack = conf.child("stats").attribute("attack").as_int(0);
 	speed = conf.child("stats").attribute("speed").as_int(0);
@@ -58,9 +54,6 @@ bool Player::Start()
 	bool ret = true;
 	changeResolution = false;
 	attacker = false;
-	player_texture = App->tex->Load(tex_player_file_name.c_str());
-	maptex = App->tex->Load(texmapfile_name.c_str());
-	hit_tex = App->tex->Load(file_hit.c_str());
 	direction = UP;
 	state = IDLE;
 	scale = App->win->GetScale();
@@ -182,23 +175,6 @@ void Player::Draw()
 {
 	//Draw player
 	App->anim_manager->Drawing_Manager(state, direction, position, 0);  //TODO LOW-> ID magic number, need change!!
-	int width, height;
-
-	if (direction == UP || direction == DOWN)
-	{
-		width = 12;
-		height = 8;
-	}
-
-	else if (direction == LEFT || direction == RIGHT)
-	{
-		width = 8;
-		height = 12;
-	}
-	if (hook->in_use == true)
-	{
-		App->render->DrawQuad(SDL_Rect{ hook->position.x,hook->position.y, width, height }, 255, 255, 255);
-	}
 }
 
 bool Player::CleanUp()
