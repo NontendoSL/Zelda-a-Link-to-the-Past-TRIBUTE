@@ -71,7 +71,24 @@ public:
 
 private:
 	HookState hook_state = MISS;
-	//std::vector<iPoint
+};
+
+class Bow : public Weapon
+{
+	Bow(bool equipable);
+	~Bow();
+
+	bool Start();
+
+	bool Update();
+
+	void SetSpeed(uint charge);
+
+	//void OnCollision(Collider* c1, Collider* c2);
+
+private:
+	uint arrow_speed = 0;
+	std::vector<Item*> throwed_arrows;
 };
 
 #endif

@@ -91,6 +91,84 @@ void Hookshot::Reset()
 	in_use = false;
 }
 
+
+/*{
+switch (player_level)
+{
+case LEVEL_1:
+if (orange tile touched)
+{
+return wall;
+}
+break;
+case LEVEL_2:
+if (yellow tile touched)
+{
+return wall;
+}
+break;
+case LEVEL_3:
+if (pink tile touched)
+{
+return wall;
+}
+break;
+default:
+break;
+}
+
+if (sudowoodo touched)
+{
+return true;
+}
+else
+{
+return false;
+}*/
+
+// -------------------
+
+
+//HOOKSHOT ------------------
+Bow::Bow(bool equip)
+{
+	equipable = equip;
+}
+
+
+Bow::~Bow()
+{
+}
+
+bool Bow::Start()
+{
+	return true;
+}
+
+bool Bow::Update()
+{
+
+	return true;
+}
+
+void Bow::SetSpeed(uint charge)
+{
+	arrow_speed = charge / 10;
+}
+
+/*void Bow::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c1 != nullptr && c2 != nullptr)
+	{
+		if (c1->type == COLLIDER_ARROW && c2->type == COLLIDER_ENEMY)
+		{
+
+		}
+
+}*/
+
+
+
 /*{
 switch (player_level)
 {
