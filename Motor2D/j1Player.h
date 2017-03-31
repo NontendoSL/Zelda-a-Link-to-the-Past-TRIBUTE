@@ -93,6 +93,8 @@ public:
 	//Pokemons has Link
 	std::list<Pokemon*> pokedex;
 
+	bool camera_follow = false;
+
 private:
 	Text* hp_text = nullptr;
 	Text* attack_text = nullptr;
@@ -111,7 +113,6 @@ private:
 	//TEST
 	std::string stats_temp;
 
-	bool Camera_follow_player = true;
 	bool changeResolution = false;
 
 	Animation* current_animation = nullptr;

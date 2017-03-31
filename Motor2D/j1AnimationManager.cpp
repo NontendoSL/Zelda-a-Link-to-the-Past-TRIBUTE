@@ -21,7 +21,7 @@ j1AnimationManager::~j1AnimationManager()
 
 bool j1AnimationManager::Awake(pugi::xml_node& test)
 {
-	for (pugi::xml_node temp = test.child("file"); temp.next_sibling() != NULL; temp = temp.next_sibling())
+	for (pugi::xml_node temp = test.child("file"); temp != NULL; temp = temp.next_sibling())
 	{
 		file_names.push_back(temp.attribute("file").as_string(""));
 	}
@@ -114,7 +114,7 @@ bool j1AnimationManager::CleanUp()
 void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, uint id) 
 {
 	BROFILER_CATEGORY("Animation", Profiler::Color::DarkMagenta)
-	//INFO ID:  1-> Player // 2-> Soldier // 3-> unknown // 4-> unknown // 5-> unknown
+	//INFO ID:  1-> Player // 2-> Soldier // 3-> Blaziken // 4-> unknown // 5-> unknown
 	if (status <= DYING)
 	{
 		if (dir == UP)
