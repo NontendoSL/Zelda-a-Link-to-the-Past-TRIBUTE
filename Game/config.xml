@@ -27,7 +27,7 @@
   
 	<animation>
 		<file file="animation/LinkAnimations.xml" />
-    <file file="BlazikenAnimations.xml" />
+		<sprite file="textures/LinkAnimations.png" />
 	</animation>
   
 	<window>

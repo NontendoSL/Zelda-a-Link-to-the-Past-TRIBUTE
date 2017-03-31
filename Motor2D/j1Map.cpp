@@ -148,7 +148,7 @@ TileDirection j1Map::MovementCost(int x, int y, Direction dir) const
 		iPoint ptemp_2 = WorldToMap(x + 8, y);
 		iPoint ptemp_3 = WorldToMap(x + 15, y);
 
-		MapLayer* meta_layer = data.layers[1];
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);

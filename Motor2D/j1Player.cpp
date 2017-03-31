@@ -56,6 +56,7 @@ bool Player::Awake(pugi::xml_node& conf)
 bool Player::Start()
 {
 	bool ret = true;
+	Camera_follow_player = true;
 	changeResolution = false;
 	attacker = false;
 	player_texture = App->tex->Load(tex_player_file_name.c_str());
@@ -86,6 +87,9 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
 	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
 	bool ret = true;
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		Camera_follow_player = !Camera_follow_player;
 
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)
@@ -308,70 +312,55 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 bool Player::Camera_inside()
 {
 	//256x224
-	if (camera_follow == true)
+	iPoint temp = App->map->MapToWorld(App->map->data.width, App->map->data.height);
+	if (direction == UP)
 	{
-		iPoint camera_pos(-App->render->camera.x / 2, -App->render->camera.y / 2);
-		iPoint size_map = App->map->MapToWorld(App->map->data.width, App->map->data.height);
-		if (direction == UP)
+		if (position.y < temp.y - (224 / 2))
 		{
-			if (camera_pos.y == 0)
+			if ((0 < -(App->render->camera.y + 2) && temp.y + 64 > -(App->render->camera.y + 2)) == false)
 			{
 				return false;
 			}
-			else
-			{
-				if (position.y > size_map.y - (App->win->GetHeight() / scale) / 2)
-				{
-					return false;
-				}
-			}
 		}
-		if (direction == DOWN)
-		{
-			if (camera_pos.y + (App->win->GetHeight() / scale) >= size_map.y)
-			{
-				return false;
-			}
-			else
-			{
-				if (position.y < (App->win->GetHeight() / scale) / 2)
-				{
-					return false;
-				}
-			}
-		}
-		if (direction == LEFT)
-		{
-			if (camera_pos.x == 0)
-			{
-				return false;
-			}
-			else
-			{
-				if (position.x > size_map.x - (App->win->GetWidth() / scale) / 2)
-				{
-					return false;
-				}
-			}
-		}
-		if (direction == RIGHT)
-		{
-			if (camera_pos.x + (App->win->GetWidth() / scale) >= size_map.x)
-			{
-				return false;
-			}
-			else
-			{
-				if (position.x < (App->win->GetWidth() / scale) / 2)
-				{
-					return false;
-				}
-			}
-		}
+		else
+			return false;
 	}
-	else
+	if (direction == DOWN)
 	{
-		return false;
+		if (position.y > 110)
+		{
+			if ((0 < -(App->render->camera.y - 2) && temp.y + 64 > -(App->render->camera.y - 2)) == false)
+			{
+				return false;
+			}
+		}
+		else
+			return false;
+
+	}
+	if (direction == LEFT)
+	{
+		if (position.x < temp.x - 130)
+		{
+			if ((0 < -(App->render->camera.x + 2) && temp.x > -(App->render->camera.x + 2)) == false)
+			{
+				return false;
+			}
+		}
+		else
+			return false;
+	}
+	if (direction == RIGHT)
+	{
+		if (position.x > 128)
+		{
+			if ((0 < -(App->render->camera.x - 2) && temp.x > -(App->render->camera.x - 2)) == false)
+			{
+				return false;
+			}
+		}
+		else
+			return false;
 	}
 	return true;
 }

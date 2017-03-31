@@ -352,8 +352,7 @@ bool j1Scene::Load_new_map(int n)
 
 			//Camera position
 			int scale = App->win->GetScale();
-			player->camera_follow = temp.child("camera").attribute("follow").as_bool();
-			if (player->camera_follow == true)
+			if (temp.child("camera").attribute("follow").as_bool() == true)
 			{
 				App->render->camera.x = -((temp.child("Link").attribute("pos_x").as_int(0) - (256 / 2)) * scale);
 				App->render->camera.y = -((temp.child("Link").attribute("pos_y").as_int(0) - (224 / 2)) * scale);

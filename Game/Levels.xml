@@ -98,7 +98,7 @@
     </map>
     <map n="4" file="Victory_Road.tmx">
       <camera follow="true"/>
-      <Link pos_x="264" pos_y="672" />
+      <Link pos_x="150" pos_y="150" />
     </map>
   </maps>
 
