@@ -13,6 +13,7 @@ class Text;
 class Pokemon;
 class Hookshot;
 class Weapon;
+class BombContainer;
 
 class Player : public Creature, public InputListener
 {
@@ -81,6 +82,7 @@ public:
 	uint charge = 0;
 
 	Hookshot* hook = nullptr;
+	BombContainer* bombmanager = nullptr;
 	Weapon* equiped_item = nullptr;
 
 	//Pokemons has Link

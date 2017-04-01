@@ -430,7 +430,7 @@ void ZeldaMenu:: Do()
 		item_menu->Hitbox.y = 344;
 		menu_texts[1]->Write("      BOMBS");
 		App->scene->player->Unequip();
-		//App->scene->player->Equip(bombs);
+		App->scene->player->Equip((Weapon*)App->scene->player->bombmanager);
 	}
 }
 

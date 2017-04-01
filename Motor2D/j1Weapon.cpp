@@ -210,3 +210,94 @@ return false;
 }*/
 
 // -------------------
+//BOMBContainer
+
+BombContainer::BombContainer()
+{
+	equipable = true;
+	Wtype = BOMB;
+}
+
+BombContainer::~BombContainer()
+{
+
+}
+
+void BombContainer::Drop(iPoint position)
+{
+	bombs.push_back(new Bomb(position, this));
+}
+
+bool BombContainer::Update()
+{
+	std::list<Bomb*>::iterator item = bombs.begin();
+	while (item != bombs.end())
+	{
+		item._Ptr->_Myval->Update();
+		item++;
+	}
+	return true;
+}
+
+void BombContainer::Draw()
+{
+	std::list<Bomb*>::iterator item = bombs.begin();
+	while (item != bombs.end())
+	{
+		item._Ptr->_Myval->Draw();
+		item++;
+	}
+}
+
+void BombContainer::CleanContainer()
+{
+	bombs.pop_front();
+}
+
+//--------------------------------- BOMB:
+
+
+Bomb::Bomb(iPoint position, BombContainer*container) : position(position), container(container)
+{
+	radius = 20;
+	timer = SDL_GetTicks();
+	step = PLANTED;
+}
+
+Bomb::~Bomb()
+{
+
+}
+
+void Bomb::Update()
+{
+	if (SDL_GetTicks() > timer + 2000 && step != EXPLOSION)
+	{
+		step = EXPLOSION;
+		collision = App->collision->AddCollider({ position.x - radius,position.y - radius,radius * 2,radius * 2 }, COLLIDER_BOMB);
+		current = App->anim_manager->GetAnimation((ActionState)2, DOWN, 3);
+		current->Reset();
+	}
+	if (step == EXPLOSION && current->Finished())
+	{
+		Die();
+	}
+}
+
+void Bomb::Draw()
+{
+	switch (step) {
+	case PLANTED:
+		App->anim_manager->Drawing_Manager((ActionState)1, DOWN, position, 3);
+		break;
+	case EXPLOSION:
+		App->anim_manager->Drawing_Manager((ActionState)2, DOWN, position, 3);
+		break;
+	}
+}
+
+void Bomb::Die()
+{
+	collision->to_delete = true;
+	container->CleanContainer();
+}

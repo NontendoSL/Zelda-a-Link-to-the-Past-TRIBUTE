@@ -18,6 +18,7 @@ class Player;
 class Item;
 class Soldier;
 class DynamicObjects;
+enum WeaponType;
 
 class j1Scene : public j1Module
 {
@@ -84,6 +85,7 @@ public:
 
 	bool fade = false;
 	bool now_switch = false;
+	WeaponType weapon_equiped;
 };
 
 #endif // __j1SCENE_H__

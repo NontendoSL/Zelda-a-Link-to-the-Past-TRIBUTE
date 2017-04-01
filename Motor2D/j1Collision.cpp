@@ -15,6 +15,8 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_BOMB] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_BOMB] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_DYNOBJECT] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
@@ -132,7 +134,7 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 		case COLLIDER_PLAYER: // white
-			App->render->DrawQuad(colliders[i]->rect, 255, 180, 125, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 0, 180, 125, alpha);
 			break;
 		case COLLIDER_ENEMY: // white
 			App->render->DrawQuad(colliders[i]->rect, 177, 255, 140, alpha);
@@ -145,6 +147,10 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_HOOKSHOT: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+			break;
+		case COLLIDER_BOMB: //RED
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
 
 		}
 	}

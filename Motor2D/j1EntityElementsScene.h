@@ -14,6 +14,7 @@ class DynamicObjects;
 class NPC;
 class Hookshot;
 class Weapon;
+class BombContainer;
 
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
@@ -49,7 +50,7 @@ public:
 	Hookshot* CreateHookshot();
 	DynamicObjects* CreateDynObject(iPoint pos, uint id, uint id_map);
 	Player* CreatePlayer();
-
+	BombContainer* CreateBombContainer();
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);

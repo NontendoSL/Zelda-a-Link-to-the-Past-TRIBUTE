@@ -148,6 +148,11 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 	}
 
 	//DRAW
+	if (animat[id].graphics == nullptr)
+	{
+		LOG("TEXTURE NULL");
+	}
+
 	App->render->Blit(animat[id].graphics, position.x - pivot.x, position.y - pivot.y, &r);
 }
 

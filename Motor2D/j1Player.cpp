@@ -64,6 +64,9 @@ bool Player::Start()
 
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
+
+	hook = App->entity_elements->CreateHookshot();
+	bombmanager = App->entity_elements->CreateBombContainer();
 	return ret;
 }
 
@@ -141,6 +144,10 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		{
 			charge--;
 		}
+	}
+	if (equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	{
+		bombmanager->Drop(position);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT && gems<999)

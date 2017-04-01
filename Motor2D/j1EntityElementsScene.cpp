@@ -195,6 +195,14 @@ Hookshot* j1EntityElementScene::CreateHookshot()
 	return hook;
 }
 
+BombContainer* j1EntityElementScene::CreateBombContainer()
+{
+	BombContainer* element = new BombContainer();
+	element->name = "bomb";
+	elementscene.push_back(element);
+	return element;
+}
+
 DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)
 {
 	DynamicObjects* element = new DynamicObjects();
@@ -228,9 +236,8 @@ Player* j1EntityElementScene::CreatePlayer()
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
 	element->Awake(config.child(element->name.c_str()));
-	element->Start();
-
 	elementscene.push_back(element);
+	element->Start();
 
 	return element;
 }

@@ -4,6 +4,9 @@
 
 #include "SceneElements.h"
 enum HookState {TARGET, OBSTACLE, MISS};
+enum BombStep { PLANTED, EXPLOSION };
+enum WeaponType { BOW, HOOKSHOT, BOMB };
+class BombContainer;
 
 class Weapon : public SceneElement
 {
@@ -39,6 +42,7 @@ public:
 	bool equiped = false;
 	bool equipable = false;
 
+	WeaponType Wtype;
 	Collider* collision = nullptr;
 };
 
@@ -90,4 +94,37 @@ private:
 	std::vector<Item*> throwed_arrows;
 };
 
+class Bomb
+{
+public:
+	Bomb(iPoint position, BombContainer* container);
+	~Bomb();
+public:
+	void Update();
+	void Draw();
+	void Die();
+public:
+	iPoint position;
+	int radius;
+	uint timer;
+	Animation* current;
+	BombContainer* container = nullptr;
+	BombStep step;
+	Collider* collision = nullptr;
+};
+
+class BombContainer :public Weapon
+{
+public:
+	BombContainer();
+	~BombContainer();
+
+public:
+	void Drop(iPoint position);
+	bool Update();
+	void Draw();
+	void CleanContainer();
+private:
+	std::list<Bomb*>bombs;
+};
 #endif

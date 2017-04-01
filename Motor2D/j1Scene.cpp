@@ -20,6 +20,7 @@
 #include "CombatManager.h"
 #include "j1FadeToBlack.h"
 #include "j1Collision.h"
+#include "j1Weapon.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -102,6 +103,10 @@ bool j1Scene::Update(float dt)
 					if (App->map->CleanUp())
 					{
 						App->collision->EreseAllColiderPlayer();
+						if (player->equiped_item != nullptr)
+						{
+							weapon_equiped = player->equiped_item->Wtype;
+						}
 						App->entity_elements->DelteElements();
 						if (enemy.size() > 0)
 						{
@@ -143,6 +148,10 @@ bool j1Scene::Update(float dt)
 					if (App->map->CleanUp())
 					{
 						App->collision->EreseAllColiderPlayer();
+						if (player->equiped_item != nullptr)
+						{
+							weapon_equiped = player->equiped_item->Wtype;
+						}
 						App->entity_elements->DelteElements();
 						if (enemy.size() > 0)
 						{
@@ -321,9 +330,12 @@ bool j1Scene::Load_new_map(int n)
 	if (player == NULL)
 	{
 		player = App->entity_elements->CreatePlayer();
-		player->hook = App->entity_elements->CreateHookshot(); // TODO MEDIUM -> Hookshot pointer maybe not created here
 	}
-
+	if (weapon_equiped == BOMB)
+	{
+		player->bombmanager = App->entity_elements->CreateBombContainer();
+		player->equiped_item = (Weapon*)player->bombmanager;
+	}
 	bool stop_rearch = false;
 
 	pugi::xml_document	config_file;
