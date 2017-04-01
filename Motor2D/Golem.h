@@ -31,12 +31,36 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	/*void AddItem(Item*);
+	void AddItem(Item*);
 
-	void Drop_item();*/
+	void Drop_item();
+
+	bool Idle();
+
+	bool Walking();
+
+	bool Move();
+
+	bool Attack();
+
+	bool Death();
+
+	bool Movebyhit();
+
+	Direction dir_hit;
+	iPoint previus_position;
 
 private:
 
+	Item* item_inside = nullptr;
+	SDL_Texture* texture = nullptr;
+
+	int timetoplay;
+	int timetorun;
+	bool reset_run;
+	int distance;
+	int dis_moved;
+	bool reset_distance;
 
 };
 
