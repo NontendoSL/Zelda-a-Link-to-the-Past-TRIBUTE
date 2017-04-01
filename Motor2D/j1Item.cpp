@@ -25,6 +25,7 @@ bool Item::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 			position.x = pos.x;
 			position.y = pos.y;
 			std::string es = conf.child("item").attribute("file").as_string("");
+			texture = App->tex->Load(es.c_str());
 			canBlit = true;
 			stop_search = true;
 		}

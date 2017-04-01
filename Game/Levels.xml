@@ -96,6 +96,7 @@
         <enemy id="1" pos_x="424" pos_y="30" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
       </enemies>
     </map>
+    
     <map n="4" file="Victory_Road.tmx">
       <camera follow="true"/>
       <Link pos_x="264" pos_y="672" />
@@ -103,7 +104,7 @@
   </maps>
 
   <map_combat>
-    <map n="1" file="Test_combat_pokemon.tmx">
+    <map n="6" file="Test_combat_pokemon.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Frist trianer" pos_x="100" pos_y="100">
         <pokemon id="1" name="Blaziken" speed="1" dir="left" hp="100" attack="4" pos_x="180" pos_y="100" active="false"/>

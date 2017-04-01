@@ -75,6 +75,8 @@ public:
 
 	pugi::xml_node		config;
 
+	iPoint newPosition;
+
 	bool ingame = false;
 	bool switch_menu = false;
 	bool inventory = false;

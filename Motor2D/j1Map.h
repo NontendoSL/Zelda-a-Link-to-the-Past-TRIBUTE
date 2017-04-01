@@ -10,6 +10,13 @@
 
 enum TileDirection { T_CONTINUE, T_WALL, T_UP, T_DOWN, T_LEFT, T_RIGHT };
 
+struct DirectionMap
+{
+	std::string name;
+	int id_tile;
+	int id_map;
+	iPoint position;
+};
 // ----------------------------------------------------
 struct Properties
 {
@@ -156,6 +163,8 @@ private:
 
 	iPoint pos_camera;
 	iPoint win_size;
+
+	std::vector<DirectionMap> directMap;
 };
 
 #endif // __j1MAP_H__

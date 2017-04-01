@@ -334,9 +334,18 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			//player position
-			player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
-			player->position.y = temp.child("Link").attribute("pos_y").as_int(0);
+			if (n == 1)
+			{
+				//player position
+				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
+				player->position.y = temp.child("Link").attribute("pos_y").as_int(0);
+			}
+			else
+			{
+				player->position.x = newPosition.x;
+				player->position.y = newPosition.y;
+			}
+
 
 			//Enemies
 			pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");

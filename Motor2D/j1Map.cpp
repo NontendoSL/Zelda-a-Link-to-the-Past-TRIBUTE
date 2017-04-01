@@ -142,6 +142,25 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 	TileDirection ret = T_CONTINUE;
 	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
 	int blue_wal = red_wal + 7;
+	int Purple_ = red_wal + 6;
+	int green_ = red_wal - 1;
+	int orange_ = red_wal + 5;
+
+	if (1)
+	{
+		iPoint temp_meta = WorldToMap(x, y); //central position
+		MapLayer* meta_ = data.layers[1];
+		int id_meta = meta_->Get(temp_meta.x, temp_meta.y);
+		for (int i = 0; i < directMap.size(); i++)
+		{
+			if (directMap[i].id_tile == id_meta)
+			{
+				App->scene->switch_map = directMap[i].id_map;
+				App->scene->newPosition = directMap[i].position;
+			}
+		}
+	}
+
 	if (dir == UP)
 	{
 		iPoint ptemp = WorldToMap(x - offsetX, y); //left position
@@ -166,10 +185,6 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 		{
 			ret = T_WALL; 
 		}
-		else if (id_1 == blue_wal)//TODO HIGH-> Only player enter
-		{
-			App->scene->switch_map = 1;
-		}
 		else
 			ret = T_CONTINUE;
 
@@ -180,7 +195,7 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 		iPoint ptemp_2 = WorldToMap(x, y); //central position
 		iPoint ptemp_3 = WorldToMap(x, y + offsetY); //down position
 
-		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+		MapLayer* meta_layer = data.layers[1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -206,7 +221,7 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 		iPoint ptemp = WorldToMap(x, y - offsetY); //up position
 		iPoint ptemp_2 = WorldToMap(x, y); //central position
 		iPoint ptemp_3 = WorldToMap(x, y + offsetY); //down position
-		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+		MapLayer* meta_layer = data.layers[1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -232,7 +247,7 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 		iPoint ptemp = WorldToMap(x - offsetX, y); //left position
 		iPoint ptemp_2 = WorldToMap(x, y); //central position
 		iPoint ptemp_3 = WorldToMap(x + offsetX, y); //down position
-		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+		MapLayer* meta_layer = data.layers[1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -251,13 +266,10 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 		{
 			ret = T_WALL;
 		}
-		else if (id_1 == blue_wal)//TODO HIGH-> Only player enter
-		{
-			App->scene->switch_map = 2;
-		}
 		else
 			ret = T_CONTINUE;
 	}
+
 
 	return ret;
 }
@@ -343,7 +355,8 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
-
+	// Remove all DirectionMap
+	directMap.clear();
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -433,7 +446,19 @@ bool j1Map::Load(const char* file_name, uint id_map)
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 		}
 	}
-	//TODO Create all DynObjects from Tiled
+
+	//Create DirectionMap
+	for (pugi::xml_node temp = map_file.child("map").child("directionLevels").child("map"); temp != NULL; temp = temp.next_sibling())
+	{
+		DirectionMap dir_map;
+		dir_map.name = temp.attribute("name").as_string("");
+		dir_map.id_tile = temp.attribute("id_tile").as_int(0);
+		dir_map.id_map = temp.attribute("id_map").as_int(0);
+		dir_map.position = iPoint(temp.attribute("pos_x").as_int(0), temp.attribute("pos_y").as_int(0));
+		directMap.push_back(dir_map);
+	}
+
+	//Create all DynObjects from Tiled
 	if (id_map > 0)
 	{
 		DynObjectFromTiled(id_map);
@@ -451,6 +476,7 @@ void j1Map::DynObjectFromTiled(uint id_map)
 	int yellowid_2 = data.tilesets[1]->firstgid + 3;
 	int yellowid_3 = data.tilesets[1]->firstgid + 4;
 	int yellowid_4 = data.tilesets[1]->firstgid + 5;
+	int chest_big = data.tilesets[1]->firstgid + 9;
 
 	MapLayer* temp = data.layers[data.layers.size() - 1];
 
@@ -462,25 +488,26 @@ void j1Map::DynObjectFromTiled(uint id_map)
 			iPoint positionObject = MapToWorld(x, y);
 			if (tile_id == yellowid_1)
 			{
-				LOG("DynObject 1");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 1, id_map));
 				EditCost(x, y, data.tilesets[1]->firstgid + 1);
 			}
 			if (tile_id == yellowid_2)
 			{
-				LOG("DynObject 2");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 2, id_map));
 				EditCost(x, y, data.tilesets[1]->firstgid + 1);
 			}
 			if (tile_id == yellowid_3)
 			{
-				LOG("DynObject 3");
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 3, id_map));
 				EditCost(x, y, data.tilesets[1]->firstgid + 1);
 			}
 			if (tile_id == yellowid_4)
 			{
-				LOG("DynObject 4");
+				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
+				EditCost(x, y, data.tilesets[1]->firstgid + 1);
+			}
+			if (tile_id == chest_big)
+			{
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
 				EditCost(x, y, data.tilesets[1]->firstgid + 1);
 			}
