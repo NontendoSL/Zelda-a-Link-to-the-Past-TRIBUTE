@@ -168,6 +168,15 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
 	{
+		if (App->scene->inventory) //TODO LOW -> If pres to fast you can lisen 2.
+		{
+			App->audio->PlayFx(3);
+		}
+		else
+		{
+			App->audio->PlayFx(2);
+		}
+
 		App->scene->switch_menu = true;
 		gamestate = INMENU;
 	}
@@ -232,6 +241,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c2->callback->name == "rupee")
 			{
+				App->audio->PlayFx(4);
 				gems++;
 				App->entity_elements->DeleteItem((Item*)c2->callback);
 				//App->collision->EraseCollider(c2);

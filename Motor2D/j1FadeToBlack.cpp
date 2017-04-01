@@ -28,6 +28,7 @@ bool j1FadeToBlack::Start()
 	LOG("Preparing Fade Screen");
 	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
 
+
 	return true;
 }
 
@@ -61,6 +62,7 @@ bool j1FadeToBlack::Update(float dt)
 		{
 			current_step = fade_step::none;
 			goFade = false;
+			finnishfirstpart = false;
 		}
 	} break;
 	}

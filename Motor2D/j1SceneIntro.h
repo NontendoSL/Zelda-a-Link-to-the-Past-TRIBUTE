@@ -59,7 +59,10 @@ private:
 	bool			right = false;
 	bool			menu = false;
 
-	ZeldaMenu*			main_menu = nullptr;
+	bool goHouse = false;
+	bool fade;
+	uint Menu_Cursor;
+	ZeldaMenu*		main_menu = nullptr;
 };
 
 #endif

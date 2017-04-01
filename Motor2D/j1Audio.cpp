@@ -230,6 +230,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 		while (i < id - 1)
 		{
 			item++;
+			i++;
 		}
 		Mix_PlayChannel(-1, item._Ptr->_Myval, repeat);
 	}

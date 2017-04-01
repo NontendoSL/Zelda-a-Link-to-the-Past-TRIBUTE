@@ -63,8 +63,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 
 	// scene last
-	AddModule(scene);
 	AddModule(intro);
+	AddModule(scene);
 	//Add managers
 	AddModule(entity_elements);
 	AddModule(combatmanager);

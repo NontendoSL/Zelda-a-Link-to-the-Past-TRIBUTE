@@ -47,9 +47,17 @@ bool j1Scene::Start()
 	{
 		LoadUi();
 		Load_new_map(1);
+		App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
+		App->audio->VolumeMusic(85);
+		App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
+		App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
+		App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
 	}
 	inventory = false;
 	switch_map = 0;
+
+
+
 	return true;
 }
 
@@ -183,6 +191,16 @@ bool j1Scene::Update(float dt)
 			}
 		}
 
+		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		{
+			player->position.x += 50;
+			App->render->camera.x -= 50;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		{
+			player->position.x -= 50;
+			App->render->camera.x += 50;
+		}
 	return true;
 }
 

@@ -7,7 +7,7 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
-#include "j1Map.h"
+#include "j1FadeToBlack.h"
 #include "j1PathFinding.h"
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
@@ -42,10 +42,12 @@ bool j1SceneIntro::Awake()
 bool j1SceneIntro::Start()
 {
 	TitleScreen_letters = App->tex->Load("gui/title_screen/letters.png");
-	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg");
+	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg"); //TODO LOW -> .png
 	Menu_bg= App->tex->Load("gui/title_screen/menu_bg.jpg");
+	Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	App->input_manager->AddListener(this);
+	fade = true;
 	return true;
 }
 
@@ -91,6 +93,25 @@ bool j1SceneIntro::Update(float dt)
 					
 		}
 	}
+	if (goHouse)
+	{
+		if (fade)
+		{
+			App->fadetoblack->FadeToBlack(3);
+			App->audio->FadeMusic(3);
+			fade = false;
+		}
+		else
+		{
+			if (App->fadetoblack->Checkfadetoblack())
+			{
+				App->scene->ingame = true;
+				App->scene->Start();
+				main_menu->Close();
+				goHouse = false;
+			}
+		}
+	}
 
 	return true;
 }
@@ -105,10 +126,12 @@ bool j1SceneIntro::PostUpdate()
 		{
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 			{
+				App->audio->PlayFx(Menu_Cursor);
 				main_menu->Select(1);
 			}
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 			{
+				App->audio->PlayFx(Menu_Cursor);
 				main_menu->Select(-1);
 			}
 		}
@@ -127,10 +150,7 @@ bool j1SceneIntro::PostUpdate()
 			}
 			if (main_menu->id_selected == 1)
 			{
-				App->audio->FadeMusic(2);
-				App->scene->ingame = true;
-				App->scene->Start();
-				main_menu->Close();
+				goHouse = true;
 			}
 		}
 	}
