@@ -58,7 +58,7 @@ bool Soldier::CleanUp()
 
 bool Soldier::Start()
 {
-	collision_enemy = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_ENEMY, this);
+	collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_ENEMY, this);
 
 	soldier_right = { 17,0,18,28 };
 	soldier_left = {36,0,18,28};
@@ -145,7 +145,7 @@ bool Soldier::Update()
 		}
 	}
 
-	collision_enemy->SetPos(position.x - offset_x, position.y - offset_y);
+	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
 }
 
