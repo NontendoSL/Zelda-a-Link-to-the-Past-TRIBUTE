@@ -141,10 +141,6 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 {
 	TileDirection ret = T_CONTINUE;
 	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
-	int blue_wal = red_wal + 7;
-	int Purple_ = red_wal + 6;
-	int green_ = red_wal - 1;
-	int orange_ = red_wal + 5;
 
 	if (1)
 	{
