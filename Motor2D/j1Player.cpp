@@ -57,12 +57,12 @@ bool Player::Start()
 	direction = UP;
 	state = IDLE;
 	scale = App->win->GetScale();
-	width = 15;
-	height = 15;
+	offset_x = 7;
+	offset_y = 7;
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 
-	collision_player = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_PLAYER, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
 	return ret;
 }
@@ -166,7 +166,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 
 	//Collision follow the player
-	collision_player->SetPos(position.x, position.y);
+	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
 	return ret;
 }
@@ -221,7 +221,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			//App->collision->EraseCollider(c2);
 		}
 
-		if (c1 == collision_player && c2->type == COLLIDER_ITEM)
+		if (c1 == collision_feet && c2->type == COLLIDER_ITEM)
 		{
 			if (c2->callback->name == "rupee")
 			{
@@ -421,19 +421,19 @@ bool Player::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 4, position.y - 16, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y - 20, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 9, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x, position.y - 4, 20, 8 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 4, position.y + 5, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 13, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 4, 20, 8 }, COLLIDER_PLAYER, this);
 		}
 	}
 	return true;
@@ -529,29 +529,29 @@ void Player::ThrowHookshot(uint charge)
 	//CHECK DIRECTION
 	if (direction == UP)
 	{
-		iPoint pos(position.x + 2, position.y - 16);
+		iPoint pos(position.x, position.y);
 		hook->collision = App->collision->AddCollider({ pos.x, pos.y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
 		hook->direction = UP;
 		hook->SetPos(pos);
 	}
 	else if (direction == RIGHT)
 	{
-		iPoint pos(position.x + 9, position.y + 2);
-		hook->collision = App->collision->AddCollider({ position.x + 9, position.y + 4, 8, 12 }, COLLIDER_HOOKSHOT, hook);
+		iPoint pos(position.x, position.y);
+		hook->collision = App->collision->AddCollider({ position.x, position.y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
 		hook->direction = RIGHT;
 		hook->SetPos(pos);
 	}
 	else if (direction == DOWN)
 	{
-		iPoint pos(position.x + 2, position.y + 5);
-		hook->collision = App->collision->AddCollider({ position.x + 4, position.y + 5, 12, 8 }, COLLIDER_HOOKSHOT, hook);
+		iPoint pos(position.x, position.y);
+		hook->collision = App->collision->AddCollider({ position.x, position.y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
 		hook->direction = DOWN;
 		hook->SetPos(pos);
 	}
 	else if (direction == LEFT)
 	{
-		iPoint pos(position.x - 9, position.y + 2);
-		hook->collision = App->collision->AddCollider({ position.x - 13, position.y + 4, 8, 12 }, COLLIDER_HOOKSHOT, hook);
+		iPoint pos(position.x, position.y);
+		hook->collision = App->collision->AddCollider({ position.x, position.y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
 		hook->direction = LEFT;
 		hook->SetPos(pos);
 	}
@@ -563,7 +563,7 @@ void Player::ThrowHookshot(uint charge)
 bool Player::Hooking()
 {
 	//collider follows the hookshot
-	hook->collision->SetPos(hook->position.x, hook->position.y);
+	hook->collision->SetPos(hook->position.x - offset_x, hook->position.y - offset_y);
 	HookState stat = hook->GetState();
 
 	if (hook->actual_range_pos < hook->range)
@@ -619,7 +619,7 @@ void Player::PickUpHook()
 	{
 	case UP:
 		hook->position.y += hook->speed;
-		if (hook->position.y + hook->height >= collision_player->rect.y)
+		if (hook->position.y + hook->offset_y >= collision_feet->rect.y)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -627,7 +627,7 @@ void Player::PickUpHook()
 		break;
 	case DOWN:
 		hook->position.y -= hook->speed;
-		if (hook->position.y <= collision_player->rect.y + collision_player->rect.h)
+		if (hook->position.y <= collision_feet->rect.y + collision_feet->rect.h)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -635,7 +635,7 @@ void Player::PickUpHook()
 		break;
 	case LEFT:
 		hook->position.x += hook->speed;
-		if (hook->position.x + hook->width >= collision_player->rect.x)
+		if (hook->position.x + hook->offset_x >= collision_feet->rect.x)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -643,7 +643,7 @@ void Player::PickUpHook()
 		break;
 	case RIGHT:
 		hook->position.x -= hook->speed;
-		if (hook->position.x <= collision_player->rect.x + collision_player->rect.w)
+		if (hook->position.x <= collision_feet->rect.x + collision_feet->rect.w)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -660,14 +660,15 @@ void Player::MoveTo(const iPoint& pos)
 	{
 	case UP:
 	{
-		int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
+		//int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
+		int temp = App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP);
 		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.y += hook->speed * scale;
 			position.y -= hook->speed;
 		}
-		else if (hook->position.y + hook->height >= collision_player->rect.y || temp !=0)
+		else if (hook->position.y >= position.y || temp !=0)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -677,14 +678,15 @@ void Player::MoveTo(const iPoint& pos)
 
 	case DOWN:
 	{
-		int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN);
+		//int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN
+		int temp = App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN);
 		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.y -= hook->speed * scale;
 			position.y += hook->speed;
 		}
-		else if (hook->position.y <= collision_player->rect.y || temp != 0)
+		else if (hook->position.y <= position.y || temp != 0)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -694,14 +696,15 @@ void Player::MoveTo(const iPoint& pos)
 
 	case LEFT:
 	{
-		int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
+		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
+		int temp = App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT);
 		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.x = hook->speed * scale;
 			position.x -= hook->speed;
 		}
-		else if (hook->position.x + hook->width >= collision_player->rect.x || temp != 0)
+		else if (hook->position.x >= position.x || temp != 0)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -711,14 +714,15 @@ void Player::MoveTo(const iPoint& pos)
 
 	case RIGHT:
 	{
-		int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT);
+		//int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT
+		int temp = App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT);
 		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.x -= hook->speed * scale;
 			position.x += hook->speed;
 		}
-		else if (hook->position.x <= collision_player->rect.x || temp != 0)
+		else if (hook->position.x <= position.x || temp != 0)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -738,7 +742,8 @@ bool Player::Move()
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = LEFT;
-		int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
+		//int temp = App->map->MovementCost(position.x - speed, position.y, LEFT
+		int temp = App->map->MovementCost(position.x - offset_x - speed, position.y, offset_x, offset_y, LEFT);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
@@ -771,7 +776,8 @@ bool Player::Move()
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 	{
 		direction = DOWN;
-		int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
+		//int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
+		int temp = App->map->MovementCost(position.x, position.y + offset_y + speed, offset_x, offset_y, DOWN);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
@@ -797,14 +803,14 @@ bool Player::Move()
 				direction = DOWN;
 			}
 		}
-
 		walking = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = RIGHT;
-		int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
+		//int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
+		int temp = App->map->MovementCost(position.x + offset_x + speed, position.y, offset_x, offset_y, RIGHT);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
@@ -830,14 +836,14 @@ bool Player::Move()
 				direction = RIGHT;
 			}
 		}
-
 		walking = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
 		direction = UP;
-		int temp = App->map->MovementCost(position.x, position.y - speed, UP);
+		//int temp = App->map->MovementCost(position.x, position.y - speed, UP);
+		int temp = App->map->MovementCost(position.x, position.y - offset_y - speed, offset_x, offset_y, UP);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
@@ -865,6 +871,7 @@ bool Player::Move()
 		}
 		walking = true;
 	}
+
 	return walking;
 }
 

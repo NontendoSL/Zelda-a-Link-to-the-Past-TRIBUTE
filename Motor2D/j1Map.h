@@ -128,7 +128,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
-	TileDirection MovementCost(int x, int y, Direction dir) const;
+	TileDirection MovementCost(int x, int y, int oX, int oY, Direction dir) const;
 	void EditCost(int x, int y,int value);
 	void DynObjectFromTiled(uint id);
 

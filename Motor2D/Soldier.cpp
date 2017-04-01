@@ -74,8 +74,8 @@ bool Soldier::Start()
 	status_action = GUARD;
 	state = IDLE;
 	speed = 1;
-	height = 15;
-	width = 15;
+	offset_x = 15;
+	offset_y = 15;
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
@@ -145,7 +145,7 @@ bool Soldier::Update()
 		}
 	}
 
-	collision_enemy->SetPos(position.x, position.y);
+	collision_enemy->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
 }
 
@@ -158,19 +158,19 @@ void Soldier::Draw()
 		{
 			if (direction == UP)
 			{
-				App->render->Blit(texture, position.x, position.y - marge, &soldier_up);
+				App->render->Blit(texture, position.x, position.y, &soldier_up);
 			}
 			if (direction == DOWN)
 			{
-				App->render->Blit(texture, position.x, position.y - marge, &soldier_down);
+				App->render->Blit(texture, position.x, position.y, &soldier_down);
 			}
 			if (direction == RIGHT)
 			{
-				App->render->Blit(texture, position.x, position.y - marge, &soldier_right);
+				App->render->Blit(texture, position.x, position.y, &soldier_right);
 			}
 			if (direction == LEFT)
 			{
-				App->render->Blit(texture, position.x, position.y - marge, &soldier_left);
+				App->render->Blit(texture, position.x, position.y, &soldier_left);
 			}
 		}
 	}
@@ -180,19 +180,19 @@ void Soldier::Draw()
 		{
 			if (direction == UP)
 			{
-				App->render->Blit(texture, position.x, position.y - marge, &soldier_up_2);
+				App->render->Blit(texture, position.x, position.y, &soldier_up_2);
 			}
 			if (direction == DOWN)
 			{
-				App->render->Blit(texture, position.x, position.y - marge, &soldier_down_2);
+				App->render->Blit(texture, position.x, position.y, &soldier_down_2);
 			}
 			if (direction == RIGHT)
 			{
-				App->render->Blit(texture, position.x, position.y - marge, &soldier_right_2);
+				App->render->Blit(texture, position.x, position.y, &soldier_right_2);
 			}
 			if (direction == LEFT)
 			{
-				App->render->Blit(texture, position.x, position.y - marge, &soldier_left_2);
+				App->render->Blit(texture, position.x, position.y, &soldier_left_2);
 			}
 		}
 	}
@@ -286,7 +286,8 @@ bool Soldier::Move()
 {
 	if (direction == LEFT)
 	{
-		if (App->map->MovementCost(position.x - speed, position.y, LEFT) == 0)
+		//App->map->MovementCost(position.x - speed, position.y, LEFT)
+		if (App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT) == 0)
 		{
 			position.x -= speed;
 			dis_moved++;
@@ -301,7 +302,8 @@ bool Soldier::Move()
 
 	if (direction == RIGHT)
 	{
-		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
+		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
+		if (App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT) == 0)
 		{
 			position.x += speed;
 			dis_moved++;
@@ -314,7 +316,8 @@ bool Soldier::Move()
 	}
 	if (direction == UP)
 	{
-		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
+		//App->map->MovementCost(position.x, position.y - speed, UP)
+		if (App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP) == 0)
 		{
 			position.y -= speed;
 			dis_moved++;
@@ -327,7 +330,8 @@ bool Soldier::Move()
 	}
 	if (direction == DOWN)
 	{
-		if (App->map->MovementCost(position.x, position.y + (speed + height), DOWN) == 0)
+		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
+		if (App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN) == 0)
 		{
 			position.y += speed;
 			dis_moved++;
@@ -360,7 +364,8 @@ bool Soldier::Movebyhit()
 {
 	if (dir_hit == UP)
 	{
-		if (App->map->MovementCost(position.x, position.y - speed, UP) == 0)
+		//App->map->MovementCost(position.x, position.y - speed, UP)
+		if (App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP) == 0)
 		{
 			position.y -= 4;
 		}
@@ -371,7 +376,8 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == DOWN)
 	{
-		if (App->map->MovementCost(position.x, position.y + (4 + height), DOWN) == 0)
+		//App->map->MovementCost(position.x, position.y + (4 + height), DOWN)
+		if (App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN) == 0)
 		{
 			position.y += 4;
 		}
@@ -383,7 +389,8 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == LEFT)
 	{
-		if (App->map->MovementCost(position.x - 4, position.y, LEFT) == 0)
+		//App->map->MovementCost(position.x - 4, position.y, LEFT)
+		if (App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT) == 0)
 		{
 			position.x -= 4;
 		}
@@ -395,7 +402,8 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == RIGHT)
 	{
-		if (App->map->MovementCost(position.x + (speed + width), position.y, RIGHT) == 0)
+		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
+		if (App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT) == 0)
 		{
 			position.x += 4;
 		}

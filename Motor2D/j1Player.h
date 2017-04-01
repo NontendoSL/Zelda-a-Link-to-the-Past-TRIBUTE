@@ -94,7 +94,8 @@ private:
 
 	std::list<Item*> bag;
 
-	Collider* collision_player;
+	//Colliders
+	Collider* collision_feet;
 	Collider* collision_attack;
 
 	bool attacker;

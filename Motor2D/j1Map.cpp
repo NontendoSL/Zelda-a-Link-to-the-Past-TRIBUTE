@@ -137,16 +137,16 @@ void j1Map::EditCost(int x, int y, int value)
 	meta_layer->data[y*meta_layer->width + x] = value;
 }
 
-TileDirection j1Map::MovementCost(int x, int y, Direction dir) const
+TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direction dir) const
 {
 	TileDirection ret = T_CONTINUE;
 	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
 	int blue_wal = red_wal + 7;
 	if (dir == UP)
 	{
-		iPoint ptemp = WorldToMap(x, y);
-		iPoint ptemp_2 = WorldToMap(x + 8, y);
-		iPoint ptemp_3 = WorldToMap(x + 15, y);
+		iPoint ptemp = WorldToMap(x - offsetX, y); //left position
+		iPoint ptemp_2 = WorldToMap(x, y); //central position
+		iPoint ptemp_3 = WorldToMap(x + offsetX, y); //rigth position
 
 		MapLayer* meta_layer = data.layers[1];
 
@@ -176,9 +176,9 @@ TileDirection j1Map::MovementCost(int x, int y, Direction dir) const
 	}
 	if (dir == LEFT)
 	{
-		iPoint ptemp = WorldToMap(x, y);
-		iPoint ptemp_2 = WorldToMap(x, y + 8);
-		iPoint ptemp_3 = WorldToMap(x, y + 15);
+		iPoint ptemp = WorldToMap(x, y - offsetY); //up position
+		iPoint ptemp_2 = WorldToMap(x, y); //central position
+		iPoint ptemp_3 = WorldToMap(x, y + offsetY); //down position
 
 		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
 
@@ -203,9 +203,9 @@ TileDirection j1Map::MovementCost(int x, int y, Direction dir) const
 	}
 	if (dir == RIGHT)
 	{
-		iPoint ptemp = WorldToMap(x, y);
-		iPoint ptemp_2 = WorldToMap(x, y + 8);
-		iPoint ptemp_3 = WorldToMap(x, y + 15);
+		iPoint ptemp = WorldToMap(x, y - offsetY); //up position
+		iPoint ptemp_2 = WorldToMap(x, y); //central position
+		iPoint ptemp_3 = WorldToMap(x, y + offsetY); //down position
 		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
@@ -229,9 +229,9 @@ TileDirection j1Map::MovementCost(int x, int y, Direction dir) const
 	}
 	if (dir == DOWN)
 	{
-		iPoint ptemp = WorldToMap(x, y);
-		iPoint ptemp_2 = WorldToMap(x + 8, y);
-		iPoint ptemp_3 = WorldToMap(x + 15, y);
+		iPoint ptemp = WorldToMap(x - offsetX, y); //left position
+		iPoint ptemp_2 = WorldToMap(x, y); //central position
+		iPoint ptemp_3 = WorldToMap(x + offsetX, y); //down position
 		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);

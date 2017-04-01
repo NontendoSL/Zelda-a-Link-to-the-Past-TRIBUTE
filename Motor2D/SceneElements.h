@@ -63,14 +63,15 @@ public:
 
 public:
 	iPoint position;
+	int offset_x = 0;
+	int offset_y = 0;
+
 	Direction direction;
 	GameState gamestate;
 	ActionState state;
 	ElementType type;
 	uint speed;
 
-	int width;
-	int height;
 
 	bool canBlit = false;
 	std::string	name;

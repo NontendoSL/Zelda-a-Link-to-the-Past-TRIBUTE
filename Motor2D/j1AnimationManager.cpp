@@ -148,7 +148,7 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 	}
 
 	//DRAW
-	App->render->Blit(animat[id].graphics, position.x - pivot.x + 8, position.y - pivot.y + 11, &r);
+	App->render->Blit(animat[id].graphics, position.x - pivot.x, position.y - pivot.y, &r);
 }
 
 Animation* j1AnimationManager::GetAnimation(ActionState status, Direction dir, uint id)

@@ -37,12 +37,12 @@ bool Blaziken::Start()
 	pokemon_player = true;
 	state = IDLE;
 	scale = App->win->GetScale();
-	width = 15;
-	height = 15;
+	offset_x = 15;
+	offset_y = 15;
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	movable = true;
-	collision_enemy = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_PLAYER, this);
+	collision_enemy = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_PLAYER, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
@@ -123,7 +123,7 @@ bool Blaziken::Update()
 	}
 
 	//Collision follow the player
-	collision_enemy->SetPos(position.x, position.y);
+	collision_enemy->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
 }
 
@@ -204,7 +204,8 @@ bool Blaziken::Move()
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = LEFT;
-		int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
+		//int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
+		int temp = App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT);
 		if (temp == 0)
 		{
 			position.x -= speed;
@@ -216,7 +217,8 @@ bool Blaziken::Move()
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 	{
 		direction = DOWN;
-		int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
+		//int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
+		int temp = App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN);
 		if (temp == 0)
 		{
 			position.y += speed;
@@ -228,7 +230,8 @@ bool Blaziken::Move()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = RIGHT;
-		int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
+		//int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
+		int temp = App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT);
 		if (temp == 0)
 		{
 			position.x += speed;
@@ -239,7 +242,8 @@ bool Blaziken::Move()
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
 		direction = UP;
-		int temp = App->map->MovementCost(position.x, position.y - speed, UP);
+		//int temp = App->map->MovementCost(position.x, position.y - speed, UP);
+		int temp = App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP);
 		if (temp == 0)
 		{
 			position.y -= speed;
@@ -267,19 +271,19 @@ bool Blaziken::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 4, position.y - 16, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x, position.y, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 9, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x, position.y, 20, 8 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 4, position.y + 5, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x, position.y, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 13, position.y + 4, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x, position.y, 20, 8 }, COLLIDER_PLAYER, this);
 		}
 	}
 	return true;
