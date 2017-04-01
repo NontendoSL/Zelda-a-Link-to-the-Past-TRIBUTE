@@ -259,33 +259,41 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 		}
+		if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
+		{
+			if (canSwitchMap == false)
+			{
+				if (changeMap != nullptr)
+				{
+					if (changeMap != c2)
+					{
+						canSwitchMap = true;
+					}
+				}
+				else
+				{
+					canSwitchMap = true;
+				}
+			}
+			if (1)
+			{
+				canSwitchMap = false;
+				changeMap = c2;
+				iPoint temp_meta = App->map->WorldToMap(position.x, position.y); //central position
+				MapLayer* meta_ = App->map->data.layers[1];
+				int id_meta = meta_->Get(temp_meta.x, temp_meta.y);
+				for (int i = 0; i < App->map->directMap.size(); i++)
+				{
+					if (App->map->directMap[i].id_tile == id_meta)
+					{
+						App->scene->switch_map = App->map->directMap[i].id_map;
+						App->scene->newPosition = App->map->directMap[i].position;
+					}
+				}
+			}
+
+		}
 	}
-
-
-
-	/*if (c1 == collision_player && c2->type == COLLIDER_ENEMY)
-	{
-		if (c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + 1 >= c2->rect.y + c2->rect.h)
-		{
-			App->render->camera.y -= speed * 2;
-			position.y = position.y + 1;
-		}
-		else if (c1->rect.y + c1->rect.h >= c2->rect.y && c1->rect.y + c1->rect.h - 1 <= c2->rect.y)
-		{
-			App->render->camera.y += speed * 2;
-			position.y = position.y - 1;
-		}
-		else if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x + c1->rect.w - 1 <= c2->rect.x)
-		{
-			App->render->camera.x += speed * 2;
-			position.x = position.x - 1;
-		}
-		else if (c1->rect.x <= c2->rect.x + c2->rect.w && c1->rect.x + 1 >= c2->rect.x + c2->rect.w)
-		{
-			App->render->camera.x -= speed * 2;
-			position.x = position.x + 1;
-		}
-	}*/
 }
 
 bool Player::Camera_inside()

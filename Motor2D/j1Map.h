@@ -154,6 +154,8 @@ public:
 
 	MapData data;
 
+	std::vector<Collider*> doors;
+	std::vector<DirectionMap> directMap;
 private:
 
 	bool navigation_map = false;
@@ -163,8 +165,6 @@ private:
 
 	iPoint pos_camera;
 	iPoint win_size;
-
-	std::vector<DirectionMap> directMap;
 };
 
 #endif // __j1MAP_H__

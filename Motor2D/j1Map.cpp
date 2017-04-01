@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1FileSystem.h"
 #include "j1Textures.h"
+#include "j1Collision.h"
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Scene.h"
@@ -141,21 +142,6 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 {
 	TileDirection ret = T_CONTINUE;
 	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
-
-	if (1)
-	{
-		iPoint temp_meta = WorldToMap(x, y); //central position
-		MapLayer* meta_ = data.layers[1];
-		int id_meta = meta_->Get(temp_meta.x, temp_meta.y);
-		for (int i = 0; i < directMap.size(); i++)
-		{
-			if (directMap[i].id_tile == id_meta)
-			{
-				App->scene->switch_map = directMap[i].id_map;
-				App->scene->newPosition = directMap[i].position;
-			}
-		}
-	}
 
 	if (dir == UP)
 	{
@@ -355,6 +341,7 @@ bool j1Map::CleanUp()
 
 	// Remove all DirectionMap
 	directMap.clear();
+	doors.clear();
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -475,8 +462,12 @@ void j1Map::DynObjectFromTiled(uint id_map)
 	int yellowid_3 = data.tilesets[1]->firstgid + 4;
 	int yellowid_4 = data.tilesets[1]->firstgid + 5;
 	int chest_big = data.tilesets[1]->firstgid + 9;
+	int blue = data.tilesets[1]->firstgid + 8;
+	int green = data.tilesets[1]->firstgid;
+	int orange = data.tilesets[1]->firstgid + 6;
+	int purple = data.tilesets[1]->firstgid + 7;
 
-	MapLayer* temp = data.layers[data.layers.size() - 1];
+	MapLayer* temp = data.layers[1];
 
 	for (int y = 0; y < data.height; ++y)
 	{
@@ -508,6 +499,26 @@ void j1Map::DynObjectFromTiled(uint id_map)
 			{
 				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
 				EditCost(x, y, data.tilesets[1]->firstgid + 1);
+			}
+			if (tile_id == blue)
+			{
+				blue = -1;
+				doors.push_back(App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP));
+			}
+			if (tile_id == green)
+			{
+				green = -1;
+				doors.push_back(App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP));
+			}
+			if (tile_id == purple)
+			{
+				purple = -1;
+				doors.push_back(App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP));
+			}
+			if (tile_id == orange)
+			{
+				orange = -1;
+				doors.push_back(App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP));
 			}
 		}
 	}

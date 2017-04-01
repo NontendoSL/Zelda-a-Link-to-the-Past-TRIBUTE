@@ -96,6 +96,10 @@ private:
 
 	std::list<Item*> bag;
 
+	//switchmap
+	bool canSwitchMap = false;
+	Collider* changeMap;
+
 	//Colliders
 	Collider* collision_feet;
 	Collider* collision_attack;

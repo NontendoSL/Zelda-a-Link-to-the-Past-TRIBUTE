@@ -81,13 +81,13 @@ bool j1Scene::Update(float dt)
 			}
 			if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 			{
-				switch_map = 10;
+				switch_map = 4;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
 				switch_map = 4;
 			}
-			if (switch_map == 10)
+			if (switch_map == 6)
 			{
 				if (fade == false)
 				{
@@ -121,7 +121,7 @@ bool j1Scene::Update(float dt)
 							dynobjects.clear();
 						}
 
-						Load_Combat_map(1);
+						Load_Combat_map(6);
 					}
 				}
 				if (App->fadetoblack->Checkfadefromblack())
@@ -182,7 +182,6 @@ bool j1Scene::Update(float dt)
 				SwitchMenu(!inventory);
 			}
 		}
-
 
 	return true;
 }
@@ -376,14 +375,34 @@ bool j1Scene::Load_new_map(int n)
 			player->camera_follow = temp.child("camera").attribute("follow").as_bool();
 			if (player->camera_follow == true)
 			{
-				App->render->camera.x = -((temp.child("Link").attribute("pos_x").as_int(0) - (256 / 2)) * scale);
-				App->render->camera.y = -((temp.child("Link").attribute("pos_y").as_int(0) - (224 / 2)) * scale);
+				int h = App->win->GetHeight() / scale;
+				int w = App->win->GetWidth() / scale;
+				App->render->camera.x = -((player->position.x - (w / scale)) * scale);
+				App->render->camera.y = -((player->position.y - (h / scale)) * scale);
+
+				iPoint size_map = App->map->MapToWorld(App->map->data.width, App->map->data.height);
+				if (-App->render->camera.x < 0)
+				{
+					App->render->camera.x = 0;
+				}
+				if (-App->render->camera.y < 0)
+				{
+					App->render->camera.y = 0;
+				}
+				if (((-App->render->camera.x / scale) + App->win->GetWidth() / scale) > size_map.x)
+				{
+					App->render->camera.x = (-size_map.x + App->win->GetWidth() / scale) * scale;
+				}
+				if (((-App->render->camera.y / scale) + App->win->GetHeight() / scale) > size_map.y)
+				{
+					App->render->camera.y = (-size_map.y + App->win->GetHeight() / scale) * scale;
+				}
 			}
 			else
 			{
 				iPoint size_pos = App->map->MapToWorld(App->map->data.width, App->map->data.height);
-				App->render->camera.x = (256 - size_pos.x);
-				App->render->camera.y = (224 - size_pos.y);
+				App->render->camera.x = (App->win->GetWidth() / scale - size_pos.x);
+				App->render->camera.y = (App->win->GetHeight() / scale - size_pos.y);
 			}
 			stop_rearch = true;
 		}
@@ -410,7 +429,7 @@ bool j1Scene::Load_Combat_map(int n)
 			//trainer
 			App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 			//Pokemon Link
-			if (n == 1)
+			if (n == 6)
 			{
 				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon"), 1));
 			}

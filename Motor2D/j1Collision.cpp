@@ -20,6 +20,10 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_DYNOBJECT] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
+
+	matrix[COLLIDER_PLAYER][COLLIDER_SWITCH_MAP] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_SWITCH_MAP] = false;
+
 }
 j1Collision::~j1Collision() {}
 
@@ -151,7 +155,9 @@ void j1Collision::DebugDraw()
 		case COLLIDER_BOMB: //RED
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
-
+		case COLLIDER_SWITCH_MAP: // Green
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
 		}
 	}
 }
