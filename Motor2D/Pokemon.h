@@ -68,13 +68,13 @@ public:
 protected:
 
 	//Item* drop;
-	Item* item_inside;
+	Item* item_inside= nullptr;
 	Pokemon* target = nullptr;
 	Animation* current_animation = nullptr;
 
 	bool attacker = false;
 
-	Collider* collision_attack;
+	Collider* collision_attack = nullptr;
 };
 
 #endif //__POKEMON_H_

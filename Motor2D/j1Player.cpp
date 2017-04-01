@@ -58,7 +58,7 @@ bool Player::Start()
 	state = IDLE;
 	scale = App->win->GetScale();
 	offset_x = 7;
-	offset_y = 7;
+	offset_y = 10;
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 
@@ -532,35 +532,44 @@ int Player::GetnuminputUse()
 
 void Player::ThrowHookshot(uint charge)
 {
-	hook->in_use = true;
+hook->in_use = true;
 	//CHECK DIRECTION
 	if (direction == UP)
 	{
-		iPoint pos(position.x, position.y);
-		hook->collision = App->collision->AddCollider({ pos.x, pos.y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
-		hook->direction = UP;
+		iPoint pos(position.x, position.y - 3);
 		hook->SetPos(pos);
+		hook->offset_x = 6;
+		hook->offset_y = 4;
+		hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
+		hook->direction = UP;
+	
 	}
 	else if (direction == RIGHT)
 	{
-		iPoint pos(position.x, position.y);
-		hook->collision = App->collision->AddCollider({ position.x, position.y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
-		hook->direction = RIGHT;
+		iPoint pos(position.x, position.y - 3);
 		hook->SetPos(pos);
+		hook->offset_x = 4;
+		hook->offset_y = 6;
+		hook->collision = App->collision->AddCollider({ pos.x + offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
+		hook->direction = RIGHT;
 	}
 	else if (direction == DOWN)
 	{
 		iPoint pos(position.x, position.y);
-		hook->collision = App->collision->AddCollider({ position.x, position.y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
-		hook->direction = DOWN;
 		hook->SetPos(pos);
+		hook->offset_x = 6;
+		hook->offset_y = 4;
+		hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y + hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
+		hook->direction = DOWN;
 	}
 	else if (direction == LEFT)
 	{
-		iPoint pos(position.x, position.y);
-		hook->collision = App->collision->AddCollider({ position.x, position.y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
-		hook->direction = LEFT;
+		iPoint pos(position.x, position.y - 3);
 		hook->SetPos(pos);
+		hook->offset_x = 4;
+		hook->offset_y = 6;
+		hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
+		hook->direction = LEFT;
 	}
 
 	//SET MAX RANGE
@@ -570,7 +579,7 @@ void Player::ThrowHookshot(uint charge)
 bool Player::Hooking()
 {
 	//collider follows the hookshot
-	hook->collision->SetPos(hook->position.x - offset_x, hook->position.y - offset_y);
+	hook->collision->SetPos(hook->position.x - hook->offset_x, hook->position.y - hook->offset_y);
 	HookState stat = hook->GetState();
 
 	if (hook->actual_range_pos < hook->range)
@@ -661,6 +670,7 @@ void Player::PickUpHook()
 	}
 }
 
+
 void Player::MoveTo(const iPoint& pos)
 {
 	switch (direction)
@@ -668,14 +678,14 @@ void Player::MoveTo(const iPoint& pos)
 	case UP:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
-		int temp = App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP);
 		if (temp == 0)
 		{
 			if (Camera_inside())
 				App->render->camera.y += hook->speed * scale;
 			position.y -= hook->speed;
 		}
-		else if (hook->position.y >= position.y || temp !=0)
+		else if (hook->position.y >= position.y || temp != 0)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -686,7 +696,7 @@ void Player::MoveTo(const iPoint& pos)
 	case DOWN:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN
-		int temp = App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN);
 		if (temp == 0)
 		{
 			if (Camera_inside())
@@ -704,7 +714,7 @@ void Player::MoveTo(const iPoint& pos)
 	case LEFT:
 	{
 		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
-		int temp = App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT);
+		int temp = App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
 		if (temp == 0)
 		{
 			if (Camera_inside())
@@ -722,7 +732,7 @@ void Player::MoveTo(const iPoint& pos)
 	case RIGHT:
 	{
 		//int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT
-		int temp = App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT);
+		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
 		if (temp == 0)
 		{
 			if (Camera_inside())
@@ -743,6 +753,7 @@ void Player::MoveTo(const iPoint& pos)
 }
 
 
+
 bool Player::Move()
 {
 	int keysuse = GetnuminputUse();
@@ -750,7 +761,7 @@ bool Player::Move()
 	{
 		direction = LEFT;
 		//int temp = App->map->MovementCost(position.x - speed, position.y, LEFT
-		int temp = App->map->MovementCost(position.x - offset_x - speed, position.y, offset_x, offset_y, LEFT);
+		int temp = App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
@@ -784,7 +795,7 @@ bool Player::Move()
 	{
 		direction = DOWN;
 		//int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
-		int temp = App->map->MovementCost(position.x, position.y + offset_y + speed, offset_x, offset_y, DOWN);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
@@ -817,7 +828,7 @@ bool Player::Move()
 	{
 		direction = RIGHT;
 		//int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
-		int temp = App->map->MovementCost(position.x + offset_x + speed, position.y, offset_x, offset_y, RIGHT);
+		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
@@ -850,7 +861,7 @@ bool Player::Move()
 	{
 		direction = UP;
 		//int temp = App->map->MovementCost(position.x, position.y - speed, UP);
-		int temp = App->map->MovementCost(position.x, position.y - offset_y - speed, offset_x, offset_y, UP);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())

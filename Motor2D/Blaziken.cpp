@@ -42,7 +42,7 @@ bool Blaziken::Start()
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	movable = true;
-	collision_enemy = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_PLAYER, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_PLAYER, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
@@ -123,7 +123,7 @@ bool Blaziken::Update()
 	}
 
 	//Collision follow the player
-	collision_enemy->SetPos(position.x - offset_x, position.y - offset_y);
+	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
 }
 
@@ -142,7 +142,7 @@ void Blaziken::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_enemy && c2->type == COLLIDER_ENEMY)
+		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
 		{
 
 		}
@@ -205,7 +205,7 @@ bool Blaziken::Move()
 	{
 		direction = LEFT;
 		//int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
-		int temp = App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT);
+		int temp = App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
 		if (temp == 0)
 		{
 			position.x -= speed;
@@ -218,7 +218,7 @@ bool Blaziken::Move()
 	{
 		direction = DOWN;
 		//int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
-		int temp = App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN);
 		if (temp == 0)
 		{
 			position.y += speed;
@@ -231,7 +231,7 @@ bool Blaziken::Move()
 	{
 		direction = RIGHT;
 		//int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
-		int temp = App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT);
+		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
 		if (temp == 0)
 		{
 			position.x += speed;
@@ -243,7 +243,7 @@ bool Blaziken::Move()
 	{
 		direction = UP;
 		//int temp = App->map->MovementCost(position.x, position.y - speed, UP);
-		int temp = App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP);
 		if (temp == 0)
 		{
 			position.y -= speed;

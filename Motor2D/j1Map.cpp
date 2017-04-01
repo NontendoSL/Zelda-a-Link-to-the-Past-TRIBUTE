@@ -137,7 +137,7 @@ void j1Map::EditCost(int x, int y, int value)
 	meta_layer->data[y*meta_layer->width + x] = value;
 }
 
-TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direction dir) const
+TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction dir) const
 {
 	TileDirection ret = T_CONTINUE;
 	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
@@ -159,9 +159,9 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 
 	if (dir == UP)
 	{
-		iPoint ptemp = WorldToMap(x - offsetX, y); //left position
-		iPoint ptemp_2 = WorldToMap(x, y); //central position
-		iPoint ptemp_3 = WorldToMap(x + offsetX, y); //rigth position
+		iPoint ptemp = WorldToMap(x, y); //left position
+		iPoint ptemp_2 = WorldToMap(x + width*0.5, y); //central position
+		iPoint ptemp_3 = WorldToMap(x + width, y); //rigth position
 
 		MapLayer* meta_layer = data.layers[1];
 
@@ -187,9 +187,9 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 	}
 	if (dir == LEFT)
 	{
-		iPoint ptemp = WorldToMap(x, y - offsetY); //up position
-		iPoint ptemp_2 = WorldToMap(x, y); //central position
-		iPoint ptemp_3 = WorldToMap(x, y + offsetY); //down position
+		iPoint ptemp = WorldToMap(x, y); //up position
+		iPoint ptemp_2 = WorldToMap(x, y + height*0.5); //central position
+		iPoint ptemp_3 = WorldToMap(x, y + height); //down position
 
 		MapLayer* meta_layer = data.layers[1];
 
@@ -214,9 +214,10 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 	}
 	if (dir == RIGHT)
 	{
-		iPoint ptemp = WorldToMap(x, y - offsetY); //up position
-		iPoint ptemp_2 = WorldToMap(x, y); //central position
-		iPoint ptemp_3 = WorldToMap(x, y + offsetY); //down position
+		iPoint ptemp = WorldToMap(x, y); //up position
+		iPoint ptemp_2 = WorldToMap(x, y + width*0.5); //central position
+		iPoint ptemp_3 = WorldToMap(x, y + width); //down position
+
 		MapLayer* meta_layer = data.layers[1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
@@ -240,9 +241,10 @@ TileDirection j1Map::MovementCost(int x, int y, int offsetX, int offsetY, Direct
 	}
 	if (dir == DOWN)
 	{
-		iPoint ptemp = WorldToMap(x - offsetX, y); //left position
-		iPoint ptemp_2 = WorldToMap(x, y); //central position
-		iPoint ptemp_3 = WorldToMap(x + offsetX, y); //down position
+		iPoint ptemp = WorldToMap(x, y); //left position
+		iPoint ptemp_2 = WorldToMap(x + width*0.5, y); //central position
+		iPoint ptemp_3 = WorldToMap(x + width, y); //down position
+
 		MapLayer* meta_layer = data.layers[1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);

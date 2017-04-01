@@ -32,6 +32,7 @@
     <file file="animation/Bomb.xml"/>
     <file file="animation/GeodudeAnimations.xml"/>
     <file file="animation/GolemAnimations.xml"/>
+    <file file="animation/Enemies.xml"/>
 	</animation>
   
 	<window>

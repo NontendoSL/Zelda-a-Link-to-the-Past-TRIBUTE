@@ -142,7 +142,7 @@ bool j1EntityElementScene::DeleteEnemy(Soldier* enemy)
 	{
 		elementscene.remove(enemy);
 		App->scene->enemy.remove(enemy);
-		enemy->collision_enemy->to_delete = true;
+		enemy->collision_feet->to_delete = true;
 		enemy = nullptr;
 		delete enemy;
 		LOG("Enemy DELETE!");
