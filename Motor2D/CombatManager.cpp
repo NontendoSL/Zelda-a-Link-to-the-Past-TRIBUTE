@@ -53,34 +53,37 @@ bool CombatManager::Update(float dt)
 	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
 
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
-	
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->scene->combat)
 	{
-		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-		Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
-		Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
-		temp->active = true;
-		temp_2->active = false;
-		temp_3->active = false;
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+			Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
+			Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
+			temp->active = true;
+			temp_2->active = false;
+			temp_3->active = false;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+			Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
+			Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
+			temp->active = false;
+			temp_2->active = true;
+			temp_3->active = false;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		{
+			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+			Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
+			Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
+			temp->active = false;
+			temp_2->active = false;
+			temp_3->active = true;
+		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-		Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
-		Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
-		temp->active = false;
-		temp_2->active = true;
-		temp_3->active = false;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-		Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
-		Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
-		temp->active = false;
-		temp_2->active = false;
-		temp_3->active = true;
-	}
+
 	while (item != elementcombat.end())
 	{
 		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;

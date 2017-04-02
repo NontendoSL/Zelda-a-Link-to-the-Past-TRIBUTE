@@ -491,6 +491,8 @@ bool j1Scene::Load_Combat_map(int n)
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
+	pokecombat = App->gui->CreatePokemonCombatHud(450, 100, 300);
+
 	for (pugi::xml_node temp = config.child("map_combat").child("map"); stop_rearch == false; temp = temp.next_sibling())
 	{
 		if (temp.attribute("n").as_int(0) == n)
