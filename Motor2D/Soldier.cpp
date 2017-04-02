@@ -213,15 +213,8 @@ void Soldier::Draw()
 		pivot = animation.anim[id].East_action.GetCurrentOffset();
 	}
 
-	//DRAW
-	if (texture == nullptr)
-	{
-		LOG("TEXTURE NULL");
-	}
-	else
-	{
-		App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
-	}
+	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+	
 }
 
 void Soldier::AddItem(Item* item)
