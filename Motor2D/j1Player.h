@@ -14,6 +14,7 @@ class Pokemon;
 class Hookshot;
 class Weapon;
 class BombContainer;
+class Dialogue;
 
 class Player : public Creature, public InputListener
 {

@@ -196,11 +196,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		if (dialog == nullptr)
 		{
-			//	dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
+				dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
 		}
 		else if (dialog->end == false)
 		{
-			//	dialog->PushLine(true);
+				dialog->PushLine(true);
 		}
 	}
 

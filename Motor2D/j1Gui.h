@@ -17,6 +17,7 @@ class Button;
 class Dialogue;
 class ZeldaMenu;
 class PokemonCombatHud;
+class Selector;
 
 // ---------------------------------------------------
 class j1Gui : public j1Module

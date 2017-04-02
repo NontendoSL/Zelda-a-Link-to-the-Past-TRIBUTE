@@ -385,7 +385,7 @@ void Selector::Handle_Input()
 		Dialogue*item = (Dialogue*)parent;
 		App->gui->Erase(item->options->vector_pos);
 		item->options = nullptr;
-		App->gui->
+		App->gui->Erase(item->vector_pos);
 	}
 }
 
