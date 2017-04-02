@@ -277,6 +277,23 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
+		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
+		{
+			if (hurt == false)
+			{
+				timer.Start();
+				hurt = true;
+				hp_hearts.y--;
+			}
+			else
+			{
+				if (timer.ReadSec() >= 1)
+				{
+					hurt = false;
+				}
+			}
+		}
+
 		if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
 		{
 			Soldier* soldier = (Soldier*)c2->callback;
