@@ -83,6 +83,34 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
 	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
 	bool ret = true;
+	//if you dead, you appear on the Link House
+	if (hp_hearts.y == 0)
+	{
+		hp_hearts = { 6,6 };
+		if (App->map->CleanUp())
+		{
+			App->collision->EreseAllColiderPlayer();
+			App->entity_elements->DelteElements();
+			if (App->scene->enemy.size() > 0)
+			{
+				App->scene->enemy.clear();
+			}
+			if (App->scene->items.size() > 0)
+			{
+				App->scene->items.clear();
+			}
+			if (App->scene->dynobjects.size() > 0)
+			{
+				App->scene->dynobjects.clear();
+			}
+			if (App->scene->pokemons.size() > 0)
+			{
+				App->scene->pokemons.clear();
+			}
+
+			App->scene->Load_new_map(1);
+		}
+	}
 
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)
