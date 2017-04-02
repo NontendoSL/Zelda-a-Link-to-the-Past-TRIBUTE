@@ -42,7 +42,14 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 
 bool DynamicObjects::Start()
 {
-	collision = App->collision->AddCollider({ position.x, position.y, 16, 16 }, COLLIDER_DYNOBJECT, this);
+	if (name == "bigchest")
+	{
+		collision = App->collision->AddCollider({ position.x, position.y, 32, 24 }, COLLIDER_DYNOBJECT, this);
+	}
+	else
+	{
+		collision = App->collision->AddCollider({ position.x, position.y, 16, 16 }, COLLIDER_DYNOBJECT, this);
+	}
 	return true;
 }
 
