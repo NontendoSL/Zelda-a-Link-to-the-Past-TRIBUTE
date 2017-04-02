@@ -81,6 +81,14 @@ bool j1Scene::Update(float dt)
 			AssignValues(gems, player->gems);
 			AssignValues(bombs, player->bombs);
 			AssignValues(arrows, player->arrows);
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) { // provisional heart/damage checker
+				player->GetDamage();
+			}
+			if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) { // provisional heart container add
+				player->AddHeartContainer();
+			}
+
+			player->ShowHearts();
 			force->Hitbox.w = player->charge;
 
 			if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
@@ -274,7 +282,12 @@ void j1Scene::LoadUi()
 	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
 	hud->AddElement(arrows);
 	//adding arrows
-	hud->AddElement(App->gui->CreateImage({ 178,15,44,7 }, { 178,15 }, "life"));
+	hp = App->gui->CreateImage({ 178,15,44,7 }, { 178,15 }, "life");
+	hud->AddElement(hp);
+	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -21,9 }, "hp1"));
+	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -12,9 }, "hp2")); //heart containers
+	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -3,9 }, "hp3"));
+
 	hud->position = { 0,0 };
 	hud->identifier = "hud";
 	//Start Menu

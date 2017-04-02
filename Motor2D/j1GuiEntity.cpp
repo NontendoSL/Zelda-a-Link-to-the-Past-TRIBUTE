@@ -16,6 +16,14 @@ j1GuiEntity::j1GuiEntity(SDL_Rect rectangle, iPoint position,std::string identif
 
 }
 
+void j1GuiEntity::CalculateDiferential()
+{
+	position.x += parent->position.x;
+	position.y += parent->position.y;
+	diferential.x = (position.x - parent->position.x);
+	diferential.y = (position.y - parent->position.y);
+}
+
 void j1GuiEntity::Update() {
 
 

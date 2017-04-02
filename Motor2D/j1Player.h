@@ -73,6 +73,9 @@ public:
 
 	int GetnuminputUse();
 
+	void AddHeartContainer();
+	void ShowHearts();
+	void GetDamage();
 public:
 
 	//ITEMS ----------
@@ -91,8 +94,8 @@ public:
 	bool camera_follow = false;
 
 private:
-	Text* hp_text = nullptr;
-	Text* attack_text = nullptr;
+	//player stats
+	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)
 
 	std::list<Item*> bag;
 

@@ -67,7 +67,7 @@ public:
 	//Ingame
 	ZeldaMenu* hud=nullptr,*start_menu = nullptr;
 	PokemonCombatHud* pokecombat = nullptr;
-	Image* force, *gems, *bombs, *arrows;
+	Image* force, *gems, *bombs, *arrows,*hp;
 	Player* player = nullptr;
 	std::list<Soldier*> enemy; //TODO LOW -> change to std::list<NPC*> enemies;
 	std::list<Item*> items;

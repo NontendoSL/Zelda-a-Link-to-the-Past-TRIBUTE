@@ -27,6 +27,7 @@ Player::Player() : Creature()
 {
 	type = CREATURE;
 	name = "Link";
+	hp_hearts = { 6,6 };
 }
 
 // Destructor
@@ -930,4 +931,43 @@ bool Player::CheckOrientation()
 		direction = DOWN;
 	}
 	return true;
+}
+
+void Player::AddHeartContainer()
+{
+	iPoint last_heart_pos = App->scene->hp->elements.back()->position - App->scene->hp->position;
+	Image* newhp = App->gui->CreateImage({ 177,24,7,7 }, { last_heart_pos.x + 9,last_heart_pos.y }, "hp_add");
+	App->scene->hp->elements.push_back(newhp);
+	newhp->parent = App->scene->hp;
+	newhp->CalculateDiferential();
+	hp_hearts.x += 2;
+	hp_hearts.y = hp_hearts.x;
+}
+
+void Player::ShowHearts()
+{
+	int addheart = hp_hearts.y;
+	for (int i = 0; i < App->scene->hp->elements.size(); i++)
+	{
+		if (addheart - 2 >= 0)
+		{
+			App->scene->hp->elements[i]->Hitbox.x = 161;
+			addheart -= 2;
+		}
+		else if (addheart - 1 >= 0)
+		{
+			App->scene->hp->elements[i]->Hitbox.x = 169;
+			addheart--;
+		}
+		else if (addheart == 0)
+		{
+			App->scene->hp->elements[i]->Hitbox.x = 177;
+		}
+	}
+}
+
+void Player::GetDamage()
+{
+	if (hp_hearts.y>0)
+		hp_hearts.y--;
 }
