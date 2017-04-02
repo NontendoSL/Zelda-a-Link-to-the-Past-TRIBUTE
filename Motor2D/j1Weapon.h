@@ -62,7 +62,7 @@ public:
 	void SetRange(float charge);
 
 	//Check the tile at its position each X Updates
-	HookState ReachObjective();
+	HookState ReachObjective(int actual_floor);
 	HookState GetState();
 
 	void Reset();

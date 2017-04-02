@@ -58,20 +58,60 @@ void Hookshot::SetRange(float charge)
 	range = charge * 1.5;
 }
 
-HookState Hookshot::ReachObjective()
+HookState Hookshot::ReachObjective(int actual_floor)
 {
-	if (App->map->MovementCost(position.x, position.y, offset_x, offset_y, direction) == T_WALL) //hookchange
+	//TODO HIGH -> made it functional to Zelda World
+	const MapLayer* meta_layer = App->map->data.layers[2]; // metasudo layer
+	iPoint map_pos = App->map->WorldToMap(position.x, position.y);
+	int hook_tile = meta_layer->Get(map_pos.x, map_pos.y);
+
+	const TileSet* tileset = App->map->data.tilesets[1];
+
+	int first_floor_hook = tileset->firstgid + 7; // PINK TILE
+	int second_floor_hook = tileset->firstgid + 9; // BLACK TILE
+	int third_floor_hook = tileset->firstgid + 6; // ORANGE TILE
+	int target = tileset->firstgid + 8;
+
+	if (actual_floor == 0)
+	{
+		if (hook_tile == first_floor_hook)
+		{
+			target_reached = false;
+			hook_state = OBSTACLE;
+			return hook_state;
+		}
+	}
+	else if (actual_floor == 1)
+	{
+		if (hook_tile == second_floor_hook)
+		{
+			target_reached = false;
+			hook_state = OBSTACLE;
+			return hook_state;
+		}
+	}
+	else if (actual_floor == 2)
+	{
+		if (hook_tile == third_floor_hook)
+		{
+			target_reached = false;
+			hook_state = OBSTACLE;
+			return hook_state;
+		}
+	}
+
+	if (hook_tile == target) //hookchange
 	{
 		target_reached = true;
 		hook_state = TARGET;
+		return hook_state;
 	}
 	else
 	{
 		target_reached = false;
 		hook_state = MISS;
+		return hook_state;
 	}
-
-	return hook_state;
 }
 
 HookState Hookshot::GetState()

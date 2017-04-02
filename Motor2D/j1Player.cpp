@@ -585,7 +585,6 @@ bool Player::Unequip()
 
 void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
-
 	switch (action)
 	{
 		if (gamestate == INGAME)
@@ -600,6 +599,34 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		}
 		break;
 	}
+	case BUTTON_A:
+	{
+		if (e_state == E_DOWN)
+		{
+			state = INTERACTING;;
+			//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+			//current_animation->Reset();
+		}
+		break;
+	}
+
+	case BUTTON_B:
+		if (equiped_item == hook)
+		{
+			if (e_state == E_UP)
+			{
+				state = HOOKTHROWN;
+				ThrowHookshot(charge);
+			}
+		}
+		else if (equiped_item == bombmanager)
+		{
+			if (e_state == E_UP)
+			{
+				bombmanager->Drop(position);
+			}
+		}
+		break;
 		}
 
 	case BUTTON_START:
@@ -690,7 +717,7 @@ bool Player::Hooking()
 	{
 		if (stat == MISS)
 		{
-			/*HookState stat = hook->ReachObjective();*/
+			HookState stat = hook->ReachObjective(actual_floor);
 			KeepGoing();
 			hook->actual_range_pos++;
 		}
@@ -782,14 +809,12 @@ void Player::MoveTo(const iPoint& pos)
 	case UP:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
-		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP);
-		if (temp == 0)
-		{
-			if (Camera_inside())
-				App->render->camera.y += hook->speed * scale;
-			position.y -= hook->speed;
-		}
-		else if (hook->position.y >= position.y || temp != 0)
+		if (Camera_inside())
+			App->render->camera.y += hook->speed * scale;
+
+		position.y -= hook->speed;
+
+		if (hook->position.y >= position.y)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -800,14 +825,11 @@ void Player::MoveTo(const iPoint& pos)
 	case DOWN:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN
-		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN);
-		if (temp == 0)
-		{
-			if (Camera_inside())
-				App->render->camera.y -= hook->speed * scale;
-			position.y += hook->speed;
-		}
-		else if (hook->position.y <= position.y || temp != 0)
+		if (Camera_inside())
+			App->render->camera.y -= hook->speed * scale;
+		position.y += hook->speed;
+
+		if (hook->position.y <= position.y)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -818,14 +840,12 @@ void Player::MoveTo(const iPoint& pos)
 	case LEFT:
 	{
 		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
-		int temp = App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
-		if (temp == 0)
-		{
-			if (Camera_inside())
-				App->render->camera.x = hook->speed * scale;
-			position.x -= hook->speed;
-		}
-		else if (hook->position.x >= position.x || temp != 0)
+
+		if (Camera_inside())
+			App->render->camera.x = hook->speed * scale;
+		position.x -= hook->speed;
+
+		if (hook->position.x >= position.x)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -836,14 +856,12 @@ void Player::MoveTo(const iPoint& pos)
 	case RIGHT:
 	{
 		//int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT
-		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
-		if (temp == 0)
-		{
-			if (Camera_inside())
-				App->render->camera.x -= hook->speed * scale;
-			position.x += hook->speed;
-		}
-		else if (hook->position.x <= position.x || temp != 0)
+
+		if (Camera_inside())
+			App->render->camera.x -= hook->speed * scale;
+		position.x += hook->speed;
+
+		if (hook->position.x <= position.x)
 		{
 			hook->Reset();
 			state = IDLE;
@@ -855,7 +873,6 @@ void Player::MoveTo(const iPoint& pos)
 		break;
 	}
 }
-
 
 
 bool Player::Move()
@@ -994,7 +1011,40 @@ bool Player::Move()
 		walking = true;
 	}
 
+	//Set the actual floor of the player
+	if (App->map->data.layers.size() >= 3)
+	{
+		GetfloorLvl(position);
+	}
+
 	return walking;
+}
+
+void Player::GetfloorLvl(iPoint pos)
+{
+	const MapLayer* meta_layer = App->map->data.layers[2];
+	iPoint map_pos = App->map->WorldToMap(pos.x, pos.y);
+	int player_lvl = meta_layer->Get(map_pos.x, map_pos.y);
+
+	const TileSet* tileset = App->map->data.tilesets[1];
+	int first_floor = tileset->firstgid + 1; // RED TILE
+	int second_floor = tileset->firstgid + 2; // YELLOW TILE
+	int third_floor = tileset->firstgid ; // GREEN TILE
+
+	if (first_floor == player_lvl)
+	{
+		actual_floor = 0;
+	}
+	else if (second_floor == player_lvl)
+	{
+		actual_floor = 1;
+	}
+	else if (third_floor == player_lvl)
+	{
+		actual_floor = 2;
+	}
+
+	LOG("Link is in floor %i", actual_floor);
 }
 
 bool Player::CheckOrientation()

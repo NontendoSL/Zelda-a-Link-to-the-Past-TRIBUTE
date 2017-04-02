@@ -55,6 +55,8 @@ public:
 
 	bool Move();
 
+	void GetfloorLvl(iPoint pos);
+
 	bool Attack();
 
 	bool Interact();
@@ -78,6 +80,7 @@ public:
 	void AddHeartContainer();
 	void ShowHearts();
 	void GetDamage();
+
 public:
 
 	//ITEMS ----------
@@ -96,9 +99,10 @@ public:
 	bool camera_follow = false;
 
 private:
+
 	//player stats
 	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)
-
+	int actual_floor = 0;
 	std::list<Item*> bag;
 
 	//switchmap
