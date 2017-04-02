@@ -95,7 +95,7 @@ bool Golem::Update()
 				mode_stone = false;
 				timetoplay = SDL_GetTicks();
 			}
-			if (mode_stone == false && SDL_GetTicks() - timetoplay > 200)
+			if (mode_stone == false && SDL_GetTicks() - timetoplay > 500)
 			{
 				state = IDLE;
 			}

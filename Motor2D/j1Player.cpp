@@ -21,6 +21,7 @@
 #include "j1Creature.h"
 #include "j1Weapon.h"
 #include "Animation.h"
+#include "Pokemon.h"
 
 //Constructor
 Player::Player() : Creature()
@@ -350,7 +351,10 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		}
 		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON)
 		{
-			c2->callback->state = AWAKENING;
+			if (c2->callback->name == "Golem")
+			{
+				c2->callback->state = AWAKENING;
+			}
 		}
 	}
 }

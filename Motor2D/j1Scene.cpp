@@ -98,10 +98,6 @@ bool j1Scene::Update(float dt)
 			{
 				App->fadetoblack->FadeToBlack(4);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-			{
-				switch_map = 4;
-			}
 			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
 				switch_map = 4;
