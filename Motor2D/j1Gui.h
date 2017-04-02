@@ -53,11 +53,15 @@ public:
 	Button* CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated = false, std::string identifier = "undefined", uint id = 0, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
 
 	Dialogue* CreateDialogue(const char* string);
+	Selector* CreateSelector(const char* first, const char* second, j1GuiEntity*parent);
 
 	ZeldaMenu* CreateZeldaMenu();
 
 	PokemonCombatHud* CreatePokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2);
 
+	void Erase(int id);
+
+	int GetEntitiesSize();
 public:
 	int Next_id = 0;
 

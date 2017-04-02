@@ -68,7 +68,9 @@ bool j1Gui::CleanUp()
 	if (entities.size() > 0)
 	{
 		for (uint i = entities.size() - 1; i > 0; i--) {
-			delete entities[i];
+			if (entities[i] != nullptr) {
+				delete entities[i];
+			}
 		}
 		entities.clear();
 	}
@@ -81,6 +83,15 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
+void j1Gui::Erase(int id)
+{
+	entities.erase(entities.begin() + id + 1);
+}
+
+int j1Gui::GetEntitiesSize()
+{
+	return entities.size();
+}
 
 Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos, std::string identifier, uint id) {
 
@@ -91,9 +102,9 @@ Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos, std::string identifier, uin
 	return element;
 }
 
-Text* j1Gui::CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Color color , bool addelement, std::string identifier, uint id) {
+Text* j1Gui::CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Color color, bool addelement, std::string identifier, uint id) {
 
-	Text* element = new Text(search,string,color, length, pos, size,addelement, identifier, id);
+	Text* element = new Text(search, string, color, length, pos, size, addelement, identifier, id);
 	if (addelement)
 		entities.push_back(element);
 
@@ -112,6 +123,15 @@ Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text
 Dialogue* j1Gui::CreateDialogue(const char* string) {
 
 	Dialogue* element = new Dialogue(string);
+
+	entities.push_back(element);
+
+	return element;
+}
+
+Selector* j1Gui::CreateSelector(const char* first, const char*second, j1GuiEntity*parent) {
+
+	Selector* element = new Selector(first, second, parent);
 
 	entities.push_back(element);
 
