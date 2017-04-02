@@ -13,6 +13,7 @@
 #include "j1Player.h"
 #include "j1FileSystem.h"
 #include "j1AnimationManager.h"
+#include "Golem.h"
 #include "j1Collision.h"
 #include "j1InputManager.h"
 #include "Soldier.h"
@@ -446,14 +447,15 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		}
 		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON)
 		{
-			if (c2->callback->name == "Golem")
+			if (c2->callback->name == "Golem" && c2->callback->state == HIT)
 			{
 				c2->callback->state = AWAKENING;
 			}
 		}
 		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
 		{
-			if (hurt == false) {
+			if (hurt == false) 
+			{
 				GetDamage();
 				hurt = true;
 			}

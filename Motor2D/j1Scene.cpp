@@ -84,24 +84,24 @@ bool j1Scene::Update(float dt)
 			AssignValues(gems, player->gems);
 			AssignValues(bombs, player->bombs);
 			AssignValues(arrows, player->arrows);
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) { // provisional heart/damage checker
+			/*if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) { // provisional heart/damage checker
 				player->GetDamage();
 			}
 			if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) { // provisional heart container add
 				player->AddHeartContainer();
-			}
+			}*/
 
 			player->ShowHearts();
 			force->Hitbox.w = player->charge;
 
-			if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 			{
 				App->fadetoblack->FadeToBlack(4);
 			}
 			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
 				switch_map = 4;
-			}
+			}*/
 			if (switch_map == 6)
 			{
 				if (fade == false)
@@ -211,7 +211,7 @@ bool j1Scene::Update(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 		{
 			player->position.x += 50;
 			App->render->camera.x -= 100;
@@ -220,7 +220,7 @@ bool j1Scene::Update(float dt)
 		{
 			player->position.x -= 50;
 			App->render->camera.x += 100;
-		}
+		}*/
 		
 	return true;
 }
