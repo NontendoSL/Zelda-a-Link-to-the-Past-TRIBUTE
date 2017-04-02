@@ -386,7 +386,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			if (n == 1)
+			if (n == 1 && switch_map == 0)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);

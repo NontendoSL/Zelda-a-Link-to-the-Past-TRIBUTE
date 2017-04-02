@@ -102,7 +102,7 @@ private:
 	std::list<Item*> bag;
 
 	//switchmap
-	bool canSwitchMap = false;
+	bool canSwitchMap;
 	Collider* changeMap;
 
 	//Colliders

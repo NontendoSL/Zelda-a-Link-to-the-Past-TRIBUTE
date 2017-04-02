@@ -35,7 +35,7 @@
   <maps>
     <map n="1" file="TiledLinkHouse.tmx">
       <camera follow="false"/>
-      <Link pos_x="104" pos_y="150" />
+      <Link pos_x="110" pos_y="100" />
       <items>
         <!--<item id="1" name="bomb" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />
 				<item id="2" name="bomb_2" type="ZELDA" attack="100" durability="1" file="gui/sf2.png" />-->
