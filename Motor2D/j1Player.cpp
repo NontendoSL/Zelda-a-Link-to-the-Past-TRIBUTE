@@ -487,18 +487,22 @@ bool Player::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
+			App->audio->PlayFx(5);
 			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y - 18, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == RIGHT)
 		{
+			App->audio->PlayFx(5);
 			collision_attack = App->collision->AddCollider({ position.x + 3, position.y - 8, 20, 8 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == DOWN)
 		{
+			App->audio->PlayFx(5);
 			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - 6, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == LEFT)
 		{
+			App->audio->PlayFx(5);
 			collision_attack = App->collision->AddCollider({ position.x - 22, position.y - 7, 20, 8 }, COLLIDER_PLAYER, this);
 		}
 	}
