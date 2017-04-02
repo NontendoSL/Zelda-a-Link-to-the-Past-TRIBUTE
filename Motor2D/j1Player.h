@@ -116,6 +116,7 @@ private:
 
 	bool attacker;
 	bool interaction;
+	bool hurt = false;
 
 	//Timer
 	int timetoplay;
