@@ -218,10 +218,7 @@ BombContainer::BombContainer()
 	Wtype = BOMB;
 }
 
-BombContainer::~BombContainer()
-{
-
-}
+BombContainer::~BombContainer(){}
 
 void BombContainer::Drop(iPoint position)
 {

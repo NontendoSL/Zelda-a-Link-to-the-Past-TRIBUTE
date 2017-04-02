@@ -117,8 +117,11 @@ bool j1EntityElementScene::DelteElements()
 	{
 		while (item != elementscene.begin())
 		{
-			delete item._Ptr->_Myval;
-			elementscene.pop_back();
+			if (item._Ptr->_Myval->type != WEAPON)
+			{
+				delete item._Ptr->_Myval;
+				elementscene.pop_back();
+			}
 			item--;
 		}
 	}
@@ -231,7 +234,6 @@ DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint 
 Player* j1EntityElementScene::CreatePlayer()
 {
 	Player* element = new Player();
-
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);

@@ -14,7 +14,8 @@
   </items>
 
   <weapons>
-    <weapon id="1" name="hookshot" equiped="false" picked="false" file="textures/Hook.png"/>
+    <weapon id="1" name="hookshot" equiped="false" picked="false" file="textures/Items.png"/>
+    <weapon id="2" name="bomb" equiped="false" picked="false" file="textures/Items.png"/>
   </weapons>
 
   <maps>
