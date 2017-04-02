@@ -287,7 +287,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT)
 		{
-			if (c2->callback->name == "chest" || c2->callback->name == "big_chest")
+			if (c2->callback->name == "chest" || c2->callback->name == "bigchest")
 			{
 				iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
 				//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
@@ -295,8 +295,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				if (canDrop == 1)
 				{
 					iPoint position;
-					position.x = c2->callback->position.x + 4;
-					position.y = c2->callback->position.y + 4;
+					position.x = c2->callback->position.x + c2->rect.w*0.5;
+					position.y = c2->callback->position.y + c2->rect.h;
 					DynamicObjects* temp = (DynamicObjects*)c2->callback;
 					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
 				}
@@ -327,12 +327,18 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				bombs++;
 				//App->collision->EraseCollider(c2);
 			}
-			if (c2->callback->name == "hook")
+			if (c2->callback->name == "hookshot")
 			{
 				if (hook == nullptr)
 				{
 					hook = App->entity_elements->CreateHookshot();
 				}
+				App->entity_elements->DeleteItem((Item*)c2->callback);
+				//App->collision->EraseCollider(c2);
+			}
+			if (c2->callback->name == "heart")
+			{
+				AddHeartContainer();
 				App->entity_elements->DeleteItem((Item*)c2->callback);
 				//App->collision->EraseCollider(c2);
 			}
@@ -963,7 +969,7 @@ void Player::MoveTo(const iPoint& pos)
 		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
 
 		if (Camera_inside())
-			App->render->camera.x = hook->speed * scale;
+			App->render->camera.x += hook->speed * scale;
 		position.x -= hook->speed;
 
 		if (hook->position.x >= position.x)
