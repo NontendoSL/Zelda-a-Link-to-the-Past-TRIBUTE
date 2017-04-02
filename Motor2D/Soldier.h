@@ -3,7 +3,7 @@
 #define __SOLDIER_H_
 
 #include "NPC.h"
-
+enum SoldierType {AGGRESSIVE, PASSIVE};
 class Soldier : public NPC
 {
 public:
@@ -52,7 +52,8 @@ public:
 
 private:
 
-	ActionState test_state = WALKING;
+	SoldierType soldier_type;
+	uint id = 0;
 
 	//Soldier Test for Release 0.1
 	AnimationStruct animation;

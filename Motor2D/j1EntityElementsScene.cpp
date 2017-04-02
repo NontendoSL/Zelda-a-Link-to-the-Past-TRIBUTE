@@ -55,7 +55,7 @@ bool j1EntityElementScene::Start()
 
 bool j1EntityElementScene::PreUpdate()
 {
-	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
+	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan)
 
 	return true;
 }
@@ -79,7 +79,7 @@ bool j1EntityElementScene::Update(float dt)
 
 bool j1EntityElementScene::PostUpdate()
 {
-	BROFILER_CATEGORY("Draw_Elements", Profiler::Color::Green);
+	BROFILER_CATEGORY("Draw_Elements", Profiler::Color::Green)
 	if (App->scene->combat == false)
 	{
 		std::list<SceneElement*>::iterator item = elementscene.end();

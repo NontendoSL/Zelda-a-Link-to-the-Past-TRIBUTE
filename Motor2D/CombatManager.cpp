@@ -48,7 +48,7 @@ bool CombatManager::PreUpdate()
 
 bool CombatManager::Update(float dt)
 {
-	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
+	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan)
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	while (item != elementcombat.end())
 	{
@@ -64,7 +64,7 @@ bool CombatManager::Update(float dt)
 
 bool CombatManager::PostUpdate()
 {
-	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green);
+	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green)
 
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	while (item != elementcombat.end())

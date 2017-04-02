@@ -43,6 +43,14 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 
 			movable = conf.attribute("canMove").as_bool(false);
 			destructible = conf.attribute("destructible").as_bool(false);
+			if (destructible == false)
+			{
+				soldier_type = PASSIVE;
+			}
+			else
+			{
+				soldier_type = AGGRESSIVE;
+			}
 			npc_id = id;
 			stop_search = true;
 		}
@@ -58,22 +66,30 @@ bool Soldier::CleanUp()
 
 bool Soldier::Start()
 {
-	offset_x = 8;
-	offset_y = 15;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_ENEMY, this);
+	if (soldier_type == AGGRESSIVE)
+	{
+		offset_x = 8;
+		offset_y = 15;
+		//marge = 12;
+		gamestate = TIMETOPLAY;
+		status_action = GUARD;
+		state = IDLE;
+		speed = 1;
+		//offset_x = 15;
+		//offset_y = 15;
+		timetoplay = SDL_GetTicks();
+		reset_distance = false;
+		reset_run = true;
+	}
 
-	//marge = 12;
-	gamestate = TIMETOPLAY;
-	status_action = GUARD;
-	state = IDLE;
-	speed = 1;
-	//offset_x = 15;
-	//offset_y = 15;
-	timetoplay = SDL_GetTicks();
-	reset_distance = false;
-	reset_run = true;
+	else if (soldier_type == PASSIVE)
+	{
+		offset_x = 8;
+		offset_y = 15;
+	}
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 16, 15 }, COLLIDER_ENEMY, this);
 
-	//Get the animations of idle
+	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(6); //id 6 = soldier
 	return true;
 }
@@ -84,49 +100,54 @@ bool Soldier::Update()
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)
 	{
-		if (status_action == GUARD)
+		if (soldier_type == AGGRESSIVE)
 		{
-			switch (state)
+			if (status_action == GUARD)
 			{
-			case IDLE:
-			{
-				Idle();
-				break;
+				switch (state)
+				{
+				case IDLE:
+				{
+					Idle();
+					break;
+				}
+				case WALKING:
+				{
+					Walking();
+					break;
+				}
+				case DYING:
+				{
+					Die();
+				}
+				case HIT:
+				{
+					Movebyhit();
+				}
+				default:
+				{
+					break;
+				}
+				}
 			}
-			case WALKING:
+
+			else if (status_action == HUNT)
 			{
-				Walking();
-				break;
-			}
-			case DYING:
-			{
-				Die();
-			}
-			case HIT:
-			{
-				Movebyhit();
-			}
-			default:
-			{
-				break;
-			}
+				switch (state)
+				{
+				case ATTACKING:
+				{
+					Attack();
+					break;
+				}
+				default:
+				{
+					break;
+				}
+				}
 			}
 		}
-		else if (status_action == HUNT)
-		{
-			switch (state)
-			{
-			case ATTACKING:
-			{
-				Attack();
-				break;
-			}
-			default:
-			{
-				break;
-			}
-			}
-		}
+		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
 	}
 	else if (gamestate == INMENU)
@@ -140,8 +161,6 @@ bool Soldier::Update()
 			gamestate = INGAME;
 		}
 	}
-
-	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
 }
 
@@ -149,30 +168,47 @@ void Soldier::Draw()
 {
 	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
 		//App->anim_manager->Drawing_Manager(state, direction, position, 6);
-		test_state = state;
-	if (test_state == HIT) // test state (we dont have hurt animation yet)
-	{
-		test_state = WALKING;
-	}
+		if (soldier_type == PASSIVE)
+		{
+			id = 2;
+		}
+		else
+		{
+			switch (state)
+			{
+			case IDLE:
+				id = 0;
+				break;
+			case WALKING:
+				id = 1;
+				break;
+			case HIT:
+				id = 1;
+				break;
+			default:
+				break;
+			}
+		}
+
 	if (direction == UP)
 	{
-		anim_rect = animation.anim[test_state].North_action.GetCurrentFrame();
-		pivot = animation.anim[test_state].North_action.GetCurrentOffset();
+		anim_rect = animation.anim[id].North_action.GetCurrentFrame();
+		pivot = animation.anim[id].North_action.GetCurrentOffset();
 	}
 	else if (direction == DOWN)
 	{
-		anim_rect = animation.anim[test_state].South_action.GetCurrentFrame();
-		pivot = animation.anim[test_state].South_action.GetCurrentOffset();
+		anim_rect = animation.anim[id].South_action.GetCurrentFrame();
+		pivot = animation.anim[id].South_action.GetCurrentOffset();
 	}
 	else if (direction == LEFT)
 	{
-		anim_rect = animation.anim[test_state].West_action.GetCurrentFrame();
-		pivot = animation.anim[test_state].West_action.GetCurrentOffset();
+		anim_rect = animation.anim[id].West_action.GetCurrentFrame();
+		pivot = animation.anim[id].West_action.GetCurrentOffset();
 	}
 	else if (direction == RIGHT)
 	{
-		anim_rect = animation.anim[test_state].East_action.GetCurrentFrame();
-		pivot = animation.anim[test_state].East_action.GetCurrentOffset();
+		anim_rect = animation.anim[id].East_action.GetCurrentFrame();
+		pivot = animation.anim[id].East_action.GetCurrentOffset();
 	}
 
 	//DRAW
@@ -184,51 +220,6 @@ void Soldier::Draw()
 	{
 		App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 	}
-	/*if (npc_id == 1)
-	{
-	if (hp > 0)
-	{
-	if (direction == UP)
-	{
-	App->render->Blit(texture, position.x, position.y, &soldier_up);
-	}
-	if (direction == DOWN)
-	{
-	App->render->Blit(texture, position.x, position.y, &soldier_down);
-	}
-	if (direction == RIGHT)
-	{
-	App->render->Blit(texture, position.x, position.y, &soldier_right);
-	}
-	if (direction == LEFT)
-	{
-	App->render->Blit(texture, position.x, position.y, &soldier_left);
-	}
-	}
-	}
-	if (npc_id == 2)
-	{
-	if (hp > 0)
-	{
-	if (direction == UP)
-	{
-	App->render->Blit(texture, position.x, position.y, &soldier_up_2);
-	}
-	if (direction == DOWN)
-	{
-	App->render->Blit(texture, position.x, position.y, &soldier_down_2);
-	}
-	if (direction == RIGHT)
-	{
-	App->render->Blit(texture, position.x, position.y, &soldier_right_2);
-	}
-	if (direction == LEFT)
-	{
-	App->render->Blit(texture, position.x, position.y, &soldier_left_2);
-	}
-	}
-	}*/
-
 }
 
 void Soldier::AddItem(Item* item)
