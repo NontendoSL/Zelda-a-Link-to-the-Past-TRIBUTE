@@ -33,6 +33,9 @@
     <file file="animation/GeodudeAnimations.xml"/>
     <file file="animation/GolemAnimations.xml"/>
     <file file="animation/Enemies.xml"/>
+    <file file="animation/SwampertAnimations"/>
+    <file file="animation/SceptileAnimations"/>
+    <file file="animation/SudowoodoAnimations"/>
 	</animation>
   
 	<window>
