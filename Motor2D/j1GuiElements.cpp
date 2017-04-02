@@ -317,41 +317,79 @@ void Dialogue::Update()
 
 }
 
-
-void Dialogue::AddLine(const char* string)
-{
-	/*
-	std::list<Text*>::iterator iterator = text_lines.end();
-	iterator--;
-	iPoint pos = { position.x + 10,iterator._Ptr->_Myval->position.y + (iterator._Ptr->_Myval->Hitbox.h) }; // Hitbox/2 is for the resolution scale
-	text_lines.push_back(App->gui->CreateText(GANONF,string,50, { pos.x,pos.y }, 30, false));
-	*/
-}
-
 void Dialogue::PushLine(bool push)
 {
-	/*
-	std::list<Text*>::iterator iterator = text_lines.begin();
-	while (iterator != text_lines.end())
+	if (end == false)
 	{
-	iterator._Ptr->_Myval->position.y -= (iterator._Ptr->_Myval->Hitbox.h / 2) + 0.5;
-	iterator++;
-	}*/
-	Text* item = lines;
-	while (item != nullptr)
-	{
-		item->position.y -= (Hitbox.h / 2) + 0.5;
-		item = item->next_line;
+		Text* item = lines;
+		//TODO LOW: Fix this sh done with magic numbers
+		while (item != nullptr)
+		{
+			item->position.y -= (Hitbox.h / 8) + diferential; //+ 0.5
+			item = item->next_line;
+		}
+		item = lines;
+		while (item->next_line != nullptr)
+		{
+			item = item->next_line;
+		}
+		if (item->position.y + position.y + 8 < position.y)
+		{
+			options = App->gui->CreateSelector("Yes", "No", this);
+			options->parent = this;
+			end = true;
+		}
+		diferential += 0.2;
+		timer = SDL_GetTicks();
+		this->push = push;
 	}
-
-	timer = SDL_GetTicks();
-	this->push = push;
 }
 
 Dialogue::~Dialogue()
 {
-	//need to clear list;
+	//need to clear text;
 }
+
+Selector::Selector(const char* first_option, const char* second_option, j1GuiEntity* parent)
+{
+	this->parent = parent;
+	this->first = App->gui->CreateText(GANONF, first_option, 50, { parent->position.x + 20,parent->position.y + 5 }, 30);
+	this->second = App->gui->CreateText(GANONF, second_option, 50, { parent->position.x + 20,parent->position.y + 20 }, 30);
+	selector = App->gui->CreateText(GANONF, ">", 50, { first->position.x - 10,first->position.y }, 30);
+	position = true;
+}
+
+void Selector::Handle_Input()
+{
+	if (App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
+	{
+		if (position)
+		{
+			selector->position.y = second->position.y;
+			position = false;
+		}
+	}
+	if (App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
+	{
+		if (position == false)
+		{
+			selector->position.y = first->position.y;
+			position = true;
+		}
+	}
+	if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+	{
+		App->gui->Erase(selector->vector_pos);
+		App->gui->Erase(second->vector_pos);
+		App->gui->Erase(first->vector_pos);
+		Dialogue*item = (Dialogue*)parent;
+		App->gui->Erase(item->options->vector_pos);
+		item->options = nullptr;
+		App->gui->
+	}
+}
+
+Selector::~Selector() {}
 
 /////////////////////////////// MENU METHODS ///////////////////////////////
 

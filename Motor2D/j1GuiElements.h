@@ -76,7 +76,7 @@ public:
 
 // -------------------------------------------------------
 
-class Dialogue: public j1GuiEntity
+class Dialogue : public j1GuiEntity
 {
 public:
 	Dialogue(const char* string);
@@ -84,13 +84,27 @@ public:
 public:
 	void Draw();
 	void Update();
-	void AddLine(const char* string);
 	void PushLine(bool push);
 public:
-	//std::list<Text*>text_lines;
+	float diferential = 0.5;
 	Text* lines;
 	bool push;
 	uint timer;
+	Selector* options;
+	bool end = false;
+};
+
+class Selector : public j1GuiEntity
+{
+public:
+	Selector(const char* first_option, const char* second_option, j1GuiEntity* parent);
+	~Selector();
+public:
+	void Handle_Input();
+private:
+	Text* first, *second;
+	Text* selector;
+	bool position;//true up false down
 };
 
 // ------------------------------------------------------

@@ -35,6 +35,7 @@ public:
 	std::string identifier;
 	std::vector<j1GuiEntity*> elements;
 	j1GuiEntity* parent; //TODO LOW: implement this as callbacks for tree purpouses in elements constructors
+	int vector_pos;
 };
 
 #endif // __j1GUIENTITY_H__

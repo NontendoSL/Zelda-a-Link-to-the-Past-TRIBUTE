@@ -73,7 +73,6 @@ public:
 	std::list<Pokemon*> pokemons;
 	std::list<Item*> items;
 	std::list<DynamicObjects*> dynobjects;
-	Dialogue* dialog = nullptr;
 
 	pugi::xml_node		config;
 

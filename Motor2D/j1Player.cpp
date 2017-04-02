@@ -192,6 +192,18 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
+	if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+	{
+		if (dialog == nullptr)
+		{
+			//	dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
+		}
+		else if (dialog->end == false)
+		{
+			//	dialog->PushLine(true);
+		}
+	}
+
 	return ret;
 }
 

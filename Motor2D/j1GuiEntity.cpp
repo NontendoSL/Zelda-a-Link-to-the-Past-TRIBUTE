@@ -9,11 +9,11 @@
 #include "j1GuiEntity.h"
 
 j1GuiEntity::j1GuiEntity() {
-	//id = Next_id++;
+	vector_pos = App->gui->GetEntitiesSize() - 1;
 }
-j1GuiEntity::j1GuiEntity(SDL_Rect rectangle, iPoint position,std::string identifier,uint id, bool resize): Hitbox(rectangle), position(position),identifier(identifier), id(id), resize(resize){
+j1GuiEntity::j1GuiEntity(SDL_Rect rectangle, iPoint position, std::string identifier, uint id, bool resize) : Hitbox(rectangle), position(position), identifier(identifier), id(id), resize(resize) {
 	//id = Next_id++;
-
+	vector_pos = App->gui->GetEntitiesSize() - 1;
 }
 
 void j1GuiEntity::CalculateDiferential()

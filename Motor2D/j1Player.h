@@ -88,7 +88,7 @@ public:
 	uint bombs = 0;
 	uint arrows = 0;
 	uint charge = 0;
-
+	Dialogue* dialog = nullptr;
 	Hookshot* hook = nullptr;
 	BombContainer* bombmanager = nullptr;
 	Weapon* equiped_item = nullptr;
