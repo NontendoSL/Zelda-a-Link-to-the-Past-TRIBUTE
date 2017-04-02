@@ -23,6 +23,10 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_PLAYER][COLLIDER_SWITCH_MAP] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_SWITCH_MAP] = false;
+	matrix[COLLIDER_POKEMON][COLLIDER_SWITCH_MAP] = false;
+
+	matrix[COLLIDER_PLAYER][COLLIDER_POKEMON] = true;
+	matrix[COLLIDER_POKEMON][COLLIDER_PLAYER] = true;
 
 }
 j1Collision::~j1Collision() {}
@@ -157,6 +161,9 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_SWITCH_MAP: // Green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
+		case COLLIDER_POKEMON: // Green
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		}
 	}

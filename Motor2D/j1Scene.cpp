@@ -139,6 +139,10 @@ bool j1Scene::Update(float dt)
 						{
 							dynobjects.clear();
 						}
+						if (pokemons.size() > 0)
+						{
+							pokemons.clear();
+						}
 
 						Load_Combat_map(6);
 					}
@@ -183,6 +187,10 @@ bool j1Scene::Update(float dt)
 						if (dynobjects.size() > 0)
 						{
 							dynobjects.clear();
+						}
+						if (pokemons.size() > 0)
+						{
+							pokemons.clear();
 						}
 
 						Load_new_map(switch_map);
@@ -413,11 +421,16 @@ bool j1Scene::Load_new_map(int n)
 			pugi::xml_node temp_pokemon = temp.child("pokemons").child("pokemon");
 			for (int i = 0; i < temp.child("pokemons").attribute("num").as_int(0); i++)
 			{
-				if (temp_pokemon.attribute("id").as_int(0) != 2 && temp_pokemon.attribute("mode_stone").as_bool(false) == false)
+				bool mode_stone = temp_pokemon.attribute("mode_stone").as_bool(false);
+				if (temp_pokemon.attribute("id").as_int(0) == 2 && mode_stone == false)
 				{
 					pokemons.push_back(App->entity_elements->CreatePokemon(temp_pokemon, temp_pokemon.attribute("id").as_int(0)));
 				}
-				temp_enemy = temp_enemy.next_sibling();
+				else 
+				{
+					pokemons.push_back(App->entity_elements->CreatePokemon(temp_pokemon, temp_pokemon.attribute("id").as_int(0)));
+				}
+				temp_pokemon = temp_pokemon.next_sibling();
 			}
 
 

@@ -17,14 +17,44 @@ Golem::~Golem()
 {
 }
 
-bool Golem::Awake(pugi::xml_node &, uint)
+bool Golem::Awake(pugi::xml_node &conf, uint id)
 {
-	return false;
+	name = conf.attribute("name").as_string("");
+	hp = conf.attribute("hp").as_int(0);
+	attack = conf.attribute("name").as_int(0);
+	speed = conf.attribute("name").as_int(0);
+	std::string temp = conf.attribute("dir").as_string("");
+	if (temp == "up")
+		direction = UP;
+	else if (temp == "down")
+		direction = DOWN;
+	else if (temp == "left")
+		direction = LEFT;
+	else
+		direction = RIGHT;
+
+	mode_stone = conf.attribute("mode_stone").as_bool(false);
+	position = iPoint(conf.attribute("pos_x").as_int(0), conf.attribute("pos_y").as_int(0));
+
+	return true;
 }
 
 bool Golem::Start()
 {
-	return false;
+	state = HIT;
+	scale = App->win->GetScale();
+	offset_x = 15;
+	offset_y = 15;
+	gamestate = TIMETOPLAY;
+	movable = true;
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
+	timetoplay = SDL_GetTicks();
+	reset_distance = false;
+	reset_run = true;
+
+	//Get the animations
+	animation = *App->anim_manager->GetAnimStruct(5); //id 5 = Golem
+	return true;
 }
 
 bool Golem::Update(float dt)
@@ -51,16 +81,27 @@ bool Golem::Update(float dt)
 		}
 		case HIT:
 		{
-			Movebyhit();
+
 		}
 		/* This case shoul be added, it reffers to the rock stage
 		case STATIC:
 		{}
 		*/
-		/* This case shoul be added, it reffers when abandoning rock stage
+		/* This case shoul be added, it reffers when abandoning rock stage */
 		case AWAKENING:
-		{}
-		*/
+		{
+			if (mode_stone)
+			{
+				mode_stone = false;
+				timetoplay = SDL_GetTicks();
+			}
+			if (mode_stone == false && SDL_GetTicks() + timetoplay > 200)
+			{
+				state = IDLE;
+			}
+
+		}
+		
 		case DYING:
 		{
 			Death();
@@ -92,6 +133,57 @@ bool Golem::Update(float dt)
 
 void Golem::Draw()
 {
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
+		//App->anim_manager->Drawing_Manager(state, direction, position, 6);
+	int id;
+	switch (state)
+	{
+	case IDLE:
+		id = 0;
+		break;
+	case WALKING:
+		id = 1;
+		break;
+	case ATTACKING:
+		id = 2;
+		break;
+	case HIT:
+		id = 3;
+		break;
+	case AWAKENING:
+		id = 4;
+		break;
+	case DYING:
+		id = 5;
+		break;
+	default:
+		break;
+	}
+
+
+	if (direction == UP)
+	{
+		anim_rect = animation.anim[id].North_action.GetCurrentFrame();
+		pivot = animation.anim[id].North_action.GetCurrentOffset();
+	}
+	else if (direction == DOWN)
+	{
+		anim_rect = animation.anim[id].South_action.GetCurrentFrame();
+		pivot = animation.anim[id].South_action.GetCurrentOffset();
+	}
+	else if (direction == LEFT)
+	{
+		anim_rect = animation.anim[id].West_action.GetCurrentFrame();
+		pivot = animation.anim[id].West_action.GetCurrentOffset();
+	}
+	else if (direction == RIGHT)
+	{
+		anim_rect = animation.anim[id].East_action.GetCurrentFrame();
+		pivot = animation.anim[id].East_action.GetCurrentOffset();
+	}
+
+	//DRAW
+	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 }
 
 bool Golem::CleanUp()
@@ -252,67 +344,5 @@ bool Golem::Attack()
 
 bool Golem::Death()
 {
-	return true;
-}
-
-bool Golem::Movebyhit()
-{
-	if (dir_hit == UP)
-	{
-		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP) == 0)
-		{
-			position.y -= 1;
-		}
-		if (position.y < (previus_position.y - 30))
-		{
-			state = IDLE;
-		}
-	}
-	if (dir_hit == DOWN)
-	{
-		//App->map->MovementCost(position.x, position.y + (4 + height), DOWN)
-		if (App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN) == 0)
-		{
-			position.y += 1;
-		}
-
-		if (position.y > (previus_position.y + 30))
-		{
-			state = IDLE;
-		}
-	}
-	if (dir_hit == LEFT)
-	{
-		//App->map->MovementCost(position.x - 4, position.y, LEFT)
-		if (App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT) == 0)
-		{
-			position.x -= 1;
-		}
-
-		if (position.x < (previus_position.x - 30))
-		{
-			state = IDLE;
-		}
-	}
-	if (dir_hit == RIGHT)
-	{
-		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT) == 0)
-		{
-			position.x += 1;
-		}
-		if (position.x > (previus_position.x + 30))
-		{
-			state = IDLE;
-		}
-	}
-	/*if (position.x > (previus_position.x + 65) ||
-	position.x < (previus_position.x + 65) ||
-	position.y >(previus_position.y + 65) ||
-	position.y < (previus_position.y + 65))
-	{
-	state = IDLE;
-	}*/
 	return true;
 }

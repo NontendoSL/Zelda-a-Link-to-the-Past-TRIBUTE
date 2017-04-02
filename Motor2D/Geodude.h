@@ -12,7 +12,7 @@ public:
 	~Geodude();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&, uint);
+	bool Awake(pugi::xml_node&, uint, iPoint);
 
 	// Called before the first frame
 	bool Start();
@@ -52,6 +52,11 @@ public:
 
 private:
 
+	//Animation
+	AnimationStruct animation;
+	SDL_Rect anim_rect;
+	iPoint pivot;
+
 	Item* item_inside = nullptr;
 	SDL_Texture* texture = nullptr;
 
@@ -61,6 +66,8 @@ private:
 	int distance;
 	int dis_moved;
 	bool reset_distance;
+
+	bool mode_stone;
 };
 
 #endif //__GEODUDE_H_

@@ -45,12 +45,15 @@ public:
 
 	bool Death();
 
-	bool Movebyhit();
-
 	Direction dir_hit;
 	iPoint previus_position;
 
 private:
+
+	//Animation
+	AnimationStruct animation;
+	SDL_Rect anim_rect;
+	iPoint pivot;
 
 	Item* item_inside = nullptr;
 	SDL_Texture* texture = nullptr;
@@ -61,6 +64,7 @@ private:
 	int distance;
 	int dis_moved;
 	bool reset_distance;
+	bool mode_stone;
 
 };
 

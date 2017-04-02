@@ -37,6 +37,10 @@ public:
 
 private:
 
+	//Animation
+	AnimationStruct animation;
+	SDL_Rect anim_rect;
+	iPoint pivot;
 
 };
 

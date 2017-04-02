@@ -17,14 +17,48 @@ Geodude::~Geodude()
 {
 }
 
-bool Geodude::Awake(pugi::xml_node &, uint)
+bool Geodude::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 {
-	return false;
+	name = conf.attribute("name").as_string("");
+	hp = conf.attribute("hp").as_int(0);
+	attack = conf.attribute("name").as_int(0);
+	speed = conf.attribute("name").as_int(0);
+	std::string temp = conf.attribute("dir").as_string("");
+	if (temp == "up")
+		direction = UP;
+	else if (temp == "down")
+		direction = DOWN;
+	else if (temp == "left")
+		direction = LEFT;
+	else
+		direction = RIGHT;
+
+	mode_stone = conf.attribute("mode_stone").as_bool(false);
+	if(mode_stone)
+		position = iPoint(pos.x, pos.y);
+	else
+		position = iPoint(conf.attribute("pos_x").as_int(0), conf.attribute("pos_y").as_int(0));
+
+	return true;
 }
 
 bool Geodude::Start()
 {
-	return false;
+	state = IDLE;
+	scale = App->win->GetScale();
+	offset_x = 15;
+	offset_y = 15;
+	gamestate = TIMETOPLAY;
+	movable = true;
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
+	timetoplay = SDL_GetTicks();
+	reset_distance = false;
+	reset_run = true;
+
+	//Get the animations
+	animation = *App->anim_manager->GetAnimStruct(4); //id 4 = Geodude
+
+	return true;
 }
 
 bool Geodude::Update(float dt)
@@ -83,6 +117,51 @@ bool Geodude::Update(float dt)
 
 void Geodude::Draw()
 {
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
+		//App->anim_manager->Drawing_Manager(state, direction, position, 6);
+		int id;
+	switch (state)
+	{
+	case IDLE:
+		id = 0;
+		break;
+	case WALKING:
+		id = 1;
+		break;
+	case ATTACKING:
+		id = 2;
+		break;
+	case DYING:
+		id = 3;
+		break;
+	default:
+		break;
+	}
+
+
+	if (direction == UP)
+	{
+		anim_rect = animation.anim[id].North_action.GetCurrentFrame();
+		pivot = animation.anim[id].North_action.GetCurrentOffset();
+	}
+	else if (direction == DOWN)
+	{
+		anim_rect = animation.anim[id].South_action.GetCurrentFrame();
+		pivot = animation.anim[id].South_action.GetCurrentOffset();
+	}
+	else if (direction == LEFT)
+	{
+		anim_rect = animation.anim[id].West_action.GetCurrentFrame();
+		pivot = animation.anim[id].West_action.GetCurrentOffset();
+	}
+	else if (direction == RIGHT)
+	{
+		anim_rect = animation.anim[id].East_action.GetCurrentFrame();
+		pivot = animation.anim[id].East_action.GetCurrentOffset();
+	}
+
+	//DRAW
+	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 }
 
 bool Geodude::CleanUp()

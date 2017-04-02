@@ -221,7 +221,7 @@ BombContainer* j1EntityElementScene::CreateBombContainer()
 	return element;
 }
 
-Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id)
+Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id, iPoint pos)
 {
 	if (id == 1)
 	{
@@ -234,7 +234,7 @@ Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id)
 	else if (id == 2)
 	{
 		Geodude* temp = new Geodude();
-		temp->Awake(conf, id);
+		temp->Awake(conf, id, pos);
 		temp->Start();
 		elementscene.push_back(temp);
 		return temp;

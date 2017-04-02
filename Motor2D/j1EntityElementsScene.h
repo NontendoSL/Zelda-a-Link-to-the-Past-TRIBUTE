@@ -14,6 +14,7 @@ class DynamicObjects;
 class NPC;
 class Hookshot;
 class Weapon;
+class Pokemon;
 class BombContainer;
 
 // ---------------------------------------------------
@@ -51,7 +52,7 @@ public:
 	DynamicObjects* CreateDynObject(iPoint pos, uint id, uint id_map);
 	Player* CreatePlayer();
 	BombContainer* CreateBombContainer();
-	Pokemon* CreatePokemon(pugi::xml_node&, uint id);
+	Pokemon* CreatePokemon(pugi::xml_node&, uint id, iPoint pos = (iPoint(0,0)));
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);
