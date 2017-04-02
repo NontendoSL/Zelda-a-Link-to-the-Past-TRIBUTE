@@ -317,6 +317,35 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				timer.Start();
 				hurt = true;
 				hp_hearts.y--;
+
+				if (direction == UP)
+				{
+					if (App->map->MovementCost(position.x, position.y + 15, position.x, position.y, DOWN) == 0) //magic numbers 20 -> this is the distance you will move
+					{
+						position.y += 15;
+					}
+				}
+				if (direction == DOWN)
+				{
+					if (App->map->MovementCost(position.x, position.y - 15, position.x, position.y, UP) == 0) //magic numbers 20 -> this is the distance you will move
+					{
+						position.y -= 15;
+					}
+				}
+				if (direction == LEFT)
+				{
+					if (App->map->MovementCost(position.x + 15, position.y, position.x, position.y, RIGHT) == 0) //magic numbers 20 -> this is the distance you will move
+					{
+						position.x += 15;
+					}
+				}
+				if (direction == RIGHT)
+				{
+					if (App->map->MovementCost(position.x - 15, position.y, position.x, position.y, LEFT) == 0) //magic numbers 20 -> this is the distance you will move
+					{
+						position.x -= 15;
+					}
+				}
 			}
 			else
 			{
