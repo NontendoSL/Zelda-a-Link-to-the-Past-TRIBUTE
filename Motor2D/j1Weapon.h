@@ -59,7 +59,7 @@ public:
 
 	void Draw();
 
-	void SetRange(uint charge);
+	void SetRange(float charge);
 
 	//Check the tile at its position each X Updates
 	HookState ReachObjective();
@@ -67,7 +67,7 @@ public:
 
 	void Reset();
 
-	uint range = 0;
+	float range = 0;
 	uint actual_range_pos = 0; // TODO MED-> set to private and create functions to get the values
 	bool target_reached = false;
 	bool in_use = false;

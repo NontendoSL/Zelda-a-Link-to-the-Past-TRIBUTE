@@ -592,7 +592,7 @@ hook->in_use = true;
 	}
 
 	//SET MAX RANGE
-	hook->SetRange(charge);
+	hook->SetRange((float)charge);
 }
 
 bool Player::Hooking()
@@ -605,7 +605,7 @@ bool Player::Hooking()
 	{
 		if (stat == MISS)
 		{
-			HookState stat = hook->ReachObjective();
+			/*HookState stat = hook->ReachObjective();*/
 			KeepGoing();
 			hook->actual_range_pos++;
 		}

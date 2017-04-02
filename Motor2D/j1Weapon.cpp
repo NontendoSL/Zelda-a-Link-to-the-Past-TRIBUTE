@@ -42,7 +42,7 @@ Hookshot::~Hookshot()
 
 bool Hookshot::Start()
 {
-	speed = 2;
+	speed = 3;
 	state = IDLE;
 	return true;
 }
@@ -53,9 +53,9 @@ bool Hookshot::Update()
 	return true;
 }
 
-void Hookshot::SetRange(uint charge)
+void Hookshot::SetRange(float charge)
 {
-	range = charge;
+	range = charge * 1.5;
 }
 
 HookState Hookshot::ReachObjective()
