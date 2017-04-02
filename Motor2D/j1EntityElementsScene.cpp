@@ -113,6 +113,18 @@ bool j1EntityElementScene::DelteElements()
 {
 	std::list<SceneElement*>::iterator item = elementscene.end();
 	item--;
+	if (elementscene.begin()._Ptr->_Myval->name != "Link")
+	{
+		std::list<SceneElement*>::iterator temp = elementscene.begin();
+		while (temp != elementscene.end())
+		{
+			if (temp._Ptr->_Myval->name == "Link")
+			{
+				std::swap(temp._Ptr->_Myval, elementscene.begin()._Ptr->_Myval);
+			}
+			temp++;
+		}
+	}
 	if (elementscene.size() > 1)
 	{
 		while (item != elementscene.begin())
@@ -120,7 +132,7 @@ bool j1EntityElementScene::DelteElements()
 			if (item._Ptr->_Myval->type != WEAPON)
 			{
 				delete item._Ptr->_Myval;
-				elementscene.pop_back();
+				elementscene.erase(item);
 			}
 			item--;
 		}
@@ -221,7 +233,12 @@ DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint 
 		{
 			element->Awake(config, id, pos);
 			element->Start();
-			elementscene.push_back(element);
+			if (id == 1 || id == 6 || id == 7 || id == 8)
+			{
+				elementscene.push_front(element);
+			}
+			else
+				elementscene.push_back(element);
 			LOG("Created!!");
 			stop_rearch = true;
 		}
