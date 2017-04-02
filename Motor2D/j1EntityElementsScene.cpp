@@ -7,6 +7,9 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "p2Log.h"
+#include "Geodude.h"
+#include "Sudowoodo.h"
+#include "Golem.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Collision.h"
@@ -216,6 +219,35 @@ BombContainer* j1EntityElementScene::CreateBombContainer()
 	element->name = "bomb";
 	elementscene.push_back(element);
 	return element;
+}
+
+Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id)
+{
+	if (id == 1)
+	{
+		Golem* temp = new Golem();
+		temp->Awake(conf, id);
+		temp->Start();
+		elementscene.push_back(temp);
+		return temp;
+	}
+	else if (id == 2)
+	{
+		Geodude* temp = new Geodude();
+		temp->Awake(conf, id);
+		temp->Start();
+		elementscene.push_back(temp);
+		return temp;
+	}
+	else if (id == 3)
+	{
+		Sudowoodo* temp = new Sudowoodo();
+		temp->Awake(conf, id);
+		temp->Start();
+		elementscene.push_back(temp);
+		return temp;
+	}
+	return nullptr;
 }
 
 DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)

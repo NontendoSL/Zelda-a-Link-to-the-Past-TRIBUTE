@@ -409,6 +409,18 @@ bool j1Scene::Load_new_map(int n)
 				temp_enemy = temp_enemy.next_sibling();
 			}
 
+			//Pokemons
+			pugi::xml_node temp_pokemon = temp.child("pokemons").child("pokemon");
+			for (int i = 0; i < temp.child("pokemons").attribute("num").as_int(0); i++)
+			{
+				if (temp_pokemon.attribute("id").as_int(0) != 2 && temp_pokemon.attribute("mode_stone").as_bool(false) == false)
+				{
+					pokemons.push_back(App->entity_elements->CreatePokemon(temp_pokemon, temp_pokemon.attribute("id").as_int(0)));
+				}
+				temp_enemy = temp_enemy.next_sibling();
+			}
+
+
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);

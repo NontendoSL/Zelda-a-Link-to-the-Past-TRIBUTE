@@ -51,6 +51,7 @@ public:
 	DynamicObjects* CreateDynObject(iPoint pos, uint id, uint id_map);
 	Player* CreatePlayer();
 	BombContainer* CreateBombContainer();
+	Pokemon* CreatePokemon(pugi::xml_node&, uint id);
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);
