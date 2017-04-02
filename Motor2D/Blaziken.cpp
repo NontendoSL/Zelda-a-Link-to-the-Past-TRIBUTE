@@ -74,6 +74,13 @@ bool Blaziken::Update()
 				Attack();
 				break;
 			}
+			/*
+			case SPECIALATTACK:
+			{
+				SpecialAttack();
+				break;
+			}
+			*/
 			default:
 			{
 				break;
@@ -101,6 +108,13 @@ bool Blaziken::Update()
 				Attack_IA();
 				break;
 			}
+			/*
+			case SPECIALATTACK:
+			{
+				SpecialAttack();
+				break;
+			}
+			*/
 			default:
 			{
 				break;

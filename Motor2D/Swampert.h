@@ -31,13 +31,37 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	/*void AddItem(Item*);
+	void OnCollision(Collider*, Collider*);
 
-	void Drop_item();*/
+	bool Idle();
+
+	bool Walking();
+
+	bool Move();
+
+	bool Attack();
+
+	bool Idle_IA();
+
+	bool Walking_IA();
+
+	bool Move_IA();
+
+	bool Attack_IA();
+
+	bool CheckOrientation();
+
+	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
 private:
 
-
+	//Timer
+	int timetoplay;
+	int dis_moved = 0;
+	int distance = 0;
+	bool reset_run;
+	bool reset_distance;
+	int timetorun = 0;
 };
 
 #endif //__SWAMPERT_H_
