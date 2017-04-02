@@ -38,24 +38,24 @@
       <enemies num="29">
 
         <!-- Static Enemies -->
-        <enemy id="1" pos_x="160" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="184" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="208" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="232" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="256" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="280" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="304" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="328" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="352" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="376" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="400" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="424" pos_y="12" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="0" pos_y="396" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="0" pos_y="418" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="213" pos_y="496" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="235" pos_y="496" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="493" pos_y="410" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <enemy id="1" pos_x="493" pos_y="388" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="169" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="193" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="217" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="241" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="265" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="289" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="313" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="337" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="361" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="385" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="409" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="433" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="9" pos_y="409" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="9" pos_y="431" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="222" pos_y="509" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="244" pos_y="509" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="502" pos_y="423" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <enemy id="1" pos_x="502" pos_y="401" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
 
         <!-- Interactive Enemies -->
         <enemy id="1" pos_x="218" pos_y="414" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" />
@@ -70,6 +70,7 @@
         <enemy id="1" pos_x="88" pos_y="329" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" />
         <enemy id="1" pos_x="182" pos_y="149" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" />
       </enemies>
+
 
       <dynObjects>
         <dynobject id="1" name="door_house_link" type="ZELDA" file="textures/closeddoor.png" />

@@ -53,7 +53,7 @@ bool j1AnimationManager::Start()
 		{
 			bool stop_rearch = false;
 			std::string dir;
-			AnimDirect stanim;
+			AnimDirect* stanim = new AnimDirect();
 			for (pugi::xml_node temp = state.child("sprite"); stop_rearch == false; temp = temp.next_sibling())
 			{
 				dir = temp.attribute("dir").as_string("");
@@ -68,34 +68,34 @@ bool j1AnimationManager::Start()
 
 				if (dir == "East")
 				{
-					stanim.East_action.PushBack(tex_rect, offset);
+					stanim->East_action.PushBack(tex_rect, offset);
 				}
 				else if (dir == "North")
 				{
-					stanim.North_action.PushBack(tex_rect, offset);
+					stanim->North_action.PushBack(tex_rect, offset);
 				}
 				else if (dir == "West")
 				{
-					stanim.West_action.PushBack(tex_rect, offset);
+					stanim->West_action.PushBack(tex_rect, offset);
 				}
 				else if (dir == "South")
 				{
-					stanim.South_action.PushBack(tex_rect, offset);
+					stanim->South_action.PushBack(tex_rect, offset);
 				}
 				else
 				{
 					stop_rearch = true;
-					stanim.East_action.speed = state.attribute("speed").as_float(0);
-					stanim.East_action.loop = state.attribute("loop").as_bool(false);
-					stanim.North_action.speed = state.attribute("speed").as_float(0);
-					stanim.North_action.loop = state.attribute("loop").as_bool(false);
-					stanim.South_action.speed = state.attribute("speed").as_float(0);
-					stanim.South_action.loop = state.attribute("loop").as_bool(false);
-					stanim.West_action.speed = state.attribute("speed").as_float(0);
-					stanim.West_action.loop = state.attribute("loop").as_bool(false);
+					stanim->East_action.speed = state.attribute("speed").as_float(0);
+					stanim->East_action.loop = state.attribute("loop").as_bool(false);
+					stanim->North_action.speed = state.attribute("speed").as_float(0);
+					stanim->North_action.loop = state.attribute("loop").as_bool(false);
+					stanim->South_action.speed = state.attribute("speed").as_float(0);
+					stanim->South_action.loop = state.attribute("loop").as_bool(false);
+					stanim->West_action.speed = state.attribute("speed").as_float(0);
+					stanim->West_action.loop = state.attribute("loop").as_bool(false);
 				}
 			}
-			temp_animat.anim.push_back(stanim);
+			temp_animat.anim.push_back(*stanim);
 			state = state.next_sibling();
 		}
 		//Add new AnimationStruct in animat -------------------------
@@ -108,13 +108,14 @@ bool j1AnimationManager::Start()
 
 bool j1AnimationManager::CleanUp()
 {
+	//TODO MEDIUM -> Fill this
 	return true;
 }
 
 void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, uint id) 
 {
 	BROFILER_CATEGORY("Animation", Profiler::Color::DarkMagenta)
-	//INFO ID:  1-> Player // 2-> Soldier // 3-> Blaziken // 4-> unknown // 5-> unknown
+	//INFO ID: 0-> Link //  1-> Blaziken // 2-> Hookshot // 3-> Bomb // 4-> Geodude // 5-> Golem // 6->Soldiers
 	if (status <= DYING)
 	{
 		test_state = status;
@@ -182,6 +183,12 @@ Animation* j1AnimationManager::GetAnimation(ActionState status, Direction dir, u
 	}
 
 	return current_animation;
+}
+
+AnimationStruct* j1AnimationManager::GetAnimStruct(uint id)
+{
+	anim_struct = &animat[id];
+	return anim_struct;
 }
 
 

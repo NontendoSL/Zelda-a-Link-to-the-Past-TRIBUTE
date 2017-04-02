@@ -58,27 +58,23 @@ bool Soldier::CleanUp()
 
 bool Soldier::Start()
 {
-	collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_ENEMY, this);
+	offset_x = 8;
+	offset_y = 15;
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_ENEMY, this);
 
-	soldier_right = { 17,0,18,28 };
-	soldier_left = {36,0,18,28};
-	soldier_up = {55,0,16,28};
-	soldier_down = { 0,0,16,28 };
-
-	soldier_left_2 = {26,20,21,28 };
-	soldier_right_2 = {74,20,21,28 };
-	soldier_up_2 = {48,20,25,28};
-	soldier_down_2 = {0,18,25,30};
-	marge = 12;
+	//marge = 12;
 	gamestate = TIMETOPLAY;
 	status_action = GUARD;
 	state = IDLE;
 	speed = 1;
-	offset_x = 15;
-	offset_y = 15;
+	//offset_x = 15;
+	//offset_y = 15;
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
+
+	//Get the animations of idle
+	animation = *App->anim_manager->GetAnimStruct(6); //id 6 = soldier
 	return true;
 }
 
@@ -152,50 +148,86 @@ bool Soldier::Update()
 void Soldier::Draw()
 {
 	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
-	if (npc_id == 1)
+		//App->anim_manager->Drawing_Manager(state, direction, position, 6);
+		test_state = state;
+	if (test_state == HIT) // test state (we dont have hurt animation yet)
 	{
-		if (hp > 0)
-		{
-			if (direction == UP)
-			{
-				App->render->Blit(texture, position.x, position.y, &soldier_up);
-			}
-			if (direction == DOWN)
-			{
-				App->render->Blit(texture, position.x, position.y, &soldier_down);
-			}
-			if (direction == RIGHT)
-			{
-				App->render->Blit(texture, position.x, position.y, &soldier_right);
-			}
-			if (direction == LEFT)
-			{
-				App->render->Blit(texture, position.x, position.y, &soldier_left);
-			}
-		}
+		test_state = WALKING;
+	}
+	if (direction == UP)
+	{
+		anim_rect = animation.anim[test_state].North_action.GetCurrentFrame();
+		pivot = animation.anim[test_state].North_action.GetCurrentOffset();
+	}
+	else if (direction == DOWN)
+	{
+		anim_rect = animation.anim[test_state].South_action.GetCurrentFrame();
+		pivot = animation.anim[test_state].South_action.GetCurrentOffset();
+	}
+	else if (direction == LEFT)
+	{
+		anim_rect = animation.anim[test_state].West_action.GetCurrentFrame();
+		pivot = animation.anim[test_state].West_action.GetCurrentOffset();
+	}
+	else if (direction == RIGHT)
+	{
+		anim_rect = animation.anim[test_state].East_action.GetCurrentFrame();
+		pivot = animation.anim[test_state].East_action.GetCurrentOffset();
+	}
+
+	//DRAW
+	if (texture == nullptr)
+	{
+		LOG("TEXTURE NULL");
+	}
+	else
+	{
+		App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+	}
+	/*if (npc_id == 1)
+	{
+	if (hp > 0)
+	{
+	if (direction == UP)
+	{
+	App->render->Blit(texture, position.x, position.y, &soldier_up);
+	}
+	if (direction == DOWN)
+	{
+	App->render->Blit(texture, position.x, position.y, &soldier_down);
+	}
+	if (direction == RIGHT)
+	{
+	App->render->Blit(texture, position.x, position.y, &soldier_right);
+	}
+	if (direction == LEFT)
+	{
+	App->render->Blit(texture, position.x, position.y, &soldier_left);
+	}
+	}
 	}
 	if (npc_id == 2)
 	{
-		if (hp > 0)
-		{
-			if (direction == UP)
-			{
-				App->render->Blit(texture, position.x, position.y, &soldier_up_2);
-			}
-			if (direction == DOWN)
-			{
-				App->render->Blit(texture, position.x, position.y, &soldier_down_2);
-			}
-			if (direction == RIGHT)
-			{
-				App->render->Blit(texture, position.x, position.y, &soldier_right_2);
-			}
-			if (direction == LEFT)
-			{
-				App->render->Blit(texture, position.x, position.y, &soldier_left_2);
-			}
-		}
+	if (hp > 0)
+	{
+	if (direction == UP)
+	{
+	App->render->Blit(texture, position.x, position.y, &soldier_up_2);
 	}
+	if (direction == DOWN)
+	{
+	App->render->Blit(texture, position.x, position.y, &soldier_down_2);
+	}
+	if (direction == RIGHT)
+	{
+	App->render->Blit(texture, position.x, position.y, &soldier_right_2);
+	}
+	if (direction == LEFT)
+	{
+	App->render->Blit(texture, position.x, position.y, &soldier_left_2);
+	}
+	}
+	}*/
 
 }
 
@@ -208,8 +240,8 @@ void Soldier::AddItem(Item* item)
 void Soldier::Drop_item()
 {
 	item_inside->canBlit = true;
-	item_inside->position.x = position.x;
-	item_inside->position.y = position.y;
+	item_inside->position.x = position.x - item_inside->collision->rect.w;
+	item_inside->position.y = position.y - item_inside->collision->rect.h;
 	item_inside = NULL;
 }
 

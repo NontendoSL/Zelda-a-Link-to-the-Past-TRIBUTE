@@ -52,16 +52,12 @@ public:
 
 private:
 
-	//Soldier Test for Release 0.1
-	SDL_Rect soldier_left;
-	SDL_Rect soldier_right;
-	SDL_Rect soldier_up;
-	SDL_Rect soldier_down;
+	ActionState test_state = WALKING;
 
-	SDL_Rect soldier_left_2;
-	SDL_Rect soldier_right_2;
-	SDL_Rect soldier_up_2;
-	SDL_Rect soldier_down_2;
+	//Soldier Test for Release 0.1
+	AnimationStruct animation;
+	SDL_Rect anim_rect;
+	iPoint pivot;
 	//Item* drop;
 	bool stunned = false;
 	Item* item_inside = nullptr;

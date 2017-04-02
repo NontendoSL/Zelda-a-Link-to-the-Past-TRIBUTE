@@ -49,6 +49,8 @@ public:
 
 	Animation* GetAnimation(ActionState status, Direction dir, uint id);
 
+	AnimationStruct* GetAnimStruct(uint id);
+
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
 
@@ -62,6 +64,7 @@ private:
 	iPoint pivot;
 	SDL_Rect r;
 	Animation* current_animation = nullptr;
+	AnimationStruct* anim_struct = nullptr;
 
 	ActionState test_state; //TODO_LOW -> REMOVE THIS
 };

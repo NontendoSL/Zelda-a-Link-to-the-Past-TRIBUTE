@@ -361,11 +361,19 @@ bool j1Scene::Load_new_map(int n)
 	{
 		player = App->entity_elements->CreatePlayer();
 	}
+
+	//SET WEAPONS WHEN MAP CHANGES
 	if (weapon_equiped == BOMB)
 	{
 		player->bombmanager = App->entity_elements->CreateBombContainer();
 		player->equiped_item = (Weapon*)player->bombmanager;
 	}
+	if (weapon_equiped == HOOKSHOT)
+	{
+		player->hook = App->entity_elements->CreateHookshot();
+		player->equiped_item = (Weapon*)player->hook;
+	}
+
 	bool stop_rearch = false;
 
 	pugi::xml_document	config_file;

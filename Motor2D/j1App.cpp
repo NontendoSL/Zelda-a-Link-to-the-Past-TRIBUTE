@@ -61,26 +61,24 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(font);
 
-
 	// scene last
 	AddModule(intro);
 	AddModule(scene);
+
 	//Add managers
+	AddModule(anim_manager);
 	AddModule(entity_elements);
 	AddModule(combatmanager);
+
 	//UI
 	AddModule(gui);//
 	//Player
 	//AddModule(player); //TODO LOW
 	AddModule(collision);
 
-	AddModule(anim_manager);
-
 	// render last to swap buffer
 	AddModule(fadetoblack);
 	AddModule(render);
-
-
 
 	PERF_PEEK(ptimer);
 }
