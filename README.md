@@ -16,16 +16,18 @@ CONTROLS
 	
 		Arrow Keys -> Move in any of the 8 directions and navigate through the menu.
 		Enter -> Start game from menu and open/close menu when in game.
-		Spacebar -> Hold it to charge the stamina bar and select items in the menu.
-		E -> Attack
+		Spacebar -> Use the equipped item. Hold it to charge the stamina bar.
+		R -> Select item in the menu.
+		E -> Attack.
+		Q -> Open chests.
 		
 	Controller:
 	
 		D-Pad -> move in any of the 8 directions and navigate through the menu.
 		Start -> Navigate trhough game intro and open/close the ingame menu.
-		A -> Select items from the menu.
+		A -> Select items from the menu. Open chests.
 		X -> Attack
-		B -> Hold it to charge the stamina bar.
+		B -> Use equipped item. Hold it to charge the stamina bar.
 
 	DEBUG MODE:
 	
@@ -38,6 +40,18 @@ CONTROLS
 
 CHANGELOG
 
+v0.4:
+
+	Pokemon are now displayed in Victory Road as enemies.
+	Victory Road has been implemented.
+	The hookshot has been implemented and it only works with Sudowoodos in the Pokemon World.
+	The player will get the Hookshot in the first big chest of the Victory Road.
+	Bombs have been implemented. The player will get them in the second big chest of the Victory Road.
+	The player now can get hurt by the enemies.
+	The enemies now get sent away after getting hit.
+	Pokemon Combat map has been created. The player can switch between what Pokemon to use.
+	The Pokemon UI has been implemented after Victory Road.
+	
 v0.3:
 
 	Enemies, bushes, pots and chests now have hurtboxes.
