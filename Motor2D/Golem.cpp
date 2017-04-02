@@ -57,7 +57,7 @@ bool Golem::Start()
 	return true;
 }
 
-bool Golem::Update(float dt)
+bool Golem::Update()
 {
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)
@@ -81,7 +81,7 @@ bool Golem::Update(float dt)
 		}
 		case HIT:
 		{
-
+			break;
 		}
 		/* This case shoul be added, it reffers to the rock stage
 		case STATIC:
@@ -95,16 +95,17 @@ bool Golem::Update(float dt)
 				mode_stone = false;
 				timetoplay = SDL_GetTicks();
 			}
-			if (mode_stone == false && SDL_GetTicks() + timetoplay > 200)
+			if (mode_stone == false && SDL_GetTicks() - timetoplay > 200)
 			{
 				state = IDLE;
 			}
-
+			break;
 		}
 		
 		case DYING:
 		{
 			Death();
+			break;
 		}
 		default:
 		{
@@ -265,7 +266,6 @@ bool Golem::Walking()
 	{
 		state = IDLE;
 	}
-
 	else
 	{
 		state = WALKING;

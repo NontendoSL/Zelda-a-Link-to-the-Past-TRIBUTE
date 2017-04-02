@@ -20,7 +20,7 @@ bool Sceptyle::Start()
 	return false;
 }
 
-bool Sceptyle::Update(float dt)
+bool Sceptyle::Update()
 {
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)

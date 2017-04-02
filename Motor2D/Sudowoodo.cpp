@@ -37,7 +37,7 @@ bool Sudowoodo::Start()
 	return true;
 }
 
-bool Sudowoodo::Update(float dt)
+bool Sudowoodo::Update()
 {
 	return true;
 }

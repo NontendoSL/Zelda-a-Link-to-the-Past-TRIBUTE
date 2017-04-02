@@ -347,7 +347,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
-
 		}
 		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON)
 		{

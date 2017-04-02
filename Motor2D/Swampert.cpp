@@ -20,7 +20,7 @@ bool Swampert::Start()
 	return false;
 }
 
-bool Swampert::Update(float dt)
+bool Swampert::Update()
 {
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)

@@ -61,7 +61,7 @@ bool Geodude::Start()
 	return true;
 }
 
-bool Geodude::Update(float dt)
+bool Geodude::Update()
 {
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)
@@ -86,10 +86,12 @@ bool Geodude::Update(float dt)
 		case HIT:
 		{
 			Movebyhit();
+			break;
 		}
 		case DYING:
 		{
 			Death();
+			break;
 		}
 		default:
 		{
