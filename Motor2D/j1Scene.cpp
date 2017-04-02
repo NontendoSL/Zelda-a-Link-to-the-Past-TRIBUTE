@@ -53,6 +53,8 @@ bool j1Scene::Start()
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
 		App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
 		App->audio->LoadFx("audio/fx/LTTP_Sword_Attack.wav");//5
+		App->audio->LoadFx("audio/fx/LTTP_Bomb_Lay.wav");//6
+		App->audio->LoadFx("audio/fx/LTTP_Bomb_Explosion.wav");//7
 	}
 	inventory = false;
 	switch_map = 0;

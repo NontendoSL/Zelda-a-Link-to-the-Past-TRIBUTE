@@ -1,6 +1,7 @@
 #include "j1Weapon.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1Audio.h"
 #include "j1App.h"
 #include "j1Collision.h"
 #include "j1Map.h"
@@ -310,6 +311,7 @@ void Bomb::Update()
 {
 	if (SDL_GetTicks() > timer + 2000 && step != EXPLOSION)
 	{
+		App->audio->PlayFx(7);
 		step = EXPLOSION;
 		collision = App->collision->AddCollider({ position.x - radius,position.y - radius,radius * 2,radius * 2 }, COLLIDER_BOMB);
 		current = App->anim_manager->GetAnimation((ActionState)2, DOWN, 3);

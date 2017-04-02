@@ -156,6 +156,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	if (equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		bombmanager->Drop(position);
+		App->audio->PlayFx(6);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT && gems<999)
