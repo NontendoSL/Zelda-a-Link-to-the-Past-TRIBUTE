@@ -196,11 +196,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	{
 		if (dialog == nullptr)
 		{
-				dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
+			//	dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
 		}
 		else if (dialog->end == false)
 		{
-				dialog->PushLine(true);
+			//	dialog->PushLine(true);
 		}
 	}
 
@@ -386,6 +386,13 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			if (c2->callback->name == "Golem")
 			{
 				c2->callback->state = AWAKENING;
+			}
+		}
+		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
+		{
+			if (hurt == false) {
+				GetDamage();
+				hurt = true;
 			}
 		}
 	}
