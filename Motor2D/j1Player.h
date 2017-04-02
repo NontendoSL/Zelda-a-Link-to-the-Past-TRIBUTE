@@ -57,6 +57,8 @@ public:
 
 	bool Attack();
 
+	bool Interact();
+
 	bool Equip(Weapon* to_equip);
 	bool Unequip();
 
@@ -106,12 +108,14 @@ private:
 	//Colliders
 	Collider* collision_feet;
 	Collider* collision_attack;
+	Collider* collision_interact;
 
 	bool attacker;
-	int attack_time;
+	bool interaction;
 
 	//Timer
 	int timetoplay;
+	j1Timer timer;
 
 	//TEST
 	std::string stats_temp;

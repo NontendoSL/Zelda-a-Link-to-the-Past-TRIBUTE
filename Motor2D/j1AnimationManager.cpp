@@ -119,7 +119,7 @@ void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoi
 	if (status <= DYING)
 	{
 		test_state = status;
-		if (test_state == HOOKTHROWN)
+		if (test_state == HOOKTHROWN || test_state == INTERACTING)
 		{
 			test_state = IDLE; //TEST BECAUSE WE DON'T HAVE HOOKING ANIMATION YET.
 		}

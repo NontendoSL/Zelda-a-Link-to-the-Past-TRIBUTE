@@ -104,6 +104,12 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			Attack();
 			break;
 		}
+
+		case INTERACTING:
+		{
+			Interact();
+			break;
+		}
 		case HOOKTHROWN:
 		{
 			Hooking();
@@ -213,7 +219,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT)
+		if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest")
 		{
 			iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
 			//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
@@ -226,17 +232,37 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
 
 			}
-			if (c2->callback->name != "chest")
-			{
-				App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
-				App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
-				App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
-				App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
-			}
+
+			App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
+			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
+			App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
+			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
+
 
 			App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 			//App->collision->EraseCollider(c2);
 		}
+
+		if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT)
+		{
+			if (c2->callback->name == "chest")
+			{
+				iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
+				//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
+				int canDrop = 1;
+				if (canDrop == 1)
+				{
+					iPoint position;
+					position.x = c2->callback->position.x + 4;
+					position.y = c2->callback->position.y;
+					App->scene->items.push_back(App->entity_elements->CreateItem(1, position)); //TODO LOW call Drop item() function
+				}
+
+				App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
+				//App->collision->EraseCollider(c2);
+			}
+		}
+
 
 		if (c1 == collision_feet && c2->type == COLLIDER_ITEM)
 		{
@@ -397,6 +423,13 @@ bool Player::Idle()
 		current_animation->Reset();
 	}
 
+	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		state = INTERACTING;
+		//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+		//current_animation->Reset();
+	}
+
 	else
 	{
 		state = IDLE;
@@ -420,6 +453,13 @@ bool Player::Walking()
 		state = ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 		current_animation->Reset();
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		state = INTERACTING;
+		//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+		//current_animation->Reset();
 	}
 
 	else
@@ -460,6 +500,46 @@ bool Player::Attack()
 		else if (direction == LEFT)
 		{
 			collision_attack = App->collision->AddCollider({ position.x - 22, position.y - 7, 20, 8 }, COLLIDER_PLAYER, this);
+		}
+	}
+	return true;
+}
+
+bool Player::Interact()
+{
+	if (interaction)
+	{
+		if (timer.ReadSec() >= 0.3) // change to animation.finished
+		{
+			//if (current_animation->Finished())
+			//{
+			App->collision->EraseCollider(collision_interact);
+			interaction = false;
+			//current_animation->Reset();
+			//current_animation = nullptr;
+			state = IDLE;
+			//}
+		}
+	}
+	else
+	{
+		timer.Start();
+		interaction = true;
+		if (direction == UP)
+		{
+			collision_interact = App->collision->AddCollider({ position.x - 8, position.y - 14, 16, 5 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == RIGHT)
+		{
+			collision_interact = App->collision->AddCollider({ position.x + offset_x - 1, position.y - offset_y - 1, 5, 16 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == DOWN)
+		{
+			collision_interact = App->collision->AddCollider({ position.x - 8, position.y + 3, 16, 5 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == LEFT)
+		{
+			collision_interact = App->collision->AddCollider({ position.x - offset_x - 4, position.y - offset_y - 1, 5, 16 }, COLLIDER_PLAYER, this);
 		}
 	}
 	return true;
