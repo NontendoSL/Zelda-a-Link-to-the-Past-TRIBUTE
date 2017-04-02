@@ -58,7 +58,7 @@ bool j1Scene::Start()
 	}
 	inventory = false;
 	switch_map = 0;
-
+	notrepeatmusic = true;
 
 
 	return true;
@@ -190,6 +190,11 @@ bool j1Scene::Update(float dt)
 						}
 
 						Load_new_map(switch_map);
+						if (switch_map == 4 && notrepeatmusic)
+						{
+							notrepeatmusic = false;
+							App->audio->PlayMusic("audio/music/POKEMON/PokemonVictoryRoad.ogg");
+						}
 					}
 				}
 				if (App->fadetoblack->Checkfadefromblack())
@@ -491,11 +496,13 @@ bool j1Scene::Load_Combat_map(int n)
 		if (temp.attribute("n").as_int(0) == n)
 		{
 			//trainer
-			App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
+			//App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 			//Pokemon Link
 			if (n == 6)
 			{
 				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon"), 1));
+				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon").next_sibling(), 2));
+				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon").next_sibling().next_sibling(), 3));
 			}
 
 			//map

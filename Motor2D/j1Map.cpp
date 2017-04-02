@@ -39,12 +39,16 @@ void j1Map::Draw()  // TODO LOW -> maybe change pointers to const(?)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		navigation_map = !navigation_map;
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		navigation_map_2 = !navigation_map_2;
 
 	for (uint i = 0; i < data.layers.size(); i++)
 	{
 		MapLayer* layer = data.layers[i];
 
 		if(layer->properties.Get("NoDraw") != 0 && navigation_map == false)
+			continue;
+		if (layer->properties.Get("NoDraw_2") != 0 && navigation_map_2 == false)
 			continue;
 
 		int marge = Checkpositions();

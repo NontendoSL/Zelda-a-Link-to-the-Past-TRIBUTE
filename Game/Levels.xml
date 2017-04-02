@@ -162,9 +162,10 @@
         <pokemon id="1" name="Blaziken" speed="1" dir="left" hp="100" attack="4" pos_x="100" pos_y="100" active="false"/>
       </trainer>
       <Link>
-        <pokemon id="1" name="Blaziken" speed="1" dir="right" hp="100" attack="4" pos_x="80" pos_y="100" active="true"/>
+        <pokemon id="1" name="Blaziken" speed="1" dir="right" hp="100" attack="4" pos_x="80" pos_y="150" active="true"/>
+        <pokemon id="2" name="Sceptyle" speed="1" dir="right" hp="100" attack="4" pos_x="80" pos_y="150" active="false"/>
+        <pokemon id="3" name="Swampert" speed="1" dir="right" hp="100" attack="4" pos_x="80" pos_y="150" active="false"/>
       </Link>
     </map>
   </map_combat>
-
 </levels>

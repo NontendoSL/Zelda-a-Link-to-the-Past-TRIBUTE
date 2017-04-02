@@ -10,14 +10,44 @@ Sceptyle::~Sceptyle()
 {
 }
 
-bool Sceptyle::Awake(pugi::xml_node &, uint)
+bool Sceptyle::Awake(pugi::xml_node &conf )
 {
-	return false;
+	std::string temp = conf.attribute("dir").as_string("");
+	if (temp == "up")
+		direction = UP;
+	else if (temp == "down")
+		direction = DOWN;
+	else if (temp == "left")
+		direction = LEFT;
+	else
+		direction = RIGHT;
+	hp = conf.attribute("hp").as_int(0);
+	attack = conf.attribute("attack").as_int(0);
+	speed = conf.attribute("speed").as_int(0);
+	name = conf.attribute("name").as_string("");
+	position.x = conf.attribute("pos_x").as_int(0);
+	position.y = conf.attribute("pos_y").as_int(0);
+	active = conf.attribute("active").as_bool(false);
+
+	return true;
 }
 
 bool Sceptyle::Start()
 {
-	return false;
+	pokemon_player = true;
+	state = IDLE;
+	scale = App->win->GetScale();
+	offset_x = 15;
+	offset_y = 15;
+	gamestate = TIMETOPLAY;
+	timetoplay = SDL_GetTicks();
+	movable = true;
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_PLAYER, this);
+	timetoplay = SDL_GetTicks();
+	reset_distance = false;
+	reset_run = true;
+
+	return true;
 }
 
 bool Sceptyle::Update()
@@ -114,6 +144,7 @@ bool Sceptyle::Update()
 
 void Sceptyle::Draw()
 {
+	App->anim_manager->Drawing_Manager(state, direction, position, 8);  //TODO LOW-> ID magic number, need change!!
 }
 
 bool Sceptyle::CleanUp()
@@ -147,7 +178,7 @@ bool Sceptyle::Idle()
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 1); //this number may need to be changed?
+		current_animation = App->anim_manager->GetAnimation(state, direction, 8); //this number may need to be changed?
 		current_animation->Reset();
 	}
 
@@ -171,7 +202,7 @@ bool Sceptyle::Walking()
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 1); //This number may need to be changed?
+		current_animation = App->anim_manager->GetAnimation(state, direction, 8); //This number may need to be changed?
 		current_animation->Reset();
 	}
 

@@ -161,6 +161,7 @@ public:
 private:
 
 	bool navigation_map = false;
+	bool navigation_map_2 = false;
 	pugi::xml_document	map_file;
 	std::string folder;
 	bool				map_loaded;

@@ -83,6 +83,8 @@ public:
 	bool inventory = false;
 	int switch_map = 0;
 
+	bool notrepeatmusic;
+
 	bool fade = false;
 	bool now_switch = false;
 	WeaponType weapon_equiped;

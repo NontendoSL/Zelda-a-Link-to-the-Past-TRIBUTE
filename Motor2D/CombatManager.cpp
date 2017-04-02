@@ -14,6 +14,8 @@
 #include "j1Window.h"
 #include "j1FileSystem.h"
 #include "Pokemon.h"
+#include "Swampert.h"
+#include "Sceptyle.h"
 #include "Blaziken.h"
 #include "PokeTrainer.h"
 
@@ -48,8 +50,37 @@ bool CombatManager::PreUpdate()
 
 bool CombatManager::Update(float dt)
 {
-	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan)
+	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
+
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
+	
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+		Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
+		Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
+		temp->active = true;
+		temp_2->active = false;
+		temp_3->active = false;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+		Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
+		Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
+		temp->active = false;
+		temp_2->active = true;
+		temp_3->active = false;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+		Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
+		Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
+		temp->active = false;
+		temp_2->active = false;
+		temp_3->active = true;
+	}
 	while (item != elementcombat.end())
 	{
 		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
@@ -64,7 +95,7 @@ bool CombatManager::Update(float dt)
 
 bool CombatManager::PostUpdate()
 {
-	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green)
+	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green);
 
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	while (item != elementcombat.end())
@@ -107,11 +138,30 @@ void CombatManager::CreateTargets()
 
 Pokemon* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 {
-	Blaziken* temp = new Blaziken();
-	temp->Awake(conf);
-	temp->Start();
-	elementcombat.push_back(temp);
-	return temp;
+	if (id == 1)
+	{
+		Blaziken* temp = new Blaziken();
+		temp->Awake(conf);
+		temp->Start();
+		elementcombat.push_back(temp);
+		return temp;
+	}
+	if (id == 2)
+	{
+		Sceptyle* temp = new Sceptyle();
+		temp->Awake(conf);
+		temp->Start();
+		elementcombat.push_back(temp);
+		return temp;
+	}
+	if (id == 3)
+	{
+		Swampert* temp = new Swampert();
+		temp->Awake(conf);
+		temp->Start();
+		elementcombat.push_back(temp);
+		return temp;
+	}
 }
 
 bool CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)

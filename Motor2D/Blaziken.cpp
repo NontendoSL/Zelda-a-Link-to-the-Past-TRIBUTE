@@ -144,7 +144,6 @@ bool Blaziken::Update()
 void Blaziken::Draw()
 {
 	App->anim_manager->Drawing_Manager(state, direction, position, 1);  //TODO LOW-> ID magic number, need change!!
-
 }
 
 bool Blaziken::CleanUp()
