@@ -14,30 +14,54 @@ Item::Item() :SceneElement()
 Item::~Item()
 {}
 
-bool Item::Awake(pugi::xml_node &conf, uint id, iPoint pos)
+bool Item::Awake(pugi::xml_node &conf, uint item_id, iPoint pos)
 {
 	bool stop_search = false;
-	for (int s_id = conf.child("item").attribute("id").as_int(0); stop_search == false; s_id = conf.child("item").next_sibling().attribute("id").as_int(0))
+	for (pugi::xml_node temp = conf.child("item"); stop_search == false; temp = temp.next_sibling())
 	{
-		if (id == s_id)
+		if (temp.attribute("id").as_int(0) == item_id)
 		{
-			name = conf.child("item").attribute("name").as_string("");
+			id = item_id;
+			name = temp.attribute("name").as_string("");
 			position.x = pos.x;
 			position.y = pos.y;
-			std::string es = conf.child("item").attribute("file").as_string("");
+			std::string es = temp.attribute("file").as_string("");
 			texture = App->tex->Load(es.c_str());
 			canBlit = true;
 			stop_search = true;
 		}
 	}
-
 	return true;
 }
 
 
 bool Item::Start()
 {
-	collision = App->collision->AddCollider({ position.x, position.y, 8, 14 }, COLLIDER_ITEM, this);
+	int width = 0;
+	int	height = 0;
+
+	//ITEM MANAGEMENT (1 -> RUPEE // 2 -> BOMB // 3-> HOOKSHOT // 4-> HEART)
+	if (id == 1)
+	{
+		width = 8;
+		height = 14;
+	}
+	else if (id == 2)
+	{
+		width = 12;
+		height = 15;
+	}
+	else if (id == 3)
+	{
+		width = 7;
+		height = 16;
+	}
+	else if (id == 4)
+	{
+		width = 14;
+		height = 13;
+	}
+	collision = App->collision->AddCollider({ position.x, position.y, width, height }, COLLIDER_ITEM, this);
 	return true;
 }
 

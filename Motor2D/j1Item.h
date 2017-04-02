@@ -39,6 +39,7 @@ public:
 
 private:
 	SDL_Texture* texture = nullptr;
+	int id = 0;
 
 public:
 	Collider* collision = nullptr;

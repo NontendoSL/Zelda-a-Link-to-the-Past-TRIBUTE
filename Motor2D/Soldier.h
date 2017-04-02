@@ -61,6 +61,8 @@ private:
 	iPoint pivot;
 	//Item* drop;
 	bool stunned = false;
+
+	int item_id = 0;
 	Item* item_inside = nullptr;
 	SDL_Texture* texture = nullptr;
 

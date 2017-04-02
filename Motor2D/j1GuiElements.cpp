@@ -175,7 +175,7 @@ void Text::CheckString(std::string string)
 		if (text[length] != ' ') {
 			text += "-";
 		}
-		next_line = App->gui->CreateText(font_name, string.substr(length + 1, 100).c_str(), length, { position.x,position.y + volum.y / 2 }, size, color,draw);
+		next_line = App->gui->CreateText(font_name, string.substr(length + 1, 100).c_str(), length, { position.x,position.y + volum.y / 2 }, size, color, draw);
 	}
 }
 
@@ -369,7 +369,7 @@ void ZeldaMenu::AddElement(j1GuiEntity* element)
 		element->id = menu_buttons.size() + 1;
 		menu_buttons.push_back((Button*)element);
 	}
-	if(element->type == IMAGE)
+	if (element->type == IMAGE)
 	{
 		menu_images.push_back((Image*)element);
 	}
@@ -377,22 +377,22 @@ void ZeldaMenu::AddElement(j1GuiEntity* element)
 	{
 		menu_texts.push_back((Text*)element);
 	}
-	
+
 }
 
 void ZeldaMenu::Select(int value)
 {
 	menu_buttons[id_selected]->click = false;
 	//assert(id_selected + value < menu_elements.size() + 1 || id_selected + value >0);
-	if (id_selected + value < menu_buttons.size() && id_selected + value >=0)
+	if (id_selected + value < menu_buttons.size() && id_selected + value >= 0)
 	{
-			menu_buttons[id_selected]->selected = false;
-			id_selected += value;
-			menu_buttons[id_selected]->selected = true;
-			if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
-			{
-				ShowItemInfo();
-			}
+		menu_buttons[id_selected]->selected = false;
+		id_selected += value;
+		menu_buttons[id_selected]->selected = true;
+		if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
+		{
+			ShowItemInfo();
+		}
 
 	}
 }
@@ -403,7 +403,7 @@ void ZeldaMenu::Click()
 	Do();
 }
 
-void ZeldaMenu:: Do()
+void ZeldaMenu::Do()
 {
 	std::string i_name = App->scene->start_menu->GetSelected()->identifier;
 	Image* item = App->scene->hud->GetImage(1);
@@ -422,6 +422,7 @@ void ZeldaMenu:: Do()
 		item_menu->Hitbox.y = 309;
 		menu_texts[1]->Write(" HOOKSHOT");
 		App->scene->player->Unequip();
+
 		App->scene->player->Equip((Weapon*)App->scene->player->hook);
 	}
 	else if (i_name == "bomb")
@@ -464,19 +465,19 @@ void ZeldaMenu::Open()
 			}
 		}
 	}
-	
+
 	visible = true;
 }
 void ZeldaMenu::Update()
 {
 
-	
+
 
 }
 
 void ZeldaMenu::Handle_Input()
 {
-	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier=="start_menu")
+	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
 	{
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
 		{
@@ -492,32 +493,32 @@ void ZeldaMenu::Handle_Input()
 		}
 		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)//TODO MED-> Check E_UP botton state
 		{
-			UnClick(); 
+			UnClick();
 		}
 	}
 }
 
 /*void ZeldaMenu::OnInputCallback(INPUTEVENT, EVENTSTATE)
 {
-	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
-	{
-		if (App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
-		{
-			Select(1);
-		}
-		else if (App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
-		{
-			Select(-1);
-		}
-		else if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
-		{
-			Click();
-		}
-		if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
-		{
-			UnClick();
-		}
-	}
+if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
+{
+if (App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+{
+Select(1);
+}
+else if (App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+{
+Select(-1);
+}
+else if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+{
+Click();
+}
+if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
+{
+UnClick();
+}
+}
 }*/
 
 void ZeldaMenu::Close()
@@ -572,7 +573,7 @@ void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich 
 		}
 		position.x += speed;
 	}
-	else 
+	else
 	{
 		for (int i = 0; i < menu_buttons.size(); i++)
 		{
@@ -645,13 +646,13 @@ ZeldaMenu::~ZeldaMenu()
 
 PokemonCombatHud::PokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2)
 {
-	hud_images.push_back(App->gui->CreateImage({ 335,19,254,51 }, { 0,0 },"top hud"));
-	hud_images.push_back(App->gui->CreateImage({ 597,18,254,33 }, { 0,224-33 }, "bottom hud"));
+	hud_images.push_back(App->gui->CreateImage({ 335,19,254,51 }, { 0,0 }, "top hud"));
+	hud_images.push_back(App->gui->CreateImage({ 597,18,254,33 }, { 0,224 - 33 }, "bottom hud"));
 	ability = App->gui->CreateImage({ 561,85,30,30 }, { 3,0 }, "left ability");
 	hud_images[1]->elements.push_back(ability);
 	ability->elements.push_back(App->gui->CreateImage({ 525,85,30,0 }, { 0,0 }, "left cd"));
 	hud_images[1]->elements.push_back(App->gui->CreateImage({ 426,84,90,23 }, { 35,7 }, "left box"));
-	hp1= App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "left hp");
+	hp1 = App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "left hp");
 	hud_images[1]->elements[1]->elements.push_back(hp1);
 	hud_images[1]->elements[1]->elements.push_back(App->gui->CreateText(POKE1, "SCEPTILE", 50, { 6,4 }, 15, { 0,0,0,255 }));
 	//
@@ -669,10 +670,10 @@ PokemonCombatHud::PokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2)
 
 void PokemonCombatHud::Handle_Input()
 {
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && incd==false) 
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && incd == false)
 	{
 		incd = true;
-		cdtime.y=cdtime.x;
+		cdtime.y = cdtime.x;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT&&hpbar1.y>0)
 	{
@@ -687,7 +688,7 @@ void PokemonCombatHud::Update()
 		if (cdtime.y>0)
 		{
 			cdtime.y--;
-			ability->elements[0]->Hitbox.h = (cdtime.y*ability->elements[0]->Hitbox.w)/ cdtime.x;
+			ability->elements[0]->Hitbox.h = (cdtime.y*ability->elements[0]->Hitbox.w) / cdtime.x;
 			LOG("setting cd");
 		}
 		else {

@@ -295,28 +295,28 @@ void j1Scene::LoadUi()
 	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -21,9 }, "hp1"));
 	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -12,9 }, "hp2")); //heart containers
 	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -3,9 }, "hp3"));
-
+	
 	hud->position = { 0,0 };
 	hud->identifier = "hud";
 	//Start Menu
 	start_menu = App->gui->CreateZeldaMenu();
 	Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg");
-	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21-224 }, { 304,268 }, { 337,268 }, false,"bow");
+	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21 - 224 }, { 304,268 }, { 337,268 }, false, "bow");
 	hotfix->selected = true;
 	start_menu->AddElement(hotfix);
-	start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21-224 }, { 304,301 }, { 337,301 },false, "hookshot"));
+	start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
 	start_menu->AddElement(Sprite);
 	start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
 	start_menu->AddElement(App->gui->CreateImage({ 370,268,32,32 }, { 18,154 - 224 }, "item_info"));
-	start_menu->AddElement(App->gui->CreateText(PIXEL, "BOW ARROWS",100, { 19,193 - 224 }, 10));
+	start_menu->AddElement(App->gui->CreateText(PIXEL, "BOW ARROWS", 100, { 19,193 - 224 }, 10));
 	start_menu->AddElement(App->gui->CreateImage({ 279,256,16,16 }, { 200,23 - 224 }, "item_picked"));
 	start_menu->AddElement(App->gui->CreateText(PIXEL, "   PICK ITEM", 100, { 184,44 - 224 }, 10));
 	start_menu->AddElement(App->gui->CreateImage({ 450,273,64,48 }, { 176,77 - 224 }, "pendants"));
-	start_menu->AddElement(App->gui->CreateText(PIXELMORE, "Los buenos guerreros,  cargan el arco para disparar con más fuerza.",22, { 59,155 - 224 }, 20));
-	Text*line = App->gui->CreateText(PIXELMORE, "Este gancho cuanta mas fuerza se le de, mas lejos se enganchara.", 22, { 59,155 - 224 }, 20);
+	start_menu->AddElement(App->gui->CreateText(PIXELMORE, "The great warriors charge the bow to shoot further.", 22, { 59,155 - 224 }, 20));
+	Text*line = App->gui->CreateText(PIXELMORE, "The more power you apply to it, more distance you will reach.", 22, { 59,155 - 224 }, 20);
 	line->Visible(false);
 	start_menu->AddElement(line);
-	line = App->gui->CreateText(PIXELMORE, "BOOOOOMBAAAAA", 22, { 59,155 - 224 }, 20);
+	line = App->gui->CreateText(PIXELMORE, "BOOM!!! Explosion!!!", 22, { 59,155 - 224 }, 20);
 	line->Visible(false);
 	start_menu->AddElement(line);
 	start_menu->position = { 0,-224 };

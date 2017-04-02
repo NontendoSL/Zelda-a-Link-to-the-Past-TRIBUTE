@@ -26,11 +26,13 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 	{
 		if (id == s_id)
 		{
-			std::string temp = conf.attribute("file").as_string("");
-			texture = App->tex->Load(temp.c_str());
 			hp = conf.attribute("hp").as_int(0);
 			position.x = conf.attribute("pos_x").as_int(0);
 			position.y = conf.attribute("pos_y").as_int(0);
+			std::string temp = conf.attribute("file").as_string("");
+
+			item_id = conf.attribute("item_id").as_int(0);
+
 			temp = conf.attribute("dir").as_string("");
 			if (temp == "up")
 				direction = UP;
@@ -43,6 +45,7 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 
 			movable = conf.attribute("canMove").as_bool(false);
 			destructible = conf.attribute("destructible").as_bool(false);
+
 			if (destructible == false)
 			{
 				soldier_type = PASSIVE;
@@ -55,7 +58,6 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 			stop_search = true;
 		}
 	}
-
 	return true;
 }
 

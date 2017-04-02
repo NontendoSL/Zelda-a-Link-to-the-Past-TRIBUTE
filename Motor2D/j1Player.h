@@ -114,8 +114,8 @@ private:
 	Collider* collision_attack;
 	Collider* collision_interact;
 
-	bool attacker;
-	bool interaction;
+	bool attacker = false;
+	bool interaction = false;
 	bool hurt = false;
 
 	//Timer

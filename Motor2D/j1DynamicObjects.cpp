@@ -31,13 +31,12 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 				position.y = pos.y;
 				rect = { temp.attribute("rect_x").as_int(0), temp.attribute("rect_y").as_int(0), temp.attribute("rect_w").as_int(0), temp.attribute("rect_h").as_int(0) };
 				canBlit = true;
+				item_id = temp.attribute("item_id").as_int(0);
 				stop_search = true;
 			}
 			temp = temp.next_sibling();
 		}
 	}
-
-
 	return true;
 }
 

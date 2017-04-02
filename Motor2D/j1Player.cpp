@@ -68,8 +68,6 @@ bool Player::Start()
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
 
-	hook = App->entity_elements->CreateHookshot();
-	bombmanager = App->entity_elements->CreateBombContainer();
 	return ret;
 }
 
@@ -138,7 +136,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 
 	//CHARGE BAR --------------
-	if (equiped_item == hook)
+	if (equiped_item != nullptr && equiped_item == hook)
 	{
 		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT) && charge <= 34)
 		{
@@ -154,7 +152,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			charge--;
 		}
 	}
-	if (equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		bombmanager->Drop(position);
 		App->audio->PlayFx(6);
@@ -222,7 +220,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest")
+		if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest")
 		{
 			iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
 			//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
@@ -232,7 +230,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				iPoint position;
 				position.x = c2->callback->position.x + 4;
 				position.y = c2->callback->position.y;
-				App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
+				DynamicObjects* temp = (DynamicObjects*)c2->callback;
+				App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position));
 
 			}
 
@@ -248,7 +247,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT)
 		{
-			if (c2->callback->name == "chest")
+			if (c2->callback->name == "chest" || c2->callback->name == "big_chest")
 			{
 				iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
 				//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
@@ -257,8 +256,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				{
 					iPoint position;
 					position.x = c2->callback->position.x + 4;
-					position.y = c2->callback->position.y;
-					App->scene->items.push_back(App->entity_elements->CreateItem(1, position)); //TODO LOW call Drop item() function
+					position.y = c2->callback->position.y + 4;
+					DynamicObjects* temp = (DynamicObjects*)c2->callback;
+					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
 				}
 
 				App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
@@ -269,10 +269,30 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_ITEM)
 		{
+
 			if (c2->callback->name == "rupee")
 			{
 				App->audio->PlayFx(4);
 				gems++;
+				App->entity_elements->DeleteItem((Item*)c2->callback);
+				//App->collision->EraseCollider(c2);
+			}
+			if (c2->callback->name == "bomb")
+			{
+				if (bombmanager == nullptr)
+				{
+					bombmanager = App->entity_elements->CreateBombContainer();
+				}
+				App->entity_elements->DeleteItem((Item*)c2->callback);
+				bombs++;
+				//App->collision->EraseCollider(c2);
+			}
+			if (c2->callback->name == "hook")
+			{
+				if (hook == nullptr)
+				{
+					hook = App->entity_elements->CreateHookshot();
+				}
 				App->entity_elements->DeleteItem((Item*)c2->callback);
 				//App->collision->EraseCollider(c2);
 			}
@@ -577,19 +597,19 @@ bool Player::Interact()
 
 bool Player::Equip(Weapon* to_equip)
 {
-	bool ret = false;
-	if (equiped_item != to_equip && to_equip->equipable == true)
+	if (to_equip != nullptr)
 	{
-		equiped_item = to_equip;
-		equiped_item->equiped = true;
-		LOG("Equiped %s", equiped_item->name.c_str());
-		ret = true;
+		if (equiped_item != to_equip && to_equip->equipable == true)
+		{
+			equiped_item = to_equip;
+			equiped_item->equiped = true;
+			LOG("Equiped %s", equiped_item->name.c_str());
+			return true;
+		}
 	}
-	else
-	{
-		LOG("Can't equip %s", to_equip->name.c_str());
-	}
-	return ret;
+
+	LOG("Can't equip item");
+	return false;
 }
 
 bool Player::Unequip()
@@ -636,7 +656,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	}
 
 	case BUTTON_B:
-		if (equiped_item == hook)
+		if (hook != nullptr && equiped_item == hook)
 		{
 			if (e_state == E_UP)
 			{
@@ -644,7 +664,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 				ThrowHookshot(charge);
 			}
 		}
-		else if (equiped_item == bombmanager)
+		else if (bombmanager != nullptr && equiped_item == bombmanager)
 		{
 			if (e_state == E_UP)
 			{
