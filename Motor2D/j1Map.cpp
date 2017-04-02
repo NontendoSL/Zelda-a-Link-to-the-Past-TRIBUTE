@@ -457,17 +457,6 @@ bool j1Map::Load(const char* file_name, uint id_map)
 
 void j1Map::DynObjectFromTiled(uint id_map)
 {
-	/*int yellowid_1 = data.tilesets[1]->firstgid + 2;
-	int yellowid_2 = data.tilesets[1]->firstgid + 3;
-	int yellowid_3 = data.tilesets[1]->firstgid + 4;
-	int yellowid_4 = data.tilesets[1]->firstgid + 5;
-	int yellowid_5 = data.tilesets[1]->firstgid + 6;
-	int yellowid_6 = data.tilesets[1]->firstgid + 7;
-	int yellowid_7 = data.tilesets[1]->firstgid + 8;
-	int yellowid_8 = data.tilesets[1]->firstgid + 9;
-	int yellowid_9 = data.tilesets[1]->firstgid + 10;
-	int yellowid_10 = data.tilesets[1]->firstgid + 11;
-	int chest_big = data.tilesets[1]->firstgid + 9;*/
 	int blue = data.tilesets[1]->firstgid + 8;
 	int green = data.tilesets[1]->firstgid;
 	int orange = data.tilesets[1]->firstgid + 6;
@@ -500,61 +489,6 @@ void j1Map::DynObjectFromTiled(uint id_map)
 					EditCost(x, y, data.tilesets[1]->firstgid + 1);
 				}
 			}
-			/*if (tile_id == yellowid_1)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 1, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_2)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 2, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_3)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 3, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_4)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_5)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_6)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_7)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_8)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_9)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == yellowid_10)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}
-			if (tile_id == chest_big)
-			{
-				App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), 4, id_map));
-				EditCost(x, y, data.tilesets[1]->firstgid + 1);
-			}*/
 			if (tile_id == blue)
 			{
 				blue = -1;
