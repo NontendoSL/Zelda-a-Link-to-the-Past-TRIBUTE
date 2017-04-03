@@ -36,6 +36,8 @@ CONTROLS
 		B -> Add rupees to your inventory.
 		N -> Add arrows to your inventory.
 		M -> Add bombs to your inventory.
+		X -> Lower Pokemon HP in combat.
+		Z -> Triggers Ability Cooldown in combat.
 
 
 CHANGELOG
