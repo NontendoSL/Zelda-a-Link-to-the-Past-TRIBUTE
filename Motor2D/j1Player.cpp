@@ -134,7 +134,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			Attack();
 			break;
 		}
-
+		case HIT:
+		{
+			Hit();
+			break;
+		}
 		case INTERACTING:
 		{
 			Interact();
@@ -239,8 +243,13 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 void Player::Draw()
 {
+	test_state = state;
+	if (test_state == HIT)
+	{
+		test_state = IDLE;
+	}
 	//Draw player
-	App->anim_manager->Drawing_Manager(state, direction, position, 0);  //TODO LOW-> ID magic number, need change!!
+	App->anim_manager->Drawing_Manager(test_state, direction, position, 0);  //TODO LOW-> ID magic number, need change!!
 }
 
 bool Player::CleanUp()
@@ -352,11 +361,13 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		}
 		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
 		{
-			if (hurt == false)
+			if (state != HIT) //TODO MED -> change this to a player state
 			{
-				timer.Start();
-				hurt = true;
+				state = HIT;
+				hurt_timer.Start();
 				hp_hearts.y--;
+
+				//KNOCKBACK--------------
 
 				if (direction == UP)
 				{
@@ -394,14 +405,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							App->render->camera.x += 15;
 					}
 				}
-			}
-			else
-			{
-				if (timer.ReadSec() >= 1)
-				{
-					hurt = false;
-				}
-			}
+			}	
 		}
 
 		if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
@@ -1338,6 +1342,16 @@ bool Player::Move()
 	}
 
 	return walking;
+}
+
+bool Player::Hit()
+{
+	if (hurt_timer.ReadSec() >= 0.2)
+	{
+		state = IDLE;
+	}
+
+	return true;
 }
 
 void Player::GetfloorLvl(iPoint pos)

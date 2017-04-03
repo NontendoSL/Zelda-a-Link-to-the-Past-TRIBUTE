@@ -52,17 +52,18 @@ public:
 
 	bool Camera_inside(iPoint pos);
 
+	//STATE MACHINE -------
+
 	bool Idle();
-
 	bool Walking();
-
 	bool Move();
+	bool Hit();
+	bool Attack();
+	bool Interact();
+
+	//----------------------
 
 	void GetfloorLvl(iPoint pos);
-
-	bool Attack();
-
-	bool Interact();
 
 	bool Equip(Weapon* to_equip);
 	bool Unequip();
@@ -121,9 +122,12 @@ private:
 	bool interaction = false;
 	bool hurt = false;
 
+	ActionState test_state; //TODO MED -> DELETE THIS
+
 	//Timer
 	int timetoplay;
 	j1Timer timer;
+	j1Timer hurt_timer;
 
 	//TEST
 	std::string stats_temp;
