@@ -47,7 +47,8 @@ bool Swampert::Start()
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
-	range = { 60,0 };
+	range = { 90,0 };
+	sp_speed = 3;
 	return true;
 }
 
@@ -190,10 +191,10 @@ void Swampert::ThrowSP()
 		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x,sp_start.y + range.y }, 10);
 		break;
 	case 2:
-		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x - range.y,sp_start.y }, 10);
+		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x - range.y,sp_start.y-10 }, 10);
 		break;
 	case 3:
-		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x + range.y,sp_start.y }, 10);
+		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x + range.y,sp_start.y-10 }, 10);
 		break;
 	}
 	if (range.y >= range.x)
@@ -203,7 +204,7 @@ void Swampert::ThrowSP()
 	}
 	else
 	{
-		range.y++;
+		range.y+=sp_speed;
 	}
 }
 
