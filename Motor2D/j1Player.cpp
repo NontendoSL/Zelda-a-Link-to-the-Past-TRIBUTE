@@ -322,10 +322,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 				if (c2->callback->name == "bomb")
 				{
-<<<<<<< HEAD
-					hook = App->entity_elements->CreateHookshot();
-					App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
-=======
 					if (bombmanager == nullptr)
 					{
 						bombmanager = App->entity_elements->CreateBombContainer();
@@ -340,10 +336,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (hook == nullptr)
 					{
 						hook = App->entity_elements->CreateHookshot();
-						Button*item = App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot");
-						App->scene->start_menu->AddElement(item);
-						item->selected = true;
-						App->scene->start_menu->ShowItemInfo();
+						App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
 					}
 					App->entity_elements->DeleteItem((Item*)c2->callback);
 					//App->collision->EraseCollider(c2);
@@ -353,7 +346,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					AddHeartContainer();
 					App->entity_elements->DeleteItem((Item*)c2->callback);
 					//App->collision->EraseCollider(c2);
->>>>>>> origin/master
 				}
 			}
 		}
