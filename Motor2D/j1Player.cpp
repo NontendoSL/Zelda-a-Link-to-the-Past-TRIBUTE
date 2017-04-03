@@ -166,7 +166,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 
 	//CHARGE BAR --------------
-	if (equiped_item != nullptr && equiped_item == hook)
+	if (equiped_item != nullptr && equiped_item == hook && hook->in_use == false)
 	{
 		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT) && charge <= 34)
 		{
@@ -448,7 +448,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON)
+		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && actual_floor != 0) //TODO MED -> change this (we will have golbats int the future)
 		{
 			if (c2->callback->name == "Golem" && c2->callback->state == HIT)
 			{
