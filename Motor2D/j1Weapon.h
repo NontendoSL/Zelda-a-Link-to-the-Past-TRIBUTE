@@ -103,6 +103,8 @@ public:
 	void Update();
 	void Draw();
 	void Die();
+
+
 public:
 	iPoint position;
 	int radius;
@@ -124,6 +126,8 @@ public:
 	bool Update();
 	void Draw();
 	void CleanContainer();
+
+
 private:
 	std::list<Bomb*>bombs;
 };

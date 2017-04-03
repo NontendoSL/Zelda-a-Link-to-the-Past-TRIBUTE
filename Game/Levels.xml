@@ -139,13 +139,13 @@
         <dynobject id="10" name="big_stone" type="ZELDA" rect_x="53" rect_y="34" rect_w="18" rect_h="19" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <pokemons num="11">
-        <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="544" pos_y="440"/>
-        <pokemon id="2" name="Geodude" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="544" pos_y="424"/>
-        <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="592" pos_y="264"/>
-        <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="552" pos_y="136"/>
-        <pokemon id="2" name="Geodude" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="256" pos_y="200"/>
-        <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="296" pos_y="96"/>
-        <pokemon id="2" name="Geodude" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="312" pos_y="80"/>
+        <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="544" pos_y="439"/>
+        <pokemon id="2" name="Geodude" mode_stone="false" speed="1" dir="down" hp="100" attack="1" pos_x="544" pos_y="424"/>
+        <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="592" pos_y="263"/>
+        <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="552" pos_y="135"/>
+        <pokemon id="2" name="Geodude" mode_stone="false" speed="1" dir="down" hp="100" attack="1" pos_x="256" pos_y="200"/>
+        <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="100" attack="1" pos_x="296" pos_y="95"/>
+        <pokemon id="2" name="Geodude" mode_stone="false" speed="1" dir="down" hp="100" attack="1" pos_x="312" pos_y="80"/>
         <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="312" pos_y="128"/>
         <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="456" pos_y="136"/>
         <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="520" pos_y="248"/>

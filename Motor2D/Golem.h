@@ -45,6 +45,8 @@ public:
 
 	bool Death();
 
+	void OnCollision(Collider*, Collider*);
+
 	Direction dir_hit;
 	iPoint previus_position;
 
@@ -65,7 +67,6 @@ private:
 	int dis_moved;
 	bool reset_distance;
 	bool mode_stone;
-
 };
 
 #endif //__GOLEM_H_

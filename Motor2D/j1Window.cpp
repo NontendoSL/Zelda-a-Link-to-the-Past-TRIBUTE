@@ -71,7 +71,6 @@ bool j1Window::Awake(pugi::xml_node& config)
 		width = x_;
 		height = y_;
 
-
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());

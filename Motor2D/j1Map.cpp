@@ -138,7 +138,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 
 void j1Map::EditCost(int x, int y, int value)
 {
-	MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+	MapLayer* meta_layer = data.layers[1];
 	meta_layer->data[y*meta_layer->width + x] = value;
 }
 

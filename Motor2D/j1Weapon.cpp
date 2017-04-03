@@ -2,6 +2,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Audio.h"
+#include "Pokemon.h"
 #include "j1App.h"
 #include "j1Collision.h"
 #include "j1Map.h"
@@ -292,6 +293,8 @@ void BombContainer::CleanContainer()
 	bombs.pop_front();
 }
 
+
+
 //--------------------------------- BOMB:
 
 
@@ -340,3 +343,4 @@ void Bomb::Die()
 	collision->to_delete = true;
 	container->CleanContainer();
 }
+

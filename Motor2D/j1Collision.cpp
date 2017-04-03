@@ -28,6 +28,8 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_POKEMON] = true;
 	matrix[COLLIDER_POKEMON][COLLIDER_PLAYER] = true;
 
+	matrix[COLLIDER_POKEMON][COLLIDER_BOMB] = true;
+
 }
 j1Collision::~j1Collision() {}
 

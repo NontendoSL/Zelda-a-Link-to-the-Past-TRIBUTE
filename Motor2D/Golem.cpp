@@ -52,6 +52,13 @@ bool Golem::Start()
 	reset_distance = false;
 	reset_run = true;
 
+	//Modify Meta
+	iPoint temp = App->map->WorldToMap(position.x, position.y);
+	App->map->EditCost(temp.x, temp.y, App->map->data.tilesets[1]->firstgid + 1);
+	App->map->EditCost(temp.x - 1, temp.y, App->map->data.tilesets[1]->firstgid + 1);
+	App->map->EditCost(temp.x, temp.y - 1, App->map->data.tilesets[1]->firstgid + 1);
+	App->map->EditCost(temp.x - 1, temp.y - 1, App->map->data.tilesets[1]->firstgid + 1);
+
 	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(5); //id 5 = Golem
 	return true;
@@ -345,4 +352,24 @@ bool Golem::Attack()
 bool Golem::Death()
 {
 	return true;
+}
+
+void Golem::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c1 != nullptr && c2 != nullptr)
+	{
+		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
+		{
+			if (state == HIT)
+			{
+				state = AWAKENING;
+				iPoint temp = App->map->WorldToMap(position.x, position.y);
+				App->map->EditCost(temp.x, temp.y, 0);
+				App->map->EditCost(temp.x - 1, temp.y, 0);
+				App->map->EditCost(temp.x, temp.y - 1, 0);
+				App->map->EditCost(temp.x - 1, temp.y - 1, 0);
+
+			}
+		}
+	}
 }

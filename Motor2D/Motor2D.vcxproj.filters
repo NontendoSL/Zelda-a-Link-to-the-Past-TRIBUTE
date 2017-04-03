@@ -124,7 +124,9 @@
     <ClCompile Include="j1Weapon.cpp">
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClCompile>
-    <ClCompile Include="SceneElements.cpp" />
+    <ClCompile Include="SceneElements.cpp">
+      <Filter>Zelda Game\ElementsScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
