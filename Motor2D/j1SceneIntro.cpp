@@ -107,7 +107,7 @@ bool j1SceneIntro::Update(float dt)
 			{
 				App->scene->ingame = true;
 				App->scene->Start();
-				main_menu->Close();
+				main_menu->OpenClose(false);
 				goHouse = false;
 			}
 		}
@@ -244,7 +244,7 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 					App->audio->FadeMusic(2);
 					App->scene->ingame = true;
 					App->scene->Start();
-					main_menu->Close();
+					main_menu->OpenClose(false);
 				}
 			}
 			break;

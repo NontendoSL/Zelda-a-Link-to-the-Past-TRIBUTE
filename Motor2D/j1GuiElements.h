@@ -121,8 +121,7 @@ public:
 public:
 	void AddElement(j1GuiEntity* element);
 	void Select(int value);
-	void Open();
-	void Close();
+	void OpenClose(bool open);
 	void Move(bool axis, float speed);
 	void Click();
 	void UnClick();
@@ -149,6 +148,7 @@ public:
 	void Update();
 public:
 	void SetCd(uint newcd);
+	void OpenClose(bool open);//true open false close
 private:
 	std::vector<Image*>hud_images;
 	bool incd;

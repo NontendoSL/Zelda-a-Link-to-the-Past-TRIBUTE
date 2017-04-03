@@ -488,24 +488,6 @@ void ZeldaMenu::UnClick()
 	menu_buttons[id_selected]->click = false;
 }
 
-void ZeldaMenu::Open()
-{
-	for (uint i = 0; i < menu_buttons.size(); i++) {
-		menu_buttons[i]->visible = true;
-	}
-	for (uint i = 0; i < menu_images.size(); i++) {
-		menu_images[i]->visible = true;
-		if (menu_images[i]->elements.size() > 0)
-		{
-			for (int j = 0; j < menu_images[i]->elements.size(); j++)
-			{
-				menu_images[i]->elements[j]->visible = true;
-			}
-		}
-	}
-
-	visible = true;
-}
 void ZeldaMenu::Update()
 {
 
@@ -559,22 +541,22 @@ UnClick();
 }
 }*/
 
-void ZeldaMenu::Close()
+void ZeldaMenu::OpenClose(bool open)
 {
 	for (uint i = 0; i < menu_buttons.size(); i++) {
-		menu_buttons[i]->visible = false;
+		menu_buttons[i]->visible = open;
 	}
 	for (uint i = 0; i < menu_images.size(); i++) {
-		menu_images[i]->visible = false;
+		menu_images[i]->visible = open;
 		if (menu_images[i]->elements.size() > 0)
 		{
 			for (int j = 0; j < menu_images[i]->elements.size(); j++)
 			{
-				menu_images[i]->elements[j]->visible = false;
+				menu_images[i]->elements[j]->visible = open;
 			}
 		}
 	}
-	visible = false;
+	visible = open;
 }
 
 void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis do we move (x=true/y=false)
@@ -716,6 +698,8 @@ void PokemonCombatHud::Handle_Input()
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT&&hpbar1.y>0)
 	{
 		hpbar1.y--;
+		sprintf_s(buffer, 25, "%i/%i", hpbar1.y, hpbar1.x);
+		hp_print->Write(buffer);
 	}
 }
 
@@ -733,14 +717,28 @@ void PokemonCombatHud::Update()
 			incd = false;
 		}
 	}
-	sprintf_s(buffer, 25, "%i/%i", hpbar1.y, hpbar1.x);
-	hp_print->Write(buffer);
+
 	hp1->Hitbox.w = (hpbar1.y * 48) / hpbar1.x;//being 48 the max pixels hp can have (atlas)
 }
 
 void PokemonCombatHud::SetCd(uint newcd)
 {
 	cdtime.x = newcd;
+}
+
+void PokemonCombatHud::OpenClose(bool open)
+{
+	for (uint i = 0; i < hud_images.size(); i++) {
+		hud_images[i]->visible = open;
+		if (hud_images[i]->elements.size() > 0)
+		{
+			for (int j = 0; j < hud_images[i]->elements.size(); j++)
+			{
+				hud_images[i]->elements[j]->visible = open;
+			}
+		}
+	}
+	visible = open;
 }
 
 PokemonCombatHud::~PokemonCombatHud()

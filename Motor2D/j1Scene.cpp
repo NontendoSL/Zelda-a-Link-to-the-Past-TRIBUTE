@@ -97,11 +97,11 @@ bool j1Scene::Update(float dt)
 			/*if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 			{
 				App->fadetoblack->FadeToBlack(4);
-			}
+			}*/
 			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
-				switch_map = 4;
-			}*/
+				switch_map = 6;
+			}
 			if (switch_map == 6)
 			{
 				if (fade == false)
@@ -325,7 +325,7 @@ void j1Scene::LoadUi()
 	line->Visible(false);
 	start_menu->AddElement(line);
 	start_menu->position = { 0,-224 };
-	start_menu->Close();
+	start_menu->OpenClose(false);
 	start_menu->identifier = "start_menu";
 	//pokecombat
 	//pokecombat = App->gui->CreatePokemonCombatHud(450,100,300);
@@ -337,13 +337,13 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 	{
 		if (start_menu->position.y < 0)
 		{
-			start_menu->Open();
-			start_menu->Move(false, 2.0);
-			hud->Move(false, 2.0);
+			start_menu->OpenClose(true);
+			start_menu->Move(false, 6.0);
+			hud->Move(false, 6.0);
 		}
 		else
 		{
-			hud->Close();
+			hud->OpenClose(false);
 			switch_menu = false;
 			inventory = true;
 			player->gamestate = INMENU;
@@ -353,13 +353,13 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 	{
 		if (hud->position.y > 0)
 		{
-			hud->Open();
-			start_menu->Move(false, -2.0);
-			hud->Move(false, -2.0);
+			hud->OpenClose(true);
+			start_menu->Move(false, -6.0);
+			hud->Move(false, -6.0);
 		}
 		else
 		{
-			start_menu->Close();
+			start_menu->OpenClose(false);
 			switch_menu = false;
 			inventory = false;
 			player->gamestate = INGAME;
@@ -408,6 +408,7 @@ bool j1Scene::Load_new_map(int n)
 				player->position.x = newPosition.x;
 				player->position.y = newPosition.y;
 			}
+
 
 
 			//Enemies
@@ -491,6 +492,8 @@ bool j1Scene::Load_Combat_map(int n)
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
+	start_menu->OpenClose(false);
+	hud->OpenClose(false);
 	pokecombat = App->gui->CreatePokemonCombatHud(450, 100, 300);
 
 	for (pugi::xml_node temp = config.child("map_combat").child("map"); stop_rearch == false; temp = temp.next_sibling())
