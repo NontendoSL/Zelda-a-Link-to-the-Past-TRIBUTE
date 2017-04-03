@@ -640,7 +640,7 @@ void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich 
 
 void ZeldaMenu::ShowItemInfo()
 {
-	if (selected->identifier.c_str() == "bow") 
+	if (selected->identifier == "bow") 
 	{
 		menu_images[1]->Hitbox.y = 268;
 		menu_texts[0]->Write("BOW ARROWS");
@@ -648,7 +648,7 @@ void ZeldaMenu::ShowItemInfo()
 		menu_texts[3]->Visible(false);
 		menu_texts[4]->Visible(false);
 	}
-	else if (selected->identifier.c_str() == "hookshot")
+	else if (selected->identifier == "hookshot")
 	{
 		menu_images[1]->Hitbox.y = 301;
 		menu_texts[0]->Write("HOOKSHOT");
@@ -656,7 +656,7 @@ void ZeldaMenu::ShowItemInfo()
 		menu_texts[3]->Visible(true);
 		menu_texts[4]->Visible(false);
 	}
-	else if(selected->identifier.c_str() =="bomb")
+	else if(selected->identifier =="bomb")
 	{
 		menu_images[1]->Hitbox.y = 336;
 		menu_texts[0]->Write("BOMBS");
