@@ -521,7 +521,18 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				if (c2->callback->name == "Geodude")
 				{
 					Geodude* pokemon = (Geodude*)c2->callback;
-					pokemon->hp--;
+					if (hurt == false)
+					{
+						hurt = true;
+						timer.Start();
+						pokemon->hp--;
+					}
+					if (timer.ReadSec() > 0.5f)
+					{
+						hurt = false;
+					}
+
+
 					if (pokemon->hp == 0)
 					{
 						c2->callback->state = DYING;
@@ -788,7 +799,7 @@ bool Player::Attack()
 		if (direction == UP)
 		{
 			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y - 13, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y - 16, 8, 20 }, COLLIDER_PLAYER, this);
 		}
 		else if (direction == RIGHT)
 		{

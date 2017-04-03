@@ -351,6 +351,7 @@ bool Golem::Attack()
 
 bool Golem::Death()
 {
+	App->entity_elements->DeletePokemon(this);
 	return true;
 }
 

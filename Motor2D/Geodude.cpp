@@ -327,8 +327,7 @@ bool Geodude::Attack()
 
 bool Geodude::Death()
 {
-	/*App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
-	App->entity_elements->DeleteEnemy(this);*/
+	App->entity_elements->DeletePokemon(this);
 	return true;
 }
 

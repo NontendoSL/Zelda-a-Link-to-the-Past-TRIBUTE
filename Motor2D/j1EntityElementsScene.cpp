@@ -163,7 +163,6 @@ bool j1EntityElementScene::DeleteEnemy(Soldier* enemy)
 		enemy->collision_feet->to_delete = true;
 		enemy = nullptr;
 		delete enemy;
-		LOG("Enemy DELETE!");
 	}
 
 	return true;
@@ -176,8 +175,6 @@ bool j1EntityElementScene::DeleteDynObject(DynamicObjects* dynobject)
 	dynobject->collision->to_delete = true;
 	dynobject = nullptr;
 	delete dynobject;
-
-	LOG("DynObject DELETE!");
 	return true;
 }
 
@@ -188,8 +185,20 @@ bool j1EntityElementScene::DeleteItem(Item* item)
 	item->collision->to_delete = true;
 	item = nullptr;
 	delete item;
-	LOG("Item DELETE!");
 	return true;
+}
+
+bool j1EntityElementScene::DeletePokemon(Pokemon* pokemon)
+{
+	if (pokemon != nullptr)
+	{
+		elementscene.remove(pokemon);
+		App->scene->pokemons.remove(pokemon);
+		pokemon->collision_feet->to_delete = true;
+		pokemon = nullptr;
+		delete pokemon;
+	}
+	return false;
 }
 
 Item* j1EntityElementScene::CreateItem(uint id, iPoint position)

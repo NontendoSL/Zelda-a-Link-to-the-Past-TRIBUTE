@@ -58,6 +58,7 @@ public:
 	bool DeleteEnemy(Soldier* enemy);
 	bool DeleteDynObject(DynamicObjects* dynobject);
 	bool DeleteItem(Item* enemy);
+	bool DeletePokemon(Pokemon* enemy);
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;
