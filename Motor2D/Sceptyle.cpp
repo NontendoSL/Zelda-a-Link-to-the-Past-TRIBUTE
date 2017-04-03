@@ -37,8 +37,8 @@ bool Sceptyle::Start()
 	pokemon_player = true;
 	state = IDLE;
 	scale = App->win->GetScale();
-	offset_x = 15;
-	offset_y = 15;
+	offset_x = 7;
+	offset_y = 17;
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	movable = true;
