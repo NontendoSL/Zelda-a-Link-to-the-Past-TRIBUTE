@@ -133,6 +133,7 @@ private:
 	std::vector<Button*>menu_buttons;
 	std::vector<Image*>menu_images;
 	std::vector<Text*>menu_texts;
+	Button*selected;
 public:
 	uint id_selected;
 };

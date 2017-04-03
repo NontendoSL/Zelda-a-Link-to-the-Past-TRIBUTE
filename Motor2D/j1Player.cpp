@@ -323,6 +323,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				if (bombmanager == nullptr)
 				{
 					bombmanager = App->entity_elements->CreateBombContainer();
+					App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
 				}
 				App->entity_elements->DeleteItem((Item*)c2->callback);
 				bombs++;
@@ -333,6 +334,10 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				if (hook == nullptr)
 				{
 					hook = App->entity_elements->CreateHookshot();
+					Button*item = App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot");
+					App->scene->start_menu->AddElement(item);
+					item->selected = true;
+					App->scene->start_menu->ShowItemInfo();
 				}
 				App->entity_elements->DeleteItem((Item*)c2->callback);
 				//App->collision->EraseCollider(c2);
@@ -436,10 +441,10 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		}
 		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON)
 		{
-			if (c2->callback->name == "Golem" && c2->callback->state == HIT)
+			/*if (c2->callback->name == "Golem" && c2->callback->state == HIT)
 			{
 				c2->callback->state = AWAKENING;
-			}
+			}*/
 		}
 		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
 		{

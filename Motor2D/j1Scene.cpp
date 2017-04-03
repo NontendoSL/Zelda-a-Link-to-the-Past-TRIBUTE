@@ -306,19 +306,21 @@ void j1Scene::LoadUi()
 	//Start Menu
 	start_menu = App->gui->CreateZeldaMenu();
 	Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg");
-	Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21 - 224 }, { 304,268 }, { 337,268 }, false, "bow");
-	hotfix->selected = true;
-	start_menu->AddElement(hotfix);
-	start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
+	//Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21 - 224 }, { 304,268 }, { 337,268 }, false, "bow");
+	//hotfix->selected = true;
+	//start_menu->AddElement(hotfix);
+
 	start_menu->AddElement(Sprite);
-	start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
-	start_menu->AddElement(App->gui->CreateImage({ 370,268,32,32 }, { 18,154 - 224 }, "item_info"));
-	start_menu->AddElement(App->gui->CreateText(PIXEL, "BOW ARROWS", 100, { 19,193 - 224 }, 10));
+
+	start_menu->AddElement(App->gui->CreateImage({ 370,372,32,32 }, { 18,154 - 224 }, "item_info"));
+	start_menu->AddElement(App->gui->CreateText(PIXEL, "SELECT AN ITEM", 100, { 19,193 - 224 }, 10));
 	start_menu->AddElement(App->gui->CreateImage({ 279,256,16,16 }, { 200,23 - 224 }, "item_picked"));
 	start_menu->AddElement(App->gui->CreateText(PIXEL, "   PICK ITEM", 100, { 184,44 - 224 }, 10));
 	start_menu->AddElement(App->gui->CreateImage({ 450,273,64,48 }, { 176,77 - 224 }, "pendants"));
-	start_menu->AddElement(App->gui->CreateText(PIXELMORE, "The great warriors charge the bow to shoot further.", 22, { 59,155 - 224 }, 20));
-	Text*line = App->gui->CreateText(PIXELMORE, "The more power you apply to it, more distance you will reach.", 22, { 59,155 - 224 }, 20);
+	Text* line = App->gui->CreateText(PIXELMORE, "The great warriors charge the bow to shoot further.", 22, { 59,155 - 224 }, 20);
+	start_menu->AddElement(line);
+	line->Visible(false);
+	line = App->gui->CreateText(PIXELMORE, "The more power you apply to it, more distance you will reach.", 22, { 59,155 - 224 }, 20);
 	line->Visible(false);
 	start_menu->AddElement(line);
 	line = App->gui->CreateText(PIXELMORE, "BOOM!!! Explosion!!!", 22, { 59,155 - 224 }, 20);
@@ -419,6 +421,10 @@ bool j1Scene::Load_new_map(int n)
 				temp_enemy = temp_enemy.next_sibling();
 			}
 
+			//map
+			std::string name_map = temp.attribute("file").as_string("");
+			App->map->Load(name_map.c_str(), n);
+
 			//Pokemons
 			pugi::xml_node temp_pokemon = temp.child("pokemons").child("pokemon");
 			for (int i = 0; i < temp.child("pokemons").attribute("num").as_int(0); i++)
@@ -435,10 +441,6 @@ bool j1Scene::Load_new_map(int n)
 				temp_pokemon = temp_pokemon.next_sibling();
 			}
 
-
-			//map
-			std::string name_map = temp.attribute("file").as_string("");
-			App->map->Load(name_map.c_str(), n);
 
 			//Camera position
 			int scale = App->win->GetScale();

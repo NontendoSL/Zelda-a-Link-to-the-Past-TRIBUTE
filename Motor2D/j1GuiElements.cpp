@@ -403,6 +403,10 @@ ZeldaMenu::ZeldaMenu()
 
 void ZeldaMenu::AddElement(j1GuiEntity* element)
 {
+	if (menu_buttons.size() == 0)
+	{
+		selected = (Button*)element;
+	}
 	if (element->type == BUTTON) {
 		element->id = menu_buttons.size() + 1;
 		menu_buttons.push_back((Button*)element);
@@ -415,15 +419,16 @@ void ZeldaMenu::AddElement(j1GuiEntity* element)
 	{
 		menu_texts.push_back((Text*)element);
 	}
-
+	
 }
 
 void ZeldaMenu::Select(int value)
 {
-	menu_buttons[id_selected]->click = false;
+	
 	//assert(id_selected + value < menu_elements.size() + 1 || id_selected + value >0);
 	if (id_selected + value < menu_buttons.size() && id_selected + value >= 0)
 	{
+		menu_buttons[id_selected]->click = false;
 		menu_buttons[id_selected]->selected = false;
 		id_selected += value;
 		menu_buttons[id_selected]->selected = true;
@@ -431,14 +436,19 @@ void ZeldaMenu::Select(int value)
 		{
 			ShowItemInfo();
 		}
-
+		selected = menu_buttons[id_selected];
 	}
+	
 }
 
 void ZeldaMenu::Click()
 {
+	if (menu_buttons.size() > 0)
+	{
 	menu_buttons[id_selected]->click = true;
 	Do();
+	}
+
 }
 
 void ZeldaMenu::Do()
@@ -485,7 +495,8 @@ Button* ZeldaMenu::GetSelected()
 
 void ZeldaMenu::UnClick()
 {
-	menu_buttons[id_selected]->click = false;
+	if(menu_buttons.size()>0)
+		menu_buttons[id_selected]->click = false;
 }
 
 void ZeldaMenu::Update()
@@ -629,29 +640,29 @@ void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich 
 
 void ZeldaMenu::ShowItemInfo()
 {
-	switch (id_selected)
+	if (selected->identifier.c_str() == "bow") 
 	{
-	case 0:
 		menu_images[1]->Hitbox.y = 268;
 		menu_texts[0]->Write("BOW ARROWS");
 		menu_texts[2]->Visible(true);
 		menu_texts[3]->Visible(false);
 		menu_texts[4]->Visible(false);
-		break;
-	case 1:
+	}
+	else if (selected->identifier.c_str() == "hookshot")
+	{
 		menu_images[1]->Hitbox.y = 301;
 		menu_texts[0]->Write("HOOKSHOT");
 		menu_texts[2]->Visible(false);
 		menu_texts[3]->Visible(true);
 		menu_texts[4]->Visible(false);
-		break;
-	case 2:
+	}
+	else if(selected->identifier.c_str() =="bomb")
+	{
 		menu_images[1]->Hitbox.y = 336;
 		menu_texts[0]->Write("BOMBS");
 		menu_texts[2]->Visible(false);
 		menu_texts[3]->Visible(false);
 		menu_texts[4]->Visible(true);
-		break;
 	}
 
 }
