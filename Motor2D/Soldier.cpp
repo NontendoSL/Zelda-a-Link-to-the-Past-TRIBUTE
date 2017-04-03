@@ -8,6 +8,7 @@
 #include "j1Item.h"
 #include "j1Collision.h"
 #include "j1EntityElementsScene.h"
+#include "j1Audio.h"
 
 Soldier::Soldier():NPC()
 {
@@ -373,6 +374,7 @@ bool Soldier::Attack()
 
 bool Soldier::Die()
 {
+	App->audio->PlayFx(11);
 	App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
 	App->entity_elements->DeleteEnemy(this);
 	return true;
@@ -382,6 +384,7 @@ bool Soldier::Movebyhit()
 {
 	if (dir_hit == UP)
 	{
+		App->audio->PlayFx(12);
 		//App->map->MovementCost(position.x, position.y - speed, UP)
 		if (App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP) == 0)
 		{
@@ -394,6 +397,7 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == DOWN)
 	{
+		App->audio->PlayFx(12);
 		//App->map->MovementCost(position.x, position.y + (4 + height), DOWN)
 		if (App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN) == 0)
 		{
@@ -407,6 +411,7 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == LEFT)
 	{
+		App->audio->PlayFx(12);
 		//App->map->MovementCost(position.x - 4, position.y, LEFT)
 		if (App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT) == 0)
 		{
@@ -420,6 +425,7 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == RIGHT)
 	{
+		App->audio->PlayFx(12);
 		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
 		if (App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT) == 0)
 		{

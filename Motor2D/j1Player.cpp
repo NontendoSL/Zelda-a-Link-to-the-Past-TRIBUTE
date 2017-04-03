@@ -855,6 +855,7 @@ bool Player::Hooking()
 		}
 		else if (hook->GetState() == TARGET)
 		{
+			App->audio->PlayFx(13);
 			MoveTo(hook->position);
 		}
 		else if (hook->GetState() == OBSTACLE)
