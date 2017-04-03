@@ -42,8 +42,8 @@ bool j1SceneIntro::Awake()
 bool j1SceneIntro::Start()
 {
 	TitleScreen_letters = App->tex->Load("gui/title_screen/letters.png");
-	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.jpg"); //TODO LOW -> .png
-	Menu_bg= App->tex->Load("gui/title_screen/menu_bg.jpg");
+	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.png"); //TODO LOW -> .png
+	Menu_bg = App->tex->Load("gui/title_screen/menu_bg.png");
 	Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	App->input_manager->AddListener(this);
@@ -66,7 +66,7 @@ bool j1SceneIntro::Update(float dt)
 	{
 		if (menu == false)
 		{
-			if (bg_anim < -120) {
+			if (bg_anim < -180) {
 				right = true;
 			}
 			if (bg_anim > 0) {
@@ -74,14 +74,14 @@ bool j1SceneIntro::Update(float dt)
 			}
 			if (right)
 			{
-				bg_anim += 0.4;
+				bg_anim += 0.3;
 			}
 			else
 			{
-				bg_anim -= 0.4;
+				bg_anim -= 0.3;
 			}
 			App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
-			App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
+			App->render->Blit(TitleScreen_letters, 50, 10, NULL, NULL, false);
 		}
 		else
 		{
@@ -89,8 +89,8 @@ bool j1SceneIntro::Update(float dt)
 				bg_anim -= 0.2;
 			}
 			App->render->Blit(Menu_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
-			App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
-					
+			App->render->Blit(TitleScreen_letters, -10, 0, NULL, NULL, false);
+
 		}
 	}
 	if (goHouse)
