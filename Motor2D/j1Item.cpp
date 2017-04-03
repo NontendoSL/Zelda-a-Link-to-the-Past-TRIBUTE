@@ -61,7 +61,17 @@ bool Item::Start()
 		width = 14;
 		height = 13;
 	}
+	delay.Start();
 	collision = App->collision->AddCollider({ position.x, position.y, width, height }, COLLIDER_ITEM, this);
+	return true;
+}
+
+bool Item::Update()
+{
+	if (delay.ReadSec() >= 0.5)
+	{
+		pickable = true;
+	}
 	return true;
 }
 

@@ -406,6 +406,8 @@ void ZeldaMenu::AddElement(j1GuiEntity* element)
 	if (menu_buttons.size() == 0)
 	{
 		selected = (Button*)element;
+		selected->selected = true;
+		ShowItemInfo();
 	}
 	if (element->type == BUTTON) {
 		element->id = menu_buttons.size() + 1;
@@ -432,11 +434,12 @@ void ZeldaMenu::Select(int value)
 		menu_buttons[id_selected]->selected = false;
 		id_selected += value;
 		menu_buttons[id_selected]->selected = true;
-		if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
-		{
-			ShowItemInfo();
-		}
+		//if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
+		//{
+	
+		//}
 		selected = menu_buttons[id_selected];
+		ShowItemInfo();
 	}
 	
 }
@@ -648,7 +651,7 @@ void ZeldaMenu::ShowItemInfo()
 		menu_texts[3]->Visible(false);
 		menu_texts[4]->Visible(false);
 	}
-	else if (selected->identifier == "hookshot")
+	if (selected->identifier == "hookshot")
 	{
 		menu_images[1]->Hitbox.y = 301;
 		menu_texts[0]->Write("HOOKSHOT");
@@ -656,7 +659,7 @@ void ZeldaMenu::ShowItemInfo()
 		menu_texts[3]->Visible(true);
 		menu_texts[4]->Visible(false);
 	}
-	else if(selected->identifier =="bomb")
+	if(selected->identifier =="bomb")
 	{
 		menu_images[1]->Hitbox.y = 336;
 		menu_texts[0]->Write("BOMBS");

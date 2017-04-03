@@ -292,7 +292,7 @@ bool Sceptyle::Attack()
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x, position.y, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x + 15, position.y + 10, 8, 20 }, COLLIDER_PLAYER, this);
 			App->audio->PlayFx(8);
 		}
 		else if (direction == DOWN)
@@ -302,7 +302,7 @@ bool Sceptyle::Attack()
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x, position.y, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 15, position.y + 10, 8, 20 }, COLLIDER_PLAYER, this);
 			App->audio->PlayFx(8);
 		}
 	}
