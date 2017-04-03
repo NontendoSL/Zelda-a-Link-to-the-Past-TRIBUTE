@@ -213,13 +213,13 @@ bool j1Scene::Update(float dt)
 
 		/*if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 		{
-			player->position.x += 50;
-			App->render->camera.x -= 100;
+			player->position.x -= 50;
+			App->render->camera.x += 100;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		{
-			player->position.x -= 50;
-			App->render->camera.x += 100;
+			player->position.x += 50;
+			App->render->camera.x -= 100;
 		}*/
 		
 	return true;

@@ -108,7 +108,7 @@ private:
 
 	//switchmap
 	bool canSwitchMap;
-	Collider* changeMap;
+	int black;
 
 	//Colliders
 	Collider* collision_feet;

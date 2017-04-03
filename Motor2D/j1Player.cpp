@@ -65,7 +65,7 @@ bool Player::Start()
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	canSwitchMap = true;
-
+	black = 0;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
 
@@ -416,17 +416,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (canSwitchMap == false)
 			{
-				if (changeMap != nullptr)
-				{
-					if (changeMap != c2)
-					{
-						canSwitchMap = true;
-					}
-				}
-				else
-				{
-					canSwitchMap = true;
-				}
+				canSwitchMap = true;
 			}
 			else
 			{
@@ -438,7 +428,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (App->map->directMap[i].id_tile == id_meta)
 					{
 						canSwitchMap = false;
-						changeMap = c2;
 						App->scene->switch_map = App->map->directMap[i].id_map;
 						App->scene->newPosition = App->map->directMap[i].position;
 					}
