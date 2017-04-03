@@ -46,8 +46,8 @@ bool Geodude::Start()
 {
 	state = IDLE;
 	scale = App->win->GetScale();
-	offset_x = 15;
-	offset_y = 15;
+	offset_x = 7;
+	offset_y = 7;
 	gamestate = TIMETOPLAY;
 	movable = true;
 	collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_POKEMON, this);

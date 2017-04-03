@@ -43,8 +43,8 @@ bool Golem::Start()
 {
 	state = HIT;
 	scale = App->win->GetScale();
-	offset_x = 15;
-	offset_y = 15;
+	offset_x = 8;
+	offset_y = 17;
 	gamestate = TIMETOPLAY;
 	movable = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
