@@ -310,40 +310,51 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_ITEM)
 		{
-
-			if (c2->callback->name == "rupee")
+			Item* temp = (Item*)c2->callback;
+			if (temp->pickable == true)
 			{
-				App->audio->PlayFx(4);
-				gems++;
-				App->entity_elements->DeleteItem((Item*)c2->callback);
-				//App->collision->EraseCollider(c2);
-			}
-			if (c2->callback->name == "bomb")
-			{
-				if (bombmanager == nullptr)
+				if (c2->callback->name == "rupee")
 				{
-					bombmanager = App->entity_elements->CreateBombContainer();
-					App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+					App->audio->PlayFx(4);
+					gems++;
+					App->entity_elements->DeleteItem((Item*)c2->callback);
+					//App->collision->EraseCollider(c2);
 				}
-				App->entity_elements->DeleteItem((Item*)c2->callback);
-				bombs++;
-				//App->collision->EraseCollider(c2);
-			}
-			if (c2->callback->name == "hookshot")
-			{
-				if (hook == nullptr)
+				if (c2->callback->name == "bomb")
 				{
+<<<<<<< HEAD
 					hook = App->entity_elements->CreateHookshot();
 					App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
+=======
+					if (bombmanager == nullptr)
+					{
+						bombmanager = App->entity_elements->CreateBombContainer();
+						App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+					}
+					App->entity_elements->DeleteItem((Item*)c2->callback);
+					bombs++;
+					//App->collision->EraseCollider(c2);
 				}
-				App->entity_elements->DeleteItem((Item*)c2->callback);
-				//App->collision->EraseCollider(c2);
-			}
-			if (c2->callback->name == "heart")
-			{
-				AddHeartContainer();
-				App->entity_elements->DeleteItem((Item*)c2->callback);
-				//App->collision->EraseCollider(c2);
+				if (c2->callback->name == "hookshot")
+				{
+					if (hook == nullptr)
+					{
+						hook = App->entity_elements->CreateHookshot();
+						Button*item = App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot");
+						App->scene->start_menu->AddElement(item);
+						item->selected = true;
+						App->scene->start_menu->ShowItemInfo();
+					}
+					App->entity_elements->DeleteItem((Item*)c2->callback);
+					//App->collision->EraseCollider(c2);
+				}
+				if (c2->callback->name == "heart")
+				{
+					AddHeartContainer();
+					App->entity_elements->DeleteItem((Item*)c2->callback);
+					//App->collision->EraseCollider(c2);
+>>>>>>> origin/master
+				}
 			}
 		}
 
@@ -1041,39 +1052,6 @@ bool Player::Move()
 		walking = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
-	{
-		direction = DOWN;
-		//int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
-		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN);
-		if (temp == T_CONTINUE)
-		{
-			if (Camera_inside())
-				App->render->camera.y -= speed * scale;
-			position.y += speed;
-		}
-		if (keysuse == 1)
-		{
-			if (temp == T_LEFT)//left
-			{
-				direction = LEFT;
-				if (Camera_inside())
-					App->render->camera.x += speed * scale;
-				position.x -= speed;
-				direction = DOWN;
-			}
-			if (temp == T_RIGHT)//right
-			{
-				direction = RIGHT;
-				if (Camera_inside())
-					App->render->camera.x -= speed * scale;
-				position.x += speed;
-				direction = DOWN;
-			}
-		}
-		walking = true;
-	}
-
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = RIGHT;
@@ -1140,8 +1118,41 @@ bool Player::Move()
 		walking = true;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
+	{
+		direction = DOWN;
+		//int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN);
+		if (temp == T_CONTINUE)
+		{
+			if (Camera_inside())
+				App->render->camera.y -= speed * scale;
+			position.y += speed;
+		}
+		if (keysuse == 1)
+		{
+			if (temp == T_LEFT)//left
+			{
+				direction = LEFT;
+				if (Camera_inside())
+					App->render->camera.x += speed * scale;
+				position.x -= speed;
+				direction = DOWN;
+			}
+			if (temp == T_RIGHT)//right
+			{
+				direction = RIGHT;
+				if (Camera_inside())
+					App->render->camera.x -= speed * scale;
+				position.x += speed;
+				direction = DOWN;
+			}
+		}
+		walking = true;
+	}
+
 	//Set the actual floor of the player
-	if (App->map->data.layers.size() >= 3)
+	if (App->map->data.layers.size() >= 3) // Only Victory Road has 3 layers
 	{
 		GetfloorLvl(position);
 	}

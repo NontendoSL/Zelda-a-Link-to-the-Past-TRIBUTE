@@ -200,7 +200,7 @@ Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 	config = LoadConfig(config_file);
 	element->Awake(config.child(element->name.c_str()), id, position);
 	element->Start();
-	elementscene.push_back(element);
+	elementscene.push_front(element);
 	return element;
 }
 

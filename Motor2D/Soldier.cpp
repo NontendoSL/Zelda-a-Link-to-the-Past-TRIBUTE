@@ -373,7 +373,7 @@ bool Soldier::Attack()
 
 bool Soldier::Die()
 {
-	App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
+	App->scene->items.push_back(App->entity_elements->CreateItem(item_id, position));
 	App->entity_elements->DeleteEnemy(this);
 	return true;
 }

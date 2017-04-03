@@ -25,7 +25,7 @@ public:
 	//bool PreUpdate();
 
 	// Called each loop iteration
-	//bool Update();
+	bool Update();
 
 	// Called before all Updates
 	//bool PostUpdate();
@@ -43,6 +43,8 @@ private:
 
 public:
 	Collider* collision = nullptr;
+	j1Timer delay;
+	bool pickable = false;
 
 };
 
