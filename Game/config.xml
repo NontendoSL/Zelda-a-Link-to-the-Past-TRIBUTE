@@ -39,8 +39,8 @@
 	</animation>
   
 	<window>
-		<resolution width="512" height="448" scale="2" />
-		<fullscreen value="false" />
+    <resolution width="512" height="448" scale="2" />
+		<fullscreen value="true" />
 		<borderless value="false" />
 		<resizable value="false" />
 		<fullscreen_window value="false" />

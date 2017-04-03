@@ -276,10 +276,10 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 			}
 
-			App->map->EditCost(pos_dyn.x, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
-			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, App->map->data.tilesets[1]->firstgid);
-			App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
-			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, App->map->data.tilesets[1]->firstgid);
+			App->map->EditCost(pos_dyn.x, pos_dyn.y, 0);
+			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, 0);
+			App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, 0);
+			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, 0);
 
 
 			App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);

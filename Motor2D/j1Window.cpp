@@ -64,6 +64,14 @@ bool j1Window::Awake(pugi::xml_node& config)
 
 		window = SDL_CreateWindow(App->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
+		//If the resultion change, the width and height will be modify
+		int x_ = 0;
+		int y_ = 0;
+		SDL_GetWindowSize(window, &x_, &y_);
+		width = x_;
+		height = y_;
+
+
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
