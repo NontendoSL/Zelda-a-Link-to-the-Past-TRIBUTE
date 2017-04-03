@@ -384,10 +384,10 @@ bool Soldier::Movebyhit()
 {
 	if (dir_hit == UP)
 	{
-		App->audio->PlayFx(12);
 		//App->map->MovementCost(position.x, position.y - speed, UP)
 		if (App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP) == 0)
 		{
+			App->audio->PlayFx(12);
 			position.y -= 4;
 		}
 		if (position.y < (previus_position.y - 30))
@@ -397,10 +397,10 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == DOWN)
 	{
-		App->audio->PlayFx(12);
 		//App->map->MovementCost(position.x, position.y + (4 + height), DOWN)
 		if (App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN) == 0)
 		{
+			App->audio->PlayFx(12);
 			position.y += 4;
 		}
 
@@ -411,10 +411,10 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == LEFT)
 	{
-		App->audio->PlayFx(12);
 		//App->map->MovementCost(position.x - 4, position.y, LEFT)
 		if (App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT) == 0)
 		{
+			App->audio->PlayFx(12);
 			position.x -= 4;
 		}
 
@@ -425,10 +425,10 @@ bool Soldier::Movebyhit()
 	}
 	if (dir_hit == RIGHT)
 	{
-		App->audio->PlayFx(12);
 		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
 		if (App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT) == 0)
 		{
+			App->audio->PlayFx(12);
 			position.x += 4;
 		}
 		if (position.x > (previus_position.x + 30))
