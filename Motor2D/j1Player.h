@@ -50,6 +50,8 @@ public:
 
 	bool Camera_inside();
 
+	bool Camera_inside(iPoint pos);
+
 	bool Idle();
 
 	bool Walking();

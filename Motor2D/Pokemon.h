@@ -65,6 +65,10 @@ public:
 	bool dead;
 	bool pokemon_player;
 
+	//hits
+	Direction dir_hit;
+	iPoint previus_position;
+
 protected:
 
 	//Item* drop;

@@ -21,8 +21,8 @@ bool Geodude::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 {
 	name = conf.attribute("name").as_string("");
 	hp = conf.attribute("hp").as_int(0);
-	attack = conf.attribute("name").as_int(0);
-	speed = conf.attribute("name").as_int(0);
+	attack = conf.attribute("attack").as_int(0);
+	speed = conf.attribute("speed").as_int(0);
 	std::string temp = conf.attribute("dir").as_string("");
 	if (temp == "up")
 		direction = UP;
@@ -135,6 +135,9 @@ void Geodude::Draw()
 		break;
 	case DYING:
 		id = 3;
+		break;
+	case HIT:
+		id = 1;
 		break;
 	default:
 		break;
@@ -324,6 +327,8 @@ bool Geodude::Attack()
 
 bool Geodude::Death()
 {
+	/*App->scene->items.push_back(App->entity_elements->CreateItem(1, position));
+	App->entity_elements->DeleteEnemy(this);*/
 	return true;
 }
 

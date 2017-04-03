@@ -47,8 +47,6 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
-	Direction dir_hit;
-	iPoint previus_position;
 
 private:
 

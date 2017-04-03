@@ -21,6 +21,7 @@
 #include "j1DynamicObjects.h"
 #include "j1Creature.h"
 #include "j1Weapon.h"
+#include "Geodude.h"
 #include "Animation.h"
 #include "Pokemon.h"
 
@@ -349,7 +350,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 		}
-
 		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
 		{
 			if (hurt == false)
@@ -363,6 +363,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0) //magic numbers 20 -> this is the distance you will move
 					{
 						position.y += 15;
+						if (Camera_inside(iPoint(0, 15)))
+							App->render->camera.y -= 15;
 					}
 				}
 				if (direction == DOWN)
@@ -370,6 +372,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0) //magic numbers 20 -> this is the distance you will move
 					{
 						position.y -= 15;
+						if (Camera_inside(iPoint(0, 15)))
+							App->render->camera.y += 15;
 					}
 				}
 				if (direction == LEFT)
@@ -377,6 +381,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0) //magic numbers 20 -> this is the distance you will move
 					{
 						position.x += 15;
+						if (Camera_inside(iPoint(15, 0)))
+							App->render->camera.x -= 15;
 					}
 				}
 				if (direction == RIGHT)
@@ -384,6 +390,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0) //magic numbers 20 -> this is the distance you will move
 					{
 						position.x -= 15;
+						if (Camera_inside(iPoint(15, 0)))
+							App->render->camera.x += 15;
 					}
 				}
 			}
@@ -439,13 +447,110 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 		}
+
+		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON)
+		{
+			if (c2->callback->name == "Golem" && c2->callback->scale == HIT)
+			{
+				//Not dammage
+			}
+			else
+			{
+				if (hurt == false)
+				{
+					timer.Start();
+					hurt = true;
+					hp_hearts.y--;
+
+					if (direction == UP)
+					{
+						if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0)
+						{
+							position.y += 15;
+							if (Camera_inside(iPoint(0, 15)))
+								App->render->camera.y -= 15;
+						}
+					}
+					if (direction == DOWN)
+					{
+						if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0)
+						{
+							position.y -= 15;
+							if (Camera_inside(iPoint(0, 15)))
+								App->render->camera.y += 15;
+						}
+					}
+					if (direction == LEFT)
+					{
+						if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0)
+						{
+							position.x += 15;
+							if (Camera_inside(iPoint(15, 0)))
+								App->render->camera.x -= 15;
+						}
+					}
+					if (direction == RIGHT)
+					{
+						if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0)
+						{
+							position.x -= 15;
+							if (Camera_inside(iPoint(15, 0)))
+								App->render->camera.x += 15;
+						}
+					}
+				}
+				else
+				{
+					if (timer.ReadSec() >= 1)
+					{
+						hurt = false;
+					}
+
+				}
+			}
+		}
+
 		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON)
 		{
-			/*if (c2->callback->name == "Golem" && c2->callback->state == HIT)
+			if (c2->callback->name == "Golem" && c2->callback->scale == HIT)
 			{
-				c2->callback->state = AWAKENING;
-			}*/
+				//Not dammage
+			}
+			else
+			{
+				if (c2->callback->name == "Geodude")
+				{
+					Geodude* pokemon = (Geodude*)c2->callback;
+					pokemon->hp--;
+					if (pokemon->hp == 0)
+					{
+						c2->callback->state = DYING;
+					}
+					else
+					{
+						c2->callback->state = HIT;
+						pokemon->dir_hit = c1->callback->direction;
+						pokemon->previus_position = pokemon->position;
+					}
+				}
+				if (c2->callback->name == "Golem")
+				{
+					Golem* pokemon = (Golem*)c2->callback;
+					pokemon->hp--;
+					if (pokemon->hp == 0)
+					{
+						c2->callback->state = DYING;
+					}
+					else
+					{
+						c2->callback->state = HIT;
+						pokemon->dir_hit = c1->callback->direction;
+						pokemon->previus_position = pokemon->position;
+					}
+				}
+			}
 		}
+
 		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
 		{
 			if (hurt == false) 
@@ -509,6 +614,77 @@ bool Player::Camera_inside()
 		if (direction == RIGHT)
 		{
 			if (camera_pos.x + (App->win->GetWidth() / scale) >= size_map.x)
+			{
+				return false;
+			}
+			else
+			{
+				if (position.x < (App->win->GetWidth() / scale) / 2)
+				{
+					return false;
+				}
+			}
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return true;
+}
+
+bool Player::Camera_inside(iPoint pos)
+{
+	//256x224
+	if (camera_follow == true)
+	{
+		iPoint camera_pos(-App->render->camera.x / 2, -App->render->camera.y / 2);
+		iPoint size_map = App->map->MapToWorld(App->map->data.width, App->map->data.height);
+		if (direction == UP)
+		{
+			if (camera_pos.y - pos.y <= 0)
+			{
+				return false;
+			}
+			else
+			{
+				if (position.y > size_map.y - (App->win->GetHeight() / scale) / 2)
+				{
+					return false;
+				}
+			}
+		}
+		if (direction == DOWN)
+		{
+			if (camera_pos.y + pos.y + (App->win->GetHeight() / scale) >= size_map.y)
+			{
+				return false;
+			}
+			else
+			{
+				if (position.y < (App->win->GetHeight() / scale) / 2)
+				{
+					return false;
+				}
+			}
+		}
+		if (direction == LEFT)
+		{
+			if (camera_pos.x - pos.x <= 0)
+			{
+				return false;
+			}
+			else
+			{
+				if (position.x > size_map.x - (App->win->GetWidth() / scale) / 2)
+				{
+					return false;
+				}
+			}
+		}
+		if (direction == RIGHT)
+		{
+			if (camera_pos.x + pos.x + (App->win->GetWidth() / scale) >= size_map.x)
 			{
 				return false;
 			}

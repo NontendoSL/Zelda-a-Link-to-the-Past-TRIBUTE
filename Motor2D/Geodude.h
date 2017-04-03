@@ -47,8 +47,7 @@ public:
 
 	bool Movebyhit();
 
-	Direction dir_hit;
-	iPoint previus_position;
+
 
 private:
 
