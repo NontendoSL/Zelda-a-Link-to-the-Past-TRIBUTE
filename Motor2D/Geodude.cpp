@@ -5,6 +5,7 @@
 #include "p2Defs.h"
 #include "j1Scene.h"
 #include "j1Input.h"
+#include "j1Player.h"
 #include "j1Item.h"
 #include "j1Collision.h"
 #include "j1EntityElementsScene.h"
@@ -327,6 +328,11 @@ bool Geodude::Attack()
 
 bool Geodude::Death()
 {
+	if (App->scene->player->bombmanager != nullptr)
+	{
+		App->scene->items.push_back(App->entity_elements->CreateItem(2, position));
+	}
+
 	App->entity_elements->DeletePokemon(this);
 	return true;
 }

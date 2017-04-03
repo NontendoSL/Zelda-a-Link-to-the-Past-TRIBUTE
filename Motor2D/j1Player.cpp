@@ -450,7 +450,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON)
 		{
-			if (c2->callback->name == "Golem" && c2->callback->scale == HIT)
+			if (c2->callback->name == "Golem" && c2->callback->state == HIT)
 			{
 				//Not dammage
 			}
@@ -512,7 +512,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON)
 		{
-			if (c2->callback->name == "Golem" && c2->callback->scale == HIT)
+			if (c2->callback->name == "Golem" && c2->callback->state == HIT)
 			{
 				//Not dammage
 			}
@@ -809,7 +809,7 @@ bool Player::Attack()
 		else if (direction == DOWN)
 		{
 			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - 6, 8, 16 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - 2, 8, 20}, COLLIDER_PLAYER, this);
 		}
 		else if (direction == LEFT)
 		{
