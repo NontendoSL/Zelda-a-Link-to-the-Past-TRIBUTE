@@ -286,23 +286,22 @@ bool Sceptyle::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			
-			collision_attack = App->collision->AddCollider({ position.x, position.y, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 39, 22, 8 }, COLLIDER_PLAYER, this);
 			App->audio->PlayFx(8);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 15, position.y + 10, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x + 9, position.y - 28, 8, 22 }, COLLIDER_PLAYER, this);
 			App->audio->PlayFx(8);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x, position.y, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_PLAYER, this);
 			App->audio->PlayFx(8);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 15, position.y + 10, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 16, position.y - 28, 8, 22 }, COLLIDER_PLAYER, this);
 			App->audio->PlayFx(8);
 		}
 	}
