@@ -749,6 +749,15 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 
 	case BUTTON_START:
 	{
+		if (App->scene->inventory)
+		{
+			App->audio->PlayFx(2);
+		}
+		else
+		{
+			App->audio->PlayFx(3);
+		}
+
 		App->scene->switch_menu = true;
 		gamestate = INMENU;
 		break;

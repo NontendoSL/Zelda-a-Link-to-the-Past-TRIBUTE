@@ -204,7 +204,11 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 			if (menu == true)
 			{
 				if (state == E_DOWN)
+				{
+					App->audio->PlayFx(Menu_Cursor);
 					main_menu->Select(-1);
+				}
+
 			}
 			break;
 
@@ -212,7 +216,10 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 			if (menu == true)
 			{
 				if (state == E_DOWN)
+				{
+					App->audio->PlayFx(Menu_Cursor);
 					main_menu->Select(1);
+				}
 			}
 			break;
 
