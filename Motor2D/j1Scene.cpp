@@ -55,6 +55,9 @@ bool j1Scene::Start()
 		App->audio->LoadFx("audio/fx/LTTP_Sword_Attack.wav");//5
 		App->audio->LoadFx("audio/fx/LTTP_Bomb_Lay.wav");//6
 		App->audio->LoadFx("audio/fx/LTTP_Bomb_Explosion.wav");//7
+		App->audio->LoadFx("audio/fx/PKMN_Scratch_Attack.wav");//8
+		App->audio->LoadFx("audio/fx/PKMN_Blaziken_Attack.wav");//9
+		App->audio->LoadFx("audio/fx/PKMN_Tackle_Attack.wav");//10
 	}
 	inventory = false;
 	switch_map = 0;

@@ -1,6 +1,7 @@
 #include "Sceptyle.h"
 #include "j1App.h"
 #include "j1Pathfinding.h"
+#include "j1Audio.h"
 
 Sceptyle::Sceptyle()
 {
@@ -285,19 +286,24 @@ bool Sceptyle::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
+			
 			collision_attack = App->collision->AddCollider({ position.x, position.y, 8, 20 }, COLLIDER_PLAYER, this);
+			App->audio->PlayFx(8);
 		}
 		else if (direction == RIGHT)
 		{
 			collision_attack = App->collision->AddCollider({ position.x, position.y, 20, 8 }, COLLIDER_PLAYER, this);
+			App->audio->PlayFx(8);
 		}
 		else if (direction == DOWN)
 		{
 			collision_attack = App->collision->AddCollider({ position.x, position.y, 8, 20 }, COLLIDER_PLAYER, this);
+			App->audio->PlayFx(8);
 		}
 		else if (direction == LEFT)
 		{
 			collision_attack = App->collision->AddCollider({ position.x, position.y, 20, 8 }, COLLIDER_PLAYER, this);
+			App->audio->PlayFx(8);
 		}
 	}
 	return true;
