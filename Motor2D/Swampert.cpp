@@ -47,7 +47,7 @@ bool Swampert::Start()
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
-
+	range = { 60,0 };
 	return true;
 }
 
@@ -137,7 +137,10 @@ bool Swampert::Update()
 			gamestate = INGAME;
 		}
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+		AttackSpecial();
+	}
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
@@ -145,6 +148,10 @@ bool Swampert::Update()
 
 void Swampert::Draw()
 {
+	if (sp_attacking == true)
+	{
+		ThrowSP();
+	}
 	App->anim_manager->Drawing_Manager(state, direction, position, 7);
 }
 
@@ -161,6 +168,42 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 		{
 
 		}
+	}
+}
+
+
+void Swampert::AttackSpecial()
+{
+	sp_attacking = true;
+	sp_direction = direction;
+	sp_start = position;
+}
+
+void Swampert::ThrowSP()
+{
+	switch (sp_direction)
+	{
+	case 0:
+		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x,sp_start.y - range.y }, 10);
+		break;
+	case 1:
+		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x,sp_start.y + range.y }, 10);
+		break;
+	case 2:
+		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x - range.y,sp_start.y }, 10);
+		break;
+	case 3:
+		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x + range.y,sp_start.y }, 10);
+		break;
+	}
+	if (range.y >= range.x)
+	{
+		range.y = 0;
+		sp_attacking = false;
+	}
+	else
+	{
+		range.y++;
 	}
 }
 

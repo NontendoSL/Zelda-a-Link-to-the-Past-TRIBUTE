@@ -53,6 +53,10 @@ public:
 
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
+	void AttackSpecial();
+
+	void ThrowSP();
+
 private:
 
 	//Timer
@@ -62,6 +66,12 @@ private:
 	bool reset_run;
 	bool reset_distance;
 	int timetorun = 0;
+
+	//special attack
+	iPoint range; //.X shows max range, .Y shows distance moved
+	iPoint sp_start;
+	bool sp_attacking = false;
+	int sp_direction;
 };
 
 #endif //__SWAMPERT_H_

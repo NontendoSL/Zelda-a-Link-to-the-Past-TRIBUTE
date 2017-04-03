@@ -36,6 +36,8 @@
     <!--id= 7--> <file file="animation/SwampertAnimations.xml"/>
     <!--id= 8--> <file file="animation/SceptileAnimations.xml"/>
     <!--id= 9--> <file file="animation/SudowoodoAnimations.xml"/>
+	<!--id= 10--> <file file="animation/AnimationsAndEffects.xml"/>
+	
 	</animation>
   
 	<window>
