@@ -109,7 +109,10 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			{
 				App->scene->pokemons.clear();
 			}
-
+			
+			gems = 0;
+			arrows = 0;
+			bombs = 0;
 			App->scene->Load_new_map(1);
 		}
 	}
