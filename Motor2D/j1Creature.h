@@ -27,17 +27,33 @@ public:
 		return true;
 	}
 
+	virtual bool Move(int x, int y);
+
 	virtual bool Die()
 	{
 		return true;
 	}
 
+	virtual bool GoTo(iPoint destination, int speed);
+	virtual bool Orientate();
 
 public:
 	CreatureType c_type;
 	int hp;
 	bool walking = false;
 	int attack;
+	float chase_speed;
+
+	//COMBAT STATS
+	j1Timer attack_time;
+	int attack_speed = 0;
+	int radar = 0;
+	iPoint target_pos = { 0, 0 };
+	std::vector<iPoint> path;
+
+	//COLLISIONS
+	Collider* collision_feet = nullptr;
+
 
 };
 

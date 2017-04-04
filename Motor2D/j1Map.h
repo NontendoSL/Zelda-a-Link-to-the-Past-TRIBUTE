@@ -137,6 +137,7 @@ public:
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 	
 	TileDirection MovementCost(int x, int y, int oX, int oY, Direction dir) const;
+	int CheckTileCost(int x, int y);
 
 	void EditCost(int x, int y,int value);
 	void DynObjectFromTiled(uint id);

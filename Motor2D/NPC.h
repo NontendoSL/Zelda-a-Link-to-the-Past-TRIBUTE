@@ -5,8 +5,6 @@
 #include "SceneElements.h"
 #include "j1Creature.h"
 
-enum StatusAction {GUARD, HUNT};
-
 class NPC : public Creature
 {
 public:
@@ -16,11 +14,6 @@ public:
 	~NPC()
 	{}
 
-	virtual void Dead()
-	{
-
-	}
-
 public:
 	bool destructible;
 	bool movable;
@@ -28,8 +21,6 @@ public:
 
 	int npc_id;
 	uint marge;
-	StatusAction status_action;
-	Collider* collision_feet = nullptr;
 
 
 };

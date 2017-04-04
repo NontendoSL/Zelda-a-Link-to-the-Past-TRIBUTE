@@ -78,17 +78,17 @@
         <enemy id="1" pos_x="507" pos_y="403" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
 
         <!-- Interactive Enemies -->
-        <enemy id="1" pos_x="218" pos_y="414" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-        <enemy id="1" pos_x="230" pos_y="400" hp="10" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0"  />
-        <enemy id="1" pos_x="330" pos_y="400" hp="10" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-        <enemy id="1" pos_x="348" pos_y="313" hp="10" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-        <enemy id="1" pos_x="374" pos_y="243" hp="10" attack="10" dir="right" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-        <enemy id="1" pos_x="322" pos_y="123" hp="10" attack="10" dir="right" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-        <enemy id="1" pos_x="365" pos_y="43" hp="10" attack="10" dir="up" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-        <enemy id="1" pos_x="209" pos_y="31" hp="10" attack="10" dir="up" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-        <enemy id="1" pos_x="227" pos_y="475" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-        <enemy id="1" pos_x="88" pos_y="329" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-        <enemy id="1" pos_x="182" pos_y="149" hp="10" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <enemy id="1" pos_x="218" pos_y="414" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <enemy id="1" pos_x="230" pos_y="400" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0"  />
+        <enemy id="1" pos_x="330" pos_y="400" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
+        <enemy id="1" pos_x="348" pos_y="313" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <enemy id="1" pos_x="374" pos_y="243" hp="3" attack="10" dir="right" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <enemy id="1" pos_x="322" pos_y="123" hp="3" attack="10" dir="right" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
+        <enemy id="1" pos_x="365" pos_y="43" hp="3" attack="10" dir="up" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <enemy id="1" pos_x="209" pos_y="31" hp="3" attack="10" dir="up" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
+        <enemy id="1" pos_x="227" pos_y="475" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <enemy id="1" pos_x="88" pos_y="329" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
+        <enemy id="1" pos_x="182" pos_y="149" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
       </enemies>
 
       <dynobjects>
