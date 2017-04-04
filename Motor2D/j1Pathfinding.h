@@ -4,15 +4,12 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include <vector>
+#include <queue>
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 
-// --------------------------------------------------
-// Recommended reading:
-// Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
-// Details: http://theory.stanford.edu/~amitp/GameProgramming/
-// --------------------------------------------------
+struct PathNode;
 
 class j1PathFinding : public j1Module
 {
@@ -44,11 +41,16 @@ public:
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
 
+	// Return a pointer of the node at pos (x,y)
+	PathNode* GetPathNode(int x, int y);
+
 private:
 
 	// size of the map
 	uint width;
 	uint height;
+
+	PathNode* map_node = nullptr;
 
 	// all map walkability values [0..255]
 	uchar* map;
@@ -66,8 +68,8 @@ struct PathList;
 struct PathNode
 {
 	// Convenient constructors
-	PathNode();
-	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
+	//PathNode();
+	PathNode(int g, int h, const iPoint& pos, PathNode* parent);
 	PathNode(const PathNode& node);
 
 	// Fills a list (PathList) of all valid adjacent pathnodes
@@ -87,12 +89,23 @@ struct PathNode
 	int g;
 	int h;
 	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	PathNode* parent = nullptr; // needed to reconstruct the path in the end
+
+	bool on_close = false;
+	bool on_open = false;
 };
 
 // ---------------------------------------------------------------------
 // Helper struct to include a list of path nodes
 // ---------------------------------------------------------------------
+struct compare
+{
+	bool operator()(const PathNode* a, const PathNode* b)
+	{
+		return a->Score() >= b->Score();
+	}
+};
+
 struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
@@ -103,8 +116,10 @@ struct PathList
 	//p2List_item<PathNode>* GetNodeLowestScore() const;
 	std::list<PathNode>::const_iterator GetNodeLowestScore() const;
 	// -----------
+	
 	// The list itself, note they are not pointers!
-	std::list<PathNode> list;
+	//std::list<PathNode> list;
+	std::priority_queue<PathNode*, std::vector<PathNode*>, compare> list;
 };
 
 

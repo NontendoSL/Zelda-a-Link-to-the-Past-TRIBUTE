@@ -21,12 +21,19 @@ bool j1PathFinding::CleanUp()
 
 	last_path.clear();
 	RELEASE_ARRAY(map);
+	RELEASE_ARRAY(map_node);
+
 	return true;
 }
 
 // Sets up the walkability map
 void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 {
+	if (data == nullptr)
+	{
+		return;
+	}
+
 	this->width = width;
 	this->height = height;
 
@@ -63,13 +70,18 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 	return INVALID_WALK_CODE;
 }
 
+PathNode * j1PathFinding::GetPathNode(int x, int y)
+{
+	return &map_node[(y*width) + x];
+}
+
 // To request all tiles involved in the last generated path //TODO LOW -> const_iterator??
 
 
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------
-std::list<PathNode>::iterator PathList::Find(const iPoint& point) 
+/*std::list<PathNode>::iterator PathList::Find(const iPoint& point) 
 {
 	std::list<PathNode>::iterator item = list.begin();
 	while(item != list.cend())
@@ -80,12 +92,12 @@ std::list<PathNode>::iterator PathList::Find(const iPoint& point)
 	}
 	item=list.end();
 	return item;
-}
+}*/
 
 // PathList ------------------------------------------------------------------------
 // Returns the Pathnode with lowest score in this list or NULL if empty
 // ---------------------------------------------------------------------------------
-std::list<PathNode>::const_iterator PathList::GetNodeLowestScore() const
+/*std::list<PathNode>::const_iterator PathList::GetNodeLowestScore() const
 {
 	//p2List_item<PathNode>* ret = NULL;
 	//TODO p1 -> const_iterator?? something wrong...
@@ -105,14 +117,14 @@ std::list<PathNode>::const_iterator PathList::GetNodeLowestScore() const
 		item++;
 	}
 	return ret;
-}
+}*/
 
 // PathNode -------------------------------------------------------------------------
 // Convenient constructors
 // ----------------------------------------------------------------------------------
-PathNode::PathNode() : g(-1), h(-1), pos(-1, -1), parent(NULL){}
+//PathNode::PathNode() : g(-1), h(-1), pos(-1, -1), parent(NULL){}
 
-PathNode::PathNode(int g, int h, const iPoint& pos, const PathNode* parent) : g(g), h(h), pos(pos), parent(parent){}
+PathNode::PathNode(int g, int h, const iPoint& pos, PathNode* parent) : g(g), h(h), pos(pos), parent(parent){}
 
 PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), parent(node.parent){}
 
@@ -126,28 +138,58 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 
 	// north
 	cell.create(pos.x, pos.y + 1);
-	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	if (App->pathfinding->IsWalkable(cell))
+	{
+		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
+		if (node->pos != cell) 
+		{
+			node->parent = (PathNode*)this;
+			node->pos = cell;
+		}
+		list_to_fill.list.push(node);
+	}
 
 	// south
 	cell.create(pos.x, pos.y - 1);
-	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	if (App->pathfinding->IsWalkable(cell))
+	{
+		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
+		if (node->pos != cell) 
+		{
+			node->parent = (PathNode*)this;
+			node->pos = cell;
+		}
+		list_to_fill.list.push(node);
+	}
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	if (App->pathfinding->IsWalkable(cell))
+	{
+		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
+		if (node->pos != cell) {
+			node->parent = (PathNode*)this;
+			node->pos = cell;
+		}
+		list_to_fill.list.push(node);
+	}
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	if (App->pathfinding->IsWalkable(cell))
+	{
+		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
+		if (node->pos != cell) {
+			node->parent = (PathNode*)this;
+			node->pos = cell;
+		}
+		list_to_fill.list.push(node);
+	}
 
 	return list_to_fill.list.size();
 }
 
-uint PathNode::FindWalkableAdjacents_D(PathList& list_to_fill) const
+/*uint PathNode::FindWalkableAdjacents_D(PathList& list_to_fill) const
 {
 	iPoint cell;
 	uint before = list_to_fill.list.size();
@@ -210,7 +252,7 @@ uint PathNode::FindWalkableAdjacents_D(PathList& list_to_fill) const
 
 
 	return list_to_fill.list.size();
-}
+}*/
 
 // PathNode -------------------------------------------------------------------------
 // Calculates this tile score
@@ -259,77 +301,84 @@ float PathNode::CalculateF_D(const iPoint & destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	// TODO 1: if origin or destination are not walkable, return -1
+	int ret = -1;
+
 	if (IsWalkable(origin) == false || IsWalkable(destination) == false)
 	{
-		return -1;
+		return ret;
 	}
 
-	// TODO 2: Create three lists: open, close
-	// Add the origin tile to open
+	last_path.clear();
+
 	PathList open;
 	PathList close;
 
-	open.list.push_back(PathNode(0, origin.DistanceManhattan(destination), origin, nullptr));
+	PathNode* first = new PathNode(0, origin.DistanceManhattan(destination), origin, nullptr);
+	open.list.push(first);
+
+	std::fill(map_node, map_node + width*height, PathNode(-1, -1, iPoint(-1, -1), nullptr));
+
+	PathNode* curr_node = nullptr;
 
 	// Iterate while we have tile in the open list
 	while (open.list.size() > 0)
 	{
-		// TODO 3: Move the lowest score cell from open list to the closed list
-		close.list.push_back(*open.GetNodeLowestScore());
-		open.list.erase(open.GetNodeLowestScore());
+		curr_node = open.list.top();
+		curr_node->on_close = true;
+		open.list.pop();
 
-		// TODO 4: If we just added the destination, we are done!
 		// Backtrack to create the final path
 		// Use the Pathnode::parent and Flip() the path when you are finish
-		if (close.list.back().pos == destination)
+		if (curr_node->pos == destination)
 		{
 			last_path.clear();
-			std::list<PathNode>::const_iterator item = close.list.end();
-			item--;
-			for (; item->parent != nullptr; item = close.Find(item->parent->pos))
+			for (; curr_node->parent != nullptr; curr_node = curr_node->parent)
 			{
-				last_path.push_back(item->pos);
+				last_path.push_back(curr_node->pos);
 			}
-			last_path.push_back(origin);
-			std::reverse(last_path.begin(), last_path.end()); //FLIP
+			last_path.push_back(curr_node->pos);
+
 			return last_path.size();
 		}
 
-		// TODO 5: Fill a list of all adjancent nodes
 		else
 		{
 			PathList neighbors;
-			close.list.back().FindWalkableAdjacents(neighbors);
+			curr_node->FindWalkableAdjacents(neighbors);
 
-			// TODO 6: Iterate adjancent nodes:
-			// ignore nodes in the closed list
-			// If it is NOT found, calculate its F and add it to the open list
-			// If it is already in the open list, check if it is a better path (compare G)
-			// If it is a better path, Update the parent
-			std::list<PathNode>::iterator item;
-			iPoint dest = destination;
-			for (item = neighbors.list.begin(); item != neighbors.list.end(); item++)
+			while (neighbors.list.empty() == false)
 			{
-				if (close.Find(item->pos) == close.list.end())
+				PathNode* temp_node = neighbors.list.top();
+				neighbors.list.pop();
+				if (temp_node->on_close == true)
 				{
-					item->CalculateF(dest);
-					if (open.Find(item->pos) == close.list.end())
+					continue;
+				}
+				else if (temp_node->on_open == true)
+				{
+					int lastG = temp_node->g;
+					temp_node->CalculateF(destination);
+					if (lastG < temp_node->g)
 					{
-						open.list.push_back(*item);
+						temp_node->parent = GetPathNode(curr_node->pos.x, curr_node->pos.y);
 					}
 					else
 					{
-						if (item->g < open.Find(item->pos)->g)
-						{
-							open.Find(item->pos)->parent = item->parent;
-						}
+						temp_node->g = lastG;
 					}
+
+				}
+				else
+				{
+					temp_node->CalculateF(destination);
+					temp_node->on_open = true;
+					open.list.push(temp_node);
 				}
 			}
-			neighbors.list.clear();
 		}
 	}
+
+	return ret;
 }
 
 
