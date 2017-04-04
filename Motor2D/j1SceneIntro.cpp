@@ -81,7 +81,7 @@ bool j1SceneIntro::Update(float dt)
 				bg_anim -= 0.3;
 			}
 			App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
-			App->render->Blit(TitleScreen_letters, 0, 0, NULL, NULL, false);
+			App->render->Blit(TitleScreen_letters, 50, 10, NULL, NULL, false);
 		}
 		else
 		{
