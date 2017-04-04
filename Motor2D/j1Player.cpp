@@ -539,43 +539,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON)
-		{
-			if (c2->callback->name == "Golem" && c2->callback->state == STATIC)
-			{
-				//Not dammage
-			}
-			else
-			{
-				if (c2->callback->name == "Geodude")
-				{
-					Geodude* pokemon = (Geodude*)c2->callback;
-					if (hurt == false)
-					{
-						hurt = true;
-						timer.Start();
-						pokemon->hp--;
-					}
-					if (timer.ReadSec() > 0.5f)
-					{
-						hurt = false;
-					}
-
-
-					if (pokemon->hp == 0)
-					{
-						c2->callback->state = DYING;
-					}
-					else
-					{
-						c2->callback->state = HIT;
-						pokemon->dir_hit = c1->callback->direction;
-						pokemon->previus_position = pokemon->position;
-					}
-				}
-			}
-		}
-
 		if (c1 == collision_interact && c2->type == COLLIDER_TRAINER)
 		{
 			if (gamestate == INGAME)
@@ -1388,6 +1351,7 @@ bool Player::Hit()
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = IDLE;
+		return true;
 	}
 
 	return true;

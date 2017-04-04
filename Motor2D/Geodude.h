@@ -47,7 +47,7 @@ public:
 
 	bool Movebyhit();
 
-
+	void OnCollision(Collider*, Collider*);
 
 private:
 
@@ -67,6 +67,8 @@ private:
 	bool reset_distance;
 
 	bool mode_stone;
+
+	j1Timer hurt_timer;
 };
 
 #endif //__GEODUDE_H_

@@ -139,7 +139,7 @@ void Geodude::Draw()
 		id = 3;
 		break;
 	case HIT:
-		id = 1;
+		id = 3;
 		break;
 	default:
 		break;
@@ -331,7 +331,9 @@ bool Geodude::Death()
 {
 	if (App->scene->player->bombmanager != nullptr)
 	{
-		App->scene->items.push_back(App->entity_elements->CreateItem(2, position));
+		iPoint pos;
+		pos.create(position.x - offset_x, position.y - offset_y);
+		App->scene->items.push_back(App->entity_elements->CreateItem(2, pos));
 	}
 
 	App->entity_elements->DeletePokemon(this);
@@ -340,12 +342,25 @@ bool Geodude::Death()
 
 bool Geodude::Movebyhit()
 {
+	if (hp <= 0) 
+	{
+		state = DYING;
+		return true;
+	}
+
+	if (hurt_timer.ReadSec() >= 0.1)
+	{
+		state = IDLE;
+		return true;
+	}
+
+	/*
 	if (dir_hit == UP)
 	{
 		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP) == 0)
+		if (App->map->MovementCost(position.x, position.y - 10, offset_x, offset_y, UP) == 0)
 		{
-			position.y -= 1.5;
+			position.y -= 10;
 		}
 		if (position.y < (previus_position.y - 30))
 		{
@@ -355,9 +370,9 @@ bool Geodude::Movebyhit()
 	if (dir_hit == DOWN)
 	{
 		//App->map->MovementCost(position.x, position.y + (4 + height), DOWN)
-		if (App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN) == 0)
+		if (App->map->MovementCost(position.x, position.y + 10, offset_x, offset_y, DOWN) == 0)
 		{
-			position.y += 1.5;
+			position.y += 10;
 		}
 
 		if (position.y > (previus_position.y + 30))
@@ -368,9 +383,9 @@ bool Geodude::Movebyhit()
 	if (dir_hit == LEFT)
 	{
 		//App->map->MovementCost(position.x - 4, position.y, LEFT)
-		if (App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT) == 0)
+		if (App->map->MovementCost(position.x - 10, position.y, offset_x, offset_y, LEFT) == 0)
 		{
-			position.x -= 1.5;
+			position.x -= 10;
 		}
 
 		if (position.x < (previus_position.x - 30))
@@ -381,21 +396,30 @@ bool Geodude::Movebyhit()
 	if (dir_hit == RIGHT)
 	{
 		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT) == 0)
+		if (App->map->MovementCost(position.x + 10, position.y, offset_x, offset_y, RIGHT) == 0)
 		{
-			position.x += 1.5;
+			position.x += 10;
 		}
 		if (position.x > (previus_position.x + 30))
 		{
 			state = IDLE;
 		}
 	}
-	/*if (position.x > (previus_position.x + 65) ||
-	position.x < (previus_position.x + 65) ||
-	position.y >(previus_position.y + 65) ||
-	position.y < (previus_position.y + 65))
-	{
-	state = IDLE;
-	}*/
+	*/
+
 	return true;
+}
+
+void Geodude::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c1 != nullptr && c2 != nullptr)
+	{
+		if (c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT)
+		{
+			animation.anim[3].ResetAnimations();
+			hurt_timer.Start();
+			state = HIT;
+			hp--;
+		}
+	}
 }

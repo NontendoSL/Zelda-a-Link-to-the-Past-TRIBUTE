@@ -360,6 +360,7 @@ bool Golem::Hit()
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = IDLE;
+		return true;
 	}
 	return true;
 }
@@ -399,7 +400,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 
 			}
 		}
-		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT)
+		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT && state != STATIC)
 		{
 			animation.anim[5].ResetAnimations();
 			hurt_timer.Start();
