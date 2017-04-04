@@ -961,7 +961,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	}
 
 	case BUTTON_B:
-		if (hook != nullptr && equiped_item == hook)
+		if (equiped_item != nullptr && equiped_item == hook && hook->in_use == false)
 		{
 			if (e_state == E_UP)
 			{
@@ -1022,7 +1022,7 @@ int Player::GetnuminputUse()
 
 void Player::ThrowHookshot(uint charge)
 {
-hook->in_use = true;
+	hook->in_use = true;
 	//CHECK DIRECTION
 	if (direction == UP)
 	{
