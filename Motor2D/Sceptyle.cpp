@@ -44,7 +44,7 @@ bool Sceptyle::Start()
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	movable = true;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_PLAYER, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
