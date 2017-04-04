@@ -348,7 +348,7 @@ bool Geodude::Movebyhit()
 		return true;
 	}
 
-	if (hurt_timer.ReadSec() >= 0.1)
+	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = IDLE;
 		return true;
