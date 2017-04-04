@@ -145,8 +145,11 @@ bool j1Scene::Update(float dt)
 						{
 							pokemons.clear();
 						}
-
-						Load_Combat_map(6);
+						if (poketrainer != nullptr)
+						{
+							delete poketrainer;
+						}
+						Load_Combat_map(7);
 					}
 				}
 				if (App->fadetoblack->Checkfadefromblack())

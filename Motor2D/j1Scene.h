@@ -74,7 +74,7 @@ public:
 	std::list<Pokemon*> pokemons;
 	std::list<Item*> items;
 	std::list<DynamicObjects*> dynobjects;
-	PokeTrainer* poketrainer;
+	PokeTrainer* poketrainer = nullptr;
 
 	pugi::xml_node		config;
 

@@ -55,7 +55,7 @@ void PokeTrainer::Draw()
 	}
 	if (direction == DOWN)
 	{
-		SDL_Rect r = { 26,1,14,21 };
+		SDL_Rect r = { 46,1,14,21 };
 		App->render->Blit(texture, position.x, position.y, &r);
 	}
 	if (direction == LEFT)
