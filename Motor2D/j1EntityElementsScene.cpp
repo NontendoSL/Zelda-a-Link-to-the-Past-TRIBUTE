@@ -30,14 +30,13 @@ j1EntityElementScene::~j1EntityElementScene()
 
 bool j1EntityElementScene::Awake(pugi::xml_node &config)
 {
-	std::list<SceneElement*>::iterator item = elementscene.begin();
+	/*std::list<SceneElement*>::iterator item = elementscene.begin();
 	while (item != elementscene.end())
 	{
-		//TODO HIGH -> we have to do that in Awake call enemies, items and dynitems and load all textures and save this textures in std::vector<Textures*>
-		//item._Ptr->_Myval->Awake(config.child(item._Ptr->_Myval->name.c_str()));
-		item++;
-	}
 
+		item++;
+	}*/
+	file_tex_dynobjects = config.child("textDynObjects").attribute("file").as_string("");
 	return true;
 }
 
@@ -50,6 +49,9 @@ bool j1EntityElementScene::Start()
 		//item._Ptr->_Myval->Start();
 		item++;
 	}
+	
+	texture_dynobjects = App->tex->Load(file_tex_dynobjects.c_str());
+
 	char* buf;
 	int size = App->fs->Load("config.xml", &buf);
 	XML.load_buffer(buf, size);

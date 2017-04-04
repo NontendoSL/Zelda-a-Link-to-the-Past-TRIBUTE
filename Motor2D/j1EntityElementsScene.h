@@ -63,6 +63,9 @@ public:
 	pugi::xml_node conf;
 	pugi::xml_document XML;
 
+	SDL_Texture* texture_dynobjects = nullptr;
+	std::string file_tex_dynobjects;
+
 private:
 	std::list<SceneElement*> elementscene;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const; //TODO LOW ->We hace this function in App but was with private

@@ -453,64 +453,66 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && actual_floor != 0) //TODO MED -> change this (we will have golbats int the future)
+		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && hook != nullptr) //TODO MED -> change this (we will have golbats int the future)
 		{
-			if (c2->callback->name == "Golem" && c2->callback->state == HIT)
+			if (hook->in_use == false)
 			{
-				//Not dammage
-			}
-			else
-			{
-				if (hurt == false)
+				if (c2->callback->name == "Golem" && c2->callback->state == HIT)
 				{
-					timer.Start();
-					hurt = true;
-					hp_hearts.y--;
-
-					if (direction == UP)
-					{
-						if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0)
-						{
-							position.y += 15;
-							if (Camera_inside(iPoint(0, 15)))
-								App->render->camera.y -= 15;
-						}
-					}
-					if (direction == DOWN)
-					{
-						if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0)
-						{
-							position.y -= 15;
-							if (Camera_inside(iPoint(0, 15)))
-								App->render->camera.y += 15;
-						}
-					}
-					if (direction == LEFT)
-					{
-						if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0)
-						{
-							position.x += 15;
-							if (Camera_inside(iPoint(15, 0)))
-								App->render->camera.x -= 15;
-						}
-					}
-					if (direction == RIGHT)
-					{
-						if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0)
-						{
-							position.x -= 15;
-							if (Camera_inside(iPoint(15, 0)))
-								App->render->camera.x += 15;
-						}
-					}
+					//Not dammage
 				}
 				else
 				{
-					if (timer.ReadSec() >= 1)
+					if (hurt == false)
 					{
-						hurt = false;
-					}
+						timer.Start();
+						hurt = true;
+						hp_hearts.y--;
 
+						if (direction == UP)
+						{
+							if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0)
+							{
+								position.y += 15;
+								if (Camera_inside(iPoint(0, 15)))
+									App->render->camera.y -= 15;
+							}
+						}
+						if (direction == DOWN)
+						{
+							if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0)
+							{
+								position.y -= 15;
+								if (Camera_inside(iPoint(0, 15)))
+									App->render->camera.y += 15;
+							}
+						}
+						if (direction == LEFT)
+						{
+							if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0)
+							{
+								position.x += 15;
+								if (Camera_inside(iPoint(15, 0)))
+									App->render->camera.x -= 15;
+							}
+						}
+						if (direction == RIGHT)
+						{
+							if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0)
+							{
+								position.x -= 15;
+								if (Camera_inside(iPoint(15, 0)))
+									App->render->camera.x += 15;
+							}
+						}
+					}
+					else
+					{
+						if (timer.ReadSec() >= 1)
+						{
+							hurt = false;
+						}
+					}
 				}
 			}
 		}

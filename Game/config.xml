@@ -23,9 +23,13 @@
 		<atlas file="gui/atlas.png" />
 	</gui>
   
-	<maps file="Levels.xml"/>    
-  
-	<animation>
+	<maps file="Levels.xml"/>
+
+  <entityelement>
+    <textDynObjects file="textures/DynObjectsSpriteSheet.png"/>
+  </entityelement>
+	
+  <animation>
     <!--id= 0--> <file file="animation/LinkAnimations.xml"/> 
     <!--id= 1--> <file file="animation/BlazikenAnimations.xml"/>
     <!--id= 2--> <file file="animation/Hookshot.xml"/>
@@ -42,7 +46,7 @@
   
 	<window>
     <resolution width="512" height="448" scale="2" />
-		<fullscreen value="false" />
+		<fullscreen value="true" />
 		<borderless value="false" />
 		<resizable value="false" />
 		<fullscreen_window value="false" />

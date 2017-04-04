@@ -2,6 +2,7 @@
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Collision.h"
+#include "j1EntityElementsScene.h"
 
 DynamicObjects::DynamicObjects() :SceneElement()
 {
@@ -25,8 +26,12 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 			if (id == s_id)
 			{
 				name = temp.attribute("name").as_string("");
-				std::string es = temp.attribute("file").as_string("");
-				texture = App->tex->Load(es.c_str());
+				if (App->entity_elements->texture_dynobjects != nullptr)
+				{
+					/*std::string es = temp.attribute("file").as_string("");
+					texture = App->tex->Load(es.c_str());*/
+				}
+
 				position.x = pos.x;
 				position.y = pos.y;
 				rect = { temp.attribute("rect_x").as_int(0), temp.attribute("rect_y").as_int(0), temp.attribute("rect_w").as_int(0), temp.attribute("rect_h").as_int(0) };
@@ -63,7 +68,7 @@ void DynamicObjects::Draw()
 	BROFILER_CATEGORY("Draw_DynObjects", Profiler::Color::Moccasin)
 	if (canBlit == true)
 	{
-		App->render->Blit(texture, position.x, position.y, &rect);
+		App->render->Blit(App->entity_elements->texture_dynobjects, position.x, position.y, &rect);
 	}
 }
 

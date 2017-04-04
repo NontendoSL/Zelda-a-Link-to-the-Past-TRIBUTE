@@ -101,15 +101,12 @@ bool j1Scene::Update(float dt)
 			player->ShowHearts();
 			force->Hitbox.w = player->charge;
 
-			/*if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-			{
-				App->fadetoblack->FadeToBlack(4);
-			}*/
 			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
 				switch_map = 6;
 			}
-			if (switch_map == 6)
+
+			if (switch_map == 7)
 			{
 				if (fade == false)
 				{
@@ -406,7 +403,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			if (n == 1 && switch_map == 0)
+			if (n == 1 && switch_map == 0 || switch_map == 6)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
