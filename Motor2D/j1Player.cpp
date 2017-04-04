@@ -226,17 +226,6 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
-	if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
-	{
-		if (dialog == nullptr)
-		{
-			//	dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
-		}
-		else if (dialog->end == false)
-		{
-			//	dialog->PushLine(true);
-		}
-	}
 
 	return ret;
 }
@@ -454,9 +443,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && hook != nullptr) //TODO MED -> change this (we will have golbats int the future)
+		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON) //TODO MED -> change this (we will have golbats int the future)
 		{
-			if (hook->in_use == false)
+			if (state != HOOKTHROWN)
 			{
 				if (c2->callback->name == "Golem" && c2->callback->state == HIT)
 				{
@@ -567,6 +556,21 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						pokemon->previus_position = pokemon->position;
 					}
 				}
+			}
+		}
+
+		if (c1 == collision_interact && c2->type == COLLIDER_TRAINER)
+		{
+			if (dialog == nullptr)
+			{
+				gamestate = INMENU;
+
+				dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
+			}
+			else if (dialog->end == false)
+			{
+				gamestate = INGAME;
+				dialog->PushLine(true);
 			}
 		}
 

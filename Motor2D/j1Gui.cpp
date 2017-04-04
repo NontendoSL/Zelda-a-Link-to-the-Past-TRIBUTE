@@ -120,7 +120,8 @@ Button* j1Gui::CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text
 	return element;
 }
 
-Dialogue* j1Gui::CreateDialogue(const char* string) {
+Dialogue* j1Gui::CreateDialogue(const char* string) 
+{
 
 	Dialogue* element = new Dialogue(string);
 
@@ -129,7 +130,8 @@ Dialogue* j1Gui::CreateDialogue(const char* string) {
 	return element;
 }
 
-Selector* j1Gui::CreateSelector(const char* first, const char*second, j1GuiEntity*parent) {
+Selector* j1Gui::CreateSelector(const char* first, const char*second, j1GuiEntity*parent)
+{
 
 	Selector* element = new Selector(first, second, parent);
 
@@ -138,7 +140,8 @@ Selector* j1Gui::CreateSelector(const char* first, const char*second, j1GuiEntit
 	return element;
 }
 
-ZeldaMenu* j1Gui::CreateZeldaMenu() {
+ZeldaMenu* j1Gui::CreateZeldaMenu() 
+{
 	ZeldaMenu* element = new ZeldaMenu();
 	entities.push_back(element);
 	return element;

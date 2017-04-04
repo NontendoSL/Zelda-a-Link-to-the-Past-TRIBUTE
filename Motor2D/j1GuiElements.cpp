@@ -379,13 +379,27 @@ void Selector::Handle_Input()
 	}
 	if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
 	{
-		App->gui->Erase(selector->vector_pos);
-		App->gui->Erase(second->vector_pos);
-		App->gui->Erase(first->vector_pos);
-		Dialogue*item = (Dialogue*)parent;
-		App->gui->Erase(item->options->vector_pos);
-		item->options = nullptr;
-		App->gui->Erase(item->vector_pos);
+		if (selector->position.y == first->position.y)
+		{
+			App->gui->Erase(selector->vector_pos);
+			App->gui->Erase(second->vector_pos);
+			App->gui->Erase(first->vector_pos);
+			Dialogue*item = (Dialogue*)parent;
+			App->gui->Erase(item->options->vector_pos);
+			item->options = nullptr;
+			App->gui->Erase(item->vector_pos);
+			App->scene->switch_map = 7;
+		}
+		else if (selector->position.y == second->position.y)
+		{
+			App->gui->Erase(selector->vector_pos);
+			App->gui->Erase(second->vector_pos);
+			App->gui->Erase(first->vector_pos);
+			Dialogue*item = (Dialogue*)parent;
+			App->gui->Erase(item->options->vector_pos);
+			item->options = nullptr;
+			App->gui->Erase(item->vector_pos);
+		}
 	}
 }
 
