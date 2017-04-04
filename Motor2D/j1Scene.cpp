@@ -105,7 +105,7 @@ bool j1Scene::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
-				switch_map = 6;
+				switch_map = 7;
 			}
 
 			if (switch_map == 7)
@@ -439,6 +439,7 @@ bool j1Scene::Load_new_map(int n)
 			App->map->Load(name_map.c_str(), n);
 
 			//Trainers
+			//if()
 			poketrainer.push_back(App->entity_elements->CreateTrainer(temp.child("trainer"), 1));
 
 			//Pokemons
@@ -520,7 +521,7 @@ bool j1Scene::Load_Combat_map(int n)
 		if (temp.attribute("n").as_int(0) == n)
 		{
 			//trainer
-			//App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
+			App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 			//Pokemon Link
 			if (n == 7)
 			{

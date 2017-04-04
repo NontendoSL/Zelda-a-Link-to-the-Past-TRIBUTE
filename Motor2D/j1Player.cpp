@@ -1168,7 +1168,7 @@ void Player::MoveTo(const iPoint& pos)
 	case UP:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
-		if (Camera_inside(pos))
+		if (Camera_inside())
 			App->render->camera.y += hook->speed * scale;
 
 		position.y -= hook->speed;
@@ -1184,7 +1184,7 @@ void Player::MoveTo(const iPoint& pos)
 	case DOWN:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN
-		if (Camera_inside(pos))
+		if (Camera_inside())
 			App->render->camera.y -= hook->speed * scale;
 		position.y += hook->speed;
 
@@ -1200,7 +1200,7 @@ void Player::MoveTo(const iPoint& pos)
 	{
 		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
 
-		if (Camera_inside(pos))
+		if (Camera_inside())
 			App->render->camera.x += hook->speed * scale;
 		position.x -= hook->speed;
 
@@ -1216,7 +1216,7 @@ void Player::MoveTo(const iPoint& pos)
 	{
 		//int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT
 
-		if (Camera_inside(pos))
+		if (Camera_inside())
 			App->render->camera.x -= hook->speed * scale;
 		position.x += hook->speed;
 
