@@ -5,6 +5,7 @@
 #include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1Collision.h"
+#include "j1Player.h"
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Scene.h"
@@ -477,21 +478,30 @@ void j1Map::DynObjectFromTiled(uint id_map)
 			if (tile_id >= data.tilesets[1]->firstgid + 2 && tile_id <= data.tilesets[1]->firstgid + 5 ||
 				tile_id >= data.tilesets[1]->firstgid + 10 && tile_id <= data.tilesets[1]->firstgid + 15)
 			{
-				if (tile_id >= data.tilesets[1]->firstgid + 10)
+				if ((id_map == 4 && App->scene->player->hook != nullptr && tile_id == data.tilesets[1]->firstgid + 10) ||
+					(id_map == 5 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[1]->firstgid + 10))
 				{
-					App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 5, id_map));
-					if (tile_id - data.tilesets[1]->firstgid - 5 == 7)
-					{
-						EditCost(x, y, 0);
-					}
-					else
-						EditCost(x, y, data.tilesets[1]->firstgid + 1);
+					//DON'T CREATE AGAIN THE BIG CHEST TODO HIGH -> REMODELATE THIS METHOD!!!!
 				}
 				else
 				{
-					App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 1, id_map));
-					EditCost(x, y, data.tilesets[1]->firstgid + 1);
+					if (tile_id >= data.tilesets[1]->firstgid + 10)
+					{
+						App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 5, id_map));
+						if (tile_id - data.tilesets[1]->firstgid - 5 == 7)
+						{
+							EditCost(x, y, 0);
+						}
+						else
+							EditCost(x, y, data.tilesets[1]->firstgid + 1);
+					}
+					else
+					{
+						App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 1, id_map));
+						EditCost(x, y, data.tilesets[1]->firstgid + 1);
+					}
 				}
+
 			}
 			if (tile_id == blue)
 			{
