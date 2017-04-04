@@ -40,8 +40,8 @@ public:
 	//Create Functions 
 	Pokemon* CreatePokemon(pugi::xml_node&, uint id);
 	PokeTrainer* CreateTrainer(pugi::xml_node&, uint id);
-	//Delete Functions
-
+	// delete elements
+	bool DeleteElements_combat();
 	//Change Pokemon
 	Pokemon* change_pokemon(bool trainer);
 

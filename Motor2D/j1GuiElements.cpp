@@ -387,6 +387,7 @@ void Selector::Handle_Input()
 		if (selector->position.y == first->position.y)
 		{
 			App->scene->switch_map = 7;
+			App->scene->player->dialog = nullptr;
 		}
 		else 
 		{
@@ -575,6 +576,33 @@ void ZeldaMenu::OpenClose(bool open)
 			for (int j = 0; j < menu_images[i]->elements.size(); j++)
 			{
 				menu_images[i]->elements[j]->visible = open;
+			}
+		}
+	}
+	for (uint i = 0; i < menu_texts.size(); i++) {
+		if (open == false)
+		{
+			menu_texts[i]->visible = open;
+			if (menu_texts[i]->next_line != nullptr)
+			{
+				Text*line = menu_texts[i]->next_line;
+				while (line != nullptr)
+				{
+					line->visible=open;
+					line = line->next_line;
+				}
+			}
+		}
+		else if (i<2){
+			menu_texts[i]->visible = open;
+			if (menu_texts[i]->next_line != nullptr)
+			{
+				Text*line = menu_texts[i]->next_line;
+				while (line != nullptr)
+				{
+					line->visible = open;
+					line = line->next_line;
+				}
 			}
 		}
 	}
@@ -772,8 +800,62 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 	else
 	{
 		//FINAL COMBAT
+		if (trainer) //LOSE
+		{
+
+			App->scene->switch_map = 6;
+			OpenClose(false);
+			App->scene->start_menu->OpenClose(true);
+			App->scene->hud->OpenClose(true);
+		}
+		else//VICTORY
+		{
+
+		}
 	}
 
+}
+
+void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
+{
+	//pokemon 1
+	Text*item_1 = (Text*)hud_images[1]->elements[1]->elements[1];
+	item_1->Write(pokemon->name.c_str());
+	hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
+	cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
+	hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;
+	ability->elements[0]->Hitbox.h = 0;
+	cooldown = false;
+	sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
+	poke_hp_Link->Write(buffer);
+
+	//Pokemon 2
+	Text* item = (Text*)hud_images[1]->elements[3]->elements[1];
+	item->Write(pokemon_2->name.c_str());
+	hpbar_pBrendan = iPoint(pokemon_2->hp, pokemon_2->hp);
+	hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
+	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
+	poke_hp_Brendan->Write(buffer);
+
+}
+
+void PokemonCombatHud::OpenClose(bool open)
+{
+	for (uint i = 0; i < hud_images.size(); i++) {
+		hud_images[i]->visible = open;
+		if (hud_images[i]->elements.size() > 0)
+		{
+			for (int j = 0; j < hud_images[i]->elements.size(); j++)
+			{
+				hud_images[i]->elements[j]->visible = open;
+				for (int k = 0; k < hud_images[i]->elements[j]->elements.size(); k++)
+				{
+					hud_images[i]->elements[j]->elements[k]->visible = open;
+				}
+			}
+		}
+	}
+	visible = open;
 }
 
 void PokemonCombatHud::Handle_Input()
@@ -799,51 +881,40 @@ void PokemonCombatHud::Handle_Input()
 
 void PokemonCombatHud::Update()
 {
-	if (cooldown) //player cd update 
+	if (App->scene->combat)
 	{
-		if (cdtime.y>0)
+		if (cooldown) //player cd update 
 		{
-			cdtime.y--;
-			ability->elements[0]->Hitbox.h = (cdtime.y*ability->elements[0]->Hitbox.w) / cdtime.x;
+			if (cdtime.y > 0)
+			{
+				cdtime.y--;
+				ability->elements[0]->Hitbox.h = (cdtime.y*ability->elements[0]->Hitbox.w) / cdtime.x;
+			}
+			else
+			{
+				cooldown = false;
+			}
 		}
-		else 
+
+		if (hpbar_pLink.y == 0)
 		{
-			cooldown = false;
+			//num_pokemons--;
+			LoadNewPokemon(App->combatmanager->change_pokemon(true), true);
 		}
-	}
+		else if (hpbar_pBrendan.y == 0)
+		{
+			LoadNewPokemon(App->combatmanager->change_pokemon(false), false);
+		}
 
-	if (hpbar_pLink.y == 0)
-	{
-		//num_pokemons--;
-		LoadNewPokemon(App->combatmanager->change_pokemon(true), true);
-	}
-	else if (hpbar_pBrendan.y == 0)
-	{
-		LoadNewPokemon(App->combatmanager->change_pokemon(false), false);
-	}
+		hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)
+		hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;//being 48 the max pixels hp can have (atlas)
 
-	hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)
-	hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;//being 48 the max pixels hp can have (atlas)
+	}
 }
 
 void PokemonCombatHud::SetCd(uint newcd)
 {
 	cdtime.x = newcd;
-}
-
-void PokemonCombatHud::OpenClose(bool open)
-{
-	for (uint i = 0; i < hud_images.size(); i++) {
-		hud_images[i]->visible = open;
-		if (hud_images[i]->elements.size() > 0)
-		{
-			for (int j = 0; j < hud_images[i]->elements.size(); j++)
-			{
-				hud_images[i]->elements[j]->visible = open;
-			}
-		}
-	}
-	visible = open;
 }
 
 PokemonCombatHud::~PokemonCombatHud()

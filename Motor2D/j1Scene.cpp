@@ -161,7 +161,7 @@ bool j1Scene::Update(float dt)
 				}
 			}
 
-			if (switch_map != 0)
+			if (switch_map != 0 && switch_map != 7)
 			{
 				if (fade == false)
 				{
@@ -183,6 +183,7 @@ bool j1Scene::Update(float dt)
 							weapon_equiped = player->equiped_item->Wtype;
 						}
 						App->entity_elements->DelteElements();
+						App->combatmanager->DeleteElements_combat();
 						if (enemy.size() > 0)
 						{
 							enemy.clear();
@@ -200,9 +201,24 @@ bool j1Scene::Update(float dt)
 							pokemons.clear();
 						}
 
+						if (poketrainer.size() > 0)
+						{
+							poketrainer.begin()._Ptr->_Myval->pokedex.clear();
+							poketrainer.clear();
+						}
+
+						if (player->pokedex.size() > 0)
+						{
+							player->pokedex.clear();
+						}
+
+						if (combat)
+						{
+							combat = false;
+						}
+
 						Load_new_map(switch_map);
 						id_map = switch_map;
-
 						if (switch_map == 4 && notrepeatmusic)
 						{
 							notrepeatmusic = false;
@@ -357,6 +373,7 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 		if (start_menu->position.y < 0)
 		{
 			start_menu->OpenClose(true);
+			start_menu->ShowItemInfo();
 			start_menu->Move(false, 6.0);
 			hud->Move(false, 6.0);
 		}
@@ -393,7 +410,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		player = App->entity_elements->CreatePlayer();
 	}
-
+	player->gamestate = INGAME;
 	/*//SET WEAPONS WHEN MAP CHANGES
 	if (weapon_equiped == BOMB)
 	{
@@ -513,7 +530,6 @@ bool j1Scene::Load_Combat_map(int n)
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
-
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
@@ -537,8 +553,17 @@ bool j1Scene::Load_Combat_map(int n)
 			//trainer
 			poketrainer.push_back(App->combatmanager->CreateTrainer(temp.child("trainer"), 1));
 
-			pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()++._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(2));
-			pokecombat->Move(true, win_marge);
+			if (pokecombat == nullptr)
+			{
+				pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(2));
+				pokecombat->Move(true, win_marge);
+			}
+			else
+			{
+				pokecombat->OpenClose(true);
+				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(2));
+			}
+
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);
@@ -550,12 +575,12 @@ bool j1Scene::Load_Combat_map(int n)
 	return true;
 }
 
-
 int j1Scene::IdMap()
 {
 	return id_map;
 
 }
+
 
 // ---------------------------------------------
 pugi::xml_node j1Scene::LoadConfig(pugi::xml_document& config_file) const

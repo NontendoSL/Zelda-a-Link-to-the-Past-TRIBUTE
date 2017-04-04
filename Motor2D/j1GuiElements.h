@@ -154,6 +154,7 @@ public:
 	void OpenClose(bool open);//true open false close
 	void Move(bool x_axis, float speed);
 	void LoadNewPokemon(Pokemon* pokemon, bool trainer);
+	void CombatInfo(Pokemon* pokemon_1, Pokemon* pokemon_2);
 private:
 	std::vector<Image*>hud_images;
 	bool cooldown;

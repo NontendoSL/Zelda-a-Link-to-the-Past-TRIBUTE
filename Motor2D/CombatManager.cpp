@@ -82,16 +82,15 @@ bool CombatManager::Update(float dt)
 			temp_2->active = false;
 			temp_3->active = true;
 		}*/
-	}
-
-	while (item != elementcombat.end())
-	{
-		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-		if (temp->active)
+		while (item != elementcombat.end())
 		{
-			item._Ptr->_Myval->Update();
+			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
+			if (temp->active)
+			{
+				item._Ptr->_Myval->Update();
+			}
+			item++;
 		}
-		item++;
 	}
 
 
@@ -178,6 +177,18 @@ PokeTrainer* CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)
 	return temp;
 }
 
+bool CombatManager::DeleteElements_combat()
+{
+	std::list<SceneElement*>::iterator item = elementcombat.begin();
+	while (item != elementcombat.end())
+	{
+		delete item._Ptr->_Myval;
+		elementcombat.erase(item);
+		item++;
+	}
+	return true;
+}
+
 Pokemon* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
 {
 	if (trainer) //Link
@@ -189,7 +200,7 @@ Pokemon* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
 			{
 				item._Ptr->_Myval->active = false;
 				item++;
-				if (item._Ptr->_Myval == nullptr)
+				if (item == App->scene->player->pokedex.end())
 				{
 					return nullptr;
 				}

@@ -41,8 +41,12 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
-	for (uint i = 0; i < entities.size(); i++) {
-		entities[i]->Handle_Input();
+	for (uint i = 0; i < entities.size(); i++) 
+	{
+		if (entities[i]->visible == true)
+		{
+			entities[i]->Handle_Input();
+		}
 		entities[i]->Update();
 	}
 	return true;
@@ -53,8 +57,10 @@ bool j1Gui::PreUpdate()
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
-	for (uint i = 0; i < entities.size(); i++) {
-		if (entities[i]->visible == true) {
+	for (uint i = 0; i < entities.size(); i++) 
+	{
+		if (entities[i]->visible == true) 
+		{
 			entities[i]->Draw();
 		}
 	}

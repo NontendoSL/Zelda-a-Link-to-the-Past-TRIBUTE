@@ -1,6 +1,8 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "Pokemon.h"
+#include "j1Scene.h"
 #include "j1Collision.h"
 #include "p2Log.h"
 
@@ -146,8 +148,12 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 		case COLLIDER_PLAYER: // white
-			App->render->DrawQuad(colliders[i]->rect, 0, 180, 125, alpha);
+		{
+			if(App->scene->combat == false)
+				App->render->DrawQuad(colliders[i]->rect, 0, 180, 125, alpha);
 			break;
+		}
+
 		case COLLIDER_ENEMY: // white
 			App->render->DrawQuad(colliders[i]->rect, 177, 255, 140, alpha);
 			break;
@@ -167,8 +173,13 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break; 
 		case COLLIDER_POKEMON: // Green
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+		{
+			Pokemon* temp = (Pokemon*)colliders[i]->callback;
+			if(temp->active)
+				App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
+		}
+
 		case COLLIDER_TRAINER: // Pink
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
@@ -230,6 +241,7 @@ void j1Collision::EreseAllColiderPlayer()
 
 bool ColliderRect::CheckCollision(const Collider* c) const
 {
+
 	return (rect.x < c->rect.x + c->rect.w &&
 		rect.x + rect.w > c->rect.x &&
 		rect.y < c->rect.y + c->rect.h &&

@@ -84,15 +84,11 @@ bool Player::PreUpdate()
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
 	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
-		bool ret = true;
-
-
-	//if you dead, you appear on the Link House
+	bool ret = true;
 	//if you dead, you appear on the Link House
 	if (hp_hearts.y == 0)
 	{
 		hp_hearts = { 6,6 };
-
 		if (App->map->CleanUp())
 		{
 			App->collision->EreseAllColiderPlayer();
@@ -113,12 +109,11 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			{
 				App->scene->pokemons.clear();
 			}
-
+			
 			gems = 0;
 			arrows = 0;
 			bombs = 0;
 		}
-
 		// SWITCH MAPS ------------------
 		if (App->scene->IdMap() == 2)
 		{
@@ -132,7 +127,6 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		{
 			App->scene->Load_new_map(5);
 		}
-
 	}
 
 	// STATE MACHINE ------------------
@@ -289,285 +283,295 @@ bool Player::Save()
 
 void Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1 != nullptr && c2 != nullptr)
+	if (App->scene->combat == false)
 	{
-		if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest")
+		if (c1 != nullptr && c2 != nullptr)
 		{
-			iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
-			//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
-			int canDrop = 1;
-			if (canDrop == 1)
-			{
-				iPoint position;
-				position.x = c2->callback->position.x + 4;
-				position.y = c2->callback->position.y;
-				DynamicObjects* temp = (DynamicObjects*)c2->callback;
-				App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position));
-
-			}
-
-			App->map->EditCost(pos_dyn.x, pos_dyn.y, 0);
-			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, 0);
-			App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, 0);
-			App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, 0);
-
-
-			App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
-			//App->collision->EraseCollider(c2);
-		}
-
-		if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT)
-		{
-			if (c2->callback->name == "chest" || c2->callback->name == "bigchest")
+			if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest")
 			{
 				iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
 				//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
-				App->audio->PlayFx(15);
 				int canDrop = 1;
 				if (canDrop == 1)
 				{
 					iPoint position;
-					position.x = c2->callback->position.x + c2->rect.w*0.5;
-					position.y = c2->callback->position.y + c2->rect.h;
+					position.x = c2->callback->position.x + 4;
+					position.y = c2->callback->position.y;
 					DynamicObjects* temp = (DynamicObjects*)c2->callback;
-					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
+					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position));
+
 				}
+
+				App->map->EditCost(pos_dyn.x, pos_dyn.y, 0);
+				App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, 0);
+				App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, 0);
+				App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, 0);
+
 
 				App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 				//App->collision->EraseCollider(c2);
 			}
-		}
 
-
-		if (c1 == collision_feet && c2->type == COLLIDER_ITEM)
-		{
-			Item* temp = (Item*)c2->callback;
-			if (temp->pickable == true)
+			if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT)
 			{
-				if (c2->callback->name == "rupee")
+				if (c2->callback->name == "chest" || c2->callback->name == "bigchest")
 				{
-					App->audio->PlayFx(4);
-					gems++;
-					App->entity_elements->DeleteItem((Item*)c2->callback);
-					//App->collision->EraseCollider(c2);
-				}
-				if (c2->callback->name == "bomb")
-				{
-					if (bombmanager == nullptr)
+					iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
+					//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
+					App->audio->PlayFx(15);
+					int canDrop = 1;
+					if (canDrop == 1)
 					{
-						bombmanager = App->entity_elements->CreateBombContainer();
-						App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+						iPoint position;
+						position.x = c2->callback->position.x + c2->rect.w*0.5;
+						position.y = c2->callback->position.y + c2->rect.h;
+						DynamicObjects* temp = (DynamicObjects*)c2->callback;
+						App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
 					}
-					App->entity_elements->DeleteItem((Item*)c2->callback);
-					bombs++;
-					//App->collision->EraseCollider(c2);
-				}
-				if (c2->callback->name == "hookshot")
-				{
-					if (hook == nullptr)
-					{
-						hook = App->entity_elements->CreateHookshot();
-						App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
-					}
-					App->entity_elements->DeleteItem((Item*)c2->callback);
-					//App->collision->EraseCollider(c2);
-				}
-				if (c2->callback->name == "heart")
-				{
-					AddHeartContainer();
-					App->entity_elements->DeleteItem((Item*)c2->callback);
+
+					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 					//App->collision->EraseCollider(c2);
 				}
 			}
-		}
-		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
-		{
-			if (state != HIT && invincible_timer.ReadSec() >= 1) //TODO MED -> change this to a player state
-			{
-				state = HIT;
-				hurt_timer.Start();
-				invincible_timer.Start();
-				hp_hearts.y--;
-				App->audio->PlayFx(13);
 
-				//KNOCKBACK--------------
 
-				if (direction == UP)
-				{
-					if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0) //magic numbers 20 -> this is the distance you will move
-					{
-						position.y += 15;
-						if (Camera_inside(iPoint(0, 15)))
-							App->render->camera.y -= 15;
-					}
-				}
-				if (direction == DOWN)
-				{
-					if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0) //magic numbers 20 -> this is the distance you will move
-					{
-						position.y -= 15;
-						if (Camera_inside(iPoint(0, 15)))
-							App->render->camera.y += 15;
-					}
-				}
-				if (direction == LEFT)
-				{
-					if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0) //magic numbers 20 -> this is the distance you will move
-					{
-						position.x += 15;
-						if (Camera_inside(iPoint(15, 0)))
-							App->render->camera.x -= 15;
-					}
-				}
-				if (direction == RIGHT)
-				{
-					if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0) //magic numbers 20 -> this is the distance you will move
-					{
-						position.x -= 15;
-						if (Camera_inside(iPoint(15, 0)))
-							App->render->camera.x += 15;
-					}
-				}
-			}	
-		}
-
-		if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
-		{
-			Soldier* soldier = (Soldier*)c2->callback;
-			soldier->hp--;
-			if (soldier->hp == 0)
+			if (c1 == collision_feet && c2->type == COLLIDER_ITEM)
 			{
-				if (soldier->destructible)
+				Item* temp = (Item*)c2->callback;
+				if (temp->pickable == true)
 				{
-					c2->callback->state = DYING;
-				}
-			}
-			else
-			{
-				if (soldier->destructible)
-				{
-					soldier->state = HIT;
-					soldier->dir_hit = c1->callback->direction;
-					soldier->previus_position = soldier->position;
-				}
-			}
-		}
-		if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
-		{
-			if (canSwitchMap == false)
-			{
-				canSwitchMap = true;
-			}
-			else
-			{
-				iPoint temp_meta = App->map->WorldToMap(position.x, position.y); //central position
-				MapLayer* meta_ = App->map->data.layers[1];
-				int id_meta = meta_->Get(temp_meta.x, temp_meta.y);
-				for (int i = 0; i < App->map->directMap.size(); i++)
-				{
-					if (App->map->directMap[i].id_tile == id_meta)
+					if (c2->callback->name == "rupee")
 					{
-						canSwitchMap = false;
-						App->scene->switch_map = App->map->directMap[i].id_map;
-						App->scene->newPosition = App->map->directMap[i].position;
+						App->audio->PlayFx(4);
+						gems++;
+						App->entity_elements->DeleteItem((Item*)c2->callback);
+						//App->collision->EraseCollider(c2);
+					}
+					if (c2->callback->name == "bomb")
+					{
+						if (bombmanager == nullptr)
+						{
+							bombmanager = App->entity_elements->CreateBombContainer();
+							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+						}
+						App->entity_elements->DeleteItem((Item*)c2->callback);
+						bombs++;
+						//App->collision->EraseCollider(c2);
+					}
+					if (c2->callback->name == "hookshot")
+					{
+						if (hook == nullptr)
+						{
+							hook = App->entity_elements->CreateHookshot();
+							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
+						}
+						App->entity_elements->DeleteItem((Item*)c2->callback);
+						//App->collision->EraseCollider(c2);
+					}
+					if (c2->callback->name == "heart")
+					{
+						AddHeartContainer();
+						App->entity_elements->DeleteItem((Item*)c2->callback);
+						//App->collision->EraseCollider(c2);
 					}
 				}
 			}
-		}
-
-		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON) //TODO MED -> change this (we will have golbats int the future)
-		{
-			if (state != HOOKTHROWN)
+			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
 			{
-				if (c2->callback->name == "Golem" && c2->callback->state == HIT)
+				if (state != HIT && invincible_timer.ReadSec() >= 1) //TODO MED -> change this to a player state
 				{
-					//Not dammage
+					state = HIT;
+					hurt_timer.Start();
+					invincible_timer.Start();
+					if (hp_hearts.y > 0)
+					{
+						hp_hearts.y--;
+					}
+
+					App->audio->PlayFx(13);
+
+					//KNOCKBACK--------------
+
+					if (direction == UP)
+					{
+						if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0) //magic numbers 20 -> this is the distance you will move
+						{
+							position.y += 15;
+							if (Camera_inside(iPoint(0, 15)))
+								App->render->camera.y -= 15;
+						}
+					}
+					if (direction == DOWN)
+					{
+						if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0) //magic numbers 20 -> this is the distance you will move
+						{
+							position.y -= 15;
+							if (Camera_inside(iPoint(0, 15)))
+								App->render->camera.y += 15;
+						}
+					}
+					if (direction == LEFT)
+					{
+						if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0) //magic numbers 20 -> this is the distance you will move
+						{
+							position.x += 15;
+							if (Camera_inside(iPoint(15, 0)))
+								App->render->camera.x -= 15;
+						}
+					}
+					if (direction == RIGHT)
+					{
+						if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0) //magic numbers 20 -> this is the distance you will move
+						{
+							position.x -= 15;
+							if (Camera_inside(iPoint(15, 0)))
+								App->render->camera.x += 15;
+						}
+					}
+				}
+			}
+
+			if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
+			{
+				Soldier* soldier = (Soldier*)c2->callback;
+				soldier->hp--;
+				if (soldier->hp == 0)
+				{
+					if (soldier->destructible)
+					{
+						c2->callback->state = DYING;
+					}
 				}
 				else
 				{
-					if (hurt == false)
+					if (soldier->destructible)
 					{
-						timer.Start();
-						hurt = true;
-						hp_hearts.y--;
-
-						if (direction == UP)
-						{
-							if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0)
-							{
-								position.y += 15;
-								if (Camera_inside(iPoint(0, 15)))
-									App->render->camera.y -= 15;
-							}
-						}
-						if (direction == DOWN)
-						{
-							if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0)
-							{
-								position.y -= 15;
-								if (Camera_inside(iPoint(0, 15)))
-									App->render->camera.y += 15;
-							}
-						}
-						if (direction == LEFT)
-						{
-							if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0)
-							{
-								position.x += 15;
-								if (Camera_inside(iPoint(15, 0)))
-									App->render->camera.x -= 15;
-							}
-						}
-						if (direction == RIGHT)
-						{
-							if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0)
-							{
-								position.x -= 15;
-								if (Camera_inside(iPoint(15, 0)))
-									App->render->camera.x += 15;
-							}
-						}
-					}
-					else
-					{
-						if (timer.ReadSec() >= 1)
-						{
-							hurt = false;
-						}
+						soldier->state = HIT;
+						soldier->dir_hit = c1->callback->direction;
+						soldier->previus_position = soldier->position;
 					}
 				}
 			}
-		}
-
-		if (c1 == collision_interact && c2->type == COLLIDER_TRAINER)
-		{
-			if (gamestate == INGAME)
+			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
 			{
-				if (dialog == nullptr)
+				if (canSwitchMap == false)
 				{
-					gamestate = INMENU;
-					if (direction == UP)
-						c2->callback->direction = DOWN;
-					else if (direction == DOWN)
-						c2->callback->direction = UP;
-					else if (direction == LEFT)
-						c2->callback->direction = RIGHT;
-					else
-						c2->callback->direction = LEFT;
-					dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
-					App->collision->EraseCollider(collision_interact);
-					interaction = false;
-					state = IDLE;
+					canSwitchMap = true;
+				}
+				else
+				{
+					iPoint temp_meta = App->map->WorldToMap(position.x, position.y); //central position
+					MapLayer* meta_ = App->map->data.layers[1];
+					int id_meta = meta_->Get(temp_meta.x, temp_meta.y);
+					for (int i = 0; i < App->map->directMap.size(); i++)
+					{
+						if (App->map->directMap[i].id_tile == id_meta)
+						{
+							canSwitchMap = false;
+							App->scene->switch_map = App->map->directMap[i].id_map;
+							App->scene->newPosition = App->map->directMap[i].position;
+						}
+					}
 				}
 			}
-		}
 
-		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
-		{
-			if (hurt == false) 
+			if (c1 == collision_feet && c2->type == COLLIDER_POKEMON) //TODO MED -> change this (we will have golbats int the future)
 			{
-				GetDamage();
-				hurt = true;
+				if (state != HOOKTHROWN)
+				{
+					if (c2->callback->name == "Golem" && c2->callback->state == HIT)
+					{
+						//Not dammage
+					}
+					else
+					{
+						if (hurt == false)
+						{
+							timer.Start();
+							hurt = true;
+							if (hp_hearts.y > 0)
+							{
+								hp_hearts.y--;
+							}
+
+							if (direction == UP)
+							{
+								if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0)
+								{
+									position.y += 15;
+									if (Camera_inside(iPoint(0, 15)))
+										App->render->camera.y -= 15;
+								}
+							}
+							if (direction == DOWN)
+							{
+								if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0)
+								{
+									position.y -= 15;
+									if (Camera_inside(iPoint(0, 15)))
+										App->render->camera.y += 15;
+								}
+							}
+							if (direction == LEFT)
+							{
+								if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0)
+								{
+									position.x += 15;
+									if (Camera_inside(iPoint(15, 0)))
+										App->render->camera.x -= 15;
+								}
+							}
+							if (direction == RIGHT)
+							{
+								if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0)
+								{
+									position.x -= 15;
+									if (Camera_inside(iPoint(15, 0)))
+										App->render->camera.x += 15;
+								}
+							}
+						}
+						else
+						{
+							if (timer.ReadSec() >= 1)
+							{
+								hurt = false;
+							}
+						}
+					}
+				}
+			}
+
+			if (c1 == collision_interact && c2->type == COLLIDER_TRAINER)
+			{
+				if (gamestate == INGAME)
+				{
+					if (dialog == nullptr)
+					{
+						gamestate = INMENU;
+						if (direction == UP)
+							c2->callback->direction = DOWN;
+						else if (direction == DOWN)
+							c2->callback->direction = UP;
+						else if (direction == LEFT)
+							c2->callback->direction = RIGHT;
+						else
+							c2->callback->direction = LEFT;
+						dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
+						App->collision->EraseCollider(collision_interact);
+						interaction = false;
+						state = IDLE;
+					}
+				}
+			}
+
+			if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
+			{
+				if (hurt == false)
+				{
+					GetDamage();
+					hurt = true;
+				}
 			}
 		}
 	}
@@ -948,18 +952,21 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 
 	case BUTTON_START:
 	{
-		if (App->scene->inventory)
+		if (App->scene->combat == false)
 		{
-			App->audio->PlayFx(2);
-		}
-		else
-		{
-			App->audio->PlayFx(3);
-		}
+			if (App->scene->inventory)
+			{
+				App->audio->PlayFx(2);
+			}
+			else
+			{
+				App->audio->PlayFx(3);
+			}
 
-		App->scene->switch_menu = true;
-		gamestate = INMENU;
-		break;
+			App->scene->switch_menu = true;
+			gamestate = INMENU;
+			break;
+		}
 	}
 
 	}
@@ -1351,7 +1358,6 @@ bool Player::Hit()
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = IDLE;
-		return true;
 	}
 
 	return true;
