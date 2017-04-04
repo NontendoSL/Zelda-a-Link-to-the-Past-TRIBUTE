@@ -204,6 +204,19 @@ bool j1EntityElementScene::DeletePokemon(Pokemon* pokemon)
 	return false;
 }
 
+bool j1EntityElementScene::DeleteTrainer(PokeTrainer* trainer)
+{
+	if (trainer != nullptr)
+	{
+		elementscene.remove(trainer);
+		App->scene->poketrainer.remove(trainer);
+		trainer->collision_feet->to_delete = true;
+		trainer = nullptr;
+		delete trainer;
+	}
+	return true;
+}
+
 Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 {
 	Item* element = new Item();

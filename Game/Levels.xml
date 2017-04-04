@@ -154,9 +154,9 @@
     </map>
 
     <map n="6" file="Combat_Map.tmx">
-      <Link pos_x="90" pos_y="90"/>
+      <Link pos_x="90" pos_y="80"/>
       <camera follow="false"/>
-      <trainer id="1" name="Brendan" pos_x="100" pos_y="100" file="textures/PokemonCharacters.png"/>
+      <trainer id="1" name="Brendan" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png"/>
     </map>
   </maps>
 

@@ -64,7 +64,7 @@ bool Player::Start()
 	offset_x = 7;
 	offset_y = 10;
 	gamestate = TIMETOPLAY;
-	timetoplay = SDL_GetTicks();
+	timetoplay.Start();
 	canSwitchMap = true;
 	black = 0;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
@@ -162,9 +162,19 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 	else if (gamestate == TIMETOPLAY)
 	{
-		if (SDL_GetTicks() - timetoplay > 1000)
+
+		if (timetoplay.ReadSec() > 1 || dialog == nullptr)
 		{
 			gamestate = INGAME;
+		}
+		else
+		{
+			if (dialog->end && timetoplay.ReadSec() > 0.2f)
+			{
+				gamestate = INGAME;
+				delete dialog;
+				dialog = nullptr;
+			}
 		}
 	}
 
@@ -561,23 +571,24 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_interact && c2->type == COLLIDER_TRAINER)
 		{
-			if (dialog == nullptr)
+			if (gamestate == INGAME)
 			{
-				gamestate = INMENU;
-				if (direction == UP)
-					c2->callback->direction = DOWN;
-				else if (direction == DOWN)
-					c2->callback->direction = UP;
-				else if (direction == LEFT)
-					c2->callback->direction = RIGHT;
-				else
-					c2->callback->direction = LEFT;
-				dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
-			}
-			else if (dialog->end == false)
-			{
-				gamestate = INGAME;
-				dialog->PushLine(true);
+				if (dialog == nullptr)
+				{
+					gamestate = INMENU;
+					if (direction == UP)
+						c2->callback->direction = DOWN;
+					else if (direction == DOWN)
+						c2->callback->direction = UP;
+					else if (direction == LEFT)
+						c2->callback->direction = RIGHT;
+					else
+						c2->callback->direction = LEFT;
+					dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
+					App->collision->EraseCollider(collision_interact);
+					interaction = false;
+					state = IDLE;
+				}
 			}
 		}
 
@@ -932,9 +943,16 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	{
 		if (e_state == E_DOWN)
 		{
-			state = INTERACTING;;
-			//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-			//current_animation->Reset();
+			if (dialog == nullptr)
+			{
+				state = INTERACTING;
+				//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+				//current_animation->Reset();
+			}
+			else if (dialog->end == false)
+			{
+				dialog->PushLine(true);
+			}
 		}
 		break;
 	}
@@ -1061,7 +1079,6 @@ bool Player::Hooking()
 		}
 		else if (hook->GetState() == TARGET)
 		{
-			App->audio->PlayFx(13);
 			MoveTo(hook->position);
 		}
 		else if (hook->GetState() == OBSTACLE)
@@ -1148,7 +1165,7 @@ void Player::MoveTo(const iPoint& pos)
 	case UP:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
-		if (Camera_inside())
+		if (Camera_inside(pos))
 			App->render->camera.y += hook->speed * scale;
 
 		position.y -= hook->speed;
@@ -1164,7 +1181,7 @@ void Player::MoveTo(const iPoint& pos)
 	case DOWN:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN
-		if (Camera_inside())
+		if (Camera_inside(pos))
 			App->render->camera.y -= hook->speed * scale;
 		position.y += hook->speed;
 
@@ -1180,7 +1197,7 @@ void Player::MoveTo(const iPoint& pos)
 	{
 		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
 
-		if (Camera_inside())
+		if (Camera_inside(pos))
 			App->render->camera.x += hook->speed * scale;
 		position.x -= hook->speed;
 
@@ -1196,7 +1213,7 @@ void Player::MoveTo(const iPoint& pos)
 	{
 		//int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT
 
-		if (Camera_inside())
+		if (Camera_inside(pos))
 			App->render->camera.x -= hook->speed * scale;
 		position.x += hook->speed;
 

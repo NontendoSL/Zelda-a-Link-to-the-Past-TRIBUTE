@@ -145,9 +145,9 @@ bool j1Scene::Update(float dt)
 						{
 							pokemons.clear();
 						}
-						if (poketrainer != nullptr)
+						if (poketrainer.size() > 0)
 						{
-							delete poketrainer;
+							poketrainer.clear();
 						}
 						Load_Combat_map(7);
 					}
@@ -439,7 +439,7 @@ bool j1Scene::Load_new_map(int n)
 			App->map->Load(name_map.c_str(), n);
 
 			//Trainers
-			poketrainer = App->entity_elements->CreateTrainer(temp.child("trainer"), 1);
+			poketrainer.push_back(App->entity_elements->CreateTrainer(temp.child("trainer"), 1));
 
 			//Pokemons
 			pugi::xml_node temp_pokemon = temp.child("pokemons").child("pokemon");
@@ -522,7 +522,7 @@ bool j1Scene::Load_Combat_map(int n)
 			//trainer
 			//App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 			//Pokemon Link
-			if (n == 6)
+			if (n == 7)
 			{
 				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon"), 1));
 				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon").next_sibling(), 2));

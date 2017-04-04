@@ -29,12 +29,10 @@ bool PokeTrainer::Start()
 {
 	direction = DOWN;
 	state = IDLE;
-	offset_y = 15;
-	offset_x = 15;
 
 	texture = App->tex->Load(file_name.c_str());
 
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_TRAINER, this);
+	collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 21 }, COLLIDER_TRAINER, this);
 
 	return true;
 }

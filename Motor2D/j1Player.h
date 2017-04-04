@@ -102,6 +102,9 @@ public:
 
 	bool camera_follow = false;
 
+	//Timer
+	j1Timer timetoplay;
+
 private:
 
 	//player stats
@@ -124,8 +127,7 @@ private:
 
 	ActionState test_state; //TODO MED -> DELETE THIS
 
-	//Timer
-	int timetoplay;
+	//Timers
 	j1Timer timer;
 	j1Timer hurt_timer;
 	j1Timer invincible_timer;
