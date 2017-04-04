@@ -18,6 +18,7 @@ class Player;
 class Item;
 class Soldier;
 class DynamicObjects;
+class PokeTrainer;
 enum WeaponType;
 
 class j1Scene : public j1Module
@@ -73,6 +74,7 @@ public:
 	std::list<Pokemon*> pokemons;
 	std::list<Item*> items;
 	std::list<DynamicObjects*> dynobjects;
+	PokeTrainer* poketrainer;
 
 	pugi::xml_node		config;
 

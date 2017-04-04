@@ -431,6 +431,9 @@ bool j1Scene::Load_new_map(int n)
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);
 
+			//Trainers
+			poketrainer = App->entity_elements->CreateTrainer(temp.child("trainer"), 1);
+
 			//Pokemons
 			pugi::xml_node temp_pokemon = temp.child("pokemons").child("pokemon");
 			for (int i = 0; i < temp.child("pokemons").attribute("num").as_int(0); i++)

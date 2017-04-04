@@ -4,6 +4,7 @@
 
 #include "NPC.h"
 #include "Pokemon.h"
+
 class PokeTrainer : public NPC
 {
 public:
@@ -40,6 +41,9 @@ private:
 	//Item* drop;
 	bool stunned = false;
 	std::list<Pokemon*> pokedex;
+	SDL_Texture* texture = nullptr;
+	std::string file_name;
+
 };
 
 #endif //__POKETRAINER_H_

@@ -10,6 +10,7 @@
 #include "Geodude.h"
 #include "Sudowoodo.h"
 #include "Golem.h"
+#include "PokeTrainer.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Collision.h"
@@ -259,6 +260,16 @@ Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id, iPoi
 		return temp;
 	}
 	return nullptr;
+}
+
+
+PokeTrainer* j1EntityElementScene::CreateTrainer(pugi::xml_node& conf, uint id)
+{
+	PokeTrainer* temp = new PokeTrainer();
+	temp->Awake(conf);
+	temp->Start();
+	elementscene.push_back(temp);
+	return temp;
 }
 
 DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)

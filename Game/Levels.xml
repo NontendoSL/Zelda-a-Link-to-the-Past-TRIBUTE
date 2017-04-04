@@ -125,7 +125,7 @@
         <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="232" pos_y="480"/>
         <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="200" pos_y="600"/>
         <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="344" pos_y="600"/>
-        <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="400" pos_y="504"/>
+        <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="400" pos_y="496"/>
         <pokemon id="3" name="Sudowoodo" speed="0" dir="down" hp="0" attack="0" pos_x="568" pos_y="504"/>
       </pokemons>
     </map>
@@ -154,11 +154,10 @@
     </map>
 
     <map n="6" file="Combat_Map.tmx">
-      <Link pos_x="136" pos_y="176"/>
+      <Link pos_x="90" pos_y="90"/>
       <camera follow="false"/>
-      <trainer id="1" name="Frist trianer" pos_x="100" pos_y="100"/>
+      <trainer id="1" name="Brendan" pos_x="100" pos_y="100" file="textures/PokemonCharacters.png"/>
     </map>
-    
   </maps>
 
   <map_combat>

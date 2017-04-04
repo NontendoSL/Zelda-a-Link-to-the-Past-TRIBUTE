@@ -53,6 +53,7 @@ public:
 	Player* CreatePlayer();
 	BombContainer* CreateBombContainer();
 	Pokemon* CreatePokemon(pugi::xml_node&, uint id, iPoint pos = (iPoint(0,0)));
+	PokeTrainer* CreateTrainer(pugi::xml_node&, uint id);
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);
