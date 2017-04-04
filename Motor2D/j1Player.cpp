@@ -564,7 +564,14 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			if (dialog == nullptr)
 			{
 				gamestate = INMENU;
-
+				if (direction == UP)
+					c2->callback->direction = DOWN;
+				else if (direction == DOWN)
+					c2->callback->direction = UP;
+				else if (direction == LEFT)
+					c2->callback->direction = RIGHT;
+				else
+					c2->callback->direction = LEFT;
 				dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
 			}
 			else if (dialog->end == false)
