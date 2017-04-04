@@ -85,6 +85,7 @@
     <ClCompile Include="Geodude.cpp" />
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="j1Collision.cpp" />
+    <ClCompile Include="j1Creature.cpp" />
     <ClCompile Include="j1DynamicObjects.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1InputManager.cpp" />
@@ -175,7 +176,9 @@
     <Xml Include="..\Game\config.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="..\Game\Levels.xml" />
+    <Xml Include="..\Game\Levels.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

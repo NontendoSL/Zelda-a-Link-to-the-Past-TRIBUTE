@@ -118,7 +118,6 @@ private:
 	int black;
 
 	//Colliders
-	Collider* collision_feet;
 	Collider* collision_attack;
 	Collider* collision_interact;
 

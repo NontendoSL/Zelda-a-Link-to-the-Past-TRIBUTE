@@ -201,7 +201,7 @@ bool j1Scene::Update(float dt)
 						}
 
 						Load_new_map(switch_map);
-						int id_map = switch_map;
+						id_map = switch_map;
 
 						if (switch_map == 4 && notrepeatmusic)
 						{

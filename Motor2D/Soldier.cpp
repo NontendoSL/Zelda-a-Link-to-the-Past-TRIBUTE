@@ -9,6 +9,7 @@
 #include "j1Collision.h"
 #include "j1EntityElementsScene.h"
 #include "j1Audio.h"
+#include "j1Player.h"
 
 Soldier::Soldier():NPC()
 {
@@ -75,7 +76,6 @@ bool Soldier::Start()
 		offset_y = 15;
 		//marge = 12;
 		gamestate = TIMETOPLAY;
-		status_action = GUARD;
 		state = IDLE;
 		speed = 1;
 		//offset_x = 15;
@@ -83,6 +83,11 @@ bool Soldier::Start()
 		timetoplay = SDL_GetTicks();
 		reset_distance = false;
 		reset_run = true;
+
+		// Test for Vertical Slice /// TODO MED-> read stats from XML
+		radar = 50;
+		attack_speed = 1;
+		chase_speed = 1;
 	}
 
 	else if (soldier_type == PASSIVE)
@@ -101,43 +106,40 @@ bool Soldier::Update()
 {
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Pink)
 	// STATE MACHINE ------------------
-	if (gamestate == INGAME)
-	{
-		if (soldier_type == AGGRESSIVE)
+		if (gamestate == INGAME)
 		{
-			if (status_action == GUARD)
+			if (soldier_type == AGGRESSIVE)
 			{
 				switch (state)
 				{
 				case IDLE:
 				{
+					CheckPlayerPos();
 					Idle();
 					break;
 				}
 				case WALKING:
 				{
+					CheckPlayerPos();
 					Walking();
 					break;
 				}
 				case DYING:
 				{
 					Die();
+					break;
 				}
 				case HIT:
 				{
 					Movebyhit();
-				}
-				default:
-				{
 					break;
 				}
-				}
-			}
-
-			else if (status_action == HUNT)
-			{
-				switch (state)
+				case CHASING:
 				{
+					CheckPlayerPos();
+					Chase();
+					break;
+				}
 				case ATTACKING:
 				{
 					Attack();
@@ -148,8 +150,10 @@ bool Soldier::Update()
 					break;
 				}
 				}
-			}
+			
+
 		}
+
 		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
 	}
@@ -188,6 +192,11 @@ void Soldier::Draw()
 			case HIT:
 				id = 1;
 				break;
+			case CHASING:
+			{
+				id = 1;
+				break;
+			}
 			default:
 				break;
 			}
@@ -232,6 +241,18 @@ void Soldier::Drop_item()
 	item_inside = NULL;
 }
 
+bool Soldier::CheckPlayerPos()
+{
+	int distance_player = App->scene->player->position.DistanceTo(position);
+
+	if (distance_player <= radar)
+	{
+		state = CHASING;
+	}
+
+	return true;
+}
+
 bool Soldier::Idle()
 {
 	if (movable)
@@ -273,12 +294,14 @@ bool Soldier::Idle()
 bool Soldier::Walking()
 {
 	walking = false;
+
 	if (reset_distance)
 	{
 		distance = rand() % 100 + 20;
 		dis_moved = 0;
 		reset_distance = false;
 	}
+
 	Move();
 
 	if(dis_moved >= distance)
@@ -360,6 +383,22 @@ bool Soldier::Move()
 			dis_moved++;
 		}
 		walking = true;
+	}
+
+	return true;
+}
+
+bool Soldier::Chase()
+{
+	path.clear();
+	attack_time.Start();
+	
+	iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
+
+	if (App->scene->player->state != HIT)
+	{
+		GoTo(player_pos, chase_speed);
+		Orientate();
 	}
 
 	return true;

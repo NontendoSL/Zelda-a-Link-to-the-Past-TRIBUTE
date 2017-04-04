@@ -230,7 +230,6 @@ void j1Collision::EreseAllColiderPlayer()
 
 bool ColliderRect::CheckCollision(const Collider* c) const
 {
-
 	return (rect.x < c->rect.x + c->rect.w &&
 		rect.x + rect.w > c->rect.x &&
 		rect.y < c->rect.y + c->rect.h &&

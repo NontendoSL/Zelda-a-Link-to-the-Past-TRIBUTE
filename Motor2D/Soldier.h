@@ -3,7 +3,10 @@
 #define __SOLDIER_H_
 
 #include "NPC.h"
+#include <vector>
+
 enum SoldierType {AGGRESSIVE, PASSIVE};
+
 class Soldier : public NPC
 {
 public:
@@ -35,11 +38,15 @@ public:
 
 	void Drop_item();
 
+	bool CheckPlayerPos();
+
 	bool Idle();
 
 	bool Walking();
 
 	bool Move();
+
+	bool Chase();
 
 	bool Attack();
 
@@ -51,7 +58,6 @@ public:
 	iPoint previus_position;
 
 private:
-
 	SoldierType soldier_type;
 	uint id = 0;
 
@@ -68,6 +74,7 @@ private:
 
 	int timetoplay;
 
+	//WHEN ATTACKED
 	int timetorun;
 	bool reset_run;
 	int distance;

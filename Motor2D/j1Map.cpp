@@ -263,6 +263,25 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 	return ret;
 }
 
+int j1Map::CheckTileCost(int x, int y)
+{
+	int ret = 0;
+	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
+
+	iPoint ptemp = WorldToMap(x, y);
+
+	MapLayer* meta_layer = data.layers[1]; //Walkability Layer
+	int id = meta_layer->Get(ptemp.x, ptemp.y);
+
+	if (id == red_wal)
+	{
+		int ret = 1;
+	}
+
+	return ret;
+	
+}
+
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
