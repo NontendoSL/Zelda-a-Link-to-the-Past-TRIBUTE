@@ -16,6 +16,7 @@ class Hookshot;
 class Weapon;
 class Pokemon;
 class BombContainer;
+class PokeTrainer;
 
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module

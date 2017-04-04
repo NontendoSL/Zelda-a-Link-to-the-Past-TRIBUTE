@@ -315,7 +315,7 @@ void j1Scene::LoadUi()
 	//Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21 - 224 }, { 304,268 }, { 337,268 }, false, "bow");
 	//hotfix->selected = true;
 	//start_menu->AddElement(hotfix);
-
+	start_menu->Hitbox = Sprite->Hitbox;
 	start_menu->AddElement(Sprite);
 
 	start_menu->AddElement(App->gui->CreateImage({ 370,372,32,32 }, { 18,154 - 224 }, "item_info"));
@@ -335,6 +335,10 @@ void j1Scene::LoadUi()
 	start_menu->position = { 0,-224 };
 	start_menu->OpenClose(false);
 	start_menu->identifier = "start_menu";
+
+	float win_marge = (App->win->GetWidth() - start_menu->Hitbox.w*App->win->GetScale()) / 4;
+	hud->Move(true, win_marge);
+	start_menu->Move(true, win_marge);
 	//pokecombat
 	//pokecombat = App->gui->CreatePokemonCombatHud(450,100,300);
 }
@@ -506,7 +510,8 @@ bool j1Scene::Load_Combat_map(int n)
 	start_menu->OpenClose(false);
 	hud->OpenClose(false);
 	pokecombat = App->gui->CreatePokemonCombatHud(450, 100, 300);
-
+	float win_marge = (App->win->GetWidth() - start_menu->Hitbox.w*App->win->GetScale()) / 4;
+	pokecombat->Move(true, win_marge);
 	for (pugi::xml_node temp = config.child("map_combat").child("map"); stop_rearch == false; temp = temp.next_sibling())
 	{
 		if (temp.attribute("n").as_int(0) == n)

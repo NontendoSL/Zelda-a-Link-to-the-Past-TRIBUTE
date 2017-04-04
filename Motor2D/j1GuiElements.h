@@ -150,6 +150,7 @@ public:
 public:
 	void SetCd(uint newcd);
 	void OpenClose(bool open);//true open false close
+	void Move(bool x_axis, float speed);
 private:
 	std::vector<Image*>hud_images;
 	bool incd;

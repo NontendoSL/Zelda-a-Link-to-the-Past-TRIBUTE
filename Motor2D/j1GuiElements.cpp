@@ -600,9 +600,12 @@ void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich 
 			menu_images[i]->position.x += speed;
 			if (menu_images[i]->elements.size() > 0)
 			{
-				for (int j = 0; j < menu_images[i]->elements.size(); j++)
+				if (x_axis == false)
 				{
-					menu_images[i]->elements[j]->position.x += speed;
+					for (int j = 0; j < menu_images[i]->elements.size(); j++)
+					{
+						menu_images[i]->elements[j]->position.x += speed;
+					}
 				}
 			}
 		}
@@ -715,6 +718,11 @@ PokemonCombatHud::PokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2)
 	this->hpbar1.y = hpbar1;
 }
 
+void PokemonCombatHud::Move(bool x_axis, float speed)
+{
+	hud_images[0]->position.x += speed;
+	hud_images[1]->position.x += speed;
+}
 
 void PokemonCombatHud::Handle_Input()
 {
