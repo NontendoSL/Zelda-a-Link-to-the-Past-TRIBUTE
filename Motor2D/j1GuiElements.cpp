@@ -12,6 +12,7 @@
 #include "j1GuiElements.h"
 #include "j1Player.h"
 #include "j1Weapon.h"
+#include "j1Window.h"
 #include <assert.h>
 
 /////////////////////////////// IMAGE METHODS ///////////////////////////////
@@ -278,6 +279,8 @@ Button::~Button()
 
 Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
 {
+	int win_marge = (App->win->GetWidth() - App->scene->start_menu->Hitbox.w*App->win->GetScale()) / 4;
+	position = { win_marge + 40,150 };
 	//TODO MID: Actual font needs a blue outline to match the original one, need to code that or edit the font creating the outline
 	type = DIALOGUE;
 	lines = App->gui->CreateText(GANONF, string, 29, { position.x + 10, 0 }, 30, { 255,255,255,255 }, false);
@@ -296,14 +299,6 @@ void Dialogue::Draw()
 		item->Draw();
 		item = item->next_line;
 	}
-	/*std::list<Text*>::iterator iterator = text_lines.begin();
-	while (iterator != text_lines.end())
-	{
-	if (iterator._Ptr->_Myval->visible == true) {
-	iterator._Ptr->_Myval->Draw();
-	}
-	iterator++;
-	}*/
 	SDL_RenderSetViewport(App->render->renderer, NULL);
 }
 
