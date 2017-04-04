@@ -216,23 +216,6 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		bombmanager->Drop(position);
 		App->audio->PlayFx(6);
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT && gems<999)
-	{
-		gems++;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT && bombs<99)
-	{
-		bombs++;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT && arrows<99)
-	{
-		arrows++;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-	{
-		//App->scene->dialog->PushLine(true);
-	}
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
 	{
 		if (App->scene->inventory) //TODO LOW -> If pres to fast you can lisen 2.
@@ -952,20 +935,23 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 
 	case BUTTON_START:
 	{
-		if (App->scene->combat == false)
+		if (e_state == E_DOWN)
 		{
-			if (App->scene->inventory)
+			if (App->scene->combat == false)
 			{
-				App->audio->PlayFx(2);
-			}
-			else
-			{
-				App->audio->PlayFx(3);
-			}
+				if (App->scene->inventory)
+				{
+					App->audio->PlayFx(2);
+				}
+				else
+				{
+					App->audio->PlayFx(3);
+				}
 
-			App->scene->switch_menu = true;
-			gamestate = INMENU;
-			break;
+				App->scene->switch_menu = true;
+				gamestate = INMENU;
+				break;
+			}
 		}
 	}
 
