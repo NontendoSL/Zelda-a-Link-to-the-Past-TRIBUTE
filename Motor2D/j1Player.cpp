@@ -367,6 +367,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				hurt_timer.Start();
 				invincible_timer.Start();
 				hp_hearts.y--;
+				App->audio->PlayFx(14);
 
 				//KNOCKBACK--------------
 

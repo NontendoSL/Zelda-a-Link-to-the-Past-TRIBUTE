@@ -61,6 +61,7 @@ bool j1Scene::Start()
 		App->audio->LoadFx("audio/fx/LTTP_Enemy_Death.wav");//11
 		App->audio->LoadFx("audio/fx/LTTP_Enemy_Hit.wav");//12
 		App->audio->LoadFx("audio/fx/LTTP_Fall.wav");//13
+		App->audio->LoadFx("audio/fx/LTTP_Link_Hurt.wav");//14
 
 	}
 	inventory = false;
