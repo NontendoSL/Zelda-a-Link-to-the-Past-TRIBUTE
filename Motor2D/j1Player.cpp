@@ -304,6 +304,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			{
 				iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
 				//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
+				App->audio->PlayFx(15);
 				int canDrop = 1;
 				if (canDrop == 1)
 				{
