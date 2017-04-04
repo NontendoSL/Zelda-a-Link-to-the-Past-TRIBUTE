@@ -361,10 +361,11 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		}
 		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
 		{
-			if (state != HIT) //TODO MED -> change this to a player state
+			if (state != HIT && invincible_timer.ReadSec() >= 1) //TODO MED -> change this to a player state
 			{
 				state = HIT;
 				hurt_timer.Start();
+				invincible_timer.Start();
 				hp_hearts.y--;
 
 				//KNOCKBACK--------------

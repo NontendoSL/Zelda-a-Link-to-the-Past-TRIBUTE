@@ -128,6 +128,7 @@ private:
 	int timetoplay;
 	j1Timer timer;
 	j1Timer hurt_timer;
+	j1Timer invincible_timer;
 
 	//TEST
 	std::string stats_temp;
