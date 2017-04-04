@@ -66,8 +66,12 @@ public:
 	pugi::xml_node conf;
 	pugi::xml_document XML;
 
+	//texture dynobjects
 	SDL_Texture* texture_dynobjects = nullptr;
 	std::string file_tex_dynobjects;
+	//texture Brendan
+	SDL_Texture* texture_trainer = nullptr;
+	std::string file_tex_trainer;
 
 private:
 	std::list<SceneElement*> elementscene;

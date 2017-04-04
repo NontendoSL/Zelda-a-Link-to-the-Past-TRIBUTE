@@ -45,8 +45,8 @@ private:
 	//Item* drop;
 	bool stunned = false;
 
-	SDL_Texture* texture = nullptr;
-	std::string file_name;
+	//SDL_Texture* texture = nullptr;
+	//std::string file_name;
 	bool active;
 
 };

@@ -38,6 +38,7 @@ bool j1EntityElementScene::Awake(pugi::xml_node &config)
 		item++;
 	}*/
 	file_tex_dynobjects = config.child("textDynObjects").attribute("file").as_string("");
+	file_tex_trainer = config.child("textBrendan").attribute("file").as_string("");
 	return true;
 }
 
@@ -52,6 +53,7 @@ bool j1EntityElementScene::Start()
 	}
 	
 	texture_dynobjects = App->tex->Load(file_tex_dynobjects.c_str());
+	texture_trainer = App->tex->Load(file_tex_trainer.c_str());
 
 	char* buf;
 	int size = App->fs->Load("config.xml", &buf);

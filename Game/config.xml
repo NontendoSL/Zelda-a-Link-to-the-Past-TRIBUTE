@@ -27,6 +27,7 @@
 
   <entityelement>
     <textDynObjects file="textures/DynObjectsSpriteSheet.png"/>
+    <textBrendan file="textures/PokemonCharacters.png"/>
   </entityelement>
 	
   <animation>

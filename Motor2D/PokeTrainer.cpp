@@ -1,6 +1,8 @@
 #include "PokeTrainer.h"
 #include "CombatManager.h"
+#include "j1EntityElementsScene.h"
 #include "j1App.h"
+
 PokeTrainer::PokeTrainer() :NPC()
 {
 	c_type = POKETRAINER;
@@ -22,7 +24,6 @@ bool PokeTrainer::Awake(pugi::xml_node &conf)
 	}
 	
 	active = conf.attribute("active").as_bool(false);
-	file_name = conf.attribute("file").as_string("");
 	return true;
 }
 
@@ -30,7 +31,6 @@ bool PokeTrainer::Start()
 {
 	direction = DOWN;
 	state = IDLE;
-	texture = App->tex->Load(file_name.c_str());
 
 	if(active)
 		collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 21 }, COLLIDER_TRAINER, this);
@@ -52,22 +52,22 @@ void PokeTrainer::Draw()
 		if (direction == UP)
 		{
 			SDL_Rect r = { 1,1,14,21 };
-			App->render->Blit(texture, position.x, position.y, &r);
+			App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &r);
 		}
 		if (direction == DOWN)
 		{
 			SDL_Rect r = { 46,1,14,21 };
-			App->render->Blit(texture, position.x, position.y, &r);
+			App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &r);
 		}
 		if (direction == LEFT)
 		{
 			SDL_Rect r = { 31,23,14,21 };
-			App->render->Blit(texture, position.x, position.y, &r);
+			App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &r);
 		}
 		if (direction == RIGHT)
 		{
 			SDL_Rect r = { 16,45,14,21 };
-			App->render->Blit(texture, position.x, position.y, &r);
+			App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &r);
 		}
 	}
 }
