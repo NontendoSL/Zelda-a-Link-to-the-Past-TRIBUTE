@@ -53,6 +53,8 @@ public:
 	//Load CombatMaps
 	bool Load_Combat_map(int n);
 
+	int IdMap();
+
 	void AssignValues(Image* assigner,uint var);
 
 	void SwitchMenu(bool direction);
@@ -84,6 +86,7 @@ public:
 	bool switch_menu = false;
 	bool inventory = false;
 	int switch_map = 0;
+	int id_map = 0;
 
 	bool notrepeatmusic;
 

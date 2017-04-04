@@ -84,11 +84,15 @@ bool Player::PreUpdate()
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
 	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
-	bool ret = true;
+		bool ret = true;
+
+
+	//if you dead, you appear on the Link House
 	//if you dead, you appear on the Link House
 	if (hp_hearts.y == 0)
 	{
 		hp_hearts = { 6,6 };
+
 		if (App->map->CleanUp())
 		{
 			App->collision->EreseAllColiderPlayer();
@@ -109,12 +113,26 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			{
 				App->scene->pokemons.clear();
 			}
-			
+
 			gems = 0;
 			arrows = 0;
 			bombs = 0;
+		}
+
+		// SWITCH MAPS ------------------
+		if (App->scene->IdMap() == 2)
+		{
 			App->scene->Load_new_map(1);
 		}
+		else if (App->scene->IdMap() == 4)
+		{
+			App->scene->Load_new_map(4);
+		}
+		else if (App->scene->IdMap() == 5)
+		{
+			App->scene->Load_new_map(5);
+		}
+
 	}
 
 	// STATE MACHINE ------------------

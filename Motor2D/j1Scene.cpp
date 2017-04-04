@@ -201,6 +201,8 @@ bool j1Scene::Update(float dt)
 						}
 
 						Load_new_map(switch_map);
+						int id_map = switch_map;
+
 						if (switch_map == 4 && notrepeatmusic)
 						{
 							notrepeatmusic = false;
@@ -548,6 +550,12 @@ bool j1Scene::Load_Combat_map(int n)
 	return true;
 }
 
+
+int j1Scene::IdMap()
+{
+	return id_map;
+
+}
 
 // ---------------------------------------------
 pugi::xml_node j1Scene::LoadConfig(pugi::xml_document& config_file) const
