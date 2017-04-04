@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include "j1Item.h"
 #include "j1Collision.h"
+#include "j1Player.h"
 #include "j1EntityElementsScene.h"
 
 Golem::Golem()
@@ -41,7 +42,7 @@ bool Golem::Awake(pugi::xml_node &conf, uint id)
 
 bool Golem::Start()
 {
-	state = HIT;
+	state = STATIC;
 	scale = App->win->GetScale();
 	offset_x = 8;
 	offset_y = 17;
@@ -88,12 +89,13 @@ bool Golem::Update()
 		}
 		case HIT:
 		{
+			Hit();
 			break;
 		}
-		/* This case shoul be added, it reffers to the rock stage
 		case STATIC:
-		{}
-		*/
+		{
+			break;
+		}
 		/* This case shoul be added, it reffers when abandoning rock stage */
 		case AWAKENING:
 		{
@@ -155,11 +157,14 @@ void Golem::Draw()
 	case ATTACKING:
 		id = 2;
 		break;
-	case HIT:
+	case STATIC:
 		id = 3;
 		break;
 	case AWAKENING:
 		id = 4;
+		break;
+	case HIT:
+		id = 5;
 		break;
 	case DYING:
 		id = 5;
@@ -344,6 +349,21 @@ bool Golem::Move()
 	return true;
 }
 
+bool Golem::Hit()
+{
+	if(hp <= 0)
+	{
+		state = DYING;
+		return true;
+	}
+
+	if (hurt_timer.ReadSec() >= 0.2)
+	{
+		state = IDLE;
+	}
+	return true;
+}
+
 bool Golem::Attack()
 {
 	return true;
@@ -351,6 +371,13 @@ bool Golem::Attack()
 
 bool Golem::Death()
 {
+	if (App->scene->player->bombmanager != nullptr)
+	{
+		iPoint pos;
+		pos.create(position.x - offset_x, position.y - offset_y);
+		App->scene->items.push_back(App->entity_elements->CreateItem(2, pos));
+	}
+
 	App->entity_elements->DeletePokemon(this);
 	return true;
 }
@@ -361,7 +388,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
 		{
-			if (state == HIT)
+			if (state == STATIC)
 			{
 				state = AWAKENING;
 				iPoint temp = App->map->WorldToMap(position.x, position.y);
@@ -371,6 +398,13 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 				App->map->EditCost(temp.x - 1, temp.y - 1, 0);
 
 			}
+		}
+		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT)
+		{
+			animation.anim[5].ResetAnimations();
+			hurt_timer.Start();
+			state = HIT;
+			hp--;
 		}
 	}
 }

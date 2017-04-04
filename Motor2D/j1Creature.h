@@ -35,7 +35,7 @@ public:
 
 public:
 	CreatureType c_type;
-	uint hp;
+	int hp;
 	bool walking = false;
 	int attack;
 

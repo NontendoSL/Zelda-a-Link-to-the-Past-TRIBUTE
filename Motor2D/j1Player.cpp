@@ -523,7 +523,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON)
 		{
-			if (c2->callback->name == "Golem" && c2->callback->state == HIT)
+			if (c2->callback->name == "Golem" && c2->callback->state == STATIC)
 			{
 				//Not dammage
 			}
@@ -544,21 +544,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 
 
-					if (pokemon->hp == 0)
-					{
-						c2->callback->state = DYING;
-					}
-					else
-					{
-						c2->callback->state = HIT;
-						pokemon->dir_hit = c1->callback->direction;
-						pokemon->previus_position = pokemon->position;
-					}
-				}
-				if (c2->callback->name == "Golem")
-				{
-					Golem* pokemon = (Golem*)c2->callback;
-					pokemon->hp--;
 					if (pokemon->hp == 0)
 					{
 						c2->callback->state = DYING;
@@ -1475,4 +1460,9 @@ void Player::GetDamage()
 {
 	if (hp_hearts.y>0)
 		hp_hearts.y--;
+}
+
+Collider* Player::GetCollisionAttack() const
+{
+	return collision_attack;
 }

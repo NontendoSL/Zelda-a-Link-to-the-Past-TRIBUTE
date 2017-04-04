@@ -45,6 +45,8 @@ public:
 
 	bool Death();
 
+	bool Hit();
+
 	void OnCollision(Collider*, Collider*);
 
 
@@ -65,6 +67,8 @@ private:
 	int dis_moved;
 	bool reset_distance;
 	bool mode_stone;
+
+	j1Timer hurt_timer;
 };
 
 #endif //__GOLEM_H_

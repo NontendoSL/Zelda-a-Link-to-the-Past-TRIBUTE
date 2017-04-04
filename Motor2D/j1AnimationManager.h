@@ -19,6 +19,8 @@ struct AnimDirect
 	Animation North_action;
 	Animation West_action;
 	Animation South_action;
+
+	void ResetAnimations();
 };
 
 struct AnimationStruct

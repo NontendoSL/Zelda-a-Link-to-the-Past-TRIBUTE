@@ -210,3 +210,11 @@ pugi::xml_node j1AnimationManager::LoadConfig(pugi::xml_document& config_file, s
 
 	return ret;
 }
+
+void AnimDirect::ResetAnimations()
+{
+	East_action.Reset();
+	North_action.Reset();
+	West_action.Reset();
+	South_action.Reset();
+}

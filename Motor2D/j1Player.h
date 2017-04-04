@@ -84,6 +84,7 @@ public:
 	void AddHeartContainer();
 	void ShowHearts();
 	void GetDamage();
+	Collider* GetCollisionAttack() const;
 
 public:
 
