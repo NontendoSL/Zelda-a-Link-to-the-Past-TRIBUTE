@@ -23,6 +23,8 @@ bool Blaziken::Awake(pugi::xml_node &conf)
 		direction = LEFT;
 	else
 		direction = RIGHT;
+
+	cooldown = conf.attribute("cooldown").as_int(0);
 	hp = conf.attribute("hp").as_int(0);
 	attack = conf.attribute("attack").as_int(0);
 	speed = conf.attribute("speed").as_int(0);

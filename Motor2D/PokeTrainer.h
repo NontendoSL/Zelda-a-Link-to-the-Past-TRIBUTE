@@ -36,13 +36,18 @@ public:
 
 	void Drop_item();
 
+	Pokemon* GetPokemon(uint position);
+
+	std::list<Pokemon*> pokedex;
+
 private:
 
 	//Item* drop;
 	bool stunned = false;
-	std::list<Pokemon*> pokedex;
+
 	SDL_Texture* texture = nullptr;
 	std::string file_name;
+	bool active;
 
 };
 

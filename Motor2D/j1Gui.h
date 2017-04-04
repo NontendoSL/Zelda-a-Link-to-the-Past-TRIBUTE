@@ -17,6 +17,7 @@ class Button;
 class Dialogue;
 class ZeldaMenu;
 class PokemonCombatHud;
+class Pokemon;
 class Selector;
 
 // ---------------------------------------------------
@@ -58,7 +59,7 @@ public:
 
 	ZeldaMenu* CreateZeldaMenu();
 
-	PokemonCombatHud* CreatePokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2);
+	PokemonCombatHud* CreatePokemonCombatHud(Pokemon* Link, Pokemon* Brendan);
 
 	void Erase(int id);
 

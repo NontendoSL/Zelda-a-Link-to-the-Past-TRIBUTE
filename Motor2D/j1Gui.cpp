@@ -147,9 +147,9 @@ ZeldaMenu* j1Gui::CreateZeldaMenu()
 	return element;
 }
 
-PokemonCombatHud* j1Gui::CreatePokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2)
+PokemonCombatHud* j1Gui::CreatePokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 {
-	PokemonCombatHud* element = new PokemonCombatHud(cd_time, hpbar1, hpbar2);
+	PokemonCombatHud* element = new PokemonCombatHud(Link, Brendan);
 	entities.push_back(element);
 	return element;
 }

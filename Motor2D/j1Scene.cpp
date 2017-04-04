@@ -19,6 +19,7 @@
 #include "j1FileSystem.h"
 #include "CombatManager.h"
 #include "j1FadeToBlack.h"
+#include "PokeTrainer.h"
 #include "j1Collision.h"
 #include "j1Weapon.h"
 
@@ -63,6 +64,7 @@ bool j1Scene::Start()
 		App->audio->LoadFx("audio/fx/LTTP_Link_Hurt.wav");//13
 		App->audio->LoadFx("audio/fx/LTTP_Fall.wav");//14
 		App->audio->LoadFx("audio/fx/LTTP_Chest_Open.wav");//15
+		
 
 	}
 	inventory = false;
@@ -439,8 +441,10 @@ bool j1Scene::Load_new_map(int n)
 			App->map->Load(name_map.c_str(), n);
 
 			//Trainers
-			//if()
-			poketrainer.push_back(App->entity_elements->CreateTrainer(temp.child("trainer"), 1));
+			if (temp.child("trainer"))
+			{
+				poketrainer.push_back(App->entity_elements->CreateTrainer(temp.child("trainer"), 1));
+			}
 
 			//Pokemons
 			pugi::xml_node temp_pokemon = temp.child("pokemons").child("pokemon");
@@ -513,15 +517,13 @@ bool j1Scene::Load_Combat_map(int n)
 
 	start_menu->OpenClose(false);
 	hud->OpenClose(false);
-	pokecombat = App->gui->CreatePokemonCombatHud(450, 100, 300);
+
 	float win_marge = (App->win->GetWidth() - start_menu->Hitbox.w*App->win->GetScale()) / 4;
-	pokecombat->Move(true, win_marge);
+
 	for (pugi::xml_node temp = config.child("map_combat").child("map"); stop_rearch == false; temp = temp.next_sibling())
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			//trainer
-			App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 			//Pokemon Link
 			if (n == 7)
 			{
@@ -530,6 +532,11 @@ bool j1Scene::Load_Combat_map(int n)
 				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon").next_sibling().next_sibling(), 3));
 			}
 
+			//trainer
+			poketrainer.push_back(App->combatmanager->CreateTrainer(temp.child("trainer"), 1));
+
+			pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()++._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(2));
+			pokecombat->Move(true, win_marge);
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);

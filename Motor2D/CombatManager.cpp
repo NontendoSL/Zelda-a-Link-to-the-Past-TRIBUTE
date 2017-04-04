@@ -55,7 +55,7 @@ bool CombatManager::Update(float dt)
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	if (App->scene->combat)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
 			Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
@@ -81,7 +81,7 @@ bool CombatManager::Update(float dt)
 			temp->active = false;
 			temp_2->active = false;
 			temp_3->active = true;
-		}
+		}*/
 	}
 
 	while (item != elementcombat.end())
@@ -93,6 +93,8 @@ bool CombatManager::Update(float dt)
 		}
 		item++;
 	}
+
+
 	return true;
 }
 
@@ -167,13 +169,64 @@ Pokemon* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 	}
 }
 
-bool CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)
+PokeTrainer* CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)
 {
 	PokeTrainer* temp = new PokeTrainer();
 	temp->Awake(conf);
 	temp->Start();
 	elementcombat.push_back(temp);
-	return false;
+	return temp;
+}
+
+Pokemon* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
+{
+	if (trainer) //Link
+	{
+		std::list<Pokemon*>::iterator item = App->scene->player->pokedex.begin();
+		while (item != App->scene->player->pokedex.end())
+		{
+			if (item._Ptr->_Myval->active == true)
+			{
+				item._Ptr->_Myval->active = false;
+				item++;
+				if (item._Ptr->_Myval == nullptr)
+				{
+					return nullptr;
+				}
+				else
+				{
+					item._Ptr->_Myval->active = true;
+					return item._Ptr->_Myval;
+				}
+			}
+			item++;
+		}
+		return nullptr;
+	}
+	else //Brendan
+	{
+		std::list<Pokemon*>::iterator item = App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.begin();
+		while (item != App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.end())
+		{
+			if (item._Ptr->_Myval->active == true)
+			{
+				item._Ptr->_Myval->active = false;
+				item++;
+				if (item._Ptr->_Myval == nullptr)
+				{
+					return nullptr;
+				}
+				else
+				{
+					item._Ptr->_Myval->active = true;
+					return item._Ptr->_Myval;
+				}
+			}
+			item++;
+		}
+		return nullptr;
+	}
+	return nullptr;
 }
 
 

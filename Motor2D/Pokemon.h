@@ -64,7 +64,7 @@ public:
 	bool active;
 	bool dead;
 	bool pokemon_player;
-
+	uint cooldown;
 	//hits
 	Direction dir_hit;
 	iPoint previus_position;
@@ -77,6 +77,7 @@ protected:
 	Animation* current_animation = nullptr;
 
 	bool attacker = false;
+
 
 	Collider* collision_attack = nullptr;
 };

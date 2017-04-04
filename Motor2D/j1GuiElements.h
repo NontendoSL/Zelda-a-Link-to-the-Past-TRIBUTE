@@ -138,11 +138,13 @@ public:
 	uint id_selected;
 };
 
+//----------------------------------------------------------
+class Pokemon;
 
 class PokemonCombatHud :public j1GuiEntity
 {
 public:
-	PokemonCombatHud(uint cd_time,uint hpbar1,uint hpbar2);
+	PokemonCombatHud(Pokemon* Link, Pokemon* Brendan);
 	~PokemonCombatHud();
 public:
 	void Handle_Input();
@@ -151,14 +153,20 @@ public:
 	void SetCd(uint newcd);
 	void OpenClose(bool open);//true open false close
 	void Move(bool x_axis, float speed);
+	void LoadNewPokemon(Pokemon* pokemon, bool trainer);
 private:
 	std::vector<Image*>hud_images;
-	bool incd;
-	Image* ability, *hp1, *hp2;
-	Text* hp_print;
+	bool cooldown;
+	Image* ability;
+	Image* hp1;
+	Image* hp2;
+	Text* poke_hp_Link;
+	Text* poke_hp_Brendan;
 	iPoint cdtime; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
-	iPoint hpbar1; //.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE) used for triangle operations with atlas pixels
+	iPoint hpbar_pLink;//.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE) used for triangle operations with atlas pixels
+	iPoint hpbar_pBrendan;
 	char buffer[25]; //hp
+	int num_pokemons = 3;
 
 };
 #endif // __j1GUIELEMENTS_H__

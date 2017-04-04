@@ -11,6 +11,8 @@
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
 #include "j1Player.h"
+#include "Pokemon.h"
+#include "CombatManager.h"
 #include "j1Weapon.h"
 #include "j1Window.h"
 #include <assert.h>
@@ -687,27 +689,54 @@ ZeldaMenu::~ZeldaMenu()
 
 /////////////////////////////////////POKEMON COMBAT HUD//////////////////////////
 
-PokemonCombatHud::PokemonCombatHud(uint cd_time, uint hpbar1, uint hpbar2)
+PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 {
+	//Hud_images 0-> up // Hud_imatge 1-> down
+	//elements 0-> left circle // elements 1-> left box // elements 2-> right circle // elements 3-> right box
+	//Big sprites
 	hud_images.push_back(App->gui->CreateImage({ 335,19,254,51 }, { 0,0 }, "top hud"));
 	hud_images.push_back(App->gui->CreateImage({ 597,18,254,33 }, { 0,224 - 33 }, "bottom hud"));
+	//UP pokeballs
+	//Link
+	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 42,11 }, "Link_Pokeball_1"));
+	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 52,13 }, "Link_Pokeball_2"));
+	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 62,14 }, "Link_Pokeball_3"));
+	//Brendan
+	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 204,11 }, "Bren_Pokeball_1"));
+	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 194,13 }, "Bren_Pokeball_2"));
+	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 184,14 }, "Bren_Pokeball_3"));
+	//Left sprites
 	ability = App->gui->CreateImage({ 561,85,30,30 }, { 3,0 }, "left ability");
 	hud_images[1]->elements.push_back(ability);
 	ability->elements.push_back(App->gui->CreateImage({ 525,85,30,0 }, { 0,0 }, "left cd"));
 	hud_images[1]->elements.push_back(App->gui->CreateImage({ 426,84,90,23 }, { 35,7 }, "left box"));
+	//hp bar left
 	hp1 = App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "left hp");
 	hud_images[1]->elements[1]->elements.push_back(hp1);
-	hud_images[1]->elements[1]->elements.push_back(App->gui->CreateText(POKE1, "SCEPTILE", 50, { 6,4 }, 15, { 0,0,0,255 }));
-	//
-	sprintf_s(buffer, 25, "%i/%i", hpbar1, hpbar1);
-	hp_print = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 });
-	hud_images[1]->elements[1]->elements.push_back(hp_print);
+	//Right sprites
 	hud_images[1]->elements.push_back(App->gui->CreateImage({ 525,85,30,30 }, { 221,0 }, "right ability"));
 	hud_images[1]->elements.push_back(App->gui->CreateImage({ 426,84,90,23 }, { 129,7 }, "right box"));
-	incd = false;
-	cdtime.x = cd_time;
-	this->hpbar1.x = hpbar1;
-	this->hpbar1.y = hpbar1;
+	//hp bar right
+	hp2 = App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "right hp");
+	hud_images[1]->elements[3]->elements.push_back(hp2);
+	//Names
+	hud_images[1]->elements[1]->elements.push_back(App->gui->CreateText(POKE1, Link->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }));
+	hud_images[1]->elements[3]->elements.push_back(App->gui->CreateText(POKE1, Brendan->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }));
+	// HP Poke Link
+	hpbar_pLink = iPoint(Link->hp, Link->hp);
+	sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
+	poke_hp_Link = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 });
+	hud_images[1]->elements[1]->elements.push_back(poke_hp_Link);
+	// HP Poke Brendan
+	hpbar_pBrendan = iPoint(Brendan->hp, Brendan->hp);
+	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
+	poke_hp_Brendan = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 });
+	hud_images[1]->elements[3]->elements.push_back(poke_hp_Brendan);
+
+
+	cooldown = false;
+	cdtime = iPoint(Link->cooldown, Link->cooldown);
+
 }
 
 void PokemonCombatHud::Move(bool x_axis, float speed)
@@ -716,37 +745,85 @@ void PokemonCombatHud::Move(bool x_axis, float speed)
 	hud_images[1]->position.x += speed;
 }
 
+void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Link - false Brendan
+{
+	if (pokemon != nullptr)
+	{
+		if (trainer) //Link
+		{
+			hud_images[0]->elements[2]->Hitbox.x = 334;
+			Text*item = (Text*)hud_images[1]->elements[1]->elements[1];
+			item->Write(pokemon->name.c_str());
+			hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
+			cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
+			hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;
+			ability->elements[0]->Hitbox.h = 0;
+			cooldown = false;
+		}
+		else //Brendan
+		{
+			hud_images[0]->elements[3]->Hitbox.x = 334;
+			Text*item = (Text*)hud_images[1]->elements[3]->elements[1];
+			item->Write(pokemon->name.c_str());
+			hpbar_pBrendan = iPoint(pokemon->hp, pokemon->hp);
+			hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
+		}
+	}
+	else
+	{
+		//FINAL COMBAT
+	}
+
+}
+
 void PokemonCombatHud::Handle_Input()
 {
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && incd == false)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && cooldown == false)
 	{
-		incd = true;
+		cooldown = true;
 		cdtime.y = cdtime.x;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT&&hpbar1.y>0)
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT && hpbar_pLink.y>0)
 	{
-		hpbar1.y--;
-		sprintf_s(buffer, 25, "%i/%i", hpbar1.y, hpbar1.x);
-		hp_print->Write(buffer);
+		hpbar_pLink.y--;
+		sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
+		poke_hp_Link->Write(buffer);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT && hpbar_pBrendan.y>0)
+	{
+		hpbar_pBrendan.y--;
+		sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
+		poke_hp_Brendan->Write(buffer);
 	}
 }
 
 void PokemonCombatHud::Update()
 {
-	if (incd) //player cd update 
+	if (cooldown) //player cd update 
 	{
 		if (cdtime.y>0)
 		{
 			cdtime.y--;
 			ability->elements[0]->Hitbox.h = (cdtime.y*ability->elements[0]->Hitbox.w) / cdtime.x;
-			LOG("setting cd");
 		}
-		else {
-			incd = false;
+		else 
+		{
+			cooldown = false;
 		}
 	}
 
-	hp1->Hitbox.w = (hpbar1.y * 48) / hpbar1.x;//being 48 the max pixels hp can have (atlas)
+	if (hpbar_pLink.y == 0)
+	{
+		//num_pokemons--;
+		LoadNewPokemon(App->combatmanager->change_pokemon(true), true);
+	}
+	else if (hpbar_pBrendan.y == 0)
+	{
+		LoadNewPokemon(App->combatmanager->change_pokemon(false), false);
+	}
+
+	hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)
+	hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;//being 48 the max pixels hp can have (atlas)
 }
 
 void PokemonCombatHud::SetCd(uint newcd)
