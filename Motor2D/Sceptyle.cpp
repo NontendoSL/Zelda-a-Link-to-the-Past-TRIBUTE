@@ -392,7 +392,3 @@ bool Sceptyle::CheckOrientation()
 {
 	return true;
 }
-
-void Sceptyle::OnInputCallback(INPUTEVENT, EVENTSTATE)
-{
-}

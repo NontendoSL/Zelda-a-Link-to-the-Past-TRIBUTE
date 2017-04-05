@@ -175,7 +175,7 @@ void j1Collision::DebugDraw()
 		case COLLIDER_POKEMON: // Green
 		{
 			Pokemon* temp = (Pokemon*)colliders[i]->callback;
-			if(temp->active)
+			if(temp->active || App->scene->combat == false)
 				App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		}

@@ -51,8 +51,6 @@ public:
 
 	bool CheckOrientation();
 
-	void OnInputCallback(INPUTEVENT, EVENTSTATE);
-
 	void AttackSpecial();
 
 	void ThrowSP();

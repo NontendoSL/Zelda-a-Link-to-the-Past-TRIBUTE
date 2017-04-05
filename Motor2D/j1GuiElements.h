@@ -85,6 +85,7 @@ public:
 	void Draw();
 	void Update();
 	void PushLine(bool push);
+	//void Clear(int more_erased);
 public:
 	float diferential = 0.5;
 	Text* lines;
@@ -167,7 +168,7 @@ private:
 	iPoint hpbar_pLink;//.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE) used for triangle operations with atlas pixels
 	iPoint hpbar_pBrendan;
 	char buffer[25]; //hp
-	int num_pokemons = 3;
+	iPoint num_pokemons;
 
 };
 #endif // __j1GUIELEMENTS_H__

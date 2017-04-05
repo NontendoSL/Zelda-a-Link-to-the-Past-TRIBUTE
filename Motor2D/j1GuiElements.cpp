@@ -342,6 +342,25 @@ void Dialogue::PushLine(bool push)
 	}
 }
 
+//TODO WORK on clear dialogue lines when u delete dialog
+/*void Dialogue::Clear(int more_erased)
+{
+	Text* item = lines;
+	Text* next_item = lines->next_line;
+	int erased = more_erased;
+	while (item != nullptr)
+	{
+		App->gui->Erase(item->vector_pos-erased);
+		item = next_item;
+		if (next_item != nullptr)
+		{
+			next_item = next_item->next_line;
+		}
+		erased++;
+	}
+
+}*/
+
 Dialogue::~Dialogue()
 {
 	//need to clear text;
@@ -383,6 +402,7 @@ void Selector::Handle_Input()
 		Dialogue*item = (Dialogue*)parent;
 		App->gui->Erase(item->options->vector_pos);
 		item->options = nullptr;
+		//item->Clear(3);
 		App->gui->Erase(item->vector_pos);
 		if (selector->position.y == first->position.y)
 		{
@@ -723,7 +743,8 @@ PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 	//elements 0-> left circle // elements 1-> left box // elements 2-> right circle // elements 3-> right box
 	//Big sprites
 	hud_images.push_back(App->gui->CreateImage({ 335,19,254,51 }, { 0,0 }, "top hud"));
-	hud_images.push_back(App->gui->CreateImage({ 597,18,254,33 }, { 0,224 - 33 }, "bottom hud"));
+	int hotfix = App->win->GetHeight()/App->win->GetScale();
+	hud_images.push_back(App->gui->CreateImage({ 597,18,254,33 }, { 0,hotfix-33  }, "bottom hud"));
 	//UP pokeballs
 	//Link
 	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 42,11 }, "Link_Pokeball_1"));
@@ -734,9 +755,9 @@ PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 194,13 }, "Bren_Pokeball_2"));
 	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 184,14 }, "Bren_Pokeball_3"));
 	//Left sprites
-	ability = App->gui->CreateImage({ 561,85,30,30 }, { 3,0 }, "left ability");
+	ability = App->gui->CreateImage({ 561,155,30,30 }, { 3,0 }, "left ability");
 	hud_images[1]->elements.push_back(ability);
-	ability->elements.push_back(App->gui->CreateImage({ 525,85,30,0 }, { 0,0 }, "left cd"));
+	ability->elements.push_back(App->gui->CreateImage({ 525,155,30,0 }, { 0,0 }, "left cd"));
 	hud_images[1]->elements.push_back(App->gui->CreateImage({ 426,84,90,23 }, { 35,7 }, "left box"));
 	//hp bar left
 	hp1 = App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "left hp");
@@ -761,7 +782,8 @@ PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 	poke_hp_Brendan = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 });
 	hud_images[1]->elements[3]->elements.push_back(poke_hp_Brendan);
 
-
+	//x-> Link - y->Brendan
+	num_pokemons = { 3, 3 };
 	cooldown = false;
 	cdtime = iPoint(Link->cooldown, Link->cooldown);
 
@@ -779,7 +801,19 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 	{
 		if (trainer) //Link
 		{
-			hud_images[0]->elements[2]->Hitbox.x = 334;
+			if (num_pokemons.x == 2)
+			{
+				hud_images[0]->elements[2]->Hitbox.x = 334;
+				ability->Hitbox.y = 120;
+				ability->elements[0]->Hitbox.y = 120;
+			}
+			if (num_pokemons.x == 1)
+			{
+				hud_images[0]->elements[1]->Hitbox.x = 334;
+				ability->Hitbox.y = 190;
+				ability->elements[0]->Hitbox.y = 190;
+			}
+
 			Text*item = (Text*)hud_images[1]->elements[1]->elements[1];
 			item->Write(pokemon->name.c_str());
 			hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
@@ -790,7 +824,14 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		}
 		else //Brendan
 		{
-			hud_images[0]->elements[3]->Hitbox.x = 334;
+			if (num_pokemons.y == 2)
+			{
+				hud_images[0]->elements[5]->Hitbox.x = 334;
+			}
+			if (num_pokemons.y == 1)
+			{
+				hud_images[0]->elements[4]->Hitbox.x = 334;
+			}
 			Text*item = (Text*)hud_images[1]->elements[3]->elements[1];
 			item->Write(pokemon->name.c_str());
 			hpbar_pBrendan = iPoint(pokemon->hp, pokemon->hp);
@@ -802,7 +843,6 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		//FINAL COMBAT
 		if (trainer) //LOSE
 		{
-
 			App->scene->switch_map = 6;
 			OpenClose(false);
 			App->scene->start_menu->OpenClose(true);
@@ -837,6 +877,14 @@ void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
 	poke_hp_Brendan->Write(buffer);
 
+	//TOP HUD BALLS
+	for (int i = 0; i < hud_images[0]->elements.size(); i++)
+	{
+		hud_images[0]->elements[i]->Hitbox.x = 344;
+	}
+	//ability sprites
+	ability->Hitbox.y = 155;
+	ability->elements[0]->Hitbox.y = 155;
 }
 
 void PokemonCombatHud::OpenClose(bool open)
@@ -898,11 +946,12 @@ void PokemonCombatHud::Update()
 
 		if (hpbar_pLink.y == 0)
 		{
-			//num_pokemons--;
+			num_pokemons.x--;
 			LoadNewPokemon(App->combatmanager->change_pokemon(true), true);
 		}
 		else if (hpbar_pBrendan.y == 0)
 		{
+			num_pokemons.y--;
 			LoadNewPokemon(App->combatmanager->change_pokemon(false), false);
 		}
 

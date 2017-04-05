@@ -555,13 +555,13 @@ bool j1Scene::Load_Combat_map(int n)
 
 			if (pokecombat == nullptr)
 			{
-				pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(2));
+				pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(0));
 				pokecombat->Move(true, win_marge);
 			}
 			else
 			{
 				pokecombat->OpenClose(true);
-				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(2));
+				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(0));
 			}
 
 			//map

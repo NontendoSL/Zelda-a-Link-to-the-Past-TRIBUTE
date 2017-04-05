@@ -50,6 +50,7 @@ bool Swampert::Start()
 	reset_run = true;
 	range = { 90,0 };
 	sp_speed = 3;
+	//App->input_manager->AddListener(this);
 	return true;
 }
 
@@ -139,7 +140,7 @@ bool Swampert::Update()
 			gamestate = INGAME;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 	{
 		AttackSpecial();
 	}
@@ -152,7 +153,6 @@ void Swampert::Draw()
 {
 	if (sp_attacking == true)
 	{
-		collision_feet;
 		ThrowSP();
 	}
 	App->anim_manager->Drawing_Manager(state, direction, position, 7);
@@ -438,6 +438,3 @@ bool Swampert::CheckOrientation()
 	return true;
 }
 
-void Swampert::OnInputCallback(INPUTEVENT, EVENTSTATE)
-{
-}

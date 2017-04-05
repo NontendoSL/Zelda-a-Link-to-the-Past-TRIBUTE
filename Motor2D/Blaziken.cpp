@@ -394,7 +394,3 @@ bool Blaziken::CheckOrientation()
 
 	return true;
 }
-
-void Blaziken::OnInputCallback(INPUTEVENT, EVENTSTATE)
-{
-}
