@@ -853,6 +853,7 @@ bool Player::Unequip()
 
 void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
+
 	switch (action)
 	{
 		if (gamestate == INGAME)
@@ -869,7 +870,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	}
 	case BUTTON_A:
 	{
-		if (e_state == E_DOWN)
+		if (e_state == E_DOWN && gamestate == INGAME && state != HOOKTHROWN)
 		{
 			if (dialog == nullptr)
 			{
@@ -894,7 +895,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 				ThrowHookshot(charge);
 			}
 		}
-		else if (bombmanager != nullptr && equiped_item == bombmanager && bombs>0)
+		else if (bombmanager != nullptr && equiped_item == bombmanager && bombs > 0)
 		{
 			if (e_state == E_UP)
 			{
