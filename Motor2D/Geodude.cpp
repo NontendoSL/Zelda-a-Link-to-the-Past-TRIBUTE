@@ -407,21 +407,27 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT)
 		{
-			knockback_time.Start();
-			animation.anim[3].ResetAnimations();
-			hurt_timer.Start();
-			state = HIT;
-			dir_hit = c2->callback->direction;
-			hp--;
+			if (c2->callback != nullptr)
+			{
+				knockback_time.Start();
+				animation.anim[3].ResetAnimations();
+				hurt_timer.Start();
+				state = HIT;
+				dir_hit = c2->callback->direction;
+				hp--;
+			}
 		}
 
-		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback->state != HIT)
+		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback != nullptr)
 		{
-			if (c2->callback->state != HOOKTHROWN && state != HIT)
+			if (c2->callback->state != HIT)
 			{
-				state = ATTACKING;
-				animation.anim[state].ResetAnimations();
-				Orientate();
+				if (c2->callback->state != HOOKTHROWN && state != HIT)
+				{
+					state = ATTACKING;
+					animation.anim[state].ResetAnimations();
+					Orientate();
+				}
 			}
 		}
 	}

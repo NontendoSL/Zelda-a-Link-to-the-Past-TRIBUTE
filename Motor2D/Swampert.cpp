@@ -187,10 +187,12 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 	{
 		Pokemon* isActive = (Pokemon*)c1->callback;
 		Pokemon* isActive_2 = (Pokemon*)c2->callback;
-		if (isActive->active && isActive_2->active)
+		if (isActive != nullptr && isActive_2 != nullptr)
 		{
-			if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false && pokemon_player)
+			if (isActive->active && isActive_2->active)
 			{
+				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false && pokemon_player)
+				{
 					Pokemon* temp = (Pokemon*)c2->callback;
 					temp->knockback_time.Start();
 					temp->hp -= sp_damage;
@@ -199,20 +201,21 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 					temp->state = HIT;
 					temp->dir_hit = c1->callback->direction;
 					temp->previus_position = temp->position;
-			}
+				}
 
-			if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
-			{
-				if (isActive->pokemon_player)
+				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
 				{
-					Pokemon* temp = (Pokemon*)c2->callback;
-					temp->knockback_time.Start();
-					temp->hp -= attack;
-					getdamage = true;
-					App->scene->pokecombat->GetDamage(attack, false);
-					temp->state = HIT;
-					temp->dir_hit = c1->callback->direction;
-					temp->previus_position = temp->position;
+					if (isActive->pokemon_player)
+					{
+						Pokemon* temp = (Pokemon*)c2->callback;
+						temp->knockback_time.Start();
+						temp->hp -= attack;
+						getdamage = true;
+						App->scene->pokecombat->GetDamage(attack, false);
+						temp->state = HIT;
+						temp->dir_hit = c1->callback->direction;
+						temp->previus_position = temp->position;
+					}
 				}
 			}
 		}
