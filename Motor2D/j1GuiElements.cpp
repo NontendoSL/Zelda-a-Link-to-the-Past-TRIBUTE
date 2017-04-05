@@ -875,7 +875,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		{
 			if (App->scene->player->gameover == nullptr)
 			{
-				App->scene->player->gameover = App->gui->CreateImage({ 525,235,320,240 }, { 0,0 });
+				App->scene->player->gameover = App->gui->CreateImage({ 525,235,320,240 }, { 0,0 },"lose");
 			}
 			else
 				App->scene->player->gameover->visible = true;
@@ -890,19 +890,23 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		}
 		else//VICTORY
 		{
+			int divider = 0;
+			if (App->scene->player->gameover != nullptr) {
+				divider = 2;
+			}
 			switch (num_pokemons.x)
 			{
 			case 3:
-				App->scene->player->score += 500;
+				App->scene->player->score += (500 / divider);
 				break;
 			case 2:
-				App->scene->player->score += 250;
+				App->scene->player->score += (250 / divider);
 				break;
 			case 1:
-				App->scene->player->score += 125;
+				App->scene->player->score += (125 / divider);
 				break;
 			}
-			if (App->scene->player->gameover == nullptr)
+			if (App->scene->player->gameover == nullptr || App->scene->player->gameover->identifier=="lose")
 			{
 				App->scene->player->gameover = App->gui->CreateImage({ 1,481,320,240 }, { 0,0 });
 				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, "LINK", 10, { 72,74 }, 40, { 38,38,38,255 }));
@@ -913,7 +917,10 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 					sec = 10;
 				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(minutes) + ":" + std::to_string(sec)).c_str(), 10, { 106,127 }, 40, { 38,38,38,255 }));
 				App->scene->player->score += App->scene->player->gems*5;
-				App->scene->player->score -= App->scene->player->game_timer.ReadSec();
+				if (App->scene->player->score - App->scene->player->game_timer.ReadSec() > 0)
+				{
+					App->scene->player->score -= App->scene->player->game_timer.ReadSec();
+				}
 				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1,std::string(std::to_string(App->scene->player->score)).c_str() , 10, { 83,149 }, 40, { 128,0,0,255 }));
 			}
 		}

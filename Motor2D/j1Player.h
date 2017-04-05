@@ -91,7 +91,7 @@ public:
 	//--- POKEMON TRAINER CARD ---
 	j1Timer game_timer;
 	Text* time;
-	uint score;
+	int score;
 	//ITEMS ----------
 	uint gems = 0;
 	uint bombs = 0;
