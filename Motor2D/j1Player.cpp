@@ -296,34 +296,37 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c1 != nullptr && c2 != nullptr)
 		{
-			if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest")
+			if (c2->callback != nullptr)
 			{
-				iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
-				//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
-				int canDrop = 1;
-				if (canDrop == 1)
+				if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest")
 				{
-					iPoint position;
-					position.x = c2->callback->position.x + 4;
-					position.y = c2->callback->position.y;
-					DynamicObjects* temp = (DynamicObjects*)c2->callback;
-					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position));
+					iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
+					//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
+					int canDrop = 1;
+					if (canDrop == 1)
+					{
+						iPoint position;
+						position.x = c2->callback->position.x + 4;
+						position.y = c2->callback->position.y;
+						DynamicObjects* temp = (DynamicObjects*)c2->callback;
+						App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position));
 
+					}
+
+					App->map->EditCost(pos_dyn.x, pos_dyn.y, 0);
+					App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, 0);
+					App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, 0);
+					App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, 0);
+
+
+					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
+					//App->collision->EraseCollider(c2);
 				}
-
-				App->map->EditCost(pos_dyn.x, pos_dyn.y, 0);
-				App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, 0);
-				App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, 0);
-				App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, 0);
-
-
-				App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
-				//App->collision->EraseCollider(c2);
 			}
 
 			if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT)
 			{
-				if (c2->callback->name == "chest" || c2->callback->name == "bigchest")
+				if (c2->callback->name == "chest" || c2->callback->name == "bigchest" && c2->callback != nullptr)
 				{
 					iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
 					//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
@@ -344,7 +347,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 
 
-			if (c1 == collision_feet && c2->type == COLLIDER_ITEM)
+			if (c1 == collision_feet && c2->type == COLLIDER_ITEM && c2->callback != nullptr)
 			{
 				Item* temp = (Item*)c2->callback;
 				if (temp->pickable == true)
@@ -417,7 +420,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 
-			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
+			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP && c2->callback != nullptr)
 			{
 				if (canSwitchMap == false)
 				{
@@ -440,7 +443,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 
-			if (c1 == collision_feet && c2->type == COLLIDER_POKEMON) 
+			if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && c2->callback != nullptr)
 			{
 				if (state != HOOKTHROWN)//TODO MED -> change this (we will have golbats int the future)
 				{
@@ -507,7 +510,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 
-			if (c1 == collision_interact && c2->type == COLLIDER_TRAINER)
+			if (c1 == collision_interact && c2->type == COLLIDER_TRAINER && c2->callback != nullptr)
 			{
 				if (gamestate == INGAME)
 				{
