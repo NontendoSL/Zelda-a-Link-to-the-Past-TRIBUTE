@@ -522,7 +522,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							c2->callback->direction = RIGHT;
 						else
 							c2->callback->direction = LEFT;
-						dialog = App->gui->CreateDialogue("Who are you? And what are you doing in my world? Here we fight with creatures called pokemon, not with weapons, let's try it");
+						dialog = App->gui->CreateDialogue("Hey, what are you doing in my world? Here we fight with creatures called pokemon, not with weapons, let's try it");
 						App->collision->EraseCollider(collision_interact);
 						interaction = false;
 						state = IDLE;
