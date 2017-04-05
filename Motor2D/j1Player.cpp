@@ -1307,30 +1307,30 @@ bool Player::Hit()
 
 	if (dir_hit == UP)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 2, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y -= 4;
+			position.y -= 2;
 		}
 	}
 	else if (dir_hit == DOWN)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 2, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y += 4;
+			position.y += 2;
 		}
 	}
 	else if (dir_hit == LEFT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - 2, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x -= 4;
+			position.x -= 2;
 		}
 	}
 	else if (dir_hit == RIGHT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 2, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x += 4;
+			position.x += 2;
 		}
 	}
 
