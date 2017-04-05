@@ -822,7 +822,11 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 			item->Write(pokemon->name.c_str());
 			hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
 			cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
-			hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;
+			if (hpbar_pLink.x > 0)
+			{
+				hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;
+			}
+
 			ability->elements[0]->Hitbox.h = 0;
 			cooldown = false;
 			sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
@@ -841,7 +845,10 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 			Text*item = (Text*)hud_images[1]->elements[3]->elements[1];
 			item->Write(pokemon->name.c_str());
 			hpbar_pBrendan = iPoint(pokemon->hp, pokemon->hp);
-			hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
+			if (hpbar_pBrendan.x > 0) {
+				hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
+			}
+
 			sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
 			poke_hp_Brendan->Write(buffer);
 		}
@@ -993,9 +1000,10 @@ void PokemonCombatHud::Update()
 			num_pokemons.y--;
 			LoadNewPokemon(App->combatmanager->change_pokemon(false), false);
 		}
-
-		hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)
-		hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;//being 48 the max pixels hp can have (atlas)
+		if(hpbar_pLink.x>0)
+			hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)
+		if (hpbar_pBrendan.x>0)
+			hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;//being 48 the max pixels hp can have (atlas)
 
 	}
 }
