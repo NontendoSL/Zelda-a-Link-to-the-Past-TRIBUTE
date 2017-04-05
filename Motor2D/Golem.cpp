@@ -239,11 +239,14 @@ bool Golem::CheckPlayerPos()
 {
 	int distance_player = App->scene->player->position.DistanceTo(position);
 
-	if (distance_player <= radar)
+	if (distance_player <= radar && App->scene->player->invincible_timer.ReadSec() >= 1)
 	{
 		state = CHASING;
 	}
-
+	else
+	{
+		state = IDLE;
+	}
 	return true;
 }
 
@@ -373,7 +376,7 @@ bool Golem::Move()
 
 bool Golem::Chase()
 {
-	if(App->scene->player->state != HIT)
+	if(App->scene->player->invincible_timer.ReadSec() > 1)
 	{
 		int distance_player = App->scene->player->position.DistanceTo(position);
 
