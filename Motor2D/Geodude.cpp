@@ -357,64 +357,46 @@ bool Geodude::Movebyhit()
 		return true;
 	}
 
+	if (knockback_time.ReadSec() >= 0.2)
+	{
+		state = IDLE;
+		return true;
+	}
+
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = IDLE;
 		return true;
 	}
 
-	/*
 	if (dir_hit == UP)
 	{
-		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(position.x, position.y - 10, offset_x, offset_y, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 1.5, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= 10;
-		}
-		if (position.y < (previus_position.y - 30))
-		{
-			state = IDLE;
+			position.y -= 1.5;
 		}
 	}
-	if (dir_hit == DOWN)
+	else if (dir_hit == DOWN)
 	{
-		//App->map->MovementCost(position.x, position.y + (4 + height), DOWN)
-		if (App->map->MovementCost(position.x, position.y + 10, offset_x, offset_y, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 1.5, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += 10;
-		}
-
-		if (position.y > (previus_position.y + 30))
-		{
-			state = IDLE;
+			position.y += 1.5;
 		}
 	}
-	if (dir_hit == LEFT)
+	else if (dir_hit == LEFT)
 	{
-		//App->map->MovementCost(position.x - 4, position.y, LEFT)
-		if (App->map->MovementCost(position.x - 10, position.y, offset_x, offset_y, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - 1.5, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= 10;
-		}
-
-		if (position.x < (previus_position.x - 30))
-		{
-			state = IDLE;
+			position.x -= 1.5;
 		}
 	}
-	if (dir_hit == RIGHT)
+	else if (dir_hit == RIGHT)
 	{
-		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(position.x + 10, position.y, offset_x, offset_y, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 1.5, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += 10;
-		}
-		if (position.x > (previus_position.x + 30))
-		{
-			state = IDLE;
+			position.x += 1.5;
 		}
 	}
-	*/
 
 	return true;
 }
@@ -425,9 +407,11 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT)
 		{
+			knockback_time.Start();
 			animation.anim[3].ResetAnimations();
 			hurt_timer.Start();
 			state = HIT;
+			dir_hit = c2->callback->direction;
 			hp--;
 		}
 
