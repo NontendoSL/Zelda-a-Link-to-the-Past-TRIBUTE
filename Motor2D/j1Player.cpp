@@ -216,8 +216,10 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN ||
 			App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
 		{
-			gameover->visible = false;
-			winover->visible = false;
+			if (gameover != nullptr)
+				gameover->visible = false;
+			if (winover != nullptr)
+				winover->visible = false;
 			gamestate = INGAME;
 		}
 	}
