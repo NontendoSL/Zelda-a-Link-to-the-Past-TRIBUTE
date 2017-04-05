@@ -227,7 +227,7 @@ Pokemon* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
 				{
 					return nullptr;
 				}
-				else
+				else if(item._Ptr->_Myval!=nullptr)
 				{
 					item._Ptr->_Myval->active = true;
 					return item._Ptr->_Myval;

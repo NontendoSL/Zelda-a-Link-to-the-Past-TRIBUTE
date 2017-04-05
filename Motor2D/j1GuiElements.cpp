@@ -864,8 +864,16 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		}
 		else//VICTORY
 		{
-			App->scene->ingame = false;
-			App->scene->player->gameover = App->gui->CreateImage({ 1,481,320,240 }, { 0,0 });
+			if (App->scene->player->gameover == nullptr)
+			{
+				App->scene->player->gameover = App->gui->CreateImage({ 1,481,320,240 }, { 0,0 });
+				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, "LINK", 10, { 72,74 }, 40, { 0,0,0,255 }));
+				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(App->scene->player->gems) + " RP").c_str(), 10, { 81,106 }, 40, { 0,0,0,255 }));
+				int minutes = App->scene->player->game_timer.ReadSec() / 60;
+				int sec = App->scene->player->game_timer.ReadSec() - minutes * 60;
+				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(minutes) + ":" + std::to_string(sec)).c_str(), 10, { 106,127 }, 40, { 0,0,0,255 }));
+
+			}
 		}
 	}
 
