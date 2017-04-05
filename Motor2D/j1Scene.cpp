@@ -104,11 +104,11 @@ bool j1Scene::Update(float dt)
 			player->ShowHearts();
 			force->Hitbox.w = player->charge;
 
-			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
 				switch_map = 7;
 			}
-
+			*/
 			if (switch_map == 7)
 			{
 				if (fade == false)
@@ -251,7 +251,7 @@ bool j1Scene::Update(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 		{
 			player->position.x -= 50;
 			App->render->camera.x += 100;
@@ -260,7 +260,7 @@ bool j1Scene::Update(float dt)
 		{
 			player->position.x += 50;
 			App->render->camera.x -= 100;
-		}
+		}*/
 		
 	return true;
 }
@@ -583,6 +583,11 @@ bool j1Scene::Load_Combat_map(int n)
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);
+			//Edit
+			App->map->EditCost(18, 17, 0);
+			App->map->EditCost(19, 17, 0);
+			App->map->EditCost(18, 18, 0);
+			App->map->EditCost(19, 18, 0);
 
 			//Load UI (?)
 			stop_rearch = true;
