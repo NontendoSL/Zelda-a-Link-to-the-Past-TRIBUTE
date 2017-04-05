@@ -241,10 +241,7 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 			{
 				if (main_menu->id_selected == 1)
 				{
-					App->audio->FadeMusic(2);
-					App->scene->ingame = true;
-					App->scene->Start();
-					main_menu->OpenClose(false);
+					goHouse = true;
 				}
 			}
 			break;
