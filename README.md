@@ -19,28 +19,44 @@ CONTROLS
 		Spacebar -> Use the equipped item. Hold it to charge the stamina bar.
 		R -> Select item in the menu.
 		E -> Attack.
-		Q -> Open chests.
+		Q -> Interact with chests and NPCs.
 		
 	Controller:
 	
 		D-Pad -> move in any of the 8 directions and navigate through the menu.
 		Start -> Navigate trhough game intro and open/close the ingame menu.
-		A -> Select items from the menu. Open chests.
+		A -> Select items from the menu. Interact with chests and NPCs.
 		X -> Attack
-		B -> Use equipped item. Hold it to charge the stamina bar.
+		B -> Use equipped item. Hold it to charge the stamina bar. Use Pokemon special ability.
+		Z -> Use Pokemon special ability.
 
 	DEBUG MODE:
 	
 		F1 -> Display navigation map.
+		F2 -> Display Hookshot navigation map.
 		F10 -> Display colliders.
-		B -> Add rupees to your inventory.
-		N -> Add arrows to your inventory.
-		M -> Add bombs to your inventory.
 		X -> Lower Pokemon HP in combat.
 		Z -> Triggers Ability Cooldown in combat.
 
 
 CHANGELOG
+
+v0.5 VERTICAL SLICE
+
+	Now the game uses full screen.
+	Geodudes will attack de player if he collides with them. They also drop bombs when dying.
+	Golems will chase the player after having been woken up with a bomb.
+	Soldiers now chase the player and show a more legit behaviour. The way player interacts with them
+	has been adjusted to feel more real and fair.
+	The items show in the menu correctly.	
+	Big chests now are not refilled after re-entering their room.
+	Game over screen added.
+	Victory screen added (it shows playtime and score).
+	More sounds added.
+	Added NPC Brendan. The player can talk to him to trigger an event.
+	Pokemon combat prototype implemented with a new combat map.
+	Victory Road has been modified in certain spots that would allow the player to finish the game
+	sooner than intended.	
 
 v0.4:
 
