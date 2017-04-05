@@ -324,6 +324,15 @@ bool Geodude::Move()
 
 bool Geodude::Attack()
 {
+	//CHECK IF ATTACK ANIMATION IS FINISHED
+	if (animation.anim[state].East_action.Finished() || 
+		animation.anim[state].West_action.Finished() ||
+		animation.anim[state].North_action.Finished() ||
+		animation.anim[state].South_action.Finished())
+	{
+		state = IDLE;
+	}
+
 	return true;
 }
 
@@ -420,6 +429,12 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 			hurt_timer.Start();
 			state = HIT;
 			hp--;
+		}
+
+		{
+			state == ATTACKING;
+			animation.anim[state].ResetAnimations();
+			Orientate();
 		}
 	}
 }

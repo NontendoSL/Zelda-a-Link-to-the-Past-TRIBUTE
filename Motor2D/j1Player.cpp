@@ -264,7 +264,6 @@ bool Player::CleanUp()
 	return ret;
 }
 
-
 bool Player::Save()
 {
 	App->entity_elements->XML.child("config").child("Link").child("stats").attribute("hp").set_value(hp);
@@ -458,15 +457,15 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 
-			if (c1 == collision_feet && c2->type == COLLIDER_POKEMON) //TODO MED -> change this (we will have golbats int the future)
+			if (c1 == collision_feet && c2->type == COLLIDER_POKEMON) 
 			{
-				if (state != HOOKTHROWN)
+				if (state != HOOKTHROWN)//TODO MED -> change this (we will have golbats int the future)
 				{
 					if (c2->callback->name == "Golem" && c2->callback->state == HIT)
 					{
 						//Not dammage
 					}
-					else
+					else if(state != HIT)
 					{
 						if (hurt == false)
 						{

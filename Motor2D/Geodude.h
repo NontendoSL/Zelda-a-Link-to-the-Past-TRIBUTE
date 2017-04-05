@@ -68,7 +68,11 @@ private:
 
 	bool mode_stone;
 
+
 	j1Timer hurt_timer;
+
+	//COMBAT INFO --------
+	//Collider* collision_punch = nullptr;
 };
 
 #endif //__GEODUDE_H_
