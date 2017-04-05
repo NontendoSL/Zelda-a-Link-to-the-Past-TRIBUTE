@@ -34,7 +34,7 @@ bool Swampert::Awake(pugi::xml_node &conf)
 	name = conf.attribute("name").as_string("");
 	position.x = conf.attribute("pos_x").as_int(0);
 	position.y = conf.attribute("pos_y").as_int(0);
-
+	sp_damage = conf.attribute("special_attack").as_int(0);
 	active = conf.attribute("active").as_bool(false);
 
 	return true;
@@ -50,16 +50,15 @@ bool Swampert::Start()
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	movable = true;
-	radar = 30;
+	radar = 20;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
 	range = { 90,0 };
 	sp_speed = 3;
-	sp_damage = 10; //TODO MID -> need modify
-	//App->input_manager->AddListener(this);
 	sp_attacking = false;
+	//App->input_manager->AddListener(this);
 	return true;
 }
 
@@ -123,13 +122,13 @@ bool Swampert::Update()
 				Attack_IA();
 				break;
 			}
-			
+
 			case HIT:
 			{
 				Movebyhit();
 				break;
 			}
-			
+
 			default:
 			{
 				break;
@@ -181,21 +180,49 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && pokemon_player)
+		Pokemon* isActive = (Pokemon*)c1->callback;
+		Pokemon* isActive_2 = (Pokemon*)c2->callback;
+		if (isActive->active && isActive_2->active)
 		{
-			//moveto
+			if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false && pokemon_player)
+			{
+					Pokemon* temp = (Pokemon*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= sp_damage;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(sp_damage, false);
+					temp->state = HIT;
+					temp->dir_hit = c1->callback->direction;
+					temp->previus_position = temp->position;
+			}
+
+			if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+			{
+				if (isActive->pokemon_player)
+				{
+					Pokemon* temp = (Pokemon*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= attack;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(attack, false);
+					temp->state = HIT;
+					temp->dir_hit = c1->callback->direction;
+					temp->previus_position = temp->position;
+				}
+				else if (isActive->pokemon_player == false)
+				{
+					Pokemon* temp = (Pokemon*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= attack;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(attack, true);
+					temp->state = HIT;
+					temp->dir_hit = c2->callback->direction;
+					temp->previus_position = temp->position;
+				}
+			}
 		}
-		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && pokemon_player && getdamage == false)
-		{
-			Pokemon* temp = (Pokemon*)c2->callback;
-			temp->knockback_time.Start();
-			temp->hp -= attack;
-			getdamage = true;
-			App->scene->pokecombat->GetDamage(attack, false);
-			temp->state = HIT;
-			temp->dir_hit = c1->callback->direction;
-			temp->previus_position = temp->position;
-		}
+
 	}
 }
 
@@ -205,7 +232,7 @@ void Swampert::AttackSpecial()
 	sp_attacking = true;
 	sp_direction = direction;
 	sp_start = position;
-	sp_attack = App->collision->AddCollider({ position.x,position.y, 8,8 }, COLLIDER_POKEMON, this);
+	sp_attack = App->collision->AddCollider({ position.x,position.y, 8,8 }, COLLIDER_POKEMON_ATTACK, this);
 }
 
 void Swampert::ThrowSP()
@@ -234,6 +261,7 @@ void Swampert::ThrowSP()
 		range.y = 0;
 		App->collision->EraseCollider(sp_attack);
 		sp_attacking = false;
+		getdamage = false;
 	}
 	else
 	{
@@ -387,22 +415,22 @@ bool Swampert::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y , 22, 8 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y , 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 	}
@@ -450,12 +478,14 @@ bool Swampert::Idle_IA()
 bool Swampert::Walking_IA()
 {
 	walking = false;
+
 	if (reset_distance)
 	{
 		distance = rand() % 60 + 20;
 		dis_moved = 0;
 		reset_distance = false;
 	}
+
 	Move_IA();
 
 	if (dis_moved >= distance)
@@ -474,13 +504,12 @@ bool Swampert::Walking_IA()
 	{
 		state = WALKING;
 	}
+
 	return true;
 }
 
 bool Swampert::Move_IA()
 {
-	//App->pathfinding->CreatePath(position, target->Getposition());
-	//App->pathfinding->CreatePath(position, target->Getposition());
 	if (direction == LEFT)
 	{
 		//App->map->MovementCost(position.x - speed, position.y, LEFT)
@@ -539,6 +568,7 @@ bool Swampert::Move_IA()
 		}
 		walking = true;
 	}
+
 	return true;
 }
 
@@ -548,7 +578,7 @@ bool Swampert::CheckTargetPos()
 
 	if (distance_target <= radar)
 	{
-		if (attacker == false)
+		if (attacker == false && state != ATTACKING)
 		{
 			state = ATTACKING;
 			current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
@@ -570,6 +600,7 @@ bool Swampert::Attack_IA()
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = IDLE;
+			getdamage = false;
 		}
 	}
 	else
@@ -577,26 +608,25 @@ bool Swampert::Attack_IA()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 	}
-	return true;
 	return true;
 }
 
@@ -616,6 +646,7 @@ bool Swampert::Movebyhit()
 	if (knockback_time.ReadSec() >= 0.2)
 	{
 		state = IDLE;
+		getdamage = false;
 		return true;
 	}
 

@@ -34,7 +34,7 @@ bool Sceptyle::Awake(pugi::xml_node &conf )
 	position.x = conf.attribute("pos_x").as_int(0);
 	position.y = conf.attribute("pos_y").as_int(0);
 	active = conf.attribute("active").as_bool(false);
-
+	sp_damage = conf.attribute("special_attack").as_int(0);
 	return true;
 }
 
@@ -52,9 +52,9 @@ bool Sceptyle::Start()
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;
+	sp_attacking = false;
 	range = { 90,0 };
 	sp_speed = 5;
-	sp_attacking = false;
 	return true;
 }
 
@@ -83,13 +83,11 @@ bool Sceptyle::Update()
 				Attack();
 				break;
 			}
-			/*
-			case SPECIALATTACK:
+			case HIT:
 			{
-				SpecialAttack();
+				Movebyhit();
 				break;
 			}
-			*/
 			default:
 			{
 				break;
@@ -117,13 +115,11 @@ bool Sceptyle::Update()
 				Attack_IA();
 				break;
 			}
-			/*
-			case SPECIALATTACK:
+			case HIT:
 			{
-				SpecialAttack();
+				Movebyhit();
 				break;
 			}
-			*/
 			default:
 			{
 				break;
@@ -156,7 +152,12 @@ void Sceptyle::Draw()
 	{
 		ThrowSP();
 	}
-	App->anim_manager->Drawing_Manager(state, direction, position, 8);  //TODO LOW-> ID magic number, need change!!
+	if (state == HIT)
+	{
+		App->anim_manager->Drawing_Manager((ActionState)3, direction, position, 8);
+	}
+	else
+		App->anim_manager->Drawing_Manager(state, direction, position, 8);
 }
 
 bool Sceptyle::CleanUp()
@@ -168,9 +169,51 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
+		Pokemon* isActive = (Pokemon*)c1->callback;
+		Pokemon* isActive_2 = (Pokemon*)c2->callback;
+		if (isActive->active && isActive_2->active)
 		{
 
+			if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+			{
+				if (pokemon_player)
+				{
+					Pokemon* temp = (Pokemon*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= attack;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(attack, false);
+					temp->state = HIT;
+					temp->dir_hit = c1->callback->direction;
+					temp->previus_position = temp->position;
+				}
+				else
+				{
+					Pokemon* temp = (Pokemon*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= attack;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(attack, true);
+					temp->state = HIT;
+					temp->dir_hit = c1->callback->direction;
+					temp->previus_position = temp->position;
+				}
+			}
+
+			if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+			{
+				if (pokemon_player)
+				{
+					Pokemon* temp = (Pokemon*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= sp_damage;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(sp_damage, false);
+					temp->state = HIT;
+					temp->dir_hit = c1->callback->direction;
+					temp->previus_position = temp->position;
+				}
+			}
 		}
 	}
 }
@@ -180,7 +223,7 @@ void Sceptyle::AttackSpecial()
 	sp_attacking = true;
 	sp_direction = direction;
 	sp_start = position;
-	sp_attack = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON, this);
+	sp_attack = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_ATTACK, this);
 }
 
 void Sceptyle::ThrowSP()
@@ -206,16 +249,18 @@ void Sceptyle::ThrowSP()
 			sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
 			break;
 		}
-		if (range.y >= range.x)
-		{
-			range.y = 0;
-			App->collision->EraseCollider(sp_attack);
-			sp_attacking = false;
-		}
-		else
-		{
-			range.y += sp_speed;
-		}
+	}
+	
+	if (range.y >= range.x)
+	{
+		range.y = 0;
+		App->collision->EraseCollider(sp_attack);
+		sp_attacking = false;
+		getdamage = false;
+	}
+	else
+	{
+		range.y += sp_speed;
 	}
 }
 
@@ -362,22 +407,22 @@ bool Sceptyle::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 39, 22, 8 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 39, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(8);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 9, position.y - 28, 8, 22 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x + 9, position.y - 28, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(8);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(8);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 16, position.y - 28, 8, 22 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 16, position.y - 28, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(8);
 		}
 	}
@@ -524,5 +569,68 @@ bool Sceptyle::Attack_IA()
 
 bool Sceptyle::CheckOrientation()
 {
+	int distance_target = target->position.DistanceTo(position);
+
+	if (distance_target <= radar)
+	{
+		if (attacker == false && state != ATTACKING)
+		{
+			state = ATTACKING;
+			current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
+			current_animation->Reset();
+		}
+	}
+	return true;
+}
+
+bool Sceptyle::Movebyhit()
+{
+	if (hp <= 0)
+	{
+		state = DYING;
+		return true;
+	}
+
+	if (knockback_time.ReadSec() >= 0.2)
+	{
+		state = IDLE;
+		return true;
+	}
+
+	if (dir_hit == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= 4;
+		}
+	}
+	else if (dir_hit == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += 4;
+		}
+	}
+	else if (dir_hit == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= 4;
+		}
+	}
+	else if (dir_hit == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += 4;
+		}
+	}
+	/*if (position.x > (previus_position.x + 65) ||
+	position.x < (previus_position.x + 65) ||
+	position.y >(previus_position.y + 65) ||
+	position.y < (previus_position.y + 65))
+	{
+	state = IDLE;
+	}*/
 	return true;
 }

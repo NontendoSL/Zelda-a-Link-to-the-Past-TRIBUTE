@@ -33,8 +33,10 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_POKEMON][COLLIDER_BOMB] = true;
 	
 	matrix[COLLIDER_PLAYER][COLLIDER_TRAINER] = true;
-	matrix[COLLIDER_POKEMON][COLLIDER_POKEMON] = true;
-
+	
+	matrix[COLLIDER_POKEMON][COLLIDER_POKEMON] = false;
+	matrix[COLLIDER_POKEMON][COLLIDER_POKEMON_ATTACK] = false;
+	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKEMON] = true;
 }
 j1Collision::~j1Collision() {}
 
@@ -153,7 +155,7 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_PLAYER: // white
 		{
-			if(App->scene->combat == false)
+			if (App->scene->combat == false)
 				App->render->DrawQuad(colliders[i]->rect, 0, 180, 125, alpha);
 			break;
 		}
@@ -175,17 +177,21 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_SWITCH_MAP: // Green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
-			break; 
+			break;
 		case COLLIDER_POKEMON: // Green
 		{
 			Pokemon* temp = (Pokemon*)colliders[i]->callback;
-			if(temp->active || App->scene->combat == false)
+			if (temp->active || App->scene->combat == false)
 				App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		}
 
 		case COLLIDER_TRAINER: // Pink
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+
+		case COLLIDER_POKEMON_ATTACK:
+			App->render->DrawQuad(colliders[i]->rect, 125, 0, 50, alpha);
 			break;
 		}
 	}

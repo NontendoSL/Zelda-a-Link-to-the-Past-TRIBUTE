@@ -55,6 +55,8 @@ public:
 
 	bool CheckOrientation();
 
+	bool Movebyhit();
+
 private:
 
 	//Timer

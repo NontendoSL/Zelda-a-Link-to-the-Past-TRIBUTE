@@ -69,6 +69,7 @@ public:
 	Direction dir_hit;
 	iPoint previus_position;
 	j1Timer knockback_time;
+
 	//target
 	Pokemon* target = nullptr;
 
@@ -90,6 +91,8 @@ protected:
 	int sp_speed;
 	uint sp_damage;
 	Collider* sp_attack;
+
+	j1Timer time_wait;
 
 
 	Collider* collision_attack = nullptr;

@@ -38,6 +38,7 @@ bool Blaziken::Awake(pugi::xml_node &conf)
 	position.x = conf.attribute("pos_x").as_int(0);
 	position.y = conf.attribute("pos_y").as_int(0);
 	active = conf.attribute("active").as_bool(false);
+	sp_damage = conf.attribute("special_attack").as_int(0);
 	return true;
 }
 
@@ -54,6 +55,7 @@ bool Blaziken::Start()
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
+	sp_attacking = false;
 	reset_run = true;
 	return true;
 }
@@ -165,10 +167,48 @@ void Blaziken::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && pokemon_player && getdamage == false)
+		Pokemon* isActive = (Pokemon*)c1->callback;
+		Pokemon* isActive_2 = (Pokemon*)c2->callback;
+		if (isActive->active && isActive_2->active)
 		{
 
-			getdamage = true;
+			if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false && pokemon_player)
+			{
+				Pokemon* temp = (Pokemon*)c2->callback;
+				temp->knockback_time.Start();
+				temp->hp -= sp_damage;
+				getdamage = true;
+				App->scene->pokecombat->GetDamage(sp_damage, false);
+				temp->state = HIT;
+				temp->dir_hit = c1->callback->direction;
+				temp->previus_position = temp->position;
+			}
+
+			if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+			{
+				if (isActive->pokemon_player)
+				{
+					Pokemon* temp = (Pokemon*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= attack;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(attack, false);
+					temp->state = HIT;
+					temp->dir_hit = c1->callback->direction;
+					temp->previus_position = temp->position;
+				}
+				else if (isActive->pokemon_player == false)
+				{
+					Pokemon* temp = (Pokemon*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= attack;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(attack, true);
+					temp->state = HIT;
+					temp->dir_hit = c2->callback->direction;
+					temp->previus_position = temp->position;
+				}
+			}
 		}
 	}
 }
@@ -335,19 +375,19 @@ bool Blaziken::Attack()
 			//TODO MID -> Need correct position colliders
 			if (direction == UP)
 			{
-				sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
+				sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			}
 			else if (direction == RIGHT)
 			{
-				sp_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+				sp_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			}
 			else if (direction == DOWN)
 			{
-				sp_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON, this);
+				sp_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			}
 			else if (direction == LEFT)
 			{
-				sp_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+				sp_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			}
 			App->audio->PlayFx(7); //TODO MID -> SOUND -> Diferent
 		}
@@ -355,19 +395,19 @@ bool Blaziken::Attack()
 		{
 			if (direction == UP)
 			{
-				collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
+				collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			}
 			else if (direction == RIGHT)
 			{
-				collision_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+				collision_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			}
 			else if (direction == DOWN)
 			{
-				collision_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON, this);
+				collision_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			}
 			else if (direction == LEFT)
 			{
-				collision_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+				collision_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			}
 			App->audio->PlayFx(9);
 		}
@@ -516,6 +556,17 @@ bool Blaziken::Attack_IA()
 
 bool Blaziken::CheckOrientation()
 {
+	int distance_target = target->position.DistanceTo(position);
+
+	if (distance_target <= radar)
+	{
+		if (attacker == false && state != ATTACKING)
+		{
+			state = ATTACKING;
+			current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
+			current_animation->Reset();
+		}
+	}
 
 	return true;
 }
