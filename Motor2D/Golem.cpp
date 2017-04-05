@@ -491,8 +491,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT && state != STATIC// &&
-		/*c2->callback->state != HIT && c2->callback->state != HOOKTHROWN*/)
+		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT && state != STATIC && state != AWAKENING)
 		{
 			knockback_time.Start();
 			animation.anim[5].ResetAnimations();
