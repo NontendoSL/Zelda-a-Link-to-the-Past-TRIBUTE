@@ -451,6 +451,65 @@ bool Sceptyle::Walking_IA()
 bool Sceptyle::Move_IA()
 {
 	//App->pathfinding->CreatePath(position, target->Getposition());
+	//App->pathfinding->CreatePath(position, target->Getposition());
+	if (direction == LEFT)
+	{
+		//App->map->MovementCost(position.x - speed, position.y, LEFT)
+		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= speed;
+			dis_moved++;
+		}
+		else
+		{
+			//Function to change direction
+			dis_moved++;
+		}
+		walking = true;
+	}
+
+	if (direction == RIGHT)
+	{
+		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	if (direction == UP)
+	{
+		//App->map->MovementCost(position.x, position.y - speed, UP)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	if (direction == DOWN)
+	{
+		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
 	return true;
 }
 

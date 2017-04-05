@@ -33,6 +33,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_POKEMON][COLLIDER_BOMB] = true;
 	
 	matrix[COLLIDER_PLAYER][COLLIDER_TRAINER] = true;
+	matrix[COLLIDER_POKEMON][COLLIDER_POKEMON] = true;
 
 }
 j1Collision::~j1Collision() {}
@@ -77,6 +78,7 @@ bool j1Collision::Update(float dt)
 			continue;
 
 		c1 = colliders[i];
+
 
 		// avoid checking collisions already checked
 		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)

@@ -47,9 +47,13 @@ public:
 
 	bool Move_IA();
 
+	bool CheckTargetPos();
+
 	bool Attack_IA();
 
 	bool CheckOrientation();
+
+	bool Movebyhit();
 
 	void AttackSpecial();
 

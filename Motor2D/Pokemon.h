@@ -15,7 +15,7 @@ public:
 	~Pokemon()
 	{}
 
-	// Called before render is available
+	/*// Called before render is available
 	bool Awake(pugi::xml_node&, uint)
 	{
 		return true;
@@ -52,7 +52,7 @@ public:
 	{}
 
 	void Drop_item()
-	{}
+	{}*/
 
 	iPoint Getposition() const
 	{
@@ -68,15 +68,19 @@ public:
 	//hits
 	Direction dir_hit;
 	iPoint previus_position;
+	j1Timer knockback_time;
+	//target
+	Pokemon* target = nullptr;
 
 protected:
 
 	//Item* drop;
 	Item* item_inside= nullptr;
-	Pokemon* target = nullptr;
+
 	Animation* current_animation = nullptr;
 
 	bool attacker = false;
+	bool getdamage = false;
 
 	//special attack
 	iPoint range; //.X shows max range, .Y shows distance moved

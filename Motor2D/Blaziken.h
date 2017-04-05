@@ -32,8 +32,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void OnCollision(Collider*, Collider*);
-
 	bool Idle();
 
 	bool Walking();
@@ -51,6 +49,10 @@ public:
 	bool Attack_IA();
 
 	bool CheckOrientation();
+
+	void OnCollision(Collider*, Collider*);
+
+	bool Movebyhit();
 
 private:
 

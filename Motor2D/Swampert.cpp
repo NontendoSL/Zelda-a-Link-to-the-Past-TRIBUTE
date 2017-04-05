@@ -6,6 +6,7 @@
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
+#include "j1Player.h"
 
 Swampert::Swampert()
 {
@@ -49,6 +50,7 @@ bool Swampert::Start()
 	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	movable = true;
+	radar = 30;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
@@ -85,13 +87,11 @@ bool Swampert::Update()
 				Attack();
 				break;
 			}
-			/*
-			case SPECIALATTACK:
+			case HIT:
 			{
-				SpecialAttack();
+				Movebyhit();
 				break;
 			}
-			*/
 			default:
 			{
 				break;
@@ -106,26 +106,29 @@ bool Swampert::Update()
 			{
 			case IDLE:
 			{
+				CheckTargetPos();
 				Idle_IA();
 				break;
 			}
 			case WALKING:
 			{
+				CheckTargetPos();
 				Walking_IA();
 				break;
 			}
 			case ATTACKING:
 			{
+				CheckTargetPos();
 				Attack_IA();
 				break;
 			}
-			/*
-			case SPECIALATTACK:
+			
+			case HIT:
 			{
-				SpecialAttack();
+				Movebyhit();
 				break;
 			}
-			*/
+			
 			default:
 			{
 				break;
@@ -169,9 +172,20 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
+		if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && pokemon_player)
 		{
-
+			//moveto
+		}
+		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && pokemon_player && getdamage == false)
+		{
+			Pokemon* temp = (Pokemon*)c2->callback;
+			temp->knockback_time.Start();
+			temp->hp -= attack;
+			getdamage = true;
+			App->scene->pokecombat->GetDamage(attack, false);
+			temp->state = HIT;
+			temp->dir_hit = c1->callback->direction;
+			temp->previus_position = temp->position;
 		}
 	}
 }
@@ -353,6 +367,10 @@ bool Swampert::Attack()
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = IDLE;
+			if (getdamage)
+			{
+				getdamage = false;
+			}
 		}
 	}
 	else
@@ -370,7 +388,7 @@ bool Swampert::Attack()
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y , 22, 8 }, COLLIDER_POKEMON, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == LEFT)
@@ -453,16 +471,180 @@ bool Swampert::Walking_IA()
 bool Swampert::Move_IA()
 {
 	//App->pathfinding->CreatePath(position, target->Getposition());
+	//App->pathfinding->CreatePath(position, target->Getposition());
+	if (direction == LEFT)
+	{
+		//App->map->MovementCost(position.x - speed, position.y, LEFT)
+		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= speed;
+			dis_moved++;
+		}
+		else
+		{
+			//Function to change direction
+			dis_moved++;
+		}
+		walking = true;
+	}
+
+	if (direction == RIGHT)
+	{
+		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	if (direction == UP)
+	{
+		//App->map->MovementCost(position.x, position.y - speed, UP)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	if (direction == DOWN)
+	{
+		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	return true;
+}
+
+bool Swampert::CheckTargetPos()
+{
+	int distance_target = target->position.DistanceTo(position);
+
+	if (distance_target <= radar)
+	{
+		if (attacker == false)
+		{
+			state = ATTACKING;
+			current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
+			current_animation->Reset();
+		}
+	}
+
 	return true;
 }
 
 bool Swampert::Attack_IA()
 {
+	if (attacker)
+	{
+		if (current_animation->Finished())
+		{
+			App->collision->EraseCollider(collision_attack);
+			attacker = false;
+			current_animation->Reset();
+			current_animation = nullptr;
+			state = IDLE;
+		}
+	}
+	else
+	{
+		attacker = true;
+		if (direction == UP)
+		{
+			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == RIGHT)
+		{
+			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == DOWN)
+		{
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == LEFT)
+		{
+			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+			App->audio->PlayFx(10);
+		}
+	}
+	return true;
 	return true;
 }
 
 bool Swampert::CheckOrientation()
 {
+	return true;
+}
+
+bool Swampert::Movebyhit()
+{
+	if (hp <= 0)
+	{
+		state = DYING;
+		return true;
+	}
+
+	if (knockback_time.ReadSec() >= 0.2)
+	{
+		state = IDLE;
+		return true;
+	}
+
+	if (dir_hit == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= 4;
+		}
+	}
+	else if (dir_hit == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += 4;
+		}
+	}
+	else if (dir_hit == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= 4;
+		}
+	}
+	else if (dir_hit == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += 4;
+		}
+	}
+	/*if (position.x > (previus_position.x + 65) ||
+	position.x < (previus_position.x + 65) ||
+	position.y >(previus_position.y + 65) ||
+	position.y < (previus_position.y + 65))
+	{
+	state = IDLE;
+	}*/
 	return true;
 }
 

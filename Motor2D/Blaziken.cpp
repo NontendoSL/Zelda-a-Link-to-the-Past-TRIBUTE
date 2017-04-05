@@ -88,13 +88,11 @@ bool Blaziken::Update()
 				Attack();
 				break;
 			}
-			/*
-			case SPECIALATTACK:
+			case HIT:
 			{
-				SpecialAttack();
+				Movebyhit();
 				break;
 			}
-			*/
 			default:
 			{
 				break;
@@ -165,14 +163,14 @@ bool Blaziken::CleanUp()
 	return true;
 }
 
-
 void Blaziken::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == sp_attack && c2->type == COLLIDER_POKEMON)
+		if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && pokemon_player && getdamage == false)
 		{
 
+			getdamage = true;
 		}
 	}
 }
@@ -327,6 +325,8 @@ bool Blaziken::Attack()
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = IDLE;
+			if (getdamage)
+				getdamage = false;
 		}
 	}
 	else
@@ -358,23 +358,20 @@ bool Blaziken::Attack()
 			if (direction == UP)
 			{
 				collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
-				App->audio->PlayFx(9);
 			}
 			else if (direction == RIGHT)
 			{
 				collision_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
-				App->audio->PlayFx(9);
 			}
 			else if (direction == DOWN)
 			{
 				collision_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON, this);
-				App->audio->PlayFx(9);
 			}
 			else if (direction == LEFT)
 			{
 				collision_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
-				App->audio->PlayFx(9);
 			}
+			App->audio->PlayFx(9);
 		}
 
 	}
@@ -452,6 +449,64 @@ bool Blaziken::Walking_IA()
 bool Blaziken::Move_IA()
 {
 	//App->pathfinding->CreatePath(position, target->Getposition());
+	if (direction == LEFT)
+	{
+		//App->map->MovementCost(position.x - speed, position.y, LEFT)
+		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= speed;
+			dis_moved++;
+		}
+		else
+		{
+			//Function to change direction
+			dis_moved++;
+		}
+		walking = true;
+	}
+
+	if (direction == RIGHT)
+	{
+		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	if (direction == UP)
+	{
+		//App->map->MovementCost(position.x, position.y - speed, UP)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
+	if (direction == DOWN)
+	{
+		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += speed;
+			dis_moved++;
+		}
+		else
+		{
+			dis_moved++;
+		}
+		walking = true;
+	}
 	return true;
 }
 
@@ -464,5 +519,57 @@ bool Blaziken::Attack_IA()
 bool Blaziken::CheckOrientation()
 {
 
+	return true;
+}
+
+bool Blaziken::Movebyhit()
+{
+	if (hp <= 0)
+	{
+		state = DYING;
+		return true;
+	}
+
+	if (knockback_time.ReadSec() >= 0.2)
+	{
+		state = IDLE;
+		return true;
+	}
+
+	if (dir_hit == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= 4;
+		}
+	}
+	else if (dir_hit == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += 4;
+		}
+	}
+	else if (dir_hit == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= 4;
+		}
+	}
+	else if (dir_hit == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += 4;
+		}
+	}
+	/*if (position.x > (previus_position.x + 65) ||
+	position.x < (previus_position.x + 65) ||
+	position.y >(previus_position.y + 65) ||
+	position.y < (previus_position.y + 65))
+	{
+	state = IDLE;
+	}*/
 	return true;
 }
