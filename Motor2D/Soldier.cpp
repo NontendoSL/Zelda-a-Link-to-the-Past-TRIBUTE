@@ -85,7 +85,7 @@ bool Soldier::Start()
 		reset_run = true;
 
 		// Test for Vertical Slice /// TODO MED-> read stats from XML
-		radar = 50;
+		radar = 75;
 		attack_speed = 1;
 		chase_speed = 1;
 	}
@@ -245,9 +245,13 @@ bool Soldier::CheckPlayerPos()
 {
 	int distance_player = App->scene->player->position.DistanceTo(position);
 
-	if (distance_player <= radar)
+	if (distance_player <= radar && App->scene->player->invincible_timer.ReadSec() >= 1)
 	{
 		state = CHASING;
+	}
+	else
+	{
+		state = IDLE;
 	}
 
 	return true;
@@ -427,7 +431,7 @@ bool Soldier::Movebyhit()
 
 	if (knockback_time.ReadSec() >= 0.2)
 	{
-		state = IDLE;
+		state = CHASING;
 		return true;
 	}
 

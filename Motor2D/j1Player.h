@@ -113,6 +113,9 @@ public:
 	//Gameover
 	Image* gameover = nullptr;
 
+	//cooldown for soldier chase
+	j1Timer invincible_timer;
+
 private:
 
 	//player stats
@@ -137,7 +140,7 @@ private:
 	//Timers
 	j1Timer timer;
 	j1Timer hurt_timer;
-	j1Timer invincible_timer;
+	
 
 	//T
 	std::string stats_temp;
