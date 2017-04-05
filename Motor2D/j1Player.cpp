@@ -86,10 +86,10 @@ bool Player::PreUpdate()
 
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
-	//sprintf_s(buffer, 30, "%.f seconds of playtime", game_timer.ReadSec());
+	/*sprintf_s(buffer, 30, "%.f seconds of playtime", game_timer.ReadSec());
 	std::string var = std::to_string(game_timer.ReadSec()) + "seconds of playtime";
 	time->Write(var.c_str());
-	var.clear();
+	var.clear();*/
 	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
 	bool ret = true;
 	//if you dead, you appear on the Link House
