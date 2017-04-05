@@ -546,8 +546,9 @@ bool Player::Camera_inside()
 		}
 		if (direction == LEFT)
 		{
-			if (camera_pos.x == 0)
+			if (camera_pos.x <= 0)
 			{
+				camera_pos.x = 0;
 				return false;
 			}
 			else

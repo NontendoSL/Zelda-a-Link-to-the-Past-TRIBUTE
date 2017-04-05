@@ -49,7 +49,6 @@ bool j1Scene::Start()
 		LoadUi();
 		Load_new_map(1);
 		App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
-		App->audio->VolumeMusic(85);
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
 		App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
@@ -152,12 +151,15 @@ bool j1Scene::Update(float dt)
 							poketrainer.clear();
 						}
 						Load_Combat_map(7);
+
 					}
 				}
 				if (App->fadetoblack->Checkfadefromblack())
 				{
 					fade = false;
 					switch_map = 0;
+					//Play music
+					//App->audio->PlayMusic("audio/music/POKEMON/PokemonWildPokemonBattle.ogg");
 				}
 			}
 			if (switch_map != 0 && switch_map != 7)
@@ -540,6 +542,7 @@ bool j1Scene::Load_Combat_map(int n)
 	config = LoadConfig(config_file);
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
+
 
 	start_menu->OpenClose(false);
 	hud->OpenClose(false);
