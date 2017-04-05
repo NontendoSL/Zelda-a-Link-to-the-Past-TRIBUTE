@@ -104,10 +104,10 @@ bool j1Scene::Update(float dt)
 			player->ShowHearts();
 			force->Hitbox.w = player->charge;
 
-			if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			{
 				switch_map = 7;
-			}
+			}*/
 			
 			if (switch_map == 7)
 			{
@@ -251,7 +251,7 @@ bool j1Scene::Update(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 		{
 			player->position.x -= 50;
 			App->render->camera.x += 100;
@@ -260,7 +260,7 @@ bool j1Scene::Update(float dt)
 		{
 			player->position.x += 50;
 			App->render->camera.x -= 100;
-		}
+		}*/
 		
 	return true;
 }
