@@ -561,29 +561,6 @@ void ZeldaMenu::Handle_Input()
 	}
 }
 
-/*void ZeldaMenu::OnInputCallback(INPUTEVENT, EVENTSTATE)
-{
-if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
-{
-if (App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
-{
-Select(1);
-}
-else if (App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
-{
-Select(-1);
-}
-else if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
-{
-Click();
-}
-if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
-{
-UnClick();
-}
-}
-}*/
-
 void ZeldaMenu::OpenClose(bool open)
 {
 	for (uint i = 0; i < menu_buttons.size(); i++) {
@@ -937,6 +914,8 @@ void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 	//ability sprites
 	ability->Hitbox.y = 155;
 	ability->elements[0]->Hitbox.y = 155;
+
+	num_pokemons = { 3, 3 };
 }
 
 void PokemonCombatHud::GetDamage(uint damage, bool trainer)
