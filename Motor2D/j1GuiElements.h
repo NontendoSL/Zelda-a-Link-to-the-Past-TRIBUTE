@@ -88,10 +88,10 @@ public:
 	//void Clear(int more_erased);
 public:
 	float diferential = 0.5;
-	Text* lines;
+	Text* lines = nullptr;
 	bool push;
 	uint timer;
-	Selector* options;
+	Selector* options = nullptr;
 	bool end = false;
 };
 
@@ -103,8 +103,8 @@ public:
 public:
 	void Handle_Input();
 private:
-	Text* first, *second;
-	Text* selector;
+	Text* first = nullptr, *second = nullptr;
+	Text* selector = nullptr;
 	bool position;//true up false down
 };
 
@@ -136,9 +136,9 @@ private:
 	std::vector<Button*>menu_buttons;
 	std::vector<Image*>menu_images;
 	std::vector<Text*>menu_texts;
-	Button*selected;
+	Button*selected=nullptr;
 public:
-	uint id_selected;
+	uint id_selected=0;
 };
 
 //----------------------------------------------------------

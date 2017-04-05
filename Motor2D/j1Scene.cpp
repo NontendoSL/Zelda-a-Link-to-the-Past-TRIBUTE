@@ -423,8 +423,9 @@ bool j1Scene::Load_new_map(int n)
 	}
 	if (n == 1)
 	{
-		App->scene->player->score = 0;
-		App->scene->player->gems = 0;
+		player->score = 0;
+		player->gems = 0;
+		hud->OpenClose(true);
 	}
 	/*//SET WEAPONS WHEN MAP CHANGES
 	if (weapon_equiped == BOMB)

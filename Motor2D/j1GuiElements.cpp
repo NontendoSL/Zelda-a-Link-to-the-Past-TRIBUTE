@@ -459,12 +459,15 @@ void ZeldaMenu::ResetInventory()
 	{
 		menu_buttons.clear();
 	}
+	selected = nullptr;
+	App->scene->hud->GetImage(1)->elements[0]->Hitbox.y = 257; //setting item selected in box to nothing
 	menu_texts[2]->Visible(false);
 	menu_texts[3]->Visible(false);
 	menu_texts[4]->Visible(false);
 	menu_images[1]->Hitbox.y = 372;
+	menu_images[2]->Hitbox.y = 256;
 	menu_texts[0]->Write("SELECT AN ITEM");
-	menu_texts[0]->Write("PICK ITEM");
+	menu_texts[1]->Write("PICK ITEM");
 
 }
 
@@ -732,29 +735,32 @@ void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich 
 
 void ZeldaMenu::ShowItemInfo()
 {
-	if (selected->identifier == "bow") 
+	if (selected != nullptr)
 	{
-		menu_images[1]->Hitbox.y = 268;
-		menu_texts[0]->Write("BOW ARROWS");
-		menu_texts[2]->Visible(true);
-		menu_texts[3]->Visible(false);
-		menu_texts[4]->Visible(false);
-	}
-	if (selected->identifier == "hookshot")
-	{
-		menu_images[1]->Hitbox.y = 301;
-		menu_texts[0]->Write("HOOKSHOT");
-		menu_texts[2]->Visible(false);
-		menu_texts[3]->Visible(true);
-		menu_texts[4]->Visible(false);
-	}
-	if(selected->identifier =="bomb")
-	{
-		menu_images[1]->Hitbox.y = 336;
-		menu_texts[0]->Write("BOMBS");
-		menu_texts[2]->Visible(false);
-		menu_texts[3]->Visible(false);
-		menu_texts[4]->Visible(true);
+		if (selected->identifier == "bow")
+		{
+			menu_images[1]->Hitbox.y = 268;
+			menu_texts[0]->Write("BOW ARROWS");
+			menu_texts[2]->Visible(true);
+			menu_texts[3]->Visible(false);
+			menu_texts[4]->Visible(false);
+		}
+		if (selected->identifier == "hookshot")
+		{
+			menu_images[1]->Hitbox.y = 301;
+			menu_texts[0]->Write("HOOKSHOT");
+			menu_texts[2]->Visible(false);
+			menu_texts[3]->Visible(true);
+			menu_texts[4]->Visible(false);
+		}
+		if (selected->identifier == "bomb")
+		{
+			menu_images[1]->Hitbox.y = 336;
+			menu_texts[0]->Write("BOMBS");
+			menu_texts[2]->Visible(false);
+			menu_texts[3]->Visible(false);
+			menu_texts[4]->Visible(true);
+		}
 	}
 
 }
