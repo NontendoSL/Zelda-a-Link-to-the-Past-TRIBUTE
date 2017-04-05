@@ -420,7 +420,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 
-			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP && c2->callback != nullptr)
+			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
 			{
 				if (canSwitchMap == false)
 				{
