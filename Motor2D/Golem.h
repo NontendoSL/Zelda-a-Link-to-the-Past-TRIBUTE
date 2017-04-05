@@ -35,11 +35,15 @@ public:
 
 	void Drop_item();
 
+	bool CheckPlayerPos();
+
 	bool Idle();
 
 	bool Walking();
 
 	bool Move();
+
+	bool Chase();
 
 	bool Attack();
 
@@ -69,6 +73,7 @@ private:
 	bool mode_stone;
 
 	j1Timer hurt_timer;
+	j1Timer change_dir;
 };
 
 #endif //__GOLEM_H_

@@ -62,6 +62,12 @@ bool Golem::Start()
 
 	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(5); //id 5 = Golem
+
+	// Test for Vertical Slice /// TODO MED-> read stats from XML
+	radar = 40;
+	attack_speed = 1;
+	chase_speed = 1;
+
 	return true;
 }
 
@@ -74,12 +80,20 @@ bool Golem::Update()
 		{
 		case IDLE:
 		{
+			CheckPlayerPos();
 			Idle();
 			break;
 		}
-		case WALKING:
+		/*case WALKING:
 		{
+			CheckPlayerPos();
 			Walking();
+			break;
+		}*/
+		case CHASING:
+		{
+			CheckPlayerPos();
+			Chase();
 			break;
 		}
 		case ATTACKING:
@@ -151,7 +165,10 @@ void Golem::Draw()
 	case IDLE:
 		id = 0;
 		break;
-	case WALKING:
+	/*case WALKING:
+		id = 1;
+		break;*/
+	case CHASING:
 		id = 1;
 		break;
 	case ATTACKING:
@@ -218,45 +235,49 @@ void Golem::Drop_item()
 	item_inside = NULL;
 }
 
+bool Golem::CheckPlayerPos()
+{
+	int distance_player = App->scene->player->position.DistanceTo(position);
+
+	if (distance_player <= radar)
+	{
+		state = CHASING;
+	}
+
+	return true;
+}
+
 bool Golem::Idle()
 {
 	if (movable)
 	{
-		if (reset_run)
+		if (change_dir.ReadSec() > 2)
 		{
-			timetorun = SDL_GetTicks();
-			reset_run = false;
-		}
-		else
-		{
-			if (SDL_GetTicks() - timetorun > 2000)
+			change_dir.Start();
+			int direc_select = rand() % 4 + 1;
+			if (direc_select == 1)
 			{
-				int direc_select = rand() % 4 + 1;
-				if (direc_select == 1)
-				{
-					direction = UP;
-				}
-				else if (direc_select == 2)
-				{
-					direction = DOWN;
-				}
-				else if (direc_select == 3)
-				{
-					direction = LEFT;
-				}
-				else if (direc_select == 4)
-				{
-					direction = RIGHT;
-				}
-				state = WALKING;
-				reset_distance = true;
+				direction = UP;
+			}
+			else if (direc_select == 2)
+			{
+				direction = DOWN;
+			}
+			else if (direc_select == 3)
+			{
+				direction = LEFT;
+			}
+			else if (direc_select == 4)
+			{
+				direction = RIGHT;
 			}
 		}
 	}
+
 	return true;
 }
 
-bool Golem::Walking()
+/*bool Golem::Walking()
 {
 	walking = false;
 	if (reset_distance)
@@ -284,7 +305,7 @@ bool Golem::Walking()
 		state = WALKING;
 	}
 	return true;
-}
+}*/
 
 bool Golem::Move()
 {
@@ -350,6 +371,27 @@ bool Golem::Move()
 	return true;
 }
 
+bool Golem::Chase()
+{
+	if(App->scene->player->state != HIT)
+	{
+		int distance_player = App->scene->player->position.DistanceTo(position);
+
+		if (distance_player <= radar)
+		{
+			iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
+			GoTo(player_pos, chase_speed);
+			Orientate();
+			state = CHASING;
+		}
+		else
+		{
+			state = IDLE;
+		}
+	}
+	return true;
+}
+
 bool Golem::Hit()
 {
 	if(hp <= 0)
@@ -368,6 +410,14 @@ bool Golem::Hit()
 
 bool Golem::Attack()
 {
+	if (animation.anim[state].East_action.Finished() ||
+		animation.anim[state].West_action.Finished() ||
+		animation.anim[state].North_action.Finished() ||
+		animation.anim[state].South_action.Finished())
+	{
+		state = IDLE;
+	}
+
 	return true;
 }
 
@@ -401,12 +451,23 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 
 			}
 		}
+
 		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT && state != STATIC)
 		{
 			animation.anim[5].ResetAnimations();
 			hurt_timer.Start();
 			state = HIT;
 			hp--;
+		}
+
+		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback->state != HIT)
+		{
+			if (c2->callback->state != HOOKTHROWN && state != HIT)
+			{
+				state = ATTACKING;
+				animation.anim[state].ResetAnimations();
+				Orientate();
+			}
 		}
 	}
 }
