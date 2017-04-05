@@ -47,13 +47,16 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 
 bool DynamicObjects::Start()
 {
-	if (name == "bigchest")
+	if(name != "door_house_link" && name != "doorinside_Link_south" && name != "roof_Link" && name != "doorVictory_south")
 	{
-		collision = App->collision->AddCollider({ position.x, position.y, 32, 24 }, COLLIDER_DYNOBJECT, this);
-	}
-	else
-	{
-		collision = App->collision->AddCollider({ position.x, position.y, 16, 16 }, COLLIDER_DYNOBJECT, this);
+		if (name == "bigchest")
+		{
+			collision = App->collision->AddCollider({ position.x, position.y, 32, 24 }, COLLIDER_DYNOBJECT, this);
+		}
+		else
+		{
+			collision = App->collision->AddCollider({ position.x, position.y, 16, 16 }, COLLIDER_DYNOBJECT, this);
+		}
 	}
 	return true;
 }
