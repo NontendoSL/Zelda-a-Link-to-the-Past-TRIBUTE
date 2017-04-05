@@ -24,7 +24,7 @@ public:
 	~Image();
 	void AssignNumber(uint n);
 public:
-	bool start;
+	bool start=false;
 
 
 };
@@ -41,9 +41,9 @@ public:
 	~Button();
 
 public:
-	bool start, click;
+	bool start=true, click=false;
 	ButtonState state=normal;
-	SDL_Rect texture2, texture3;
+	SDL_Rect texture2 = { 0,0,0,0 }, texture3 = { 0,0,0,0 };
 	Text* buttontext = nullptr;;
 	Animation* anim=nullptr;
 };
@@ -64,13 +64,13 @@ public:
 	void Visible(bool yes);
 private:
 	std::string text;
-	_TTF_Font* font;
-	SDL_Texture* text_texture;
-	uint length, size;
+	_TTF_Font* font = nullptr;
+	SDL_Texture* text_texture = nullptr;
+	uint length=50, size=30;
 public:
 	Text* next_line = nullptr;
-	FontName font_name;
-	SDL_Color color;
+	FontName font_name = GANONF;
+	SDL_Color color = { 255,255,255,255 };
 	bool draw = true;
 };
 
@@ -89,8 +89,8 @@ public:
 public:
 	float diferential = 0.5;
 	Text* lines = nullptr;
-	bool push;
-	uint timer;
+	bool push=false;
+	uint timer=0;
 	Selector* options = nullptr;
 	bool end = false;
 };
@@ -105,7 +105,7 @@ public:
 private:
 	Text* first = nullptr, *second = nullptr;
 	Text* selector = nullptr;
-	bool position;//true up false down
+	bool position=true;//true up false down
 };
 
 // ------------------------------------------------------
@@ -160,22 +160,22 @@ public:
 	void CombatInfo(Pokemon* pokemon_1, Pokemon* pokemon_2);
 	void GetDamage(uint damage, bool trainer);
 public:
-	bool cooldown;
-	iPoint cdtime; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
+	bool cooldown=false;
+	iPoint cdtime = { 0,0 }; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
 
 private:
 	std::vector<Image*>hud_images;
 
-	Image* ability;
-	Image* hp1;
-	Image* hp2;
-	Text* poke_hp_Link;
-	Text* poke_hp_Brendan;
+	Image* ability = nullptr;
+	Image* hp1 = nullptr;
+	Image* hp2 = nullptr;
+	Text* poke_hp_Link = nullptr;
+	Text* poke_hp_Brendan = nullptr;
 
-	iPoint hpbar_pLink;//.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE) used for triangle operations with atlas pixels
-	iPoint hpbar_pBrendan;
+	iPoint hpbar_pLink = { 0,0 };//.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE) used for triangle operations with atlas pixels
+	iPoint hpbar_pBrendan = { 0,0 };
 	char buffer[25]; //hp
-	iPoint num_pokemons;
+	iPoint num_pokemons = { 0,0 };
 
 };
 #endif // __j1GUIELEMENTS_H__
