@@ -739,6 +739,8 @@ ZeldaMenu::~ZeldaMenu()
 
 PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 {
+
+	
 	//Hud_images 0-> up // Hud_imatge 1-> down
 	//elements 0-> left circle // elements 1-> left box // elements 2-> right circle // elements 3-> right box
 	//Big sprites

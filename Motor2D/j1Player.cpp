@@ -21,6 +21,7 @@
 #include "j1DynamicObjects.h"
 #include "j1Creature.h"
 #include "j1Weapon.h"
+#include "j1FadeToBlack.h"
 #include "Geodude.h"
 #include "Animation.h"
 #include "Pokemon.h"
@@ -224,7 +225,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		bombmanager->Drop(position);
 		App->audio->PlayFx(6);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fadetoblack->Checkfadetoblack())
 	{
 		if (App->scene->inventory) //TODO LOW -> If pres to fast you can lisen 2.
 		{

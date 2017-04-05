@@ -580,6 +580,7 @@ bool j1Scene::Load_Combat_map(int n)
 			stop_rearch = true;
 		}
 	}
+
 	return true;
 }
 
