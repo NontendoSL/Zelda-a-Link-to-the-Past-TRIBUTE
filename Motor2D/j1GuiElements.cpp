@@ -565,6 +565,7 @@ void ZeldaMenu::Handle_Input()
 	}
 }
 
+
 void ZeldaMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
 	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
@@ -951,6 +952,8 @@ void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 	//ability sprites
 	ability->Hitbox.y = 155;
 	ability->elements[0]->Hitbox.y = 155;
+
+	num_pokemons = { 3, 3 };
 }
 
 void PokemonCombatHud::GetDamage(uint damage, bool trainer)

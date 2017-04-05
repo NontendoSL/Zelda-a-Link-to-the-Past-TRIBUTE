@@ -54,6 +54,7 @@ bool Sceptyle::Start()
 	reset_run = true;
 	range = { 90,0 };
 	sp_speed = 5;
+	sp_attacking = false;
 	return true;
 }
 
@@ -184,34 +185,37 @@ void Sceptyle::AttackSpecial()
 
 void Sceptyle::ThrowSP()
 {
-	switch (sp_direction)
+	if (sp_attack != nullptr)
 	{
-	case 0:
-		App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x,sp_start.y - range.y }, 10);
-		sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
-		break;
-	case 1:
-		App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x,sp_start.y + range.y }, 10);
-		sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
-		break;
-	case 2:
-		App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x - range.y,sp_start.y-10 }, 10);
-		sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
-		break;
-	case 3:
-		App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x + range.y,sp_start.y-10 }, 10);
-		sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
-		break;
-	}
-	if (range.y >= range.x)
-	{
-		range.y = 0;
-		App->collision->EraseCollider(sp_attack);
-		sp_attacking = false;
-	}
-	else
-	{
-		range.y += sp_speed;
+		switch (sp_direction)
+		{
+		case 0:
+			App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x,sp_start.y - range.y }, 10);
+			sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
+			break;
+		case 1:
+			App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x,sp_start.y + range.y }, 10);
+			sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
+			break;
+		case 2:
+			App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x - range.y,sp_start.y - 10 }, 10);
+			sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
+			break;
+		case 3:
+			App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x + range.y,sp_start.y - 10 }, 10);
+			sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
+			break;
+		}
+		if (range.y >= range.x)
+		{
+			range.y = 0;
+			App->collision->EraseCollider(sp_attack);
+			sp_attacking = false;
+		}
+		else
+		{
+			range.y += sp_speed;
+		}
 	}
 }
 

@@ -59,6 +59,7 @@ bool Swampert::Start()
 	sp_speed = 3;
 	sp_damage = 10; //TODO MID -> need modify
 	//App->input_manager->AddListener(this);
+	sp_attacking = false;
 	return true;
 }
 
