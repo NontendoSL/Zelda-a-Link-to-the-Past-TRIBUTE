@@ -95,7 +95,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	if (hp_hearts.y == 0)
 	{
 		score = 0;
-		hp_hearts = { 6,6 };
+		hp_hearts = { hp_hearts.x, hp_hearts.x };
 
 		gems = 0;
 		bombs = 0;
@@ -119,6 +119,30 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	// STATE MACHINE ------------------
 	if (gamestate == INGAME)
 	{
+		//CHARGE BAR --------------
+		if (equiped_item != nullptr && equiped_item == hook && hook->in_use == false)
+		{
+			if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT) && charge <= 34)
+			{
+				charge++;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+			{
+				state = HOOKTHROWN;
+				ThrowHookshot(charge);
+			}
+			else if (charge > 0)
+			{
+				charge--;
+			}
+		}
+		if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && bombs>0)
+		{
+			bombmanager->Drop(position);
+			bombs--;
+			App->audio->PlayFx(6);
+		}
+
 		switch (state)
 		{
 		case IDLE:
@@ -198,29 +222,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 
 
-	//CHARGE BAR --------------
-	if (equiped_item != nullptr && equiped_item == hook && hook->in_use == false)
-	{
-		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT) && charge <= 34)
-		{
-			charge++;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-		{
-			state = HOOKTHROWN;
-			ThrowHookshot(charge);
-		}
-		else if (charge > 0)
-		{
-			charge--;
-		}
-	}
-	if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && bombs>0)
-	{
-		bombmanager->Drop(position);
-		bombs--;
-		App->audio->PlayFx(6);
-	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fadetoblack->IsFading())
 	{
 		if (App->scene->inventory) //TODO LOW -> If pres to fast you can lisen 2.
@@ -815,7 +817,7 @@ bool Player::Equip(Weapon* to_equip)
 {
 	if (to_equip != nullptr)
 	{
-		if (equiped_item != to_equip && to_equip->equipable == true)
+		if (equiped_item == nullptr && to_equip->equipable == true)
 		{
 			equiped_item = to_equip;
 			equiped_item->equiped = true;
@@ -837,9 +839,13 @@ bool Player::Unequip()
 	}
 	else
 	{
-		LOG("Unequiped %s", equiped_item->name.c_str());
-		equiped_item->equiped = false;
-		equiped_item = nullptr;
+		if (equiped_item->in_use == false)
+		{
+			LOG("Unequiped %s", equiped_item->name.c_str());
+			equiped_item->equiped = false;
+			equiped_item = nullptr;
+			ret = true;
+		}
 	}
 	return ret;
 }

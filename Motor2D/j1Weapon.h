@@ -41,6 +41,7 @@ public:
 	//bool picked = false;
 	bool equiped = false;
 	bool equipable = false;
+	bool in_use = false;
 
 	WeaponType Wtype;
 	Collider* collision = nullptr;
@@ -70,7 +71,6 @@ public:
 	float range = 0;
 	uint actual_range_pos = 0; // TODO MED-> set to private and create functions to get the values
 	bool target_reached = false;
-	bool in_use = false;
 
 private:
 	HookState hook_state = MISS;

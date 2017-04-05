@@ -490,28 +490,32 @@ void ZeldaMenu::Do()
 	Image* item_menu = App->scene->start_menu->GetImage(2);
 	if (i_name == "bow")
 	{
+		App->scene->player->Unequip();
+		//App->scene->player->Equip(bow);
 		item->elements[0]->Hitbox.y = 276;
 		item_menu->Hitbox.y = 276;
 		menu_texts[1]->Write("BOW ARROWS");
-		App->scene->player->Unequip();
-		//App->scene->player->Equip(bow);
+
 	}
 	else if (i_name == "hookshot")
 	{
-		item->elements[0]->Hitbox.y = 309;
-		item_menu->Hitbox.y = 309;
-		menu_texts[1]->Write(" HOOKSHOT");
 		App->scene->player->Unequip();
-
-		App->scene->player->Equip((Weapon*)App->scene->player->hook);
+		if (App->scene->player->Equip((Weapon*)App->scene->player->hook) == true)
+		{
+			item->elements[0]->Hitbox.y = 309;
+			item_menu->Hitbox.y = 309;
+			menu_texts[1]->Write(" HOOKSHOT");
+		}
 	}
 	else if (i_name == "bomb")
 	{
-		item->elements[0]->Hitbox.y = 344;
-		item_menu->Hitbox.y = 344;
-		menu_texts[1]->Write("      BOMBS");
 		App->scene->player->Unequip();
-		App->scene->player->Equip((Weapon*)App->scene->player->bombmanager);
+		if (App->scene->player->Equip((Weapon*)App->scene->player->bombmanager) == true)
+		{
+			item->elements[0]->Hitbox.y = 344;
+			item_menu->Hitbox.y = 344;
+			menu_texts[1]->Write("      BOMBS");
+		}
 	}
 }
 
@@ -542,47 +546,57 @@ void ZeldaMenu::Handle_Input()
 {
 	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
 	{
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 		{
 			Select(1);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 		{
 			Select(-1);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		{
 			Click();
 		}
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)//TODO MED-> Check E_UP botton state
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
 		{
 			UnClick();
 		}
 	}
 }
 
-/*void ZeldaMenu::OnInputCallback(INPUTEVENT, EVENTSTATE)
+void ZeldaMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
-if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
-{
-if (App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
-{
-Select(1);
+	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
+	{
+		switch (action)
+		{
+
+		case MRIGHT:
+			if (e_state == E_DOWN)
+			{
+				Select(1);
+			}
+			break;
+		case MLEFT:
+			if (e_state == E_DOWN)
+			{
+				Select(-1);
+			}
+			break;
+		case BUTTON_A:
+			if (e_state == E_DOWN)
+			{
+				Click();
+			}
+			else if (e_state == E_UP)
+			{
+				UnClick();
+			}
+			break;
+		}
+	}
 }
-else if (App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
-{
-Select(-1);
-}
-else if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
-{
-Click();
-}
-if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
-{
-UnClick();
-}
-}
-}*/
 
 void ZeldaMenu::OpenClose(bool open)
 {
