@@ -893,11 +893,12 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 				ThrowHookshot(charge);
 			}
 		}
-		else if (bombmanager != nullptr && equiped_item == bombmanager)
+		else if (bombmanager != nullptr && equiped_item == bombmanager && bombs>0)
 		{
 			if (e_state == E_UP)
 			{
 				bombmanager->Drop(position);
+				bombs--;
 			}
 		}
 		break;

@@ -890,7 +890,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		}
 		else//VICTORY
 		{
-			int divider = 0;
+			int divider = 1;
 			if (App->scene->player->gameover != nullptr) {
 				divider = 2;
 			}
