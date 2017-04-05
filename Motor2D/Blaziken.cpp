@@ -119,7 +119,7 @@ bool Blaziken::Update()
 			}
 			case ATTACKING:
 			{
-				Attack_IA();
+				//Attack_IA();
 				break;
 			}
 			case HIT:
@@ -195,17 +195,6 @@ void Blaziken::OnCollision(Collider* c1, Collider* c2)
 					App->scene->pokecombat->GetDamage(attack, false);
 					temp->state = HIT;
 					temp->dir_hit = c1->callback->direction;
-					temp->previus_position = temp->position;
-				}
-				else if (isActive->pokemon_player == false)
-				{
-					Pokemon* temp = (Pokemon*)c2->callback;
-					temp->knockback_time.Start();
-					temp->hp -= attack;
-					getdamage = true;
-					App->scene->pokecombat->GetDamage(attack, true);
-					temp->state = HIT;
-					temp->dir_hit = c2->callback->direction;
 					temp->previus_position = temp->position;
 				}
 			}
@@ -556,7 +545,7 @@ bool Blaziken::Attack_IA()
 
 bool Blaziken::CheckOrientation()
 {
-	int distance_target = target->position.DistanceTo(position);
+	/*int distance_target = target->position.DistanceTo(position);
 
 	if (distance_target <= radar)
 	{
@@ -566,7 +555,7 @@ bool Blaziken::CheckOrientation()
 			current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
 			current_animation->Reset();
 		}
-	}
+	}*/
 
 	return true;
 }

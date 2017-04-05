@@ -187,17 +187,6 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 					temp->dir_hit = c1->callback->direction;
 					temp->previus_position = temp->position;
 				}
-				else
-				{
-					Pokemon* temp = (Pokemon*)c2->callback;
-					temp->knockback_time.Start();
-					temp->hp -= attack;
-					getdamage = true;
-					App->scene->pokecombat->GetDamage(attack, true);
-					temp->state = HIT;
-					temp->dir_hit = c1->callback->direction;
-					temp->previus_position = temp->position;
-				}
 			}
 
 			if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
@@ -205,7 +194,6 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 				if (pokemon_player)
 				{
 					Pokemon* temp = (Pokemon*)c2->callback;
-					temp->knockback_time.Start();
 					temp->hp -= sp_damage;
 					getdamage = true;
 					App->scene->pokecombat->GetDamage(sp_damage, false);
@@ -569,7 +557,7 @@ bool Sceptyle::Attack_IA()
 
 bool Sceptyle::CheckOrientation()
 {
-	int distance_target = target->position.DistanceTo(position);
+	/*int distance_target = target->position.DistanceTo(position);
 
 	if (distance_target <= radar)
 	{
@@ -579,7 +567,7 @@ bool Sceptyle::CheckOrientation()
 			current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
 			current_animation->Reset();
 		}
-	}
+	}*/
 	return true;
 }
 

@@ -106,20 +106,20 @@ bool Swampert::Update()
 			{
 			case IDLE:
 			{
-				CheckTargetPos();
+				//CheckTargetPos();
 				Idle_IA();
 				break;
 			}
 			case WALKING:
 			{
-				CheckTargetPos();
+				//CheckTargetPos();
 				Walking_IA();
 				break;
 			}
 			case ATTACKING:
 			{
-				CheckTargetPos();
-				Attack_IA();
+				//CheckTargetPos();
+				//Attack_IA();
 				break;
 			}
 
@@ -209,17 +209,6 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 					temp->dir_hit = c1->callback->direction;
 					temp->previus_position = temp->position;
 				}
-				else if (isActive->pokemon_player == false)
-				{
-					Pokemon* temp = (Pokemon*)c2->callback;
-					temp->knockback_time.Start();
-					temp->hp -= attack;
-					getdamage = true;
-					App->scene->pokecombat->GetDamage(attack, true);
-					temp->state = HIT;
-					temp->dir_hit = c2->callback->direction;
-					temp->previus_position = temp->position;
-				}
 			}
 		}
 
@@ -261,7 +250,6 @@ void Swampert::ThrowSP()
 		range.y = 0;
 		App->collision->EraseCollider(sp_attack);
 		sp_attacking = false;
-		getdamage = false;
 	}
 	else
 	{
@@ -646,7 +634,6 @@ bool Swampert::Movebyhit()
 	if (knockback_time.ReadSec() >= 0.2)
 	{
 		state = IDLE;
-		getdamage = false;
 		return true;
 	}
 
