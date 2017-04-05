@@ -158,14 +158,14 @@
     <map n="7" file="Combat_Map.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Brendan" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
-        <pokemon id="3" name="Swampert" speed="1" cooldown="320" dir="left" hp="70" attack="4" pos_x="160" pos_y="130" active="true"/>
-        <pokemon id="2" name="Sceptyle" speed="1" cooldown="250" dir="left" hp="100" attack="4" pos_x="160" pos_y="130" active="false"/>
-        <pokemon id="1" name="Blaziken" speed="1" cooldown="130" dir="left" hp="80" attack="4" pos_x="160" pos_y="130" active="false"/>
+        <pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" pos_x="160" pos_y="130" active="true"/>
+        <pokemon id="2" name="SCEPTILE" speed="1" cooldown="250" dir="left" hp="100" attack="4" pos_x="160" pos_y="130" active="false"/>
+        <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="130" dir="left" hp="80" attack="4" pos_x="160" pos_y="130" active="false"/>
       </trainer>
       <Link>
-        <pokemon id="1" name="Blaziken" speed="1" cooldown="130" dir="right" hp="80" attack="4" pos_x="80" pos_y="130" active="true"/>
-        <pokemon id="2" name="Sceptyle" speed="1" cooldown="250" dir="right" hp="100" attack="4" pos_x="80" pos_y="130" active="false"/>
-        <pokemon id="3" name="Swampert" speed="1" cooldown="320" dir="right" hp="70" attack="4" pos_x="80" pos_y="130" active="false"/>
+        <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="130" dir="right" hp="80" attack="4" pos_x="80" pos_y="130" active="true"/>
+        <pokemon id="2" name="SCEPTILE" speed="1" cooldown="250" dir="right" hp="100" attack="4" pos_x="80" pos_y="130" active="false"/>
+        <pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="right" hp="70" attack="4" pos_x="80" pos_y="130" active="false"/>
       </Link>
     </map>
   </map_combat>
