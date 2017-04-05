@@ -78,6 +78,15 @@ protected:
 
 	bool attacker = false;
 
+	//special attack
+	iPoint range; //.X shows max range, .Y shows distance moved
+	iPoint sp_start;
+	bool sp_attacking;
+	int sp_direction;
+	int sp_speed;
+	uint sp_damage;
+	Collider* sp_attack;
+
 
 	Collider* collision_attack = nullptr;
 };

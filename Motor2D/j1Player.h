@@ -15,6 +15,7 @@ class Hookshot;
 class Weapon;
 class BombContainer;
 class Dialogue;
+class Image;
 
 class Player : public Creature, public InputListener
 {
@@ -106,6 +107,9 @@ public:
 	//Timer
 	j1Timer timetoplay;
 
+	//Gameover
+	Image* gameover = nullptr;
+
 private:
 
 	//player stats
@@ -132,7 +136,7 @@ private:
 	j1Timer hurt_timer;
 	j1Timer invincible_timer;
 
-	//TEST
+	//T
 	std::string stats_temp;
 
 	bool changeResolution = false;

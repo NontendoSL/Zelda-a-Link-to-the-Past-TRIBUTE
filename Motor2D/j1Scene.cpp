@@ -160,7 +160,6 @@ bool j1Scene::Update(float dt)
 					switch_map = 0;
 				}
 			}
-
 			if (switch_map != 0 && switch_map != 7)
 			{
 				if (fade == false)
@@ -212,7 +211,7 @@ bool j1Scene::Update(float dt)
 							player->pokedex.clear();
 						}
 
-						if (combat)
+						if (combat && switch_map != 6)
 						{
 							combat = false;
 						}
@@ -228,9 +227,19 @@ bool j1Scene::Update(float dt)
 				}
 				if (App->fadetoblack->Checkfadefromblack())
 				{
-					switch_map = 0;
-					fade = false;
-					player->gamestate = INGAME;
+					if (combat && switch_map == 6)
+					{
+						switch_map = 0;
+						fade = false;
+						combat = false;
+						player->gamestate = GAMEOVER;
+					}
+					else
+					{
+						switch_map = 0;
+						fade = false;
+						player->gamestate = INGAME;
+					}
 				}
 			}
 
@@ -410,7 +419,6 @@ bool j1Scene::Load_new_map(int n)
 	{
 		player = App->entity_elements->CreatePlayer();
 	}
-	player->gamestate = INGAME;
 	/*//SET WEAPONS WHEN MAP CHANGES
 	if (weapon_equiped == BOMB)
 	{

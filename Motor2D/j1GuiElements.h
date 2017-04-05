@@ -156,15 +156,19 @@ public:
 	void Move(bool x_axis, float speed);
 	void LoadNewPokemon(Pokemon* pokemon, bool trainer);
 	void CombatInfo(Pokemon* pokemon_1, Pokemon* pokemon_2);
+public:
+	bool cooldown;
+	iPoint cdtime; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
+
 private:
 	std::vector<Image*>hud_images;
-	bool cooldown;
+
 	Image* ability;
 	Image* hp1;
 	Image* hp2;
 	Text* poke_hp_Link;
 	Text* poke_hp_Brendan;
-	iPoint cdtime; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
+
 	iPoint hpbar_pLink;//.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE) used for triangle operations with atlas pixels
 	iPoint hpbar_pBrendan;
 	char buffer[25]; //hp

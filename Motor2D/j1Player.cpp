@@ -69,7 +69,6 @@ bool Player::Start()
 	black = 0;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
-
 	return ret;
 }
 
@@ -190,6 +189,15 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 				delete dialog;
 				dialog = nullptr;
 			}
+		}
+	}
+	else if (gamestate == GAMEOVER)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN ||
+			App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+		{
+			gameover->visible = false;
+			gamestate = INGAME;
 		}
 	}
 

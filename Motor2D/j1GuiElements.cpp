@@ -821,6 +821,8 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 			hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;
 			ability->elements[0]->Hitbox.h = 0;
 			cooldown = false;
+			sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
+			poke_hp_Link->Write(buffer);
 		}
 		else //Brendan
 		{
@@ -836,6 +838,8 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 			item->Write(pokemon->name.c_str());
 			hpbar_pBrendan = iPoint(pokemon->hp, pokemon->hp);
 			hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
+			sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
+			poke_hp_Brendan->Write(buffer);
 		}
 	}
 	else
@@ -843,6 +847,12 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		//FINAL COMBAT
 		if (trainer) //LOSE
 		{
+			if (App->scene->player->gameover == nullptr)
+			{
+				App->scene->player->gameover = App->gui->CreateImage({ 525,235,320,240 }, { 0,0 });
+			}
+			else
+				App->scene->player->gameover->visible = true;
 			App->scene->switch_map = 6;
 			OpenClose(false);
 			App->scene->start_menu->OpenClose(true);
@@ -908,11 +918,11 @@ void PokemonCombatHud::OpenClose(bool open)
 
 void PokemonCombatHud::Handle_Input()
 {
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && cooldown == false)
+	/*if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && cooldown == false)
 	{
 		cooldown = true;
 		cdtime.y = cdtime.x;
-	}
+	}*/
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT && hpbar_pLink.y>0)
 	{
 		hpbar_pLink.y--;
