@@ -131,9 +131,10 @@
         <dynobject id="9" name="small_stone" type="ZELDA" rect_x="74" rect_y="34" rect_w="14" rect_h="14" file="textures/DynObjectsSpriteSheet.png" />
         <dynobject id="10" name="big_stone" type="ZELDA" rect_x="53" rect_y="34" rect_w="18" rect_h="19" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
-      <pokemons num="11">
+      <pokemons num="12">
         <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="5" attack="1" pos_x="544" pos_y="439"/>
         <pokemon id="2" name="Geodude" mode_stone="false" speed="1" dir="down" hp="3" attack="1" pos_x="580" pos_y="424"/>
+        <pokemon id="2" name="Geodude" mode_stone="false" speed="1" dir="down" hp="3" attack="1" pos_x="216" pos_y="184"/>
         <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="5" attack="1" pos_x="592" pos_y="263"/>
         <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="5" attack="1" pos_x="552" pos_y="135"/>
         <pokemon id="1" name="Golem" mode_stone="true" speed="1" dir="down" hp="5" attack="1" pos_x="256" pos_y="205"/>
