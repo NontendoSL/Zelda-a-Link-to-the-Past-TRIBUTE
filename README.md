@@ -20,6 +20,7 @@ CONTROLS
 		R -> Select item in the menu.
 		E -> Attack.
 		Q -> Interact with chests and NPCs.
+		Z -> Cast the special Ability in combat.
 		
 	Controller:
 	
@@ -35,7 +36,6 @@ CONTROLS
 		F2 -> Display Hookshot navigation map.
 		F10 -> Display colliders.
 		X -> Lower Pokémon HP in combat.
-		Z -> Cast the special Ability in combat.
 
 OBJECTIVE
 	
