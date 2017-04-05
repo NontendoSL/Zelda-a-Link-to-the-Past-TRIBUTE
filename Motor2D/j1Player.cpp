@@ -96,43 +96,23 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	if (hp_hearts.y == 0)
 	{
 		hp_hearts = { 6,6 };
-		if (App->map->CleanUp())
-		{
-			App->collision->EreseAllColiderPlayer();
-			App->entity_elements->DelteElements();
-			if (App->scene->enemy.size() > 0)
-			{
-				App->scene->enemy.clear();
-			}
-			if (App->scene->items.size() > 0)
-			{
-				App->scene->items.clear();
-			}
-			if (App->scene->dynobjects.size() > 0)
-			{
-				App->scene->dynobjects.clear();
-			}
-			if (App->scene->pokemons.size() > 0)
-			{
-				App->scene->pokemons.clear();
-			}
-			
-			gems = 0;
-			arrows = 0;
-			bombs = 0;
-		}
+
+		gems = 0;
+		bombs = 0;
+		arrows = 0;
+		
 		// SWITCH MAPS ------------------
 		if (App->scene->IdMap() == 2)
 		{
-			App->scene->Load_new_map(1);
+			App->scene->switch_map = App->scene->id_map;
 		}
 		else if (App->scene->IdMap() == 4)
 		{
-			App->scene->Load_new_map(4);
+			App->scene->switch_map = App->scene->id_map;
 		}
 		else if (App->scene->IdMap() == 5)
 		{
-			App->scene->Load_new_map(5);
+			App->scene->switch_map = App->scene->id_map;
 		}
 	}
 
