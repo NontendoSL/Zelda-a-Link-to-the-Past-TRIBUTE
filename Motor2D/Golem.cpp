@@ -500,16 +500,16 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			state = HIT;
 			hp--;
 		}
-/*
+
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback->state != HIT)
 		{
-			if (c2->callback->state != HOOKTHROWN && state != HIT)
+			if (c2->callback->state != HOOKTHROWN && state != HIT && state != STATIC)
 			{
 				state = ATTACKING;
 				animation.anim[state].ResetAnimations();
 				Orientate();
 			}
 		}
-		*/
+
 	}
 }
