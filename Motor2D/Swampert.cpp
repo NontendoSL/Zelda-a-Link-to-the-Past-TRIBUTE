@@ -2,6 +2,10 @@
 #include "j1App.h"
 #include "j1Pathfinding.h"
 #include "j1Audio.h"
+#include "j1Scene.h"
+#include "j1Gui.h"
+#include "j1GuiEntity.h"
+#include "j1GuiElements.h"
 
 Swampert::Swampert()
 {
@@ -29,6 +33,7 @@ bool Swampert::Awake(pugi::xml_node &conf)
 	name = conf.attribute("name").as_string("");
 	position.x = conf.attribute("pos_x").as_int(0);
 	position.y = conf.attribute("pos_y").as_int(0);
+
 	active = conf.attribute("active").as_bool(false);
 
 	return true;
@@ -50,6 +55,7 @@ bool Swampert::Start()
 	reset_run = true;
 	range = { 90,0 };
 	sp_speed = 3;
+	sp_damage = 10; //TODO MID -> need modify
 	//App->input_manager->AddListener(this);
 	return true;
 }
@@ -140,10 +146,6 @@ bool Swampert::Update()
 			gamestate = INGAME;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
-	{
-		AttackSpecial();
-	}
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
@@ -180,6 +182,7 @@ void Swampert::AttackSpecial()
 	sp_attacking = true;
 	sp_direction = direction;
 	sp_start = position;
+	sp_attack = App->collision->AddCollider({ position.x,position.y, 8,8 }, COLLIDER_POKEMON, this);
 }
 
 void Swampert::ThrowSP()
@@ -188,20 +191,25 @@ void Swampert::ThrowSP()
 	{
 	case 0:
 		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x,sp_start.y - range.y }, 10);
+		sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
 		break;
 	case 1:
 		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x,sp_start.y + range.y }, 10);
+		sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
 		break;
 	case 2:
 		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x - range.y,sp_start.y-10 }, 10);
+		sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
 		break;
 	case 3:
 		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x + range.y,sp_start.y-10 }, 10);
+		sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
 		break;
 	}
 	if (range.y >= range.x)
 	{
 		range.y = 0;
+		App->collision->EraseCollider(sp_attack);
 		sp_attacking = false;
 	}
 	else
@@ -222,7 +230,17 @@ bool Swampert::Idle()
 		CheckOrientation();
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+	{
+		if (App->scene->pokecombat->cooldown == false)
+		{
+			AttackSpecial();
+			App->scene->pokecombat->cooldown = true;
+			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
+		}
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
 		state = ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
@@ -246,7 +264,17 @@ bool Swampert::Walking()
 		state = IDLE;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+	{
+		if (App->scene->pokecombat->cooldown == false)
+		{
+			AttackSpecial();
+			App->scene->pokecombat->cooldown = true;
+			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
+		}
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
 		state = ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(state, direction, 7); //This number may need to be changed?
@@ -332,22 +360,22 @@ bool Swampert::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
 			App->audio->PlayFx(10);
 		}
 	}

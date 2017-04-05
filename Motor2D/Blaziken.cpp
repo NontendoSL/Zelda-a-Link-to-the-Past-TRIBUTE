@@ -2,6 +2,12 @@
 #include "j1App.h"
 #include "j1Pathfinding.h"
 #include "j1Audio.h"
+#include "j1Scene.h"
+#include "j1Gui.h"
+#include "j1GuiEntity.h"
+#include "j1GuiElements.h"
+
+
 
 Blaziken::Blaziken()
 {
@@ -73,6 +79,11 @@ bool Blaziken::Update()
 				break;
 			}
 			case ATTACKING:
+			{
+				Attack();
+				break;
+			}
+			case HOOKTHROWN:
 			{
 				Attack();
 				break;
@@ -154,11 +165,12 @@ bool Blaziken::CleanUp()
 	return true;
 }
 
+
 void Blaziken::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
+		if (c1 == sp_attack && c2->type == COLLIDER_POKEMON)
 		{
 
 		}
@@ -177,7 +189,20 @@ bool Blaziken::Idle()
 		CheckOrientation();
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+	{
+		if (App->scene->pokecombat->cooldown == false)
+		{
+			App->scene->pokecombat->cooldown = true;
+			state = HOOKTHROWN;
+			current_animation = App->anim_manager->GetAnimation(state, direction, 1);
+			current_animation->Reset();
+			sp_attacking = true;
+			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
+		}
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
 		state = ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(state, direction, 1);
@@ -201,7 +226,20 @@ bool Blaziken::Walking()
 		state = IDLE;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+	{
+		if (App->scene->pokecombat->cooldown == false)
+		{
+			App->scene->pokecombat->cooldown = true;
+			state = HOOKTHROWN;
+			current_animation = App->anim_manager->GetAnimation(state, direction, 1);
+			current_animation->Reset();
+			sp_attacking = true;
+			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
+		}
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
 		state = ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(state, direction, 1);
@@ -275,7 +313,16 @@ bool Blaziken::Attack()
 	{
 		if (current_animation->Finished())
 		{
-			App->collision->EraseCollider(collision_attack);
+			if (sp_attacking)
+			{
+				App->collision->EraseCollider(sp_attack);
+				sp_attacking = false;
+			}
+			else
+			{
+				App->collision->EraseCollider(collision_attack);
+
+			}
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;
@@ -285,26 +332,51 @@ bool Blaziken::Attack()
 	else
 	{
 		attacker = true;
-		if (direction == UP)
+		if (sp_attacking)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_PLAYER, this);
-			App->audio->PlayFx(9);
+			//TODO MID -> Need correct position colliders
+			if (direction == UP)
+			{
+				sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
+			}
+			else if (direction == RIGHT)
+			{
+				sp_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+			}
+			else if (direction == DOWN)
+			{
+				sp_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON, this);
+			}
+			else if (direction == LEFT)
+			{
+				sp_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+			}
+			App->audio->PlayFx(7); //TODO MID -> SOUND -> Diferent
 		}
-		else if (direction == RIGHT)
+		else
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_PLAYER, this);
-			App->audio->PlayFx(9);
+			if (direction == UP)
+			{
+				collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON, this);
+				App->audio->PlayFx(9);
+			}
+			else if (direction == RIGHT)
+			{
+				collision_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+				App->audio->PlayFx(9);
+			}
+			else if (direction == DOWN)
+			{
+				collision_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_POKEMON, this);
+				App->audio->PlayFx(9);
+			}
+			else if (direction == LEFT)
+			{
+				collision_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_POKEMON, this);
+				App->audio->PlayFx(9);
+			}
 		}
-		else if (direction == DOWN)
-		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y, 22, 8 }, COLLIDER_PLAYER, this);
-			App->audio->PlayFx(9);
-		}
-		else if (direction == LEFT)
-		{
-			collision_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_PLAYER, this);
-			App->audio->PlayFx(9);
-		}
+
 	}
 	return true;
 }

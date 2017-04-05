@@ -33,6 +33,10 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
+	void AttackSpecial();
+
+	void ThrowSP();
+
 	bool Idle();
 
 	bool Walking();

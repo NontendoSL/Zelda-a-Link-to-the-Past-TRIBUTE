@@ -4,6 +4,7 @@
 
 #include "Pokemon.h"
 
+
 class Blaziken : public Pokemon
 {
 public:
@@ -60,6 +61,8 @@ private:
 	bool reset_run;
 	bool reset_distance;
 	int timetorun = 0;
+
+
 };
 
 #endif //__BLAZIKEN_H_
