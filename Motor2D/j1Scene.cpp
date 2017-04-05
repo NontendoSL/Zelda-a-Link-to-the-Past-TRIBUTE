@@ -363,7 +363,7 @@ void j1Scene::LoadUi()
 	line = App->gui->CreateText(PIXELMORE, "The more power you apply to it, more distance you will reach.", 22, { 59,155 - 224 }, 20);
 	line->Visible(false);
 	start_menu->AddElement(line);
-	line = App->gui->CreateText(PIXELMORE, "BOOM!!! Explosion!!!", 22, { 59,155 - 224 }, 20);
+	line = App->gui->CreateText(PIXELMORE, "Use this bombs near big rocks to destroy them", 22, { 59,155 - 224 }, 20);
 	line->Visible(false);
 	start_menu->AddElement(line);
 	start_menu->position = { 0,-224 };

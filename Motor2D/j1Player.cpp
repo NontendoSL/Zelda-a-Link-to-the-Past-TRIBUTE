@@ -522,7 +522,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							c2->callback->direction = RIGHT;
 						else
 							c2->callback->direction = LEFT;
-						dialog = App->gui->CreateDialogue("Hey dude, what are you doing with a real sword in here ? !We Pokemon trainers don't fightHow 'bout that ?");
+						dialog = App->gui->CreateDialogue("Who are you? And what are you doing in my world? Here we fight with creatures called pokemon, not with weapons, let's try it");
 						App->collision->EraseCollider(collision_interact);
 						interaction = false;
 						state = IDLE;
@@ -1385,32 +1385,45 @@ bool Player::Hit()
 
 	if (dir_hit == UP)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 2.5, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 3, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y -= 2.5;
+			if (Camera_inside())
+				App->render->camera.y += 3 * scale;
+
+			position.y -= 3;
 		}
 	}
 	else if (dir_hit == DOWN)
 	{
 		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 2.5, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y += 2.5;
+			if (Camera_inside())
+				App->render->camera.y -= 3 * scale;
+
+			position.y += 3;
 		}
 	}
 	else if (dir_hit == LEFT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x - 2.5, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - 3, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x -= 2.5;
+			if (Camera_inside())
+				App->render->camera.x += 3 * scale;
+
+			position.x -= 3;
 		}
 	}
 	else if (dir_hit == RIGHT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 2.5, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 3, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x += 2.5;
+			if (Camera_inside())
+				App->render->camera.x -= 3 * scale;
+
+			position.x += 3;
 		}
 	}
+
 
 	return true;
 }
