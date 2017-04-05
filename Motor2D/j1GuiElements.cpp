@@ -906,13 +906,13 @@ void PokemonCombatHud::GetDamage(uint damage, bool trainer)
 {
 	if (trainer)
 	{
-		hpbar_pLink.y--;
+		hpbar_pLink.y -= damage;
 		sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
 		poke_hp_Link->Write(buffer);
 	}
 	else
 	{
-		hpbar_pBrendan.y--;
+		hpbar_pBrendan.y -= damage;
 		sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
 		poke_hp_Brendan->Write(buffer);
 	}
@@ -975,12 +975,12 @@ void PokemonCombatHud::Update()
 			}
 		}
 
-		if (hpbar_pLink.y >= 0)
+		if (hpbar_pLink.y <= 0)
 		{
 			num_pokemons.x--;
 			LoadNewPokemon(App->combatmanager->change_pokemon(true), true);
 		}
-		else if (hpbar_pBrendan.y >= 0)
+		else if (hpbar_pBrendan.y <= 0)
 		{
 			num_pokemons.y--;
 			LoadNewPokemon(App->combatmanager->change_pokemon(false), false);

@@ -120,13 +120,11 @@ bool Blaziken::Update()
 				Attack_IA();
 				break;
 			}
-			/*
-			case SPECIALATTACK:
+			case HIT:
 			{
-				SpecialAttack();
+				Movebyhit();
 				break;
 			}
-			*/
 			default:
 			{
 				break;

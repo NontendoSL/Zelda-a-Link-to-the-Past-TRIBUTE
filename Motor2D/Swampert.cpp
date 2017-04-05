@@ -160,7 +160,15 @@ void Swampert::Draw()
 	{
 		ThrowSP();
 	}
-	App->anim_manager->Drawing_Manager(state, direction, position, 7);
+	if (state == HIT)
+	{
+		App->anim_manager->Drawing_Manager(IDLE, direction, position, 7);
+	}
+	else
+	{
+		App->anim_manager->Drawing_Manager(state, direction, position, 7);
+	}
+
 }
 
 bool Swampert::CleanUp()
