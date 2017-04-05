@@ -223,7 +223,7 @@ Pokemon* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
 			{
 				item._Ptr->_Myval->active = false;
 				item++;
-				if (item == App->scene->player->pokedex.end())
+				if (item == App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.end())
 				{
 					return nullptr;
 				}

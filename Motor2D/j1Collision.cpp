@@ -45,6 +45,7 @@ bool j1Collision::Awake()
 
 bool j1Collision::Start()
 {
+	waittodelete = false;
 	return true;
 }
 
@@ -61,6 +62,7 @@ bool j1Collision::PreUpdate()
 				num_colliders--;
 		}
 	}
+	waittodelete = false;
 	return true;
 }
 
@@ -91,12 +93,12 @@ bool j1Collision::Update(float dt)
 
 			if (c1->CheckCollision(c2) == true)
 			{
-				if (matrix[c1->type][c2->type] == true && c1->callback)
+				if (matrix[c1->type][c2->type] == true && c1->callback && waittodelete == false)
 				{
 					c1->callback->OnCollision(c1, c2);
 				}
 
-				if (matrix[c2->type][c1->type] == true && c2->callback)
+				if (matrix[c2->type][c1->type] == true && c2->callback && waittodelete == false)
 				{
 					c2->callback->OnCollision(c2, c1);
 				}

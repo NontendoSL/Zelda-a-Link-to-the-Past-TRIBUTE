@@ -119,6 +119,7 @@ bool j1EntityElementScene::CleanUp()
 
 bool j1EntityElementScene::DelteElements()
 {
+	App->collision->waittodelete = true;
 	std::list<SceneElement*>::iterator item = elementscene.end();
 	item--;
 	if (elementscene.begin()._Ptr->_Myval->name != "Link")

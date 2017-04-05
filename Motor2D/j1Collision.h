@@ -88,6 +88,7 @@ public:
 	void DebugDraw();
 
 	uint num_colliders = 0;
+	bool waittodelete;
 
 private:
 
