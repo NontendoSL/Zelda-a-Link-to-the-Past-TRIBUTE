@@ -116,6 +116,10 @@ public:
 	//cooldown for soldier chase
 	j1Timer invincible_timer;
 
+	Direction dir_hit;
+	iPoint previus_position;
+	j1Timer knockback_time;
+
 private:
 
 	//player stats

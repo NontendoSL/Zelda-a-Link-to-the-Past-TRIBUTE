@@ -356,58 +356,18 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
+			
 			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
 			{
 				if (state != HIT && invincible_timer.ReadSec() >= 1) //TODO MED -> change this to a player state
 				{
+					App->audio->PlayFx(13);
 					state = HIT;
 					hurt_timer.Start();
 					invincible_timer.Start();
-					if (hp_hearts.y > 0)
-					{
-						hp_hearts.y--;
-					}
-
-					App->audio->PlayFx(13);
-
-					//KNOCKBACK--------------
-
-					if (c2->callback->direction == DOWN)
-				{
-					if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0) //magic numbers 20 -> this is the distance you will move
-					{
-						position.y += 15;
-						if (Camera_inside(iPoint(0, 15)))
-							App->render->camera.y -= 15;
-					}
-				}
-				if (c2->callback->direction == UP)
-				{
-					if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0) //magic numbers 20 -> this is the distance you will move
-					{
-						position.y -= 15;
-						if (Camera_inside(iPoint(0, 15)))
-							App->render->camera.y += 15;
-					}
-				}
-				if (c2->callback->direction == RIGHT)
-				{
-					if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0) //magic numbers 20 -> this is the distance you will move
-					{
-						position.x += 15;
-						if (Camera_inside(iPoint(15, 0)))
-							App->render->camera.x -= 15;
-					}
-				}
-				if (c2->callback->direction == LEFT)
-				{
-					if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0) //magic numbers 20 -> this is the distance you will move
-					{
-						position.x -= 15;
-						if (Camera_inside(iPoint(15, 0)))
-							App->render->camera.x += 15;
-					}
-				}
+					hp_hearts.y--;
+					dir_hit = c2->callback->direction;
+					previus_position = position;
 				}
 			}
 
@@ -1338,6 +1298,40 @@ bool Player::Hit()
 	{
 		state = IDLE;
 		return true;
+	}
+	if (hp <= 0)
+	{
+		state = DYING;
+		return true;
+	}
+
+	if (dir_hit == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y -= 4;
+		}
+	}
+	else if (dir_hit == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y += 4;
+		}
+	}
+	else if (dir_hit == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x -= 4;
+		}
+	}
+	else if (dir_hit == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x += 4;
+		}
 	}
 
 	return true;
