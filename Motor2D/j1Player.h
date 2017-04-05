@@ -145,6 +145,10 @@ private:
 	//Timers
 	j1Timer timer;
 	j1Timer hurt_timer;
+
+	//Comprovate camera in map
+	j1Timer timer_to_comprovate;
+	bool CameraisIn();
 	
 
 	//T

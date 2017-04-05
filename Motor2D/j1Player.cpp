@@ -70,7 +70,7 @@ bool Player::Start()
 	black = 0;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
-
+	timer_to_comprovate.Start();
 	game_timer.Start();
 	return ret;
 }
@@ -246,7 +246,12 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
-
+	//each 1s
+	if (timer_to_comprovate.ReadSec() > 1)
+	{
+		timer_to_comprovate.Start();
+		CameraisIn();
+	}
 	return ret;
 }
 
@@ -1489,4 +1494,32 @@ void Player::GetDamage()
 Collider* Player::GetCollisionAttack() const
 {
 	return collision_attack;
+}
+
+bool Player::CameraisIn()
+{
+	bool ret = false;
+	iPoint camera_pos(-App->render->camera.x / 2, -App->render->camera.y / 2);
+	iPoint size_map = App->map->MapToWorld(App->map->data.width, App->map->data.height);
+	if (camera_pos.x < 0)
+	{
+		camera_pos.x = 0;
+		ret = true;
+	}
+	if (camera_pos.x > size_map.x - (App->win->GetWidth() / scale) / 2)
+	{
+		camera_pos.x = size_map.x - (App->win->GetWidth() / scale) / 2;
+		ret = true;
+	}
+	if (camera_pos.y < 0)
+	{
+		camera_pos.y = 0;
+		ret = true;
+	}
+	if (camera_pos.y > size_map.y - (App->win->GetHeight() / scale) / 2)
+	{
+		camera_pos.y = size_map.y - (App->win->GetHeight() / scale) / 2;
+		ret = true;
+	}
+	return ret;
 }
