@@ -888,7 +888,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	}
 	case BUTTON_A:
 	{
-		if (e_state == E_DOWN && gamestate == INGAME && state != HOOKTHROWN)
+		if (e_state == E_DOWN && state != HOOKTHROWN)
 		{
 			if (dialog == nullptr)
 			{
@@ -1451,8 +1451,6 @@ void Player::GetfloorLvl(iPoint pos)
 	{
 		actual_floor = 2;
 	}
-
-	LOG("Link is in floor %i", actual_floor);
 }
 
 bool Player::CheckOrientation()
