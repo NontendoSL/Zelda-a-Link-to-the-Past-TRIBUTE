@@ -44,11 +44,11 @@ bool Golem::Start()
 {
 	state = STATIC;
 	scale = App->win->GetScale();
-	offset_x = 8;
-	offset_y = 17;
+	offset_x = 7;
+	offset_y = 14;
 	gamestate = TIMETOPLAY;
 	movable = true;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_POKEMON, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	reset_run = true;

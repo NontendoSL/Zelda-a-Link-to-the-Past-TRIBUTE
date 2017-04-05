@@ -7,33 +7,71 @@
 bool Creature::Move(int x, int y)
 {
 	bool ret = true;
+	int temp;
 	if (x < 0) //LEFT
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + x, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		temp = App->map->MovementCost(collision_feet->rect.x + x, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
+		if (temp == 0)
 		{
 			position.x += x;
 		}
+		else if (temp == T_UP)
+		{
+			position.y -= chase_speed;
+		}
+		else if (temp == T_DOWN)
+		{
+			position.y += chase_speed;
+		}
 	}
+
 	else //RIGHT
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + x, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + x, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
+		if (temp == 0)
 		{
 			position.x += x;
+		}
+		else if (temp == T_UP)
+		{
+			position.y -= chase_speed;
+		}
+		else if (temp == T_DOWN)
+		{
+			position.y += chase_speed;
 		}
 	}
 
 	if (y > 0) //DOWN
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + y, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + y, collision_feet->rect.w, collision_feet->rect.h, DOWN);
+		if (temp == 0)
 		{
 			position.y += y;
+		}
+		else if (temp == T_LEFT)
+		{
+			position.x -= chase_speed;
+		}
+		else if (temp == T_RIGHT)
+		{
+			position.x += chase_speed;
 		}
 	}
 	else // UP
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + y, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + y, collision_feet->rect.w, collision_feet->rect.h, UP);
+		if (temp == 0)
 		{
 			position.y += y;
+		}
+		else if (temp = T_LEFT)
+		{
+			position.x -= chase_speed;
+		}
+		else if (temp == T_RIGHT)
+		{
+			position.x += chase_speed;
 		}
 	}
 
