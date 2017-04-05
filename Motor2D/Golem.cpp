@@ -491,7 +491,8 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT && state != STATIC)
+		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT && state != STATIC// &&
+		/*c2->callback->state != HIT && c2->callback->state != HOOKTHROWN*/)
 		{
 			knockback_time.Start();
 			animation.anim[5].ResetAnimations();
@@ -500,8 +501,8 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			state = HIT;
 			hp--;
 		}
-
-		/*if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback->state != HIT)
+/*
+		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback->state != HIT)
 		{
 			if (c2->callback->state != HOOKTHROWN && state != HIT)
 			{
@@ -509,6 +510,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 				animation.anim[state].ResetAnimations();
 				Orientate();
 			}
-		}*/
+		}
+		*/
 	}
 }
