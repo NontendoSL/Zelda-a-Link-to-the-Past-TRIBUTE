@@ -156,6 +156,7 @@ public:
 	void Move(bool x_axis, float speed);
 	void LoadNewPokemon(Pokemon* pokemon, bool trainer);
 	void CombatInfo(Pokemon* pokemon_1, Pokemon* pokemon_2);
+	void GetDamage(uint damage, bool trainer);
 public:
 	bool cooldown;
 	iPoint cdtime; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME

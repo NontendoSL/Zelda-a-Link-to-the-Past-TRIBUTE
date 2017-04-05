@@ -788,6 +788,8 @@ PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 	num_pokemons = { 3, 3 };
 	cooldown = false;
 	cdtime = iPoint(Link->cooldown, Link->cooldown);
+	Link->target = Brendan;
+	Brendan->target = Link;
 
 }
 
@@ -862,7 +864,8 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		}
 		else//VICTORY
 		{
-
+			App->scene->ingame = false;
+			App->scene->player->gameover = App->gui->CreateImage({ 1,481,320,240 }, { 0,0 });
 		}
 	}
 
@@ -897,6 +900,22 @@ void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 	//ability sprites
 	ability->Hitbox.y = 155;
 	ability->elements[0]->Hitbox.y = 155;
+}
+
+void PokemonCombatHud::GetDamage(uint damage, bool trainer)
+{
+	if (trainer)
+	{
+		hpbar_pLink.y--;
+		sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
+		poke_hp_Link->Write(buffer);
+	}
+	else
+	{
+		hpbar_pBrendan.y--;
+		sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
+		poke_hp_Brendan->Write(buffer);
+	}
 }
 
 void PokemonCombatHud::OpenClose(bool open)
@@ -956,12 +975,12 @@ void PokemonCombatHud::Update()
 			}
 		}
 
-		if (hpbar_pLink.y == 0)
+		if (hpbar_pLink.y >= 0)
 		{
 			num_pokemons.x--;
 			LoadNewPokemon(App->combatmanager->change_pokemon(true), true);
 		}
-		else if (hpbar_pBrendan.y == 0)
+		else if (hpbar_pBrendan.y >= 0)
 		{
 			num_pokemons.y--;
 			LoadNewPokemon(App->combatmanager->change_pokemon(false), false);

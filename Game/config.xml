@@ -47,7 +47,7 @@
   
 	<window>
     <resolution width="640" height="480" scale="2" />
-		<fullscreen value="false" />
+		<fullscreen value="true" />
 		<borderless value="false" />
 		<resizable value="false" />
 		<fullscreen_window value="false" />
