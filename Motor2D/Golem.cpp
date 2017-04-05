@@ -403,11 +403,47 @@ bool Golem::Hit()
 		return true;
 	}
 
+	if (knockback_time.ReadSec() >= 0.2)
+	{
+		state = IDLE;
+		return true;
+	}
+
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = IDLE;
 		return true;
 	}
+
+	if (dir_hit == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 1, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= 1;
+		}
+	}
+	else if (dir_hit == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 1, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += 1;
+		}
+	}
+	else if (dir_hit == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - 1, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= 1;
+		}
+	}
+	else if (dir_hit == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 1, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += 1;
+		}
+	}
+
 	return true;
 }
 
@@ -457,13 +493,15 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 
 		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT && state != STATIC)
 		{
+			knockback_time.Start();
 			animation.anim[5].ResetAnimations();
 			hurt_timer.Start();
+			dir_hit = c2->callback->direction;
 			state = HIT;
 			hp--;
 		}
 
-		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback->state != HIT)
+		/*if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback->state != HIT)
 		{
 			if (c2->callback->state != HOOKTHROWN && state != HIT)
 			{
@@ -471,6 +509,6 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 				animation.anim[state].ResetAnimations();
 				Orientate();
 			}
-		}
+		}*/
 	}
 }

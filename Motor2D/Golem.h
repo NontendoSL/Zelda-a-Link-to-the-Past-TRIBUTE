@@ -53,6 +53,8 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
+	Direction dir_hit;
+	j1Timer knockback_time;
 
 private:
 
