@@ -390,17 +390,15 @@ bool Soldier::Move()
 
 bool Soldier::Chase()
 {
-	path.clear();
-	attack_time.Start();
-	
-	iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
+	//path.clear();
+	//attack_time.Start();
 
 	if (App->scene->player->state != HIT)
 	{
+		iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
 		GoTo(player_pos, chase_speed);
 		Orientate();
 	}
-
 	return true;
 }
 
@@ -421,68 +419,53 @@ bool Soldier::Die()
 
 bool Soldier::Movebyhit()
 {
+	if (hp <= 0)
+	{
+		state = DYING;
+		return true;
+	}
+
+	if (knockback_time.ReadSec() >= 0.2)
+	{
+		state = IDLE;
+		return true;
+	}
+
 	if (dir_hit == UP)
 	{
-		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			App->audio->PlayFx(12);
 			position.y -= 4;
 		}
-		if (position.y < (previus_position.y - 30))
-		{
-			state = IDLE;
-		}
 	}
-	if (dir_hit == DOWN)
+	else if (dir_hit == DOWN)
 	{
-		//App->map->MovementCost(position.x, position.y + (4 + height), DOWN)
-		if (App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			App->audio->PlayFx(12);
 			position.y += 4;
 		}
-
-		if (position.y > (previus_position.y + 30))
-		{
-			state = IDLE;
-		}
 	}
-	if (dir_hit == LEFT)
+	else if (dir_hit == LEFT)
 	{
-		//App->map->MovementCost(position.x - 4, position.y, LEFT)
-		if (App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			App->audio->PlayFx(12);
 			position.x -= 4;
 		}
-
-		if (position.x < (previus_position.x - 30))
-		{
-			state = IDLE;
-		}
 	}
-	if (dir_hit == RIGHT)
+	else if (dir_hit == RIGHT)
 	{
-		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			App->audio->PlayFx(12);
 			position.x += 4;
-		}
-		if (position.x > (previus_position.x + 30))
-		{
-			state = IDLE;
 		}
 	}
 	/*if (position.x > (previus_position.x + 65) ||
-		position.x < (previus_position.x + 65) ||
-		position.y >(previus_position.y + 65) ||
-		position.y < (previus_position.y + 65))
+	position.x < (previus_position.x + 65) ||
+	position.y >(previus_position.y + 65) ||
+	position.y < (previus_position.y + 65))
 	{
-		state = IDLE;
+	state = IDLE;
 	}*/
 	return true;
 }
-
 

@@ -29,6 +29,8 @@ public:
 	// Called before all Updates
 	//bool PostUpdate();
 
+	//void OnCollision(Collider* c1, Collider* c2);
+
 	void Draw();
 
 	// Called before quitting
@@ -56,6 +58,7 @@ public:
 	bool Movebyhit();
 	Direction dir_hit;
 	iPoint previus_position;
+	j1Timer knockback_time;
 
 private:
 	SoldierType soldier_type;

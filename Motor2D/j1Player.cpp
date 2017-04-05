@@ -375,66 +375,58 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 					//KNOCKBACK--------------
 
-					if (direction == UP)
+					if (c2->callback->direction == DOWN)
+				{
+					if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0) //magic numbers 20 -> this is the distance you will move
 					{
-						if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0) //magic numbers 20 -> this is the distance you will move
-						{
-							position.y += 15;
-							if (Camera_inside(iPoint(0, 15)))
-								App->render->camera.y -= 15;
-						}
+						position.y += 15;
+						if (Camera_inside(iPoint(0, 15)))
+							App->render->camera.y -= 15;
 					}
-					if (direction == DOWN)
+				}
+				if (c2->callback->direction == UP)
+				{
+					if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0) //magic numbers 20 -> this is the distance you will move
 					{
-						if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0) //magic numbers 20 -> this is the distance you will move
-						{
-							position.y -= 15;
-							if (Camera_inside(iPoint(0, 15)))
-								App->render->camera.y += 15;
-						}
+						position.y -= 15;
+						if (Camera_inside(iPoint(0, 15)))
+							App->render->camera.y += 15;
 					}
-					if (direction == LEFT)
+				}
+				if (c2->callback->direction == RIGHT)
+				{
+					if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0) //magic numbers 20 -> this is the distance you will move
 					{
-						if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0) //magic numbers 20 -> this is the distance you will move
-						{
-							position.x += 15;
-							if (Camera_inside(iPoint(15, 0)))
-								App->render->camera.x -= 15;
-						}
+						position.x += 15;
+						if (Camera_inside(iPoint(15, 0)))
+							App->render->camera.x -= 15;
 					}
-					if (direction == RIGHT)
+				}
+				if (c2->callback->direction == LEFT)
+				{
+					if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0) //magic numbers 20 -> this is the distance you will move
 					{
-						if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0) //magic numbers 20 -> this is the distance you will move
-						{
-							position.x -= 15;
-							if (Camera_inside(iPoint(15, 0)))
-								App->render->camera.x += 15;
-						}
+						position.x -= 15;
+						if (Camera_inside(iPoint(15, 0)))
+							App->render->camera.x += 15;
 					}
+				}
 				}
 			}
 
 			if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
 			{
 				Soldier* soldier = (Soldier*)c2->callback;
-				soldier->hp--;
-				if (soldier->hp == 0)
+				if (soldier->destructible == true && soldier->state != HIT)
 				{
-					if (soldier->destructible)
-					{
-						c2->callback->state = DYING;
-					}
-				}
-				else
-				{
-					if (soldier->destructible)
-					{
-						soldier->state = HIT;
-						soldier->dir_hit = c1->callback->direction;
-						soldier->previus_position = soldier->position;
-					}
+					soldier->knockback_time.Start();
+					soldier->hp--;
+					soldier->state = HIT;
+					soldier->dir_hit = c1->callback->direction;
+					soldier->previus_position = soldier->position;
 				}
 			}
+
 			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
 			{
 				if (canSwitchMap == false)
@@ -1341,9 +1333,14 @@ bool Player::Move()
 
 bool Player::Hit()
 {
+	if (collision_attack != nullptr)
+	{
+		collision_attack->to_delete = true;
+	}
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = IDLE;
+		return true;
 	}
 
 	return true;

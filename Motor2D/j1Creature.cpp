@@ -7,19 +7,34 @@
 bool Creature::Move(int x, int y)
 {
 	bool ret = true;
-
-	position.x += x;
-	if (App->map->CheckTileCost(x, y) == 1)
+	if (x < 0) //LEFT
 	{
-		position.x -= x;
-		ret = false;
+		if (App->map->MovementCost(collision_feet->rect.x + x, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x += x;
+		}
+	}
+	else //RIGHT
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + x, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += x;
+		}
 	}
 
-	position.y += y;
-	if (App->map->CheckTileCost(x, y) == 1)
+	if (y > 0) //DOWN
 	{
-		position.y -= y;
-		ret = false;
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + y, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += y;
+		}
+	}
+	else // UP
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + y, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y += y;
+		}
 	}
 
 	return ret;
@@ -73,11 +88,11 @@ bool Creature::Orientate()
 		{
 			direction = DOWN;
 		}
-			
+
 		else
 		{
 			direction = UP;
-		}	
+		}
 	}
 
 	else
@@ -86,18 +101,18 @@ bool Creature::Orientate()
 		{
 			direction = LEFT;
 		}
-			
+
 		else
 		{
 			direction = RIGHT;
-		}		
+		}
 	}
 
 	if (prev_dir == direction)
 	{
 		return false;
 	}
-	
+
 	else
 	{
 		return true;
@@ -105,5 +120,4 @@ bool Creature::Orientate()
 
 
 }
-
 
