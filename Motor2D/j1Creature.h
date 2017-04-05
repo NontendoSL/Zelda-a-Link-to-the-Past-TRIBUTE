@@ -36,6 +36,7 @@ public:
 
 	virtual bool GoTo(iPoint destination, int speed);
 	virtual bool Orientate();
+	virtual bool OrientateTo(iPoint pos);
 
 public:
 	CreatureType c_type;
@@ -53,6 +54,7 @@ public:
 
 	//COLLISIONS
 	Collider* collision_feet = nullptr;
+	j1Timer orient_time;
 
 
 };

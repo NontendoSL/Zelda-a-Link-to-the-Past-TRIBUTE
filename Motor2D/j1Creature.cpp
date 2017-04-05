@@ -159,3 +159,43 @@ bool Creature::Orientate()
 
 }
 
+bool Creature::OrientateTo(iPoint pos)
+{
+	Direction prev_dir = direction;
+	if (abs(pos.x - position.x) < abs(pos.y - position.y))
+	{
+		if (pos.y > position.y)
+		{
+			direction = DOWN;
+		}
+
+		else
+		{
+			direction = UP;
+		}
+	}
+
+	else
+	{
+		if (pos.x < position.x)
+		{
+			direction = LEFT;
+		}
+
+		else
+		{
+			direction = RIGHT;
+		}
+	}
+
+	if (prev_dir == direction)
+	{
+		return false;
+	}
+
+	else
+	{
+		return true;
+	}
+}
+

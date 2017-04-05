@@ -108,6 +108,11 @@ bool Sceptyle::Update()
 			case WALKING:
 			{
 				Walking_IA();
+				/*if (target != nullptr && orient_time.ReadSec() >= 2)
+				{
+					orient_time.Start();
+					OrientateTo(target->position);
+				}*/
 				break;
 			}
 			case ATTACKING:
@@ -191,7 +196,7 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 
 			if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
 			{
-				if (pokemon_player)
+				if (pokemon_player && c1->callback != c2->callback)
 				{
 					Pokemon* temp = (Pokemon*)c2->callback;
 					temp->hp -= sp_damage;
@@ -388,6 +393,7 @@ bool Sceptyle::Attack()
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = IDLE;
+			getdamage = false;
 		}
 	}
 	else
@@ -448,6 +454,7 @@ bool Sceptyle::Idle_IA()
 					direction = RIGHT;
 				}
 				state = WALKING;
+				orient_time.Start();
 				reset_distance = true;
 			}
 		}

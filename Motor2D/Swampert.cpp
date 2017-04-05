@@ -114,6 +114,11 @@ bool Swampert::Update()
 			{
 				//CheckTargetPos();
 				Walking_IA();
+				/*if (target != nullptr && orient_time.ReadSec() >= 2)
+				{
+					orient_time.Start();
+					OrientateTo(target->position);
+				}*/
 				break;
 			}
 			case ATTACKING:
@@ -457,6 +462,7 @@ bool Swampert::Idle_IA()
 				}
 				state = WALKING;
 				reset_distance = true;
+				orient_time.Start();
 			}
 		}
 	}

@@ -115,6 +115,11 @@ bool Blaziken::Update()
 			case WALKING:
 			{
 				Walking_IA();
+				/*if (target != nullptr && orient_time.ReadSec() >= 2)
+				{
+					orient_time.Start();
+					OrientateTo(target->position);
+				}*/
 				break;
 			}
 			case ATTACKING:
@@ -436,6 +441,7 @@ bool Blaziken::Idle_IA()
 					direction = RIGHT;
 				}
 				state = WALKING;
+				orient_time.Start();
 				reset_distance = true;
 			}
 		}
