@@ -117,6 +117,24 @@ bool j1EntityElementScene::CleanUp()
 	return ret;
 }
 
+bool j1EntityElementScene::DelteWeapons()
+{
+	std::list<SceneElement*>::iterator item = elementscene.end();
+	item--;
+	{
+		while (item != elementscene.begin())
+		{
+			if (item._Ptr->_Myval->type == WEAPON)
+			{
+				delete item._Ptr->_Myval;
+				elementscene.erase(item);
+			}
+			item--;
+		}
+	}
+	return true;
+}
+
 bool j1EntityElementScene::DelteElements()
 {
 	App->collision->waittodelete = true;

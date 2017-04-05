@@ -112,6 +112,7 @@ public:
 
 	//Gameover
 	Image* gameover = nullptr;
+	Image* winover = nullptr;
 
 	//cooldown for soldier chase
 	j1Timer invincible_timer;

@@ -421,6 +421,11 @@ bool j1Scene::Load_new_map(int n)
 	{
 		player = App->entity_elements->CreatePlayer();
 	}
+	if (n == 1)
+	{
+		App->scene->player->score = 0;
+		App->scene->player->gems = 0;
+	}
 	/*//SET WEAPONS WHEN MAP CHANGES
 	if (weapon_equiped == BOMB)
 	{
@@ -443,7 +448,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			if (n == 1 && switch_map == 0 || switch_map == 6)
+			if (n == 1 && switch_map == 0 || switch_map == 6 || pokecombat!=nullptr && n==1)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);

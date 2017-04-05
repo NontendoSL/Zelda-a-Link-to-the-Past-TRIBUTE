@@ -43,6 +43,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool DelteWeapons();
 	// delete elements witout player
 	bool DelteElements();
 

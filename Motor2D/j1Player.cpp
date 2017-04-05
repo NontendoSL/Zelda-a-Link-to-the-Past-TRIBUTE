@@ -217,6 +217,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
 		{
 			gameover->visible = false;
+			winover->visible = false;
 			gamestate = INGAME;
 		}
 	}
@@ -425,11 +426,11 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			{
 				if (state != HOOKTHROWN)//TODO MED -> change this (we will have golbats int the future)
 				{
-					if (c2->callback->name == "Golem" && c2->callback->state == HIT)
+					if (c2->callback->name == "Golem" && c2->callback->state == STATIC)
 					{
 						//Not dammage
 					}
-					else if(state != HIT)
+					else if(state != STATIC)
 					{
 						if (hurt == false)
 						{
@@ -921,8 +922,30 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 
 				App->scene->switch_menu = true;
 				gamestate = INMENU;
-				break;
 			}
+			if (gamestate == INMENU)
+			{
+				if (gameover != nullptr)
+				{
+					gameover->visible = false;
+					for (int i = 0; i < gameover->elements.size(); i++)
+					{
+						gameover->elements[i]->visible = false;
+					}
+				}
+				if (winover != nullptr)
+				{
+					winover->visible = false;
+					for (int i = 0; i < winover->elements.size(); i++)
+					{
+						winover->elements[i]->visible = false;
+					}
+				}
+
+				gamestate = INGAME;
+
+			}
+			break;
 		}
 	}
 
