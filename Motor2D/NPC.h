@@ -15,11 +15,11 @@ public:
 	{}
 
 public:
-	bool destructible;
-	bool movable;
-	bool canattack;
+	bool destructible = false;
+	bool movable = false;
+	bool canattack = false;
 
-	int npc_id;
+	int npc_id = 0;
 	uint marge;
 
 

@@ -61,9 +61,9 @@ public:
 
 public:
 
-	bool active;
-	bool dead;
-	bool pokemon_player;
+	bool active = false;
+	bool dead = false;
+	bool pokemon_player = false;
 	uint cooldown;
 	//hits
 	Direction dir_hit;
@@ -86,11 +86,11 @@ protected:
 	//special attack
 	iPoint range; //.X shows max range, .Y shows distance moved
 	iPoint sp_start;
-	bool sp_attacking;
-	int sp_direction;
-	int sp_speed;
+	bool sp_attacking = false;
+	int sp_direction = 0;
+	int sp_speed = 0;
 	uint sp_damage;
-	Collider* sp_attack;
+	Collider* sp_attack = nullptr;
 
 	j1Timer time_wait;
 

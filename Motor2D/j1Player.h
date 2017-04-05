@@ -90,7 +90,7 @@ public:
 public:
 	//--- POKEMON TRAINER CARD ---
 	j1Timer game_timer;
-	Text* time;
+	Text* time = nullptr;
 	int score;
 	//ITEMS ----------
 	uint gems = 0;
@@ -129,12 +129,12 @@ private:
 	std::list<Item*> bag;
 
 	//switchmap
-	bool canSwitchMap;
-	int black;
+	bool canSwitchMap = false;
+	int black = 0;
 
 	//Colliders
-	Collider* collision_attack;
-	Collider* collision_interact;
+	Collider* collision_attack = nullptr;
+	Collider* collision_interact = nullptr;
 
 	bool attacker = false;
 	bool interaction = false;

@@ -47,7 +47,7 @@ private:
 
 	//SDL_Texture* texture = nullptr;
 	//std::string file_name;
-	bool active;
+	bool active = false;
 
 };
 

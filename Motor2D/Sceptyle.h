@@ -60,11 +60,11 @@ public:
 private:
 
 	//Timer
-	int timetoplay;
+	int timetoplay = 0;
 	int dis_moved = 0;
 	int distance = 0;
-	bool reset_run;
-	bool reset_distance;
+	bool reset_run = false;
+	bool reset_distance = false;
 	int timetorun = 0;
 };
 

@@ -62,8 +62,8 @@ private:
 	//All animations of the game
 	std::vector<AnimationStruct> animat;
 
-	int range_link;
-	iPoint pivot;
+	int range_link = 0;
+	iPoint pivot {0,0};
 	SDL_Rect r;
 	Animation* current_animation = nullptr;
 	AnimationStruct* anim_struct = nullptr;

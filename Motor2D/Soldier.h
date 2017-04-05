@@ -78,11 +78,11 @@ private:
 	int timetoplay;
 
 	//WHEN ATTACKED
-	int timetorun;
-	bool reset_run;
-	int distance;
-	int dis_moved;
-	bool reset_distance;
+	int timetorun = 0;
+	bool reset_run = false;
+	int distance = 0;
+	int dis_moved = 0;
+	bool reset_distance = false;
 };
 
 #endif //__SOLDIER_H_

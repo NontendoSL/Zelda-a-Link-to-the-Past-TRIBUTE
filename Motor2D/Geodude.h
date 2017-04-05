@@ -62,14 +62,14 @@ private:
 	Item* item_inside = nullptr;
 	SDL_Texture* texture = nullptr;
 
-	int timetoplay;
-	int timetorun;
-	bool reset_run;
-	int distance;
-	int dis_moved;
-	bool reset_distance;
+	int timetoplay = 0;
+	int timetorun = 0;
+	bool reset_run = false;
+	int distance = 0;
+	int dis_moved = 0;
+	bool reset_distance = false;
 
-	bool mode_stone;
+	bool mode_stone = false;
 
 
 	j1Timer hurt_timer;

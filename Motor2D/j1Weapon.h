@@ -107,9 +107,9 @@ public:
 
 public:
 	iPoint position;
-	int radius;
+	int radius = 0;
 	uint timer;
-	Animation* current;
+	Animation* current = nullptr;
 	BombContainer* container = nullptr;
 	BombStep step;
 	Collider* collision = nullptr;

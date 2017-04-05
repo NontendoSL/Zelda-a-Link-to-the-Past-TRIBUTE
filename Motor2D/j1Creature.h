@@ -40,9 +40,9 @@ public:
 
 public:
 	CreatureType c_type;
-	int hp;
+	int hp = 0;
 	bool walking = false;
-	int attack;
+	int attack = 0;
 	float chase_speed;
 
 	//COMBAT STATS
