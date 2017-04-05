@@ -263,7 +263,7 @@ bool Geodude::Move()
 	if (direction == LEFT)
 	{
 		//App->map->MovementCost(position.x - speed, position.y, LEFT)
-		if (App->map->MovementCost(position.x - offset_x, position.y, offset_x, offset_y, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
 			position.x -= speed;
 			dis_moved++;
@@ -279,7 +279,7 @@ bool Geodude::Move()
 	if (direction == RIGHT)
 	{
 		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(position.x + offset_x, position.y, offset_x, offset_y, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
 			position.x += speed;
 			dis_moved++;
@@ -293,7 +293,7 @@ bool Geodude::Move()
 	if (direction == UP)
 	{
 		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(position.x, position.y - offset_y, offset_x, offset_y, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
 			position.y -= speed;
 			dis_moved++;
@@ -307,7 +307,7 @@ bool Geodude::Move()
 	if (direction == DOWN)
 	{
 		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
-		if (App->map->MovementCost(position.x, position.y + offset_y, offset_x, offset_y, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
 			position.y += speed;
 			dis_moved++;
