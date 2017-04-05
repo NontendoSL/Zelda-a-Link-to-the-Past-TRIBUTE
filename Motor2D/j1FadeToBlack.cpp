@@ -72,6 +72,11 @@ bool j1FadeToBlack::Update(float dt)
 	return true;
 }
 
+bool j1FadeToBlack::IsFading()
+{
+	return current_step == none;
+}
+
 bool j1FadeToBlack::PostUpdate()
 {
 	// Finally render the black square with alpha on the screen

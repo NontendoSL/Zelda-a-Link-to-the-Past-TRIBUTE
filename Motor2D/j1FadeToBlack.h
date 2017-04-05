@@ -27,9 +27,8 @@ public:
 	bool Checkfadetoblack();
 	bool Checkfadefromblack();
 
-private:
+	bool IsFading();
 
-	float normalized = 0;
 	enum fade_step
 	{
 		none,
@@ -38,6 +37,10 @@ private:
 	};
 
 	fade_step current_step = none;
+private:
+
+	float normalized = 0;
+
 	bool goFade = false;
 	bool finnishfirstpart = false;
 	Uint32 start_time = 0;

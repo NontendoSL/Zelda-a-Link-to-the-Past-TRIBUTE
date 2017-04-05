@@ -70,6 +70,9 @@ bool Player::Start()
 	black = 0;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
+
+	game_timer.Start();
+	time = App->gui->CreateText(GANONF, "0 seconds of playtime", 50, { 0,0 }, 20, { 255,0,255,255 });
 	return ret;
 }
 
@@ -83,6 +86,10 @@ bool Player::PreUpdate()
 
 bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 {
+	//sprintf_s(buffer, 30, "%.f seconds of playtime", game_timer.ReadSec());
+	std::string var = std::to_string(game_timer.ReadSec()) + "seconds of playtime";
+	time->Write(var.c_str());
+	var.clear();
 	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
 	bool ret = true;
 	//if you dead, you appear on the Link House
@@ -225,7 +232,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		bombmanager->Drop(position);
 		App->audio->PlayFx(6);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fadetoblack->Checkfadetoblack())
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fadetoblack->IsFading())
 	{
 		if (App->scene->inventory) //TODO LOW -> If pres to fast you can lisen 2.
 		{
@@ -237,7 +244,9 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		}
 
 		App->scene->switch_menu = true;
+		
 		gamestate = INMENU;
+
 	}
 
 	//Collision follow the player
