@@ -353,6 +353,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							bombmanager = App->entity_elements->CreateBombContainer();
 							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
 							score += 75;
+							bombs += 4;
 						}
 						App->entity_elements->DeleteItem((Item*)c2->callback);
 						bombs++;

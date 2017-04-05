@@ -55,7 +55,7 @@
     <map n="2" file="LinkHouseOutdoor.tmx">
       <camera follow="true"/>
       <Link pos_x="184" pos_y="265" />
-      <enemies num="29">
+      <enemies num="22">
 
         <!-- Static Enemies -->
         <enemy id="1" pos_x="169" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
@@ -79,7 +79,6 @@
 
         <!-- Interactive Enemies -->
         <enemy id="1" pos_x="218" pos_y="414" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-        <enemy id="1" pos_x="230" pos_y="400" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0"  />
         <enemy id="1" pos_x="330" pos_y="400" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
         <enemy id="1" pos_x="88" pos_y="329" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
         <enemy id="1" pos_x="182" pos_y="149" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
