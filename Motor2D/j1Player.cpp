@@ -881,7 +881,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		{
 	case BUTTON_X:
 	{
-		if (e_state == E_DOWN)
+		if (e_state == E_DOWN && state != HOOKTHROWN)
 		{
 			state = ATTACKING;
 			current_animation = App->anim_manager->GetAnimation(state, direction, 0);
