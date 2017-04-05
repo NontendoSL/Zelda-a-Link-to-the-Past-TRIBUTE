@@ -431,6 +431,7 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 			hp--;
 		}
 
+		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c1->callback->state != HIT)
 		{
 			state == ATTACKING;
 			animation.anim[state].ResetAnimations();
