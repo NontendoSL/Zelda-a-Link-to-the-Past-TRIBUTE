@@ -121,12 +121,14 @@ public:
 	void OnInputCallback(INPUTEVENT, EVENTSTATE); //TODO LOW -> check if its better to put button inputs here or not
 public:
 	void AddElement(j1GuiEntity* element);
+	void ResetInventory();
 	void Select(int value);
 	void OpenClose(bool open);
 	void Move(bool axis, float speed);
 	void Click();
 	void UnClick();
 	void Do();
+
 	Image* GetImage(uint id);
 	Button* GetSelected();
 	void ShowItemInfo();

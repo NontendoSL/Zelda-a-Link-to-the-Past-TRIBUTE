@@ -184,7 +184,17 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 	else if (gamestate == INMENU)
 	{
-
+		if (winover != nullptr)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{
+				winover->visible = false;
+				for (int i = 0; i < winover->elements.size(); i++)
+				{
+					winover->elements[i]->visible = false;
+				}
+			}
+		}
 		if (dialog != nullptr)
 		{
 			if (dialog->end == false)
@@ -512,7 +522,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							c2->callback->direction = RIGHT;
 						else
 							c2->callback->direction = LEFT;
-						dialog = App->gui->CreateDialogue("> Allahuakbar LOREM IPSUM,main nemim i spotato nintendo switch nontendoo SL maoeraoern ayylmao olaefc bruh. THE END");
+						dialog = App->gui->CreateDialogue("Hey dude, what are you doing with a real sword in here ? !We Pokemon trainers don't fightHow 'bout that ?");
 						App->collision->EraseCollider(collision_interact);
 						interaction = false;
 						state = IDLE;

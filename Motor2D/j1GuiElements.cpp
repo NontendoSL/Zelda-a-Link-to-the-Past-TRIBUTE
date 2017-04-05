@@ -438,7 +438,8 @@ void ZeldaMenu::AddElement(j1GuiEntity* element)
 		selected->selected = true;
 		ShowItemInfo();
 	}
-	if (element->type == BUTTON) {
+	if (element->type == BUTTON)
+	{
 		element->id = menu_buttons.size() + 1;
 		menu_buttons.push_back((Button*)element);
 	}
@@ -450,7 +451,21 @@ void ZeldaMenu::AddElement(j1GuiEntity* element)
 	{
 		menu_texts.push_back((Text*)element);
 	}
-	
+}
+
+void ZeldaMenu::ResetInventory()
+{
+	if (menu_buttons.size() > 0)
+	{
+		menu_buttons.clear();
+	}
+	menu_texts[2]->Visible(false);
+	menu_texts[3]->Visible(false);
+	menu_texts[4]->Visible(false);
+	menu_images[1]->Hitbox.y = 372;
+	menu_texts[0]->Write("SELECT AN ITEM");
+	menu_texts[0]->Write("PICK ITEM");
+
 }
 
 void ZeldaMenu::Select(int value)
@@ -877,7 +892,8 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 			{
 				App->scene->player->gameover = App->gui->CreateImage({ 525,235,320,240 }, { 0,0 },"lose");
 			}
-			else{
+			else
+			{
 				App->scene->player->gameover->visible = true;
 			}
 			App->scene->switch_map = 6;
@@ -892,7 +908,8 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		else//VICTORY
 		{
 			int divider = 1;
-			if (App->scene->player->winover != nullptr) {
+			if (App->scene->player->winover != nullptr) 
+			{
 				divider = 2;
 			}
 			switch (num_pokemons.x)
@@ -931,6 +948,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 				App->entity_elements->DelteWeapons();
 				App->scene->player->hook = nullptr;
 				App->scene->player->bombmanager = nullptr;
+				App->scene->start_menu->ResetInventory();
 			}
 			else if (App->scene->player->winover->identifier == "win" && App->scene->player->winover->visible==false) //second loop win
 			{
@@ -961,6 +979,8 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 				App->entity_elements->DelteWeapons();
 				App->scene->player->hook = nullptr;
 				App->scene->player->bombmanager = nullptr;
+				App->scene->start_menu->ResetInventory();
+
 			}
 		}
 	}
@@ -1020,7 +1040,8 @@ void PokemonCombatHud::GetDamage(uint damage, bool trainer)
 
 void PokemonCombatHud::OpenClose(bool open)
 {
-	for (uint i = 0; i < hud_images.size(); i++) {
+	for (uint i = 0; i < hud_images.size(); i++) 
+	{
 		hud_images[i]->visible = open;
 		if (hud_images[i]->elements.size() > 0)
 		{
