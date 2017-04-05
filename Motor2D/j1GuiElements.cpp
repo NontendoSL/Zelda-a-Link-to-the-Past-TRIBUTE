@@ -377,7 +377,7 @@ Selector::Selector(const char* first_option, const char* second_option, j1GuiEnt
 
 void Selector::Handle_Input()
 {
-	if (App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
+	if (App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN || (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN))
 	{
 		if (position)
 		{
@@ -385,7 +385,7 @@ void Selector::Handle_Input()
 			position = false;
 		}
 	}
-	if (App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
+	if (App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN || (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN))
 	{
 		if (position == false)
 		{
@@ -393,7 +393,7 @@ void Selector::Handle_Input()
 			position = true;
 		}
 	}
-	if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+	if (App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN || (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN))
 	{
 
 		App->gui->Erase(selector->vector_pos);
@@ -918,6 +918,7 @@ void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 	cooldown = false;
 	sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
 	poke_hp_Link->Write(buffer);
+	pokemon->target = pokemon_2;
 
 	//Pokemon 2
 	Text* item = (Text*)hud_images[1]->elements[3]->elements[1];
@@ -926,6 +927,7 @@ void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 	hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
 	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
 	poke_hp_Brendan->Write(buffer);
+	pokemon_2->target = pokemon;
 
 	//TOP HUD BALLS
 	for (int i = 0; i < hud_images[0]->elements.size(); i++)

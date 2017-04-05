@@ -161,6 +161,14 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	else if (gamestate == INMENU)
 	{
 
+		if (dialog != nullptr)
+		{
+			if (dialog->end == false)
+			{
+				if(App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+					dialog->PushLine(true);
+			}
+		}
 	}
 	else if (gamestate == TIMETOPLAY)
 	{
@@ -680,6 +688,7 @@ bool Player::Idle()
 		state = INTERACTING;
 		//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 		//current_animation->Reset();
+
 	}
 
 	else
@@ -712,6 +721,7 @@ bool Player::Walking()
 		state = INTERACTING;
 		//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 		//current_animation->Reset();
+
 	}
 
 	else
@@ -936,77 +946,84 @@ int Player::GetnuminputUse()
 
 void Player::ThrowHookshot(uint charge)
 {
-	hook->in_use = true;
-	//CHECK DIRECTION
-	if (direction == UP)
+	if (hook != nullptr)
 	{
-		iPoint pos(position.x, position.y - 3);
-		hook->SetPos(pos);
-		hook->offset_x = 6;
-		hook->offset_y = 4;
-		hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
-		hook->direction = UP;
-	
-	}
-	else if (direction == RIGHT)
-	{
-		iPoint pos(position.x, position.y - 3);
-		hook->SetPos(pos);
-		hook->offset_x = 4;
-		hook->offset_y = 6;
-		hook->collision = App->collision->AddCollider({ pos.x + offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
-		hook->direction = RIGHT;
-	}
-	else if (direction == DOWN)
-	{
-		iPoint pos(position.x, position.y);
-		hook->SetPos(pos);
-		hook->offset_x = 6;
-		hook->offset_y = 4;
-		hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y + hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
-		hook->direction = DOWN;
-	}
-	else if (direction == LEFT)
-	{
-		iPoint pos(position.x, position.y - 3);
-		hook->SetPos(pos);
-		hook->offset_x = 4;
-		hook->offset_y = 6;
-		hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
-		hook->direction = LEFT;
-	}
+		hook->in_use = true;
+		//CHECK DIRECTION
+		if (direction == UP)
+		{
+			iPoint pos(position.x, position.y - 3);
+			hook->SetPos(pos);
+			hook->offset_x = 6;
+			hook->offset_y = 4;
+			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
+			hook->direction = UP;
 
-	//SET MAX RANGE
-	hook->SetRange((float)charge);
+		}
+		else if (direction == RIGHT)
+		{
+			iPoint pos(position.x, position.y - 3);
+			hook->SetPos(pos);
+			hook->offset_x = 4;
+			hook->offset_y = 6;
+			hook->collision = App->collision->AddCollider({ pos.x + offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
+			hook->direction = RIGHT;
+		}
+		else if (direction == DOWN)
+		{
+			iPoint pos(position.x, position.y);
+			hook->SetPos(pos);
+			hook->offset_x = 6;
+			hook->offset_y = 4;
+			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y + hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
+			hook->direction = DOWN;
+		}
+		else if (direction == LEFT)
+		{
+			iPoint pos(position.x, position.y - 3);
+			hook->SetPos(pos);
+			hook->offset_x = 4;
+			hook->offset_y = 6;
+			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
+			hook->direction = LEFT;
+		}
+
+		//SET MAX RANGE
+		hook->SetRange((float)charge);
+	}
+	
 }
 
 bool Player::Hooking()
 {
-	//collider follows the hookshot
-	hook->collision->SetPos(hook->position.x - hook->offset_x, hook->position.y - hook->offset_y);
-	HookState stat = hook->GetState();
-
-	if (hook->actual_range_pos < hook->range)
+	if (hook != nullptr)
 	{
-		if (stat == MISS)
+		//collider follows the hookshot
+		hook->collision->SetPos(hook->position.x - hook->offset_x, hook->position.y - hook->offset_y);
+		HookState stat = hook->GetState();
+
+		if (hook->actual_range_pos < hook->range)
 		{
-			HookState stat = hook->ReachObjective(actual_floor);
-			KeepGoing();
-			hook->actual_range_pos++;
+			if (stat == MISS)
+			{
+				HookState stat = hook->ReachObjective(actual_floor);
+				KeepGoing();
+				hook->actual_range_pos++;
+			}
+			else if (hook->GetState() == TARGET)
+			{
+				MoveTo(hook->position);
+			}
+			else if (hook->GetState() == OBSTACLE)
+			{
+				PickUpHook();
+			}
 		}
-		else if (hook->GetState() == TARGET)
-		{
-			MoveTo(hook->position);
-		}
-		else if (hook->GetState() == OBSTACLE)
+
+		else
 		{
 			PickUpHook();
 		}
-	}
-
-	else
-	{
-		PickUpHook();
 	}
 
 	return true;
@@ -1014,64 +1031,71 @@ bool Player::Hooking()
 
 void Player::KeepGoing()
 {
-	switch (direction)
+	if (hook != nullptr)
 	{
-	case UP:
-		hook->position.y-= hook->speed;
-		break;
-	case DOWN:
-		hook->position.y += hook->speed;
-		break;
-	case LEFT:
-		hook->position.x -= hook->speed;
-		break;
-	case RIGHT:
-		hook->position.x += hook->speed;
-		break;
-	default:
-		break;
+		switch (direction)
+		{
+		case UP:
+			hook->position.y -= hook->speed;
+			break;
+		case DOWN:
+			hook->position.y += hook->speed;
+			break;
+		case LEFT:
+			hook->position.x -= hook->speed;
+			break;
+		case RIGHT:
+			hook->position.x += hook->speed;
+			break;
+		default:
+			break;
+		}
 	}
 }
 
 void Player::PickUpHook()
 {
-	switch (direction)
+	if (hook != nullptr)
 	{
-	case UP:
-		hook->position.y += hook->speed;
-		if (hook->position.y + hook->offset_y >= collision_feet->rect.y)
+		switch (direction)
 		{
-			hook->Reset();
-			state = IDLE;
+		case UP:
+			hook->position.y += hook->speed;
+			if (hook->position.y + hook->offset_y >= collision_feet->rect.y)
+			{
+				hook->Reset();
+				state = IDLE;
+			}
+			break;
+		case DOWN:
+			hook->position.y -= hook->speed;
+			if (hook->position.y <= collision_feet->rect.y + collision_feet->rect.h)
+			{
+				hook->Reset();
+				state = IDLE;
+			}
+			break;
+		case LEFT:
+			hook->position.x += hook->speed;
+			if (hook->position.x + hook->offset_x >= collision_feet->rect.x)
+			{
+				hook->Reset();
+				state = IDLE;
+			}
+			break;
+		case RIGHT:
+			hook->position.x -= hook->speed;
+			if (hook->position.x <= collision_feet->rect.x + collision_feet->rect.w)
+			{
+				hook->Reset();
+				state = IDLE;
+			}
+			break;
+		default:
+			break;
 		}
-		break;
-	case DOWN:
-		hook->position.y -= hook->speed;
-		if (hook->position.y <= collision_feet->rect.y + collision_feet->rect.h)
-		{
-			hook->Reset();
-			state = IDLE;
-		}
-		break;
-	case LEFT:
-		hook->position.x += hook->speed;
-		if (hook->position.x + hook->offset_x >= collision_feet->rect.x)
-		{
-			hook->Reset();
-			state = IDLE;
-		}
-		break;
-	case RIGHT:
-		hook->position.x -= hook->speed;
-		if (hook->position.x <= collision_feet->rect.x + collision_feet->rect.w)
-		{
-			hook->Reset();
-			state = IDLE;
-		}
-		break;
-	default:
-		break;
 	}
+
 }
 
 
