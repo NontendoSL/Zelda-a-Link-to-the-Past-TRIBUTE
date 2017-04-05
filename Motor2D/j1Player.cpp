@@ -72,7 +72,6 @@ bool Player::Start()
 	App->input_manager->AddListener(this);
 
 	game_timer.Start();
-	time = App->gui->CreateText(GANONF, "0 seconds of playtime", 50, { 0,0 }, 20, { 255,0,255,255 });
 	return ret;
 }
 
@@ -95,6 +94,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	//if you dead, you appear on the Link House
 	if (hp_hearts.y == 0)
 	{
+		score = 0;
 		hp_hearts = { 6,6 };
 
 		gems = 0;
@@ -207,9 +207,10 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			charge--;
 		}
 	}
-	if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && bombs>0)
 	{
 		bombmanager->Drop(position);
+		bombs--;
 		App->audio->PlayFx(6);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fadetoblack->IsFading())
@@ -308,7 +309,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						DynamicObjects* temp = (DynamicObjects*)c2->callback;
 						App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
 					}
-
+					score += 75;
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 					//App->collision->EraseCollider(c2);
 				}
@@ -333,9 +334,11 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						{
 							bombmanager = App->entity_elements->CreateBombContainer();
 							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+							score += 75;
 						}
 						App->entity_elements->DeleteItem((Item*)c2->callback);
 						bombs++;
+						score += 5;
 						//App->collision->EraseCollider(c2);
 					}
 					if (c2->callback->name == "hookshot")
@@ -344,6 +347,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						{
 							hook = App->entity_elements->CreateHookshot();
 							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
+							score += 75;
 						}
 						App->entity_elements->DeleteItem((Item*)c2->callback);
 						//App->collision->EraseCollider(c2);

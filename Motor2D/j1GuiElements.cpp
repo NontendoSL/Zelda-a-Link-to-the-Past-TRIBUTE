@@ -868,18 +868,38 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 			OpenClose(false);
 			App->scene->start_menu->OpenClose(true);
 			App->scene->hud->OpenClose(true);
+			if (App->scene->player->score - 250 > 0)
+			{
+				App->scene->player->score -= 250;
+			}
 		}
 		else//VICTORY
 		{
+			switch (num_pokemons.x)
+			{
+			case 3:
+				App->scene->player->score += 500;
+				break;
+			case 2:
+				App->scene->player->score += 250;
+				break;
+			case 1:
+				App->scene->player->score += 125;
+				break;
+			}
 			if (App->scene->player->gameover == nullptr)
 			{
 				App->scene->player->gameover = App->gui->CreateImage({ 1,481,320,240 }, { 0,0 });
-				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, "LINK", 10, { 72,74 }, 40, { 0,0,0,255 }));
-				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(App->scene->player->gems) + " RP").c_str(), 10, { 81,106 }, 40, { 0,0,0,255 }));
+				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, "LINK", 10, { 72,74 }, 40, { 38,38,38,255 }));
+				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(App->scene->player->gems) + " RP").c_str(), 10, { 81,106 }, 40, { 38,38,38,255 }));
 				int minutes = App->scene->player->game_timer.ReadSec() / 60;
 				int sec = App->scene->player->game_timer.ReadSec() - minutes * 60;
-				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(minutes) + ":" + std::to_string(sec)).c_str(), 10, { 106,127 }, 40, { 0,0,0,255 }));
-
+				if (sec < 10)
+					sec = 10;
+				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(minutes) + ":" + std::to_string(sec)).c_str(), 10, { 106,127 }, 40, { 38,38,38,255 }));
+				App->scene->player->score += App->scene->player->gems*5;
+				App->scene->player->score -= App->scene->player->game_timer.ReadSec();
+				App->scene->player->gameover->elements.push_back(App->gui->CreateText(POKE1,std::string(std::to_string(App->scene->player->score)).c_str() , 10, { 83,149 }, 40, { 128,0,0,255 }));
 			}
 		}
 	}
