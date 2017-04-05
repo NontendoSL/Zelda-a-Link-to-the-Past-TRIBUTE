@@ -27,8 +27,7 @@ CONTROLS
 		Start -> Navigate trhough game intro and open/close the ingame menu.
 		A -> Select items from the menu. Interact with chests and NPCs.
 		X -> Attack.
-		B -> Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability.
-		Z -> Cast Pokémon Special Ability in combat.
+		B -> Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability in combat
 
 	DEBUG MODE:
 	
