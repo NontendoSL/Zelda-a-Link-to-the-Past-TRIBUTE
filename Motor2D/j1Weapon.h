@@ -43,6 +43,7 @@ public:
 	bool equipable = false;
 	bool in_use = false;
 
+
 	WeaponType Wtype;
 	Collider* collision = nullptr;
 };
@@ -72,6 +73,10 @@ public:
 	uint actual_range_pos = 0; // TODO MED-> set to private and create functions to get the values
 	bool target_reached = false;
 
+
+public:
+	uint speed; //TODO JORDI
+
 private:
 	HookState hook_state = MISS;
 };
@@ -89,9 +94,14 @@ class Bow : public Weapon
 
 	//void OnCollision(Collider* c1, Collider* c2);
 
+public:
+	uint speed; //TODO JORDI
+
 private:
 	uint arrow_speed = 0;
 	std::vector<Item*> throwed_arrows;
+
+
 };
 
 class Bomb

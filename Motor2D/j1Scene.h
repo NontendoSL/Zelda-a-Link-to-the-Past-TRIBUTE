@@ -21,6 +21,8 @@ class DynamicObjects;
 class PokeTrainer;
 enum WeaponType;
 
+
+
 class j1Scene : public j1Module
 {
 public:
@@ -87,6 +89,8 @@ public:
 	bool inventory = false;
 	int switch_map = 0;
 	int id_map = 0;
+
+
 
 	bool notrepeatmusic;
 

@@ -16,6 +16,8 @@
     <item id="4" name="heart" file="textures/Heart.png"/>
   </items>
   
+  <!--WEAPONS-->
+  
   <!--DYNOBJECTS INFORMATION (not use, only information)-->
   <dynobjects>
     <dynobject id="1" name="door_house_link" type="ZELDA" rect_x="1" rect_y="131" rect_w="32" rect_h="44" file="textures/DynObjectsSpriteSheet.png"/>

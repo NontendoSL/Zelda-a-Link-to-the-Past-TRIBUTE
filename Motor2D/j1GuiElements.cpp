@@ -413,7 +413,7 @@ void Selector::Handle_Input()
 		{
 			App->scene->player->gamestate = TIMETOPLAY;
 			App->scene->player->state = IDLE;
-			App->scene->player->timetoplay.Start();
+			//App->scene->player->timetoplay.Start(); //TODO JORDI - ELLIOT
 		}
 	}
 }

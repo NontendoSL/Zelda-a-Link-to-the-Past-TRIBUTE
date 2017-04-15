@@ -36,10 +36,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void AddItem(Item*);
-
-	void Drop_item();
-
 	bool CheckPlayerPos();
 
 	bool Idle();
@@ -56,9 +52,6 @@ public:
 
 	//hit enemy
 	bool Movebyhit();
-	Direction dir_hit;
-	iPoint previus_position;
-	j1Timer knockback_time;
 
 private:
 	SoldierType soldier_type;

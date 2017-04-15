@@ -53,8 +53,6 @@ public:
 
 	bool Attack_IA();
 
-	bool CheckOrientation();
-
 	bool Movebyhit();
 
 private:

@@ -32,10 +32,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void AddItem(Item*);
-
-	void Drop_item();
-
 	Pokemon* GetPokemon(uint position);
 
 	std::list<Pokemon*> pokedex;

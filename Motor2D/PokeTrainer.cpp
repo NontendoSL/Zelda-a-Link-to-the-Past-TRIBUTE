@@ -5,7 +5,7 @@
 
 PokeTrainer::PokeTrainer() :NPC()
 {
-	c_type = POKETRAINER;
+
 }
 
 PokeTrainer::~PokeTrainer()
@@ -70,16 +70,6 @@ void PokeTrainer::Draw()
 			App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &r);
 		}
 	}
-}
-
-void PokeTrainer::AddItem(Item* item)
-{
-
-}
-
-void PokeTrainer::Drop_item()
-{
-
 }
 
 Pokemon* PokeTrainer::GetPokemon(uint position)

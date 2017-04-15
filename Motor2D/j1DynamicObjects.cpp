@@ -35,7 +35,6 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 				position.x = pos.x;
 				position.y = pos.y;
 				rect = { temp.attribute("rect_x").as_int(0), temp.attribute("rect_y").as_int(0), temp.attribute("rect_w").as_int(0), temp.attribute("rect_h").as_int(0) };
-				canBlit = true;
 				item_id = temp.attribute("item_id").as_int(0);
 				stop_search = true;
 			}
@@ -68,11 +67,10 @@ bool DynamicObjects::Update()
 
 void DynamicObjects::Draw()
 {
-	BROFILER_CATEGORY("Draw_DynObjects", Profiler::Color::Moccasin)
-	if (canBlit == true)
-	{
-		App->render->Blit(App->entity_elements->texture_dynobjects, position.x, position.y, &rect);
-	}
+	BROFILER_CATEGORY("Draw_DynObjects", Profiler::Color::Moccasin);
+
+	App->render->Blit(App->entity_elements->texture_dynobjects, position.x, position.y, &rect);
+
 }
 
 bool DynamicObjects::CleanUp()

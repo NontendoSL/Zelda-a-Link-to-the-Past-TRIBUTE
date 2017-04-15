@@ -35,15 +35,6 @@ void BCTrooper::Draw()
 
 }
 
-void BCTrooper::AddItem(Item* item)
-{
-
-}
-
-void BCTrooper::Drop_item()
-{
-
-}
 
 bool BCTrooper::CleanUp()
 {

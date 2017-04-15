@@ -48,8 +48,6 @@ public:
 
 	bool Attack_IA();
 
-	bool CheckOrientation();
-
 	void OnCollision(Collider*, Collider*);
 
 	bool Movebyhit();

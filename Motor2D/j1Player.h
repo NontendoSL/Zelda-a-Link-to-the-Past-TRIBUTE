@@ -76,8 +76,6 @@ public:
 	void PickUpHook();
 	void MoveTo(const iPoint& pos);
 
-	bool CheckOrientation();
-
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
 	int GetnuminputUse();
@@ -85,7 +83,9 @@ public:
 	void AddHeartContainer();
 	void ShowHearts();
 	void GetDamage();
-	Collider* GetCollisionAttack() const;
+
+	//Comprovate camera in map
+	bool CameraisIn();
 
 public:
 	//--- POKEMON TRAINER CARD ---
@@ -107,30 +107,21 @@ public:
 
 	bool camera_follow = false;
 
-	//Timer
-	j1Timer timetoplay;
-
-	//Gameover
+	//Gameover TODO MARC
 	Image* gameover = nullptr;
 	Image* winover = nullptr;
 
 	//cooldown for soldier chase
 	j1Timer invincible_timer;
 
-	Direction dir_hit;
-	iPoint previus_position;
-	j1Timer knockback_time;
-
 private:
 
-	//player stats
+	//player stats TODO JORDI - ELLIOT
 	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)
 	int actual_floor = 0;
-	std::list<Item*> bag;
 
 	//switchmap
 	bool canSwitchMap = false;
-	int black = 0;
 
 	//Colliders
 	Collider* collision_attack = nullptr;
@@ -138,23 +129,18 @@ private:
 
 	bool attacker = false;
 	bool interaction = false;
-	bool hurt = false;
 
 	ActionState test_state; //TODO MED -> DELETE THIS
 
 	//Timers
 	j1Timer timer;
 	j1Timer hurt_timer;
-
-	//Comprovate camera in map
-	j1Timer timer_to_comprovate;
-	bool CameraisIn();
 	
 
 	//T
 	std::string stats_temp;
 
-	bool changeResolution = false;
+	//bool changeResolution = false;
 
 	Animation* current_animation = nullptr;
 };

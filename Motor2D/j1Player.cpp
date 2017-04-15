@@ -31,7 +31,6 @@ Player::Player() : Creature()
 {
 	type = CREATURE;
 	name = "Link";
-	hp_hearts = { 6,6 };
 }
 
 // Destructor
@@ -48,7 +47,7 @@ bool Player::Awake(pugi::xml_node& conf)
 	speed = conf.child("stats").attribute("speed").as_int(0);
 	position.x = conf.child("stats").attribute("pos_x").as_int(0);
 	position.y = conf.child("stats").attribute("pos_y").as_int(0);
-
+	hp_hearts = { 6,6 };
 
 	return ret;
 }
@@ -57,7 +56,7 @@ bool Player::Awake(pugi::xml_node& conf)
 bool Player::Start()
 {
 	bool ret = true;
-	changeResolution = false;
+	//changeResolution = false;
 	attacker = false;
 	direction = DOWN;
 	state = IDLE;
@@ -65,12 +64,10 @@ bool Player::Start()
 	offset_x = 7;
 	offset_y = 10;
 	gamestate = TIMETOPLAY;
-	timetoplay.Start();
+	/*timetoplay.Start();*/
 	canSwitchMap = true;
-	black = 0;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	App->input_manager->AddListener(this);
-	timer_to_comprovate.Start();
 	game_timer.Start();
 	return ret;
 }
@@ -204,7 +201,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			}
 		}
 	}
-	else if (gamestate == TIMETOPLAY)
+	/*else if (gamestate == TIMETOPLAY) //TODO JORDI - ELLIOT
 	{
 
 		if (timetoplay.ReadSec() > 1 || dialog == nullptr)
@@ -220,7 +217,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 				dialog = nullptr;
 			}
 		}
-	}
+	}*/
 	else if (gamestate == GAMEOVER)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN ||
@@ -256,12 +253,6 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
-	//each 1s
-	if (timer_to_comprovate.ReadSec() > 1)
-	{
-		timer_to_comprovate.Start();
-		CameraisIn();
-	}
 	return ret;
 }
 
@@ -320,29 +311,23 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
-					//App->collision->EraseCollider(c2);
 				}
 			}
 
-			if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT)
+			if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT && c2->callback != nullptr)
 			{
-				if (c2->callback->name == "chest" || c2->callback->name == "bigchest" && c2->callback != nullptr)
+				if (c2->callback->name == "chest" || c2->callback->name == "bigchest")
 				{
 					iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
-					//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
 					App->audio->PlayFx(15);
-					int canDrop = 1;
-					if (canDrop == 1)
-					{
-						iPoint position;
-						position.x = c2->callback->position.x + c2->rect.w*0.5;
-						position.y = c2->callback->position.y + c2->rect.h;
-						DynamicObjects* temp = (DynamicObjects*)c2->callback;
-						App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
-					}
+					//create item
+					iPoint position;
+					position.x = c2->callback->position.x + c2->rect.w*0.5;
+					position.y = c2->callback->position.y + c2->rect.h;
+					DynamicObjects* temp = (DynamicObjects*)c2->callback;
+					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
 					score += 75;
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
-					//App->collision->EraseCollider(c2);
 				}
 			}
 
@@ -350,52 +335,46 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			if (c1 == collision_feet && c2->type == COLLIDER_ITEM && c2->callback != nullptr)
 			{
 				Item* temp = (Item*)c2->callback;
-				if (temp->pickable == true)
+				if (c2->callback->name == "rupee")
 				{
-					if (c2->callback->name == "rupee")
+					App->audio->PlayFx(4);
+					gems++;
+				}
+				if (c2->callback->name == "bomb")
+				{
+					//First time picking a bomb
+					if (bombmanager == nullptr)
 					{
-						App->audio->PlayFx(4);
-						gems++;
-						App->entity_elements->DeleteItem((Item*)c2->callback);
-						//App->collision->EraseCollider(c2);
+						bombmanager = App->entity_elements->CreateBombContainer();
+						App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+						score += 75;
+						bombs += 4;
 					}
-					if (c2->callback->name == "bomb")
+					bombs++;
+					score += 5;
+				}
+				if (c2->callback->name == "hookshot")
+				{
+					//First time picking a hookshot
+					if (hook == nullptr)
 					{
-						if (bombmanager == nullptr)
-						{
-							bombmanager = App->entity_elements->CreateBombContainer();
-							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
-							score += 75;
-							bombs += 4;
-						}
-						App->entity_elements->DeleteItem((Item*)c2->callback);
-						bombs++;
-						score += 5;
-						//App->collision->EraseCollider(c2);
-					}
-					if (c2->callback->name == "hookshot")
-					{
-						if (hook == nullptr)
-						{
-							hook = App->entity_elements->CreateHookshot();
-							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
-							score += 75;
-						}
-						App->entity_elements->DeleteItem((Item*)c2->callback);
-						//App->collision->EraseCollider(c2);
-					}
-					if (c2->callback->name == "heart")
-					{
-						AddHeartContainer();
-						App->entity_elements->DeleteItem((Item*)c2->callback);
-						//App->collision->EraseCollider(c2);
+						hook = App->entity_elements->CreateHookshot();
+						App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
+						score += 75;
 					}
 				}
+				if (c2->callback->name == "heart")
+				{
+					AddHeartContainer();
+				}
+				//Delete item when picked
+				App->entity_elements->DeleteItem((Item*)c2->callback);
+
 			}
 			
-			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY)
+			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY) //if green soldier attack you
 			{
-				if (state != HIT && invincible_timer.ReadSec() >= 1) //TODO MED -> change this to a player state
+				if (state != HIT && invincible_timer.ReadSec() >= 1)
 				{
 					App->audio->PlayFx(13);
 					state = HIT;
@@ -403,7 +382,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					invincible_timer.Start();
 					hp_hearts.y--;
 					dir_hit = c2->callback->direction;
-					previus_position = position;
+					prev_position = position;
 				}
 			}
 
@@ -416,19 +395,19 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					soldier->hp--;
 					soldier->state = HIT;
 					soldier->dir_hit = c1->callback->direction;
-					soldier->previus_position = soldier->position;
+					soldier->prev_position = soldier->position;
 				}
 			}
 
 			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
 			{
-				if (canSwitchMap == false)
+				if (canSwitchMap == false) // TODO LOW -> delete canSwitchMap
 				{
 					canSwitchMap = true;
 				}
 				else
 				{
-					iPoint temp_meta = App->map->WorldToMap(position.x, position.y); //central position
+					iPoint temp_meta = App->map->WorldToMap(position.x, position.y);
 					MapLayer* meta_ = App->map->data.layers[1];
 					int id_meta = meta_->Get(temp_meta.x, temp_meta.y);
 					for (int i = 0; i < App->map->directMap.size(); i++)
@@ -438,73 +417,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							canSwitchMap = false;
 							App->scene->switch_map = App->map->directMap[i].id_map;
 							App->scene->newPosition = App->map->directMap[i].position;
-						}
-					}
-				}
-			}
-
-			if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && c2->callback != nullptr)
-			{
-				if (state != HOOKTHROWN)//TODO MED -> change this (we will have golbats int the future)
-				{
-					if (c2->callback->name == "Golem" && c2->callback->state == STATIC)
-					{
-						//Not dammage
-					}
-					else if(state != STATIC)
-					{
-						if (hurt == false)
-						{
-							timer.Start();
-							hurt = true;
-							if (hp_hearts.y > 0)
-							{
-								hp_hearts.y--;
-							}
-
-							if (direction == UP)
-							{
-								if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0)
-								{
-									position.y += 15;
-									if (Camera_inside(iPoint(0, 15)))
-										App->render->camera.y -= 15;
-								}
-							}
-							if (direction == DOWN)
-							{
-								if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0)
-								{
-									position.y -= 15;
-									if (Camera_inside(iPoint(0, 15)))
-										App->render->camera.y += 15;
-								}
-							}
-							if (direction == LEFT)
-							{
-								if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0)
-								{
-									position.x += 15;
-									if (Camera_inside(iPoint(15, 0)))
-										App->render->camera.x -= 15;
-								}
-							}
-							if (direction == RIGHT)
-							{
-								if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0)
-								{
-									position.x -= 15;
-									if (Camera_inside(iPoint(15, 0)))
-										App->render->camera.x += 15;
-								}
-							}
-						}
-						else
-						{
-							if (timer.ReadSec() >= 1)
-							{
-								hurt = false;
-							}
 						}
 					}
 				}
@@ -535,17 +447,16 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 			if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
 			{
-				if (hurt == false)
+				if (hp_hearts.y > 0)
 				{
 					GetDamage();
-					hurt = true;
 				}
 			}
 		}
 	}
 }
 
-bool Player::Camera_inside()
+bool Player::Camera_inside() //TODO JORDI -> RENDER
 {
 	//256x224
 	if (camera_follow == true)
@@ -617,7 +528,7 @@ bool Player::Camera_inside()
 	return true;
 }
 
-bool Player::Camera_inside(iPoint pos)
+bool Player::Camera_inside(iPoint pos) //TODO JORDI -> RENDER
 {
 	//256x224
 	if (camera_follow == true)
@@ -688,6 +599,7 @@ bool Player::Camera_inside(iPoint pos)
 	return true;
 }
 
+//STATE MACHINE ---------------------------------------------------------------------
 bool Player::Idle()
 {
 	//TEST MOVE LINK
@@ -697,7 +609,6 @@ bool Player::Idle()
 		App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
 		state = WALKING;
-		CheckOrientation();
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
@@ -754,475 +665,6 @@ bool Player::Walking()
 	}
 	return false;
 }
-
-bool Player::Attack()
-{
-	if (attacker)
-	{
-		if (current_animation->Finished())
-		{
-			App->collision->EraseCollider(collision_attack);
-			attacker = false;
-			current_animation->Reset();
-			current_animation = nullptr;
-			state = IDLE;
-		}
-	}
-	else
-	{
-		attacker = true;
-		if (direction == UP)
-		{
-			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y - 16, 8, 20 }, COLLIDER_PLAYER, this);
-		}
-		else if (direction == RIGHT)
-		{
-			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x + 3, position.y - 8, 20, 8 }, COLLIDER_PLAYER, this);
-		}
-		else if (direction == DOWN)
-		{
-			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - 2, 8, 20}, COLLIDER_PLAYER, this);
-		}
-		else if (direction == LEFT)
-		{
-			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x - 22, position.y - 7, 20, 8 }, COLLIDER_PLAYER, this);
-		}
-	}
-	return true;
-}
-
-bool Player::Interact()
-{
-	if (interaction)
-	{
-		if (timer.ReadSec() >= 0.3) // change to animation.finished
-		{
-			//if (current_animation->Finished())
-			//{
-			App->collision->EraseCollider(collision_interact);
-			interaction = false;
-			//current_animation->Reset();
-			//current_animation = nullptr;
-			state = IDLE;
-			//}
-		}
-	}
-	else
-	{
-		timer.Start();
-		interaction = true;
-		if (direction == UP)
-		{
-			collision_interact = App->collision->AddCollider({ position.x - 8, position.y - 14, 16, 5 }, COLLIDER_PLAYER, this);
-		}
-		else if (direction == RIGHT)
-		{
-			collision_interact = App->collision->AddCollider({ position.x + offset_x - 1, position.y - offset_y - 1, 5, 16 }, COLLIDER_PLAYER, this);
-		}
-		else if (direction == DOWN)
-		{
-			collision_interact = App->collision->AddCollider({ position.x - 8, position.y + 3, 16, 5 }, COLLIDER_PLAYER, this);
-		}
-		else if (direction == LEFT)
-		{
-			collision_interact = App->collision->AddCollider({ position.x - offset_x - 4, position.y - offset_y - 1, 5, 16 }, COLLIDER_PLAYER, this);
-		}
-	}
-	return true;
-}
-
-bool Player::Equip(Weapon* to_equip)
-{
-	if (to_equip != nullptr)
-	{
-		if (equiped_item == nullptr && to_equip->equipable == true)
-		{
-			equiped_item = to_equip;
-			equiped_item->equiped = true;
-			LOG("Equiped %s", equiped_item->name.c_str());
-			return true;
-		}
-	}
-
-	LOG("Can't equip item");
-	return false;
-}
-
-bool Player::Unequip()
-{
-	bool ret = false;
-	if (equiped_item == nullptr)
-	{
-		LOG("Nothing equiped");
-	}
-	else
-	{
-		if (equiped_item->in_use == false)
-		{
-			LOG("Unequiped %s", equiped_item->name.c_str());
-			equiped_item->equiped = false;
-			equiped_item = nullptr;
-			ret = true;
-		}
-	}
-	return ret;
-}
-
-void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
-{
-
-	switch (action)
-	{
-		if (gamestate == INGAME)
-		{
-	case BUTTON_X:
-	{
-		if (e_state == E_DOWN && state != HOOKTHROWN)
-		{
-			state = ATTACKING;
-			current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-			current_animation->Reset();
-		}
-		break;
-	}
-	case BUTTON_A:
-	{
-		if (e_state == E_DOWN && state != HOOKTHROWN)
-		{
-			if (dialog == nullptr)
-			{
-				state = INTERACTING;
-				//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-				//current_animation->Reset();
-			}
-			else if (dialog->end == false)
-			{
-				dialog->PushLine(true);
-			}
-		}
-		break;
-	}
-
-	case BUTTON_B:
-		if (equiped_item != nullptr && equiped_item == hook && hook->in_use == false)
-		{
-			if (e_state == E_UP)
-			{
-				state = HOOKTHROWN;
-				ThrowHookshot(charge);
-			}
-		}
-		else if (bombmanager != nullptr && equiped_item == bombmanager && bombs > 0)
-		{
-			if (e_state == E_UP)
-			{
-				bombmanager->Drop(position);
-				bombs--;
-			}
-		}
-		break;
-		}
-
-	case BUTTON_START:
-	{
-		if (e_state == E_DOWN)
-		{
-			if (App->scene->combat == false)
-			{
-				if (App->scene->inventory)
-				{
-					App->audio->PlayFx(2);
-				}
-				else
-				{
-					App->audio->PlayFx(3);
-				}
-
-				App->scene->switch_menu = true;
-				gamestate = INMENU;
-			}
-			if (gamestate == INMENU)
-			{
-				if (gameover != nullptr)
-				{
-					gameover->visible = false;
-					for (int i = 0; i < gameover->elements.size(); i++)
-					{
-						gameover->elements[i]->visible = false;
-					}
-				}
-				if (winover != nullptr)
-				{
-					winover->visible = false;
-					for (int i = 0; i < winover->elements.size(); i++)
-					{
-						winover->elements[i]->visible = false;
-					}
-				}
-
-				gamestate = INGAME;
-
-			}
-			break;
-		}
-	}
-
-	}
-}
-
-int Player::GetnuminputUse()
-{
-	int ret = 0;
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
-	{
-		ret++;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
-	{
-		ret++;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
-	{
-		ret++;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
-	{
-		ret++;
-	}
-	return ret;
-}
-
-void Player::ThrowHookshot(uint charge)
-{
-	if (hook != nullptr)
-	{
-		hook->in_use = true;
-		//CHECK DIRECTION
-		if (direction == UP)
-		{
-			iPoint pos(position.x, position.y - 3);
-			hook->SetPos(pos);
-			hook->offset_x = 6;
-			hook->offset_y = 4;
-			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
-			hook->direction = UP;
-
-		}
-		else if (direction == RIGHT)
-		{
-			iPoint pos(position.x, position.y - 3);
-			hook->SetPos(pos);
-			hook->offset_x = 4;
-			hook->offset_y = 6;
-			hook->collision = App->collision->AddCollider({ pos.x + offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
-			hook->direction = RIGHT;
-		}
-		else if (direction == DOWN)
-		{
-			iPoint pos(position.x, position.y);
-			hook->SetPos(pos);
-			hook->offset_x = 6;
-			hook->offset_y = 4;
-			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y + hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
-			hook->direction = DOWN;
-		}
-		else if (direction == LEFT)
-		{
-			iPoint pos(position.x, position.y - 3);
-			hook->SetPos(pos);
-			hook->offset_x = 4;
-			hook->offset_y = 6;
-			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
-			hook->direction = LEFT;
-		}
-
-		//SET MAX RANGE
-		hook->SetRange((float)charge);
-	}
-	
-}
-
-bool Player::Hooking()
-{
-	if (hook != nullptr)
-	{
-		//collider follows the hookshot
-		hook->collision->SetPos(hook->position.x - hook->offset_x, hook->position.y - hook->offset_y);
-		HookState stat = hook->GetState();
-
-		if (hook->actual_range_pos < hook->range)
-		{
-			if (stat == MISS)
-			{
-				HookState stat = hook->ReachObjective(actual_floor);
-				KeepGoing();
-				hook->actual_range_pos++;
-			}
-			else if (hook->GetState() == TARGET)
-			{
-				MoveTo(hook->position);
-			}
-			else if (hook->GetState() == OBSTACLE)
-			{
-				PickUpHook();
-			}
-		}
-
-		else
-		{
-			PickUpHook();
-		}
-	}
-
-	return true;
-}
-
-void Player::KeepGoing()
-{
-	if (hook != nullptr)
-	{
-		switch (direction)
-		{
-		case UP:
-			hook->position.y -= hook->speed;
-			break;
-		case DOWN:
-			hook->position.y += hook->speed;
-			break;
-		case LEFT:
-			hook->position.x -= hook->speed;
-			break;
-		case RIGHT:
-			hook->position.x += hook->speed;
-			break;
-		default:
-			break;
-		}
-	}
-}
-
-void Player::PickUpHook()
-{
-	if (hook != nullptr)
-	{
-		switch (direction)
-		{
-		case UP:
-			hook->position.y += hook->speed;
-			if (hook->position.y + hook->offset_y >= collision_feet->rect.y)
-			{
-				hook->Reset();
-				state = IDLE;
-			}
-			break;
-		case DOWN:
-			hook->position.y -= hook->speed;
-			if (hook->position.y <= collision_feet->rect.y + collision_feet->rect.h)
-			{
-				hook->Reset();
-				state = IDLE;
-			}
-			break;
-		case LEFT:
-			hook->position.x += hook->speed;
-			if (hook->position.x + hook->offset_x >= collision_feet->rect.x)
-			{
-				hook->Reset();
-				state = IDLE;
-			}
-			break;
-		case RIGHT:
-			hook->position.x -= hook->speed;
-			if (hook->position.x <= collision_feet->rect.x + collision_feet->rect.w)
-			{
-				hook->Reset();
-				state = IDLE;
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-}
-
-
-void Player::MoveTo(const iPoint& pos)
-{
-	switch (direction)
-	{
-	case UP:
-	{
-		//int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
-		if (Camera_inside())
-			App->render->camera.y += hook->speed * scale;
-
-		position.y -= hook->speed;
-
-		if (hook->position.y >= position.y)
-		{
-			hook->Reset();
-			state = IDLE;
-		}
-		break;
-	}
-
-	case DOWN:
-	{
-		//int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN
-		if (Camera_inside())
-			App->render->camera.y -= hook->speed * scale;
-		position.y += hook->speed;
-
-		if (hook->position.y <= position.y)
-		{
-			hook->Reset();
-			state = IDLE;
-		}
-		break;
-	}
-
-	case LEFT:
-	{
-		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
-
-		if (Camera_inside())
-			App->render->camera.x += hook->speed * scale;
-		position.x -= hook->speed;
-
-		if (hook->position.x >= position.x)
-		{
-			hook->Reset();
-			state = IDLE;
-		}
-		break;
-	}
-
-	case RIGHT:
-	{
-		//int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT
-
-		if (Camera_inside())
-			App->render->camera.x -= hook->speed * scale;
-		position.x += hook->speed;
-
-		if (hook->position.x <= position.x)
-		{
-			hook->Reset();
-			state = IDLE;
-		}
-		break;
-	}
-
-	default:
-		break;
-	}
-}
-
 
 bool Player::Move()
 {
@@ -1369,6 +811,121 @@ bool Player::Move()
 	return walking;
 }
 
+bool Player::Attack()
+{
+	if (attacker)
+	{
+		if (current_animation->Finished())
+		{
+			App->collision->EraseCollider(collision_attack);
+			attacker = false;
+			current_animation->Reset();
+			current_animation = nullptr;
+			state = IDLE;
+		}
+	}
+	else
+	{
+		attacker = true;
+		if (direction == UP)
+		{
+			App->audio->PlayFx(5);
+			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y - 16, 8, 20 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == RIGHT)
+		{
+			App->audio->PlayFx(5);
+			collision_attack = App->collision->AddCollider({ position.x + 3, position.y - 8, 20, 8 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == DOWN)
+		{
+			App->audio->PlayFx(5);
+			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - 2, 8, 20}, COLLIDER_PLAYER, this);
+		}
+		else if (direction == LEFT)
+		{
+			App->audio->PlayFx(5);
+			collision_attack = App->collision->AddCollider({ position.x - 22, position.y - 7, 20, 8 }, COLLIDER_PLAYER, this);
+		}
+	}
+	return true;
+}
+
+bool Player::Interact()
+{
+	if (interaction)
+	{
+		if (timer.ReadSec() >= 0.3) // change to animation.finished
+		{
+			//if (current_animation->Finished())
+			//{
+			App->collision->EraseCollider(collision_interact);
+			interaction = false;
+			//current_animation->Reset();
+			//current_animation = nullptr;
+			state = IDLE;
+			//}
+		}
+	}
+	else
+	{
+		timer.Start();
+		interaction = true;
+		if (direction == UP)
+		{
+			collision_interact = App->collision->AddCollider({ position.x - 8, position.y - 14, 16, 5 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == RIGHT)
+		{
+			collision_interact = App->collision->AddCollider({ position.x + offset_x - 1, position.y - offset_y - 1, 5, 16 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == DOWN)
+		{
+			collision_interact = App->collision->AddCollider({ position.x - 8, position.y + 3, 16, 5 }, COLLIDER_PLAYER, this);
+		}
+		else if (direction == LEFT)
+		{
+			collision_interact = App->collision->AddCollider({ position.x - offset_x - 4, position.y - offset_y - 1, 5, 16 }, COLLIDER_PLAYER, this);
+		}
+	}
+	return true;
+}
+
+bool Player::Hooking()
+{
+	if (hook != nullptr)
+	{
+		//collider follows the hookshot
+		hook->collision->SetPos(hook->position.x - hook->offset_x, hook->position.y - hook->offset_y);
+		HookState stat = hook->GetState();
+
+		if (hook->actual_range_pos < hook->range)
+		{
+			if (stat == MISS)
+			{
+				HookState stat = hook->ReachObjective(actual_floor);
+				KeepGoing();
+				hook->actual_range_pos++;
+			}
+			else if (hook->GetState() == TARGET)
+			{
+				MoveTo(hook->position);
+			}
+			else if (hook->GetState() == OBSTACLE)
+			{
+				PickUpHook();
+			}
+		}
+
+		else
+		{
+			PickUpHook();
+		}
+	}
+
+	return true;
+}
+
 bool Player::Hit()
 {
 	if (collision_attack != nullptr)
@@ -1431,6 +988,365 @@ bool Player::Hit()
 	return true;
 }
 
+//----------------------------------------------------------------------------------
+
+//EQUIP, UNEQUIP AND USE ITEMS
+bool Player::Equip(Weapon* to_equip)
+{
+	if (to_equip != nullptr)
+	{
+		if (equiped_item == nullptr && to_equip->equipable == true)
+		{
+			equiped_item = to_equip;
+			equiped_item->equiped = true;
+			LOG("Equiped %s", equiped_item->name.c_str());
+			return true;
+		}
+	}
+
+	LOG("Can't equip item");
+	return false;
+}
+
+bool Player::Unequip()
+{
+	bool ret = false;
+	if (equiped_item == nullptr)
+	{
+		LOG("Nothing equiped");
+	}
+	else
+	{
+		if (equiped_item->in_use == false)
+		{
+			LOG("Unequiped %s", equiped_item->name.c_str());
+			equiped_item->equiped = false;
+			equiped_item = nullptr;
+			ret = true;
+		}
+	}
+	return ret;
+}
+
+//HOOKSHOT  TODO JORDI ----------------------------------
+void Player::KeepGoing()
+{
+	if (hook != nullptr)
+	{
+		switch (direction)
+		{
+		case UP:
+			hook->position.y -= hook->speed;
+			break;
+		case DOWN:
+			hook->position.y += hook->speed;
+			break;
+		case LEFT:
+			hook->position.x -= hook->speed;
+			break;
+		case RIGHT:
+			hook->position.x += hook->speed;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void Player::PickUpHook()
+{
+	if (hook != nullptr)
+	{
+		switch (direction)
+		{
+		case UP:
+			hook->position.y += hook->speed;
+			if (hook->position.y + hook->offset_y >= collision_feet->rect.y)
+			{
+				hook->Reset();
+				state = IDLE;
+			}
+			break;
+		case DOWN:
+			hook->position.y -= hook->speed;
+			if (hook->position.y <= collision_feet->rect.y + collision_feet->rect.h)
+			{
+				hook->Reset();
+				state = IDLE;
+			}
+			break;
+		case LEFT:
+			hook->position.x += hook->speed;
+			if (hook->position.x + hook->offset_x >= collision_feet->rect.x)
+			{
+				hook->Reset();
+				state = IDLE;
+			}
+			break;
+		case RIGHT:
+			hook->position.x -= hook->speed;
+			if (hook->position.x <= collision_feet->rect.x + collision_feet->rect.w)
+			{
+				hook->Reset();
+				state = IDLE;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+}
+
+void Player::MoveTo(const iPoint& pos)
+{
+	switch (direction)
+	{
+	case UP:
+	{
+		//int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
+		if (Camera_inside())
+			App->render->camera.y += hook->speed * scale;
+
+		position.y -= hook->speed;
+
+		if (hook->position.y >= position.y)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	}
+
+	case DOWN:
+	{
+		//int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN
+		if (Camera_inside())
+			App->render->camera.y -= hook->speed * scale;
+		position.y += hook->speed;
+
+		if (hook->position.y <= position.y)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	}
+
+	case LEFT:
+	{
+		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
+
+		if (Camera_inside())
+			App->render->camera.x += hook->speed * scale;
+		position.x -= hook->speed;
+
+		if (hook->position.x >= position.x)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	}
+
+	case RIGHT:
+	{
+		//int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT
+
+		if (Camera_inside())
+			App->render->camera.x -= hook->speed * scale;
+		position.x += hook->speed;
+
+		if (hook->position.x <= position.x)
+		{
+			hook->Reset();
+			state = IDLE;
+		}
+		break;
+	}
+
+	default:
+		break;
+	}
+}
+
+void Player::ThrowHookshot(uint charge)
+{
+	if (hook != nullptr)
+	{
+		hook->in_use = true;
+		//CHECK DIRECTION
+		if (direction == UP)
+		{
+			iPoint pos(position.x, position.y - 3);
+			hook->SetPos(pos);
+			hook->offset_x = 6;
+			hook->offset_y = 4;
+			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
+			hook->direction = UP;
+
+		}
+		else if (direction == RIGHT)
+		{
+			iPoint pos(position.x, position.y - 3);
+			hook->SetPos(pos);
+			hook->offset_x = 4;
+			hook->offset_y = 6;
+			hook->collision = App->collision->AddCollider({ pos.x + offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
+			hook->direction = RIGHT;
+		}
+		else if (direction == DOWN)
+		{
+			iPoint pos(position.x, position.y);
+			hook->SetPos(pos);
+			hook->offset_x = 6;
+			hook->offset_y = 4;
+			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y + hook->offset_y, 12, 8 }, COLLIDER_HOOKSHOT, hook);
+			hook->direction = DOWN;
+		}
+		else if (direction == LEFT)
+		{
+			iPoint pos(position.x, position.y - 3);
+			hook->SetPos(pos);
+			hook->offset_x = 4;
+			hook->offset_y = 6;
+			hook->collision = App->collision->AddCollider({ pos.x - hook->offset_x, pos.y - hook->offset_y, 8, 12 }, COLLIDER_HOOKSHOT, hook);
+			hook->direction = LEFT;
+		}
+
+		//SET MAX RANGE
+		hook->SetRange((float)charge);
+	}
+
+}
+
+//-----------------
+
+//UTILITY METHODS ----------------------------------------------------------------
+void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
+{
+
+	switch (action)
+	{
+		if (gamestate == INGAME)
+		{
+	case BUTTON_X:
+	{
+		if (e_state == E_DOWN && state != HOOKTHROWN)
+		{
+			state = ATTACKING;
+			current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+			current_animation->Reset();
+		}
+		break;
+	}
+	case BUTTON_A:
+	{
+		if (e_state == E_DOWN && state != HOOKTHROWN)
+		{
+			if (dialog == nullptr)
+			{
+				state = INTERACTING;
+				//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+				//current_animation->Reset();
+			}
+			else if (dialog->end == false)
+			{
+				dialog->PushLine(true);
+			}
+		}
+		break;
+	}
+
+	case BUTTON_B:
+		if (equiped_item != nullptr && equiped_item == hook && hook->in_use == false)
+		{
+			if (e_state == E_UP)
+			{
+				state = HOOKTHROWN;
+				ThrowHookshot(charge);
+			}
+		}
+		else if (bombmanager != nullptr && equiped_item == bombmanager && bombs > 0)
+		{
+			if (e_state == E_UP)
+			{
+				bombmanager->Drop(position);
+				bombs--;
+			}
+		}
+		break;
+		}
+
+	case BUTTON_START:
+	{
+		if (e_state == E_DOWN)
+		{
+			if (App->scene->combat == false)
+			{
+				if (App->scene->inventory)
+				{
+					App->audio->PlayFx(2);
+				}
+				else
+				{
+					App->audio->PlayFx(3);
+				}
+
+				App->scene->switch_menu = true;
+				gamestate = INMENU;
+			}
+			if (gamestate == INMENU)
+			{
+				if (gameover != nullptr)
+				{
+					gameover->visible = false;
+					for (int i = 0; i < gameover->elements.size(); i++)
+					{
+						gameover->elements[i]->visible = false;
+					}
+				}
+				if (winover != nullptr)
+				{
+					winover->visible = false;
+					for (int i = 0; i < winover->elements.size(); i++)
+					{
+						winover->elements[i]->visible = false;
+					}
+				}
+
+				gamestate = INGAME;
+
+			}
+			break;
+		}
+	}
+
+	}
+}
+
+int Player::GetnuminputUse()
+{
+	int ret = 0;
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
+	{
+		ret++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
+	{
+		ret++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
+	{
+		ret++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
+	{
+		ret++;
+	}
+	return ret;
+}
+
 void Player::GetfloorLvl(iPoint pos)
 {
 	const MapLayer* meta_layer = App->map->data.layers[2];
@@ -1454,27 +1370,6 @@ void Player::GetfloorLvl(iPoint pos)
 	{
 		actual_floor = 2;
 	}
-}
-
-bool Player::CheckOrientation()
-{
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
-	{
-		direction = LEFT;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
-	{
-		direction = RIGHT;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
-	{
-		direction = UP;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
-	{
-		direction = DOWN;
-	}
-	return true;
 }
 
 void Player::AddHeartContainer()
@@ -1516,12 +1411,7 @@ void Player::GetDamage()
 		hp_hearts.y--;
 }
 
-Collider* Player::GetCollisionAttack() const
-{
-	return collision_attack;
-}
-
-bool Player::CameraisIn()
+bool Player::CameraisIn() //Comprovate if the camera is inside the Map
 {
 	bool ret = false;
 	iPoint camera_pos(-App->render->camera.x / 2, -App->render->camera.y / 2);

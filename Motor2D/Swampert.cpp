@@ -200,7 +200,7 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 					App->scene->pokecombat->GetDamage(sp_damage, false);
 					temp->state = HIT;
 					temp->dir_hit = c1->callback->direction;
-					temp->previus_position = temp->position;
+					temp->prev_position = temp->position;
 				}
 
 				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
@@ -214,7 +214,7 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 						App->scene->pokecombat->GetDamage(attack, false);
 						temp->state = HIT;
 						temp->dir_hit = c1->callback->direction;
-						temp->previus_position = temp->position;
+						temp->prev_position = temp->position;
 					}
 				}
 			}
@@ -274,7 +274,6 @@ bool Swampert::Idle()
 		App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
 		state = WALKING;
-		CheckOrientation();
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
@@ -627,11 +626,6 @@ bool Swampert::Attack_IA()
 	return true;
 }
 
-bool Swampert::CheckOrientation()
-{
-	return true;
-}
-
 bool Swampert::Movebyhit()
 {
 	if (hp <= 0)
@@ -674,10 +668,10 @@ bool Swampert::Movebyhit()
 			position.x += 4;
 		}
 	}
-	/*if (position.x > (previus_position.x + 65) ||
-	position.x < (previus_position.x + 65) ||
-	position.y >(previus_position.y + 65) ||
-	position.y < (previus_position.y + 65))
+	/*if (position.x > (prev_position.x + 65) ||
+	position.x < (prev_position.x + 65) ||
+	position.y >(prev_position.y + 65) ||
+	position.y < (prev_position.y + 65))
 	{
 	state = IDLE;
 	}*/

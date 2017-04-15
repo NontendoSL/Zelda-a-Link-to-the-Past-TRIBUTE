@@ -65,7 +65,6 @@ bool Golem::Start()
 
 	// Test for Vertical Slice /// TODO MED-> read stats from XML
 	radar = 40;
-	attack_speed = 1;
 	chase_speed = 1;
 
 	return true;
@@ -219,20 +218,6 @@ void Golem::Draw()
 bool Golem::CleanUp()
 {
 	return true;
-}
-
-void Golem::AddItem(Item* item)
-{
-	item_inside = item;
-	item->canBlit = false;
-}
-
-void Golem::Drop_item()
-{
-	item_inside->canBlit = true;
-	item_inside->position.x = position.x;
-	item_inside->position.y = position.y;
-	item_inside = NULL;
 }
 
 bool Golem::CheckPlayerPos()
@@ -490,8 +475,8 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 
 			}
 		}
-
-		if(c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT && state != STATIC && state != AWAKENING)
+		//TODO JORDI
+		if(c1 == collision_feet && /*c2 == App->scene->player->GetCollisionAttack() &&*/ state != HIT && state != STATIC && state != AWAKENING)
 		{
 			if (c2->callback != nullptr)
 			{

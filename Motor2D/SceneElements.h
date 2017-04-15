@@ -14,8 +14,12 @@ class Item;
 
 enum ElementType{ CREATURE, ITEM, DYNOBJECT, WEAPON };
 enum Direction { UP, DOWN, LEFT, RIGHT };
-enum GameState {INGAME, INMENU, TIMETOPLAY, GAMEOVER};
-enum ActionState { IDLE = 0, WALKING, ATTACKING, HOOKTHROWN, HIT, INTERACTING, AWAKENING, STATIC, CHASING, DYING}; //DYING ALWAYS LAST STATE
+
+enum GameState { INGAME, INMENU, TIMETOPLAY, GAMEOVER }; //TODO JORDI
+
+
+//TODO ELLIOT
+enum ActionState { IDLE = 0, WALKING, ATTACKING, HOOKTHROWN, HIT, INTERACTING, AWAKENING, STATIC, CHASING, DYING};
 
 
 // ---------------------------------------------------
@@ -67,17 +71,15 @@ public:
 	int offset_y = 0;
 
 	Direction direction;
-	GameState gamestate;
-	ActionState state;
+
+	ActionState state; //TODO ELLIOT
 	ElementType type;
-	uint speed;
-
-
-	bool canBlit = false;
 	std::string	name;
 
-	uint scale;
-	//SDL_Texture* texture;
+	//TODO JORDI
+	GameState gamestate;
+
+	uint scale; //TODO JORDI
 
 };
 

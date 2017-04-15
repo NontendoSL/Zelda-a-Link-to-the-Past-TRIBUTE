@@ -86,7 +86,6 @@ bool Soldier::Start()
 
 		// Test for Vertical Slice /// TODO MED-> read stats from XML
 		radar = 75;
-		attack_speed = 1;
 		chase_speed = 1;
 	}
 
@@ -225,20 +224,6 @@ void Soldier::Draw()
 
 	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 	
-}
-
-void Soldier::AddItem(Item* item)
-{
-	item_inside = item;
-	item->canBlit = false;
-}
-
-void Soldier::Drop_item()
-{
-	item_inside->canBlit = true;
-	item_inside->position.x = position.x - item_inside->collision->rect.w;
-	item_inside->position.y = position.y - item_inside->collision->rect.h;
-	item_inside = NULL;
 }
 
 bool Soldier::CheckPlayerPos()
@@ -466,10 +451,10 @@ bool Soldier::Movebyhit()
 			position.x += 4;
 		}
 	}
-	/*if (position.x > (previus_position.x + 65) ||
-	position.x < (previus_position.x + 65) ||
-	position.y >(previus_position.y + 65) ||
-	position.y < (previus_position.y + 65))
+	/*if (position.x > (prev_position.x + 65) ||
+	position.x < (prev_position.x + 65) ||
+	position.y >(prev_position.y + 65) ||
+	position.y < (prev_position.y + 65))
 	{
 	state = IDLE;
 	}*/

@@ -176,20 +176,6 @@ bool Geodude::CleanUp()
 	return false;
 }
 
-void Geodude::AddItem(Item* item)
-{
-	item_inside = item;
-	item->canBlit = false;
-}
-
-void Geodude::Drop_item()
-{
-	item_inside->canBlit = true;
-	item_inside->position.x = position.x;
-	item_inside->position.y = position.y;
-	item_inside = NULL;
-}
-
 bool Geodude::Idle()
 {
 	if (movable)
@@ -403,9 +389,10 @@ bool Geodude::Movebyhit()
 
 void Geodude::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1 != nullptr && c2 != nullptr)
+	if (c1 != nullptr && c2 != nullptr && state != DYING)
 	{
-		if (c1 == collision_feet && c2 == App->scene->player->GetCollisionAttack() && state != HIT)
+		//TODO JORDI
+		if (c1 == collision_feet /*&& c2 == App->scene->player->GetCollisionAttack()*/ && state != HIT)
 		{
 			if (c2->callback != nullptr)
 			{
@@ -430,5 +417,71 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 		}
+		/*if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && c2->callback != nullptr)
+		{
+			if (state != HOOKTHROWN)//TODO MED -> change this (we will have golbats int the future)
+			{
+				if (c2->callback->name == "Golem" && c2->callback->state == STATIC)
+				{
+					//Not dammage
+				}
+				else if (state != STATIC)
+				{
+					if (hurt == false)
+					{
+						timer.Start();
+						hurt = true;
+						if (hp_hearts.y > 0)
+						{
+							hp_hearts.y--;
+						}
+
+						if (direction == UP)
+						{
+							if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0)
+							{
+								position.y += 15;
+								if (Camera_inside(iPoint(0, 15)))
+									App->render->camera.y -= 15;
+							}
+						}
+						if (direction == DOWN)
+						{
+							if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0)
+							{
+								position.y -= 15;
+								if (Camera_inside(iPoint(0, 15)))
+									App->render->camera.y += 15;
+							}
+						}
+						if (direction == LEFT)
+						{
+							if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0)
+							{
+								position.x += 15;
+								if (Camera_inside(iPoint(15, 0)))
+									App->render->camera.x -= 15;
+							}
+						}
+						if (direction == RIGHT)
+						{
+							if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0)
+							{
+								position.x -= 15;
+								if (Camera_inside(iPoint(15, 0)))
+									App->render->camera.x += 15;
+							}
+						}
+					}
+					else
+					{
+						if (timer.ReadSec() >= 1)
+						{
+							hurt = false;
+						}
+					}
+				}
+			}
+		}*/
 	}
 }

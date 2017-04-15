@@ -27,7 +27,6 @@ bool Item::Awake(pugi::xml_node &conf, uint item_id, iPoint pos)
 			position.y = pos.y;
 			std::string es = temp.attribute("file").as_string("");
 			texture = App->tex->Load(es.c_str());
-			canBlit = true;
 			stop_search = true;
 		}
 	}
@@ -77,10 +76,7 @@ bool Item::Update()
 
 void Item::Draw()
 {
-	if (canBlit == true)
-	{
-		App->render->Blit(texture, position.x, position.y);
-	}
+	App->render->Blit(texture, position.x, position.y);
 }
 
 bool Item::CleanUp()

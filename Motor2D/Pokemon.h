@@ -46,13 +46,7 @@ public:
 	bool CleanUp()
 	{
 		return true;
-	}
-
-	void AddItem(Item*)
-	{}
-
-	void Drop_item()
-	{}*/
+	}*/
 
 	iPoint Getposition() const
 	{
@@ -65,10 +59,6 @@ public:
 	bool dead = false;
 	bool pokemon_player = false;
 	uint cooldown;
-	//hits
-	Direction dir_hit;
-	iPoint previus_position;
-	j1Timer knockback_time;
 
 	//target
 	Pokemon* target = nullptr;

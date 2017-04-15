@@ -35,16 +35,6 @@ void Ganon::Draw()
 
 }
 
-void Ganon::AddItem(Item* item)
-{
-
-}
-
-void Ganon::Drop_item()
-{
-
-}
-
 bool Ganon::CleanUp()
 {
 	return true;

@@ -31,10 +31,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void AddItem(Item*);
-
-	void Drop_item();
-
 	bool Idle();
 
 	bool Walking();

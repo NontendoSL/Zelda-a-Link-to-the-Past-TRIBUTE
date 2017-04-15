@@ -50,9 +50,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite dir ="West" n="6" x="85" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
     <sprite dir ="West" n="7" x="102" y="75" w="17" h="24" pX="0.5" pY="0.5"/>
   </state>
+  
   <state name="attack">
     
   </state>
+  
   <state name="walk_shield">
     
   </state>
