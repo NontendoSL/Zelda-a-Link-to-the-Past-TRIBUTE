@@ -411,7 +411,7 @@ void Selector::Handle_Input()
 		}
 		else 
 		{
-			App->scene->player->gamestate = TIMETOPLAY;
+			App->scene->gamestate = TIMETOPLAY;
 			App->scene->player->state = IDLE;
 			//App->scene->player->timetoplay.Start(); //TODO JORDI - ELLIOT
 		}
@@ -948,7 +948,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 				App->scene->player->winover->elements.push_back(App->gui->CreateText(POKE1,std::string(std::to_string(App->scene->player->score)).c_str() , 10, { 83,149 }, 40, { 128,0,0,255 }));
 				
 				App->scene->switch_map = 1;
-				App->scene->player->gamestate = INMENU;
+				App->scene->gamestate = INMENU;
 				App->scene->pokecombat->OpenClose(false);
 				App->scene->player->Unequip();
 				App->entity_elements->DelteWeapons();
@@ -975,7 +975,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 				item = (Text*)App->scene->player->winover->elements[3];
 				item->Write(std::string(std::to_string(App->scene->player->score)).c_str());
 				App->scene->switch_map = 1;
-				App->scene->player->gamestate = INMENU;
+				App->scene->gamestate = INMENU;
 				App->scene->pokecombat->OpenClose(false);
 				for (int i = 0; i < App->scene->player->winover->elements.size(); i++)
 				{

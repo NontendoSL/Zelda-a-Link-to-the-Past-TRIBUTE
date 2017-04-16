@@ -75,7 +75,6 @@ bool Soldier::Start()
 		offset_x = 8;
 		offset_y = 15;
 		//marge = 12;
-		gamestate = TIMETOPLAY;
 		state = IDLE;
 		speed = 1;
 		//offset_x = 15;
@@ -105,7 +104,7 @@ bool Soldier::Update()
 {
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Pink)
 	// STATE MACHINE ------------------
-		if (gamestate == INGAME)
+		if (App->scene->gamestate == INGAME)
 		{
 			if (soldier_type == AGGRESSIVE)
 			{
@@ -156,17 +155,17 @@ bool Soldier::Update()
 		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
 	}
-	else if (gamestate == INMENU)
+	else if (App->scene->gamestate == INMENU)
 	{
 
 	}
-	else if (gamestate == TIMETOPLAY)
+	/*else if (App->scene->gamestate == TIMETOPLAY)
 	{
 		if (SDL_GetTicks() - timetoplay > 1000)
 		{
-			gamestate = INGAME;
+			App->scene->gamestate = INGAME;
 		}
-	}
+	}*/
 	return true;
 }
 

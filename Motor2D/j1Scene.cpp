@@ -167,7 +167,7 @@ bool j1Scene::Update(float dt)
 				if (fade == false)
 				{
 					App->fadetoblack->FadeToBlack();
-					player->gamestate = INMENU;
+					gamestate = INMENU;
 					player->state = IDLE;
 					fade = true;
 					now_switch = true;
@@ -234,13 +234,13 @@ bool j1Scene::Update(float dt)
 						switch_map = 0;
 						fade = false;
 						combat = false;
-						player->gamestate = GAMEOVER;
+						gamestate = GAMEOVER;
 					}
 					else
 					{
 						switch_map = 0;
 						fade = false;
-						player->gamestate = INGAME;
+						gamestate = INGAME;
 					}
 				}
 			}
@@ -393,7 +393,7 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 			hud->OpenClose(false);
 			switch_menu = false;
 			inventory = true;
-			player->gamestate = INMENU;
+			gamestate = INMENU;
 		}
 	}
 	else
@@ -409,7 +409,7 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 			start_menu->OpenClose(false);
 			switch_menu = false;
 			inventory = false;
-			player->gamestate = INGAME;
+			gamestate = INGAME;
 		}
 	}
 

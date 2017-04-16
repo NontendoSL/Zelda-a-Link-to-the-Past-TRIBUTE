@@ -48,7 +48,6 @@ bool Blaziken::Start()
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 17;
-	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	movable = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
@@ -62,7 +61,7 @@ bool Blaziken::Start()
 bool Blaziken::Update()
 {
 	// STATE MACHINE ------------------
-	if (gamestate == INGAME)
+	if (App->scene->gamestate == INGAME)
 	{
 		if (pokemon_player)
 		{
@@ -140,17 +139,17 @@ bool Blaziken::Update()
 		}
 
 	}
-	else if (gamestate == INMENU)
+	else if (App->scene->gamestate == INMENU)
 	{
 
 	}
-	else if (gamestate == TIMETOPLAY)
+	/*else if (App->scene->gamestate == TIMETOPLAY)
 	{
 		if (SDL_GetTicks() - timetoplay > 1000)
 		{
-			gamestate = INGAME;
+			App->scene->gamestate = INGAME;
 		}
-	}
+	}*/
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);

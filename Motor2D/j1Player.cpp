@@ -63,7 +63,6 @@ bool Player::Start()
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 10;
-	gamestate = TIMETOPLAY;
 	/*timetoplay.Start();*/
 	canSwitchMap = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
@@ -114,7 +113,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 	}
 
 	// STATE MACHINE ------------------
-	if (gamestate == INGAME)
+	if (App->scene->gamestate == INGAME)
 	{
 		//CHARGE BAR --------------
 		if (equiped_item != nullptr && equiped_item == hook && hook->in_use == false)
@@ -179,7 +178,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 
 		}
 	}
-	else if (gamestate == INMENU)
+	else if (App->scene->gamestate == INMENU)
 	{
 		if (winover != nullptr)
 		{
@@ -201,6 +200,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			}
 		}
 	}
+
 	/*else if (gamestate == TIMETOPLAY) //TODO JORDI - ELLIOT
 	{
 
@@ -218,7 +218,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 			}
 		}
 	}*/
-	else if (gamestate == GAMEOVER)
+	else if (App->scene->gamestate == GAMEOVER)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN ||
 			App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
@@ -227,7 +227,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 				gameover->visible = false;
 			if (winover != nullptr)
 				winover->visible = false;
-			gamestate = INGAME;
+			App->scene->gamestate = INGAME;
 		}
 	}
 
@@ -245,9 +245,7 @@ bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
 		}
 
 		App->scene->switch_menu = true;
-		
-		gamestate = INMENU;
-
+		App->scene->gamestate = INMENU;
 	}
 
 	//Collision follow the player
@@ -424,11 +422,11 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 			if (c1 == collision_interact && c2->type == COLLIDER_TRAINER && c2->callback != nullptr)
 			{
-				if (gamestate == INGAME)
+				if (App->scene->gamestate == INGAME)
 				{
 					if (dialog == nullptr)
 					{
-						gamestate = INMENU;
+						App->scene->gamestate = INMENU;
 						if (direction == UP)
 							c2->callback->direction = DOWN;
 						else if (direction == DOWN)
@@ -830,22 +828,22 @@ bool Player::Attack()
 		if (direction == UP)
 		{
 			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y - 16, 8, 20 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - offset_y - 16, 8, 20 }, COLLIDER_SWORD, this);
 		}
 		else if (direction == RIGHT)
 		{
 			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x + 3, position.y - 8, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x + 3, position.y - 8, 20, 8 }, COLLIDER_SWORD, this);
 		}
 		else if (direction == DOWN)
 		{
 			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - 2, 8, 20}, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 4, position.y - 2, 8, 20}, COLLIDER_SWORD, this);
 		}
 		else if (direction == LEFT)
 		{
 			App->audio->PlayFx(5);
-			collision_attack = App->collision->AddCollider({ position.x - 22, position.y - 7, 20, 8 }, COLLIDER_PLAYER, this);
+			collision_attack = App->collision->AddCollider({ position.x - 22, position.y - 7, 20, 8 }, COLLIDER_SWORD, this);
 		}
 	}
 	return true;
@@ -1228,7 +1226,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 
 	switch (action)
 	{
-		if (gamestate == INGAME)
+		if (App->scene->gamestate == INGAME)
 		{
 	case BUTTON_X:
 	{
@@ -1294,9 +1292,9 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 				}
 
 				App->scene->switch_menu = true;
-				gamestate = INMENU;
+				App->scene->gamestate = INMENU;
 			}
-			if (gamestate == INMENU)
+			if (App->scene->gamestate == INMENU)
 			{
 				if (gameover != nullptr)
 				{
@@ -1315,8 +1313,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 					}
 				}
 
-				gamestate = INGAME;
-
+				App->scene->gamestate = INGAME;
 			}
 			break;
 		}

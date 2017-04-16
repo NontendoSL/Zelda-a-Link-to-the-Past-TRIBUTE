@@ -50,7 +50,6 @@ bool Geodude::Start()
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 7;
-	gamestate = TIMETOPLAY;
 	movable = true;
 	collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_POKEMON, this);
 	timetoplay = SDL_GetTicks();
@@ -66,7 +65,7 @@ bool Geodude::Start()
 bool Geodude::Update()
 {
 	// STATE MACHINE ------------------
-	if (gamestate == INGAME)
+	if (App->scene->gamestate == INGAME)
 	{
 		switch (state)
 		{
@@ -102,17 +101,17 @@ bool Geodude::Update()
 		}
 	}
 
-	else if (gamestate == INMENU)
+	else if (App->scene->gamestate == INMENU)
 	{
 
 	}
-	else if (gamestate == TIMETOPLAY)
+	/*else if (App->scene->gamestate == TIMETOPLAY)
 	{
 		if (SDL_GetTicks() - timetoplay > 1000)
 		{
-			gamestate = INGAME;
+			App->scene->gamestate = INGAME;
 		}
-	}
+	}*/
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -392,7 +391,7 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 	if (c1 != nullptr && c2 != nullptr && state != DYING)
 	{
 		//TODO JORDI
-		if (c1 == collision_feet /*&& c2 == App->scene->player->GetCollisionAttack()*/ && state != HIT)
+		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && state != HIT)
 		{
 			if (c2->callback != nullptr)
 			{

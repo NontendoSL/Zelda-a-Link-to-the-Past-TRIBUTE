@@ -46,7 +46,6 @@ bool Golem::Start()
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 14;
-	gamestate = TIMETOPLAY;
 	movable = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_POKEMON, this);
 	timetoplay = SDL_GetTicks();
@@ -73,7 +72,7 @@ bool Golem::Start()
 bool Golem::Update()
 {
 	// STATE MACHINE ------------------
-	if (gamestate == INGAME)
+	if (App->scene->gamestate == INGAME)
 	{
 		switch (state)
 		{
@@ -137,17 +136,17 @@ bool Golem::Update()
 		}
 	}
 
-	else if (gamestate == INMENU)
+	else if (App->scene->gamestate == INMENU)
 	{
 
 	}
-	else if (gamestate == TIMETOPLAY)
+	/*else if (App->scene->gamestate == TIMETOPLAY)
 	{
 		if (SDL_GetTicks() - timetoplay > 1000)
 		{
-			gamestate = INGAME;
+			App->scene->gamestate = INGAME;
 		}
-	}
+	}*/
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -476,7 +475,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 		//TODO JORDI
-		if(c1 == collision_feet && /*c2 == App->scene->player->GetCollisionAttack() &&*/ state != HIT && state != STATIC && state != AWAKENING)
+		if(c1 == collision_feet && c2->type == COLLIDER_SWORD && state != HIT && state != STATIC && state != AWAKENING)
 		{
 			if (c2->callback != nullptr)
 			{

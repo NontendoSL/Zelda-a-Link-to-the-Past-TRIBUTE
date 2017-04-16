@@ -4,6 +4,8 @@
 #include "j1Module.h"
 #include "j1EntityElementsScene.h"
 
+enum GameState { INGAME, INMENU, TIMETOPLAY, GAMEOVER };
+
 struct SDL_Texture;
 
 class j1GuiEntity;
@@ -66,6 +68,8 @@ private:
 	void LoadUi();
 
 public:
+
+	GameState gamestate;
 
 	//Combat or not
 	bool combat = false;

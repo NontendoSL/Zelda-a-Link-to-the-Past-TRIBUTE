@@ -14,26 +14,27 @@ j1Collision::j1Collision()
 		colliders[i] = nullptr;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = false;
-
 	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_BOMB] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_SWITCH_MAP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_POKEMON] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TRAINER] = true;
+
+	matrix[COLLIDER_SWORD][COLLIDER_POKEMON] = true;
+	matrix[COLLIDER_SWORD][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_SWORD][COLLIDER_DYNOBJECT] = true;
+	matrix[COLLIDER_POKEMON][COLLIDER_SWORD] = true;
+
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_BOMB] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_DYNOBJECT] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
-
-	matrix[COLLIDER_PLAYER][COLLIDER_SWITCH_MAP] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_SWITCH_MAP] = false;
+
 	matrix[COLLIDER_POKEMON][COLLIDER_SWITCH_MAP] = false;
-
-	matrix[COLLIDER_PLAYER][COLLIDER_POKEMON] = true;
 	matrix[COLLIDER_POKEMON][COLLIDER_PLAYER] = true;
-
 	matrix[COLLIDER_POKEMON][COLLIDER_BOMB] = true;
-	
-	matrix[COLLIDER_PLAYER][COLLIDER_TRAINER] = true;
-	
 	matrix[COLLIDER_POKEMON][COLLIDER_POKEMON] = false;
 	matrix[COLLIDER_POKEMON][COLLIDER_POKEMON_ATTACK] = false;
 	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKEMON] = true;
@@ -157,6 +158,11 @@ void j1Collision::DebugDraw()
 		{
 			if (App->scene->combat == false)
 				App->render->DrawQuad(colliders[i]->rect, 0, 180, 125, alpha);
+			break;
+		}
+		case COLLIDER_SWORD: // white
+		{
+			App->render->DrawQuad(colliders[i]->rect, 0, 180, 125, alpha);
 			break;
 		}
 

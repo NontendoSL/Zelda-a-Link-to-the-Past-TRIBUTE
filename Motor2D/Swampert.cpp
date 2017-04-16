@@ -47,7 +47,6 @@ bool Swampert::Start()
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 17;
-	gamestate = TIMETOPLAY;
 	timetoplay = SDL_GetTicks();
 	movable = true;
 	radar = 20;
@@ -65,7 +64,7 @@ bool Swampert::Start()
 bool Swampert::Update()
 {
 	// STATE MACHINE ------------------
-	if (gamestate == INGAME)
+	if (App->scene->gamestate == INGAME)
 	{
 		if (pokemon_player)
 		{
@@ -143,17 +142,18 @@ bool Swampert::Update()
 		}
 
 	}
-	else if (gamestate == INMENU)
+	else if (App->scene->gamestate == INMENU)
 	{
 
 	}
-	else if (gamestate == TIMETOPLAY)
+	/*else if (App->scene->gamestate == TIMETOPLAY)
 	{
 		if (SDL_GetTicks() - timetoplay > 1000)
 		{
-			gamestate = INGAME;
+			App->scene->gamestate = INGAME;
 		}
-	}
+	}*/
+
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
