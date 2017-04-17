@@ -58,7 +58,7 @@ bool Blaziken::Start()
 	return true;
 }
 
-bool Blaziken::Update()
+bool Blaziken::Update(float dt)
 {
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)

@@ -60,7 +60,7 @@ bool DynamicObjects::Start()
 	return true;
 }
 
-bool DynamicObjects::Update()
+bool DynamicObjects::Update(float dt)
 {
 	return true;
 }

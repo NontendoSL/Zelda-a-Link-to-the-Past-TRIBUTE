@@ -100,7 +100,7 @@ bool Soldier::Start()
 	return true;
 }
 
-bool Soldier::Update()
+bool Soldier::Update(float dt)
 {
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Pink)
 	// STATE MACHINE ------------------

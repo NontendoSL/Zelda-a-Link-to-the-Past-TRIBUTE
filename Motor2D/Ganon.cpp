@@ -23,7 +23,7 @@ bool Ganon::Start()
 	return true;
 }
 
-bool Ganon::Update()
+bool Ganon::Update(float dt)
 {
 
 

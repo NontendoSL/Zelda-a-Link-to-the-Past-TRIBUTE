@@ -38,7 +38,7 @@ bool PokeTrainer::Start()
 	return true;
 }
 
-bool PokeTrainer::Update()
+bool PokeTrainer::Update(float dt)
 {
 	
 

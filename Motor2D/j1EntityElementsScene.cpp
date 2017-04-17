@@ -77,7 +77,7 @@ bool j1EntityElementScene::Update(float dt)
 		std::list<SceneElement*>::iterator item3 = elementscene.begin();
 		while (item3 != elementscene.end())
 		{
-			item3._Ptr->_Myval->Update();
+			item3._Ptr->_Myval->Update(dt);
 			item3++;
 		}
 	}

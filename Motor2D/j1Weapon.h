@@ -57,7 +57,7 @@ public:
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	void Draw();
 
@@ -88,7 +88,7 @@ class Bow : public Weapon
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	void SetSpeed(uint charge);
 
@@ -110,7 +110,7 @@ public:
 	Bomb(iPoint position, BombContainer* container);
 	~Bomb();
 public:
-	void Update();
+	void Update(float dt);
 	void Draw();
 	void Die();
 
@@ -133,7 +133,7 @@ public:
 
 public:
 	void Drop(iPoint position);
-	bool Update();
+	bool Update(float dt);
 	void Draw();
 	void CleanContainer();
 

@@ -25,7 +25,7 @@ public:
 	//bool PreUpdate();
 
 	// Called each loop iteration
-	bool Update();
+	bool Update(float dt);
 
 	void Draw();
 	// Called before all Updates

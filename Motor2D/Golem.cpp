@@ -69,7 +69,7 @@ bool Golem::Start()
 	return true;
 }
 
-bool Golem::Update()
+bool Golem::Update(float dt)
 {
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)

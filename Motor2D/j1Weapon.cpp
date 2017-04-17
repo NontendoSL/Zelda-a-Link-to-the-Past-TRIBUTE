@@ -49,7 +49,7 @@ bool Hookshot::Start()
 	return true;
 }
 
-bool Hookshot::Update()
+bool Hookshot::Update(float dt)
 {
 
 	return true;
@@ -193,7 +193,7 @@ bool Bow::Start()
 	return true;
 }
 
-bool Bow::Update()
+bool Bow::Update(float dt)
 {
 
 	return true;
@@ -267,12 +267,12 @@ void BombContainer::Drop(iPoint position)
 	bombs.push_back(new Bomb(position, this));
 }
 
-bool BombContainer::Update()
+bool BombContainer::Update(float dt)
 {
 	std::list<Bomb*>::iterator item = bombs.begin();
 	while (item != bombs.end())
 	{
-		item._Ptr->_Myval->Update();
+		item._Ptr->_Myval->Update(dt);
 		item++;
 	}
 	return true;
@@ -310,7 +310,7 @@ Bomb::~Bomb()
 
 }
 
-void Bomb::Update()
+void Bomb::Update(float dt)
 {
 	if (SDL_GetTicks() > timer + 2000 && step != EXPLOSION)
 	{

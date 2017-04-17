@@ -56,7 +56,7 @@ bool Sceptyle::Start()
 	return true;
 }
 
-bool Sceptyle::Update()
+bool Sceptyle::Update(float dt)
 {
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)

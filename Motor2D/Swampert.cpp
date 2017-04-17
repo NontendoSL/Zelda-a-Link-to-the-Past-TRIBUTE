@@ -61,7 +61,7 @@ bool Swampert::Start()
 	return true;
 }
 
-bool Swampert::Update()
+bool Swampert::Update(float dt)
 {
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)

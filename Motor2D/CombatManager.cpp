@@ -87,7 +87,7 @@ bool CombatManager::Update(float dt)
 			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
 			if (temp->active)
 			{
-				item._Ptr->_Myval->Update();
+				item._Ptr->_Myval->Update(dt);
 			}
 			item++;
 		}

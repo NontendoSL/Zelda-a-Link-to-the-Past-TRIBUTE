@@ -62,7 +62,7 @@ bool Geodude::Start()
 	return true;
 }
 
-bool Geodude::Update()
+bool Geodude::Update(float dt)
 {
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)

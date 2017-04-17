@@ -79,7 +79,7 @@ bool Player::PreUpdate()
 	return ret;
 }
 
-bool Player::Update()//TODO HIGH -> I delete dt but i thing that we need.
+bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need.
 {
 	/*sprintf_s(buffer, 30, "%.f seconds of playtime", game_timer.ReadSec());
 	std::string var = std::to_string(game_timer.ReadSec()) + "seconds of playtime";
@@ -333,41 +333,43 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			if (c1 == collision_feet && c2->type == COLLIDER_ITEM && c2->callback != nullptr)
 			{
 				Item* temp = (Item*)c2->callback;
-				if (c2->callback->name == "rupee")
+				if (temp->pickable == true)
 				{
-					App->audio->PlayFx(4);
-					gems++;
-				}
-				if (c2->callback->name == "bomb")
-				{
-					//First time picking a bomb
-					if (bombmanager == nullptr)
+					if (c2->callback->name == "rupee")
 					{
-						bombmanager = App->entity_elements->CreateBombContainer();
-						App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
-						score += 75;
-						bombs += 4;
+						App->audio->PlayFx(4);
+						gems++;
 					}
-					bombs++;
-					score += 5;
-				}
-				if (c2->callback->name == "hookshot")
-				{
-					//First time picking a hookshot
-					if (hook == nullptr)
+					if (c2->callback->name == "bomb")
 					{
-						hook = App->entity_elements->CreateHookshot();
-						App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
-						score += 75;
+						//First time picking a bomb
+						if (bombmanager == nullptr)
+						{
+							bombmanager = App->entity_elements->CreateBombContainer();
+							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+							score += 75;
+							bombs += 4;
+						}
+						bombs++;
+						score += 5;
 					}
+					if (c2->callback->name == "hookshot")
+					{
+						//First time picking a hookshot
+						if (hook == nullptr)
+						{
+							hook = App->entity_elements->CreateHookshot();
+							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
+							score += 75;
+						}
+					}
+					if (c2->callback->name == "heart")
+					{
+						AddHeartContainer();
+					}
+					//Delete item when picked
+					App->entity_elements->DeleteItem((Item*)c2->callback);
 				}
-				if (c2->callback->name == "heart")
-				{
-					AddHeartContainer();
-				}
-				//Delete item when picked
-				App->entity_elements->DeleteItem((Item*)c2->callback);
-
 			}
 			
 			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY) //if green soldier attack you

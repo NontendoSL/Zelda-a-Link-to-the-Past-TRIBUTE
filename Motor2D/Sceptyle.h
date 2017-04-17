@@ -21,7 +21,7 @@ public:
 	//bool PreUpdate();
 
 	// Called each loop iteration
-	bool Update();
+	bool Update(float dt);
 
 	// Called before all Updates
 	//bool PostUpdate();

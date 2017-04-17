@@ -23,7 +23,7 @@ bool BCTrooper::Start()
 	return true;
 }
 
-bool BCTrooper::Update()
+bool BCTrooper::Update(float dt)
 {
 
 
