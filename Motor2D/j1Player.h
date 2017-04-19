@@ -85,6 +85,7 @@ public:
 	void GetDamage();
 
 	void SetState(LinkState state);
+	LinkState GetState() const;
 	void SetAnimState(LinkState anim);
 
 	//Comprovate camera in map

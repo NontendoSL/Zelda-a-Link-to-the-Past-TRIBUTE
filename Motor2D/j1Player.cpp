@@ -1432,6 +1432,11 @@ void Player::SetState(LinkState set)
 	}
 }
 
+LinkState Player::GetState() const
+{
+	return state;
+}
+
 void Player::SetAnimState(LinkState anim)
 {
 	if (anim >= L_IDLE && anim <= L_INTERACTING)

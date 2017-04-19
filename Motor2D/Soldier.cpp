@@ -82,7 +82,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 				hp--;
 				state = S_HIT;
 				anim_state = S_IDLE;
-				dir_hit = c1->callback->direction;
+				dir_hit = c2->callback->direction;
 				prev_position = position;
 			}
 		}
@@ -408,7 +408,7 @@ bool Soldier::Chase()
 	//path.clear();
 	//attack_time.Start();
 
-	if (App->scene->player->state != HIT)
+	if (App->scene->player->GetState() != L_HIT)
 	{
 		iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
 		GoTo(player_pos, chase_speed);
