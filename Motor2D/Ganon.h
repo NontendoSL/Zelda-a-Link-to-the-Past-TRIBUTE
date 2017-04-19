@@ -4,6 +4,8 @@
 
 #include "NPC.h"
 
+enum GanonState { G_IDLE = 0, G_WALKING, G_MELEE, G_SPECIAL, G_SHIELD, G_DYING };
+
 class Ganon : public NPC
 {
 public:
@@ -32,6 +34,8 @@ public:
 	bool CleanUp();
 
 private:
+	GanonState state = G_IDLE;
+	GanonState anim_state = G_IDLE;
 
 	//Item* drop;
 	bool stunned = false;

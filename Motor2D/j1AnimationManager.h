@@ -9,9 +9,33 @@
 #include "p2Defs.h"
 #include "Animation.h"
 
-enum ActionState;
-enum Direction;
+enum AnimationElement //TODO HIGH-> ORDER THIS ENUM
+{
+	LINK,
+	SOLDIER,
+	
+	//WEAPONS ---------
+	HOOKSHOT,
+	BOMB,
 
+	GEODUDE,
+	GOLEM,
+	//GOLBAT,
+	SUDOWOODO,
+	TRAINER,
+	BC_TROOPER,
+	GANON,
+
+	//POKÉMON COMBAT ---------
+	BLAZIKEN, SWAMPERT, SCEPTILE,
+	//CRAWDAUNT, ABSOL, SHIFTRY,
+	//DUSCLOPS, BANETTE, SABLEYE,
+	//SEALEO, WALREIN, GLALIE,
+	//SALAMENCE, FLYGON, ALTARIA,
+	//MEWTWO, GROUDON, RAIKOU
+};
+
+enum Direction;
 
 struct AnimDirect
 {
@@ -47,11 +71,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void Drawing_Manager(ActionState status, Direction dir, iPoint position, uint id);
+	void Drawing_Manager(uint state_id, Direction dir, iPoint position, AnimationElement element);
 
-	Animation* GetAnimation(ActionState status, Direction dir, uint id);
+	Animation* GetAnimation(uint state_id, Direction dir, AnimationElement element);
 
-	AnimationStruct* GetAnimStruct(uint id);
+	AnimationStruct* GetAnimStruct(AnimationElement element);
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file, std::string file) const;
@@ -62,13 +86,14 @@ private:
 	//All animations of the game
 	std::vector<AnimationStruct> animat;
 
-	int range_link = 0;
 	iPoint pivot {0,0};
 	SDL_Rect r;
+
+	//UITILITY POINTERS ------------------------
 	Animation* current_animation = nullptr;
 	AnimationStruct* anim_struct = nullptr;
+	//------------------------------------------
 
-	ActionState test_state; //TODO_LOW -> REMOVE THIS
 };
 
 #endif //__j1ANIMATION_H_

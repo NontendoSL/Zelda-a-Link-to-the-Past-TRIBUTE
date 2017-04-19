@@ -58,11 +58,17 @@ bool Player::Start()
 	bool ret = true;
 	//changeResolution = false;
 	attacker = false;
+
+
+	//ANIMATION ---------------
 	direction = DOWN;
-	state = IDLE;
+	state = L_IDLE;
+	anim_state = L_IDLE;
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 10;
+	//--------------------------
+
 	/*timetoplay.Start();*/
 	canSwitchMap = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
@@ -124,7 +130,8 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 			{
-				state = HOOKTHROWN;
+				state = L_HOOKTHROWN;
+				anim_state = L_IDLE;
 				ThrowHookshot(charge);
 			}
 			else if (charge > 0)
@@ -141,32 +148,32 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 
 		switch (state)
 		{
-		case IDLE:
+		case L_IDLE:
 		{
 			Idle();
 			break;
 		}
-		case WALKING:
+		case L_WALKING:
 		{
 			Walking();
 			break;
 		}
-		case ATTACKING:
+		case L_ATTACKING:
 		{
 			Attack();
 			break;
 		}
-		case HIT:
+		case L_HIT:
 		{
 			Hit();
 			break;
 		}
-		case INTERACTING:
+		case L_INTERACTING:
 		{
 			Interact();
 			break;
 		}
-		case HOOKTHROWN:
+		case L_HOOKTHROWN:
 		{
 			Hooking();
 			break;
@@ -232,10 +239,9 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 	}
 
 
-	
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fadetoblack->IsFading())
 	{
-		if (App->scene->inventory) //TODO LOW -> If pres to fast you can lisen 2.
+		if (App->scene->inventory) //TODO LOW -> If pressed to fast you can listen fx twice.
 		{
 			App->audio->PlayFx(3);
 		}
@@ -256,13 +262,9 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 
 void Player::Draw()
 {
-	test_state = state;
-	if (test_state == HIT)
-	{
-		test_state = IDLE;
-	}
+
 	//Draw player
-	App->anim_manager->Drawing_Manager(test_state, direction, position, 0);  //TODO LOW-> ID magic number, need change!!
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK);  //TODO LOW-> ID magic number, need change!!
 }
 
 bool Player::CleanUp()
@@ -374,28 +376,16 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			
 			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY) //if green soldier attack you
 			{
-				if (state != HIT && invincible_timer.ReadSec() >= 1)
+				if (state != L_HIT && invincible_timer.ReadSec() >= 1)
 				{
 					App->audio->PlayFx(13);
-					state = HIT;
+					state = L_HIT;
+					anim_state = L_IDLE;
 					hurt_timer.Start();
 					invincible_timer.Start();
 					hp_hearts.y--;
 					dir_hit = c2->callback->direction;
 					prev_position = position;
-				}
-			}
-
-			if (c1 == collision_attack && c2->type == COLLIDER_ENEMY)
-			{
-				Soldier* soldier = (Soldier*)c2->callback;
-				if (soldier->destructible == true && soldier->state != HIT)
-				{
-					soldier->knockback_time.Start();
-					soldier->hp--;
-					soldier->state = HIT;
-					soldier->dir_hit = c1->callback->direction;
-					soldier->prev_position = soldier->position;
 				}
 			}
 
@@ -440,7 +430,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						dialog = App->gui->CreateDialogue("Hey, what are you doing in my world? Here we fight with creatures called pokemon, not with weapons, let's try it");
 						App->collision->EraseCollider(collision_interact);
 						interaction = false;
-						state = IDLE;
+						state = L_IDLE;
+						anim_state = L_IDLE;
 					}
 				}
 			}
@@ -608,19 +599,22 @@ bool Player::Idle()
 		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT ||
 		App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
-		state = WALKING;
+		state = L_WALKING;
+		anim_state = L_WALKING;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+		state = L_ATTACKING;
+		anim_state = L_ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(anim_state, direction, LINK);
 		current_animation->Reset();
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
-		state = INTERACTING;
+		state = L_INTERACTING;
+		anim_state = L_IDLE;
 		//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 		//current_animation->Reset();
 
@@ -628,7 +622,8 @@ bool Player::Idle()
 
 	else
 	{
-		state = IDLE;
+		state = L_IDLE;
+		anim_state = L_IDLE;
 	}
 
 	return true;
@@ -641,19 +636,22 @@ bool Player::Walking()
 
 	if (walking == false)
 	{
-		state = IDLE;
+		state = L_IDLE;
+		anim_state = L_IDLE;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+		state = L_ATTACKING;
+		anim_state = L_ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(anim_state, direction, LINK);
 		current_animation->Reset();
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
-		state = INTERACTING;
+		state = L_INTERACTING;
+		anim_state = L_IDLE;
 		//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 		//current_animation->Reset();
 
@@ -661,7 +659,8 @@ bool Player::Walking()
 
 	else
 	{
-		state = WALKING;
+		state = L_WALKING;
+		anim_state = L_WALKING;
 	}
 	return false;
 }
@@ -821,7 +820,8 @@ bool Player::Attack()
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;
-			state = IDLE;
+			state = L_IDLE;
+			anim_state = L_IDLE;
 		}
 	}
 	else
@@ -863,7 +863,8 @@ bool Player::Interact()
 			interaction = false;
 			//current_animation->Reset();
 			//current_animation = nullptr;
-			state = IDLE;
+			state = L_IDLE;
+			anim_state = L_IDLE;
 			//}
 		}
 	}
@@ -934,12 +935,14 @@ bool Player::Hit()
 	}
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
-		state = IDLE;
+		state = L_IDLE;
+		anim_state = L_IDLE;
 		return true;
 	}
 	if (hp <= 0)
 	{
-		state = DYING;
+		state = L_DYING;
+		anim_state = L_IDLE;
 		return true;
 	}
 
@@ -1064,7 +1067,8 @@ void Player::PickUpHook()
 			if (hook->position.y + hook->offset_y >= collision_feet->rect.y)
 			{
 				hook->Reset();
-				state = IDLE;
+				state = L_IDLE;
+				anim_state = L_IDLE;
 			}
 			break;
 		case DOWN:
@@ -1072,7 +1076,8 @@ void Player::PickUpHook()
 			if (hook->position.y <= collision_feet->rect.y + collision_feet->rect.h)
 			{
 				hook->Reset();
-				state = IDLE;
+				state = L_IDLE;
+				anim_state = L_IDLE;
 			}
 			break;
 		case LEFT:
@@ -1080,7 +1085,8 @@ void Player::PickUpHook()
 			if (hook->position.x + hook->offset_x >= collision_feet->rect.x)
 			{
 				hook->Reset();
-				state = IDLE;
+				state = L_IDLE;
+				anim_state = L_IDLE;
 			}
 			break;
 		case RIGHT:
@@ -1088,7 +1094,8 @@ void Player::PickUpHook()
 			if (hook->position.x <= collision_feet->rect.x + collision_feet->rect.w)
 			{
 				hook->Reset();
-				state = IDLE;
+				state = L_IDLE;
+				anim_state = L_IDLE;
 			}
 			break;
 		default:
@@ -1113,7 +1120,8 @@ void Player::MoveTo(const iPoint& pos)
 		if (hook->position.y >= position.y)
 		{
 			hook->Reset();
-			state = IDLE;
+			state = L_IDLE;
+			anim_state = L_IDLE;
 		}
 		break;
 	}
@@ -1128,7 +1136,8 @@ void Player::MoveTo(const iPoint& pos)
 		if (hook->position.y <= position.y)
 		{
 			hook->Reset();
-			state = IDLE;
+			state = L_IDLE;
+			anim_state = L_IDLE;
 		}
 		break;
 	}
@@ -1144,7 +1153,8 @@ void Player::MoveTo(const iPoint& pos)
 		if (hook->position.x >= position.x)
 		{
 			hook->Reset();
-			state = IDLE;
+			state = L_IDLE;
+			anim_state = L_IDLE;
 		}
 		break;
 	}
@@ -1160,7 +1170,8 @@ void Player::MoveTo(const iPoint& pos)
 		if (hook->position.x <= position.x)
 		{
 			hook->Reset();
-			state = IDLE;
+			state = L_IDLE;
+			anim_state = L_IDLE;
 		}
 		break;
 	}
@@ -1232,21 +1243,23 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		{
 	case BUTTON_X:
 	{
-		if (e_state == E_DOWN && state != HOOKTHROWN)
+		if (e_state == E_DOWN && state != L_HOOKTHROWN)
 		{
-			state = ATTACKING;
-			current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+			state = L_ATTACKING;
+			anim_state = L_ATTACKING;
+			current_animation = App->anim_manager->GetAnimation(anim_state, direction, LINK);
 			current_animation->Reset();
 		}
 		break;
 	}
 	case BUTTON_A:
 	{
-		if (e_state == E_DOWN && state != HOOKTHROWN)
+		if (e_state == E_DOWN && state != L_HOOKTHROWN)
 		{
 			if (dialog == nullptr)
 			{
-				state = INTERACTING;
+				state = L_INTERACTING;
+				anim_state = L_IDLE;
 				//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 				//current_animation->Reset();
 			}
@@ -1263,7 +1276,8 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		{
 			if (e_state == E_UP)
 			{
-				state = HOOKTHROWN;
+				state = L_HOOKTHROWN;
+				anim_state = L_IDLE;
 				ThrowHookshot(charge);
 			}
 		}
@@ -1408,6 +1422,22 @@ void Player::GetDamage()
 {
 	if (hp_hearts.y>0)
 		hp_hearts.y--;
+}
+
+void Player::SetState(LinkState set)
+{
+	if (set >= L_IDLE && set <= L_INTERACTING)
+	{
+		state = set;
+	}
+}
+
+void Player::SetAnimState(LinkState anim)
+{
+	if (anim >= L_IDLE && anim <= L_INTERACTING)
+	{
+		anim_state = anim;
+	}
 }
 
 bool Player::CameraisIn() //Comprovate if the camera is inside the Map

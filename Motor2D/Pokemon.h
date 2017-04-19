@@ -6,6 +6,9 @@
 #include "j1Window.h"
 #include "j1Collision.h"
 
+enum PokemonState { P_IDLE = 0, P_WALKING, P_ATTACKING, P_HIT, P_DYING, P_SPECIAL };
+
+
 class Pokemon : public NPC
 {
 public:
@@ -63,16 +66,6 @@ public:
 	//target
 	Pokemon* target = nullptr;
 
-protected:
-
-	//Item* drop;
-	Item* item_inside= nullptr;
-
-	Animation* current_animation = nullptr;
-
-	bool attacker = false;
-	bool getdamage = false;
-
 	//special attack
 	iPoint range; //.X shows max range, .Y shows distance moved
 	iPoint sp_start;
@@ -82,10 +75,22 @@ protected:
 	uint sp_damage;
 	Collider* sp_attack = nullptr;
 
+	Collider* collision_attack = nullptr;
+
+protected:
+	//Item* drop;
+	Item* item_inside= nullptr;
+
+	PokemonState state = P_IDLE;
+	PokemonState anim_state = P_IDLE;
+
+	Animation* current_animation = nullptr;
+
+	bool attacker = false;
+	bool getdamage = false;
+
 	j1Timer time_wait;
 
-
-	Collider* collision_attack = nullptr;
 };
 
 #endif //__POKEMON_H_

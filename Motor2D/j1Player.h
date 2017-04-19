@@ -6,6 +6,8 @@
 #include "j1Creature.h"
 #include "j1InputManager.h"
 
+enum LinkState { L_IDLE = 0, L_WALKING, L_ATTACKING, L_DYING, L_HOOKTHROWN, L_HIT, L_INTERACTING };
+
 class Creature;
 class InputListener;
 class Animation;
@@ -54,14 +56,12 @@ public:
 	bool Camera_inside(iPoint pos);
 
 	//STATE MACHINE -------
-
 	bool Idle();
 	bool Walking();
 	bool Move();
 	bool Hit();
 	bool Attack();
 	bool Interact();
-
 	//----------------------
 
 	void GetfloorLvl(iPoint pos);
@@ -69,13 +69,13 @@ public:
 	bool Equip(Weapon* to_equip);
 	bool Unequip();
 
-	//HOOKSHOT FUNCTIONALITY
+	//HOOKSHOT FUNCTIONALITY -----------
 	void ThrowHookshot(uint charge);
 	bool Hooking();
 	void KeepGoing();
 	void PickUpHook();
 	void MoveTo(const iPoint& pos);
-
+	//----------------------------------
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
 	int GetnuminputUse();
@@ -83,6 +83,9 @@ public:
 	void AddHeartContainer();
 	void ShowHearts();
 	void GetDamage();
+
+	void SetState(LinkState state);
+	void SetAnimState(LinkState anim);
 
 	//Comprovate camera in map
 	bool CameraisIn();
@@ -120,6 +123,9 @@ private:
 	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)
 	int actual_floor = 0;
 
+	LinkState state = L_IDLE; //Logical state
+	LinkState anim_state = L_IDLE; //Animation state
+
 	//switchmap
 	bool canSwitchMap = false;
 
@@ -129,8 +135,6 @@ private:
 
 	bool attacker = false;
 	bool interaction = false;
-
-	ActionState test_state; //TODO MED -> DELETE THIS
 
 	//Timers
 	j1Timer timer;

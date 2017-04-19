@@ -5,7 +5,11 @@
 #include "SceneElements.h"
 enum HookState {TARGET, OBSTACLE, MISS};
 enum BombStep { PLANTED, EXPLOSION };
-enum WeaponType { BOW, HOOKSHOT, BOMB };
+enum WeaponType { W_BOW, W_HOOKSHOT, W_BOMB };
+
+enum WeaponState { W_IDLE = 0, W_DYING };
+
+
 class BombContainer;
 
 class Weapon : public SceneElement
@@ -46,6 +50,10 @@ public:
 
 	WeaponType Wtype;
 	Collider* collision = nullptr;
+
+protected:
+	WeaponState state = W_IDLE;
+	WeaponState anim_state = W_IDLE;
 };
 
 

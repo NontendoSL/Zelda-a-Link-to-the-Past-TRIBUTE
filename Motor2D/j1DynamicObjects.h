@@ -4,6 +4,7 @@
 
 #include "SceneElements.h"
 
+enum DynObjectState { D_IDLE = 0, D_DYING };
 
 class Text;
 
@@ -38,10 +39,13 @@ public:
 
 
 public:
-
 	Collider* collision = nullptr;
 	SDL_Rect rect;
 	int item_id = 0;
+
+private:
+	DynObjectState state = D_IDLE;
+	DynObjectState anim_state = D_IDLE;
 };
 
 

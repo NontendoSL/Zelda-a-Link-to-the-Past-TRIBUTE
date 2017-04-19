@@ -102,7 +102,6 @@ bool j1AnimationManager::Start()
 		animat.push_back(temp_animat);
 		cont++;
 	}
-	range_link = 8;
 	return true;
 }
 
@@ -112,82 +111,67 @@ bool j1AnimationManager::CleanUp()
 	return true;
 }
 
-void j1AnimationManager::Drawing_Manager(ActionState status, Direction dir, iPoint position, uint id) 
+void j1AnimationManager::Drawing_Manager(uint state_id, Direction dir, iPoint position, AnimationElement element)
 {
-	BROFILER_CATEGORY("Animation", Profiler::Color::DarkMagenta)
-	//INFO ID: 0-> Link //  1-> Blaziken // 2-> Hookshot // 3-> Bomb // 4-> Geodude // 5-> Golem // 6->Soldiers
-	if (status <= DYING)
+	BROFILER_CATEGORY("DrawAnimation", Profiler::Color::DarkMagenta);
+
+	if (dir == UP)
 	{
-		test_state = status;
-		if ((test_state == HOOKTHROWN || test_state == INTERACTING) && id == 0)
-		{
-			test_state = IDLE; //TEST BECAUSE WE DON'T HAVE HOOKING ANIMATION YET.
-		}
-		if (dir == UP)
-		{
-			r = animat[id].anim[test_state].North_action.GetCurrentFrame();
-			pivot = animat[id].anim[test_state].North_action.GetCurrentOffset();
-		}
-
-		else if (dir == DOWN)
-		{
-			r = animat[id].anim[test_state].South_action.GetCurrentFrame();
-			pivot = animat[id].anim[test_state].South_action.GetCurrentOffset();
-		}
-
-		else if (dir == LEFT)
-		{
-			r = animat[id].anim[test_state].West_action.GetCurrentFrame();
-			pivot = animat[id].anim[test_state].West_action.GetCurrentOffset();
-		}
-
-		else if (dir == RIGHT)
-		{
-			r = animat[id].anim[test_state].East_action.GetCurrentFrame();
-			pivot = animat[id].anim[test_state].East_action.GetCurrentOffset();
-		}
+		r = animat[element].anim[state_id].North_action.GetCurrentFrame();
+		pivot = animat[element].anim[state_id].North_action.GetCurrentOffset();
+	}
+	else if (dir == DOWN)
+	{
+		r = animat[element].anim[state_id].South_action.GetCurrentFrame();
+		pivot = animat[element].anim[state_id].South_action.GetCurrentOffset();
+	}
+	else if (dir == LEFT)
+	{
+		r = animat[element].anim[state_id].West_action.GetCurrentFrame();
+		pivot = animat[element].anim[state_id].West_action.GetCurrentOffset();
+	}
+	else if (dir == RIGHT)
+	{
+		r = animat[element].anim[state_id].East_action.GetCurrentFrame();
+		pivot = animat[element].anim[state_id].East_action.GetCurrentOffset();
 	}
 
 	//DRAW
-	if (animat[id].graphics == nullptr)
+	if (animat[element].graphics == nullptr)
 	{
 		LOG("TEXTURE NULL");
 	}
-
-	App->render->Blit(animat[id].graphics, position.x - pivot.x, position.y - pivot.y, &r);
+	else
+	{
+		App->render->Blit(animat[element].graphics, position.x - pivot.x, position.y - pivot.y, &r);
+	}
 }
 
-Animation* j1AnimationManager::GetAnimation(ActionState status, Direction dir, uint id)
+Animation* j1AnimationManager::GetAnimation(uint state_id, Direction dir, AnimationElement element)
 {
-	if (status <= DYING)
+	if (dir == UP)
 	{
-		if (dir == UP)
-		{
-			current_animation = &animat[id].anim[status].North_action;
-		}
-
-		else if (dir == DOWN)
-		{
-			current_animation = &animat[id].anim[status].South_action;
-		}
-
-		else if (dir == LEFT)
-		{
-			current_animation = &animat[id].anim[status].West_action;
-		}
-
-		else if (dir == RIGHT)
-		{
-			current_animation = &animat[id].anim[status].East_action;
-		}
+		current_animation = &animat[element].anim[state_id].North_action;
+	}
+	else if (dir == DOWN)
+	{
+		current_animation = &animat[element].anim[state_id].South_action;
+	}
+	else if (dir == LEFT)
+	{
+		current_animation = &animat[element].anim[state_id].West_action;
+	}
+	else if (dir == RIGHT)
+	{
+		current_animation = &animat[element].anim[state_id].East_action;
 	}
 
 	return current_animation;
 }
 
-AnimationStruct* j1AnimationManager::GetAnimStruct(uint id)
+AnimationStruct* j1AnimationManager::GetAnimStruct(AnimationElement element)
 {
-	anim_struct = &animat[id];
+	anim_struct = &animat[element];
 	return anim_struct;
 }
 

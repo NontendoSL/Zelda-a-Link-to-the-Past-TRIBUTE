@@ -4,6 +4,8 @@
 
 #include "NPC.h"
 
+enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_ATTACKING, BC_HIT, BC_DYING };
+
 class BCTrooper : public NPC
 {
 public:

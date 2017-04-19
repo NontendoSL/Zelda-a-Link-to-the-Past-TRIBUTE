@@ -168,7 +168,8 @@ bool j1Scene::Update(float dt)
 				{
 					App->fadetoblack->FadeToBlack();
 					gamestate = INMENU;
-					player->state = IDLE;
+					player->SetState(L_IDLE);
+					player->SetAnimState(L_IDLE);
 					fade = true;
 					now_switch = true;
 				}

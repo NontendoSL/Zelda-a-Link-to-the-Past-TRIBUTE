@@ -35,6 +35,7 @@ bool Weapon::Awake(pugi::xml_node &conf, uint id)
 Hookshot::Hookshot(bool equip)
 {
 	equipable = equip;
+	Wtype = W_HOOKSHOT;
 }
 
 
@@ -45,7 +46,9 @@ Hookshot::~Hookshot()
 bool Hookshot::Start()
 {
 	speed = 3;
-	state = IDLE;
+	state = W_IDLE;
+	anim_state = W_IDLE;
+
 	return true;
 }
 
@@ -135,7 +138,7 @@ void Hookshot::Draw()
 {
 	if (in_use == true)
 	{
-		App->anim_manager->Drawing_Manager(state, direction, position, 2); //id 2 = hookshot animation xml
+		App->anim_manager->Drawing_Manager(anim_state, direction, position, HOOKSHOT); //id 2 = hookshot animation xml
 	}
 }
 
@@ -257,7 +260,7 @@ return false;
 BombContainer::BombContainer()
 {
 	equipable = true;
-	Wtype = BOMB;
+	Wtype = W_BOMB;
 }
 
 BombContainer::~BombContainer(){}
@@ -295,9 +298,7 @@ void BombContainer::CleanContainer()
 
 
 
-//--------------------------------- BOMB:
-
-
+//--------------------------------- BOMB: TODO HIGH -> modify animation management.
 Bomb::Bomb(iPoint position, BombContainer*container) : position(position), container(container)
 {
 	radius = 20;
@@ -317,7 +318,7 @@ void Bomb::Update(float dt)
 		App->audio->PlayFx(7);
 		step = EXPLOSION;
 		collision = App->collision->AddCollider({ position.x - radius,position.y - radius,radius * 2,radius * 2 }, COLLIDER_BOMB);
-		current = App->anim_manager->GetAnimation((ActionState)2, DOWN, 3);
+		current = App->anim_manager->GetAnimation((WeaponState)2, DOWN, BOMB);
 		current->Reset();
 	}
 	if (step == EXPLOSION && current->Finished())
@@ -330,10 +331,10 @@ void Bomb::Draw()
 {
 	switch (step) {
 	case PLANTED:
-		App->anim_manager->Drawing_Manager((ActionState)1, DOWN, position, 3);
+		App->anim_manager->Drawing_Manager((WeaponState)1, DOWN, position, BOMB);
 		break;
 	case EXPLOSION:
-		App->anim_manager->Drawing_Manager((ActionState)2, DOWN, position, 3);
+		App->anim_manager->Drawing_Manager((WeaponState)2, DOWN, position, BOMB);
 		break;
 	}
 }

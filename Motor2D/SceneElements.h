@@ -16,8 +16,7 @@ enum ElementType{ CREATURE, ITEM, DYNOBJECT, WEAPON };
 enum Direction { UP, DOWN, LEFT, RIGHT };
 
 //TODO ELLIOT
-enum ActionState { IDLE = 0, WALKING, ATTACKING, HOOKTHROWN, HIT, INTERACTING, AWAKENING, STATIC, CHASING, DYING};
-
+//enum ActionState { IDLE = 0, WALKING, ATTACKING, HOOKTHROWN, HIT, INTERACTING, AWAKENING, STATIC, CHASING, DYING};
 
 // ---------------------------------------------------
 class SceneElement 
@@ -69,7 +68,7 @@ public:
 
 	Direction direction;
 
-	ActionState state; //TODO ELLIOT
+	//ActionState state; //TODO ELLIOT
 	ElementType type;
 	std::string	name;
 

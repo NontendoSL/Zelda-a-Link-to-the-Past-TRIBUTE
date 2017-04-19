@@ -5,6 +5,8 @@
 #include "NPC.h"
 #include "Pokemon.h"
 
+enum TrainerState { T_IDLE = 0, T_TALKING };
+
 class PokeTrainer : public NPC
 {
 public:
@@ -37,7 +39,8 @@ public:
 	std::list<Pokemon*> pokedex;
 
 private:
-
+	TrainerState state = T_IDLE;
+	TrainerState anim_state = T_IDLE;
 	//Item* drop;
 	bool stunned = false;
 

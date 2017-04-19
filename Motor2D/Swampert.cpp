@@ -43,7 +43,8 @@ bool Swampert::Awake(pugi::xml_node &conf)
 bool Swampert::Start()
 {
 	pokemon_player = true;
-	state = IDLE;
+	state = P_IDLE;
+	anim_state = P_IDLE;
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 17;
@@ -71,22 +72,22 @@ bool Swampert::Update(float dt)
 			//pokemon controlled by player
 			switch (state)
 			{
-			case IDLE:
+			case P_IDLE:
 			{
 				Idle();
 				break;
 			}
-			case WALKING:
+			case P_WALKING:
 			{
 				Walking();
 				break;
 			}
-			case ATTACKING:
+			case P_ATTACKING:
 			{
 				Attack();
 				break;
 			}
-			case HIT:
+			case P_HIT:
 			{
 				Movebyhit();
 				break;
@@ -103,13 +104,13 @@ bool Swampert::Update(float dt)
 			//Pokemon IA
 			switch (state)
 			{
-			case IDLE:
+			case P_IDLE:
 			{
 				//CheckTargetPos();
 				Idle_IA();
 				break;
 			}
-			case WALKING:
+			case P_WALKING:
 			{
 				//CheckTargetPos();
 				Walking_IA();
@@ -120,18 +121,24 @@ bool Swampert::Update(float dt)
 				}*/
 				break;
 			}
-			case ATTACKING:
+			case P_ATTACKING:
 			{
 				//CheckTargetPos();
 				//Attack_IA();
 				break;
 			}
 
-			case HIT:
+			case P_HIT:
 			{
 				Movebyhit();
 				break;
 			}
+
+			/*case P_SPECIAL:
+			{
+				SpecialAttack(); //Aqui dins és on s'han de controlar les pertícules d'especial.
+				break;
+			}*/
 
 			default:
 			{
@@ -165,13 +172,10 @@ void Swampert::Draw()
 	{
 		ThrowSP();
 	}
-	if (state == HIT)
-	{
-		App->anim_manager->Drawing_Manager(IDLE, direction, position, 7);
-	}
+
 	else
 	{
-		App->anim_manager->Drawing_Manager(state, direction, position, 7);
+		App->anim_manager->Drawing_Manager(anim_state, direction, position, SWAMPERT);
 	}
 
 }
@@ -185,36 +189,36 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		Pokemon* isActive = (Pokemon*)c1->callback;
-		Pokemon* isActive_2 = (Pokemon*)c2->callback;
+		Pokemon* isActive = (Pokemon*)c1->callback; //THIS POKEMON
+		Pokemon* isActive_2 = (Pokemon*)c2->callback; //ENEMY POKEMON
 		if (isActive != nullptr && isActive_2 != nullptr)
 		{
 			if (isActive->active && isActive_2->active)
 			{
-				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false && pokemon_player)
+				if (c1 == collision_feet && c2 == isActive_2->sp_attack && getdamage == false)
 				{
-					Pokemon* temp = (Pokemon*)c2->callback;
-					temp->knockback_time.Start();
-					temp->hp -= sp_damage;
+					knockback_time.Start();
+					hp -= isActive_2->sp_damage;
 					getdamage = true;
-					App->scene->pokecombat->GetDamage(sp_damage, false);
-					temp->state = HIT;
-					temp->dir_hit = c1->callback->direction;
-					temp->prev_position = temp->position;
+					App->scene->pokecombat->GetDamage(isActive_2->sp_damage, false);
+					state = P_HIT;
+					anim_state = P_HIT;
+					dir_hit = isActive_2->direction;
+					prev_position = position;
 				}
 
-				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+				if (c1 == collision_feet && c2 == isActive_2->collision_attack && getdamage == false)
 				{
 					if (isActive->pokemon_player)
 					{
-						Pokemon* temp = (Pokemon*)c2->callback;
-						temp->knockback_time.Start();
-						temp->hp -= attack;
+						knockback_time.Start();
+						hp -= isActive_2->attack;
 						getdamage = true;
-						App->scene->pokecombat->GetDamage(attack, false);
-						temp->state = HIT;
-						temp->dir_hit = c1->callback->direction;
-						temp->prev_position = temp->position;
+						App->scene->pokecombat->GetDamage(isActive_2->attack, false);
+						state = P_HIT;
+						anim_state = P_HIT;
+						dir_hit = isActive_2->direction;
+						prev_position = position;
 					}
 				}
 			}
@@ -273,7 +277,8 @@ bool Swampert::Idle()
 		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT ||
 		App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
-		state = WALKING;
+		state = P_WALKING;
+		anim_state = P_WALKING;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
@@ -288,14 +293,16 @@ bool Swampert::Idle()
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
-		state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
+		state = P_ATTACKING;
+		anim_state = P_ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(anim_state, direction, SWAMPERT); 
 		current_animation->Reset();
 	}
 
 	else
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 	return true;
 }
@@ -307,7 +314,8 @@ bool Swampert::Walking()
 
 	if (walking == false)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
@@ -322,14 +330,16 @@ bool Swampert::Walking()
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
-		state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 7); //This number may need to be changed?
+		state = P_ATTACKING;
+		anim_state = P_ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(anim_state, direction, SWAMPERT); //This number may need to be changed?
 		current_animation->Reset();
 	}
 
 	else
 	{
-		state = WALKING;
+		state = P_WALKING;
+		anim_state = P_WALKING;
 	}
 	return false;
 }
@@ -398,7 +408,8 @@ bool Swampert::Attack()
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;
-			state = IDLE;
+			state = P_IDLE;
+			anim_state = P_IDLE;
 			if (getdamage)
 			{
 				getdamage = false;
@@ -462,7 +473,8 @@ bool Swampert::Idle_IA()
 				{
 					direction = RIGHT;
 				}
-				state = WALKING;
+				state = P_WALKING;
+				anim_state = P_WALKING;
 				reset_distance = true;
 				orient_time.Start();
 			}
@@ -493,12 +505,14 @@ bool Swampert::Walking_IA()
 
 	if (walking == false)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 
 	else
 	{
-		state = WALKING;
+		state = P_WALKING;
+		anim_state = P_WALKING;
 	}
 
 	return true;
@@ -574,10 +588,11 @@ bool Swampert::CheckTargetPos()
 
 	if (distance_target <= radar)
 	{
-		if (attacker == false && state != ATTACKING)
+		if (attacker == false && state != P_ATTACKING)
 		{
-			state = ATTACKING;
-			current_animation = App->anim_manager->GetAnimation(state, direction, 7); //this number may need to be changed?
+			state = P_ATTACKING;
+			anim_state = P_ATTACKING;
+			current_animation = App->anim_manager->GetAnimation(anim_state, direction, SWAMPERT); //this number may need to be changed?
 			current_animation->Reset();
 		}
 	}
@@ -595,7 +610,8 @@ bool Swampert::Attack_IA()
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;
-			state = IDLE;
+			state = P_IDLE;
+			anim_state = P_IDLE;
 			getdamage = false;
 		}
 	}
@@ -630,13 +646,15 @@ bool Swampert::Movebyhit()
 {
 	if (hp <= 0)
 	{
-		state = DYING;
+		state = P_DYING;
+		anim_state = P_HIT;
 		return true;
 	}
 
 	if (knockback_time.ReadSec() >= 0.2)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 		return true;
 	}
 

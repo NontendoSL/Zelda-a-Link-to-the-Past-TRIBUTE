@@ -56,16 +56,38 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 			{
 				soldier_type = AGGRESSIVE;
 			}
+
 			npc_id = id;
 			stop_search = true;
 		}
 	}
+
 	return true;
 }
 
 bool Soldier::CleanUp()
 {
 	return true;
+}
+
+void Soldier::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c1 != nullptr && c2 != nullptr)
+	{
+		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
+		{
+			if (destructible == true && state != S_HIT)
+			{
+				knockback_time.Start();
+				hp--;
+				state = S_HIT;
+				anim_state = S_IDLE;
+				dir_hit = c1->callback->direction;
+				prev_position = position;
+			}
+		}
+	}
+
 }
 
 bool Soldier::Start()
@@ -75,7 +97,8 @@ bool Soldier::Start()
 		offset_x = 8;
 		offset_y = 15;
 		//marge = 12;
-		state = IDLE;
+		state = S_IDLE;
+		anim_state = S_IDLE;
 		speed = 1;
 		//offset_x = 15;
 		//offset_y = 15;
@@ -96,7 +119,7 @@ bool Soldier::Start()
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 16, 15 }, COLLIDER_ENEMY, this);
 
 	//Get the animations
-	animation = *App->anim_manager->GetAnimStruct(6); //id 6 = soldier
+	animation = *App->anim_manager->GetAnimStruct(SOLDIER);
 	return true;
 }
 
@@ -110,35 +133,35 @@ bool Soldier::Update(float dt)
 			{
 				switch (state)
 				{
-				case IDLE:
+				case S_IDLE:
 				{
 					CheckPlayerPos();
 					Idle();
 					break;
 				}
-				case WALKING:
+				case S_WALKING:
 				{
 					CheckPlayerPos();
 					Walking();
 					break;
 				}
-				case DYING:
+				case S_DYING:
 				{
 					Die();
 					break;
 				}
-				case HIT:
+				case S_HIT:
 				{
 					Movebyhit();
 					break;
 				}
-				case CHASING:
+				case S_CHASING:
 				{
 					CheckPlayerPos();
 					Chase();
 					break;
 				}
-				case ATTACKING:
+				case S_ATTACKING:
 				{
 					Attack();
 					break;
@@ -181,16 +204,16 @@ void Soldier::Draw()
 		{
 			switch (state)
 			{
-			case IDLE:
+			case S_IDLE:
 				id = 0;
 				break;
-			case WALKING:
+			case S_WALKING:
 				id = 1;
 				break;
-			case HIT:
+			case S_HIT:
 				id = 1;
 				break;
-			case CHASING:
+			case S_CHASING:
 			{
 				id = 1;
 				break;
@@ -231,11 +254,12 @@ bool Soldier::CheckPlayerPos()
 
 	if (distance_player <= radar && App->scene->player->invincible_timer.ReadSec() >= 1)
 	{
-		state = CHASING;
+		state = S_CHASING;
+		anim_state = S_WALKING;
 	}
 	else
 	{
-		state = IDLE;
+		state = S_IDLE;
 	}
 
 	return true;
@@ -271,7 +295,8 @@ bool Soldier::Idle()
 				{
 					direction = RIGHT;
 				}
-				state = WALKING;
+				state = S_WALKING;
+				anim_state = S_WALKING;
 				reset_distance = true;
 			}
 		}
@@ -301,12 +326,14 @@ bool Soldier::Walking()
 
 	if (walking == false)
 	{
-		state = IDLE;
+		state = S_IDLE;
+		anim_state = S_IDLE;
 	}
 
 	else
 	{
-		state = WALKING;
+		state = S_WALKING;
+		anim_state = S_WALKING;
 	}
 
 	return true;
@@ -412,13 +439,15 @@ bool Soldier::Movebyhit()
 {
 	if (hp <= 0)
 	{
-		state = DYING;
+		state = S_DYING;
+		anim_state = S_IDLE;
 		return true;
 	}
 
 	if (knockback_time.ReadSec() >= 0.2)
 	{
-		state = CHASING;
+		state = S_CHASING;
+		anim_state = S_WALKING;
 		return true;
 	}
 
@@ -455,7 +484,7 @@ bool Soldier::Movebyhit()
 	position.y >(prev_position.y + 65) ||
 	position.y < (prev_position.y + 65))
 	{
-	state = IDLE;
+	state = L_IDLE;
 	}*/
 	return true;
 }

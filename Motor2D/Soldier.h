@@ -5,7 +5,9 @@
 #include "NPC.h"
 #include <vector>
 
-enum SoldierType {AGGRESSIVE, PASSIVE};
+enum SoldierType { AGGRESSIVE, PASSIVE };
+enum SoldierState { S_IDLE = 0, S_WALKING, S_DYING, S_ATTACKING, S_CHASING, S_HIT };
+
 
 class Soldier : public NPC
 {
@@ -36,6 +38,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void OnCollision(Collider*, Collider*);
+
 	bool CheckPlayerPos();
 
 	bool Idle();
@@ -56,6 +60,8 @@ public:
 private:
 	SoldierType soldier_type;
 	uint id = 0;
+	SoldierState state = S_IDLE;
+	SoldierState anim_state = S_IDLE;
 
 	//Soldier Test for Release 0.1
 	AnimationStruct animation;
