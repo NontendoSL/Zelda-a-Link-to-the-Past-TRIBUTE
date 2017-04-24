@@ -44,7 +44,8 @@ bool Blaziken::Awake(pugi::xml_node &conf)
 bool Blaziken::Start()
 {
 	pokemon_player = true;
-	state = IDLE;
+	state = P_IDLE;
+	anim_state = P_IDLE;
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 17;
@@ -68,27 +69,27 @@ bool Blaziken::Update(float dt)
 			//pokemon controlled by player
 			switch (state)
 			{
-			case IDLE:
+			case P_IDLE:
 			{
 				Idle();
 				break;
 			}
-			case WALKING:
+			case P_WALKING:
 			{
 				Walking();
 				break;
 			}
-			case ATTACKING:
+			case P_ATTACKING:
 			{
 				Attack();
 				break;
 			}
-			case HOOKTHROWN:
+			case P_SPECIAL:
 			{
 				Attack();
 				break;
 			}
-			case HIT:
+			case P_HIT:
 			{
 				Movebyhit();
 				break;
@@ -105,12 +106,12 @@ bool Blaziken::Update(float dt)
 			//Pokemon IA
 			switch (state)
 			{
-			case IDLE:
+			case P_IDLE:
 			{
 				Idle_IA();
 				break;
 			}
-			case WALKING:
+			case P_WALKING:
 			{
 				Walking_IA();
 				/*if (target != nullptr && orient_time.ReadSec() >= 2)
@@ -120,12 +121,12 @@ bool Blaziken::Update(float dt)
 				}*/
 				break;
 			}
-			case ATTACKING:
+			case P_ATTACKING:
 			{
 				//Attack_IA();
 				break;
 			}
-			case HIT:
+			case P_HIT:
 			{
 				Movebyhit();
 				break;
@@ -158,7 +159,7 @@ bool Blaziken::Update(float dt)
 
 void Blaziken::Draw()
 {
-	App->anim_manager->Drawing_Manager(state, direction, position, 1);  //TODO LOW-> ID magic number, need change!!
+	App->anim_manager->Drawing_Manager(state, direction, position, BLAZIKEN);  //TODO LOW-> ID magic number, need change!!
 }
 
 bool Blaziken::CleanUp()
@@ -184,7 +185,7 @@ void Blaziken::OnCollision(Collider* c1, Collider* c2)
 					temp->hp -= sp_damage;
 					getdamage = true;
 					App->scene->pokecombat->GetDamage(sp_damage, false);
-					temp->state = HIT;
+					temp->state = P_HIT;
 					temp->dir_hit = c1->callback->direction;
 					temp->prev_position = temp->position;
 				}
@@ -216,7 +217,8 @@ bool Blaziken::Idle()
 		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT ||
 		App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
-		state = WALKING;
+		state = P_WALKING;
+		anim_state = P_WALKING;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
@@ -224,8 +226,9 @@ bool Blaziken::Idle()
 		if (App->scene->pokecombat->cooldown == false)
 		{
 			App->scene->pokecombat->cooldown = true;
-			state = HOOKTHROWN;
-			current_animation = App->anim_manager->GetAnimation(state, direction, 1);
+			state = P_SPECIAL;
+			anim_state = P_SPECIAL;
+			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
 			current_animation->Reset();
 			sp_attacking = true;
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
@@ -234,14 +237,16 @@ bool Blaziken::Idle()
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
-		state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 1);
+		state = P_ATTACKING;
+		anim_state = P_ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
 		current_animation->Reset();
 	}
 
 	else
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 	return true;
 }
@@ -253,7 +258,8 @@ bool Blaziken::Walking()
 
 	if (walking == false)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
@@ -261,8 +267,9 @@ bool Blaziken::Walking()
 		if (App->scene->pokecombat->cooldown == false)
 		{
 			App->scene->pokecombat->cooldown = true;
-			state = HOOKTHROWN;
-			current_animation = App->anim_manager->GetAnimation(state, direction, 1);
+			state = P_SPECIAL;
+			anim_state = P_SPECIAL;
+			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
 			current_animation->Reset();
 			sp_attacking = true;
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
@@ -271,14 +278,16 @@ bool Blaziken::Walking()
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
-		state = ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, 1);
+		state = P_ATTACKING;
+		anim_state = P_ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
 		current_animation->Reset();
 	}
 
 	else
 	{
-		state = WALKING;
+		state = P_WALKING;
+		anim_state = P_WALKING;
 	}
 	return false;
 }
@@ -356,7 +365,8 @@ bool Blaziken::Attack()
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;
-			state = IDLE;
+			state = P_IDLE;
+			anim_state = P_IDLE;
 			if (getdamage)
 				getdamage = false;
 		}
@@ -440,7 +450,8 @@ bool Blaziken::Idle_IA()
 				{
 					direction = RIGHT;
 				}
-				state = WALKING;
+				state = P_WALKING;
+				anim_state = P_WALKING;
 				orient_time.Start();
 				reset_distance = true;
 			}
@@ -469,12 +480,14 @@ bool Blaziken::Walking_IA()
 
 	if (walking == false)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 
 	else
 	{
-		state = WALKING;
+		state = P_WALKING;
+		anim_state = P_WALKING;
 	}
 	return true;
 }
@@ -553,13 +566,15 @@ bool Blaziken::Movebyhit()
 {
 	if (hp <= 0)
 	{
-		state = DYING;
+		state = P_DYING;
+		anim_state = P_DYING;
 		return true;
 	}
 
 	if (knockback_time.ReadSec() >= 0.2)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 		return true;
 	}
 

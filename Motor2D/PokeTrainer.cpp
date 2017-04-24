@@ -30,7 +30,8 @@ bool PokeTrainer::Awake(pugi::xml_node &conf)
 bool PokeTrainer::Start()
 {
 	direction = DOWN;
-	state = IDLE;
+	state = T_IDLE;
+	anim_state = T_IDLE;
 
 	if(active)
 		collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 21 }, COLLIDER_TRAINER, this);

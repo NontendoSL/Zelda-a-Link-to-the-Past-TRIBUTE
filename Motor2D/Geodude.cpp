@@ -46,7 +46,8 @@ bool Geodude::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 
 bool Geodude::Start()
 {
-	state = IDLE;
+	state = P_IDLE;
+	anim_state = P_IDLE;
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 7;
@@ -69,27 +70,27 @@ bool Geodude::Update(float dt)
 	{
 		switch (state)
 		{
-		case IDLE:
+		case P_IDLE:
 		{
 			Idle();
 			break;
 		}
-		case WALKING:
+		case P_WALKING:
 		{
 			Walking();
 			break;
 		}
-		case ATTACKING:
+		case P_ATTACKING:
 		{
 			Attack();
 			break;
 		}
-		case HIT:
+		case P_HIT:
 		{
 			Movebyhit();
 			break;
 		}
-		case DYING:
+		case P_DYING:
 		{
 			Death();
 			break;
@@ -125,19 +126,19 @@ void Geodude::Draw()
 		int id;
 	switch (state)
 	{
-	case IDLE:
+	case P_IDLE:
 		id = 0;
 		break;
-	case WALKING:
+	case P_WALKING:
 		id = 1;
 		break;
-	case ATTACKING:
+	case P_ATTACKING:
 		id = 2;
 		break;
-	case DYING:
+	case P_DYING:
 		id = 3;
 		break;
-	case HIT:
+	case P_HIT:
 		id = 3;
 		break;
 	default:
@@ -205,7 +206,8 @@ bool Geodude::Idle()
 				{
 					direction = RIGHT;
 				}
-				state = WALKING;
+				state = P_WALKING;
+				anim_state = P_WALKING;
 				reset_distance = true;
 			}
 		}
@@ -233,12 +235,14 @@ bool Geodude::Walking()
 
 	if (walking == false)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 
 	else
 	{
-		state = WALKING;
+		state = P_WALKING;
+		anim_state = P_WALKING;
 	}
 	return true;
 }
@@ -315,7 +319,8 @@ bool Geodude::Attack()
 		animation.anim[state].North_action.Finished() ||
 		animation.anim[state].South_action.Finished())
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 
 	return true;
@@ -338,19 +343,22 @@ bool Geodude::Movebyhit()
 {
 	if (hp <= 0) 
 	{
-		state = DYING;
+		state = P_DYING;
+		anim_state = P_DYING;
 		return true;
 	}
 
 	if (knockback_time.ReadSec() >= 0.2)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 		return true;
 	}
 
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 		return true;
 	}
 
@@ -388,17 +396,18 @@ bool Geodude::Movebyhit()
 
 void Geodude::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1 != nullptr && c2 != nullptr && state != DYING)
+	if (c1 != nullptr && c2 != nullptr && state != P_DYING)
 	{
 		//TODO JORDI
-		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && state != HIT)
+		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && state != P_HIT)
 		{
 			if (c2->callback != nullptr)
 			{
 				knockback_time.Start();
 				animation.anim[3].ResetAnimations();
 				hurt_timer.Start();
-				state = HIT;
+				state = P_HIT;
+				anim_state = P_HIT;
 				dir_hit = c2->callback->direction;
 				hp--;
 			}
@@ -406,11 +415,12 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback != nullptr)
 		{
-			if (c2->callback->state != HIT)
+			if (c2->callback->state != L_HIT)
 			{
-				if (c2->callback->state != HOOKTHROWN && state != HIT)
+				if (c2->callback->state != L_HOOKTHROWN && state != L_HIT)
 				{
-					state = ATTACKING;
+					state = P_ATTACKING;
+					anim_state = P_ATTACKING;
 					animation.anim[state].ResetAnimations();
 					Orientate();
 				}

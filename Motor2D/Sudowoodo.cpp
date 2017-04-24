@@ -31,9 +31,10 @@ bool Sudowoodo::Awake(pugi::xml_node &conf, uint id)
 
 bool Sudowoodo::Start()
 {
-	state = IDLE;
+	state = P_IDLE;
+	anim_state = P_IDLE;
 	//Get the animations
-	animation = *App->anim_manager->GetAnimStruct(9); //id 9 = Sudowoodo
+	animation = *App->anim_manager->GetAnimStruct(SUDOWOODO); //id 9 = Sudowoodo
 	return true;
 }
 
@@ -49,7 +50,7 @@ void Sudowoodo::Draw()
 		int id;
 	switch (state)
 	{
-	case IDLE:
+	case P_IDLE:
 		id = 0;
 		break;
 	default:
@@ -62,7 +63,6 @@ void Sudowoodo::Draw()
 		anim_rect = animation.anim[id].South_action.GetCurrentFrame();
 		pivot = animation.anim[id].South_action.GetCurrentOffset();
 	}
-
 
 	//DRAW
 	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);

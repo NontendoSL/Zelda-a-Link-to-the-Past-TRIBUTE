@@ -42,7 +42,8 @@ bool Golem::Awake(pugi::xml_node &conf, uint id)
 
 bool Golem::Start()
 {
-	state = STATIC;
+	state = P_SPECIAL;
+	anim_state = P_SPECIAL;
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 14;
@@ -76,7 +77,7 @@ bool Golem::Update(float dt)
 	{
 		switch (state)
 		{
-		case IDLE:
+		case P_IDLE:
 		{
 			CheckPlayerPos();
 			Idle();
@@ -88,28 +89,28 @@ bool Golem::Update(float dt)
 			Walking();
 			break;
 		}*/
-		case CHASING:
+		case P_CHASING:
 		{
 			CheckPlayerPos();
 			Chase();
 			break;
 		}
-		case ATTACKING:
+		case P_ATTACKING:
 		{
 			Attack();
 			break;
 		}
-		case HIT:
+		case P_HIT:
 		{
 			Hit();
 			break;
 		}
-		case STATIC:
+		case P_STATIC:
 		{
 			break;
 		}
 		/* This case shoul be added, it reffers when abandoning rock stage */
-		case AWAKENING:
+		case P_SPECIAL:
 		{
 			if (mode_stone)
 			{
@@ -118,12 +119,13 @@ bool Golem::Update(float dt)
 			}
 			if (mode_stone == false && SDL_GetTicks() - timetoplay > 500)
 			{
-				state = IDLE;
+				state = P_IDLE;
+				anim_state = P_IDLE;
 			}
 			break;
 		}
 		
-		case DYING:
+		case P_DYING:
 		{
 			Death();
 			break;
@@ -160,28 +162,28 @@ void Golem::Draw()
 	int id;
 	switch (state)
 	{
-	case IDLE:
+	case P_IDLE:
 		id = 0;
 		break;
 	/*case WALKING:
 		id = 1;
 		break;*/
-	case CHASING:
+	case P_CHASING:
 		id = 1;
 		break;
-	case ATTACKING:
+	case P_ATTACKING:
 		id = 2;
 		break;
-	case STATIC:
+	case P_STATIC:
 		id = 3;
 		break;
-	case AWAKENING:
+	case P_SPECIAL:
 		id = 4;
 		break;
-	case HIT:
+	case P_HIT:
 		id = 5;
 		break;
-	case DYING:
+	case P_DYING:
 		id = 5;
 		break;
 	default:
@@ -225,11 +227,13 @@ bool Golem::CheckPlayerPos()
 
 	if (distance_player <= radar && App->scene->player->invincible_timer.ReadSec() >= 1)
 	{
-		state = CHASING;
+		state = P_CHASING;
+		anim_state = P_WALKING;
 	}
 	else
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 	return true;
 }
@@ -369,11 +373,13 @@ bool Golem::Chase()
 			iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
 			GoTo(player_pos, chase_speed);
 			Orientate();
-			state = CHASING;
+			state = P_CHASING;
+			anim_state = P_WALKING;
 		}
 		else
 		{
-			state = IDLE;
+			state = P_IDLE;
+			anim_state = P_IDLE;
 		}
 	}
 	return true;
@@ -383,19 +389,22 @@ bool Golem::Hit()
 {
 	if(hp <= 0)
 	{
-		state = DYING;
+		state = P_DYING;
+		anim_state = P_DYING;
 		return true;
 	}
 
 	if (knockback_time.ReadSec() >= 0.2)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 		return true;
 	}
 
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 		return true;
 	}
 
@@ -438,7 +447,8 @@ bool Golem::Attack()
 		animation.anim[state].North_action.Finished() ||
 		animation.anim[state].South_action.Finished())
 	{
-		state = IDLE;
+		state = P_IDLE;
+		anim_state = P_IDLE;
 	}
 
 	return true;
@@ -463,9 +473,10 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
 		{
-			if (state == STATIC)
+			if (state == P_STATIC)
 			{
-				state = AWAKENING;
+				state = P_SPECIAL;
+				anim_state = P_SPECIAL;
 				iPoint temp = App->map->WorldToMap(position.x, position.y);
 				App->map->EditCost(temp.x, temp.y, 0);
 				App->map->EditCost(temp.x - 1, temp.y, 0);
@@ -490,9 +501,10 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback != nullptr)
 		{
-			if (c2->callback->state != HIT && c2->callback->state != HOOKTHROWN && state != HIT && state != STATIC)
+			if (c2->callback->state != L_HIT && c2->callback->state != L_HOOKTHROWN && state != L_HIT && state != P_STATIC)
 			{
-				state = ATTACKING;
+				state = P_ATTACKING;
+				anim_state = P_ATTACKING;
 				animation.anim[state].ResetAnimations();
 				Orientate();
 			}
