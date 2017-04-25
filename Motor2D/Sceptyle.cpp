@@ -156,12 +156,11 @@ void Sceptyle::Draw()
 	{
 		ThrowSP();
 	}
-	if (state == P_HIT)
-	{
-		App->anim_manager->Drawing_Manager((ActionState)3, direction, position, 8);
-	}
+
 	else
-		App->anim_manager->Drawing_Manager(state, direction, position, SCEPTILE);
+	{
+		App->anim_manager->Drawing_Manager(anim_state, direction, position, SCEPTILE);
+	}
 }
 
 bool Sceptyle::CleanUp()
@@ -227,19 +226,19 @@ void Sceptyle::ThrowSP()
 		switch (sp_direction)
 		{
 		case 0:
-			App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x,sp_start.y - range.y }, 10);
+			App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
 			sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
 			break;
 		case 1:
-			App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x,sp_start.y + range.y }, 10);
+			App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
 			sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
 			break;
 		case 2:
-			App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x - range.y,sp_start.y - 10 }, 10);
+			App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
 			sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
 			break;
 		case 3:
-			App->anim_manager->Drawing_Manager((ActionState)3, UP, { sp_start.x + range.y,sp_start.y - 10 }, 10);
+			App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
 			sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
 			break;
 		}

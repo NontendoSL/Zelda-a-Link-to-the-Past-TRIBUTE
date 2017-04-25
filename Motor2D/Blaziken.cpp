@@ -159,7 +159,7 @@ bool Blaziken::Update(float dt)
 
 void Blaziken::Draw()
 {
-	App->anim_manager->Drawing_Manager(state, direction, position, BLAZIKEN);  //TODO LOW-> ID magic number, need change!!
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);  //TODO LOW-> ID magic number, need change!!
 }
 
 bool Blaziken::CleanUp()
@@ -297,7 +297,6 @@ bool Blaziken::Move()
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = LEFT;
-		//int temp = App->map->MovementCost(position.x - speed, position.y, LEFT);
 		int temp = App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
 		if (temp == 0)
 		{
@@ -310,7 +309,6 @@ bool Blaziken::Move()
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 	{
 		direction = DOWN;
-		//int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
 		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN);
 		if (temp == 0)
 		{
@@ -323,7 +321,6 @@ bool Blaziken::Move()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = RIGHT;
-		//int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
 		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
 		if (temp == 0)
 		{
@@ -368,7 +365,9 @@ bool Blaziken::Attack()
 			state = P_IDLE;
 			anim_state = P_IDLE;
 			if (getdamage)
+			{
 				getdamage = false;
+			}
 		}
 	}
 	else
@@ -497,7 +496,6 @@ bool Blaziken::Move_IA()
 	//App->pathfinding->CreatePath(position, target->Getposition());
 	if (direction == LEFT)
 	{
-		//App->map->MovementCost(position.x - speed, position.y, LEFT)
 		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
 			position.x -= speed;
@@ -513,7 +511,6 @@ bool Blaziken::Move_IA()
 
 	if (direction == RIGHT)
 	{
-		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
 		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
 			position.x += speed;
@@ -527,7 +524,6 @@ bool Blaziken::Move_IA()
 	}
 	if (direction == UP)
 	{
-		//App->map->MovementCost(position.x, position.y - speed, UP)
 		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
 			position.y -= speed;
@@ -541,7 +537,6 @@ bool Blaziken::Move_IA()
 	}
 	if (direction == DOWN)
 	{
-		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
 		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
 			position.y += speed;

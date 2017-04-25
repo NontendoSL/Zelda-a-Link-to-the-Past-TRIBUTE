@@ -42,8 +42,8 @@ bool Golem::Awake(pugi::xml_node &conf, uint id)
 
 bool Golem::Start()
 {
-	state = P_SPECIAL;
-	anim_state = P_SPECIAL;
+	state = P_STATIC;
+	anim_state = P_STATIC;
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 14;
@@ -61,7 +61,7 @@ bool Golem::Start()
 	App->map->EditCost(temp.x - 1, temp.y - 1, App->map->data.tilesets[1]->firstgid + 1);
 
 	//Get the animations
-	animation = *App->anim_manager->GetAnimStruct(5); //id 5 = Golem
+	animation = *App->anim_manager->GetAnimStruct(GOLEM); //id 5 = Golem
 
 	// Test for Vertical Slice /// TODO MED-> read stats from XML
 	radar = 40;
@@ -109,7 +109,8 @@ bool Golem::Update(float dt)
 		{
 			break;
 		}
-		/* This case shoul be added, it reffers when abandoning rock stage */
+
+		/* This case should be added, it reffers when abandoning rock stage */
 		case P_SPECIAL:
 		{
 			if (mode_stone)
@@ -157,59 +158,26 @@ bool Golem::Update(float dt)
 
 void Golem::Draw()
 {
-	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
-		//App->anim_manager->Drawing_Manager(state, direction, position, 6);
-	int id;
-	switch (state)
-	{
-	case P_IDLE:
-		id = 0;
-		break;
-	/*case WALKING:
-		id = 1;
-		break;*/
-	case P_CHASING:
-		id = 1;
-		break;
-	case P_ATTACKING:
-		id = 2;
-		break;
-	case P_STATIC:
-		id = 3;
-		break;
-	case P_SPECIAL:
-		id = 4;
-		break;
-	case P_HIT:
-		id = 5;
-		break;
-	case P_DYING:
-		id = 5;
-		break;
-	default:
-		break;
-	}
-
-
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow);
 	if (direction == UP)
 	{
-		anim_rect = animation.anim[id].North_action.GetCurrentFrame();
-		pivot = animation.anim[id].North_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].North_action.GetCurrentOffset();
 	}
 	else if (direction == DOWN)
 	{
-		anim_rect = animation.anim[id].South_action.GetCurrentFrame();
-		pivot = animation.anim[id].South_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
 	}
 	else if (direction == LEFT)
 	{
-		anim_rect = animation.anim[id].West_action.GetCurrentFrame();
-		pivot = animation.anim[id].West_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].West_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].West_action.GetCurrentOffset();
 	}
 	else if (direction == RIGHT)
 	{
-		anim_rect = animation.anim[id].East_action.GetCurrentFrame();
-		pivot = animation.anim[id].East_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].East_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].East_action.GetCurrentOffset();
 	}
 
 	//DRAW
@@ -442,10 +410,10 @@ bool Golem::Hit()
 
 bool Golem::Attack()
 {
-	if (animation.anim[state].East_action.Finished() ||
-		animation.anim[state].West_action.Finished() ||
-		animation.anim[state].North_action.Finished() ||
-		animation.anim[state].South_action.Finished())
+	if (animation.anim[P_ATTACKING].East_action.Finished() ||
+		animation.anim[P_ATTACKING].West_action.Finished() ||
+		animation.anim[P_ATTACKING].North_action.Finished() ||
+		animation.anim[P_ATTACKING].South_action.Finished())
 	{
 		state = P_IDLE;
 		anim_state = P_IDLE;
@@ -486,15 +454,16 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 		//TODO JORDI
-		if(c1 == collision_feet && c2->type == COLLIDER_SWORD && state != HIT && state != STATIC && state != AWAKENING)
+		if(c1 == collision_feet && c2->type == COLLIDER_SWORD && state != P_HIT && state != P_STATIC && state != P_SPECIAL)
 		{
 			if (c2->callback != nullptr)
 			{
 				knockback_time.Start();
-				animation.anim[5].ResetAnimations();
+				animation.anim[P_DYING].ResetAnimations();
 				hurt_timer.Start();
 				dir_hit = c2->callback->direction;
-				state = HIT;
+				state = P_HIT;
+				anim_state = P_DYING;
 				hp--;
 			}
 		}
@@ -505,7 +474,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			{
 				state = P_ATTACKING;
 				anim_state = P_ATTACKING;
-				animation.anim[state].ResetAnimations();
+				animation.anim[P_ATTACKING].ResetAnimations();
 				Orientate();
 			}
 		}

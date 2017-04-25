@@ -11,20 +11,20 @@
 
 enum AnimationElement //TODO HIGH-> ORDER THIS ENUM
 {
+	//ZELDA NPCS -------------
 	LINK,
 	SOLDIER,
+	//BC_TROOPER,GANON,
 	
 	//WEAPONS ---------
 	HOOKSHOT,
 	BOMB,
 
+	//VICTORY ROAD -------------
 	GEODUDE,
 	GOLEM,
-	//GOLBAT,
 	SUDOWOODO,
-	TRAINER,
-	BC_TROOPER,
-	GANON,
+	//GOLBAT,
 
 	//POKÉMON COMBAT ---------
 	BLAZIKEN, SWAMPERT, SCEPTILE,
@@ -33,6 +33,12 @@ enum AnimationElement //TODO HIGH-> ORDER THIS ENUM
 	//SEALEO, WALREIN, GLALIE,
 	//SALAMENCE, FLYGON, ALTARIA,
 	//MEWTWO, GROUDON, RAIKOU
+
+	//PARTICLES ------------
+	PARTICLES,
+
+	//TRAINERS -----------
+	TRAINER
 };
 
 enum Direction;

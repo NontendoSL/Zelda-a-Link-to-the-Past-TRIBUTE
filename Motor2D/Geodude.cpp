@@ -58,7 +58,7 @@ bool Geodude::Start()
 	reset_run = true;
 
 	//Get the animations
-	animation = *App->anim_manager->GetAnimStruct(4); //id 4 = Geodude
+	animation = *App->anim_manager->GetAnimStruct(GEODUDE);
 
 	return true;
 }
@@ -121,50 +121,27 @@ bool Geodude::Update(float dt)
 
 void Geodude::Draw()
 {
-	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
-		//App->anim_manager->Drawing_Manager(state, direction, position, 6);
-		int id;
-	switch (state)
-	{
-	case P_IDLE:
-		id = 0;
-		break;
-	case P_WALKING:
-		id = 1;
-		break;
-	case P_ATTACKING:
-		id = 2;
-		break;
-	case P_DYING:
-		id = 3;
-		break;
-	case P_HIT:
-		id = 3;
-		break;
-	default:
-		break;
-	}
-
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow);
 
 	if (direction == UP)
 	{
-		anim_rect = animation.anim[id].North_action.GetCurrentFrame();
-		pivot = animation.anim[id].North_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].North_action.GetCurrentOffset();
 	}
 	else if (direction == DOWN)
 	{
-		anim_rect = animation.anim[id].South_action.GetCurrentFrame();
-		pivot = animation.anim[id].South_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
 	}
 	else if (direction == LEFT)
 	{
-		anim_rect = animation.anim[id].West_action.GetCurrentFrame();
-		pivot = animation.anim[id].West_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].West_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].West_action.GetCurrentOffset();
 	}
 	else if (direction == RIGHT)
 	{
-		anim_rect = animation.anim[id].East_action.GetCurrentFrame();
-		pivot = animation.anim[id].East_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].East_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].East_action.GetCurrentOffset();
 	}
 
 	//DRAW
@@ -314,10 +291,10 @@ bool Geodude::Move()
 bool Geodude::Attack()
 {
 	//CHECK IF ATTACK ANIMATION IS FINISHED
-	if (animation.anim[state].East_action.Finished() || 
-		animation.anim[state].West_action.Finished() ||
-		animation.anim[state].North_action.Finished() ||
-		animation.anim[state].South_action.Finished())
+	if (animation.anim[P_ATTACKING].East_action.Finished() || 
+		animation.anim[P_ATTACKING].West_action.Finished() ||
+		animation.anim[P_ATTACKING].North_action.Finished() ||
+		animation.anim[P_ATTACKING].South_action.Finished())
 	{
 		state = P_IDLE;
 		anim_state = P_IDLE;
@@ -404,10 +381,10 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 			if (c2->callback != nullptr)
 			{
 				knockback_time.Start();
-				animation.anim[3].ResetAnimations();
+				animation.anim[P_DYING].ResetAnimations();
 				hurt_timer.Start();
 				state = P_HIT;
-				anim_state = P_HIT;
+				anim_state = P_DYING;
 				dir_hit = c2->callback->direction;
 				hp--;
 			}
@@ -421,7 +398,7 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 				{
 					state = P_ATTACKING;
 					anim_state = P_ATTACKING;
-					animation.anim[state].ResetAnimations();
+					animation.anim[anim_state].ResetAnimations();
 					Orientate();
 				}
 			}

@@ -241,19 +241,19 @@ void Swampert::ThrowSP()
 	switch (sp_direction)
 	{
 	case 0:
-		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x,sp_start.y - range.y }, 10);
+		App->anim_manager->Drawing_Manager(BUBBLE, (Direction)0, { sp_start.x, sp_start.y - range.y }, PARTICLES);
 		sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
 		break;
 	case 1:
-		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x,sp_start.y + range.y }, 10);
+		App->anim_manager->Drawing_Manager(BUBBLE, (Direction)0, { sp_start.x, sp_start.y + range.y }, PARTICLES);
 		sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
 		break;
 	case 2:
-		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x - range.y,sp_start.y-10 }, 10);
+		App->anim_manager->Drawing_Manager(BUBBLE, (Direction)0, { sp_start.x - range.y, sp_start.y-10 }, PARTICLES);
 		sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
 		break;
 	case 3:
-		App->anim_manager->Drawing_Manager((ActionState)0, UP, { sp_start.x + range.y,sp_start.y-10 }, 10);
+		App->anim_manager->Drawing_Manager(BUBBLE, (Direction)0, { sp_start.x + range.y, sp_start.y-10 }, PARTICLES);
 		sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
 		break;
 	}
@@ -647,7 +647,7 @@ bool Swampert::Movebyhit()
 	if (hp <= 0)
 	{
 		state = P_DYING;
-		anim_state = P_HIT;
+		anim_state = P_DYING;
 		return true;
 	}
 

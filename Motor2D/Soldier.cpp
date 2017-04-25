@@ -55,6 +55,7 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 			else
 			{
 				soldier_type = AGGRESSIVE;
+				anim_state = S_GUARD;
 			}
 
 			npc_id = id;
@@ -194,58 +195,32 @@ bool Soldier::Update(float dt)
 
 void Soldier::Draw()
 {
-	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
-		//App->anim_manager->Drawing_Manager(state, direction, position, 6);
-		if (soldier_type == PASSIVE)
-		{
-			id = 2;
-		}
-		else
-		{
-			switch (state)
-			{
-			case S_IDLE:
-				id = 0;
-				break;
-			case S_WALKING:
-				id = 1;
-				break;
-			case S_HIT:
-				id = 1;
-				break;
-			case S_CHASING:
-			{
-				id = 1;
-				break;
-			}
-			default:
-				break;
-			}
-		}
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow);
+	//App->anim_manager->Drawing_Manager(state, direction, position, 6);
 
 	if (direction == UP)
 	{
-		anim_rect = animation.anim[id].North_action.GetCurrentFrame();
-		pivot = animation.anim[id].North_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].North_action.GetCurrentOffset();
 	}
 	else if (direction == DOWN)
 	{
-		anim_rect = animation.anim[id].South_action.GetCurrentFrame();
-		pivot = animation.anim[id].South_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
 	}
 	else if (direction == LEFT)
 	{
-		anim_rect = animation.anim[id].West_action.GetCurrentFrame();
-		pivot = animation.anim[id].West_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].West_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].West_action.GetCurrentOffset();
 	}
 	else if (direction == RIGHT)
 	{
-		anim_rect = animation.anim[id].East_action.GetCurrentFrame();
-		pivot = animation.anim[id].East_action.GetCurrentOffset();
+		anim_rect = animation.anim[anim_state].East_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].East_action.GetCurrentOffset();
 	}
 
 	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
-	
+
 }
 
 bool Soldier::CheckPlayerPos()
@@ -260,6 +235,7 @@ bool Soldier::CheckPlayerPos()
 	else
 	{
 		state = S_IDLE;
+		anim_state = S_IDLE;
 	}
 
 	return true;

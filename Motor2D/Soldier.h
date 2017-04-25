@@ -6,7 +6,7 @@
 #include <vector>
 
 enum SoldierType { AGGRESSIVE, PASSIVE };
-enum SoldierState { S_IDLE = 0, S_WALKING, S_DYING, S_ATTACKING, S_CHASING, S_HIT };
+enum SoldierState { S_IDLE = 0, S_WALKING, S_GUARD, S_DYING, S_ATTACKING, S_CHASING, S_HIT };
 
 
 class Soldier : public NPC
@@ -30,8 +30,6 @@ public:
 
 	// Called before all Updates
 	//bool PostUpdate();
-
-	//void OnCollision(Collider* c1, Collider* c2);
 
 	void Draw();
 
