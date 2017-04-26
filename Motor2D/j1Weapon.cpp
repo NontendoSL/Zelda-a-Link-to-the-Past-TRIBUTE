@@ -329,12 +329,13 @@ void Bomb::Update(float dt)
 
 void Bomb::Draw()
 {
-	switch (step) {
+	switch (step) 
+	{
 	case PLANTED:
-		App->anim_manager->Drawing_Manager((WeaponState)1, DOWN, position, BOMB);
+		App->anim_manager->Drawing_Manager(W_IDLE, DOWN, position, BOMB);
 		break;
 	case EXPLOSION:
-		App->anim_manager->Drawing_Manager((WeaponState)2, DOWN, position, BOMB);
+		App->anim_manager->Drawing_Manager(W_DYING, DOWN, position, BOMB);
 		break;
 	}
 }

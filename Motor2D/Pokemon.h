@@ -55,6 +55,19 @@ public:
 	{
 		return position;
 	}
+	
+	PokemonState GetState() const
+	{
+		return state;
+	}
+	void SetState(PokemonState s_state)
+	{
+		state = s_state;
+	}
+	void SetAnimState(PokemonState a_state)
+	{
+		anim_state = a_state;
+	}
 
 public:
 

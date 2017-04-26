@@ -465,3 +465,18 @@ bool Soldier::Movebyhit()
 	return true;
 }
 
+SoldierState Soldier::GetState() const
+{
+	return state;
+}
+
+void Soldier::SetState(SoldierState s_state)
+{
+	state = s_state;
+}
+
+void Soldier::SetAnimState(SoldierState a_state)
+{
+	anim_state = a_state;
+}
+

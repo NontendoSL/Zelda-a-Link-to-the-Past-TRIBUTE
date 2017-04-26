@@ -392,9 +392,9 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback != nullptr)
 		{
-			if (c2->callback->state != L_HIT)
+			if (((Player*)c2->callback)->GetState() != L_HIT)
 			{
-				if (c2->callback->state != L_HOOKTHROWN && state != L_HIT)
+				if (((Player*)c2->callback)->GetState() != L_HOOKTHROWN && state != L_HIT)
 				{
 					state = P_ATTACKING;
 					anim_state = P_ATTACKING;

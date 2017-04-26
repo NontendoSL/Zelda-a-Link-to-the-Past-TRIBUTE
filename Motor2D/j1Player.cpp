@@ -254,6 +254,28 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 		App->scene->gamestate = INMENU;
 	}
 
+	//MINI TP ---------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		SetPos(iPoint(position.x,position.y - 10));
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+	{
+		SetPos(iPoint(position.x - 10, position.y));
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		SetPos(iPoint(position.x, position.y + 10));
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		SetPos(iPoint(position.x + 10, position.y));
+	}
+	//------------------------------------------------
+	
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
@@ -1424,25 +1446,20 @@ void Player::GetDamage()
 		hp_hearts.y--;
 }
 
-void Player::SetState(LinkState set)
-{
-	if (set >= L_IDLE && set <= L_INTERACTING)
-	{
-		state = set;
-	}
-}
 
 LinkState Player::GetState() const
 {
 	return state;
 }
 
-void Player::SetAnimState(LinkState anim)
+void Player::SetState(LinkState s_state)
 {
-	if (anim >= L_IDLE && anim <= L_INTERACTING)
-	{
-		anim_state = anim;
-	}
+	state = s_state;
+}
+
+void Player::SetAnimState(LinkState a_state)
+{
+	anim_state = a_state;
 }
 
 bool Player::CameraisIn() //Comprovate if the camera is inside the Map

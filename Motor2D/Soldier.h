@@ -55,6 +55,10 @@ public:
 	//hit enemy
 	bool Movebyhit();
 
+	SoldierState GetState() const;
+	void SetState(SoldierState state);
+	void SetAnimState(SoldierState state);
+
 private:
 	SoldierType soldier_type;
 	uint id = 0;

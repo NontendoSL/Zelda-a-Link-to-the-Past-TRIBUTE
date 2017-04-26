@@ -84,9 +84,9 @@ public:
 	void ShowHearts();
 	void GetDamage();
 
-	void SetState(LinkState state);
 	LinkState GetState() const;
-	void SetAnimState(LinkState anim);
+	void SetState(LinkState state);
+	void SetAnimState(LinkState state);
 
 	//Comprovate camera in map
 	bool CameraisIn();

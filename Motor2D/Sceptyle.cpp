@@ -187,7 +187,8 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 						temp->hp -= attack;
 						getdamage = true;
 						App->scene->pokecombat->GetDamage(attack, false);
-						temp->state = P_HIT;
+						temp->SetState(P_HIT);
+						temp->SetAnimState(P_DYING);
 						temp->dir_hit = c1->callback->direction;
 						temp->prev_position = temp->position;
 					}
@@ -201,7 +202,8 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 						temp->hp -= sp_damage;
 						getdamage = true;
 						App->scene->pokecombat->GetDamage(sp_damage, false);
-						temp->state = P_HIT;
+						temp->SetState(P_HIT);
+						temp->SetAnimState(P_DYING);
 						temp->dir_hit = c1->callback->direction;
 						temp->prev_position = temp->position;
 					}
