@@ -428,7 +428,7 @@ bool Golem::Death()
 	{
 		iPoint pos;
 		pos.create(position.x - offset_x, position.y - offset_y);
-		App->scene->items.push_back(App->entity_elements->CreateItem(2, pos));
+		App->entity_elements->CreateItem(2, pos);
 	}
 
 	App->entity_elements->DeletePokemon(this);

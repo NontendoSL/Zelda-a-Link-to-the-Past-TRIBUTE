@@ -506,7 +506,7 @@ void j1Map::DynObjectFromTiled(uint id_map)
 				{
 					if (tile_id >= data.tilesets[1]->firstgid + 10)
 					{
-						App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 5, id_map));
+						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 5, id_map);
 						if (tile_id - data.tilesets[1]->firstgid - 5 == 7)
 						{
 							EditCost(x, y, 0);
@@ -516,7 +516,7 @@ void j1Map::DynObjectFromTiled(uint id_map)
 					}
 					else
 					{
-						App->scene->dynobjects.push_back(App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 1, id_map));
+						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 1, id_map);
 						EditCost(x, y, data.tilesets[1]->firstgid + 1);
 					}
 				}

@@ -93,6 +93,11 @@
       </dynobjects>
       <switch blue="1" yellow="3" />
     </map>
+
+    <map n="3" file="Map_testing.tmx">
+      <camera follow="true"/>
+      <BCTrooper pos_x="169" pos_y="25" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+    </map>
     
     <map n="4" file="Victory_Road.tmx">
       <camera follow="true"/>

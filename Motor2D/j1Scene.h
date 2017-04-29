@@ -74,15 +74,16 @@ public:
 	//Combat or not
 	bool combat = false;
 	//Ingame
-	ZeldaMenu* hud=nullptr,*start_menu = nullptr;
+	ZeldaMenu* hud = nullptr;
+	ZeldaMenu* start_menu = nullptr;
 	PokemonCombatHud* pokecombat = nullptr;
-	Image* force, *gems, *bombs, *arrows,*hp;
+	Image* force = nullptr;
+	Image* gems = nullptr;
+	Image* bombs = nullptr;
+	Image* arrows = nullptr;
+	Image* hp = nullptr;
 	Player* player = nullptr;
-	std::list<Soldier*> enemy;
-	std::list<Pokemon*> pokemons;
-	std::list<Item*> items;
-	std::list<DynamicObjects*> dynobjects;
-	std::list<PokeTrainer*> poketrainer;
+	PokeTrainer* poketrainer = nullptr;
 
 	pugi::xml_node		config;
 

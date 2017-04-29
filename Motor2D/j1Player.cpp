@@ -321,7 +321,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						position.x = c2->callback->position.x + 4;
 						position.y = c2->callback->position.y;
 						DynamicObjects* temp = (DynamicObjects*)c2->callback;
-						App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position));
+						App->entity_elements->CreateItem(temp->item_id, position);
 
 					}
 
@@ -346,7 +346,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					position.x = c2->callback->position.x + c2->rect.w*0.5;
 					position.y = c2->callback->position.y + c2->rect.h;
 					DynamicObjects* temp = (DynamicObjects*)c2->callback;
-					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
+					App->entity_elements->CreateItem(temp->item_id, position); //TODO LOW call Drop item() function
 					score += 75;
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 				}

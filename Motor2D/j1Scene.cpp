@@ -104,65 +104,12 @@ bool j1Scene::Update(float dt)
 			player->ShowHearts();
 			force->Hitbox.w = player->charge;
 
-			/*if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 			{
-				switch_map = 7;
-			}*/
-			
-			if (switch_map == 7)
-			{
-				if (fade == false)
-				{
-					App->fadetoblack->FadeToBlack();
-					fade = true;
-					now_switch = true;
-				}
-
-				if (App->fadetoblack->Checkfadetoblack() && now_switch)
-				{
-					combat = true;
-					now_switch = false;
-					if (App->map->CleanUp())
-					{
-						App->collision->EreseAllColiderPlayer();
-						if (player->equiped_item != nullptr)
-						{
-							weapon_equiped = player->equiped_item->Wtype;
-						}
-						App->entity_elements->DelteElements();
-						if (enemy.size() > 0)
-						{
-							enemy.clear();
-						}
-						if (items.size() > 0)
-						{
-							items.clear();
-						}
-						if (dynobjects.size() > 0)
-						{
-							dynobjects.clear();
-						}
-						if (pokemons.size() > 0)
-						{
-							pokemons.clear();
-						}
-						if (poketrainer.size() > 0)
-						{
-							poketrainer.clear();
-						}
-						Load_Combat_map(7);
-
-					}
-				}
-				if (App->fadetoblack->Checkfadefromblack())
-				{
-					fade = false;
-					switch_map = 0;
-					//Play music
-					//App->audio->PlayMusic("audio/music/POKEMON/PokemonWildPokemonBattle.ogg");
-				}
+				switch_map = 3;
 			}
-			if (switch_map != 0 && switch_map != 7)
+
+			if (switch_map > 0)
 			{
 				if (fade == false)
 				{
@@ -176,6 +123,10 @@ bool j1Scene::Update(float dt)
 
 				if (App->fadetoblack->Checkfadetoblack() && now_switch)
 				{
+					if (switch_map > 6)
+					{
+						combat = true;
+					}
 					now_switch = false;
 					if (App->map->CleanUp())
 					{
@@ -186,41 +137,28 @@ bool j1Scene::Update(float dt)
 						}
 						App->entity_elements->DelteElements();
 						App->combatmanager->DeleteElements_combat();
-						if (enemy.size() > 0)
-						{
-							enemy.clear();
-						}
-						if (items.size() > 0)
-						{
-							items.clear();
-						}
-						if (dynobjects.size() > 0)
-						{
-							dynobjects.clear();
-						}
-						if (pokemons.size() > 0)
-						{
-							pokemons.clear();
-						}
 
-						if (poketrainer.size() > 0)
+						if (poketrainer != nullptr)
 						{
-							poketrainer.begin()._Ptr->_Myval->pokedex.clear();
-							poketrainer.clear();
+							if (poketrainer->pokedex.size() > 0)
+							{
+								poketrainer->pokedex.clear();
+							}
 						}
-
 						if (player->pokedex.size() > 0)
 						{
 							player->pokedex.clear();
 						}
 
-						if (combat && switch_map != 6)
+						if (combat && switch_map < 7)
 						{
 							combat = false;
+							Load_new_map(switch_map);
 						}
-
-						Load_new_map(switch_map);
-						id_map = switch_map;
+						else
+						{
+							Load_Combat_map(switch_map);
+						}
 						if (switch_map == 4 && notrepeatmusic)
 						{
 							notrepeatmusic = false;
@@ -230,7 +168,7 @@ bool j1Scene::Update(float dt)
 				}
 				if (App->fadetoblack->Checkfadefromblack())
 				{
-					if (combat && switch_map == 6)
+					if (combat && switch_map == 6 && id_map > 6)
 					{
 						switch_map = 0;
 						fade = false;
@@ -243,9 +181,9 @@ bool j1Scene::Update(float dt)
 						fade = false;
 						gamestate = INGAME;
 					}
+					id_map = switch_map;
 				}
 			}
-
 			if (switch_menu)
 			{
 				SwitchMenu(!inventory);
@@ -462,13 +400,11 @@ bool j1Scene::Load_new_map(int n)
 				player->position.y = newPosition.y;
 			}
 
-
-
 			//soldier
 			pugi::xml_node temp_enemy = temp.child("soldier").child("soldier");
 			for (int i = 0; i < temp.child("soldier").attribute("num").as_int(0); i++)
 			{
-				enemy.push_back(App->entity_elements->CreateSoldier(temp_enemy.attribute("id").as_int(0), temp_enemy));
+				App->entity_elements->CreateSoldier(temp_enemy.attribute("id").as_int(0), temp_enemy);
 				temp_enemy = temp_enemy.next_sibling();
 			}
 
@@ -479,7 +415,7 @@ bool j1Scene::Load_new_map(int n)
 			//Trainers
 			if (temp.child("trainer"))
 			{
-				poketrainer.push_back(App->entity_elements->CreateTrainer(temp.child("trainer"), 1));
+				poketrainer = App->entity_elements->CreateTrainer(temp.child("trainer"), 1);
 			}
 
 			//Pokemons
@@ -489,15 +425,22 @@ bool j1Scene::Load_new_map(int n)
 				bool mode_stone = temp_pokemon.attribute("mode_stone").as_bool(false);
 				if (temp_pokemon.attribute("id").as_int(0) == 2 && mode_stone == false)
 				{
-					pokemons.push_back(App->entity_elements->CreatePokemon(temp_pokemon, temp_pokemon.attribute("id").as_int(0)));
+					App->entity_elements->CreatePokemon(temp_pokemon, temp_pokemon.attribute("id").as_int(0));
 				}
 				else 
 				{
-					pokemons.push_back(App->entity_elements->CreatePokemon(temp_pokemon, temp_pokemon.attribute("id").as_int(0)));
+					App->entity_elements->CreatePokemon(temp_pokemon, temp_pokemon.attribute("id").as_int(0));
 				}
 				temp_pokemon = temp_pokemon.next_sibling();
 			}
 
+			//BCTrooper
+			/*pugi::xml_node temp_enemy = temp.child("BCTrooper");
+			for (int i = 0; i < temp.child("soldier").attribute("num").as_int(0); i++)
+			{
+				App->entity_elements->CreateSoldier(temp_enemy.attribute("id").as_int(0), temp_enemy);
+				temp_enemy = temp_enemy.next_sibling();
+			}*/
 
 			//Camera position
 			int scale = App->win->GetScale();
@@ -569,17 +512,17 @@ bool j1Scene::Load_Combat_map(int n)
 			}
 
 			//trainer
-			poketrainer.push_back(App->combatmanager->CreateTrainer(temp.child("trainer"), 1));
+			poketrainer = App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 
 			if (pokecombat == nullptr)
 			{
-				pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(0));
+				pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon(0)); //TODO ELliot no need GetPokemon()
 				pokecombat->Move(true, win_marge);
 			}
 			else
 			{
 				pokecombat->OpenClose(true);
-				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer.begin()._Ptr->_Myval->GetPokemon(0));
+				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon(0));
 			}
 
 			//map

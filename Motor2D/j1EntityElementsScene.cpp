@@ -183,7 +183,6 @@ bool j1EntityElementScene::DeleteEnemy(Soldier* enemy)
 	if (enemy != nullptr)
 	{
 		elementscene.remove(enemy);
-		App->scene->enemy.remove(enemy);
 		enemy->collision_feet->to_delete = true;
 		enemy = nullptr;
 		delete enemy;
@@ -195,7 +194,6 @@ bool j1EntityElementScene::DeleteEnemy(Soldier* enemy)
 bool j1EntityElementScene::DeleteDynObject(DynamicObjects* dynobject)
 {
 	elementscene.remove(dynobject);
-	App->scene->dynobjects.remove(dynobject);
 	dynobject->collision->to_delete = true;
 	dynobject = nullptr;
 	delete dynobject;
@@ -205,7 +203,6 @@ bool j1EntityElementScene::DeleteDynObject(DynamicObjects* dynobject)
 bool j1EntityElementScene::DeleteItem(Item* item)
 {
 	elementscene.remove(item);
-	App->scene->items.remove(item);
 	item->collision->to_delete = true;
 	item = nullptr;
 	delete item;
@@ -217,7 +214,6 @@ bool j1EntityElementScene::DeletePokemon(Pokemon* pokemon)
 	if (pokemon != nullptr)
 	{
 		elementscene.remove(pokemon);
-		App->scene->pokemons.remove(pokemon);
 		pokemon->collision_feet->to_delete = true;
 		pokemon = nullptr;
 		delete pokemon;
@@ -230,7 +226,8 @@ bool j1EntityElementScene::DeleteTrainer(PokeTrainer* trainer)
 	if (trainer != nullptr)
 	{
 		elementscene.remove(trainer);
-		App->scene->poketrainer.remove(trainer);
+		delete App->scene->poketrainer;
+		App->scene->poketrainer = nullptr;
 		trainer->collision_feet->to_delete = true;
 		trainer = nullptr;
 		delete trainer;
@@ -304,6 +301,11 @@ PokeTrainer* j1EntityElementScene::CreateTrainer(pugi::xml_node& conf, uint id)
 	temp->Start();
 	elementscene.push_back(temp);
 	return temp;
+}
+
+BCTrooper* j1EntityElementScene::CreateBCTrooper(pugi::xml_node &)
+{
+	return nullptr;
 }
 
 DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)

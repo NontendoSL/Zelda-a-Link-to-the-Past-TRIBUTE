@@ -1,6 +1,6 @@
 #include "BCTrooper.h"
 
-BCTrooper::BCTrooper() :NPC()
+BCTrooper::BCTrooper() : NPC()
 {
 	name = "BCTrooper";
 	type = CREATURE;
@@ -11,7 +11,6 @@ BCTrooper::~BCTrooper()
 
 bool BCTrooper::Awake(pugi::xml_node &conf, uint id)
 {
-
 
 	return true;
 }

@@ -17,6 +17,7 @@ class Weapon;
 class Pokemon;
 class BombContainer;
 class PokeTrainer;
+class BCTrooper;
 
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
@@ -56,6 +57,7 @@ public:
 	BombContainer* CreateBombContainer();
 	Pokemon* CreatePokemon(pugi::xml_node&, uint id, iPoint pos = (iPoint(0,0)));
 	PokeTrainer* CreateTrainer(pugi::xml_node&, uint id);
+	BCTrooper* CreateBCTrooper(pugi::xml_node&);
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);

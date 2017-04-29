@@ -216,7 +216,8 @@ Pokemon* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
 	}
 	else //Brendan
 	{
-		std::list<Pokemon*>::iterator item = App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.begin();
+		//TODO HIGH -> ELLIOT no list only 1 pokemon
+		/*std::list<Pokemon*>::iterator item = App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.begin();
 		while (item != App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.end())
 		{
 			if (item._Ptr->_Myval->active == true)
@@ -234,7 +235,7 @@ Pokemon* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
 				}
 			}
 			item++;
-		}
+		}*/
 		return nullptr;
 	}
 	return nullptr;
