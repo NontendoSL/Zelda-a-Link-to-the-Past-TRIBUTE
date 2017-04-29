@@ -30,6 +30,9 @@ public:
 	void VolumeMusic(int volume = 128);
 	void FadeMusic(int ms);
 
+	//Stop (Volume = 0) Fx
+	void StopFx(int id);
+
 	// Load a WAV in memory
 	unsigned int LoadFx(const char* path);
 

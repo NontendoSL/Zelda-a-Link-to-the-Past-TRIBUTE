@@ -188,7 +188,22 @@ void j1Audio::FadeMusic(int ms)
 {
 	if (music != NULL)
 	{
+
 		Mix_FadeOutMusic((int)(ms * 1000.0f));
+	}
+}
+
+void j1Audio::StopFx(int id)
+{
+	std::list<Mix_Chunk*>::iterator chunk = fx.begin();
+	int temp = 0;
+	while (chunk != fx.end())
+	{
+		if (temp == id)
+		{
+			chunk._Ptr->_Myval->volume = 0;
+		}
+		chunk++;
 	}
 }
 
