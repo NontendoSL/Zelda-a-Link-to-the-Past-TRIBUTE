@@ -24,6 +24,7 @@
 #include "j1App.h"
 #include "j1Player.h"
 #include "j1FadeToBlack.h"
+#include "ParticleManager.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -48,6 +49,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new j1Collision();
 	input_manager = new InputManager();
 	fadetoblack = new j1FadeToBlack();
+	particlemanager = new ParticleManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -64,6 +66,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// scene last
 	AddModule(intro);
 	AddModule(scene);
+
+	//Particle System
+	AddModule(particlemanager);
 
 	//Add managers
 	AddModule(anim_manager);

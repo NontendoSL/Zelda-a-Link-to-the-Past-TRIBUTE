@@ -28,6 +28,7 @@ class j1AnimationManager;
 class j1Collision;
 class j1FadeToBlack;
 class InputManager;
+class ParticleManager;
 
 class j1App
 {
@@ -110,6 +111,7 @@ public:
 	j1Collision*			collision = NULL;
 	CombatManager*			combatmanager = NULL;
 	j1FadeToBlack*			fadetoblack = NULL;
+	ParticleManager*		particlemanager = NULL;
 
 private:
 

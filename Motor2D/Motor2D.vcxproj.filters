@@ -130,6 +130,24 @@
     <ClCompile Include="j1Creature.cpp">
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClCompile>
+    <ClCompile Include="P_Explosion.cpp">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Fire.cpp">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Firework.cpp">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Follow.cpp">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -279,6 +297,24 @@
     <ClInclude Include="j1Weapon.h">
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClInclude>
+    <ClInclude Include="P_Explosion.h">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Fire.h">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Firework.h">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Follow.h">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Zelda Game\Particle System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Zelda Game">
@@ -319,6 +355,9 @@
     </Filter>
     <Filter Include="Zelda Game\Modules\GUI">
       <UniqueIdentifier>{fff5abb1-d128-4071-a124-281ad1c0603e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\Particle System">
+      <UniqueIdentifier>{9a75331e-9c95-48f9-89e9-415be607b6a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
