@@ -107,7 +107,14 @@ bool j1AnimationManager::Start()
 
 bool j1AnimationManager::CleanUp()
 {
-	//TODO MEDIUM -> Fill this
+	std::vector<AnimationStruct>::iterator temp = animat.begin();
+	while (temp != animat.end())
+	{
+		temp._Ptr->anim.clear();
+		temp++;
+	}
+	animat.clear();
+
 	return true;
 }
 

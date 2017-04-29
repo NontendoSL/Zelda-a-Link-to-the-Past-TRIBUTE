@@ -92,7 +92,7 @@ bool j1EntityElementScene::PostUpdate()
 	{
 		std::list<SceneElement*>::iterator item = elementscene.end();
 		item--;
-		while (item != elementscene.begin()) //TODO HIGH -> need inverse_iterator
+		while (item != elementscene.begin())
 		{
 			item._Ptr->_Myval->Draw();
 			item--;

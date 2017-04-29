@@ -67,7 +67,6 @@ bool j1Audio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	//p2List_item<Mix_Chunk*>* item; TODO
 	std::list<Mix_Chunk*>::iterator item;
 	for(item = fx.begin(); item != fx.end(); item++)
 		Mix_FreeChunk(item._Ptr->_Myval);

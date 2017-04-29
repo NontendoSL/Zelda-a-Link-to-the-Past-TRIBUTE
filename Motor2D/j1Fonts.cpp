@@ -43,7 +43,6 @@ bool j1Fonts::Awake(pugi::xml_node& conf)
 bool j1Fonts::CleanUp()
 {
 	LOG("Freeing True Type fonts and library");
-	//p2List_item<TTF_Font*>* item; - TODO p2list
 	std::list<TTF_Font*>::iterator item;
 	for(item = fonts.begin(); item != fonts.end(); item++)
 	{

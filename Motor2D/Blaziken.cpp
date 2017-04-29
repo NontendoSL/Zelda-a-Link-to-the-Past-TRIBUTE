@@ -159,7 +159,7 @@ bool Blaziken::Update(float dt)
 
 void Blaziken::Draw()
 {
-	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);  //TODO LOW-> ID magic number, need change!!
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);
 }
 
 bool Blaziken::CleanUp()
@@ -377,7 +377,6 @@ bool Blaziken::Attack()
 		attacker = true;
 		if (sp_attacking)
 		{
-			//TODO MID -> Need correct position colliders
 			if (direction == UP)
 			{
 				sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
@@ -394,7 +393,7 @@ bool Blaziken::Attack()
 			{
 				sp_attack = App->collision->AddCollider({ position.x - 23, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			}
-			App->audio->PlayFx(7); //TODO MID -> SOUND -> Diferent
+			App->audio->PlayFx(7);
 		}
 		else
 		{

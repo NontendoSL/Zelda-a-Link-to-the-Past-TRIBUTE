@@ -13,7 +13,7 @@
 
 Soldier::Soldier():NPC()
 {
-	name = "enemies"; //TODO need change name to "Soldier".
+	name = "Soldier";
 	type = CREATURE;
 	srand(time(NULL));
 }

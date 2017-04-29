@@ -31,7 +31,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-void j1Map::Draw()  // TODO LOW -> maybe change pointers to const(?)
+void j1Map::Draw()
 {
 	BROFILER_CATEGORY("Draw_MAP", Profiler::Color::DarkOrange)
 	if(map_loaded == false)
@@ -500,7 +500,7 @@ void j1Map::DynObjectFromTiled(uint id_map)
 				if ((id_map == 4 && App->scene->player->hook != nullptr && tile_id == data.tilesets[1]->firstgid + 10) ||
 					(id_map == 5 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[1]->firstgid + 10))
 				{
-					//DON'T CREATE AGAIN THE BIG CHEST TODO HIGH -> REMODELATE THIS METHOD!!!!
+					//DON'T CREATE AGAIN THE BIG CHEST TODO MED -> REMODELATE THIS METHOD!!!!
 				}
 				else
 				{

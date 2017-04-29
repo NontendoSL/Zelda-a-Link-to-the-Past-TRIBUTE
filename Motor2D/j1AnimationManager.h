@@ -9,7 +9,7 @@
 #include "p2Defs.h"
 #include "Animation.h"
 
-enum AnimationElement //TODO HIGH-> ORDER THIS ENUM
+enum AnimationElement
 {
 	//ZELDA NPCS -------------
 	LINK,

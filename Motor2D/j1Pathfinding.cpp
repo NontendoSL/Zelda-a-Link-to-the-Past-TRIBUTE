@@ -75,8 +75,6 @@ PathNode * j1PathFinding::GetPathNode(int x, int y)
 	return &map_node[(y*width) + x];
 }
 
-// To request all tiles involved in the last generated path //TODO LOW -> const_iterator??
-
 
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL

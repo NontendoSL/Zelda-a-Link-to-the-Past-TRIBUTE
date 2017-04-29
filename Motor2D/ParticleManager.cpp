@@ -51,6 +51,7 @@ bool ParticleManager::Update(float dt)
 	std::list<P_Fire*>::iterator item_2 = Group_Fire.begin();
 	while (item_2 != Group_Fire.end())
 	{
+
 		item_2._Ptr->_Myval->Update(dt);
 		item_2++;
 	}

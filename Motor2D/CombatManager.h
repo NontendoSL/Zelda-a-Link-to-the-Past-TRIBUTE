@@ -29,7 +29,7 @@ public:
 	// Called before all Updates
 	bool PreUpdate();
 
-	bool Update(float dt); //TODO LOW -> Change bool to void
+	bool Update(float dt);
 
 	bool PostUpdate();
 
@@ -50,8 +50,7 @@ public:
 
 private:
 	std::list<SceneElement*> elementcombat;
-	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const; //TODO LOW ->We hace this function in App but was with private
-																	  //Delete
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 
 };
 

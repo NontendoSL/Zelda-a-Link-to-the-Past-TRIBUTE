@@ -53,7 +53,6 @@ attack *= 2;
 if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 Save();*/
 
-//TODO MID -> I thing that use a stats_temp all time clear and insert, clear-insert, is not a good idea...
 /*stats_temp.clear();
 stats_temp = std::to_string(hp);
 stats_temp.insert(0, "HP LINK -> ");
@@ -118,7 +117,6 @@ attack *= 2;
 if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 Save();*/
 
-//TODO MID -> I thing that use a stats_temp all time clear and insert, clear-insert, is not a good idea...
 /*stats_temp.clear();
 stats_temp = std::to_string(hp);
 stats_temp.insert(0, "HP LINK -> ");

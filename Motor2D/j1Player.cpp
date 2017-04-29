@@ -85,7 +85,7 @@ bool Player::PreUpdate()
 	return ret;
 }
 
-bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need.
+bool Player::Update(float dt)
 {
 	/*sprintf_s(buffer, 30, "%.f seconds of playtime", game_timer.ReadSec());
 	std::string var = std::to_string(game_timer.ReadSec()) + "seconds of playtime";
@@ -284,9 +284,8 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 
 void Player::Draw()
 {
-
 	//Draw player
-	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK);  //TODO LOW-> ID magic number, need change!!
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK);
 }
 
 bool Player::CleanUp()
@@ -469,7 +468,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
-bool Player::Camera_inside() //TODO JORDI -> RENDER
+bool Player::Camera_inside() //TODO LOW -> Elliot
 {
 	//256x224
 	if (camera_follow == true)
@@ -541,7 +540,7 @@ bool Player::Camera_inside() //TODO JORDI -> RENDER
 	return true;
 }
 
-bool Player::Camera_inside(iPoint pos) //TODO JORDI -> RENDER
+bool Player::Camera_inside(iPoint pos)
 {
 	//256x224
 	if (camera_follow == true)

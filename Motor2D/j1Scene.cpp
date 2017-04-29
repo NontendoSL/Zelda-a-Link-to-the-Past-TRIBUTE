@@ -464,9 +464,9 @@ bool j1Scene::Load_new_map(int n)
 
 
 
-			//Enemies
-			pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
-			for (int i = 0; i < temp.child("enemies").attribute("num").as_int(0); i++)
+			//soldier
+			pugi::xml_node temp_enemy = temp.child("soldier").child("soldier");
+			for (int i = 0; i < temp.child("soldier").attribute("num").as_int(0); i++)
 			{
 				enemy.push_back(App->entity_elements->CreateSoldier(temp_enemy.attribute("id").as_int(0), temp_enemy));
 				temp_enemy = temp_enemy.next_sibling();

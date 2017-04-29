@@ -2,7 +2,6 @@
 #define __j1TEXTURES_H__
 
 #include "j1Module.h"
-//#include "p2List.h" TODO - p2list
 #include <list>
 #include "p2Defs.h"
 
