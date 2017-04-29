@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "SDL\include\SDL_gamecontroller.h"
+#include "p2Point.h"
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
@@ -70,6 +71,8 @@ public:
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
+	iPoint GetMousePosition();
+	iPoint* GetMousePosition_pointer();
 	//const char* get_lastinput();
 
 	bool input_print = false;
@@ -84,6 +87,7 @@ private:
 	int			mouse_motion_y = 0;
 	int			mouse_x = 0;
 	int			mouse_y = 0;
+	iPoint		mouse_pos;
 
 	// GAMEPAD ------------
 	SDL_GameController*	controller = nullptr;

@@ -3,8 +3,10 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include "j1App.h"
 #include "j1InputManager.h"
 #include "SDL/include/SDL.h"
+#include "j1Render.h"
 
 #define MAX_KEYS 300
 
@@ -169,6 +171,8 @@ bool j1Input::PreUpdate()
 			mouse_motion_y = event.motion.yrel / scale;
 			mouse_x = event.motion.x / scale;
 			mouse_y = event.motion.y / scale;
+			mouse_pos.x = event.motion.x / scale;
+			mouse_pos.y = event.motion.y / scale;
 			break;
 		}
 
@@ -238,4 +242,14 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+iPoint j1Input::GetMousePosition()
+{
+	return iPoint(mouse_x - App->render->camera.x / 2, mouse_y - App->render->camera.y / 2);
+}
+
+iPoint* j1Input::GetMousePosition_pointer()
+{
+	return &mouse_pos;
 }
