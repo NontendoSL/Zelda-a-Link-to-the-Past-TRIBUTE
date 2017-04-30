@@ -253,28 +253,6 @@ bool Player::Update(float dt)
 		App->scene->switch_menu = true;
 		App->scene->gamestate = INMENU;
 	}
-
-	//MINI TP ---------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-		SetPos(iPoint(position.x,position.y - 10));
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-	{
-		SetPos(iPoint(position.x - 10, position.y));
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		SetPos(iPoint(position.x, position.y + 10));
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-	{
-		SetPos(iPoint(position.x + 10, position.y));
-	}
-	//------------------------------------------------
 	
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -816,6 +794,12 @@ bool Player::Move(float dt)
 			}
 		}
 		walking = true;
+	}
+
+	//Set the actual floor of the player
+	if (App->map->data.layers.size() >= 3) // Only Victory Road has 3 layers
+	{
+		GetfloorLvl(position);
 	}
 
 	return walking;
