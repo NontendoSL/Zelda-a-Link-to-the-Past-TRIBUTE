@@ -93,7 +93,7 @@ bool Player::Update(float dt)
 	var.clear();*/
 	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
 	bool ret = true;
-	//if you dead, you appear on the Link House
+	//if you die, you appear on the Link House
 	if (hp_hearts.y == 0)
 	{
 		score = 0;
@@ -155,7 +155,7 @@ bool Player::Update(float dt)
 		}
 		case L_WALKING:
 		{
-			Walking();
+			Walking(dt);
 			break;
 		}
 		case L_ATTACKING:
@@ -650,10 +650,10 @@ bool Player::Idle()
 	return true;
 }
 
-bool Player::Walking()
+bool Player::Walking(float dt)
 {
 	walking = false;
-	Move();
+	Move(dt);
 
 	if (walking == false)
 	{
@@ -686,146 +686,136 @@ bool Player::Walking()
 	return false;
 }
 
-bool Player::Move()
+bool Player::Move(float dt)
 {
 	int keysuse = GetnuminputUse();
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		direction = LEFT;
-		//int temp = App->map->MovementCost(position.x - speed, position.y, LEFT
-		int temp = App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
+		int temp = App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
-				App->render->camera.x += speed * scale;
-			position.x -= speed;
+				App->render->camera.x += ceil(speed*dt) * scale;
+			position.x -= ceil(speed*dt);
 		}
-		if (keysuse == 1) //if you pres a key left and up this if will do that dont move more fast
+		if (keysuse == 1)
 		{
-			if (temp == T_UP)//up
+			if (temp == T_UP)
 			{
 				direction = UP;
 				if (Camera_inside())
-					App->render->camera.y += speed * scale;
-				position.y -= speed;
+					App->render->camera.y += ceil(speed*dt) * scale;
+				position.y -= ceil(speed*dt);
 				direction = LEFT;
 			}
-			if (temp == T_DOWN)//down
+			if (temp == T_DOWN)
 			{
 				direction = DOWN;
 				if (Camera_inside())
-					App->render->camera.y -= speed * scale;
-				position.y += speed;
+					App->render->camera.y -= ceil(speed*dt) * scale;
+				position.y += ceil(speed*dt);
 				direction = LEFT;
 			}
 		}
-
 		walking = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		direction = RIGHT;
-		//int temp = App->map->MovementCost(position.x + (speed + width), position.y, RIGHT);
-		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
+		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
-				App->render->camera.x -= speed * scale;
-			position.x += speed;
+				App->render->camera.x -= ceil(speed*dt) * scale;
+			position.x += ceil(speed*dt);
 		}
 		if (keysuse == 1)
 		{
-			if (temp == T_UP)//up
+			if (temp == T_UP)
 			{
 				direction = UP;
 				if (Camera_inside())
-					App->render->camera.y += speed * scale;
-				position.y -= speed;
+					App->render->camera.y += ceil(speed*dt) * scale;
+				position.y -= ceil(speed*dt);
 				direction = RIGHT;
 			}
-			if (temp == T_DOWN)//down
+			if (temp == T_DOWN)
 			{
 				direction = DOWN;
 				if (Camera_inside())
-					App->render->camera.y -= speed * scale;
-				position.y += speed;
+					App->render->camera.y -= ceil(speed*dt) * scale;
+				position.y += ceil(speed*dt);
 				direction = RIGHT;
 			}
 		}
+
 		walking = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		direction = UP;
-		//int temp = App->map->MovementCost(position.x, position.y - speed, UP);
-		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
-				App->render->camera.y += speed * scale;
-			position.y -= speed;
+				App->render->camera.y += ceil(speed*dt) * scale;
+			position.y -= ceil(speed*dt);
 		}
 		if (keysuse == 1)
 		{
-			if (temp == T_LEFT)//left
+			if (temp == T_LEFT)
 			{
 				direction = LEFT;
 				if (Camera_inside())
-					App->render->camera.x += speed * scale;
-				position.x -= speed;
+					App->render->camera.x += ceil(speed*dt) * scale;
+				position.x -= ceil(speed*dt);
 				direction = UP;
 			}
-			if (temp == T_RIGHT)//right
+			if (temp == T_RIGHT)
 			{
 				direction = RIGHT;
 				if (Camera_inside())
-					App->render->camera.x -= speed * scale;
-				position.x += speed;
+					App->render->camera.x -= ceil(speed*dt) * scale;
+				position.x += ceil(speed*dt);
 				direction = UP;
 			}
 		}
 		walking = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		direction = DOWN;
-		//int temp = App->map->MovementCost(position.x, position.y + (speed + height), DOWN);
-		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN);
+		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN);
 		if (temp == T_CONTINUE)
 		{
 			if (Camera_inside())
-				App->render->camera.y -= speed * scale;
-			position.y += speed;
+				App->render->camera.y -= ceil(speed*dt) * scale;
+			position.y += ceil(speed*dt);
 		}
 		if (keysuse == 1)
 		{
-			if (temp == T_LEFT)//left
+			if (temp == T_LEFT)
 			{
 				direction = LEFT;
 				if (Camera_inside())
-					App->render->camera.x += speed * scale;
-				position.x -= speed;
+					App->render->camera.x += ceil(speed*dt) * scale;
+				position.x -= ceil(speed*dt);
 				direction = DOWN;
 			}
-			if (temp == T_RIGHT)//right
+			if (temp == T_RIGHT)
 			{
 				direction = RIGHT;
 				if (Camera_inside())
-					App->render->camera.x -= speed * scale;
-				position.x += speed;
+					App->render->camera.x -= ceil(speed*dt) * scale;
+				position.x += ceil(speed*dt);
 				direction = DOWN;
 			}
 		}
 		walking = true;
-	}
-
-	//Set the actual floor of the player
-	if (App->map->data.layers.size() >= 3) // Only Victory Road has 3 layers
-	{
-		GetfloorLvl(position);
 	}
 
 	return walking;

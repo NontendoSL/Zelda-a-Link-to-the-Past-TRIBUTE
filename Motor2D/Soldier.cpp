@@ -97,19 +97,14 @@ bool Soldier::Start()
 	{
 		offset_x = 8;
 		offset_y = 15;
-		//marge = 12;
 		state = S_IDLE;
 		anim_state = S_IDLE;
-		speed = 1;
-		//offset_x = 15;
-		//offset_y = 15;
+		speed = 40;
 		timetoplay = SDL_GetTicks();
 		reset_distance = false;
 		reset_run = true;
-
-		// Test for Vertical Slice /// TODO MED-> read stats from XML
 		radar = 75;
-		chase_speed = 1;
+		chase_speed = 50;
 	}
 
 	else if (soldier_type == PASSIVE)
@@ -117,10 +112,13 @@ bool Soldier::Start()
 		offset_x = 8;
 		offset_y = 15;
 	}
+
+	//Set collider
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 16, 15 }, COLLIDER_ENEMY, this);
 
 	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(SOLDIER);
+
 	return true;
 }
 
@@ -143,7 +141,7 @@ bool Soldier::Update(float dt)
 				case S_WALKING:
 				{
 					CheckPlayerPos();
-					Walking();
+					Walking(dt);
 					break;
 				}
 				case S_DYING:
@@ -153,13 +151,13 @@ bool Soldier::Update(float dt)
 				}
 				case S_HIT:
 				{
-					Movebyhit();
+					Movebyhit(dt);
 					break;
 				}
 				case S_CHASING:
 				{
 					CheckPlayerPos();
-					Chase();
+					Chase(dt);
 					break;
 				}
 				case S_ATTACKING:
@@ -280,7 +278,7 @@ bool Soldier::Idle()
 	return true;
 }
 
-bool Soldier::Walking()
+bool Soldier::Walking(float dt)
 {
 	walking = false;
 
@@ -291,7 +289,7 @@ bool Soldier::Walking()
 		reset_distance = false;
 	}
 
-	Move();
+	Move(dt);
 
 	if(dis_moved >= distance)
 	{
@@ -315,30 +313,27 @@ bool Soldier::Walking()
 	return true;
 }
 
-bool Soldier::Move()
+bool Soldier::Move(float dt)
 {
 	if (direction == LEFT)
 	{
-		//App->map->MovementCost(position.x - speed, position.y, LEFT)
-		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= speed;
+			position.x -= ceil(speed*dt);
 			dis_moved++;
 		}
 		else
 		{
-			//Function to change direction
 			dis_moved++;
 		}
-		walking = true; 
+		walking = true;
 	}
 
 	if (direction == RIGHT)
 	{
-		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += speed;
+			position.x += ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -349,10 +344,9 @@ bool Soldier::Move()
 	}
 	if (direction == UP)
 	{
-		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= speed;
+			position.y -= ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -363,10 +357,9 @@ bool Soldier::Move()
 	}
 	if (direction == DOWN)
 	{
-		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += speed;
+			position.y += ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -379,7 +372,7 @@ bool Soldier::Move()
 	return true;
 }
 
-bool Soldier::Chase()
+bool Soldier::Chase(float dt)
 {
 	//path.clear();
 	//attack_time.Start();
@@ -387,7 +380,7 @@ bool Soldier::Chase()
 	if (App->scene->player->GetState() != L_HIT)
 	{
 		iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
-		GoTo(player_pos, chase_speed);
+		GoTo(player_pos, ceil(dt*chase_speed));
 		Orientate();
 	}
 	return true;
@@ -411,7 +404,7 @@ bool Soldier::Die()
 	return true;
 }
 
-bool Soldier::Movebyhit()
+bool Soldier::Movebyhit(float dt)
 {
 	if (hp <= 0)
 	{
@@ -429,30 +422,30 @@ bool Soldier::Movebyhit()
 
 	if (dir_hit == UP)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(240*dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= 4;
+			position.y -= ceil(240 * dt);
 		}
 	}
 	else if (dir_hit == DOWN)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += 4;
+			position.y += ceil(240 * dt);
 		}
 	}
 	else if (dir_hit == LEFT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= 4;
+			position.x -= ceil(240 * dt);
 		}
 	}
 	else if (dir_hit == RIGHT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += 4;
+			position.x += ceil(240 * dt);
 		}
 	}
 	/*if (position.x > (prev_position.x + 65) ||

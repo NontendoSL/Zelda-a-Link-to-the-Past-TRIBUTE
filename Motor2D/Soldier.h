@@ -40,20 +40,17 @@ public:
 
 	bool CheckPlayerPos();
 
+	//STATE MACHINE ----------
 	bool Idle();
-
-	bool Walking();
-
-	bool Move();
-
-	bool Chase();
-
+	bool Walking(float dt);
+	bool Move(float dt);
+	bool Chase(float dt);
 	bool Attack();
-
 	bool Die();
+	// -----------------------
 
-	//hit enemy
-	bool Movebyhit();
+	//Knockback
+	bool Movebyhit(float dt);
 
 	SoldierState GetState() const;
 	void SetState(SoldierState state);

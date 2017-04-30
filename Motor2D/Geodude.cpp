@@ -77,7 +77,7 @@ bool Geodude::Update(float dt)
 		}
 		case P_WALKING:
 		{
-			Walking();
+			Walking(dt);
 			break;
 		}
 		case P_ATTACKING:
@@ -87,7 +87,7 @@ bool Geodude::Update(float dt)
 		}
 		case P_HIT:
 		{
-			Movebyhit();
+			Movebyhit(dt);
 			break;
 		}
 		case P_DYING:
@@ -192,7 +192,7 @@ bool Geodude::Idle()
 	return true;
 }
 
-bool Geodude::Walking()
+bool Geodude::Walking(float dt)
 {
 	walking = false;
 	if (reset_distance)
@@ -201,7 +201,7 @@ bool Geodude::Walking()
 		dis_moved = 0;
 		reset_distance = false;
 	}
-	Move();
+	Move(dt);
 
 	if (dis_moved >= distance)
 	{
@@ -224,19 +224,17 @@ bool Geodude::Walking()
 	return true;
 }
 
-bool Geodude::Move()
+bool Geodude::Move(float dt)
 {
 	if (direction == LEFT)
 	{
-		//App->map->MovementCost(position.x - speed, position.y, LEFT)
-		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= speed;
+			position.x -= ceil(speed*dt);
 			dis_moved++;
 		}
 		else
 		{
-			//Function to change direction
 			dis_moved++;
 		}
 		walking = true;
@@ -244,10 +242,9 @@ bool Geodude::Move()
 
 	if (direction == RIGHT)
 	{
-		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += speed;
+			position.x += ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -258,10 +255,9 @@ bool Geodude::Move()
 	}
 	if (direction == UP)
 	{
-		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= speed;
+			position.y -= ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -272,10 +268,9 @@ bool Geodude::Move()
 	}
 	if (direction == DOWN)
 	{
-		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += speed;
+			position.y += ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -287,6 +282,7 @@ bool Geodude::Move()
 
 	return true;
 }
+
 
 bool Geodude::Attack()
 {
@@ -316,7 +312,7 @@ bool Geodude::Death()
 	return true;
 }
 
-bool Geodude::Movebyhit()
+bool Geodude::Movebyhit(float dt)
 {
 	if (hp <= 0) 
 	{
@@ -341,30 +337,30 @@ bool Geodude::Movebyhit()
 
 	if (dir_hit == UP)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 1.5, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(90 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= 1.5;
+			position.y -= ceil(90 * dt);
 		}
 	}
 	else if (dir_hit == DOWN)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 1.5, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(90 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += 1.5;
+			position.y += ceil(90 * dt);
 		}
 	}
 	else if (dir_hit == LEFT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x - 1.5, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(90 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= 1.5;
+			position.x -= ceil(90 * dt);
 		}
 	}
 	else if (dir_hit == RIGHT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 1.5, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(90 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += 1.5;
+			position.x += ceil(90 * dt);
 		}
 	}
 

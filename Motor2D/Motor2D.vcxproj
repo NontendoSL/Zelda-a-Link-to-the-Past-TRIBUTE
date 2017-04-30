@@ -80,6 +80,7 @@
     <ClCompile Include="BCTrooper.cpp" />
     <ClCompile Include="Blaziken.cpp" />
     <ClCompile Include="CombatManager.cpp" />
+    <ClCompile Include="CutsceneManager.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Ganon.cpp" />
     <ClCompile Include="Geodude.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="BCTrooper.h" />
     <ClInclude Include="Blaziken.h" />
     <ClInclude Include="CombatManager.h" />
+    <ClInclude Include="CutsceneManager.h" />
     <ClInclude Include="Ganon.h" />
     <ClInclude Include="Geodude.h" />
     <ClInclude Include="Golem.h" />

@@ -150,7 +150,7 @@ bool j1Scene::Update(float dt)
 							player->pokedex.clear();
 						}
 
-						if (combat && switch_map < 7)
+						if (switch_map < 7)
 						{
 							combat = false;
 							Load_new_map(switch_map);
@@ -352,6 +352,14 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 		}
 	}
 
+}
+
+void j1Scene::ChangeState(GameState state)
+{
+	if (state >= INGAME && state <= GAMEOVER)
+	{
+		gamestate = state;
+	}
 }
 
 bool j1Scene::Load_new_map(int n)

@@ -33,19 +33,15 @@ public:
 
 	bool CheckPlayerPos();
 
+	// STATE MACHINE -----------
 	bool Idle();
-
-	bool Walking();
-
-	bool Move();
-
-	bool Chase();
-
+	bool Walking(float dt);
+	bool Move(float dt);
+	bool Chase(float dt);
 	bool Attack();
-
 	bool Death();
-
-	bool Hit();
+	bool Hit(float dt);
+	// -------------------------
 
 	void OnCollision(Collider*, Collider*);
 

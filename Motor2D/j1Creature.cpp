@@ -17,11 +17,11 @@ bool Creature::Move(int x, int y)
 		}
 		else if (temp == T_UP)
 		{
-			position.y -= chase_speed;
+			position.y -= x;
 		}
 		else if (temp == T_DOWN)
 		{
-			position.y += chase_speed;
+			position.y += x;
 		}
 	}
 
@@ -34,11 +34,11 @@ bool Creature::Move(int x, int y)
 		}
 		else if (temp == T_UP)
 		{
-			position.y -= chase_speed;
+			position.y -= x;
 		}
 		else if (temp == T_DOWN)
 		{
-			position.y += chase_speed;
+			position.y += x;
 		}
 	}
 
@@ -51,11 +51,11 @@ bool Creature::Move(int x, int y)
 		}
 		else if (temp == T_LEFT)
 		{
-			position.x -= chase_speed;
+			position.x -= y;
 		}
 		else if (temp == T_RIGHT)
 		{
-			position.x += chase_speed;
+			position.x += y;
 		}
 	}
 	else // UP
@@ -67,11 +67,11 @@ bool Creature::Move(int x, int y)
 		}
 		else if (temp = T_LEFT)
 		{
-			position.x -= chase_speed;
+			position.x -= y;
 		}
 		else if (temp == T_RIGHT)
 		{
-			position.x += chase_speed;
+			position.x += y;
 		}
 	}
 

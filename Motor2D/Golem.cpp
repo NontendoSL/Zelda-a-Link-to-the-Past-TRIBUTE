@@ -65,7 +65,7 @@ bool Golem::Start()
 
 	// Test for Vertical Slice /// TODO MED-> read stats from XML
 	radar = 40;
-	chase_speed = 1;
+	chase_speed = 60;
 
 	return true;
 }
@@ -92,7 +92,7 @@ bool Golem::Update(float dt)
 		case P_CHASING:
 		{
 			CheckPlayerPos();
-			Chase();
+			Chase(dt);
 			break;
 		}
 		case P_ATTACKING:
@@ -102,7 +102,7 @@ bool Golem::Update(float dt)
 		}
 		case P_HIT:
 		{
-			Hit();
+			Hit(dt);
 			break;
 		}
 		case P_STATIC:
@@ -266,19 +266,17 @@ bool Golem::Idle()
 	return true;
 }*/
 
-bool Golem::Move()
+bool Golem::Move(float dt)
 {
 	if (direction == LEFT)
 	{
-		//App->map->MovementCost(position.x - speed, position.y, LEFT)
-		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= speed;
+			position.x -= ceil(speed*dt);
 			dis_moved++;
 		}
 		else
 		{
-			//Function to change direction
 			dis_moved++;
 		}
 		walking = true;
@@ -286,10 +284,9 @@ bool Golem::Move()
 
 	if (direction == RIGHT)
 	{
-		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += speed;
+			position.x += ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -300,10 +297,9 @@ bool Golem::Move()
 	}
 	if (direction == UP)
 	{
-		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= speed;
+			position.y -= ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -314,10 +310,9 @@ bool Golem::Move()
 	}
 	if (direction == DOWN)
 	{
-		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += speed;
+			position.y += ceil(speed*dt);
 			dis_moved++;
 		}
 		else
@@ -330,7 +325,7 @@ bool Golem::Move()
 	return true;
 }
 
-bool Golem::Chase()
+bool Golem::Chase(float dt)
 {
 	if(App->scene->player->invincible_timer.ReadSec() > 1)
 	{
@@ -339,7 +334,7 @@ bool Golem::Chase()
 		if (distance_player <= radar)
 		{
 			iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
-			GoTo(player_pos, chase_speed);
+			GoTo(player_pos, ceil(dt*chase_speed));
 			Orientate();
 			state = P_CHASING;
 			anim_state = P_WALKING;
@@ -353,7 +348,7 @@ bool Golem::Chase()
 	return true;
 }
 
-bool Golem::Hit()
+bool Golem::Hit(float dt)
 {
 	if(hp <= 0)
 	{
@@ -378,30 +373,30 @@ bool Golem::Hit()
 
 	if (dir_hit == UP)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 1, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(40 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= 1;
+			position.y -= ceil(40 * dt);
 		}
 	}
 	else if (dir_hit == DOWN)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 1, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(40 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += 1;
+			position.y += ceil(40 * dt);
 		}
 	}
 	else if (dir_hit == LEFT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x - 1, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(40 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= 1;
+			position.x -= ceil(40 * dt);
 		}
 	}
 	else if (dir_hit == RIGHT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 1, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(40 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += 1;
+			position.x += ceil(40 * dt);
 		}
 	}
 

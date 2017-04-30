@@ -33,15 +33,15 @@ public:
 
 	bool Idle();
 
-	bool Walking();
+	bool Walking(float dt);
 
-	bool Move();
+	bool Move(float dt);
 
 	bool Attack();
 
 	bool Death();
 
-	bool Movebyhit();
+	bool Movebyhit(float dt);
 
 	void OnCollision(Collider*, Collider*);
 

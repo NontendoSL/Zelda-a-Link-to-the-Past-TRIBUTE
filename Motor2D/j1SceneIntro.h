@@ -48,6 +48,8 @@ public:
 
 	void LoadMainMenu();
 
+	void LoadNewMap(int id);
+
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
 private:

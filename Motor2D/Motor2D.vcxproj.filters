@@ -1,26 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="j1Window.cpp">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Audio.cpp">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1App.cpp">
       <Filter>Zelda Game</Filter>
     </ClCompile>
-    <ClCompile Include="j1Input.cpp">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Main.cpp">
       <Filter>Zelda Game</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Render.cpp">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Textures.cpp">
-      <Filter>Zelda Game\Modules</Filter>
     </ClCompile>
     <ClCompile Include="p2Log.cpp">
       <Filter>Utility</Filter>
@@ -28,26 +13,14 @@
     <ClCompile Include="j1Scene.cpp">
       <Filter>Zelda Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="j1FileSystem.cpp">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>Zelda Game\Tools\PuguiXML</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Map.cpp">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Pathfinding.cpp">
-      <Filter>Zelda Game\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1Timer.cpp">
       <Filter>Zelda Game\Tools</Filter>
     </ClCompile>
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Zelda Game\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Fonts.cpp">
-      <Filter>Zelda Game\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1Gui.cpp">
       <Filter>Zelda Game\Modules\GUI</Filter>
@@ -58,68 +31,38 @@
     <ClCompile Include="j1GuiElements.cpp">
       <Filter>Zelda Game\Modules\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="j1EntityElementsScene.cpp">
-      <Filter>Zelda Game\ElementsScene</Filter>
-    </ClCompile>
     <ClCompile Include="j1Player.cpp">
       <Filter>Zelda Game\ElementsScene</Filter>
-    </ClCompile>
-    <ClCompile Include="j1AnimationManager.cpp">
-      <Filter>Zelda Game\Animation</Filter>
     </ClCompile>
     <ClCompile Include="j1Item.cpp">
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClCompile>
-    <ClCompile Include="j1Collision.cpp">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1DynamicObjects.cpp">
       <Filter>Zelda Game\ElementsScene</Filter>
-    </ClCompile>
-    <ClCompile Include="BCTrooper.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClCompile>
-    <ClCompile Include="Ganon.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClCompile>
-    <ClCompile Include="Soldier.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClCompile>
-    <ClCompile Include="PokeTrainer.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClCompile>
-    <ClCompile Include="j1InputManager.cpp">
-      <Filter>Zelda Game\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1SceneIntro.cpp">
       <Filter>Zelda Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="CombatManager.cpp">
-      <Filter>Zelda Game\CombatManager</Filter>
-    </ClCompile>
     <ClCompile Include="Blaziken.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
     <ClCompile Include="Geodude.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
     <ClCompile Include="Golem.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
     <ClCompile Include="Sceptyle.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
     <ClCompile Include="Sudowoodo.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
     <ClCompile Include="Swampert.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
     <ClCompile Include="Functions.cpp">
       <Filter>Zelda Game\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="j1FadeToBlack.cpp">
-      <Filter>Zelda Game\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1Weapon.cpp">
       <Filter>Zelda Game\ElementsScene</Filter>
@@ -131,45 +74,90 @@
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClCompile>
     <ClCompile Include="P_Explosion.cpp">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="P_Fire.cpp">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="P_Firework.cpp">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="P_Follow.cpp">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="ParticleManager.cpp">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="j1InputManager.cpp">
+      <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EntityElementsScene.cpp">
+      <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="PokeTrainer.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
+    </ClCompile>
+    <ClCompile Include="BCTrooper.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClCompile>
+    <ClCompile Include="Ganon.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClCompile>
+    <ClCompile Include="CombatManager.cpp">
+      <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Audio.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Collision.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1FadeToBlack.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1FileSystem.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Input.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Map.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Render.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Textures.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Window.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1AnimationManager.cpp">
+      <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="CutsceneManager.cpp">
+      <Filter>Zelda Game\Modules\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="j1Window.h">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Audio.h">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1App.h">
       <Filter>Zelda Game</Filter>
     </ClInclude>
-    <ClInclude Include="j1Input.h">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Module.h">
       <Filter>Zelda Game</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Render.h">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Textures.h">
-      <Filter>Zelda Game\Modules</Filter>
     </ClInclude>
     <ClInclude Include="p2Defs.h">
       <Filter>Utility</Filter>
@@ -183,29 +171,17 @@
     <ClInclude Include="j1Scene.h">
       <Filter>Zelda Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="j1FileSystem.h">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
       <Filter>Zelda Game\Tools\PuguiXML</Filter>
     </ClInclude>
     <ClInclude Include="PugiXml\src\pugixml.hpp">
       <Filter>Zelda Game\Tools\PuguiXML</Filter>
     </ClInclude>
-    <ClInclude Include="j1Map.h">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Pathfinding.h">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Timer.h">
       <Filter>Zelda Game\Tools</Filter>
     </ClInclude>
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Zelda Game\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Fonts.h">
-      <Filter>Zelda Game\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Gui.h">
       <Filter>Zelda Game\Modules\GUI</Filter>
@@ -216,14 +192,8 @@
     <ClInclude Include="j1GuiElements.h">
       <Filter>Zelda Game\Modules\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="j1EntityElementsScene.h">
-      <Filter>Zelda Game\ElementsScene</Filter>
-    </ClInclude>
     <ClInclude Include="j1Player.h">
       <Filter>Zelda Game\ElementsScene</Filter>
-    </ClInclude>
-    <ClInclude Include="j1AnimationManager.h">
-      <Filter>Zelda Game\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Zelda Game\Animation</Filter>
@@ -231,32 +201,11 @@
     <ClInclude Include="j1Item.h">
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClInclude>
-    <ClInclude Include="j1Collision.h">
-      <Filter>Zelda Game\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1DynamicObjects.h">
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClInclude>
     <ClInclude Include="SceneElements.h">
       <Filter>Zelda Game\ElementsScene</Filter>
-    </ClInclude>
-    <ClInclude Include="NPC.h">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClInclude>
-    <ClInclude Include="BCTrooper.h">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClInclude>
-    <ClInclude Include="Ganon.h">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClInclude>
-    <ClInclude Include="Soldier.h">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClInclude>
-    <ClInclude Include="PokeTrainer.h">
-      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
-    </ClInclude>
-    <ClInclude Include="j1InputManager.h">
-      <Filter>Zelda Game\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Creature.h">
       <Filter>Zelda Game\ElementsScene</Filter>
@@ -267,53 +216,110 @@
     <ClInclude Include="MemLeaks.h">
       <Filter>Zelda Game\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="CombatManager.h">
-      <Filter>Zelda Game\CombatManager</Filter>
-    </ClInclude>
     <ClInclude Include="Pokemon.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="Geodude.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="Golem.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="Swampert.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="Blaziken.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="Sceptyle.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="Sudowoodo.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\Pokemons</Filter>
-    </ClInclude>
-    <ClInclude Include="j1FadeToBlack.h">
-      <Filter>Zelda Game\Modules</Filter>
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="j1Weapon.h">
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClInclude>
     <ClInclude Include="P_Explosion.h">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="P_Fire.h">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="P_Firework.h">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="P_Follow.h">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="ParticleManager.h">
-      <Filter>Zelda Game\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="j1InputManager.h">
+      <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EntityElementsScene.h">
+      <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="PokeTrainer.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClInclude>
+    <ClInclude Include="BCTrooper.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClInclude>
+    <ClInclude Include="Ganon.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClInclude>
+    <ClInclude Include="CombatManager.h">
+      <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Audio.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Collision.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FadeToBlack.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FileSystem.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Input.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Map.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Render.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Textures.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Window.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1AnimationManager.h">
+      <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="CutsceneManager.h">
+      <Filter>Zelda Game\Modules\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -341,12 +347,6 @@
     <Filter Include="Utility">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Zelda Game\CombatManager">
-      <UniqueIdentifier>{ad8fd33a-cb57-4e5d-9d14-b7c594f00af9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Zelda Game\ElementsScene\NPCs\Pokemons">
-      <UniqueIdentifier>{76127520-9f8e-4897-abff-0403a68ea8cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Zelda Game\Animation\XML">
       <UniqueIdentifier>{6a882597-537e-47fe-8328-a787353c0983}</UniqueIdentifier>
     </Filter>
@@ -356,8 +356,20 @@
     <Filter Include="Zelda Game\Modules\GUI">
       <UniqueIdentifier>{fff5abb1-d128-4071-a124-281ad1c0603e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Zelda Game\Particle System">
+    <Filter Include="Zelda Game\Modules\Managers">
+      <UniqueIdentifier>{ac1d6860-690c-4434-8ef1-b13d711cee85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\ElementsScene\NPCs\POKEMON">
+      <UniqueIdentifier>{76127520-9f8e-4897-abff-0403a68ea8cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\ElementsScene\NPCs\ZELDA">
+      <UniqueIdentifier>{b78f82bf-cccb-486f-83b5-ecc9c5788793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\Modules\Managers\Particle System">
       <UniqueIdentifier>{9a75331e-9c95-48f9-89e9-415be607b6a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\Modules\Base Modules">
+      <UniqueIdentifier>{d76157c5-fb33-4ece-ac86-e17282743b28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

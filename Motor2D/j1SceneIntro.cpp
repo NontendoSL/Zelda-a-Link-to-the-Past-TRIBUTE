@@ -194,6 +194,19 @@ void j1SceneIntro::LoadMainMenu()
 	main_menu->AddElement(menu_button);
 }
 
+void j1SceneIntro::LoadNewMap(int id)
+{
+	//Load the correct map accord to the id passed
+	switch (id)
+	{
+	case 1: //ID = 1 -> Set the first map of the game (Link's house)
+		goHouse = true;
+		break;
+	default:
+		break;
+	}
+}
+
 void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 {
 	if (App->scene->ingame == false)

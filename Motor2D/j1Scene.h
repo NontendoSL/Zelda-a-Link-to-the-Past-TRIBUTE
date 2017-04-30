@@ -4,7 +4,7 @@
 #include "j1Module.h"
 #include "j1EntityElementsScene.h"
 
-enum GameState { INGAME, INMENU, TIMETOPLAY, GAMEOVER };
+enum GameState { INGAME, INMENU, TIMETOPLAY, GAMEOVER, CUTSCENE};
 
 struct SDL_Texture;
 
@@ -54,6 +54,7 @@ public:
 
 	//Load Maps
 	bool Load_new_map(int n);
+
 	//Load CombatMaps
 	bool Load_Combat_map(int n);
 
@@ -62,6 +63,9 @@ public:
 	void AssignValues(Image* assigner,uint var);
 
 	void SwitchMenu(bool direction);
+
+	void ChangeState(GameState state);
+
 private:
 	SDL_Texture* debug_tex;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;

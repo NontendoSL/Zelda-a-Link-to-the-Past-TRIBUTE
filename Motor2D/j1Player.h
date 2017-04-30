@@ -57,8 +57,8 @@ public:
 
 	//STATE MACHINE -------
 	bool Idle();
-	bool Walking();
-	bool Move();
+	bool Walking(float dt);
+	bool Move(float dt);
 	bool Hit();
 	bool Attack();
 	bool Interact();
@@ -96,6 +96,7 @@ public:
 	j1Timer game_timer;
 	Text* time = nullptr;
 	int score;
+
 	//ITEMS ----------
 	uint gems = 0;
 	uint bombs = 0;
