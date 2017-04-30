@@ -184,10 +184,30 @@ bool j1Scene::Update(float dt)
 					id_map = switch_map;
 				}
 			}
+
 			if (switch_menu)
 			{
 				SwitchMenu(!inventory);
 			}
+
+			//MINI TP -----------------------------------------------
+			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+			{
+				App->scene->player->position.x += 50;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+			{
+				App->scene->player->position.y += 50;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+			{
+				App->scene->player->position.x -= 50;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+			{
+				App->scene->player->position.y -= 50;
+			}
+			//-------------------------------------------------------
 		}
 
 		/*if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)

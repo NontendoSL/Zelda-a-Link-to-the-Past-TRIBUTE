@@ -118,6 +118,7 @@ public:
 
 	//cooldown for soldier chase
 	j1Timer invincible_timer;
+	j1Timer hurt_timer;
 
 private:
 
@@ -139,8 +140,6 @@ private:
 
 	//Timers
 	j1Timer timer;
-	j1Timer hurt_timer;
-	
 
 	//T
 	std::string stats_temp;

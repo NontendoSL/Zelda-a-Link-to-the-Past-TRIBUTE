@@ -373,7 +373,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 			
-			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY) //if green soldier attack you
+			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY) //If green soldier attacks you
 			{
 				if (state != L_HIT && invincible_timer.ReadSec() >= 1)
 				{
@@ -928,6 +928,7 @@ bool Player::Hit()
 	{
 		collision_attack->to_delete = true;
 	}
+
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = L_IDLE;
@@ -951,6 +952,7 @@ bool Player::Hit()
 			position.y -= 3;
 		}
 	}
+
 	else if (dir_hit == DOWN)
 	{
 		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 2.5, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)

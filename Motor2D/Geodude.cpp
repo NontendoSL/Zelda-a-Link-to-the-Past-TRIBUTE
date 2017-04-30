@@ -9,6 +9,7 @@
 #include "j1Item.h"
 #include "j1Collision.h"
 #include "j1EntityElementsScene.h"
+#include "j1Audio.h"
 
 Geodude::Geodude()
 {
@@ -371,7 +372,6 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr && state != P_DYING)
 	{
-		//TODO JORDI
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && state != P_HIT)
 		{
 			if (c2->callback != nullptr)
@@ -388,14 +388,23 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback != nullptr)
 		{
-			if (((Player*)c2->callback)->GetState() != L_HIT)
+			if (((Player*)c2->callback)->GetState() != L_HIT && ((Player*)c2->callback)->GetState() != L_HOOKTHROWN)
 			{
-				if (((Player*)c2->callback)->GetState() != L_HOOKTHROWN && state != L_HIT)
+				if (state != P_ATTACKING && state != L_HIT)
 				{
+					App->audio->PlayFx(13);
+					Player* player = (Player*)c2->callback;
 					state = P_ATTACKING;
 					anim_state = P_ATTACKING;
 					animation.anim[anim_state].ResetAnimations();
 					Orientate();
+					player->SetState(L_HIT);
+					player->SetAnimState(L_IDLE);
+					player->invincible_timer.Start();
+					player->hurt_timer.Start();
+					player->GetDamage();
+					player->dir_hit = direction;
+					player->prev_position = player->position;
 				}
 			}
 		}

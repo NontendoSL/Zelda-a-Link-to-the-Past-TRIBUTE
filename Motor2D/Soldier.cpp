@@ -55,7 +55,6 @@ bool Soldier::Awake(pugi::xml_node &conf, uint id)
 			else
 			{
 				soldier_type = AGGRESSIVE;
-				anim_state = S_GUARD;
 			}
 
 			npc_id = id;
@@ -111,6 +110,7 @@ bool Soldier::Start()
 	{
 		offset_x = 8;
 		offset_y = 15;
+		anim_state = S_GUARD;
 	}
 
 	//Set collider

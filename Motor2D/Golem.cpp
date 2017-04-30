@@ -9,6 +9,7 @@
 #include "j1Collision.h"
 #include "j1Player.h"
 #include "j1EntityElementsScene.h"
+#include "j1Audio.h"
 
 Golem::Golem()
 {
@@ -448,7 +449,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 
 			}
 		}
-		//TODO JORDI
+
 		if(c1 == collision_feet && c2->type == COLLIDER_SWORD && state != P_HIT && state != P_STATIC && state != P_SPECIAL)
 		{
 			if (c2->callback != nullptr)
@@ -465,12 +466,24 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback != nullptr)
 		{
-			if (((Player*)c2->callback)->GetState() != L_HIT && ((Player*)c2->callback)->GetState() != L_HOOKTHROWN && state != L_HIT && state != P_STATIC)
+			if (((Player*)c2->callback)->GetState() != L_HIT && ((Player*)c2->callback)->GetState() != L_HOOKTHROWN)
 			{
-				state = P_ATTACKING;
-				anim_state = P_ATTACKING;
-				animation.anim[P_ATTACKING].ResetAnimations();
-				Orientate();
+				if (state != P_ATTACKING && state != L_HIT)
+				{
+					App->audio->PlayFx(13);
+					Player* player = (Player*)c2->callback;
+					state = P_ATTACKING;
+					anim_state = P_ATTACKING;
+					animation.anim[anim_state].ResetAnimations();
+					Orientate();
+					player->SetState(L_HIT);
+					player->SetAnimState(L_IDLE);
+					player->invincible_timer.Start();
+					player->hurt_timer.Start();
+					player->GetDamage();
+					player->dir_hit = direction;
+					player->prev_position = player->position;
+				}
 			}
 		}
 	}
