@@ -4,7 +4,9 @@
 
 #include "NPC.h"
 
-enum GanonState { G_IDLE = 0, G_WALKING, G_MELEE, G_SPECIAL, G_SHIELD, G_DYING };
+enum GanonPhase { SLEEP = 0, INITIAL, INVINCIBLE, RAGE, DEATH };
+enum GanonState { G_IDLE = 0, G_WALKING, G_MELEE, G_SPECIAL_1, G_SPECIAL_2, G_SHIELD, G_HIT, G_DYING, G_ATTACKING};
+enum SpawnType { };
 
 class Ganon : public NPC
 {
@@ -30,17 +32,52 @@ public:
 
 	void Draw();
 
+	// PHASE UPDATES MACHINE -------------
+	bool InitialUpdate(float dt);
+	bool InvincibleUpdate(float dt);
+	bool RageUpdate(float dt);
+	bool DeathUpdate(float dt);
+	// ----------------------------------
+
+	// STATE MACHINE ----------------
+	void Idle();
+	void Walk(float dt);
+	void MeleeAttack();
+	void SpecialAttack();
+	void Flare();
+	void FireCircle();
+	void Hit();
+	void Spawn();
+	// -----------------------------
+
 	// Called before quitting
 	bool CleanUp();
+
+	void OnCollision(Collider*, Collider*);
+
+	GanonState GetState();
+	void SetState(GanonState state);
+	void SetAnimState(GanonState state);
 
 private:
 	GanonState state = G_IDLE;
 	GanonState anim_state = G_IDLE;
+	GanonPhase phase = SLEEP;
+	int item_id = -1;
 
-	//Item* drop;
-	bool stunned = false;
-	Item* item_inside = nullptr;
-	SDL_Texture* texture = nullptr;
+	//2ND PHASE VARIABLES ---
+	j1Timer spawn_timer;
+	int spawn_rate = 0;
+	int minions_killed = 0;
+	int minions_spawned = 0;
+	// -----------------------
+
+	//3D PHASE VARIABLES -----
+	int flare = 0;
+	int circle = 0;
+	GanonState special_attack = G_SPECIAL_1;
+	// -----------------------
+
 };
 
 #endif //__GANON_H_

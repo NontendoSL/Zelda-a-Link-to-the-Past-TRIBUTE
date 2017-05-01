@@ -124,7 +124,7 @@ bool Soldier::Start()
 
 bool Soldier::Update(float dt)
 {
-	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Pink)
+	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Pink);
 	// STATE MACHINE ------------------
 		if (App->scene->gamestate == INGAME)
 		{

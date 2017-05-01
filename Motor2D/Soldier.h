@@ -46,11 +46,10 @@ public:
 	bool Move(float dt);
 	bool Chase(float dt);
 	bool Attack();
-	bool Die();
-	// -----------------------
-
 	//Knockback
 	bool Movebyhit(float dt);
+	bool Die();
+	// -----------------------
 
 	SoldierState GetState() const;
 	void SetState(SoldierState state);
