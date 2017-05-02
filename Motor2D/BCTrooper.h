@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_ATTACKING, BC_HIT, BC_DYING };
+enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_HIT, BC_DYING };
 
 class BCTrooper : public NPC
 {
@@ -33,12 +33,27 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// STATE MACHINE ----------------
+	void Idle();
+	void Walk(float dt);
+	void Hit();
+	void Death();
+	// -----------------------------
+	//Change Radius
+	bool ChangeRadius(int radius_to_stop, bool increment);
+
 private:
 
-	//Item* drop;
+	BCTrooperState state = BC_IDLE;
 	bool stunned = false;
-	Item* item_inside = nullptr;
 	SDL_Texture* texture = nullptr;
+	std::vector<iPoint> points;
+	iPoint bole;
+	int pos_in_vect = 1;
+	int radius = 10;
+	int speed = 6;
+	j1Timer Change_State;
+	bool reset_time = true;
 };
 
 #endif//__BCTROOPER_H_

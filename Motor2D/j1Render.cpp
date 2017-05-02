@@ -134,11 +134,13 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	if (pos.x != -999) {
+	if (pos.x != -999) 
+	{
 		rect.x = (int)(camera.x * speed) + pos.x * scale;
 		rect.y = (int)(camera.y * speed) + pos.y * scale;
 	}
-	else {
+	else 
+	{
 		rect.x = (int)(camera.x * speed) + x * scale;
 		rect.y = (int)(camera.y * speed) + y * scale;
 	}

@@ -164,6 +164,12 @@
       <Link pos_x="488" pos_y="896"/>
       <camera follow="true"/>
     </map>
+
+    <map n="8" file="Test_map.tmx">
+      <Link pos_x="150" pos_y="150"/>
+      <camera follow="true"/>
+      <!--<BCTrooper pos_x="169" pos_y="25" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />-->
+    </map>
   </maps>
 
   <map_combat>

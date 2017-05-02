@@ -17,6 +17,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1FileSystem.h"
+#include "BCTrooper.h"
 #include "j1Weapon.h"
 
 
@@ -235,6 +236,17 @@ bool j1EntityElementScene::DeleteTrainer(PokeTrainer* trainer)
 	return true;
 }
 
+bool j1EntityElementScene::DeleteBCTrooper(BCTrooper* bctrooper)
+{
+	if (bctrooper != nullptr)
+	{
+		elementscene.remove(bctrooper);
+		delete bctrooper;
+		bctrooper = nullptr;
+	}
+	return true;
+}
+
 Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 {
 	Item* element = new Item();
@@ -303,8 +315,12 @@ PokeTrainer* j1EntityElementScene::CreateTrainer(pugi::xml_node& conf, uint id)
 	return temp;
 }
 
-BCTrooper* j1EntityElementScene::CreateBCTrooper(pugi::xml_node &)
+BCTrooper* j1EntityElementScene::CreateBCTrooper(pugi::xml_node& conf)
 {
+	BCTrooper* temp = new BCTrooper();
+	temp->Awake(conf, 1);
+	temp->Start();
+	elementscene.push_back(temp);
 	return nullptr;
 }
 
