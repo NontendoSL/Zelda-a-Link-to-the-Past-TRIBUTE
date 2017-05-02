@@ -159,10 +159,15 @@
       <camera follow="false"/>
       <trainer id="1" name="Brendan" active="true" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png"/>
     </map>
+  
+    <map n="7" file="HyruleInterior.tmx">
+      <Link pos_x="488" pos_y="896"/>
+      <camera follow="true"/>
+    </map>
   </maps>
 
   <map_combat>
-    <map n="7" file="Combat_Map.tmx">
+    <map n="12" file="Combat_Map.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Brendan" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>
@@ -176,4 +181,92 @@
       </Link>
     </map>
   </map_combat>
+  
+  
+  <!--LOAD TELEPORTS INFO-->
+  <teleport>
+    <!--Nomal Maps - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <map id="1"><!--HouseLink-->
+      <door name="LinkHouseOutdoor" id_tile="" switch_map="2" pos_x="192" pos_y="262"/>
+    </map> 
+    
+    <map id="2"><!--LinkHouseOutdoor-->
+      <door name="HouseLink" id_tile="" switch_map="1" pos_x="112" pos_y="183"/>
+      <!--Castle-->
+      <!--Uncle-->
+    </map> 
+    
+    <map id="3"><!--Uncle-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="4"><!--Castle-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map>  
+    
+    <map id="5"><!--Zelda Room-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="6"><!--Water Fall--><!--Before enter Victory Road-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="7"><!--Victory 1-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="8"><!--Victory 2-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="9"><!--Exterior Victory--><!--Before enter League-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="10"><!--EntranceLeague-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+
+    <map id="11"><!--Piramide Power-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+
+    <map id="12"><!--Final Boss-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <!--COMBAT MAPS - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <map id="13"><!--Turorial Combat-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="14"><!--Dark Combat-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="15"><!--Ghost Combat-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+    <map id="16"><!--Ice Combat-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+
+    <map id="17"><!--Dragon Combat-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+
+    <map id="18"><!--Red Combat-->
+      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+    </map> 
+    
+
+
+
+  </teleport>
 </levels>
+
+
+

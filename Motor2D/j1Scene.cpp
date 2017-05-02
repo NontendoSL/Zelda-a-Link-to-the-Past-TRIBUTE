@@ -94,95 +94,18 @@ bool j1Scene::Update(float dt)
 			AssignValues(gems, player->gems);
 			AssignValues(bombs, player->bombs);
 			AssignValues(arrows, player->arrows);
-			/*if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) { // provisional heart/damage checker
-				player->GetDamage();
-			}
-			if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) { // provisional heart container add
-				player->AddHeartContainer();
-			}*/
 
 			player->ShowHearts();
 			force->Hitbox.w = player->charge;
 
 			if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 			{
-				switch_map = 3;
+				switch_map = 7;
 			}
 
 			if (switch_map > 0)
 			{
-				if (fade == false)
-				{
-					App->fadetoblack->FadeToBlack();
-					gamestate = INMENU;
-					player->SetState(L_IDLE);
-					player->SetAnimState(L_IDLE);
-					fade = true;
-					now_switch = true;
-				}
-
-				if (App->fadetoblack->Checkfadetoblack() && now_switch)
-				{
-					if (switch_map > 6)
-					{
-						combat = true;
-					}
-					now_switch = false;
-					if (App->map->CleanUp())
-					{
-						App->collision->EreseAllColiderPlayer();
-						if (player->equiped_item != nullptr)
-						{
-							weapon_equiped = player->equiped_item->Wtype;
-						}
-						App->entity_elements->DelteElements();
-						App->combatmanager->DeleteElements_combat();
-
-						if (poketrainer != nullptr)
-						{
-							if (poketrainer->pokedex.size() > 0)
-							{
-								poketrainer->pokedex.clear();
-							}
-						}
-						if (player->pokedex.size() > 0)
-						{
-							player->pokedex.clear();
-						}
-
-						if (switch_map < 7)
-						{
-							combat = false;
-							Load_new_map(switch_map);
-						}
-						else
-						{
-							Load_Combat_map(switch_map);
-						}
-						if (switch_map == 4 && notrepeatmusic)
-						{
-							notrepeatmusic = false;
-							App->audio->PlayMusic("audio/music/POKEMON/PokemonVictoryRoad.ogg");
-						}
-					}
-				}
-				if (App->fadetoblack->Checkfadefromblack())
-				{
-					if (combat && switch_map == 6 && id_map > 6)
-					{
-						switch_map = 0;
-						fade = false;
-						combat = false;
-						gamestate = GAMEOVER;
-					}
-					else
-					{
-						switch_map = 0;
-						fade = false;
-						gamestate = INGAME;
-					}
-					id_map = switch_map;
-				}
+				SwitchMap();
 			}
 
 			if (switch_menu)
@@ -209,17 +132,6 @@ bool j1Scene::Update(float dt)
 			}
 			//-------------------------------------------------------
 		}
-
-		/*if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-		{
-			player->position.x -= 50;
-			App->render->camera.x += 100;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-		{
-			player->position.x += 50;
-			App->render->camera.x -= 100;
-		}*/
 		
 	return true;
 }
@@ -382,6 +294,82 @@ void j1Scene::ChangeState(GameState state)
 	}
 }
 
+void j1Scene::SwitchMap()
+{
+	if (fade == false)
+	{
+		App->fadetoblack->FadeToBlack();
+		gamestate = INMENU;
+		player->SetState(L_IDLE);
+		player->SetAnimState(L_IDLE);
+		fade = true;
+		now_switch = true;
+	}
+
+	if (App->fadetoblack->Checkfadetoblack() && now_switch)
+	{
+		if (switch_map > FIRST_LEVEL_COMBAT - 1) //id 13 = level combat map - need 12 
+		{
+			combat = true;
+		}
+		now_switch = false;
+		if (App->map->CleanUp())
+		{
+			App->collision->EreseAllColiderPlayer();
+			if (player->equiped_item != nullptr)
+			{
+				weapon_equiped = player->equiped_item->Wtype;
+			}
+			App->entity_elements->DelteElements();
+			App->combatmanager->DeleteElements_combat();
+
+			if (poketrainer != nullptr)
+			{
+				if (poketrainer->pokedex.size() > 0)
+				{
+					poketrainer->pokedex.clear();
+				}
+			}
+			if (player->pokedex.size() > 0)
+			{
+				player->pokedex.clear();
+			}
+
+			if (switch_map < FIRST_LEVEL_COMBAT) //id 13 is the first combat map
+			{
+				combat = false;
+				Load_new_map(switch_map);
+			}
+			else
+			{
+				Load_Combat_map(switch_map);
+			}
+			if (switch_map == 4 && notrepeatmusic)
+			{
+				notrepeatmusic = false;
+				App->audio->PlayMusic("audio/music/POKEMON/PokemonVictoryRoad.ogg");
+			}
+		}
+	}
+	if (App->fadetoblack->Checkfadefromblack())
+	{
+		if (combat && switch_map == 6 && id_map > FIRST_LEVEL_COMBAT - 1) //TODO LOW Create lvl GameOver
+		{
+			switch_map = 0;
+			fade = false;
+			combat = false;
+			//gamestate = GAMEOVER;
+		}
+		else
+		{
+			switch_map = 0;
+			fade = false;
+			gamestate = INGAME;
+		}
+		id_map = switch_map;
+	}
+}
+
 bool j1Scene::Load_new_map(int n)
 {
 	if (player == NULL)
@@ -416,7 +404,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			if (n == 1 && switch_map == 0 || switch_map == 6 || pokecombat!=nullptr && n==1)
+			if (n == 1 && switch_map == 0 || switch_map == 7 || pokecombat!=nullptr && n==1)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);

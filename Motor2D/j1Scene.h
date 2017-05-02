@@ -4,6 +4,8 @@
 #include "j1Module.h"
 #include "j1EntityElementsScene.h"
 
+#define FIRST_LEVEL_COMBAT 13
+
 enum GameState { INGAME, INMENU, TIMETOPLAY, GAMEOVER, CUTSCENE};
 
 struct SDL_Texture;
@@ -65,6 +67,9 @@ public:
 	void SwitchMenu(bool direction);
 
 	void ChangeState(GameState state);
+
+	//
+	void SwitchMap();
 
 private:
 	SDL_Texture* debug_tex;
