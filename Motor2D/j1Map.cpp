@@ -31,7 +31,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-void j1Map::Draw()
+void j1Map::Draw(bool floor_2)
 {
 	BROFILER_CATEGORY("Draw_MAP", Profiler::Color::DarkOrange)
 	if(map_loaded == false)
@@ -51,6 +51,21 @@ void j1Map::Draw()
 			continue;
 		if (layer->properties.Get("NoDraw_2") != 0 && navigation_map_2 == false)
 			continue;
+
+		if (floor_2)
+		{
+			if (layer->name != "Floor 2" && i < 1)
+			{
+				continue;
+			}
+		}
+		else
+		{
+			if (data.layers[i]->name == "Floor 2")
+			{
+				continue;
+			}
+		}
 
 		int marge = Checkpositions();
 		for(int y = pos_camera.y; y < pos_camera.y + win_size.y + marge; ++y)

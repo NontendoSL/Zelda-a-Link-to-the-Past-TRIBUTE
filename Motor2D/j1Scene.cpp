@@ -146,7 +146,7 @@ bool j1Scene::PostUpdate()
 	bool ret = true;
 
 	//Draw a map
-	App->map->Draw();
+	App->map->Draw(false);
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
