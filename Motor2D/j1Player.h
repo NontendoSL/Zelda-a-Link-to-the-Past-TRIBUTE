@@ -15,6 +15,7 @@ class Text;
 class Pokemon;
 class Hookshot;
 class Weapon;
+class Bow;
 class BombContainer;
 class Dialogue;
 class Image;
@@ -105,6 +106,7 @@ public:
 	Dialogue* dialog = nullptr;
 	Hookshot* hook = nullptr;
 	BombContainer* bombmanager = nullptr;
+	Bow* bow = nullptr;
 	Weapon* equiped_item = nullptr;
 
 	//Pokemons has Link

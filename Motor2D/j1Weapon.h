@@ -5,7 +5,7 @@
 #include "SceneElements.h"
 enum HookState { TARGET, OBSTACLE, MISS};
 enum BombStep { PLANTED, EXPLOSION };
-enum ArrowStep { AIR, ENEMY_IMPACT, WALL_IMPACT, DIE};
+enum ArrowStep { AIR, IMPACT, DIE};
 
 enum WeaponType { W_BOW, W_HOOKSHOT, W_BOMB };
 enum WeaponState { W_IDLE = 0, W_DYING };
@@ -96,6 +96,8 @@ public:
 
 	void Update(float dt);
 	void Draw();
+
+	void KeepGoing(float dt);
 	void Die();
 
 public:

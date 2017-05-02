@@ -185,7 +185,7 @@ void Bow::Draw()
 
 void Bow::CleanContainer()
 {
-	//arrows.erase(arrow_pos);
+	arrows.pop_front();
 }
 
 void Bow::SetSpeed(uint charge)
@@ -195,14 +195,15 @@ void Bow::SetSpeed(uint charge)
 
 void Bow::Shoot(iPoint pos, Direction dir, float speed)
 {
-	arrows.push_back(new Arrow(pos, dir, this, speed));
+	Arrow* arrow = new Arrow(pos, dir, this, speed);
+	arrows.push_back(arrow);
 }
 
 // ARROW -------------------------------------------------------
 Arrow::Arrow(iPoint pos, Direction dir, Bow* container, float speed):
 	position(pos),direction(dir), container(container),arrow_speed(speed)
 {
-	lifetime = 2; //Seconds before disappearing.
+	lifetime = 1.5; //Seconds before disappearing.
 	step = AIR;
 	timer.Start();
 }
@@ -218,7 +219,18 @@ void Arrow::Update(float dt)
 		step = DIE;
 	}
 
-	if (step == DIE)
+	if (step == AIR)
+	{
+		KeepGoing(dt);
+		//Set collision of the collider.
+	}
+
+	else if (step == IMPACT)
+	{
+		//Get stuck into the wall (metasudo) or damage an enemy.
+	}
+
+	else if (step == DIE)
 	{
 		Die();
 	}
@@ -226,6 +238,38 @@ void Arrow::Update(float dt)
 
 void Arrow::Draw()
 {
+	switch (step)
+	{
+	case AIR:
+		//App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW);
+		break;
+	case IMPACT:
+		//App->anim_manager->Drawing_Manager(W_DYING, direction, position, ARROW);
+		break;
+	default:
+		break;
+	}
+}
+
+void Arrow::KeepGoing(float dt)
+{
+	switch (direction)
+	{
+	case UP:
+		position.y -= ceil(arrow_speed*dt);
+		break;
+	case DOWN:
+		position.y += ceil(arrow_speed*dt);
+		break;
+	case LEFT:
+		position.x -= ceil(arrow_speed*dt);
+		break;
+	case RIGHT:
+		position.x += ceil(arrow_speed*dt);
+		break;
+	default:
+		break;
+	}
 }
 
 void Arrow::Die()
