@@ -268,6 +268,15 @@ Hookshot* j1EntityElementScene::CreateHookshot()
 	return hook;
 }
 
+Bow * j1EntityElementScene::CreateBow()
+{
+	Bow* bow = new Bow(true);
+	bow->name = "bow";
+	bow->Start();
+	elementscene.push_back(bow);
+	return bow;
+}
+
 BombContainer* j1EntityElementScene::CreateBombContainer()
 {
 	BombContainer* element = new BombContainer();

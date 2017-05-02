@@ -47,7 +47,7 @@ bool j1Scene::Start()
 	if (ingame == true)
 	{
 		LoadUi();
-		Load_new_map(8);
+		Load_new_map(1);
 		App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
@@ -455,8 +455,8 @@ bool j1Scene::Load_new_map(int n)
 			}
 
 			//BCTrooper
-			pugi::xml_node temp_bctrooper = temp.child("BCTrooper");
-			App->entity_elements->CreateBCTrooper(temp_bctrooper);
+			//pugi::xml_node temp_bctrooper = temp.child("BCTrooper");
+			//App->entity_elements->CreateBCTrooper(temp_bctrooper);
 
 			//Camera position
 			int scale = App->win->GetScale();

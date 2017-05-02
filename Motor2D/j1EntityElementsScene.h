@@ -13,6 +13,7 @@ class Player;
 class DynamicObjects;
 class NPC;
 class Hookshot;
+class Bow;
 class Weapon;
 class Pokemon;
 class BombContainer;
@@ -52,6 +53,7 @@ public:
 	Soldier* CreateSoldier(uint id, pugi::xml_node& );
 	Item* CreateItem(uint id, iPoint position);
 	Hookshot* CreateHookshot();
+	Bow* CreateBow();
 	DynamicObjects* CreateDynObject(iPoint pos, uint id, uint id_map);
 	Player* CreatePlayer();
 	BombContainer* CreateBombContainer();

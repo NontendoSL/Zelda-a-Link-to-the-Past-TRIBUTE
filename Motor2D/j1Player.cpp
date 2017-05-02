@@ -56,6 +56,11 @@ bool Player::Awake(pugi::xml_node& conf)
 bool Player::Start()
 {
 	bool ret = true;
+
+	//TEST BOW ------------
+	bow = App->entity_elements->CreateBow();
+	// ------------------
+
 	//changeResolution = false;
 	attacker = false;
 
@@ -139,12 +144,31 @@ bool Player::Update(float dt)
 				charge--;
 			}
 		}
-		if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && bombs>0)
+		if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && bombs > 0)
 		{
 			bombmanager->Drop(position);
 			bombs--;
 			App->audio->PlayFx(6);
 		}
+
+		//BOW TEST ------------
+		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT  && charge <= 34)
+		{
+			charge++;
+		}
+
+		else if (App->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
+		{
+			bow->Shoot(position, direction, charge);
+		}
+		else if (charge > 0)
+		{
+			charge--;
+		}
+		// ----------------------------
+
+
+		// --------------------
 
 		switch (state)
 		{

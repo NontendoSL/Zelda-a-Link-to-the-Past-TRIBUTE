@@ -13,6 +13,7 @@ enum WeaponState { W_IDLE = 0, W_DYING };
 
 class BombContainer;
 class Bow;
+class P_Follow;
 
 class Weapon : public SceneElement
 {
@@ -110,6 +111,7 @@ public:
 	Bow* container = nullptr;
 	ArrowStep step;
 	Collider* collision = nullptr;
+	P_Follow* particles = nullptr;
 };
 
 class Bow : public Weapon
@@ -123,7 +125,7 @@ public:
 	void Draw();
 	void CleanContainer();
 
-	void SetSpeed(uint charge);
+	float SetSpeed(float charge);
 	void Shoot(iPoint pos, Direction dir, float speed);
 
 	//void OnCollision(Collider* c1, Collider* c2);

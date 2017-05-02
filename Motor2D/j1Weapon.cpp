@@ -6,6 +6,7 @@
 #include "j1App.h"
 #include "j1Collision.h"
 #include "j1Map.h"
+#include "ParticleManager.h"
 
 Weapon::Weapon() :SceneElement()
 {
@@ -156,7 +157,7 @@ Bow::~Bow()
 
 bool Bow::Start()
 {
-	arrow_speed = 1;
+	arrow_speed = 7;
 	state = W_IDLE;
 	anim_state = W_IDLE;
 	return true;
@@ -164,11 +165,14 @@ bool Bow::Start()
 
 bool Bow::Update(float dt)
 {
-	std::list<Arrow*>::const_iterator item = arrows.begin();
-	while (item != arrows.end())
+	if (arrows.size() > 0)
 	{
-		item._Ptr->_Myval->Update(dt);
-		item++;
+		std::list<Arrow*>::const_iterator item = arrows.begin();
+		while (item != arrows.end())
+		{
+			item._Ptr->_Myval->Update(dt);
+			item++;
+		}
 	}
 	return true;
 }
@@ -188,14 +192,16 @@ void Bow::CleanContainer()
 	arrows.pop_front();
 }
 
-void Bow::SetSpeed(uint charge)
+float Bow::SetSpeed(float charge)
 {
-	arrow_speed *= charge; //More charge = more speed = more distance
+	return arrow_speed * charge; //More charge = more speed = more distance
 }
 
-void Bow::Shoot(iPoint pos, Direction dir, float speed)
+void Bow::Shoot(iPoint pos, Direction dir, float charge)
 {
+	float speed = SetSpeed(charge);
 	Arrow* arrow = new Arrow(pos, dir, this, speed);
+	arrow->collision = App->collision->AddCollider({ arrow->position.x, arrow->position.y, 4, 4 }, COLLIDER_ARROW);
 	arrows.push_back(arrow);
 }
 
@@ -203,8 +209,10 @@ void Bow::Shoot(iPoint pos, Direction dir, float speed)
 Arrow::Arrow(iPoint pos, Direction dir, Bow* container, float speed):
 	position(pos),direction(dir), container(container),arrow_speed(speed)
 {
-	lifetime = 1.5; //Seconds before disappearing.
+	lifetime = 1; //Seconds before disappearing.
 	step = AIR;
+	App->particlemanager->CreateFollow_P(nullptr, &position, { 0,2,2,0 }, { 2,2 }, { 30,15 }, 4, 10, true);
+	particles = App->particlemanager->Group_Follow.back();
 	timer.Start();
 }
 
@@ -214,7 +222,7 @@ Arrow::~Arrow()
 
 void Arrow::Update(float dt)
 {
-	if (timer.ReadSec() >= lifetime)
+	if (timer.ReadSec() >= lifetime && step != DIE)
 	{
 		step = DIE;
 	}
@@ -222,12 +230,14 @@ void Arrow::Update(float dt)
 	if (step == AIR)
 	{
 		KeepGoing(dt);
+		collision->SetPos(position.x, position.y);
 		//Set collision of the collider.
 	}
 
 	else if (step == IMPACT)
 	{
 		//Get stuck into the wall (metasudo) or damage an enemy.
+		//step = DIE;
 	}
 
 	else if (step == DIE)
@@ -242,9 +252,11 @@ void Arrow::Draw()
 	{
 	case AIR:
 		//App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW);
+		App->render->DrawQuad({position.x, position.y, 4, 4}, 255, 255, 255);
 		break;
 	case IMPACT:
 		//App->anim_manager->Drawing_Manager(W_DYING, direction, position, ARROW);
+		App->render->DrawQuad({ position.x,position.y,4,4 }, 255, 0, 0);
 		break;
 	default:
 		break;
@@ -276,6 +288,7 @@ void Arrow::Die()
 {
 	collision->to_delete = true;
 	container->CleanContainer();
+	App->particlemanager->DeleteFollow_p(particles);
 }
 
 
