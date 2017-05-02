@@ -13,7 +13,7 @@
 class Item;
 
 enum ElementType{ CREATURE, ITEM, DYNOBJECT, WEAPON };
-enum Direction { UP, DOWN, LEFT, RIGHT };
+enum Direction { UP, DOWN, LEFT, RIGHT, NO_DIRECTION };
 
 
 class SceneElement 

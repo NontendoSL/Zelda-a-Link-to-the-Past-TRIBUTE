@@ -141,51 +141,14 @@ void Hookshot::Draw()
 		App->anim_manager->Drawing_Manager(anim_state, direction, position, HOOKSHOT); //id 2 = hookshot animation xml
 	}
 }
+// ----------------------------------
 
-
-/*{
-switch (player_level)
-{
-case LEVEL_1:
-if (orange tile touched)
-{
-return wall;
-}
-break;
-case LEVEL_2:
-if (yellow tile touched)
-{
-return wall;
-}
-break;
-case LEVEL_3:
-if (pink tile touched)
-{
-return wall;
-}
-break;
-default:
-break;
-}
-
-if (sudowoodo touched)
-{
-return true;
-}
-else
-{
-return false;
-}*/
-
-// -------------------
-
-
-//HOOKSHOT ------------------
+// BOW ------------------------------
 Bow::Bow(bool equip)
 {
 	equipable = equip;
+	Wtype = W_BOW;
 }
-
 
 Bow::~Bow()
 {
@@ -193,70 +156,90 @@ Bow::~Bow()
 
 bool Bow::Start()
 {
+	arrow_speed = 1;
+	state = W_IDLE;
+	anim_state = W_IDLE;
 	return true;
 }
 
 bool Bow::Update(float dt)
 {
-
+	std::list<Arrow*>::const_iterator item = arrows.begin();
+	while (item != arrows.end())
+	{
+		item._Ptr->_Myval->Update(dt);
+		item++;
+	}
 	return true;
+}
+
+void Bow::Draw()
+{
+	std::list<Arrow*>::const_iterator item = arrows.begin();
+	while (item != arrows.end())
+	{
+		item._Ptr->_Myval->Draw();
+		item++;
+	}
+}
+
+void Bow::CleanContainer()
+{
+	//arrows.erase(arrow_pos);
 }
 
 void Bow::SetSpeed(uint charge)
 {
-	arrow_speed = charge / 10;
+	arrow_speed *= charge; //More charge = more speed = more distance
 }
 
-/*void Bow::OnCollision(Collider* c1, Collider* c2)
+void Bow::Shoot(iPoint pos, Direction dir, float speed)
 {
-	if (c1 != nullptr && c2 != nullptr)
+	arrows.push_back(new Arrow(pos, dir, this, speed));
+}
+
+// ARROW -------------------------------------------------------
+Arrow::Arrow(iPoint pos, Direction dir, Bow* container, float speed):
+	position(pos),direction(dir), container(container),arrow_speed(speed)
+{
+	lifetime = 2; //Seconds before disappearing.
+	step = AIR;
+	timer.Start();
+}
+
+Arrow::~Arrow()
+{
+}
+
+void Arrow::Update(float dt)
+{
+	if (timer.ReadSec() >= lifetime)
 	{
-		if (c1->type == COLLIDER_ARROW && c2->type == COLLIDER_ENEMY)
-		{
+		step = DIE;
+	}
 
-		}
-
-}*/
-
-
-
-/*{
-switch (player_level)
-{
-case LEVEL_1:
-if (orange tile touched)
-{
-return wall;
-}
-break;
-case LEVEL_2:
-if (yellow tile touched)
-{
-return wall;
-}
-break;
-case LEVEL_3:
-if (pink tile touched)
-{
-return wall;
-}
-break;
-default:
-break;
+	if (step == DIE)
+	{
+		Die();
+	}
 }
 
-if (sudowoodo touched)
+void Arrow::Draw()
 {
-return true;
 }
-else
+
+void Arrow::Die()
 {
-return false;
-}*/
+	collision->to_delete = true;
+	container->CleanContainer();
+}
 
-// -------------------
-//BOMBContainer
 
+//-------------------------------------
+//-------------------------------------------------
+
+
+//BOMB CONTAINER -------------------------------
 BombContainer::BombContainer()
 {
 	equipable = true;
@@ -297,8 +280,7 @@ void BombContainer::CleanContainer()
 }
 
 
-
-//--------------------------------- BOMB: TODO HIGH -> modify animation management.
+// BOMB ----------------------------------------  TODO HIGH -> modify animation management.
 Bomb::Bomb(iPoint position, BombContainer*container) : position(position), container(container)
 {
 	radius = 20;
@@ -345,4 +327,7 @@ void Bomb::Die()
 	collision->to_delete = true;
 	container->CleanContainer();
 }
+
+//------------------------------------
+//----------------------------------------------------
 

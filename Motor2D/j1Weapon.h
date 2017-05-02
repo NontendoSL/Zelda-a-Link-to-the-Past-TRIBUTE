@@ -3,14 +3,16 @@
 #define __WEAPONS_H_
 
 #include "SceneElements.h"
-enum HookState {TARGET, OBSTACLE, MISS};
+enum HookState { TARGET, OBSTACLE, MISS};
 enum BombStep { PLANTED, EXPLOSION };
-enum WeaponType { W_BOW, W_HOOKSHOT, W_BOMB };
+enum ArrowStep { AIR, ENEMY_IMPACT, WALL_IMPACT, DIE};
 
+enum WeaponType { W_BOW, W_HOOKSHOT, W_BOMB };
 enum WeaponState { W_IDLE = 0, W_DYING };
 
 
 class BombContainer;
+class Bow;
 
 class Weapon : public SceneElement
 {
@@ -80,36 +82,53 @@ public:
 	float range = 0;
 	uint actual_range_pos = 0; // TODO MED-> set to private and create functions to get the values
 	bool target_reached = false;
-
-
-public:
-	uint speed; //TODO JORDI
+	int speed = 0; //TODO JORDI -> combine with dt
 
 private:
 	HookState hook_state = MISS;
 };
 
+class Arrow
+{
+public:
+	Arrow(iPoint position, Direction dir, Bow* container, float speed);
+	~Arrow();
+
+	void Update(float dt);
+	void Draw();
+	void Die();
+
+public:
+	iPoint position;
+	Direction direction = NO_DIRECTION;
+	float arrow_speed = 0;
+	float lifetime = 0;
+	j1Timer timer;
+	Animation* current = nullptr;
+	Bow* container = nullptr;
+	ArrowStep step;
+	Collider* collision = nullptr;
+};
+
 class Bow : public Weapon
 {
+public:
 	Bow(bool equipable);
 	~Bow();
 
 	bool Start();
-
 	bool Update(float dt);
+	void Draw();
+	void CleanContainer();
 
 	void SetSpeed(uint charge);
+	void Shoot(iPoint pos, Direction dir, float speed);
 
 	//void OnCollision(Collider* c1, Collider* c2);
 
-public:
-	uint speed; //TODO JORDI
-
 private:
-	uint arrow_speed = 0;
-	std::vector<Item*> throwed_arrows;
-
-
+	std::list<Arrow*> arrows;
+	float arrow_speed = 0;
 };
 
 class Bomb
