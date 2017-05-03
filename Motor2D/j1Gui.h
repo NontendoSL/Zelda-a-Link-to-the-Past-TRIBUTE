@@ -6,15 +6,24 @@
 #include <vector>
 
 #define CURSOR_WIDTH 2
-enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE, DIALOGUE,MENU };
+enum GuiType { BUTTON, TEXT, TEXT_BOX, MOUSE, IMAGE, DIALOGUE, MENU };
+enum GuiGroup
+{
+	NONE,
+	MAIN_MENU,
+	ZELDA_HUD,
+	ZELDA_MENU,
+	POKEMON_COMBAT
+};
 enum FontName;
 
-// TODO 1: Create your structure of classes
 class j1GuiEntity;
 class Image;
 class Text;
 class Button;
 class Dialogue;
+class MainMenu;
+class ZeldaHud;
 class ZeldaMenu;
 class PokemonCombatHud;
 class Pokemon;
@@ -39,6 +48,8 @@ public:
 	// Called before all Updates
 	bool PreUpdate();
 
+	void ReceiveInput();
+
 	// Called after all Updates
 	bool PostUpdate();
 
@@ -48,33 +59,46 @@ public:
 	const SDL_Texture* GetAtlas() const;
 
 	// create img
-	Image* CreateImage(SDL_Rect rect, iPoint pos, std::string identifier="undefined", uint id=0);
+	Image* CreateImage(SDL_Rect rect, iPoint pos, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE, bool movable = true);
 	// create text
-	Text* CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Color color = { 255,255,255,255 }, bool addelement = true, std::string identifier = "undefined", uint id = 0);
+	Text* CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Color color = { 255,255,255,255 }, bool addelement = true, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE);
 	// create button
-	Button* CreateButton(SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated = false, std::string identifier = "undefined", uint id = 0, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
+	Button* CreateButton(j1Module* listener, SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated = false, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
 
 	Dialogue* CreateDialogue(const char* string);
+
 	Selector* CreateSelector(const char* first, const char* second, j1GuiEntity*parent);
+
+	MainMenu* CreateMainMenu();
+
+	ZeldaHud* CreateZeldaHud();
 
 	ZeldaMenu* CreateZeldaMenu();
 
 	PokemonCombatHud* CreatePokemonCombatHud(Pokemon* Link, Pokemon* Brendan);
 
-	void Erase(int id);
+	void Erase(j1GuiEntity* to_delete);
 
 	int GetEntitiesSize();
+
+	j1GuiEntity* GetFocused();
+
+	void SetFocus(j1GuiEntity* to_focus);
+
+	void MoveGroup(GuiGroup group, bool x_axis, float speed, bool move_all = false);
+
+	void SetGui(GuiGroup guistate);
 public:
 	int Next_id = 0;
 
 private:
 	std::string atlas_file_name;
-	//p2DynArray<j1GuiEntity*> entities;
 	std::vector<j1GuiEntity*> entities;
-
-protected:
 	SDL_Texture* atlas;
+	j1GuiEntity* focused;
+	GuiGroup status;
 
+	//friend class ZeldaMenu; // work on this, search for alternative option
 };
 
 #endif // __j1GUI_H__
