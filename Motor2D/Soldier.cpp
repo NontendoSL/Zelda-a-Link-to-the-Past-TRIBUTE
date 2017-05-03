@@ -10,6 +10,7 @@
 #include "j1EntityElementsScene.h"
 #include "j1Audio.h"
 #include "j1Player.h"
+#include "j1Weapon.h"
 
 Soldier::Soldier():NPC()
 {
@@ -74,6 +75,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
+		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
 		{
 			if (destructible == true && state != S_HIT)
@@ -86,8 +88,22 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 				prev_position = position;
 			}
 		}
-	}
 
+		//ARROW COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
+		{
+			if (c2->arrow_callback->step != DIE)
+			{
+				knockback_time.Start();
+				hp--;
+				state = S_HIT;
+				anim_state = S_IDLE;
+				dir_hit = c2->arrow_callback->direction;
+				prev_position = position;
+				c2->arrow_callback->step = DIE; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
+			}
+		}
+	}
 }
 
 bool Soldier::Start()
@@ -471,5 +487,10 @@ void Soldier::SetState(SoldierState s_state)
 void Soldier::SetAnimState(SoldierState a_state)
 {
 	anim_state = a_state;
+}
+
+SoldierType Soldier::GetType() const
+{
+	return soldier_type;
 }
 

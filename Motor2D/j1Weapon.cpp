@@ -6,7 +6,9 @@
 #include "j1App.h"
 #include "j1Collision.h"
 #include "j1Map.h"
+#include "Soldier.h"
 #include "ParticleManager.h"
+#include "j1Collision.h"
 
 Weapon::Weapon() :SceneElement()
 {
@@ -192,6 +194,8 @@ void Bow::CleanContainer()
 	arrows.pop_front();
 }
 
+
+
 float Bow::SetSpeed(float charge)
 {
 	return arrow_speed * charge; //More charge = more speed = more distance
@@ -201,7 +205,7 @@ void Bow::Shoot(iPoint pos, Direction dir, float charge)
 {
 	float speed = SetSpeed(charge);
 	Arrow* arrow = new Arrow(pos, dir, this, speed);
-	arrow->collision = App->collision->AddCollider({ arrow->position.x, arrow->position.y, 4, 4 }, COLLIDER_ARROW);
+	arrow->collision = App->collision->AddCollider({ arrow->position.x, arrow->position.y, 4, 4 }, COLLIDER_ARROW, nullptr, arrow);
 	arrows.push_back(arrow);
 }
 
@@ -252,11 +256,11 @@ void Arrow::Draw()
 	{
 	case AIR:
 		//App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW);
-		App->render->DrawQuad({position.x, position.y, 4, 4}, 255, 255, 255);
+		//App->render->DrawQuad({collision->rect.x, collision->rect.y, 4, 4}, 255, 255, 255);
 		break;
 	case IMPACT:
 		//App->anim_manager->Drawing_Manager(W_DYING, direction, position, ARROW);
-		App->render->DrawQuad({ position.x,position.y,4,4 }, 255, 0, 0);
+		App->render->DrawQuad({ collision->rect.x, collision->rect.y,4,4 }, 255, 0, 0);
 		break;
 	default:
 		break;

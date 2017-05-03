@@ -33,6 +33,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_DYNOBJECT] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_SWITCH_MAP] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_ARROW] = true;
 
 	matrix[COLLIDER_POKEMON][COLLIDER_SWITCH_MAP] = false;
 	matrix[COLLIDER_POKEMON][COLLIDER_PLAYER] = true;
@@ -42,6 +43,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_POKEMON][COLLIDER_SWORD] = true; 
 
 	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKEMON] = false;
+
 }
 j1Collision::~j1Collision() {}
 
@@ -210,6 +212,8 @@ void j1Collision::DebugDraw()
 		case COLLIDER_BCTROOPER_MAZE:
 			App->render->DrawQuad(colliders[i]->rect, 200, 50, 100, alpha);
 			break;
+		case COLLIDER_ARROW:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 		}
 	}
 }
@@ -220,7 +224,7 @@ bool j1Collision::Getdebug() const
 }
 
 
-Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneElement* callback)
+Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneElement* callback, Arrow* a_callback)
 {
 	Collider* ret = nullptr;
 
@@ -228,7 +232,7 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneEleme
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new ColliderRect(rect, type, callback);
+			ret = colliders[i] = new ColliderRect(rect, type, callback, a_callback);
 			if (colliders[i]->to_delete == true)
 			{
 				colliders[i]->to_delete = false;
