@@ -420,18 +420,16 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 				else
 				{
-					iPoint temp_meta = App->map->WorldToMap(position.x, position.y);
-					MapLayer* meta_ = App->map->data.layers[1];
-					int id_meta = meta_->Get(temp_meta.x, temp_meta.y);
-					/*for (int i = 0; i < App->map->directMap.size(); i++)
+					for (int i = 0; i < App->scene->teleports.size(); i++)
 					{
-						if (App->map->directMap[i].id_tile == id_meta)
+						if (App->scene->teleports[i].rect.x == c2->rect.x &&
+							App->scene->teleports[i].rect.y== c2->rect.y)
 						{
 							canSwitchMap = false;
-							App->scene->switch_map = App->map->directMap[i].id_map;
-							App->scene->newPosition = App->map->directMap[i].position;
+							App->scene->switch_map = App->scene->teleports[i].id_map;
+							App->scene->newPosition = App->scene->teleports[i].position;
 						}
-					}*/
+					}
 				}
 			}
 

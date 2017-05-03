@@ -64,12 +64,12 @@ bool j1Scene::Start()
 		App->audio->LoadFx("audio/fx/LTTP_Fall.wav");//14
 		App->audio->LoadFx("audio/fx/LTTP_Chest_Open.wav");//15
 		
-
+		//Inicialitzate All teleports
+		CreateTeleports();
 	}
 	inventory = false;
 	switch_map = 0;
 	notrepeatmusic = true;
-
 
 	return true;
 }
@@ -165,6 +165,9 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	// Remove all teleports
+	teleports.clear();
+
 	return true;
 }
 
@@ -195,6 +198,27 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		}
 	}
 
+}
+
+void j1Scene::CreateTeleports()
+{
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	config = LoadConfig(config_file);
+	//Create DirectionMap
+	for (pugi::xml_node temp = config.child("teleport").child("map"); temp != NULL; temp = temp.next_sibling())
+	{
+		for (pugi::xml_node port = temp.child("port"); port != NULL; port = port.next_sibling())
+		{
+			Teleport teleport;
+			teleport.name = port.attribute("name").as_string("");
+			teleport.rect.x = port.attribute("rect_x").as_int(0);
+			teleport.rect.y = port.attribute("rect_y").as_int(0);
+			teleport.id_map = port.attribute("switch_map").as_int(0);
+			teleport.position = iPoint(port.attribute("pos_x").as_int(0), port.attribute("pos_y").as_int(0));
+			teleports.push_back(teleport);
+		}
+	}
 }
 
 void j1Scene::LoadUi()
@@ -370,7 +394,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			/*if (n == 1 && switch_map == 0 || switch_map == 7 || switch_map == 8 || pokecombat!=nullptr && n==1)
+			if (n == 1 && switch_map == 0 || switch_map == 7 || switch_map == 8 || pokecombat != nullptr && n==1)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
@@ -380,9 +404,7 @@ bool j1Scene::Load_new_map(int n)
 			{
 				player->position.x = newPosition.x;
 				player->position.y = newPosition.y;
-			}*/
-			player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
-			player->position.y = temp.child("Link").attribute("pos_y").as_int(0);
+			}
 
 			//soldier
 			pugi::xml_node temp_enemy = temp.child("soldier").child("soldier");

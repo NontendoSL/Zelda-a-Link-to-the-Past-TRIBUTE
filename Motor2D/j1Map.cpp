@@ -383,9 +383,6 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
-	// Remove all DirectionMap
-	teleports.clear();
-
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -475,17 +472,6 @@ bool j1Map::Load(const char* file_name, uint id_map)
 		}
 	}
 
-	//Create DirectionMap
-	for (pugi::xml_node temp = map_file.child("map").child("directionLevels").child("map"); temp != NULL; temp = temp.next_sibling())
-	{
-		/*DirectionMap dir_map;
-		dir_map.name = temp.attribute("name").as_string("");
-		dir_map.id_tile = temp.attribute("id_tile").as_int(0);
-		dir_map.id_map = temp.attribute("id_map").as_int(0);
-		dir_map.position = iPoint(temp.attribute("pos_x").as_int(0), temp.attribute("pos_y").as_int(0));
-		directMap.push_back(dir_map);*/
-	}
-
 	//Create all DynObjects from Tiled
 	if (id_map > 0)
 	{
@@ -500,10 +486,7 @@ bool j1Map::Load(const char* file_name, uint id_map)
 
 void j1Map::DynObjectFromTiled(uint id_map)
 {
-	int blue = data.tilesets[1]->firstgid + 8;
-	int green = data.tilesets[1]->firstgid;
-	int orange = data.tilesets[1]->firstgid + 6;
-	int purple = data.tilesets[1]->firstgid + 7;
+	int teleport = data.tilesets[1]->firstgid + 16;
 
 	MapLayer* temp = data.layers[data.layers.size() - 1];
 
@@ -541,24 +524,8 @@ void j1Map::DynObjectFromTiled(uint id_map)
 				}
 
 			}
-			if (tile_id == blue)
+			if (tile_id == teleport)
 			{
-				blue = -1;
-				App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP);
-			}
-			if (tile_id == green)
-			{
-				green = -1;
-				App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP);
-			}
-			if (tile_id == purple)
-			{
-				purple = -1;
-				App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP);
-			}
-			if (tile_id == orange)
-			{
-				orange = -1;
 				App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP);
 			}
 		}

@@ -181,79 +181,79 @@
   <teleport>
     <!--Nomal Maps - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <map id="1"><!--HouseLink-->
-      <door name="LinkHouseOutdoor" id_tile="" switch_map="2" pos_x="192" pos_y="262"/>
+      <port name="LinkHouseOutdoor" rect_x="104" rect_y="184" switch_map="2" pos_x="704" pos_y="1288"/>
     </map> 
     
     <map id="2"><!--LinkHouseOutdoor-->
-      <door name="HouseLink" id_tile="" switch_map="1" pos_x="112" pos_y="183"/>
+      <port name="HouseLink" rect_x="696" rect_y="1256" switch_map="1" pos_x="111" pos_y="175"/>
       <!--Castle-->
       <!--Uncle-->
     </map> 
     
     <map id="3"><!--Uncle-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="4"><!--Castle-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map>  
     
     <map id="5"><!--Zelda Room-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="6"><!--Water Fall--><!--Before enter Victory Road-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="7"><!--Victory 1-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="8"><!--Victory 2-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="9"><!--Exterior Victory--><!--Before enter League-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="10"><!--EntranceLeague-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
 
     <map id="11"><!--Piramide Power-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
 
     <map id="12"><!--Final Boss-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <!--COMBAT MAPS - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     
     <map id="13"><!--Turorial Combat-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="14"><!--Dark Combat-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="15"><!--Ghost Combat-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
     <map id="16"><!--Ice Combat-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
 
     <map id="17"><!--Dragon Combat-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
 
     <map id="18"><!--Red Combat-->
-      <door name="" id_tile="" switch_map="" pos_x="" pos_y=""/>
+      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
     </map> 
     
 

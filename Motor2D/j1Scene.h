@@ -26,6 +26,14 @@ class DynamicObjects;
 class PokeTrainer;
 enum WeaponType;
 
+struct Teleport
+{
+	std::string name;
+	SDL_Rect rect;
+	int id_map;
+	iPoint position;
+};
+
 class j1Scene : public j1Module
 {
 public:
@@ -56,6 +64,9 @@ public:
 	//OnGui buttons
 	void OnGui(j1GuiEntity* element, GuiAction event);
 
+	//Create Teleports
+	void CreateTeleports();
+
 	//Load Maps
 	bool Load_new_map(int n);
 	//Load CombatMaps
@@ -77,6 +88,8 @@ private:
 
 public:
 	GameState gamestate = INGAME;
+	//Teleports
+	std::vector<Teleport> teleports;
 
 	//Combat or not
 	bool combat = false;

@@ -9,12 +9,6 @@
 
 enum TileDirection { T_CONTINUE, T_WALL, T_UP, T_DOWN, T_LEFT, T_RIGHT };
 
-struct Teleport
-{
-	std::string name;
-	SDL_Rect rect;
-	int id_map;
-};
 // ----------------------------------------------------
 struct Properties
 {
@@ -154,8 +148,6 @@ private:
 public:
 
 	MapData data;
-
-	std::vector<Teleport> teleports;
 private:
 
 	bool navigation_map = false;
