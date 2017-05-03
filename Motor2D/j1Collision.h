@@ -24,6 +24,8 @@ enum COLLIDER_TYPE
 	COLLIDER_TRAINER,
 	COLLIDER_POKEMON_ATTACK,
 	COLLIDER_SWORD,
+	COLLIDER_BCTROOPER,
+	COLLIDER_BCTROOPER_MAZE,
 	COLLIDER_MAX
 };
 
@@ -88,6 +90,7 @@ public:
 	bool EraseCollider(Collider* collider);
 	void EreseAllColiderPlayer();
 	void DebugDraw();
+	bool Getdebug() const;
 
 	uint num_colliders = 0;
 	bool waittodelete;

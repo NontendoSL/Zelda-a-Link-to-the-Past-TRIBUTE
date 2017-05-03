@@ -4,6 +4,9 @@
 
 #include "NPC.h"
 
+#define NUM_POINTS_CIRCLE 90
+#define MULTI_P 4
+
 enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_HIT, BC_DYING };
 
 class BCTrooper : public NPC
@@ -42,6 +45,9 @@ public:
 	//Change Radius
 	bool ChangeRadius(int radius_to_stop, bool increment);
 
+	//Collision----------------------------------
+	void OnCollision(Collider*, Collider*);
+
 private:
 
 	BCTrooperState state = BC_IDLE;
@@ -51,9 +57,9 @@ private:
 	iPoint bole;
 	int pos_in_vect = 1;
 	int radius = 10;
-	int speed = 6;
 	j1Timer Change_State;
 	bool reset_time = true;
+	Collider* collision_maze = nullptr;
 };
 
 #endif//__BCTROOPER_H_
