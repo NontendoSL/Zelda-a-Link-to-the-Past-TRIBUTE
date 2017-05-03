@@ -158,3 +158,75 @@ App->map->EditCost(position.x , position.y + 8, 0);
 break;
 }
 }*/
+
+/*
+void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis do we move (x=true/y=false)
+{
+if (x_axis)
+{
+for (int i = 0; i < menu_buttons.size(); i++)
+{
+menu_buttons[i]->position.x += speed;
+}
+for (int i = 0; i < menu_images.size(); i++)
+{
+menu_images[i]->position.x += speed;
+if (menu_images[i]->elements.size() > 0)
+{
+if (x_axis == false)
+{
+for (int j = 0; j < menu_images[i]->elements.size(); j++)
+{
+menu_images[i]->elements[j]->position.x += speed;
+}
+}
+}
+}
+for (int i = 0; i < menu_texts.size(); i++)
+{
+menu_texts[i]->position.x += speed;
+if (menu_texts[i]->next_line != nullptr)
+{
+Text*line = menu_texts[i]->next_line;
+while (line != nullptr)
+{
+line->position.x += speed;
+line = line->next_line;
+}
+}
+}
+position.x += speed;
+}
+else
+{
+for (int i = 0; i < menu_buttons.size(); i++)
+{
+menu_buttons[i]->position.y += speed;
+}
+for (int i = 0; i < menu_images.size(); i++)
+{
+menu_images[i]->position.y += speed;
+if (menu_images[i]->elements.size() > 0)
+{
+for (int j = 0; j < menu_images[i]->elements.size(); j++)
+{
+menu_images[i]->elements[j]->position.y += speed;
+}
+}
+}
+for (int i = 0; i < menu_texts.size(); i++)
+{
+menu_texts[i]->position.y += speed;
+if (menu_texts[i]->next_line != nullptr)
+{
+Text*line = menu_texts[i]->next_line;
+while (line != nullptr)
+{
+line->position.y += speed;
+line = line->next_line;
+}
+}
+}
+position.y += speed;
+}
+}*/

@@ -192,7 +192,7 @@ bool j1CutSceneManager::FinishCutscene()
 			//Do this by calling the appropiate function of the intro scene.
 			if (active_cutscene->map_id > -1) //Load the assigned map if the cutscene has a map id
 			{
-				App->intro->LoadNewMap(active_cutscene->map_id);
+				//App->intro->LoadNewMap(active_cutscene->map_id);
 			}
 
 			//TODO 10: Clear the cutscene and set active_cutsene pointer to nullptr.
