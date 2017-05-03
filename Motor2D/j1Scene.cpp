@@ -116,18 +116,22 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 			{
 				App->scene->player->position.x += 50;
+				App->render->camera.x -= 100;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 			{
 				App->scene->player->position.y += 50;
+				App->render->camera.y -= 100;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 			{
 				App->scene->player->position.x -= 50;
+				App->render->camera.x += 100;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 			{
 				App->scene->player->position.y -= 50;
+				App->render->camera.y += 100;
 			}
 			//-------------------------------------------------------
 		}
@@ -366,7 +370,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			if (n == 1 && switch_map == 0 || switch_map == 7 || switch_map == 8 || pokecombat!=nullptr && n==1)
+			/*if (n == 1 && switch_map == 0 || switch_map == 7 || switch_map == 8 || pokecombat!=nullptr && n==1)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
@@ -376,7 +380,9 @@ bool j1Scene::Load_new_map(int n)
 			{
 				player->position.x = newPosition.x;
 				player->position.y = newPosition.y;
-			}
+			}*/
+			player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
+			player->position.y = temp.child("Link").attribute("pos_y").as_int(0);
 
 			//soldier
 			pugi::xml_node temp_enemy = temp.child("soldier").child("soldier");

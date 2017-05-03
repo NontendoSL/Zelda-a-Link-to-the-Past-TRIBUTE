@@ -74,22 +74,22 @@
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClCompile>
     <ClCompile Include="P_Explosion.cpp">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="P_Fire.cpp">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="P_Firework.cpp">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="P_Follow.cpp">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="ParticleManager.cpp">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="j1InputManager.cpp">
       <Filter>Zelda Game\Modules\Managers</Filter>
@@ -241,22 +241,22 @@
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClInclude>
     <ClInclude Include="P_Explosion.h">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="P_Fire.h">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="P_Firework.h">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="P_Follow.h">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="ParticleManager.h">
-      <Filter>Zelda Game\Modules\Managers\Particle System</Filter>
+      <Filter>Zelda Game\Modules\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="j1InputManager.h">
       <Filter>Zelda Game\Modules\Managers</Filter>
@@ -365,11 +365,11 @@
     <Filter Include="Zelda Game\ElementsScene\NPCs\ZELDA">
       <UniqueIdentifier>{b78f82bf-cccb-486f-83b5-ecc9c5788793}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Zelda Game\Modules\Managers\Particle System">
-      <UniqueIdentifier>{9a75331e-9c95-48f9-89e9-415be607b6a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Zelda Game\Modules\Base Modules">
       <UniqueIdentifier>{d76157c5-fb33-4ece-ac86-e17282743b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\Modules\Particle System">
+      <UniqueIdentifier>{9a75331e-9c95-48f9-89e9-415be607b6a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

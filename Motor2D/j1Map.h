@@ -9,12 +9,11 @@
 
 enum TileDirection { T_CONTINUE, T_WALL, T_UP, T_DOWN, T_LEFT, T_RIGHT };
 
-struct DirectionMap
+struct Teleport
 {
 	std::string name;
-	int id_tile;
+	SDL_Rect rect;
 	int id_map;
-	iPoint position;
 };
 // ----------------------------------------------------
 struct Properties
@@ -156,8 +155,7 @@ public:
 
 	MapData data;
 
-	std::vector<Collider*> doors;
-	std::vector<DirectionMap> directMap;
+	std::vector<Teleport> teleports;
 private:
 
 	bool navigation_map = false;

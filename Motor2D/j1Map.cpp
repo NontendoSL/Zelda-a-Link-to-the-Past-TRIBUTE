@@ -37,35 +37,40 @@ void j1Map::Draw(bool floor_2)
 	if(map_loaded == false)
 		return;
 
-
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		navigation_map = !navigation_map;
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		navigation_map_2 = !navigation_map_2;
+	if (floor_2 == false)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+			navigation_map = !navigation_map;
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+			navigation_map_2 = !navigation_map_2;
+	}
 
 	for (uint i = 0; i < data.layers.size(); i++)
 	{
 		MapLayer* layer = data.layers[i];
 
-		if(layer->properties.Get("NoDraw") != 0 && navigation_map == false)
-			continue;
-		if (layer->properties.Get("NoDraw_2") != 0 && navigation_map_2 == false)
-			continue;
-
 		if (floor_2)
 		{
-			if (layer->properties.Get("Floor_2") == 0)
+			if (layer->properties.Get("Floor_2") != 1)
 			{
-				continue;
+				if (i < 1)
+				{
+					continue;
+				}
 			}
 		}
 		else
 		{
-			if (layer->properties.Get("Floor_2") != 0)
+			if (i > 0)
 			{
 				continue;
 			}
 		}
+
+		if (layer->properties.Get("NoDraw") != 0 && navigation_map == false)
+			continue;
+		if (layer->properties.Get("NoDraw_2") != 0 && navigation_map_2 == false)
+			continue;
 
 		int marge = Checkpositions();
 		for(int y = pos_camera.y; y < pos_camera.y + win_size.y + marge; ++y)
@@ -154,7 +159,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 
 void j1Map::EditCost(int x, int y, int value)
 {
-	MapLayer* meta_layer = data.layers[1];
+	MapLayer* meta_layer = data.layers[data.layers.size() - 1]; //lAST LAYER
 	meta_layer->data[y*meta_layer->width + x] = value;
 }
 
@@ -379,8 +384,7 @@ bool j1Map::CleanUp()
 	data.layers.clear();
 
 	// Remove all DirectionMap
-	directMap.clear();
-	doors.clear();
+	teleports.clear();
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -474,12 +478,12 @@ bool j1Map::Load(const char* file_name, uint id_map)
 	//Create DirectionMap
 	for (pugi::xml_node temp = map_file.child("map").child("directionLevels").child("map"); temp != NULL; temp = temp.next_sibling())
 	{
-		DirectionMap dir_map;
+		/*DirectionMap dir_map;
 		dir_map.name = temp.attribute("name").as_string("");
 		dir_map.id_tile = temp.attribute("id_tile").as_int(0);
 		dir_map.id_map = temp.attribute("id_map").as_int(0);
 		dir_map.position = iPoint(temp.attribute("pos_x").as_int(0), temp.attribute("pos_y").as_int(0));
-		directMap.push_back(dir_map);
+		directMap.push_back(dir_map);*/
 	}
 
 	//Create all DynObjects from Tiled
@@ -501,7 +505,7 @@ void j1Map::DynObjectFromTiled(uint id_map)
 	int orange = data.tilesets[1]->firstgid + 6;
 	int purple = data.tilesets[1]->firstgid + 7;
 
-	MapLayer* temp = data.layers[1];
+	MapLayer* temp = data.layers[data.layers.size() - 1];
 
 	for (int y = 0; y < data.height; ++y)
 	{
@@ -540,22 +544,22 @@ void j1Map::DynObjectFromTiled(uint id_map)
 			if (tile_id == blue)
 			{
 				blue = -1;
-				doors.push_back(App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP));
+				App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP);
 			}
 			if (tile_id == green)
 			{
 				green = -1;
-				doors.push_back(App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP));
+				App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP);
 			}
 			if (tile_id == purple)
 			{
 				purple = -1;
-				doors.push_back(App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP));
+				App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP);
 			}
 			if (tile_id == orange)
 			{
 				orange = -1;
-				doors.push_back(App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP));
+				App->collision->AddCollider(SDL_Rect{ positionObject.x, positionObject.y, 15, 15 }, COLLIDER_SWITCH_MAP);
 			}
 		}
 	}

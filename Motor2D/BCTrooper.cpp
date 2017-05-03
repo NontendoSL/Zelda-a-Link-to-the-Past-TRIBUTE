@@ -135,7 +135,7 @@ void BCTrooper::Idle()
 	}
 	else
 	{
-		if (Change_State.ReadSec() > 1)
+		if (Change_State.ReadSec() > 2)
 		{
 			if (ChangeRadius(50, true))
 			{
@@ -155,7 +155,7 @@ void BCTrooper::Walk(float dt)
 	}
 	else
 	{
-		if (Change_State.ReadSec() > 1)
+		if (Change_State.ReadSec() > 5)
 		{
 			if (ChangeRadius(10, false))
 			{

@@ -76,7 +76,7 @@ private:
 	void LoadUi();
 
 public:
-	GameState gamestate;
+	GameState gamestate = INGAME;
 
 	//Combat or not
 	bool combat = false;
