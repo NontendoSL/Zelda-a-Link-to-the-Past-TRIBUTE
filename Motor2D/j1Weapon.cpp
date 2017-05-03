@@ -205,7 +205,21 @@ void Bow::Shoot(iPoint pos, Direction dir, float charge)
 {
 	float speed = SetSpeed(charge);
 	Arrow* arrow = new Arrow(pos, dir, this, speed);
-	arrow->collision = App->collision->AddCollider({ arrow->position.x, arrow->position.y, 4, 4 }, COLLIDER_ARROW, nullptr, arrow);
+
+	if (dir == UP || dir == DOWN)
+	{
+		arrow->offset_x = 3;
+		arrow->offset_y = 7;
+		arrow->collision = App->collision->AddCollider({ arrow->position.x - arrow->offset_x, arrow->position.y - arrow->offset_y, 7, 15 }, COLLIDER_ARROW, nullptr, arrow);
+	}
+
+	else if (dir == LEFT || dir == RIGHT)
+	{
+		arrow->offset_x = 7;
+		arrow->offset_y = 3;
+		arrow->collision = App->collision->AddCollider({ arrow->position.x - arrow->offset_x, arrow->position.y - arrow->offset_y, 15, 7 }, COLLIDER_ARROW, nullptr, arrow);
+	}
+	
 	arrows.push_back(arrow);
 }
 
@@ -234,7 +248,7 @@ void Arrow::Update(float dt)
 	if (step == AIR)
 	{
 		KeepGoing(dt);
-		collision->SetPos(position.x, position.y);
+		collision->SetPos(position.x - offset_x, position.y - offset_y);
 		//Set collision of the collider.
 	}
 
@@ -255,6 +269,7 @@ void Arrow::Draw()
 	switch (step)
 	{
 	case AIR:
+		App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW); //id 2 = hookshot animation xml
 		//App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW);
 		//App->render->DrawQuad({collision->rect.x, collision->rect.y, 4, 4}, 255, 255, 255);
 		break;

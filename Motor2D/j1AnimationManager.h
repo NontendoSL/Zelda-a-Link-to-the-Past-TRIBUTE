@@ -19,6 +19,7 @@ enum AnimationElement
 	//WEAPONS ---------
 	HOOKSHOT,
 	BOMB,
+	ARROW,
 
 	//VICTORY ROAD -------------
 	GEODUDE,

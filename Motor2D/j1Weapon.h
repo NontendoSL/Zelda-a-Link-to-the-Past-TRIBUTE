@@ -102,6 +102,8 @@ public:
 	void Die();
 
 public:
+	int offset_x = 0;
+	int offset_y = 0;
 	iPoint position;
 	Direction direction = NO_DIRECTION;
 	float arrow_speed = 0;

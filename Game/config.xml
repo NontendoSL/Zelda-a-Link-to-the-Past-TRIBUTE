@@ -38,19 +38,20 @@
     <!--WEAPONS-->
     <!--id= 2--> <file file="animation/Hookshot.xml"/>
     <!--id= 3--> <file file="animation/Bomb.xml"/>
+    <!--id= 4--> <file file="animation/Arrow.xml"/>
     
     <!--VICTORY ROAD-->
-    <!--id= 4--> <file file="animation/GeodudeAnimations.xml"/>
-    <!--id= 5--> <file file="animation/GolemAnimations.xml"/>
-    <!--id= 6--> <file file="animation/SudowoodoAnimations.xml"/>
+    <!--id= 5--> <file file="animation/GeodudeAnimations.xml"/>
+    <!--id= 6--> <file file="animation/GolemAnimations.xml"/>
+    <!--id= 7--> <file file="animation/SudowoodoAnimations.xml"/>
     
     <!--POKEMON COMBATS-->
-    <!--id= 7--> <file file="animation/BlazikenAnimations.xml"/>
-    <!--id= 8--> <file file="animation/SceptileAnimations.xml"/>
-    <!--id= 9--> <file file="animation/SwampertAnimations.xml"/>
+    <!--id= 8--> <file file="animation/BlazikenAnimations.xml"/>
+    <!--id= 9--> <file file="animation/SceptileAnimations.xml"/>
+    <!--id= 10--> <file file="animation/SwampertAnimations.xml"/>
 
     <!--PARTICLES-->
-	  <!--id= 10--> <file file="animation/AnimationsAndEffects.xml"/>
+	  <!--id= 11--> <file file="animation/AnimationsAndEffects.xml"/>
 	</animation>
   
 	<window>
