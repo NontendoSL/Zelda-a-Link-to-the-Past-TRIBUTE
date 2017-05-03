@@ -9,7 +9,9 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
+class j1GuiEntity;
 struct Collider;
+enum GuiAction;
 
 class j1Module
 {
@@ -73,6 +75,8 @@ public:
 	}
 
 	virtual void OnCollision(Collider*, Collider*) {}
+
+	virtual void OnGui(j1GuiEntity* element, GuiAction event) {}
 
 public:
 

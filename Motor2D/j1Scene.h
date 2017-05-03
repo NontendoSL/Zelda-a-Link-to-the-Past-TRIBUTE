@@ -15,6 +15,7 @@ class Image;
 class Text;
 class Button;
 class Dialogue;
+class ZeldaHud;
 class ZeldaMenu;
 class PokemonCombatHud;
 
@@ -24,8 +25,6 @@ class Soldier;
 class DynamicObjects;
 class PokeTrainer;
 enum WeaponType;
-
-
 
 class j1Scene : public j1Module
 {
@@ -54,15 +53,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//OnGui buttons
+	void OnGui(j1GuiEntity* element, GuiAction event);
+
 	//Load Maps
 	bool Load_new_map(int n);
-
 	//Load CombatMaps
 	bool Load_Combat_map(int n);
 
 	int IdMap();
-
-	void AssignValues(Image* assigner,uint var);
 
 	void SwitchMenu(bool direction);
 
@@ -77,20 +76,14 @@ private:
 	void LoadUi();
 
 public:
-
 	GameState gamestate;
 
 	//Combat or not
 	bool combat = false;
 	//Ingame
-	ZeldaMenu* hud = nullptr;
+	ZeldaHud* hud = nullptr;
 	ZeldaMenu* start_menu = nullptr;
 	PokemonCombatHud* pokecombat = nullptr;
-	Image* force = nullptr;
-	Image* gems = nullptr;
-	Image* bombs = nullptr;
-	Image* arrows = nullptr;
-	Image* hp = nullptr;
 	Player* player = nullptr;
 	PokeTrainer* poketrainer = nullptr;
 
@@ -103,8 +96,6 @@ public:
 	bool inventory = false;
 	int switch_map = 0;
 	int id_map = 0;
-
-
 
 	bool notrepeatmusic;
 

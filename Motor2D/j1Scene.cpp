@@ -90,13 +90,8 @@ bool j1Scene::Update(float dt)
 
 		if (ingame == true)
 		{
-			//TODO AssignValues to only interact when picking/droping items
-			AssignValues(gems, player->gems);
-			AssignValues(bombs, player->bombs);
-			AssignValues(arrows, player->arrows);
 
 			player->ShowHearts();
-			force->Hitbox.w = player->charge;
 
 			if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 			{
@@ -169,85 +164,45 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void j1Scene::AssignValues(Image* assigner, uint var)
+void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 {
-	int number = var % 10, i= assigner->elements.size()-1;
-	assigner->elements[i--]->AssignNumber(number);
-	number = var / 10;
-	number %= 10;
-	assigner->elements[i--]->AssignNumber(number);
-	if (assigner->elements.size() > 2)
+	if (element->identifier == "hookshot")
 	{
-		number = var/ 100;
-		assigner->elements[i]->AssignNumber(number);
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			start_menu->Equip("hookshot");
+		}
 	}
+	if (element->identifier == "bomb")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			start_menu->Equip("bomb");
+		}
+	}
+
 }
 
 void j1Scene::LoadUi()
 {
 	//UI
-	hud = App->gui->CreateZeldaMenu();
-	Image* Sprite = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 }, "charge");
-	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 }, "force");
-	Sprite->elements.push_back(force);
-	hud->AddElement(Sprite);//[0] adding charge bar
-	Sprite = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 }, "item");
-	Sprite->elements.push_back(App->gui->CreateImage({ 279,257,16,16 }, { 3,3 }, "item_picked"));
-	hud->AddElement(Sprite);
-	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 }, "gems"); //Gems and value
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }));
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }));
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }));
-	hud->AddElement(gems); 
-	//adding gems [2]
-	bombs= App->gui->CreateImage({ 100,15,8,8 }, { 100,15 }, "bombs");
-	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
-	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-	hud->AddElement(bombs);
-	// adding bombs
-	arrows= App->gui->CreateImage({ 121,15,14,8 }, { 121,15 },"arrows");
-	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }));
-	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }));
-	hud->AddElement(arrows);
-	//adding arrows
-	hp = App->gui->CreateImage({ 178,15,44,7 }, { 178,15 }, "life");
-	hud->AddElement(hp);
-	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -21,9 }, "hp1"));
-	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -12,9 }, "hp2")); //heart containers
-	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -3,9 }, "hp3"));
-	
-	hud->position = { 0,0 };
-	hud->identifier = "hud";
+	hud = App->gui->CreateZeldaHud();
 	//Start Menu
 	start_menu = App->gui->CreateZeldaMenu();
-	Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg");
-	//Button* hotfix = App->gui->CreateButton({ 271,268,32,32 }, { 24,21 - 224 }, { 304,268 }, { 337,268 }, false, "bow");
-	//hotfix->selected = true;
-	//start_menu->AddElement(hotfix);
-	start_menu->Hitbox = Sprite->Hitbox;
-	start_menu->AddElement(Sprite);
-
-	start_menu->AddElement(App->gui->CreateImage({ 370,372,32,32 }, { 18,154 - 224 }, "item_info"));
-	start_menu->AddElement(App->gui->CreateText(PIXEL, "SELECT AN ITEM", 100, { 19,193 - 224 }, 10));
-	start_menu->AddElement(App->gui->CreateImage({ 279,256,16,16 }, { 200,23 - 224 }, "item_picked"));
-	start_menu->AddElement(App->gui->CreateText(PIXEL, "   PICK ITEM", 100, { 184,44 - 224 }, 10));
-	start_menu->AddElement(App->gui->CreateImage({ 450,273,64,48 }, { 176,77 - 224 }, "pendants"));
-	Text* line = App->gui->CreateText(PIXELMORE, "The great warriors charge the bow to shoot further.", 22, { 59,155 - 224 }, 20);
-	start_menu->AddElement(line);
-	line->Visible(false);
-	line = App->gui->CreateText(PIXELMORE, "The more power you apply to it, more distance you will reach.", 22, { 59,155 - 224 }, 20);
-	line->Visible(false);
-	start_menu->AddElement(line);
-	line = App->gui->CreateText(PIXELMORE, "Use this bombs near big rocks to destroy them", 22, { 59,155 - 224 }, 20);
-	line->Visible(false);
-	start_menu->AddElement(line);
-	start_menu->position = { 0,-224 };
-	start_menu->OpenClose(false);
-	start_menu->identifier = "start_menu";
-
 	float win_marge = (App->win->GetWidth() - start_menu->Hitbox.w*App->win->GetScale()) / 4;
 	hud->Move(true, win_marge);
 	start_menu->Move(true, win_marge);
+	App->gui->SetGui(ZELDA_HUD);
 	//pokecombat
 	//pokecombat = App->gui->CreatePokemonCombatHud(450,100,300);
 }
@@ -258,33 +213,36 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 	{
 		if (start_menu->position.y < 0)
 		{
-			start_menu->OpenClose(true);
-			start_menu->ShowItemInfo();
+			//start_menu->OpenClose(true);
 			start_menu->Move(false, 6.0);
-			hud->Move(false, 6.0);
+			hud->Move(false, 6.0, true);
 		}
 		else
 		{
-			hud->OpenClose(false);
+			//hud->OpenClose(false);
+			start_menu->position.y = 0;
 			switch_menu = false;
 			inventory = true;
 			gamestate = INMENU;
+			App->gui->SetGui(ZELDA_MENU);
+			start_menu->ShowItemInfo();
 		}
 	}
 	else
 	{
 		if (hud->position.y > 0)
 		{
-			hud->OpenClose(true);
+			//hud->OpenClose(true);
 			start_menu->Move(false, -6.0);
-			hud->Move(false, -6.0);
+			hud->Move(false, -6.0, true);
 		}
 		else
 		{
-			start_menu->OpenClose(false);
+			//start_menu->OpenClose(false);
 			switch_menu = false;
 			inventory = false;
 			gamestate = INGAME;
+			App->gui->SetGui(ZELDA_HUD);
 		}
 	}
 
@@ -384,7 +342,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		player->score = 0;
 		player->gems = 0;
-		hud->OpenClose(true);
+		//hud->OpenClose(true);
 	}
 	/*//SET WEAPONS WHEN MAP CHANGES
 	if (weapon_equiped == BOMB)
@@ -514,8 +472,8 @@ bool j1Scene::Load_Combat_map(int n)
 	App->render->camera.y = 0;
 
 
-	start_menu->OpenClose(false);
-	hud->OpenClose(false);
+	//start_menu->OpenClose(false);
+	//hud->OpenClose(false);
 
 	float win_marge = (App->win->GetWidth() - start_menu->Hitbox.w*App->win->GetScale()) / 4;
 

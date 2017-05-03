@@ -371,7 +371,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						if (bombmanager == nullptr)
 						{
 							bombmanager = App->entity_elements->CreateBombContainer();
-							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb"));
+							App->scene->start_menu->PickItem("bomb");
 							score += 75;
 							bombs += 4;
 						}
@@ -384,7 +384,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						if (hook == nullptr)
 						{
 							hook = App->entity_elements->CreateHookshot();
-							App->scene->start_menu->AddElement(App->gui->CreateButton({ 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot"));
+							App->scene->start_menu->PickItem("hookshot");
 							score += 75;
 						}
 					}
@@ -1408,10 +1408,10 @@ void Player::GetfloorLvl(iPoint pos)
 
 void Player::AddHeartContainer()
 {
-	iPoint last_heart_pos = App->scene->hp->elements.back()->position - App->scene->hp->position;
+	iPoint last_heart_pos = App->scene->hud->hp->elements.back()->position - App->scene->hud->hp->position;
 	Image* newhp = App->gui->CreateImage({ 177,24,7,7 }, { last_heart_pos.x + 9,last_heart_pos.y }, "hp_add");
-	App->scene->hp->elements.push_back(newhp);
-	newhp->parent = App->scene->hp;
+	App->scene->hud->hp->elements.push_back(newhp);
+	newhp->parent = App->scene->hud->hp;
 	newhp->CalculateDiferential();
 	hp_hearts.x += 2;
 	hp_hearts.y = hp_hearts.x;
@@ -1420,21 +1420,21 @@ void Player::AddHeartContainer()
 void Player::ShowHearts()
 {
 	int addheart = hp_hearts.y;
-	for (int i = 0; i < App->scene->hp->elements.size(); i++)
+	for (int i = 0; i < App->scene->hud->hp->elements.size(); i++)
 	{
 		if (addheart - 2 >= 0)
 		{
-			App->scene->hp->elements[i]->Hitbox.x = 161;
+			App->scene->hud->hp->elements[i]->Hitbox.x = 161;
 			addheart -= 2;
 		}
 		else if (addheart - 1 >= 0)
 		{
-			App->scene->hp->elements[i]->Hitbox.x = 169;
+			App->scene->hud->hp->elements[i]->Hitbox.x = 169;
 			addheart--;
 		}
 		else if (addheart == 0)
 		{
-			App->scene->hp->elements[i]->Hitbox.x = 177;
+			App->scene->hud->hp->elements[i]->Hitbox.x = 177;
 		}
 	}
 }

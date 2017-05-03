@@ -42,7 +42,7 @@ bool j1SceneIntro::Awake()
 bool j1SceneIntro::Start()
 {
 	TitleScreen_letters = App->tex->Load("gui/title_screen/letters.png");
-	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.png");
+	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.png"); //TODO LOW -> .png
 	Menu_bg = App->tex->Load("gui/title_screen/menu_bg.png");
 	Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
@@ -107,7 +107,7 @@ bool j1SceneIntro::Update(float dt)
 			{
 				App->scene->ingame = true;
 				App->scene->Start();
-				main_menu->OpenClose(false);
+				//main_menu->OpenClose(false);
 				goHouse = false;
 			}
 		}
@@ -120,21 +120,8 @@ bool j1SceneIntro::Update(float dt)
 bool j1SceneIntro::PostUpdate()
 {
 	bool ret = true;
-	if (App->scene->ingame == false )
+	if (App->scene->ingame == false)
 	{
-		if (menu)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
-			{
-				App->audio->PlayFx(Menu_Cursor);
-				main_menu->Select(1);
-			}
-			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
-			{
-				App->audio->PlayFx(Menu_Cursor);
-				main_menu->Select(-1);
-			}
-		}
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
 			ret = false;
@@ -143,68 +130,74 @@ bool j1SceneIntro::PostUpdate()
 		{
 			if (menu == false)
 			{
+				LoadMainMenu();
+			}
+			//if (main_menu->id_selected == 1)
+			//{
+			//	goHouse = true;  CHANGE THIS TO ONGUI
+			//}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP)
+		{
+			if (menu == false)
+			{
 				menu = true;
 				bg_anim = 0;
 				TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
-				LoadMainMenu();
-			}
-			if (main_menu->id_selected == 1)
-			{
-				goHouse = true;
+				App->gui->SetGui(MAIN_MENU);
 			}
 		}
 	}
-	
+
 	return ret;
+}
+
+void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
+{
+	App->audio->PlayFx(Menu_Cursor);
+	if (element->identifier == "Newgame_b")
+	{
+		if (event == GuiAction::CLICK_DOWN)
+		{
+			if (menu == true)
+			{
+				((Button*)element)->click = true;
+			}
+		}
+		else if (event == GuiAction::CLICK_UP)
+		{
+			if (menu == true)
+			{
+				goHouse = true;
+				((Button*)element)->click = false;
+				return;
+			}
+		}
+	}
+	if (element->identifier == "Continue_b")
+	{
+		if (event == GuiAction::CLICK_DOWN)
+		{
+			if (menu == true)
+			{
+				((Button*)element)->click = true;
+			}
+		}
+		else if (event == GuiAction::CLICK_UP)
+		{
+			if (menu == true)
+			{
+				goHouse = true;
+				((Button*)element)->click = false;
+				return;
+			}
+		}
+	}
 }
 
 void j1SceneIntro::LoadMainMenu()
 {
-	main_menu = App->gui->CreateZeldaMenu();
-	Button* menu_button=App->gui->CreateButton({ 1,146,110,17 }, { 172 / 2,180 / 2 }, { 0,0 }, { 112,164 }, true);
-	menu_button->selected = true;
-	menu_button->anim->PushBack({ 112,146,110,17 });
-	menu_button->anim->PushBack({ 223,146,110,17 });
-	menu_button->anim->PushBack({ 334,146,110,17 });
-	menu_button->anim->PushBack({ 1,164,110,17 });
-	menu_button->anim->PushBack({ 334,146,110,17 });
-	menu_button->anim->PushBack({ 223,146,110,17 });
-	menu_button->anim->speed = 0.25f;
-	menu_button->resize = false;
-	main_menu->AddElement(menu_button);
-	menu_button= App->gui->CreateButton({ 1,182,125,17 }, { 172 / 2,210 / 2 }, { 0,0 }, { 127,200 }, true);
-	menu_button->anim->PushBack({ 127,182,125,17 });
-	menu_button->anim->PushBack({ 253,182,125,17 });
-	menu_button->anim->PushBack({ 379,182,125,17 });
-	menu_button->anim->PushBack({ 1,200,125,17 });
-	menu_button->anim->PushBack({ 379,182,125,17 });
-	menu_button->anim->PushBack({ 253,182,125,17 });
-	menu_button->anim->speed = 0.25f;
-	menu_button->resize = false;
-	main_menu->AddElement(menu_button);
-	menu_button = App->gui->CreateButton({ 1,218,110,17 }, { 172 / 2, 240/ 2 }, { 0,0 }, { 112,236 }, true);
-	menu_button->anim->PushBack({ 112,218,110,17 });
-	menu_button->anim->PushBack({ 223,218,110,17 });
-	menu_button->anim->PushBack({ 334,218,110,17 });
-	menu_button->anim->PushBack({ 1,236,110,17 });
-	menu_button->anim->PushBack({ 334,218,110,17 });
-	menu_button->anim->PushBack({ 223,218,110,17 });
-	menu_button->anim->speed = 0.25f;
-	menu_button->resize = false;
-	main_menu->AddElement(menu_button);
-}
-
-void j1SceneIntro::LoadNewMap(int id)
-{
-	//Load the correct map accord to the id passed
-	switch (id)
-	{
-	case 1: //ID = 1 -> Set the first map of the game (Link's house)
-		goHouse = true;
-		break;
-	default:
-		break;
-	}
+	main_menu = App->gui->CreateMainMenu();
 }
 
 void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
@@ -213,29 +206,6 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 	{
 		switch (action)
 		{
-		case MUP:
-			if (menu == true)
-			{
-				if (state == E_DOWN)
-				{
-					App->audio->PlayFx(Menu_Cursor);
-					main_menu->Select(-1);
-				}
-
-			}
-			break;
-
-		case MDOWN:
-			if (menu == true)
-			{
-				if (state == E_DOWN)
-				{
-					App->audio->PlayFx(Menu_Cursor);
-					main_menu->Select(1);
-				}
-			}
-			break;
-
 		case BUTTON_START:
 			if (state == E_DOWN)
 			{
@@ -243,18 +213,13 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 				{
 					menu = true;
 					bg_anim = 0;
-					TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
-					LoadMainMenu();
-				}
-			}
-			break;
+					if (TitleScreen_letters == nullptr)
+					{
+						TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
+						LoadMainMenu();
+						App->gui->SetGui(MAIN_MENU);
+					}
 
-		case BUTTON_A:
-			if (menu == true)
-			{
-				if (main_menu->id_selected == 1)
-				{
-					goHouse = true;
 				}
 			}
 			break;

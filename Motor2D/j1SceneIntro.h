@@ -12,7 +12,7 @@ class Image;
 class Text;
 class Button;
 class Dialogue;
-class ZeldaMenu;
+class MainMenu;
 class Player;
 class Item;
 class Soldier;
@@ -48,9 +48,11 @@ public:
 
 	void LoadMainMenu();
 
-	void LoadNewMap(int id);
+	//void LoadNewMap(int id);
 
 	void OnInputCallback(INPUTEVENT, EVENTSTATE);
+
+	void OnGui(j1GuiEntity* element, GuiAction event);
 
 private:
 	//Start screen
@@ -64,7 +66,8 @@ private:
 	bool goHouse = false;
 	bool fade;
 	uint Menu_Cursor;
-	ZeldaMenu*		main_menu = nullptr;
+public:
+	MainMenu*		main_menu = nullptr;
 };
 
 #endif
