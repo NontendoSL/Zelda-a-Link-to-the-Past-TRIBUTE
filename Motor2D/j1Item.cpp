@@ -39,7 +39,7 @@ bool Item::Start()
 	int width = 0;
 	int	height = 0;
 
-	//ITEM MANAGEMENT (1 -> RUPEE // 2 -> BOMB // 3-> HOOKSHOT // 4-> HEART)
+	//ITEM MANAGEMENT (1 -> RUPEE // 2 -> BOMB // 3-> HOOKSHOT // 4-> HEART // 5->BOW)
 	if (id == 1)
 	{
 		width = 8;
@@ -59,6 +59,11 @@ bool Item::Start()
 	{
 		width = 14;
 		height = 13;
+	}
+	else if (id == 5)
+	{
+		width = 7;
+		height = 16;
 	}
 	delay.Start();
 	collision = App->collision->AddCollider({ position.x, position.y, width, height }, COLLIDER_ITEM, this);

@@ -57,10 +57,6 @@ bool Player::Start()
 {
 	bool ret = true;
 
-	//TEST BOW ------------
-	bow = App->entity_elements->CreateBow();
-	// ------------------
-
 	//changeResolution = false;
 	attacker = false;
 
@@ -157,7 +153,7 @@ bool Player::Update(float dt)
 			charge++;
 		}
 
-		else if (App->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
+		else if (App->input->GetKey(SDL_SCANCODE_G) == KEY_UP && charge >= 17)
 		{
 			bow->Shoot(position, direction, charge);
 		}
@@ -385,6 +381,16 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						{
 							hook = App->entity_elements->CreateHookshot();
 							App->scene->start_menu->PickItem("hookshot");
+							score += 75;
+						}
+					}
+					if (c2->callback->name == "bow")
+					{
+						//First time picking a hookshot
+						if (bow == nullptr)
+						{
+							bow = App->entity_elements->CreateBow();
+							App->scene->start_menu->PickItem("bow");
 							score += 75;
 						}
 					}
