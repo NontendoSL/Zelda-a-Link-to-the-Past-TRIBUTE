@@ -140,6 +140,7 @@ bool Player::Update(float dt)
 				charge--;
 			}
 		}
+
 		if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && bombs > 0)
 		{
 			bombmanager->Drop(position);
@@ -147,21 +148,22 @@ bool Player::Update(float dt)
 			App->audio->PlayFx(6);
 		}
 
-		//BOW TEST ------------
-		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT  && charge <= 34)
+		if (equiped_item != nullptr && equiped_item == bow)
 		{
-			charge++;
+ 			if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT) && charge <= 34)
+			{
+				charge++;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && charge >= 17)
+			{
+				bow->Shoot(position, direction, charge);
+			}
+			else if (charge > 0)
+			{
+				charge--;
+			}
 		}
 
-		else if (App->input->GetKey(SDL_SCANCODE_G) == KEY_UP && charge >= 17)
-		{
-			bow->Shoot(position, direction, charge);
-		}
-		else if (charge > 0)
-		{
-			charge--;
-		}
-		// ----------------------------
 
 
 		// --------------------

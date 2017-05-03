@@ -763,7 +763,7 @@ void ZeldaMenu::Equip(const char* item)
 	if (item == "bow")
 	{
 		item_equiped->Hitbox.y = 276;
-		App->scene->player->Equip((Weapon*)App->scene->player->hook);
+		App->scene->player->Equip((Weapon*)App->scene->player->bow);
 		item_eq_name->Write("BOW ARROWS");
 	}
 	if (item == "hookshot")
