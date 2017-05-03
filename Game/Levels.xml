@@ -5,7 +5,7 @@
     <atlas file="textures/LinkWalkingSprites.png" />
     <hit file="textures/hit.png" />
     <day-night file="gui/test.png" />
-    <stats hp="74" attack="10" speed="60" pos_x="100" pos_y="90" />
+    <stats hp="74" attack="10" speed="50" pos_x="100" pos_y="90" />
   </Link>
 
   <!--LOAD ITEMS INFO-->
@@ -56,22 +56,10 @@
 
     <map n="2" file="Link_OverWorld.tmx">
       <camera follow="true"/>
-      <Link pos_x="184" pos_y="265" />
-      <soldier num="22">
+      <Link pos_x="704" pos_y="1288" />
+      <soldier num="10">
 
         <!-- Static soldier -->
-        <soldier id="1" pos_x="169" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="193" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="217" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="241" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="265" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="289" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="313" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="337" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="361" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="385" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="409" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="433" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
         <soldier id="1" pos_x="4" pos_y="431" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
         <soldier id="1" pos_x="4" pos_y="409" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
         <soldier id="1" pos_x="220" pos_y="519" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />

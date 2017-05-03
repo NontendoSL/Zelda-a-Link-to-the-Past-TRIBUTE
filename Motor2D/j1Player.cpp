@@ -423,7 +423,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					iPoint temp_meta = App->map->WorldToMap(position.x, position.y);
 					MapLayer* meta_ = App->map->data.layers[1];
 					int id_meta = meta_->Get(temp_meta.x, temp_meta.y);
-					for (int i = 0; i < App->map->directMap.size(); i++)
+					/*for (int i = 0; i < App->map->directMap.size(); i++)
 					{
 						if (App->map->directMap[i].id_tile == id_meta)
 						{
@@ -431,7 +431,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							App->scene->switch_map = App->map->directMap[i].id_map;
 							App->scene->newPosition = App->map->directMap[i].position;
 						}
-					}
+					}*/
 				}
 			}
 
@@ -1409,7 +1409,7 @@ void Player::GetfloorLvl(iPoint pos)
 void Player::AddHeartContainer()
 {
 	iPoint last_heart_pos = App->scene->hud->hp->elements.back()->position - App->scene->hud->hp->position;
-	Image* newhp = App->gui->CreateImage({ 177,24,7,7 }, { last_heart_pos.x + 9,last_heart_pos.y }, "hp_add");
+	Image* newhp = App->gui->CreateImage({ 177,24,7,7 }, { last_heart_pos.x + 9,last_heart_pos.y }, "hp_add", ZELDA_HUD);
 	App->scene->hud->hp->elements.push_back(newhp);
 	newhp->parent = App->scene->hud->hp;
 	newhp->CalculateDiferential();
