@@ -54,14 +54,14 @@ void j1Map::Draw(bool floor_2)
 
 		if (floor_2)
 		{
-			if (layer->name != "Floor 2" && i < 1)
+			if (layer->properties.Get("Floor_2") == 0)
 			{
 				continue;
 			}
 		}
 		else
 		{
-			if (data.layers[i]->name == "Floor 2")
+			if (layer->properties.Get("Floor_2") != 0)
 			{
 				continue;
 			}
@@ -169,7 +169,7 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 		iPoint ptemp_2 = WorldToMap(x + width*0.5, y); //central position
 		iPoint ptemp_3 = WorldToMap(x + width, y); //rigth position
 
-		MapLayer* meta_layer = data.layers[1];
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -197,7 +197,7 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 		iPoint ptemp_2 = WorldToMap(x, y + height*0.5); //central position
 		iPoint ptemp_3 = WorldToMap(x, y + height); //down position
 
-		MapLayer* meta_layer = data.layers[1];
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -224,7 +224,7 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 		iPoint ptemp_2 = WorldToMap(x, y + width*0.5); //central position
 		iPoint ptemp_3 = WorldToMap(x, y + width); //down position
 
-		MapLayer* meta_layer = data.layers[1];
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -251,7 +251,7 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 		iPoint ptemp_2 = WorldToMap(x + width*0.5, y); //central position
 		iPoint ptemp_3 = WorldToMap(x + width, y); //down position
 
-		MapLayer* meta_layer = data.layers[1];
+		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
