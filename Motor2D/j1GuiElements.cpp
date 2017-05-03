@@ -635,6 +635,7 @@ ZeldaMenu::ZeldaMenu()
 	//line = App->gui->CreateText(PIXELMORE, "Use this bombs near big rocks to destroy them", 22, { 59,155 - 224 }, 20);
 
 	//buttons items
+	items.push_back(new ItemMenu(App->gui->CreateButton(App->scene, { 271,268,32,32 }, { 24,21 - 224 }, { 304,268 }, { 337,268 }, false, "bow", ZELDA_MENU)));
 	items.push_back(new ItemMenu(App->gui->CreateButton(App->scene, { 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot", ZELDA_MENU)));
 	items.push_back(new ItemMenu(App->gui->CreateButton(App->scene, { 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb", ZELDA_MENU)));
 

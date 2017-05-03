@@ -173,6 +173,18 @@ bool j1Scene::CleanUp()
 
 void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 {
+	if (element->identifier == "bow")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			start_menu->Equip("bow");
+		}
+	}
 	if (element->identifier == "hookshot")
 	{
 		if (event == CLICK_DOWN)
@@ -197,6 +209,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			start_menu->Equip("bomb");
 		}
 	}
+
 
 }
 
