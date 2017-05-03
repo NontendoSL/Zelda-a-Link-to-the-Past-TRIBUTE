@@ -54,7 +54,7 @@
       <enemies num="0" />
     </map>
 
-    <map n="2" file="LinkHouseOutdoor.tmx">
+    <map n="2" file="Link_OverWorld.tmx">
       <camera follow="true"/>
       <Link pos_x="184" pos_y="265" />
       <soldier num="22">
