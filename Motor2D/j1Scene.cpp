@@ -408,7 +408,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			if (n == 1 && switch_map == 0 || switch_map == 7 || pokecombat!=nullptr && n==1)
+			if (n == 1 && switch_map == 0 || switch_map == 7 || switch_map == 8 || pokecombat!=nullptr && n==1)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
@@ -455,8 +455,12 @@ bool j1Scene::Load_new_map(int n)
 			}
 
 			//BCTrooper
-			//pugi::xml_node temp_bctrooper = temp.child("BCTrooper");
-			//App->entity_elements->CreateBCTrooper(temp_bctrooper);
+			if (temp.child("BCTrooper"))
+			{
+				pugi::xml_node temp_bctrooper = temp.child("BCTrooper");
+				App->entity_elements->CreateBCTrooper(temp_bctrooper);
+			}
+
 
 			//Camera position
 			int scale = App->win->GetScale();
