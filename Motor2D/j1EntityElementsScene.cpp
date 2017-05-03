@@ -103,8 +103,10 @@ bool j1EntityElementScene::PostUpdate()
 			item._Ptr->_Myval->Draw();
 		}
 	}
-	//Draw Floor 2 TODO ELLIOT
+
+	//Draw Floor 2-----------------------
 	App->map->Draw(true);
+
 	return true;
 }
 
