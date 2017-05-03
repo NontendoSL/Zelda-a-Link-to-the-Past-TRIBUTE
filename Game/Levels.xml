@@ -82,12 +82,22 @@
       <switch blue="1" yellow="3" />
     </map>
 
-    <map n="3" file="Map_testing.tmx">
+    <map n="3" file="Uncle.tmx">
       <camera follow="true"/>
-      <BCTrooper pos_x="169" pos_y="25" hp="10" attack="10" dir="down" file="textures/Soldiers.png" />
+    </map>
+
+    <map n="4" file="HyruleInterior.tmx">
+      <Link pos_x="488" pos_y="896"/>
+      <camera follow="true"/>
+    </map>
+
+    <map n="5" file="ZeldaRoom.tmx">
+      <Link pos_x="150" pos_y="150"/>
+      <camera follow="true"/>
+      <BCTrooper pos_x="169" pos_y="25" hp="10" attack="10" dir="down" file="" />
     </map>
     
-    <map n="4" file="Victory_Road.tmx">
+    <map n="7" file="Victory_Road.tmx">
       <camera follow="true"/>
       <dynobjects>
         <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id ="4"/>
@@ -118,7 +128,7 @@
       </pokemons>
     </map>
     
-    <map n="5" file="Victory_Road2.tmx">
+    <map n="8" file="Victory_Road2.tmx">
       <camera follow="true"/>
       <dynobjects>
         <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id ="4"/>
@@ -142,21 +152,10 @@
       </pokemons>
     </map>
 
-    <map n="6" file="Combat_Map.tmx">
+    <map n="9" file="Combat_Map.tmx">
       <Link pos_x="90" pos_y="80"/>
       <camera follow="false"/>
       <trainer id="1" name="Brendan" active="true" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png"/>
-    </map>
-  
-    <map n="7" file="HyruleInterior.tmx">
-      <Link pos_x="488" pos_y="896"/>
-      <camera follow="true"/>
-    </map>
-
-    <map n="8" file="ZeldaRoom.tmx">
-      <Link pos_x="150" pos_y="150"/>
-      <camera follow="true"/>
-      <BCTrooper pos_x="169" pos_y="25" hp="10" attack="10" dir="down" file="" />
     </map>
   </maps>
 
@@ -186,20 +185,22 @@
     
     <map id="2"><!--LinkHouseOutdoor-->
       <port name="HouseLink" rect_x="696" rect_y="1256" switch_map="1" pos_x="111" pos_y="175"/>
-      <!--Castle-->
-      <!--Uncle-->
+      <port name="Castle" rect_x="440" rect_y="264" switch_map="4" pos_x="480" pos_y="896"/>
+      <port name="Uncle_water" rect_x="904" rect_y="168" switch_map="3" pos_x="384" pos_y="112"/>
+      <port name="Uncle" rect_x="648" rect_y="232" switch_map="3" pos_x="96" pos_y="320"/>
     </map> 
     
     <map id="3"><!--Uncle-->
-      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
+      <port name="LinkHouseOutdoor" rect_x="88" rect_y="424" switch_map="2" pos_x="656" pos_y="280"/>
     </map> 
     
     <map id="4"><!--Castle-->
-      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
+      <port name="LinkHouseOutdoor" rect_x="480" rect_y="960" switch_map="2" pos_x="448" pos_y="312"/>
+      <port name="ZeldaRoom" rect_x="480" rect_y="80" switch_map="5" pos_x="56" pos_y="56"/>
     </map>  
     
     <map id="5"><!--Zelda Room-->
-      <port name="" rect_x="" rect_y="" switch_map="" pos_x="" pos_y=""/>
+      <port name="Castle" rect_x="48" rect_y="8" switch_map="4" pos_x="488" pos_y="128"/>
     </map> 
     
     <map id="6"><!--Water Fall--><!--Before enter Victory Road-->
