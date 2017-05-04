@@ -46,7 +46,7 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 
 bool DynamicObjects::Start()
 {
-	if(name != "door_house_link" && name != "doorinside_Link_south" && name != "roof_Link" && name != "doorVictory_south")
+	if(name != "door")
 	{
 		if (name == "bigchest")
 		{

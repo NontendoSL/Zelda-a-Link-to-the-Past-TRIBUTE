@@ -90,6 +90,4 @@ void P_Follow::Update_position(iPoint* element)
 		pos.x = element->x - App->render->camera.x / 2;
 		pos.y = element->y - App->render->camera.y / 2;
 	}
-
-	LOG("%i - %i", element->x, element->y);
 }

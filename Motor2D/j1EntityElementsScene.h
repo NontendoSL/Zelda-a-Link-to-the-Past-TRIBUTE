@@ -68,6 +68,7 @@ public:
 	bool DeletePokemon(Pokemon* enemy);
 	bool DeleteTrainer(PokeTrainer* trainer);
 	bool DeleteBCTrooper(BCTrooper* bctrooper);
+	bool DeleteElement(std::string name);
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;

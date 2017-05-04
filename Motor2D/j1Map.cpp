@@ -509,7 +509,7 @@ void j1Map::DynObjectFromTiled(uint id_map)
 					if (tile_id >= data.tilesets[0]->firstgid + 10)
 					{
 						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[0]->firstgid - 5, id_map);
-						if (tile_id - data.tilesets[0]->firstgid - 5 == 7)
+						if (tile_id - data.tilesets[0]->firstgid - 5 == 6)
 						{
 							EditCost(x, y, 0);
 						}

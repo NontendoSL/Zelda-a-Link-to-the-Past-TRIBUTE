@@ -199,7 +199,10 @@ bool j1EntityElementScene::DeleteEnemy(Soldier* enemy)
 bool j1EntityElementScene::DeleteDynObject(DynamicObjects* dynobject)
 {
 	elementscene.remove(dynobject);
-	dynobject->collision->to_delete = true;
+	if (dynobject->collision != nullptr)
+	{
+		dynobject->collision->to_delete = true;
+	}
 	dynobject = nullptr;
 	delete dynobject;
 	return true;
@@ -248,6 +251,25 @@ bool j1EntityElementScene::DeleteBCTrooper(BCTrooper* bctrooper)
 		delete bctrooper;
 		bctrooper = nullptr;
 	}
+	return true;
+}
+
+bool j1EntityElementScene::DeleteElement(std::string name)
+{
+	std::list<SceneElement*>::iterator item = elementscene.begin();
+	while (item != elementscene.end())
+	{
+		if (item._Ptr->_Myval->name == name)
+		{
+			if (item._Ptr->_Myval->type == DYNOBJECT)
+			{
+				DeleteDynObject((DynamicObjects*)item._Ptr->_Myval);
+			}
+		}
+		item++;
+	}
+
+
 	return true;
 }
 
@@ -352,12 +374,7 @@ DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint 
 		{
 			element->Awake(config, id, pos);
 			element->Start();
-			if (id == 1 || id == 6 || id == 7 || id == 8)
-			{
-				elementscene.push_front(element);
-			}
-			else
-				elementscene.push_back(element);
+			elementscene.push_back(element);
 			LOG("Created!!");
 			stop_rearch = true;
 		}

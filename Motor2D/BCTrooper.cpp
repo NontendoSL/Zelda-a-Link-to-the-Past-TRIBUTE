@@ -2,6 +2,7 @@
 #include "j1Scene.h"
 #include "ParticleManager.h"
 #include "j1Collision.h"
+#include "j1Map.h"
 #include "j1Player.h"
 
 BCTrooper::BCTrooper() : NPC()
@@ -289,6 +290,10 @@ void BCTrooper::Hit()
 
 void BCTrooper::Death()
 {
+	//40 - 13 // 41 - 13
+	App->map->EditCost(40, 13, 0);
+	App->map->EditCost(41, 13, 0);
+	App->entity_elements->DeleteElement("door");
 }
 
 bool BCTrooper::ChangeRadius_degrade(int radius_to_stop, bool incremenet)
@@ -363,8 +368,15 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (stunned == false)
 			{
-				state = BC_HIT;
 				hp -= 10;
+				if (hp > 0)
+				{
+					state = BC_HIT;
+				}
+				else
+				{
+					state = BC_DYING;
+				}
 				reset_time = true;
 				stunned = true;
 			}
