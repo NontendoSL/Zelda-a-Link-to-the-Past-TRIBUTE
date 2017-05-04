@@ -23,7 +23,7 @@
 
 j1SceneIntro::j1SceneIntro() : j1Module()
 {
-	name = "scene";
+	name = "scene_intro";
 }
 
 // Destructor

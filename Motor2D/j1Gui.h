@@ -61,7 +61,7 @@ public:
 	// create img
 	Image* CreateImage(SDL_Rect rect, iPoint pos, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE, bool movable = true);
 	// create text
-	Text* CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Color color = { 255,255,255,255 }, bool addelement = true, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE);
+	Text* CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Rect  color = { 255,255,255,255 }, bool addelement = true, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE);
 	// create button
 	Button* CreateButton(j1Module* listener, SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated = false, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
 
@@ -88,11 +88,19 @@ public:
 	void MoveGroup(GuiGroup group, bool x_axis, float speed, bool move_all = false);
 
 	void SetGui(GuiGroup guistate);
+
+	pugi::xml_node j1Gui::LoadConfig(pugi::xml_document& config_file, std::string file) const;
+
+	void LoadEntities();
+
+	j1GuiEntity* GetEntity(const char* identifier);
 public:
 	int Next_id = 0;
 
 private:
 	std::string atlas_file_name;
+	std::string entities_file_name;
+	std::vector<std::string> gui_groups_name;
 	std::vector<j1GuiEntity*> entities;
 	SDL_Texture* atlas;
 	j1GuiEntity* focused;

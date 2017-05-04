@@ -9,6 +9,7 @@
 #include "j1GuiElements.h"
 #include "j1Scene.h"
 #include "j1SceneIntro.h"
+#include "j1FileSystem.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -23,10 +24,15 @@ j1Gui::~j1Gui()
 // Called before render is available
 bool j1Gui::Awake(pugi::xml_node& conf)
 {
-	LOG("Loading GUI atlas");
+	LOG("Loading GUI atlas & entities");
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	entities_file_name = conf.child("entities").attribute("file").as_string("");
+	gui_groups_name.push_back("Main_Menu");
+	gui_groups_name.push_back("Zelda_HUD");
+	gui_groups_name.push_back("Zelda_Menu");
+	gui_groups_name.push_back("PokemonCombat_HUD");
 
 	return ret;
 }
@@ -35,6 +41,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.c_str());
+	LoadEntities();
 
 	return true;
 }
@@ -219,9 +226,10 @@ Image* j1Gui::CreateImage(SDL_Rect rect, iPoint pos, std::string identifier, Gui
 	return element;
 }
 
-Text* j1Gui::CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Color color, bool addelement, std::string identifier, GuiGroup group) {
+Text* j1Gui::CreateText(FontName search, const char* string, uint length, iPoint pos, uint size, SDL_Rect color, bool addelement, std::string identifier, GuiGroup group) {
 
-	Text* element = new Text(search, string, color, length, pos, size, addelement, identifier, group);
+	SDL_Color colored = { color.x,color.y,color.w,color.h };
+	Text* element = new Text(search, string, colored, length, pos, size, addelement, identifier, group);
 	if (addelement)
 		entities.push_back(element);
 
@@ -285,6 +293,106 @@ PokemonCombatHud* j1Gui::CreatePokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 	return element;
 }
 
+// --------------------------------------------- Entities Loading
+void j1Gui::LoadEntities()
+{
+	pugi::xml_document	entities_file;
+	pugi::xml_node		entities_node;
+	pugi::xml_node		group_node;
+
+	entities_node = LoadConfig(entities_file, entities_file_name);
+	GuiGroup actual = GuiGroup::MAIN_MENU;
+	group_node = entities_node.child(gui_groups_name[actual - 1].c_str());
+
+	Button* anim_picker = nullptr;
+	Image* inside_picker = nullptr;
+	Image* inside_picker_push = nullptr;
+	std::string type;
+
+	for (pugi::xml_node temp = group_node; temp != NULL; temp = group_node)
+	{
+		for (pugi::xml_node temp_inside = temp.child("entity"); temp_inside != NULL; temp_inside = temp_inside.next_sibling())
+		{
+			type = temp_inside.attribute("type").as_string("");
+			if (type == "image")
+			{
+				inside_picker = App->gui->CreateImage({ temp_inside.attribute("rect.x").as_int(0), temp_inside.attribute("rect.y").as_int(0), temp_inside.attribute("rect.w").as_int(0), temp_inside.attribute("rect.h").as_int(0) }, { temp_inside.attribute("pos.x").as_int(0),temp_inside.attribute("pos.y").as_int(0) }, temp_inside.attribute("identifier").as_string(""), actual, temp_inside.attribute("movable").as_bool(true));
+				if (temp_inside.attribute("inside").as_bool(false))
+				{
+					for (pugi::xml_node push = temp_inside.child("entity"); push != NULL; push = push.next_sibling())
+					{
+						inside_picker_push = App->gui->CreateImage({ push.attribute("rect.x").as_int(0), push.attribute("rect.y").as_int(0), push.attribute("rect.w").as_int(0), push.attribute("rect.h").as_int(0) }, { push.attribute("pos.x").as_int(0), push.attribute("pos.y").as_int(0) }, push.attribute("identifier").as_string(""), actual, push.attribute("movable").as_bool(true));
+						inside_picker->elements.push_back(inside_picker_push);
+						if (push.attribute("inside").as_bool(false))
+						{
+							for (pugi::xml_node push2 = temp_inside.child("entity"); push2 != NULL; push2 = push2.next_sibling())
+							{
+								inside_picker_push->elements.push_back(App->gui->CreateImage({ push2.attribute("rect.x").as_int(0), push2.attribute("rect.y").as_int(0), push2.attribute("rect.w").as_int(0), push2.attribute("rect.h").as_int(0) }, { push2.attribute("pos.x").as_int(0), push2.attribute("pos.y").as_int(0) }, push2.attribute("identifier").as_string(""), actual, push2.attribute("movable").as_bool(true)));
+							}
+						}
+					}
+				}
+			}
+			if (type == "button")
+			{
+				anim_picker = App->gui->CreateButton(App->Search(temp_inside.attribute("listener").as_string("")), { temp_inside.attribute("rect.x").as_int(0), temp_inside.attribute("rect.y").as_int(0), temp_inside.attribute("rect.w").as_int(0), temp_inside.attribute("rect.h").as_int(0) }, { temp_inside.attribute("pos.x").as_int(0), temp_inside.attribute("pos.y").as_int(0) }, { temp_inside.attribute("state2.x").as_int(0) ,temp_inside.attribute("state2.y").as_int(0) }, { temp_inside.attribute("state3.x").as_int(0) ,temp_inside.attribute("state3.y").as_int(0) }, temp_inside.attribute("animated").as_bool(false), temp_inside.attribute("identifier").as_string(""), actual);
+				if (temp_inside.attribute("animated").as_bool(false))
+				{
+					for (pugi::xml_node anim = temp_inside.child("animation"); anim != NULL; anim = anim.next_sibling())
+					{
+						anim_picker->anim->PushBack({ anim.attribute("x").as_int(0), anim.attribute("y").as_int(0), anim.attribute("w").as_int(0), anim.attribute("h").as_int(0) });
+					}
+					anim_picker->anim->speed = temp_inside.attribute("anim_speed").as_double();
+				}
+			}
+			if (type == "text")
+			{
+				App->gui->CreateText((FontName)temp_inside.attribute("font").as_int(0), temp_inside.attribute("string").as_string(""), temp_inside.attribute("length").as_int(0), { temp_inside.attribute("pos.x").as_int(0), temp_inside.attribute("pos.y").as_int(0) }, temp_inside.attribute("size").as_int(0), { temp_inside.attribute("rgb.x").as_int(255), temp_inside.attribute("rgb.y").as_int(255), temp_inside.attribute("rgb.w").as_int(255), temp_inside.attribute("rgb.h").as_int(255) }, true, temp_inside.attribute("identifier").as_string(""), actual);
+			}
+		}
+		actual = (GuiGroup)(actual + 1);
+		if (actual > 4)
+		{
+			LOG("GUI ENTITIES LOADED=======================================");
+			return;
+		}
+		else
+		{
+			group_node = entities_node.child(gui_groups_name[actual - 1].c_str());
+		}
+	}
+
+
+}
+
+pugi::xml_node j1Gui::LoadConfig(pugi::xml_document& config_file, std::string file) const
+{
+	pugi::xml_node ret;
+
+	char* buf;
+	int size = App->fs->Load(file.c_str(), &buf);
+	pugi::xml_parse_result result = config_file.load_buffer(buf, size);
+	RELEASE(buf);
+
+	if (result == NULL)
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	else
+		ret = config_file.child("elements");
+
+	return ret;
+}
+
+j1GuiEntity* j1Gui::GetEntity(const char* identifier)
+{
+	for (int i = 0; i < entities.size(); i++)
+	{
+		if (entities[i]->identifier == identifier)
+		{
+			return entities[i];
+		}
+	}
+
+}
 
 
 // class Gui ---------------------------------------------------

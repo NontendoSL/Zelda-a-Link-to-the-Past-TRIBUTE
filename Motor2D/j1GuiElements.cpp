@@ -167,19 +167,17 @@ void Text::Visible(bool yes)
 
 void Text::CheckString(std::string string)
 { //SDL has already a function that does this :////////////////////////
-	iPoint volum;
-	/* int pixels;
-	App->font->CalcSize("l", pixels, volum.x, font);*/
-	App->font->CalcSize(string.c_str(), volum.x, volum.y, font);
-	if (string.size() > length)
-	{
-		//int characters = length / pixels;
-		text = string.substr(0, length + 1);
-		if (text[length] != ' ') {
-			text += "-";
-		}
-		next_line = App->gui->CreateText(font_name, string.substr(length + 1, 100).c_str(), length, { position.x,position.y + volum.y / 2 }, size, color, draw, "inside text", belong);
-	}
+  /*
+  iPoint volum;
+  App->font->CalcSize(string.c_str(), volum.x, volum.y, font);
+  if (string.size() > length)
+  {
+  text = string.substr(0, length + 1);
+  if (text[length] != ' ') {
+  text += "-";
+  }
+  next_line = App->gui->CreateText(font_name, string.substr(length + 1, 100).c_str(), length, { position.x,position.y + volum.y / 2 }, size, color, draw, "inside text", belong);
+  }*/
 }
 
 void Text::Draw()
@@ -423,37 +421,15 @@ Selector::~Selector() {}
 
 MainMenu::MainMenu()
 {
-	Button* menu_button = App->gui->CreateButton((j1Module*)App->intro, { 1,146,110,17 }, { 172 / 2,180 / 2 }, { 0,0 }, { 112,164 }, true, "Continue_b", MAIN_MENU);
-	//menu_button->selected = true;
-	menu_button->anim->PushBack({ 112,146,110,17 });
-	menu_button->anim->PushBack({ 223,146,110,17 });
-	menu_button->anim->PushBack({ 334,146,110,17 });
-	menu_button->anim->PushBack({ 1,164,110,17 });
-	menu_button->anim->PushBack({ 334,146,110,17 });
-	menu_button->anim->PushBack({ 223,146,110,17 });
-	menu_button->anim->speed = 0.25f;
-	menu_button->resize = false;
-	options.push_back(menu_button);
-	menu_button = App->gui->CreateButton((j1Module*)App->intro, { 1,182,125,17 }, { 172 / 2,210 / 2 }, { 0,0 }, { 127,200 }, true, "Newgame_b", MAIN_MENU);
-	menu_button->anim->PushBack({ 127,182,125,17 });
-	menu_button->anim->PushBack({ 253,182,125,17 });
-	menu_button->anim->PushBack({ 379,182,125,17 });
-	menu_button->anim->PushBack({ 1,200,125,17 });
-	menu_button->anim->PushBack({ 379,182,125,17 });
-	menu_button->anim->PushBack({ 253,182,125,17 });
-	menu_button->anim->speed = 0.25f;
-	menu_button->resize = false;
-	options.push_back(menu_button);
-	menu_button = App->gui->CreateButton((j1Module*)App->intro, { 1,218,110,17 }, { 172 / 2, 240 / 2 }, { 0,0 }, { 112,236 }, true, "Loadgame_b", MAIN_MENU);
-	menu_button->anim->PushBack({ 112,218,110,17 });
-	menu_button->anim->PushBack({ 223,218,110,17 });
-	menu_button->anim->PushBack({ 334,218,110,17 });
-	menu_button->anim->PushBack({ 1,236,110,17 });
-	menu_button->anim->PushBack({ 334,218,110,17 });
-	menu_button->anim->PushBack({ 223,218,110,17 });
-	menu_button->anim->speed = 0.25f;
-	menu_button->resize = false;
-	options.push_back(menu_button);
+	options.push_back((Button*)App->gui->GetEntity("Continue_b"));
+	options.push_back((Button*)App->gui->GetEntity("Newgame_b"));
+	options.push_back((Button*)App->gui->GetEntity("Loadgame_b"));
+
+	for (int i = 0; i < options.size(); i++)
+	{
+		options[i]->resize = false; //buttons on main menu are not resized 
+	}
+
 	belong = MAIN_MENU;
 }
 
@@ -525,35 +501,13 @@ MainMenu::~MainMenu()
 
 ZeldaHud::ZeldaHud()
 {
-	Image* Sprite = App->gui->CreateImage({ 18,44,42,16 }, { 12,35 }, "charge", ZELDA_HUD);
-	force = App->gui->CreateImage({ 21,61,34,10 }, { 4,3 }, "force", ZELDA_HUD, false);
-	Sprite->elements.push_back(force);
-	//hud->AddElement(Sprite);//[0] adding charge bar
-	Sprite = App->gui->CreateImage({ 37,20,22,22 }, { 22,12 }, "item", ZELDA_HUD);
-	picked = App->gui->CreateImage({ 279,257,16,16 }, { 3,3 }, "item_picked", ZELDA_HUD, false);
-	Sprite->elements.push_back(picked);
-	//hud->AddElement(Sprite);
-	gems = App->gui->CreateImage({ 72,15,8,8 }, { 72,15 }, "gems", ZELDA_HUD); //Gems and value
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -7,10 }, "number", ZELDA_HUD, false));
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 1,10 }, "number", ZELDA_HUD, false));
-	gems->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 9,10 }, "number", ZELDA_HUD, false));
-	//hud->AddElement(gems);
-	//adding gems [2]
-	bombs = App->gui->CreateImage({ 100,15,8,8 }, { 100,15 }, "bombs", ZELDA_HUD);
-	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }, "number", ZELDA_HUD, false));
-	bombs->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }, "number", ZELDA_HUD, false));
-	//hud->AddElement(bombs);
-	// adding bombs
-	arrows = App->gui->CreateImage({ 121,15,14,8 }, { 121,15 }, "arrows", ZELDA_HUD);
-	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { -3,9 }, "number", ZELDA_HUD, false));
-	arrows->elements.push_back(App->gui->CreateImage({ 259,13,7,7 }, { 5,9 }, "number", ZELDA_HUD, false));
-	//hud->AddElement(arrows);
-	//adding arrows
-	hp = App->gui->CreateImage({ 178,15,44,7 }, { 178,15 }, "life", ZELDA_HUD);
-	//hud->AddElement(hp);
-	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -21,9 }, "hp1", ZELDA_HUD, false));
-	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -12,9 }, "hp2", ZELDA_HUD, false)); //heart containers
-	hp->elements.push_back(App->gui->CreateImage({ 177,24,7,7 }, { -3,9 }, "hp3", ZELDA_HUD, false));
+
+	force = (Image*)App->gui->GetEntity("force");
+	picked = (Image*)App->gui->GetEntity("item_picked");
+	gems = (Image*)App->gui->GetEntity("gems");
+	bombs = (Image*)App->gui->GetEntity("bombs");
+	arrows = (Image*)App->gui->GetEntity("arrows");
+	hp = (Image*)App->gui->GetEntity("life");
 
 	position = { 0,0 };
 	identifier = "hud";
@@ -619,26 +573,15 @@ ZeldaMenu::ZeldaMenu()
 {
 	type = MENU;
 	App->input_manager->AddListener(this);
-	//items
-	Image* Sprite = App->gui->CreateImage({ 1,255,256,224 }, { 0,-224 }, "bg", ZELDA_MENU);
-	Hitbox = Sprite->Hitbox;//? unnecessary, look it after
 
-
-	item_info = App->gui->CreateImage({ 370,372,32,32 }, { 18,154 - 224 }, "item_info", ZELDA_MENU);
-	item_info_name = App->gui->CreateText(PIXEL, "SELECT AN ITEM", 200, { 19,193 - 224 }, 10, { 255,255,255,255 }, true, "item_info_name", ZELDA_MENU); // text name description
-	item_equiped = App->gui->CreateImage({ 279,256,16,16 }, { 200,23 - 224 }, "item_picked", ZELDA_MENU);
-	item_eq_name = App->gui->CreateText(PIXEL, "   PICK ITEM", 100, { 184,44 - 224 }, 10, { 255,255,255,255 }, true, "item_eq_name", ZELDA_MENU);
-	App->gui->CreateImage({ 450,273,64,48 }, { 176,77 - 224 }, "pendants", ZELDA_MENU);
-	item_info_desc = App->gui->CreateText(PIXELMORE, "Search for items!", 180, { 59,155 - 224 }, 20, { 255,255,255,255 }, true, "description_item_text", ZELDA_MENU);
-	//Text* line = App->gui->CreateText(PIXELMORE, "The great warriors charge the bow to shoot further.", 22, { 59,155 - 224 }, 20, { 255,255,255,255 },true, "description item text", ZELDA_MENU);
-	//line = App->gui->CreateText(PIXELMORE, "The more power you apply to it, more distance you will reach.", 22, { 59,155 - 224 }, 20);
-	//line = App->gui->CreateText(PIXELMORE, "Use this bombs near big rocks to destroy them", 22, { 59,155 - 224 }, 20);
-
+	item_info = (Image*)App->gui->GetEntity("item_info");
+	item_info_name = (Text*)App->gui->GetEntity("item_info_name");
+	item_eq_name = (Text*)App->gui->GetEntity("item_eq_name");
+	item_info_desc = (Text*)App->gui->GetEntity("description_item_text");
 	//buttons items
-	items.push_back(new ItemMenu(App->gui->CreateButton(App->scene, { 271,268,32,32 }, { 24,21 - 224 }, { 304,268 }, { 337,268 }, false, "bow", ZELDA_MENU)));
-	items.push_back(new ItemMenu(App->gui->CreateButton(App->scene, { 271,301,32,32 }, { 48,21 - 224 }, { 304,301 }, { 337,301 }, false, "hookshot", ZELDA_MENU)));
-	items.push_back(new ItemMenu(App->gui->CreateButton(App->scene, { 271,336,32,32 }, { 72,21 - 224 }, { 304,336 }, { 337,336 }, false, "bomb", ZELDA_MENU)));
-
+	items.push_back(new ItemMenu((Button*)App->gui->GetEntity("bow")));
+	items.push_back(new ItemMenu((Button*)App->gui->GetEntity("hookshot")));
+	items.push_back(new ItemMenu((Button*)App->gui->GetEntity("bomb")));
 
 	for (int i = 0; i < items.size(); i++)
 	{
@@ -646,10 +589,8 @@ ZeldaMenu::ZeldaMenu()
 	}
 
 	position = { 0,-224 };
-	//OpenClose(false);
 	identifier = "start_menu";
 	belong = ZELDA_MENU;
-	//TODO HIGH-> edit Write function on item description
 }
 
 void ZeldaMenu::ResetInventory()
@@ -1058,49 +999,24 @@ ZeldaMenu::~ZeldaMenu()
 PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 {
 
-
-	//Hud_images 0-> up // Hud_imatge 1-> down
-	//elements 0-> left circle // elements 1-> left box // elements 2-> right circle // elements 3-> right box
-	//Big sprites
-	hud_images.push_back(App->gui->CreateImage({ 335,19,254,51 }, { 0,0 }, "top hud", POKEMON_COMBAT));
 	int hotfix = App->win->GetHeight() / App->win->GetScale();
-	hud_images.push_back(App->gui->CreateImage({ 597,18,254,33 }, { 0,hotfix - 33 }, "bottom hud", POKEMON_COMBAT));
-	//UP pokeballs
-	//Link
-	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 42,11 }, "Link_Pokeball_1", POKEMON_COMBAT));
-	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 52,13 }, "Link_Pokeball_2", POKEMON_COMBAT));
-	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 62,14 }, "Link_Pokeball_3", POKEMON_COMBAT));
-	//Brendan
-	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 204,11 }, "Bren_Pokeball_1", POKEMON_COMBAT));
-	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 194,13 }, "Bren_Pokeball_2", POKEMON_COMBAT));
-	hud_images[0]->elements.push_back(App->gui->CreateImage({ 344,72,7,7 }, { 184,14 }, "Bren_Pokeball_3", POKEMON_COMBAT));
-	//Left sprites
-	ability = App->gui->CreateImage({ 561,155,30,30 }, { 3,0 }, "left ability", POKEMON_COMBAT);
-	hud_images[1]->elements.push_back(ability);
-	ability->elements.push_back(App->gui->CreateImage({ 525,155,30,0 }, { 0,0 }, "left cd", POKEMON_COMBAT));
-	hud_images[1]->elements.push_back(App->gui->CreateImage({ 426,84,90,23 }, { 35,7 }, "left box", POKEMON_COMBAT));
 	//hp bar left
-	hp1 = App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "left hp", POKEMON_COMBAT);
-	hud_images[1]->elements[1]->elements.push_back(hp1);
-	//Right sprites
-	hud_images[1]->elements.push_back(App->gui->CreateImage({ 525,85,30,30 }, { 221,0 }, "right ability", POKEMON_COMBAT));
-	hud_images[1]->elements.push_back(App->gui->CreateImage({ 426,84,90,23 }, { 129,7 }, "right box", POKEMON_COMBAT));
+	hp1 = (Image*)App->gui->GetEntity("left hp");
 	//hp bar right
 	hp2 = App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "right hp", POKEMON_COMBAT);
-	hud_images[1]->elements[3]->elements.push_back(hp2);
 	//Names
-	hud_images[1]->elements[1]->elements.push_back(App->gui->CreateText(POKE1, Link->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "link_pk_name", POKEMON_COMBAT));
-	hud_images[1]->elements[3]->elements.push_back(App->gui->CreateText(POKE1, Brendan->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "brendan_pk_name", POKEMON_COMBAT));
+	App->gui->GetEntity("left box")->elements.push_back(App->gui->CreateText(POKE1, Link->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "link_pk_name", POKEMON_COMBAT));
+	App->gui->GetEntity("right box")->elements.push_back(App->gui->CreateText(POKE1, Brendan->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "brendan_pk_name", POKEMON_COMBAT));
 	// HP Poke Link
 	hpbar_pLink = iPoint(Link->hp, Link->hp);
 	sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);// CANVIAR A STD::STRING FRASE(%I,VALUE)
 	poke_hp_Link = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 }, true, "poke_hp_Link", POKEMON_COMBAT);
-	hud_images[1]->elements[1]->elements.push_back(poke_hp_Link);
+	App->gui->GetEntity("left box")->elements.push_back(poke_hp_Link);
 	// HP Poke Brendan
 	hpbar_pBrendan = iPoint(Brendan->hp, Brendan->hp);
-	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
+	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x); //CHANGE THIS FOR NOT USING THE BUFFER
 	poke_hp_Brendan = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 }, true, "poke_hp_brendan", POKEMON_COMBAT);
-	hud_images[1]->elements[3]->elements.push_back(poke_hp_Brendan);
+	App->gui->GetEntity("right box")->elements.push_back(poke_hp_Brendan);
 
 	//x-> Link - y->Brendan
 	num_pokemons = { 3, 3 };
@@ -1113,8 +1029,8 @@ PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 
 void PokemonCombatHud::Move(bool x_axis, float speed)
 {
-	hud_images[0]->position.x += speed;
-	hud_images[1]->position.x += speed;
+	App->gui->GetEntity("left box")->position.x += speed;
+	App->gui->GetEntity("right box")->position.x += speed;
 }
 
 void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Link - false Brendan
@@ -1125,19 +1041,18 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		{
 			if (num_pokemons.x == 2)
 			{
-				hud_images[0]->elements[2]->Hitbox.x = 334;
+				App->gui->GetEntity("Link_Pokeball_3")->Hitbox.x = 334;
 				ability->Hitbox.y = 120;
 				ability->elements[0]->Hitbox.y = 120;
 			}
 			if (num_pokemons.x == 1)
 			{
-				hud_images[0]->elements[1]->Hitbox.x = 334;
+				App->gui->GetEntity("Link_Pokeball_2")->Hitbox.x = 334;
 				ability->Hitbox.y = 190;
 				ability->elements[0]->Hitbox.y = 190;
 			}
 
-			Text*item = (Text*)hud_images[1]->elements[1]->elements[1];
-			item->Write(pokemon->name.c_str());
+			((Text*)App->gui->GetEntity("link_pk_name"))->Write(pokemon->name.c_str());
 			hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
 			cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
 			if (hpbar_pLink.x > 0)
@@ -1154,14 +1069,14 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 		{
 			if (num_pokemons.y == 2)
 			{
-				hud_images[0]->elements[5]->Hitbox.x = 334;
+				App->gui->GetEntity("Bren_Pokeball_3")->Hitbox.x = 334;
 			}
 			if (num_pokemons.y == 1)
 			{
-				hud_images[0]->elements[4]->Hitbox.x = 334;
+				App->gui->GetEntity("Bren_Pokeball_2")->Hitbox.x = 334;
 			}
-			Text*item = (Text*)hud_images[1]->elements[3]->elements[1];
-			item->Write(pokemon->name.c_str());
+
+			((Text*)App->gui->GetEntity("brendan_pk_name"))->Write(pokemon->name.c_str());
 			hpbar_pBrendan = iPoint(pokemon->hp, pokemon->hp);
 			if (hpbar_pBrendan.x > 0) {
 				hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
@@ -1185,7 +1100,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 				App->scene->player->gameover->visible = true;
 			}
 			App->scene->switch_map = 6;
-			OpenClose(false);
+			//OpenClose(false);
 			//App->scene->start_menu->OpenClose(true);
 			//App->scene->hud->OpenClose(true);
 			if (App->scene->player->score - 250 > 0)
@@ -1231,7 +1146,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 
 				App->scene->switch_map = 1;
 				App->scene->gamestate = INMENU;
-				App->scene->pokecombat->OpenClose(false);
+				//App->scene->pokecombat->OpenClose(false);
 				App->scene->player->Unequip();
 				App->entity_elements->DelteWeapons();
 				App->scene->player->hook = nullptr;
@@ -1258,7 +1173,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 				item->Write(std::string(std::to_string(App->scene->player->score)).c_str());
 				App->scene->switch_map = 1;
 				App->scene->gamestate = INMENU;
-				App->scene->pokecombat->OpenClose(false);
+				//App->scene->pokecombat->OpenClose(false);
 				for (int i = 0; i < App->scene->player->winover->elements.size(); i++)
 				{
 					App->scene->player->winover->elements[i]->visible = true;
@@ -1278,8 +1193,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 {
 	//pokemon 1
-	Text*item_1 = (Text*)hud_images[1]->elements[1]->elements[1];
-	item_1->Write(pokemon->name.c_str());
+	((Text*)App->gui->GetEntity("link_pk_name"))->Write(pokemon->name.c_str());
 	hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
 	cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
 	hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;
@@ -1290,8 +1204,7 @@ void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 	pokemon->target = pokemon_2;
 
 	//Pokemon 2
-	Text* item = (Text*)hud_images[1]->elements[3]->elements[1];
-	item->Write(pokemon_2->name.c_str());
+	((Text*)App->gui->GetEntity("brendan_pk_name"))->Write(pokemon_2->name.c_str());
 	hpbar_pBrendan = iPoint(pokemon_2->hp, pokemon_2->hp);
 	hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
 	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
@@ -1299,9 +1212,9 @@ void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
 	pokemon_2->target = pokemon;
 
 	//TOP HUD BALLS
-	for (int i = 0; i < hud_images[0]->elements.size(); i++)
+	for (int i = 0; i < App->gui->GetEntity("top hud")->elements.size(); i++)
 	{
-		hud_images[0]->elements[i]->Hitbox.x = 344;
+		App->gui->GetEntity("top hud")->elements[i]->Hitbox.x = 344;
 	}
 	//ability sprites
 	ability->Hitbox.y = 155;
@@ -1326,25 +1239,25 @@ void PokemonCombatHud::GetDamage(uint damage, bool trainer)
 	}
 }
 
-void PokemonCombatHud::OpenClose(bool open)
+/*void PokemonCombatHud::OpenClose(bool open)
 {
-	for (uint i = 0; i < hud_images.size(); i++)
-	{
-		hud_images[i]->visible = open;
-		if (hud_images[i]->elements.size() > 0)
-		{
-			for (int j = 0; j < hud_images[i]->elements.size(); j++)
-			{
-				hud_images[i]->elements[j]->visible = open;
-				for (int k = 0; k < hud_images[i]->elements[j]->elements.size(); k++)
-				{
-					hud_images[i]->elements[j]->elements[k]->visible = open;
-				}
-			}
-		}
-	}
-	visible = open;
+for (uint i = 0; i < hud_images.size(); i++)
+{
+hud_images[i]->visible = open;
+if (hud_images[i]->elements.size() > 0)
+{
+for (int j = 0; j < hud_images[i]->elements.size(); j++)
+{
+hud_images[i]->elements[j]->visible = open;
+for (int k = 0; k < hud_images[i]->elements[j]->elements.size(); k++)
+{
+hud_images[i]->elements[j]->elements[k]->visible = open;
 }
+}
+}
+}
+visible = open;
+}*/
 
 void PokemonCombatHud::Input()
 {

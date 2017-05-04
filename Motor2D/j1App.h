@@ -65,6 +65,9 @@ public:
 	void SaveGame(const char* file) const;
 	//void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 	void GetSaveGames(std::list<std::string>& list_to_fill) const;
+
+	j1Module* Search(const char* module_name);
+
 private:
 
 	// Load config file

@@ -21,6 +21,7 @@
   
 	<gui>
 		<atlas file="gui/atlas.png" />
+		<entities file="gui/entities.xml" />
 	</gui>
   
 	<maps file="Levels.xml"/>

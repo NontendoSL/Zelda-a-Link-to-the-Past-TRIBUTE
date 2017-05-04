@@ -200,7 +200,7 @@ public:
 	void Update(j1GuiEntity* focused);
 public:
 	void SetCd(uint newcd);
-	void OpenClose(bool open);//true open false close
+	//void OpenClose(bool open);//true open false close
 	void Move(bool x_axis, float speed);
 	void LoadNewPokemon(Pokemon* pokemon, bool trainer);
 	void CombatInfo(Pokemon* pokemon_1, Pokemon* pokemon_2);
@@ -210,7 +210,7 @@ public:
 	iPoint cdtime = { 0,0 }; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
 
 private:
-	std::vector<Image*>hud_images;
+	//std::vector<Image*>hud_images;
 	Image* ability = nullptr;
 	Image* hp1 = nullptr;
 	Image* hp2 = nullptr;

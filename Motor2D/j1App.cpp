@@ -529,3 +529,15 @@ bool j1App::SavegameNow() const
 	want_to_save = false;
 	return ret;
 }
+
+j1Module* j1App::Search(const char* module_name)
+{
+	for (std::list<j1Module*>::iterator temp = modules.begin(); temp != modules.end(); temp++)
+	{
+		if (temp._Ptr->_Myval->name == module_name)
+		{
+			return temp._Ptr->_Myval;
+		}
+	}
+	return nullptr;
+}

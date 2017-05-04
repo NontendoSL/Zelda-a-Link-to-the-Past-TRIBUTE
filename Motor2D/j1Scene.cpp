@@ -238,14 +238,11 @@ void j1Scene::LoadUi()
 {
 	//UI
 	hud = App->gui->CreateZeldaHud();
-	//Start Menu
 	start_menu = App->gui->CreateZeldaMenu();
-	float win_marge = (App->win->GetWidth() - start_menu->Hitbox.w*App->win->GetScale()) / 4;
+	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
 	hud->Move(true, win_marge);
 	start_menu->Move(true, win_marge);
 	App->gui->SetGui(ZELDA_HUD);
-	//pokecombat
-	//pokecombat = App->gui->CreatePokemonCombatHud(450,100,300);
 }
 
 void j1Scene::SwitchMenu(bool direction)//true for down, false for up
@@ -540,7 +537,7 @@ bool j1Scene::Load_Combat_map(int n)
 			}
 			else
 			{
-				pokecombat->OpenClose(true);
+				//pokecombat->OpenClose(true);
 				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon(0));
 			}
 
