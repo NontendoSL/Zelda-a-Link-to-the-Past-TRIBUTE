@@ -5,6 +5,7 @@
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Weapon.h"
+#include "j1Audio.h"
 
 BCTrooper::BCTrooper() : NPC()
 {
@@ -379,6 +380,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 			Player* link = (Player*)c2->callback;
 			if (link->invincible_timer.ReadSec() >= 1 && state != BC_HIT)
 			{
+				App->audio->PlayFx(13);
 				link->SetState(L_HIT);
 				link->SetAnimState(L_IDLE);
 				link->hurt_timer.Start();
