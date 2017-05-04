@@ -1335,6 +1335,14 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 				bombs--;
 			}
 		}
+		else if (bow != nullptr && equiped_item == bow && arrows > 0 && charge > 17)
+		{
+			if (e_state == E_UP)
+			{
+				bow->Shoot(position, direction, charge);
+				arrows--;
+			}
+		}
 		break;
 		}
 

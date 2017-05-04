@@ -40,7 +40,7 @@ bool BCTrooper::Start()
 	Wait_attack.Start();
 	speed = 10;
 	speed_bole = 1;
-	hp = 100;
+	hp = 50;
 	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(BC_TROOPER);
 	collision_feet = App->collision->AddCollider({ position.x, position.y, 16, 15 }, COLLIDER_BCTROOPER, this);
@@ -112,11 +112,11 @@ bool BCTrooper::Update(float dt)
 	}
 
 	//Increment dificult
-	if (hp < 50)
+	if (hp < 30)
 	{
 		speed_bole = 2;
 	}
-	if (hp < 25)
+	if (hp < 10)
 	{
 		speed_bole = 5;
 	}
@@ -128,36 +128,38 @@ bool BCTrooper::Update(float dt)
 
 void BCTrooper::Draw()
 {
-	if (state == BC_DEFEND)
+	if (state != BC_DYING)
 	{
-		App->anim_manager->Drawing_Manager(BC_IDLE, direction, position, BC_TROOPER);
-	}
-	else
-	{
-		App->anim_manager->Drawing_Manager(state, direction, position, BC_TROOPER);
-	}
-
-	if (state != BC_HIT && state != BC_DYING)
-	{
-		//Draw Circle of movement bole
-		if (App->collision->Getdebug())
+		if (state == BC_DEFEND)
 		{
-			SDL_Rect temp = { 20,12,2,2 };
-			for (int i = 0; i < NUM_POINTS_CIRCLE; i++)
-			{
-				App->render->Blit(texture, points[i].x, points[i].y, &temp);
-			}
+			App->anim_manager->Drawing_Manager(BC_IDLE, direction, position, BC_TROOPER);
+		}
+		else
+		{
+			App->anim_manager->Drawing_Manager(state, direction, position, BC_TROOPER);
 		}
 
-		//Draw Chain
-		SDL_Rect temp_3 = { 0,0,radius,6 };
-		App->render->Blit(texture, position.x, position.y, &temp_3, 1, true, pos_in_vect * MULTI_P, 5, 5);
+		if (state != BC_HIT && state != BC_DYING)
+		{
+			//Draw Circle of movement bole
+			if (App->collision->Getdebug())
+			{
+				SDL_Rect temp = { 20,12,2,2 };
+				for (int i = 0; i < NUM_POINTS_CIRCLE; i++)
+				{
+					App->render->Blit(texture, points[i].x, points[i].y, &temp);
+				}
+			}
 
-		//Draw Bole
-		SDL_Rect temp_2 = { 0,7,14,14 };
-		App->render->Blit(texture, bole.x - 5, bole.y - 4, &temp_2);
+			//Draw Chain
+			SDL_Rect temp_3 = { 0,0,radius,6 };
+			App->render->Blit(texture, position.x, position.y, &temp_3, 1, true, pos_in_vect * MULTI_P, 5, 5);
+
+			//Draw Bole
+			SDL_Rect temp_2 = { 0,7,14,14 };
+			App->render->Blit(texture, bole.x - 5, bole.y - 4, &temp_2);
+		}
 	}
-
 }
 
 
@@ -392,6 +394,10 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 			if (Wait_attack.ReadSec() > 1 && stunned)
 			{
 				hp -= 10;
+				if (hp <= 0)
+				{
+					state = BC_DYING;
+				}
 				Wait_attack.Start();
 			}
 

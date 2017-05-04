@@ -805,7 +805,7 @@ void ZeldaMenu::Input()
 
 void ZeldaMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
-	if (App->scene->inventory == true && App->scene->ingame == true && this->identifier == "start_menu")
+	if (App->scene->inventory && App->scene->ingame && this->identifier == "start_menu" && App->scene->gamestate == INMENU)
 	{
 		switch (action)
 		{
@@ -813,23 +813,29 @@ void ZeldaMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		case MRIGHT:
 			if (e_state == E_DOWN)
 			{
-				Select(1);
+				Select(true);
 			}
 			break;
 		case MLEFT:
 			if (e_state == E_DOWN)
 			{
-				Select(-1);
+				Select(false);
 			}
 			break;
 		case BUTTON_A:
 			if (e_state == E_DOWN)
 			{
-				Click();
+				if (App->gui->GetFocused() != nullptr)
+				{
+					App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+				}
 			}
 			else if (e_state == E_UP)
 			{
-				UnClick();
+				if (App->gui->GetFocused() != nullptr)
+				{
+					App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+				}
 			}
 			break;
 		}
