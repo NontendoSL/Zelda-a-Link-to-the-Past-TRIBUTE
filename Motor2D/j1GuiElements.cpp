@@ -576,6 +576,7 @@ ZeldaMenu::ZeldaMenu()
 
 	item_info = (Image*)App->gui->GetEntity("item_info");
 	item_info_name = (Text*)App->gui->GetEntity("item_info_name");
+	item_equiped = (Image*)App->gui->GetEntity("item_eq_sprite");
 	item_eq_name = (Text*)App->gui->GetEntity("item_eq_name");
 	item_info_desc = (Text*)App->gui->GetEntity("description_item_text");
 	//buttons items
