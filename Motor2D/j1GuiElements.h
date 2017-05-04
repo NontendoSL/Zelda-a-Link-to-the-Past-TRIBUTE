@@ -66,9 +66,9 @@ public:
 private:
 	std::string text;
 	SDL_Texture* text_texture = nullptr;
-	uint length = 50, size = 30;
 	_TTF_Font* font = nullptr;
 public:
+	uint length = 50, size = 30;
 	Text* next_line = nullptr;
 	FontName font_name = GANONF;
 	SDL_Color color = { 255,255,255,255 };
@@ -96,6 +96,7 @@ public:
 	Selector* options = nullptr;
 	bool end = false;
 	uint pushes = 0; //8 TOP
+	uint enters = 0;
 };
 
 class Selector : public j1GuiEntity

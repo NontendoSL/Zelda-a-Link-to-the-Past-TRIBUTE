@@ -284,6 +284,12 @@ Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
 	lines = App->gui->CreateText(GANONF, string, 330, {5, 0 }, 30, { 255,255,255,255 }, false,"dialogue text", ZELDA_HUD);
 	
 	identifier = "dialogue";
+	App->scene->gamestate = GameState::CUTSCENE;
+	for (int i = lines->Hitbox.w*2; i > lines->length; enters++)
+	{
+		i -= lines->length;
+	}
+	enters--;
 }
 
 void Dialogue::Draw()
@@ -317,9 +323,10 @@ void Dialogue::PushLine(bool push)
 		lines->position.y -= lines->Hitbox.h/4+1;
 		timer = SDL_GetTicks();
 		this->push = push;
-		if (pushes == 15)
+		if (pushes == 15 || pushes == enters*2-1)
 		{
 			end = true;
+			App->scene->gamestate = GameState::INGAME;
 		}
 		pushes++;
 	}
