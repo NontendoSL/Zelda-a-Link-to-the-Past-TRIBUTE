@@ -92,7 +92,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 		//ARROW COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
 		{
-			if (c2->arrow_callback->step == AIR)
+			if (c2->arrow_callback->step == AIR && destructible == true && state != S_HIT)
 			{
 				knockback_time.Start();
 				hp--;
