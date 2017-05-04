@@ -92,6 +92,21 @@ bool j1SceneIntro::Update(float dt)
 			App->render->Blit(TitleScreen_letters, -10, 0, NULL, NULL, false);
 
 		}
+
+		// Change Volume Music -------------------------------------
+		if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+		{
+			if (volume < 120)
+				volume += 10;
+			App->audio->VolumeMusic(volume);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+		{
+			if (volume > 0)
+				volume -= 10;
+			App->audio->VolumeMusic(volume);
+		}
+		// --------------------------------------------------------
 	}
 	if (goHouse)
 	{

@@ -106,6 +106,21 @@ bool j1Scene::Update(float dt)
 					player->dialog->PushLine(true);
 				}
 			}
+			
+			// Change Volume Music -------------------------------------
+			if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+			{
+				if(volume < 120)
+					volume += 10;
+				App->audio->VolumeMusic(volume);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+			{
+				if (volume > 0)
+					volume -= 10;
+				App->audio->VolumeMusic(volume);
+			}
+			// --------------------------------------------------------
 
 			// TP LEVEL -----------------------------------------
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)

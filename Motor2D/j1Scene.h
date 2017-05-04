@@ -123,6 +123,7 @@ public:
 
 private:
 	bool useTP = false;
+	uint volume = 120;
 };
 
 #endif // __j1SCENE_H__
