@@ -159,14 +159,14 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 
 void j1Map::EditCost(int x, int y, int value)
 {
-	MapLayer* meta_layer = data.layers[data.layers.size() - 1]; //lAST LAYER
+	MapLayer* meta_layer = data.layers[data.layers.size() - 2]; //WALKABILITY LAYER
 	meta_layer->data[y*meta_layer->width + x] = value;
 }
 
 TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction dir) const
 {
 	TileDirection ret = T_CONTINUE;
-	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
+	int red_wal = data.tilesets[0]->firstgid + 1; // RED TILE
 
 	if (dir == UP)
 	{
@@ -174,7 +174,7 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 		iPoint ptemp_2 = WorldToMap(x + width*0.5, y); //central position
 		iPoint ptemp_3 = WorldToMap(x + width, y); //rigth position
 
-		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+		const MapLayer* meta_layer = App->map->data.layers[App->map->data.layers.size() - 2]; //WALKABILITY LAYER
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -202,7 +202,7 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 		iPoint ptemp_2 = WorldToMap(x, y + height*0.5); //central position
 		iPoint ptemp_3 = WorldToMap(x, y + height); //down position
 
-		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+		const MapLayer* meta_layer = App->map->data.layers[App->map->data.layers.size() - 2]; //WALKABILITY LAYER
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -229,7 +229,7 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 		iPoint ptemp_2 = WorldToMap(x, y + width*0.5); //central position
 		iPoint ptemp_3 = WorldToMap(x, y + width); //down position
 
-		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+		const MapLayer* meta_layer = App->map->data.layers[App->map->data.layers.size() - 2]; //WALKABILITY LAYER
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -256,7 +256,7 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 		iPoint ptemp_2 = WorldToMap(x + width*0.5, y); //central position
 		iPoint ptemp_3 = WorldToMap(x + width, y); //down position
 
-		MapLayer* meta_layer = data.layers[data.layers.size() - 1];
+		const MapLayer* meta_layer = App->map->data.layers[App->map->data.layers.size() - 2]; //WALKABILITY LAYER
 
 		int id_1 = meta_layer->Get(ptemp.x, ptemp.y);
 		int id_2 = meta_layer->Get(ptemp_2.x, ptemp_2.y);
@@ -286,11 +286,11 @@ TileDirection j1Map::MovementCost(int x, int y, int width, int height, Direction
 int j1Map::CheckTileCost(int x, int y)
 {
 	int ret = 0;
-	int red_wal = data.tilesets[1]->firstgid + 1; // RED TILE
+	int red_wal = data.tilesets[0]->firstgid + 1; // RED TILE
 
 	iPoint ptemp = WorldToMap(x, y);
 
-	MapLayer* meta_layer = data.layers[1]; //Walkability Layer
+	const MapLayer* meta_layer = App->map->data.layers[App->map->data.layers.size() - 2]; //WALKABILITY LAYER
 	int id = meta_layer->Get(ptemp.x, ptemp.y);
 
 	if (id == red_wal)
@@ -486,9 +486,9 @@ bool j1Map::Load(const char* file_name, uint id_map)
 
 void j1Map::DynObjectFromTiled(uint id_map)
 {
-	int teleport = data.tilesets[1]->firstgid + 16;
+	int teleport = data.tilesets[0]->firstgid + 16;
 
-	MapLayer* temp = data.layers[data.layers.size() - 1];
+	MapLayer* temp = App->map->data.layers[App->map->data.layers.size() - 2]; //WALKABILITY LAYER
 
 	for (int y = 0; y < data.height; ++y)
 	{
@@ -496,30 +496,30 @@ void j1Map::DynObjectFromTiled(uint id_map)
 		{
 			int tile_id = temp->Get(x, y);
 			iPoint positionObject = MapToWorld(x, y);
-			if (tile_id >= data.tilesets[1]->firstgid + 2 && tile_id <= data.tilesets[1]->firstgid + 5 ||
-				tile_id >= data.tilesets[1]->firstgid + 10 && tile_id <= data.tilesets[1]->firstgid + 15)
+			if (tile_id >= data.tilesets[0]->firstgid + 2 && tile_id <= data.tilesets[0]->firstgid + 5 ||
+				tile_id >= data.tilesets[0]->firstgid + 10 && tile_id <= data.tilesets[0]->firstgid + 15)
 			{
-				if ((id_map == 4 && App->scene->player->hook != nullptr && tile_id == data.tilesets[1]->firstgid + 10) ||
-					(id_map == 5 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[1]->firstgid + 10))
+				if ((id_map == 4 && App->scene->player->hook != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
+					(id_map == 5 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[0]->firstgid + 10))
 				{
 					//DON'T CREATE AGAIN THE BIG CHEST TODO MED -> REMODELATE THIS METHOD!!!!
 				}
 				else
 				{
-					if (tile_id >= data.tilesets[1]->firstgid + 10)
+					if (tile_id >= data.tilesets[0]->firstgid + 10)
 					{
-						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 5, id_map);
-						if (tile_id - data.tilesets[1]->firstgid - 5 == 7)
+						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[0]->firstgid - 5, id_map);
+						if (tile_id - data.tilesets[0]->firstgid - 5 == 7)
 						{
 							EditCost(x, y, 0);
 						}
 						else
-							EditCost(x, y, data.tilesets[1]->firstgid + 1);
+							EditCost(x, y, data.tilesets[0]->firstgid + 1);
 					}
 					else
 					{
-						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[1]->firstgid - 1, id_map);
-						EditCost(x, y, data.tilesets[1]->firstgid + 1);
+						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[0]->firstgid - 1, id_map);
+						EditCost(x, y, data.tilesets[0]->firstgid + 1);
 					}
 				}
 

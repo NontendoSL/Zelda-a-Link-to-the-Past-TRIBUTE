@@ -56,10 +56,10 @@ bool Golem::Start()
 
 	//Modify Meta
 	iPoint temp = App->map->WorldToMap(position.x, position.y);
-	App->map->EditCost(temp.x, temp.y, App->map->data.tilesets[1]->firstgid + 1);
-	App->map->EditCost(temp.x - 1, temp.y, App->map->data.tilesets[1]->firstgid + 1);
-	App->map->EditCost(temp.x, temp.y - 1, App->map->data.tilesets[1]->firstgid + 1);
-	App->map->EditCost(temp.x - 1, temp.y - 1, App->map->data.tilesets[1]->firstgid + 1);
+	App->map->EditCost(temp.x, temp.y, App->map->data.tilesets[0]->firstgid + 1);
+	App->map->EditCost(temp.x - 1, temp.y, App->map->data.tilesets[0]->firstgid + 1);
+	App->map->EditCost(temp.x, temp.y - 1, App->map->data.tilesets[0]->firstgid + 1);
+	App->map->EditCost(temp.x - 1, temp.y - 1, App->map->data.tilesets[0]->firstgid + 1);
 
 	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(GOLEM); //id 5 = Golem

@@ -1389,11 +1389,11 @@ int Player::GetnuminputUse()
 
 void Player::GetfloorLvl(iPoint pos)
 {
-	const MapLayer* meta_layer = App->map->data.layers[2];
+	const MapLayer* meta_layer = App->map->data.layers[App->map->data.layers.size() - 1]; //WEAPONS LAYER
 	iPoint map_pos = App->map->WorldToMap(pos.x, pos.y);
 	int player_lvl = meta_layer->Get(map_pos.x, map_pos.y);
 
-	const TileSet* tileset = App->map->data.tilesets[1];
+	const TileSet* tileset = App->map->data.tilesets[0]; //META TILESET
 	int first_floor = tileset->firstgid + 1; // RED TILE
 	int second_floor = tileset->firstgid + 2; // YELLOW TILE
 	int third_floor = tileset->firstgid ; // GREEN TILE
@@ -1410,6 +1410,11 @@ void Player::GetfloorLvl(iPoint pos)
 	{
 		actual_floor = 2;
 	}
+}
+
+int Player::GetFloor() const
+{
+	return actual_floor;
 }
 
 void Player::AddHeartContainer()

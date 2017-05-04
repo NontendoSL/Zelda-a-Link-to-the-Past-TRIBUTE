@@ -66,6 +66,7 @@ public:
 	//----------------------
 
 	void GetfloorLvl(iPoint pos);
+	int GetFloor() const;
 
 	bool Equip(Weapon* to_equip);
 	bool Unequip();

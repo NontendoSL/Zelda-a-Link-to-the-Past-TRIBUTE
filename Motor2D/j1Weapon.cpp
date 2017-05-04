@@ -9,6 +9,9 @@
 #include "Soldier.h"
 #include "ParticleManager.h"
 #include "j1Collision.h"
+#include "j1Player.h"
+#include "j1Scene.h"
+#include "j1App.h"
 
 Weapon::Weapon() :SceneElement()
 {
@@ -69,11 +72,11 @@ void Hookshot::SetRange(float charge)
 HookState Hookshot::ReachObjective(int actual_floor)
 {
 	//TODO HIGH -> made it functional to Zelda World
-	const MapLayer* meta_layer = App->map->data.layers[2]; // metasudo layer
+	const MapLayer* meta_layer = App->map->data.layers[App->map->data.layers.size() - 1]; //WEAPONS LAYER
 	iPoint map_pos = App->map->WorldToMap(position.x, position.y);
 	int hook_tile = meta_layer->Get(map_pos.x, map_pos.y);
 
-	const TileSet* tileset = App->map->data.tilesets[1];
+	const TileSet* tileset = App->map->data.tilesets[0]; // META TILESET
 
 	int first_floor_hook = tileset->firstgid + 7; // PINK TILE
 	int second_floor_hook = tileset->firstgid + 9; // BLACK TILE
@@ -248,14 +251,23 @@ void Arrow::Update(float dt)
 	if (step == AIR)
 	{
 		KeepGoing(dt);
+
+		//Set collision to the arrow.
 		collision->SetPos(position.x - offset_x, position.y - offset_y);
-		//Set collision of the collider.
+		
+		//Check for a WALL IMPACT.
+		if (IsImpact(App->scene->player->GetFloor()) == IMPACT)
+		{
+			impact_time.Start();
+		}
 	}
 
 	else if (step == IMPACT)
 	{
-		//Get stuck into the wall (metasudo) or damage an enemy.
-		//step = DIE;
+		if (impact_time.ReadSec() >= 0.5)
+		{
+			step = DIE;
+		}
 	}
 
 	else if (step == DIE)
@@ -269,7 +281,7 @@ void Arrow::Draw()
 	switch (step)
 	{
 	case AIR:
-		App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW); //id 2 = hookshot animation xml
+		App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW);
 		//App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW);
 		//App->render->DrawQuad({collision->rect.x, collision->rect.y, 4, 4}, 255, 255, 255);
 		break;
@@ -301,6 +313,47 @@ void Arrow::KeepGoing(float dt)
 	default:
 		break;
 	}
+}
+
+ArrowStep Arrow::IsImpact(int actual_floor)
+{
+	const MapLayer* meta_layer = App->map->data.layers[App->map->data.layers.size() - 1]; //WEAPONS LAYER
+	iPoint map_pos = App->map->WorldToMap(position.x, position.y);
+	int arrow_tile = meta_layer->Get(map_pos.x, map_pos.y);
+
+	const TileSet* tileset = App->map->data.tilesets[0]; // META TILESET
+
+	int first_floor = tileset->firstgid + 7; // PINK TILE
+	int second_floor = tileset->firstgid + 9; // BLACK TILE
+	int third_floor = tileset->firstgid + 6; // ORANGE TILE
+
+	if (actual_floor == 0)
+	{
+		if (arrow_tile == first_floor)
+		{
+			step = IMPACT;
+		}
+	}
+	else if (actual_floor == 1)
+	{
+		if (arrow_tile == second_floor)
+		{
+			step = IMPACT;
+		}
+	}
+	else if (actual_floor == 2)
+	{
+		if (arrow_tile == third_floor)
+		{
+			step = IMPACT;
+		}
+	}
+	else
+	{
+		step = AIR;
+	}
+
+	return step;
 }
 
 void Arrow::Die()

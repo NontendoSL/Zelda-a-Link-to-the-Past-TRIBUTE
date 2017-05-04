@@ -99,6 +99,7 @@ public:
 	void Draw();
 
 	void KeepGoing(float dt);
+	ArrowStep IsImpact(int actual_floor);
 	void Die();
 
 public:
@@ -109,6 +110,7 @@ public:
 	float arrow_speed = 0;
 	float lifetime = 0;
 	j1Timer timer;
+	j1Timer impact_time;
 	Animation* current = nullptr;
 	Bow* container = nullptr;
 	ArrowStep step;

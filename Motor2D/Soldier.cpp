@@ -92,7 +92,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 		//ARROW COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
 		{
-			if (c2->arrow_callback->step != DIE)
+			if (c2->arrow_callback->step == AIR)
 			{
 				knockback_time.Start();
 				hp--;
@@ -100,7 +100,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 				anim_state = S_IDLE;
 				dir_hit = c2->arrow_callback->direction;
 				prev_position = position;
-				c2->arrow_callback->step = DIE; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
+				c2->arrow_callback->step = IMPACT; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
 			}
 		}
 	}
