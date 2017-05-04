@@ -71,6 +71,7 @@ v0.6
 	Bow and arrows added (you can shoot them to damage and knockback enemies).
 	Particle System implemented.
 	Zelda UI corrections.
+	Cutscene Placeholders added (Dialogues boxes to show some info of the game, at the moment).
 	
 	BOW MECHANIC: hold Spacebar/B until reach the half of the bar to shoot an arrow.
 
