@@ -79,8 +79,9 @@ v0.6
 	Particle System implemented.
 	Zelda UI corrections.
 	Cutscene Placeholders added (Dialogues boxes to show some info of the game, at the moment).
-	
 	BOW MECHANIC: hold Spacebar/B until reach the half of the bar to shoot an arrow.
+	
+	*WARNING:* in this release, the player can not access to Pokemon World. 
 
 v0.5 VERTICAL SLICE
 
