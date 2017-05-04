@@ -21,6 +21,7 @@ CONTROLS
 		E -> Attack.
 		Q -> Interact with chests and NPCs.
 		Z -> Cast the special Ability in combat.
+		+/- -> Up/Down the audio volume.
 		
 	Controller:
 	
