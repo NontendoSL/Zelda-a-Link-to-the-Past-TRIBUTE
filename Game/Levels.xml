@@ -47,7 +47,7 @@
      
       <dynobjects>
         <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
-        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id="5"/>
+        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
       </dynobjects>
       <enemies num="0" />
     </map>
@@ -55,36 +55,60 @@
     <map n="2" file="Link_OverWorld.tmx">
       <camera follow="true"/>
       <Link pos_x="704" pos_y="1288" />
-      <soldier num="10">
-
+      <soldier num="13">
         <!-- Static soldier -->
-        <soldier id="1" pos_x="4" pos_y="431" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="4" pos_y="409" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="220" pos_y="519" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="244" pos_y="519" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="507" pos_y="425" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <soldier id="1" pos_x="507" pos_y="403" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <soldier id="1" pos_x="517" pos_y="1465" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <soldier id="1" pos_x="517" pos_y="1445" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <soldier id="1" pos_x="517" pos_y="1425" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <soldier id="1" pos_x="730" pos_y="1535" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <soldier id="1" pos_x="755" pos_y="1535" hp="10" attack="10" dir="up" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <soldier id="1" pos_x="1020" pos_y="1455" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <soldier id="1" pos_x="1020" pos_y="1435" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
+        <soldier id="1" pos_x="1020" pos_y="1415" hp="10" attack="10" dir="left" canMove="false" destructible="false" file="textures/Soldiers.png" />
 
         <!-- Interactive soldier -->
-        <soldier id="1" pos_x="218" pos_y="414" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-        <soldier id="1" pos_x="330" pos_y="400" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-        <soldier id="1" pos_x="88" pos_y="329" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-        <soldier id="1" pos_x="182" pos_y="149" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <soldier id="1" pos_x="440" pos_y="392" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <soldier id="1" pos_x="440" pos_y="456" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
+        <soldier id="1" pos_x="440" pos_y="568" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <soldier id="1" pos_x="888" pos_y="560" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <soldier id="1" pos_x="888" pos_y="416" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
       </soldier>
 
       <dynobjects>
+        <dynobject id="1" name="door_house_link" type="ZELDA" rect_x="1" rect_y="131" rect_w="32" rect_h="44" file="textures/DynObjectsSpriteSheet.png"/>
         <dynobject id="2" name="bush_plant" type="ZELDA" rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
+        <dynobject id="7" name="roof_Link" type="ZELDA" rect_x="34" rect_y="174" rect_w="96" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
+      
       <switch blue="1" yellow="3" />
     </map>
 
     <map n="3" file="Uncle.tmx">
+      <Link pos_x="376" pos_y="88" />
+      <soldier num="2">
+        <!-- Interactive soldier -->
+        <soldier id="1" pos_x="160" pos_y="272" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+        <soldier id="1" pos_x="336" pos_y="336" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      </soldier>
+   
       <camera follow="true"/>
-    </map>
+     </map>
 
     <map n="4" file="HyruleInterior.tmx">
       <Link pos_x="488" pos_y="896"/>
       <camera follow="true"/>
+      <soldier num="9">
+      <!-- Interactive soldier -->
+      <soldier id="1" pos_x="492" pos_y="744" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="472" pos_y="664" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="472" pos_y="704" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="88"  pos_y="680" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="88"  pos_y="264" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="832" pos_y="696" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="832" pos_y="230" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="352" pos_y="128" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="640" pos_y="128" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      </soldier>
     </map>
 
     <map n="5" file="ZeldaRoom.tmx">
