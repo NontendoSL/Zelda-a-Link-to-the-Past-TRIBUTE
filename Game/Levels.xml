@@ -117,6 +117,10 @@
       <soldier id="1" pos_x="352" pos_y="128" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
       <soldier id="1" pos_x="640" pos_y="128" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="7" />
       </soldier>
+
+      <dynobjects>
+        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png"  item_id="7"/>
+      </dynobjects>
     </map>
 
     <map n="5" file="ZeldaRoom.tmx">
