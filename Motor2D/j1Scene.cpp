@@ -95,11 +95,11 @@ bool j1Scene::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 			{
-				switch_map = 5;
+				player->dialog = App->gui->CreateDialogue("This is a test for testing purpouses on the testing of the length tests of the test dialogue test we are currently testing and aswell im testing the longevity of the code, if a string is sooo damn fcking long it can be putted in only one dialog? or it has to be separated in multiple ones in order to not fuck the position?");
 			}
 			if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 			{
-				switch_map = 8;
+				player->dialog->PushLine(true);
 			}
 
 			if (switch_map > 0)

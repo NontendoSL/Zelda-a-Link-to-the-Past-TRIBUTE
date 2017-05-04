@@ -249,6 +249,7 @@ Dialogue* j1Gui::CreateDialogue(const char* string)
 {
 
 	Dialogue* element = new Dialogue(string);
+	element->belong = status;
 
 	entities.push_back(element);
 

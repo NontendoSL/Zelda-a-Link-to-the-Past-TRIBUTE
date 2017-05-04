@@ -65,9 +65,9 @@ public:
 	void Visible(bool yes);
 private:
 	std::string text;
-	_TTF_Font* font = nullptr;
 	SDL_Texture* text_texture = nullptr;
 	uint length = 50, size = 30;
+	_TTF_Font* font = nullptr;
 public:
 	Text* next_line = nullptr;
 	FontName font_name = GANONF;
@@ -86,7 +86,8 @@ public:
 	void Draw();
 	void Update(j1GuiEntity* focused);
 	void PushLine(bool push);
-	//void Clear(int more_erased);
+private:
+	void Clear();
 public:
 	float diferential = 0.5;
 	Text* lines = nullptr;
@@ -94,6 +95,7 @@ public:
 	uint timer = 0;
 	Selector* options = nullptr;
 	bool end = false;
+	uint pushes = 0; //8 TOP
 };
 
 class Selector : public j1GuiEntity

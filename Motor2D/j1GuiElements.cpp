@@ -140,8 +140,7 @@ Text::Text(FontName search, const char* write, SDL_Color color, uint length, iPo
 
 	//CheckString(std::string(write));
 	text_texture = App->font->Print(text.c_str(), length, color, font);
-	Hitbox.w /= 2; //TODO MID Adapt functions to resolution scale
-	Hitbox.h /= 2;
+	App->font->CalcSize(write, Hitbox.w, Hitbox.h, font);
 }
 
 void Text::Visible(bool yes)
@@ -184,7 +183,6 @@ void Text::Draw()
 {
 
 	App->render->Blit(text_texture, position.x, position.y, NULL, 0, false);
-
 }
 
 void Text::Update(j1GuiEntity* focused)
@@ -279,26 +277,23 @@ Button::~Button()
 
 Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
 {
-	int win_marge = (App->win->GetWidth() - App->scene->start_menu->Hitbox.w*App->win->GetScale()) / 4;
+	int win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
 	position = { win_marge + 40,150 };
 	//TODO MID: Actual font needs a blue outline to match the original one, need to code that or edit the font creating the outline
 	type = DIALOGUE;
-	lines = App->gui->CreateText(GANONF, string, 29, { position.x + 10, 0 }, 30, { 255,255,255,255 }, false);
-
+	lines = App->gui->CreateText(GANONF, string, 330, {5, 0 }, 30, { 255,255,255,255 }, false,"dialogue text", ZELDA_HUD);
+	
+	identifier = "dialogue";
 }
 
 void Dialogue::Draw()
 {
-
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
-	SDL_Rect viewport = { 0,312,Hitbox.w * 3,Hitbox.h*1.5 + 5 };//TODO LOW REMOVE MAGIC NUMBERS
+	
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);//178 50
+	SDL_Rect viewport = { (position.x*2)+6*2, (position.y * 2) + 6*2, 178*2, 50*2 };
 	SDL_RenderSetViewport(App->render->renderer, &viewport);
+	//App->render->DrawQuad({ -500,-500,999,999 }, 255, 255, 255, 170); UNCOMMENT TO SEE VIEWPORT
 	lines->Draw();
-	Text* item = lines;
-	while (item != nullptr) {
-		item->Draw();
-		item = item->next_line;
-	}
 	SDL_RenderSetViewport(App->render->renderer, NULL);
 }
 
@@ -309,55 +304,37 @@ void Dialogue::Update(j1GuiEntity* focused)
 		push = false;
 		PushLine(false);
 	}
-
+	if (end)
+	{
+		Clear();
+	}
 }
 
 void Dialogue::PushLine(bool push)
 {
 	if (end == false)
 	{
-		Text* item = lines;
-		//TODO LOW: Fix this sh done with magic numbers
-		while (item != nullptr)  //mirar metode eric funcio sdl per tallar string
-		{
-			item->position.y -= (Hitbox.h / 8) + diferential; //+ 0.5
-			item = item->next_line;
-		}
-		item = lines;
-		while (item->next_line != nullptr)
-		{
-			item = item->next_line;
-		}
-		if (item->position.y + position.y + 8 < position.y)
-		{
-			options = App->gui->CreateSelector("Yes", "No", this);
-			options->parent = this;
-			end = true;
-		}
-		diferential += 0.2;
+		lines->position.y -= lines->Hitbox.h/4+1;
 		timer = SDL_GetTicks();
 		this->push = push;
+		if (pushes == 15)
+		{
+			end = true;
+		}
+		pushes++;
 	}
+
+	//	options = App->gui->CreateSelector("Yes", "No", this);
+	//	options->parent = this;
+	//	end = true;
 }
 
 //TODO WORK on clear dialogue lines when u delete dialog
-/*void Dialogue::Clear(int more_erased)
+void Dialogue::Clear()
 {
-Text* item = lines;
-Text* next_item = lines->next_line;
-int erased = more_erased;
-while (item != nullptr)
-{
-App->gui->Erase(item->vector_pos-erased);
-item = next_item;
-if (next_item != nullptr)
-{
-next_item = next_item->next_line;
+	App->gui->Erase(App->gui->GetEntity("dialogue text"));
+	App->gui->Erase(App->gui->GetEntity(identifier.c_str()));
 }
-erased++;
-}
-
-}*/
 
 Dialogue::~Dialogue()
 {
