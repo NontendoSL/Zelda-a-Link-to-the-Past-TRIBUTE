@@ -4,6 +4,7 @@
 #include "j1Collision.h"
 #include "j1Map.h"
 #include "j1Player.h"
+#include "j1Weapon.h"
 
 BCTrooper::BCTrooper() : NPC()
 {
@@ -74,6 +75,11 @@ bool BCTrooper::Update(float dt)
 			break;
 
 			//
+		case BC_DEFEND:
+			Defend();
+			break;
+
+			//
 		case BC_DYING:
 			Death();
 			break;
@@ -122,6 +128,15 @@ bool BCTrooper::Update(float dt)
 
 void BCTrooper::Draw()
 {
+	if (state == BC_DEFEND)
+	{
+		App->anim_manager->Drawing_Manager(BC_IDLE, direction, position, BC_TROOPER);
+	}
+	else
+	{
+		App->anim_manager->Drawing_Manager(state, direction, position, BC_TROOPER);
+	}
+
 	if (state != BC_HIT && state != BC_DYING)
 	{
 		//Draw Circle of movement bole
@@ -143,28 +158,6 @@ void BCTrooper::Draw()
 		App->render->Blit(texture, bole.x - 5, bole.y - 4, &temp_2);
 	}
 
-	/*
-	//Draw BCTrooper
-	if (direction == UP)
-	{
-		anim_rect = animation.anim[state].North_action.GetCurrentFrame();
-	}
-	else if (direction == DOWN)
-	{
-		anim_rect = animation.anim[state].South_action.GetCurrentFrame();
-	}
-	else if (direction == LEFT)
-	{
-		anim_rect = animation.anim[state].West_action.GetCurrentFrame();
-	}
-	else if (direction == RIGHT)
-	{
-		anim_rect = animation.anim[state].East_action.GetCurrentFrame();
-	}
-
-	App->render->Blit(animation.graphics, position.x, position.y, &anim_rect);
-	*/
-	App->anim_manager->Drawing_Manager(state, direction, position, BC_TROOPER);
 }
 
 
@@ -277,14 +270,34 @@ void BCTrooper::Hit()
 	}
 	else
 	{
-		if (Change_State.ReadSec() > 0.5)
+		if (Change_State.ReadSec() > 1.5)
 		{
 			if (ChangeRadius_insta(10, false))
 			{
-				stunned = false;
-				state = BC_IDLE;
+				state = BC_DEFEND;
 				reset_time = true;
 			}
+		}
+	}
+}
+
+void BCTrooper::Defend()
+{
+	if (reset_time)
+	{
+		Change_State.Start();
+		reset_time = false;
+		save_speed = speed_bole;
+		speed_bole = 5;
+	}
+	else
+	{
+		if (Change_State.ReadSec() > 1)
+		{
+			stunned = false;
+			state = BC_IDLE;
+			reset_time = true;
+			speed_bole = save_speed;
 		}
 	}
 }
@@ -362,7 +375,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 		if (c1 == collision_maze && c2->type == COLLIDER_PLAYER)
 		{
 			Player* link = (Player*)c2->callback;
-			if (link->invincible_timer.ReadSec() >= 1)
+			if (link->invincible_timer.ReadSec() >= 1 && state != BC_HIT)
 			{
 				link->SetState(L_HIT);
 				link->SetAnimState(L_IDLE);
@@ -376,7 +389,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD)
 		{
-			if (Wait_attack.ReadSec() > 1)
+			if (Wait_attack.ReadSec() > 1 && stunned)
 			{
 				hp -= 10;
 				Wait_attack.Start();
@@ -390,6 +403,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 				state = BC_HIT;
 				reset_time = true;
 				stunned = true;
+				c2->arrow_callback->step = IMPACT;
 			}
 		}
 	}

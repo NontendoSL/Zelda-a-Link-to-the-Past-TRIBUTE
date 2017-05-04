@@ -7,7 +7,7 @@
 #define NUM_POINTS_CIRCLE 90
 #define MULTI_P 4
 
-enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_HIT, BC_DYING };
+enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_HIT, BC_DEFEND,BC_DYING };
 
 class BCTrooper : public NPC
 {
@@ -41,6 +41,7 @@ public:
 	void Walk(float dt);
 	bool Move(float dt);
 	void Hit();
+	void Defend();
 	void Death();
 	// -----------------------------
 	//Change Radius
@@ -63,6 +64,7 @@ private:
 	int pos_in_vect = 1;
 	int radius = 10;
 	int speed_bole = 1;
+	int save_speed = 0;
 	int canmove = 0;
 	//Timers
 	j1Timer Change_State;
