@@ -53,6 +53,9 @@
 
     <!--PARTICLES-->
 	  <!--id= 11--> <file file="animation/AnimationsAndEffects.xml"/>
+
+    <!--BCTrooper-->
+    <!--id= 12--> <file file="animation/BCTrooper.xml"/>
 	</animation>
   
 	<window>

@@ -39,25 +39,36 @@ public:
 	// STATE MACHINE ----------------
 	void Idle();
 	void Walk(float dt);
+	bool Move(float dt);
 	void Hit();
 	void Death();
 	// -----------------------------
 	//Change Radius
-	bool ChangeRadius(int radius_to_stop, bool increment);
+	bool ChangeRadius_degrade(int radius_to_stop, bool increment);
+	bool ChangeRadius_insta(int radius_to_go, bool increment);
 
 	//Collision----------------------------------
 	void OnCollision(Collider*, Collider*);
 
 private:
+	//Animation
+	AnimationStruct animation;
+	SDL_Rect anim_rect;
 
+	//state
 	BCTrooperState state = BC_IDLE;
-	bool stunned = false;
 	SDL_Texture* texture = nullptr;
 	std::vector<iPoint> points;
 	iPoint bole;
 	int pos_in_vect = 1;
 	int radius = 10;
+	int speed_bole = 1;
+	int canmove = 0;
+	//Timers
 	j1Timer Change_State;
+	j1Timer Wait_attack;
+	bool stunned = false;
+
 	bool reset_time = true;
 	Collider* collision_maze = nullptr;
 };

@@ -95,7 +95,7 @@ bool j1Scene::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 			{
-				switch_map = 7;
+				switch_map = 5;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 			{
@@ -132,6 +132,11 @@ bool j1Scene::Update(float dt)
 			{
 				App->scene->player->position.y -= 50;
 				App->render->camera.y += 100;
+			}
+			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+			{
+				App->scene->player->position.x = App->input->GetMousePosition().x;
+				App->scene->player->position.y = App->input->GetMousePosition().y;
 			}
 			//-------------------------------------------------------
 		}
