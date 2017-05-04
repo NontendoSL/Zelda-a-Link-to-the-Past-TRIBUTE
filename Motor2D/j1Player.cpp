@@ -156,7 +156,11 @@ bool Player::Update(float dt)
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && charge >= 17)
 			{
-				bow->Shoot(position, direction, charge);
+				if (arrows > 0)
+				{
+					bow->Shoot(position, direction, charge);
+					arrows--;
+				}
 			}
 			else if (charge > 0)
 			{
@@ -393,6 +397,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						{
 							bow = App->entity_elements->CreateBow();
 							App->scene->start_menu->PickItem("bow");
+							arrows += 5;
 							score += 75;
 						}
 					}
@@ -400,6 +405,19 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					{
 						AddHeartContainer();
 					}
+
+					if (c2->callback->name == "arrows")
+					{
+						//First time picking a bomb
+						score += 75;
+						arrows += 5;
+					}
+
+					if (c2->callback->name == "sword_shield")
+					{
+						sword_equiped = true;
+					}
+
 					//Delete item when picked
 					App->entity_elements->DeleteItem((Item*)c2->callback);
 				}
@@ -632,7 +650,7 @@ bool Player::Idle()
 		anim_state = L_WALKING;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && sword_equiped == true)
 	{
 		state = L_ATTACKING;
 		anim_state = L_ATTACKING;
@@ -669,7 +687,7 @@ bool Player::Walking(float dt)
 		anim_state = L_IDLE;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && sword_equiped == true)
 	{
 		state = L_ATTACKING;
 		anim_state = L_ATTACKING;

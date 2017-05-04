@@ -15,7 +15,8 @@
     <item id="3" name="hookshot" file="textures/Hook.png"/>
     <item id="4" name="heart" file="textures/Heart.png"/>
     <item id="5" name="bow" file="textures/Bow.png"/>
-    <item id="6" name="sword" file=""/>
+    <item id="6" name="sword_shield" file="textures/Sword_Shield.png"/>
+    <item id="7" name="arrows" file="textures/Arrows.png"/>
   </items>
   
   <!--WEAPONS-->
@@ -93,7 +94,7 @@
         <soldier id="1" pos_x="336" pos_y="336" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
       </soldier>
       <items num="1">
-        <item id="6" pos_x="" pos_y=""/> <!--POSITION-->
+        <item id="6" pos_x="216" pos_y="64" file="textures/Sword_Shield"/>
       </items>
       <dynobjects>
         <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png"  item_id="4"/>
@@ -106,15 +107,15 @@
       <camera follow="true"/>
       <soldier num="9">
       <!-- Interactive soldier -->
-      <soldier id="1" pos_x="492" pos_y="744" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="492" pos_y="744" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="7" />
       <soldier id="1" pos_x="472" pos_y="664" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
       <soldier id="1" pos_x="472" pos_y="704" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-      <soldier id="1" pos_x="88"  pos_y="680" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="88"  pos_y="680" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="7" />
       <soldier id="1" pos_x="88"  pos_y="264" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-      <soldier id="1" pos_x="832" pos_y="696" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="832" pos_y="696" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="7" />
       <soldier id="1" pos_x="832" pos_y="230" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
       <soldier id="1" pos_x="352" pos_y="128" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-      <soldier id="1" pos_x="640" pos_y="128" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
+      <soldier id="1" pos_x="640" pos_y="128" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="7" />
       </soldier>
     </map>
 

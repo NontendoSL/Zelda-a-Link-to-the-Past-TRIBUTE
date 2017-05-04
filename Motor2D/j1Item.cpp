@@ -65,6 +65,16 @@ bool Item::Start()
 		width = 7;
 		height = 16;
 	}
+	else if (id == 6)
+	{
+		width = 15;
+		height = 13;
+	}
+	else if (id == 7)
+	{
+		width = 10;
+		height = 16;
+	}
 	delay.Start();
 	collision = App->collision->AddCollider({ position.x, position.y, width, height }, COLLIDER_ITEM, this);
 	return true;

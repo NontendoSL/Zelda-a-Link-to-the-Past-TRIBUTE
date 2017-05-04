@@ -150,6 +150,9 @@ private:
 	//bool changeResolution = false;
 
 	Animation* current_animation = nullptr;
+
+	//Current release test
+	bool sword_equiped = false;
 };
 
 
