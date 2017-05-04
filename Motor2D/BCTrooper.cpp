@@ -142,7 +142,7 @@ void BCTrooper::Draw()
 		App->render->Blit(texture, bole.x - 5, bole.y - 4, &temp_2);
 	}
 
-
+	/*
 	//Draw BCTrooper
 	if (direction == UP)
 	{
@@ -162,8 +162,8 @@ void BCTrooper::Draw()
 	}
 
 	App->render->Blit(animation.graphics, position.x, position.y, &anim_rect);
-
-
+	*/
+	App->anim_manager->Drawing_Manager(state, direction, position, BC_TROOPER);
 }
 
 
@@ -276,7 +276,7 @@ void BCTrooper::Hit()
 	}
 	else
 	{
-		if (Wait_attack.ReadSec() > 1)
+		if (Wait_attack.ReadSec() > 0.5)
 		{
 			if (ChangeRadius_insta(10, false))
 			{
