@@ -86,7 +86,7 @@
     </map>
 
     <map n="3" file="Uncle.tmx">
-      <Link pos_x="376" pos_y="88" />
+      <Link pos_x="96" pos_y="320" />
       <camera follow="true"/>
       <soldier num="2">
         <!-- Interactive soldier -->
@@ -103,7 +103,7 @@
      </map>
 
     <map n="4" file="HyruleInterior.tmx">
-      <Link pos_x="488" pos_y="896"/>
+      <Link pos_x="480" pos_y="896"/>
       <camera follow="true"/>
       <soldier num="9">
       <!-- Interactive soldier -->
@@ -120,7 +120,7 @@
     </map>
 
     <map n="5" file="ZeldaRoom.tmx">
-      <Link pos_x="150" pos_y="150"/>
+      <Link pos_x="56" pos_y="56"/>
       <camera follow="true"/>
       <BCTrooper pos_x="169" pos_y="25" hp="10" attack="10" dir="down" file="" />
       

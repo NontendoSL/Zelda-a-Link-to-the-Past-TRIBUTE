@@ -68,7 +68,7 @@ public:
 	void CreateTeleports();
 
 	//Load Maps
-	bool Load_new_map(int n);
+	bool Load_new_map(int n, bool isTP);
 	//Load CombatMaps
 	bool Load_Combat_map(int n);
 
@@ -79,7 +79,7 @@ public:
 	void ChangeState(GameState state);
 
 	//
-	void SwitchMap();
+	void SwitchMap(bool isTP);
 
 private:
 	SDL_Texture* debug_tex;
@@ -120,6 +120,9 @@ public:
 	////DIALOGUE VICENTE METHOD PROVISIONAL TILL WE IMPLEMENT IT PROPERLY
 	uint help_timer = 0;
 	bool help_bool = true;
+
+private:
+	bool useTP = false;
 };
 
 #endif // __j1SCENE_H__

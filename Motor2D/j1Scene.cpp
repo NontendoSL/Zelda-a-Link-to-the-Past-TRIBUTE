@@ -47,7 +47,7 @@ bool j1Scene::Start()
 	if (ingame == true)
 	{
 		LoadUi();
-		Load_new_map(1);
+		Load_new_map(1, false);
 		App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
@@ -107,9 +107,41 @@ bool j1Scene::Update(float dt)
 				}
 			}
 
+			// TP LEVEL -----------------------------------------
+			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+			{
+				useTP = true;
+				switch_map = 1;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+			{
+				useTP = true;
+				switch_map = 2;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+			{
+				useTP = true;
+				switch_map = 3;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+			{
+				useTP = true;
+				switch_map = 4;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+			{
+				useTP = true;
+				switch_map = 5;
+			}
+			// --------------------------------------------------------
+
 			if (switch_map > 0)
 			{
-				SwitchMap();
+				SwitchMap(useTP);
 			}
 
 			if (switch_menu)
@@ -118,7 +150,7 @@ bool j1Scene::Update(float dt)
 			}
 
 			//MINI TP -----------------------------------------------
-			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 			{
 				App->scene->player->position.x += 50;
 				App->render->camera.x -= 100;
@@ -142,8 +174,9 @@ bool j1Scene::Update(float dt)
 			{
 				App->scene->player->position.x = App->input->GetMousePosition().x;
 				App->scene->player->position.y = App->input->GetMousePosition().y;
-			}
+			}*/
 			//-------------------------------------------------------
+			// TP LEVEL
 		}
 		
 	return true;
@@ -304,7 +337,7 @@ void j1Scene::ChangeState(GameState state)
 	}
 }
 
-void j1Scene::SwitchMap()
+void j1Scene::SwitchMap(bool isTP)
 {
 	if (fade == false)
 	{
@@ -348,7 +381,7 @@ void j1Scene::SwitchMap()
 			if (switch_map < FIRST_LEVEL_COMBAT) //id 13 is the first combat map
 			{
 				combat = false;
-				Load_new_map(switch_map);
+				Load_new_map(switch_map, isTP);
 			}
 			else
 			{
@@ -377,10 +410,11 @@ void j1Scene::SwitchMap()
 			gamestate = INGAME;
 		}
 		id_map = switch_map;
+		useTP = false;
 	}
 }
 
-bool j1Scene::Load_new_map(int n)
+bool j1Scene::Load_new_map(int n, bool isTP)
 {
 	if (player == NULL)
 	{
@@ -414,7 +448,7 @@ bool j1Scene::Load_new_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			if (n == 1 && switch_map == 0 || switch_map == 7 || switch_map == 8 || pokecombat != nullptr && n==1)
+			if (n == 1 && switch_map == 0 || switch_map == 7 || switch_map == 8 || pokecombat != nullptr && n==1 || isTP)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
