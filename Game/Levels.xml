@@ -15,6 +15,7 @@
     <item id="3" name="hookshot" file="textures/Hook.png"/>
     <item id="4" name="heart" file="textures/Heart.png"/>
     <item id="5" name="bow" file="textures/Bow.png"/>
+    <item id="6" name="sword" file=""/>
   </items>
   
   <!--WEAPONS-->
@@ -85,13 +86,19 @@
 
     <map n="3" file="Uncle.tmx">
       <Link pos_x="376" pos_y="88" />
+      <camera follow="true"/>
       <soldier num="2">
         <!-- Interactive soldier -->
         <soldier id="1" pos_x="160" pos_y="272" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
         <soldier id="1" pos_x="336" pos_y="336" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
       </soldier>
-   
-      <camera follow="true"/>
+      <items num="1">
+        <item id="6" pos_x="" pos_y=""/> <!--POSITION-->
+      </items>
+      <dynobjects>
+        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
+      </dynobjects>
      </map>
 
     <map n="4" file="HyruleInterior.tmx">

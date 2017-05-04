@@ -36,6 +36,7 @@ bool BCTrooper::Start()
 	bole.x = points.begin()._Ptr->x;
 	bole.y = points.begin()._Ptr->y;
 	prev_position = position;
+	Wait_attack.Start();
 	speed = 10;
 	speed_bole = 1;
 	hp = 100;
@@ -271,12 +272,12 @@ void BCTrooper::Hit()
 {
 	if (reset_time)
 	{
-		Wait_attack.Start();
+		Change_State.Start();
 		reset_time = false;
 	}
 	else
 	{
-		if (Wait_attack.ReadSec() > 0.5)
+		if (Change_State.ReadSec() > 0.5)
 		{
 			if (ChangeRadius_insta(10, false))
 			{
@@ -353,30 +354,40 @@ bool BCTrooper::ChangeRadius_insta(int radius_to_go, bool incremenet)
 	}
 	return true;
 }
+
 void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
 		if (c1 == collision_maze && c2->type == COLLIDER_PLAYER)
 		{
-			Player* link = (Player*)c1->callback;
-			link->hp -= 1;
-			link->position.x -= 20;
+			Player* link = (Player*)c2->callback;
+			if (link->invincible_timer.ReadSec() >= 1)
+			{
+				link->SetState(L_HIT);
+				link->SetAnimState(L_IDLE);
+				link->hurt_timer.Start();
+				link->invincible_timer.Start();
+				link->GetDamage();
+				link->dir_hit = direction;
+				link->prev_position = position;
+			}
 		}
 
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD)
 		{
-			if (stunned == false)
+			if (Wait_attack.ReadSec() > 1)
 			{
 				hp -= 10;
-				if (hp > 0)
-				{
-					state = BC_HIT;
-				}
-				else
-				{
-					state = BC_DYING;
-				}
+				Wait_attack.Start();
+			}
+
+		}
+		if (c1 == collision_feet && c2->type == COLLIDER_ARROW)
+		{
+			if (stunned == false)
+			{
+				state = BC_HIT;
 				reset_time = true;
 				stunned = true;
 			}

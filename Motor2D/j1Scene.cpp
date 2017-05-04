@@ -439,6 +439,14 @@ bool j1Scene::Load_new_map(int n)
 				poketrainer = App->entity_elements->CreateTrainer(temp.child("trainer"), 1);
 			}
 
+			//items
+			pugi::xml_node temp_item = temp.child("items").child("item");
+			for (int i = 0; i < temp.child("items").attribute("num").as_int(0); i++)
+			{
+				App->entity_elements->CreateItem(temp_item.attribute("id").as_int(0), iPoint(temp_item.attribute("pos_x").as_int(0), temp_item.attribute("pos_y").as_int(0)));
+				temp_item = temp_item.next_sibling();
+			}
+
 			//Pokemons
 			pugi::xml_node temp_pokemon = temp.child("pokemons").child("pokemon");
 			for (int i = 0; i < temp.child("pokemons").attribute("num").as_int(0); i++)
