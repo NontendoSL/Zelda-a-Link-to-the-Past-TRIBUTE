@@ -211,15 +211,11 @@ void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
 			{
 				if (menu == false)
 				{
+					LoadMainMenu();
 					menu = true;
 					bg_anim = 0;
-					if (TitleScreen_letters == nullptr)
-					{
-						TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
-						LoadMainMenu();
-						App->gui->SetGui(MAIN_MENU);
-					}
-
+					TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
+					App->gui->SetGui(MAIN_MENU);
 				}
 			}
 			break;

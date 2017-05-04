@@ -716,7 +716,7 @@ bool Player::Walking(float dt)
 bool Player::Move(float dt)
 {
 	int keysuse = GetnuminputUse();
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = LEFT;
 		int temp = App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
@@ -748,7 +748,7 @@ bool Player::Move(float dt)
 		walking = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT)
 	{
 		direction = RIGHT;
 		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
@@ -781,7 +781,7 @@ bool Player::Move(float dt)
 		walking = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
 		direction = UP;
 		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP);
@@ -813,7 +813,7 @@ bool Player::Move(float dt)
 		walking = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT)
 	{
 		direction = DOWN;
 		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN);
@@ -1289,7 +1289,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		{
 	case BUTTON_X:
 	{
-		if (e_state == E_DOWN && state != L_HOOKTHROWN)
+		if (e_state == E_DOWN && state != L_HOOKTHROWN && sword_equiped)
 		{
 			state = L_ATTACKING;
 			anim_state = L_ATTACKING;

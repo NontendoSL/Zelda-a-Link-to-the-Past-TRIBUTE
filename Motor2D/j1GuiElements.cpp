@@ -341,6 +341,7 @@ void Dialogue::Clear()
 {
 	App->gui->Erase(App->gui->GetEntity("dialogue text"));
 	App->gui->Erase(App->gui->GetEntity(identifier.c_str()));
+	App->scene->player->dialog = nullptr;
 }
 
 Dialogue::~Dialogue()
@@ -430,7 +431,7 @@ void MainMenu::Input()
 	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 	{
 		//assert(App->gui->GetFocused()->listener != nullptr);
-		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP); //TODO HIGH MARC -> CLICK_DOWN
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP)
 	{
@@ -442,6 +443,8 @@ Button* MainMenu::GetElement(uint id)
 {
 	return options[id];
 }
+
+
 
 void MainMenu::Select(bool next)
 {

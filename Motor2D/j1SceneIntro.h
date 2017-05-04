@@ -67,7 +67,7 @@ private:
 	bool fade;
 	uint Menu_Cursor;
 public:
-	MainMenu*		main_menu = nullptr;
+	MainMenu* main_menu = nullptr;
 };
 
 #endif

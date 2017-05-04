@@ -102,9 +102,9 @@ private:
 	std::string entities_file_name;
 	std::vector<std::string> gui_groups_name;
 	std::vector<j1GuiEntity*> entities;
-	SDL_Texture* atlas;
-	j1GuiEntity* focused;
-	GuiGroup status;
+	SDL_Texture* atlas = nullptr;
+	j1GuiEntity* focused = nullptr;
+	GuiGroup status = NONE;
 
 	//friend class ZeldaMenu; // work on this, search for alternative option
 };
