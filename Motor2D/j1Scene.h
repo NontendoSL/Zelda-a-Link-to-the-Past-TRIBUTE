@@ -115,6 +115,11 @@ public:
 	bool fade = false;
 	bool now_switch = false;
 	WeaponType weapon_equiped;
+
+
+	////DIALOGUE VICENTE METHOD PROVISIONAL TILL WE IMPLEMENT IT PROPERLY
+	uint help_timer = 0;
+	bool help_bool = true;
 };
 
 #endif // __j1SCENE_H__

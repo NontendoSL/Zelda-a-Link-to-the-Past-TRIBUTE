@@ -416,6 +416,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (c2->callback->name == "sword_shield")
 					{
 						sword_equiped = true;
+						dialog = App->gui->CreateDialogue("With great power comes great responsability       -Uncle Link");
 					}
 
 					//Delete item when picked
