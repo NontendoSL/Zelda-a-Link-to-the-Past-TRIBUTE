@@ -352,7 +352,7 @@ void j1Scene::SwitchMap()
 			if (switch_map == 4 && notrepeatmusic)
 			{
 				notrepeatmusic = false;
-				App->audio->PlayMusic("audio/music/POKEMON/PokemonVictoryRoad.ogg");
+				App->audio->PlayMusic("audio/music/ZELDA/ZeldaHyruleCastle.ogg");
 			}
 		}
 	}
