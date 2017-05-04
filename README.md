@@ -33,9 +33,16 @@ CONTROLS
 	DEBUG MODE:
 	
 		F1 -> Display navigation map.
-		F2 -> Display Hookshot navigation map.
+		F2 -> Display weapons collision map.
 		F10 -> Display colliders.
 		X -> Lower Pokémon HP in combat.
+		I,J,K,L -> Movement mini-teleports (4 directions).
+		1 -> teleport to Link House.
+		2 -> teleport to Hyrule Outdoors.
+		3 -> teleport to Uncle's Room.
+		4 -> teleport to Hyrule Castle.
+		5 -> teleport to miniboss Room.
+		
 
 OBJECTIVE
 	
