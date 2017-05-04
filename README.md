@@ -60,6 +60,20 @@ THE POKÉMON COMBAT
 
 CHANGELOG
 
+v0.6
+
+	Added Chain & Ball Trooper (miniboss).
+	All Zelda World maps implemented:
+	 - Link house Outdoor.
+	 - Link's Uncle's Room.
+	 - Hyrule Castle (interior & exterior).
+	 - Zelda's cell Room.
+	Bow and arrows added (you can shoot them to damage and knockback enemies).
+	Particle System implemented.
+	Zelda UI corrections.
+	
+	BOW MECHANIC: hold Spacebar/B until reach the half of the bar to shoot an arrow.
+
 v0.5 VERTICAL SLICE
 
 	Now the game uses full screen.
