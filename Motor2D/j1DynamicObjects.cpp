@@ -48,7 +48,7 @@ bool DynamicObjects::Start()
 {
 	if(name != "door")
 	{
-		if (name == "bigchest")
+		if (name == "bigchest") //Only created if player picked the item inside
 		{
 			collision = App->collision->AddCollider({ position.x, position.y, 32, 24 }, COLLIDER_DYNOBJECT, this);
 		}

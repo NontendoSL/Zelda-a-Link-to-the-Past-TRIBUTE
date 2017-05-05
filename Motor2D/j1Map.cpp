@@ -499,7 +499,8 @@ void j1Map::DynObjectFromTiled(uint id_map)
 			if (tile_id >= data.tilesets[0]->firstgid + 2 && tile_id <= data.tilesets[0]->firstgid + 5 ||
 				tile_id >= data.tilesets[0]->firstgid + 10 && tile_id <= data.tilesets[0]->firstgid + 15)
 			{
-				if ((id_map == 4 && App->scene->player->hook != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
+				if ((id_map == 3 && App->scene->player->bow != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
+					(id_map == 4 && App->scene->player->hook != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
 					(id_map == 5 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[0]->firstgid + 10))
 				{
 					//DON'T CREATE AGAIN THE BIG CHEST TODO MED -> REMODELATE THIS METHOD!!!!

@@ -15,14 +15,6 @@ bool Creature::Move(int x, int y)
 		{
 			position.x += x;
 		}
-		else if (temp == T_UP)
-		{
-			position.y -= x;
-		}
-		else if (temp == T_DOWN)
-		{
-			position.y += x;
-		}
 	}
 
 	else //RIGHT
@@ -31,14 +23,6 @@ bool Creature::Move(int x, int y)
 		if (temp == 0)
 		{
 			position.x += x;
-		}
-		else if (temp == T_UP)
-		{
-			position.y -= x;
-		}
-		else if (temp == T_DOWN)
-		{
-			position.y += x;
 		}
 	}
 
@@ -49,14 +33,6 @@ bool Creature::Move(int x, int y)
 		{
 			position.y += y;
 		}
-		else if (temp == T_LEFT)
-		{
-			position.x -= y;
-		}
-		else if (temp == T_RIGHT)
-		{
-			position.x += y;
-		}
 	}
 	else // UP
 	{
@@ -64,14 +40,6 @@ bool Creature::Move(int x, int y)
 		if (temp == 0)
 		{
 			position.y += y;
-		}
-		else if (temp = T_LEFT)
-		{
-			position.x -= y;
-		}
-		else if (temp == T_RIGHT)
-		{
-			position.x += y;
 		}
 	}
 

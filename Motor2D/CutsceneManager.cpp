@@ -338,7 +338,7 @@ bool Cutscene::Update(float dt)
 		CS_Step* step = *temp;
 
 		//TODO 7: Start the step if its start time has been reached (Use the cutscene timer to check the current time)
-		//This function will be called only one time, so you will ned 3 conditions: 
+		//This function will be called only one time, so you will need 3 conditions: 
 		// 1) if the step isn't active
 		// 2) if the step isn't finished.
 		// 3) if the start time has been reached by the cutscene timer
