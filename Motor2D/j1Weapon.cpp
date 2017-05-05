@@ -206,6 +206,7 @@ float Bow::SetSpeed(float charge)
 
 void Bow::Shoot(iPoint pos, Direction dir, float charge)
 {
+	App->audio->PlayFx(18);
 	float speed = SetSpeed(charge);
 	Arrow* arrow = new Arrow(pos, dir, this, speed);
 
@@ -259,6 +260,7 @@ void Arrow::Update(float dt)
 		if (IsImpact(App->scene->player->GetFloor()) == IMPACT)
 		{
 			impact_time.Start();
+			App->audio->PlayFx(17);
 		}
 	}
 

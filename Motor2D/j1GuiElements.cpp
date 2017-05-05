@@ -495,6 +495,7 @@ ZeldaHud::ZeldaHud()
 	bombs = (Image*)App->gui->GetEntity("bombs");
 	arrows = (Image*)App->gui->GetEntity("arrows");
 	hp = (Image*)App->gui->GetEntity("life");
+	charge = (Image*)App->gui->GetEntity("charge");
 
 	position = { 0,0 };
 	identifier = "hud";
@@ -519,10 +520,20 @@ void ZeldaHud::Equip(const char* item)
 	if (item == "bow")
 	{
 		picked->Hitbox.y = 276;
+		charge->Hitbox.x = 61;
+		charge->Hitbox.y = 33;
+		force->Hitbox.x = 65;
+		force->Hitbox.y = 50;
+
 	}
 	if (item == "hookshot")
 	{
 		picked->Hitbox.y = 309;
+		charge->Hitbox.x = 18;
+		charge->Hitbox.y = 44;
+		force->Hitbox.x = 21;
+		force->Hitbox.y = 61;
+
 	}
 	if (item == "bomb")
 	{

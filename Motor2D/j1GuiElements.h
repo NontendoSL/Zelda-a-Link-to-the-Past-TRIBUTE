@@ -140,12 +140,13 @@ public:
 	// TU DU heart container manager
 	void Equip(const char* item);
 public:
-	Image* force;
-	Image *gems;
-	Image *bombs;
-	Image *arrows;
-	Image *hp;
-	Image *picked; // set R1 and L1 interaction to change items inhud without opening menu
+	Image* charge = nullptr;
+	Image* force = nullptr;
+	Image *gems = nullptr;
+	Image *bombs = nullptr;
+	Image *arrows = nullptr;
+	Image *hp = nullptr;
+	Image *picked = nullptr; // set R1 and L1 interaction to change items inhud without opening menu
 };
 
 /////////////////////////////// MENU ITEMS /////////////////////////////////

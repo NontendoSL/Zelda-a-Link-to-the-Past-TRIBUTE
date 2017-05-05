@@ -152,7 +152,10 @@ bool Player::Update(float dt)
 		{
  			if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_REPEAT) && charge <= 34)
 			{
-				charge++;
+				if (charge++ == 17)
+				{
+					App->audio->PlayFx(16);
+				}
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && charge >= 17)
 			{

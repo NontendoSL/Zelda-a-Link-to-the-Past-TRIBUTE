@@ -80,6 +80,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (destructible == true && state != S_HIT)
 			{
+				App->audio->PlayFx(12);
 				knockback_time.Start();
 				hp--;
 				state = S_HIT;
@@ -94,6 +95,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c2->arrow_callback->step == AIR && destructible == true && state != S_HIT)
 			{
+				App->audio->PlayFx(12);
 				knockback_time.Start();
 				hp--;
 				state = S_HIT;

@@ -48,7 +48,7 @@ bool j1Scene::Start()
 	{
 		LoadUi();
 		Load_new_map(1, false);
-		App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
+		//App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
 		App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
 		App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
@@ -63,6 +63,9 @@ bool j1Scene::Start()
 		App->audio->LoadFx("audio/fx/LTTP_Link_Hurt.wav");//13
 		App->audio->LoadFx("audio/fx/LTTP_Fall.wav");//14
 		App->audio->LoadFx("audio/fx/LTTP_Chest_Open.wav");//15
+		App->audio->LoadFx("audio/fx/LTTP_BombBreaksWall.wav");//16 Arrow charge GOOD
+		App->audio->LoadFx("audio/fx/LTTP_ArrowHitWall.wav");//17 Arrow hit
+		App->audio->LoadFx("audio/fx/LTTP_Arrow.wav");//18
 		help_timer = SDL_GetTicks();
 		//Inicialitzate All teleports
 		CreateTeleports();
@@ -405,7 +408,7 @@ void j1Scene::SwitchMap(bool isTP)
 			if (switch_map == 4 && notrepeatmusic)
 			{
 				notrepeatmusic = false;
-				App->audio->PlayMusic("audio/music/ZELDA/ZeldaHyruleCastle.ogg");
+				//App->audio->PlayMusic("audio/music/ZELDA/ZeldaHyruleCastle.ogg");
 			}
 		}
 	}
