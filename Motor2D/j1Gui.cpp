@@ -163,13 +163,15 @@ j1GuiEntity* j1Gui::GetFocused()
 
 void j1Gui::SetFocus(j1GuiEntity* to_focus)
 {
-	if (focused != nullptr)
+	if (focused != to_focus)
 	{
-		Button* temp = (Button*)focused;
-		temp->click = false;
-	}
+		if (focused != nullptr)
+		{
+			((Button*)focused)->click = false;
+		}
 
-	focused = to_focus;
+		focused = to_focus;
+	}
 }
 
 void j1Gui::MoveGroup(GuiGroup group, bool x_axis, float speed, bool move_all)

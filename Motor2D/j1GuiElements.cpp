@@ -622,6 +622,7 @@ void ZeldaMenu::Select(bool next)
 					if (items[i]->picked)
 					{
 						App->gui->SetFocus(items[i]->ui_button);
+						ShowItemInfo();
 						return;
 					}
 					if (i == items.size() - 1)
@@ -637,6 +638,7 @@ void ZeldaMenu::Select(bool next)
 					if (items[i]->picked)
 					{
 						App->gui->SetFocus(items[i]->ui_button);
+						ShowItemInfo();
 						return;
 					}
 				}
@@ -651,6 +653,7 @@ void ZeldaMenu::Select(bool next)
 					if (items[i]->picked)
 					{
 						App->gui->SetFocus(items[i]->ui_button);
+						ShowItemInfo();
 						return;
 					}
 					if (i == 0)
@@ -666,6 +669,7 @@ void ZeldaMenu::Select(bool next)
 					if (items[i]->picked)
 					{
 						App->gui->SetFocus(items[i]->ui_button);
+						ShowItemInfo();
 						return;
 					}
 				}
@@ -709,12 +713,10 @@ void ZeldaMenu::Input()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
 	{
 		Select(true);
-		ShowItemInfo();
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
 	{
 		Select(false);
-		ShowItemInfo();
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 	{
