@@ -672,18 +672,6 @@ void ZeldaMenu::Select(bool next)
 			}
 		}
 	}
-
-	/*
-	if (id_selected + value < menu_buttons.size() && id_selected + value >= 0)
-	{
-	menu_buttons[id_selected]->click = false;
-	menu_buttons[id_selected]->selected = false;
-	id_selected += value;
-	menu_buttons[id_selected]->selected = true;
-	selected = menu_buttons[id_selected];
-	ShowItemInfo();
-	}
-	*/
 }
 
 void ZeldaMenu::Equip(const char* item)
@@ -709,64 +697,6 @@ void ZeldaMenu::Equip(const char* item)
 	}
 	App->scene->hud->Equip(item);
 	return;
-}
-
-
-void ZeldaMenu::Click()
-{
-	/*
-	if (menu_buttons.size() > 0)
-	{
-	menu_buttons[id_selected]->click = true;
-	Do();
-	}*/
-
-	//TODO: do this on OnGui();
-}
-
-void ZeldaMenu::Do()
-{
-	/*
-	//Image* item = App->scene->hud->GetImage(1);
-	//Image* item_menu = App->scene->start_menu->GetImage(2);
-	// Create a function equip item to change hud and menu equiped sprite item;
-	if (i_name == "bow")
-	{
-	App->scene->player->Unequip();
-	//App->scene->player->Equip(bow);
-	item->elements[0]->Hitbox.y = 276; // change hud equiped sprite
-	item_menu->Hitbox.y = 276; // change menu equiped sprite
-	menu_texts[1]->Write("BOW ARROWS"); //On listener->GuiAction put this aswell
-
-	}
-	else if (i_name == "hookshot")
-	{
-	App->scene->player->Unequip();
-	if (App->scene->player->Equip((Weapon*)App->scene->player->hook) == true)
-	{
-	item->elements[0]->Hitbox.y = 309;
-	item_menu->Hitbox.y = 309;
-	menu_texts[1]->Write(" HOOKSHOT");
-	}
-	}
-	else if (i_name == "bomb")
-	{
-	App->scene->player->Unequip();
-	if (App->scene->player->Equip((Weapon*)App->scene->player->bombmanager) == true)
-	{
-	item->elements[0]->Hitbox.y = 344;
-	item_menu->Hitbox.y = 344;
-	menu_texts[1]->Write("      BOMBS");
-	}
-	}
-	*/
-}
-
-
-void ZeldaMenu::UnClick()
-{
-	//if(menu_buttons.size()>0)
-	//	menu_buttons[id_selected]->click = false;
 }
 
 void ZeldaMenu::Update(j1GuiEntity* focused)
@@ -842,51 +772,6 @@ void ZeldaMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	}
 }
 
-/*void ZeldaMenu::OpenClose(bool open)
-{
-for (uint i = 0; i < menu_buttons.size(); i++) {
-menu_buttons[i]->visible = open;
-}
-for (uint i = 0; i < menu_images.size(); i++) {
-menu_images[i]->visible = open;
-if (menu_images[i]->elements.size() > 0)
-{
-for (int j = 0; j < menu_images[i]->elements.size(); j++)
-{
-menu_images[i]->elements[j]->visible = open;
-}
-}
-}
-for (uint i = 0; i < menu_texts.size(); i++) {
-if (open == false)
-{
-menu_texts[i]->visible = open;
-if (menu_texts[i]->next_line != nullptr)
-{
-Text*line = menu_texts[i]->next_line;
-while (line != nullptr)
-{
-line->visible=open;
-line = line->next_line;
-}
-}
-}
-else if (i<2){
-menu_texts[i]->visible = open;
-if (menu_texts[i]->next_line != nullptr)
-{
-Text*line = menu_texts[i]->next_line;
-while (line != nullptr)
-{
-line->visible = open;
-line = line->next_line;
-}
-}
-}
-}
-visible = open;
-}*/
-
 void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis do we move (x=true/y=false)
 {
 	App->gui->MoveGroup(ZELDA_MENU, x_axis, speed);
@@ -894,8 +779,6 @@ void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich 
 
 Button* ZeldaMenu::GetFirst()
 {
-	//	if (empty)
-	//	return nullptr;
 
 	for (int i = 0; i < items.size(); i++)
 	{
@@ -923,8 +806,6 @@ void ZeldaMenu::PickItem(const char* name)
 			}
 		}
 	}
-
-	//ShowItemInfo();
 }
 
 
@@ -952,39 +833,11 @@ void ZeldaMenu::ShowItemInfo()
 		}
 	}
 
-	/*if (selected != nullptr)
-	{
-	if (selected->identifier == "bow")
-	{
-	menu_images[1]->Hitbox.y = 268;
-	menu_texts[0]->Write("BOW ARROWS");
-	menu_texts[2]->Visible(true);
-	menu_texts[3]->Visible(false);
-	menu_texts[4]->Visible(false);
-	}
-	if (selected->identifier == "hookshot")
-	{
-	menu_images[1]->Hitbox.y = 301;
-	menu_texts[0]->Write("HOOKSHOT");
-	menu_texts[2]->Visible(false);
-	menu_texts[3]->Visible(true);
-	menu_texts[4]->Visible(false);
-	}
-	if (selected->identifier == "bomb")
-	{
-	menu_images[1]->Hitbox.y = 336;
-	menu_texts[0]->Write("BOMBS");
-	menu_texts[2]->Visible(false);
-	menu_texts[3]->Visible(false);
-	menu_texts[4]->Visible(true);
-	}
-	}*/
-
 }
 
 ZeldaMenu::~ZeldaMenu()
 {
-	//need to clear vector;
+
 }
 
 
@@ -1233,25 +1086,6 @@ void PokemonCombatHud::GetDamage(uint damage, bool trainer)
 	}
 }
 
-/*void PokemonCombatHud::OpenClose(bool open)
-{
-for (uint i = 0; i < hud_images.size(); i++)
-{
-hud_images[i]->visible = open;
-if (hud_images[i]->elements.size() > 0)
-{
-for (int j = 0; j < hud_images[i]->elements.size(); j++)
-{
-hud_images[i]->elements[j]->visible = open;
-for (int k = 0; k < hud_images[i]->elements[j]->elements.size(); k++)
-{
-hud_images[i]->elements[j]->elements[k]->visible = open;
-}
-}
-}
-}
-visible = open;
-}*/
 
 void PokemonCombatHud::Input()
 {
