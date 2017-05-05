@@ -31,11 +31,11 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 					/*std::string es = temp.attribute("file").as_string("");
 					texture = App->tex->Load(es.c_str());*/
 				}
-
 				position.x = pos.x;
 				position.y = pos.y;
 				rect = { temp.attribute("rect_x").as_int(0), temp.attribute("rect_y").as_int(0), temp.attribute("rect_w").as_int(0), temp.attribute("rect_h").as_int(0) };
 				item_id = temp.attribute("item_id").as_int(0);
+				pickable = temp.attribute("pickable").as_bool(false);
 				stop_search = true;
 			}
 			temp = temp.next_sibling();

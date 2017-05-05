@@ -23,13 +23,13 @@
   
   <!--DYNOBJECTS INFORMATION (not use, only information)-->
   <dynobjects>
-    <dynobject id="2" name="bush_plant" type="ZELDA" rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-    <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-    <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-    <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" file="textures/DynObjectsSpriteSheet.png" />
-    <dynobject id="6" name="door" type="ZELDA" rect_x="83" rect_y="100" rect_w="16" rect_h="32" file="textures/DynObjectsSpriteSheet.png" />
-    <dynobject id="9" name="small_stone" type="ZELDA" rect_x="74" rect_y="34" rect_w="14" rect_h="14" file="textures/DynObjectsSpriteSheet.png" />
-    <dynobject id="10" name="big_stone" type="ZELDA" rect_x="53" rect_y="34" rect_w="18" rect_h="19" file="textures/DynObjectsSpriteSheet.png" />
+    <dynobject id="2" name="bush_plant" type="ZELDA" rect_x="37" rect_y="17" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png" />
+    <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png" />
+    <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+    <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+    <dynobject id="6" name="door" type="ZELDA" rect_x="83" rect_y="100" rect_w="16" rect_h="32" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+    <dynobject id="9" name="small_stone" type="ZELDA" rect_x="74" rect_y="34" rect_w="14" rect_h="14" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+    <dynobject id="10" name="big_stone" type="ZELDA" rect_x="53" rect_y="34" rect_w="18" rect_h="19" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
   </dynobjects>
   
   <weapons>
@@ -48,8 +48,8 @@
       </items>
      
       <dynobjects>
-        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
-        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
+        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true"  file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
+        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" pickable ="false"  file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
       </dynobjects>
       <enemies num="0" />
     </map>
@@ -77,9 +77,9 @@
       </soldier>
 
       <dynobjects>
-        <dynobject id="1" name="door_house_link" type="ZELDA" rect_x="1" rect_y="131" rect_w="32" rect_h="44" file="textures/DynObjectsSpriteSheet.png"/>
-        <dynobject id="2" name="bush_plant" type="ZELDA" rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
-        <dynobject id="7" name="roof_Link" type="ZELDA" rect_x="34" rect_y="174" rect_w="96" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="1" name="door_house_link" type="ZELDA" rect_x="1" rect_y="131" rect_w="32" rect_h="44" pickable ="false" file="textures/DynObjectsSpriteSheet.png"/>
+        <dynobject id="2" name="bush_plant" type="ZELDA" rect_x="37" rect_y="17" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
+        <dynobject id="7" name="roof_Link" type="ZELDA" rect_x="34" rect_y="174" rect_w="96" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       
       <switch blue="1" yellow="3" />
@@ -97,8 +97,8 @@
         <item id="6" pos_x="216" pos_y="64" file="textures/Sword_Shield"/>
       </items>
       <dynobjects>
-        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png"  item_id="4"/>
-        <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" file="textures/DynObjectsSpriteSheet.png" item_id ="5"/>
+        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png"  item_id="4"/>
+        <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id ="5"/>
       </dynobjects>
      </map>
 
@@ -119,7 +119,7 @@
       </soldier>
 
       <dynobjects>
-        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png"  item_id="7"/>
+        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png"  item_id="7"/>
       </dynobjects>
     </map>
 
@@ -129,9 +129,9 @@
       <BCTrooper pos_x="169" pos_y="25" hp="10" attack="10" dir="down" file="" />
       
       <dynobjects>
-        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png"  item_id="7"/>
-        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id="4"/>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="83" rect_y="100" rect_w="16" rect_h="32" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png"  item_id="7"/>
+        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id="4"/>
+        <dynobject id="6" name="door" type="ZELDA" rect_x="83" rect_y="100" rect_w="16" rect_h="32" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       
     </map>
@@ -139,10 +139,10 @@
     <map n="7" file="Victory_Road.tmx">
       <camera follow="true"/>
       <dynobjects>
-        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id ="4"/>
-        <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" file="textures/DynObjectsSpriteSheet.png" item_id ="3"/>
-        <dynobject id="9" name="small_stone" type="ZELDA" rect_x="74" rect_y="34" rect_w="14" rect_h="14" file="textures/DynObjectsSpriteSheet.png" />
-        <dynobject id="10" name="big_stone" type="ZELDA" rect_x="53" rect_y="34" rect_w="18" rect_h="19" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id ="4"/>
+        <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id ="3"/>
+        <dynobject id="9" name="small_stone" type="ZELDA" rect_x="74" rect_y="34" rect_w="14" rect_h="14" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="10" name="big_stone" type="ZELDA" rect_x="53" rect_y="34" rect_w="18" rect_h="19" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <pokemons num="18">
         <pokemon id="2" name="Geodude" mode_stone="false" speed="50" dir="down" hp="3" attack="1" pos_x="120" pos_y="648"/>
@@ -169,10 +169,10 @@
     <map n="8" file="Victory_Road2.tmx">
       <camera follow="true"/>
       <dynobjects>
-        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" item_id ="4"/>
-        <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" file="textures/DynObjectsSpriteSheet.png" item_id ="2"/>
-        <dynobject id="9" name="small_stone" type="ZELDA" rect_x="74" rect_y="34" rect_w="14" rect_h="14" file="textures/DynObjectsSpriteSheet.png" />
-        <dynobject id="10" name="big_stone" type="ZELDA" rect_x="53" rect_y="34" rect_w="18" rect_h="19" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id ="4"/>
+        <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id ="2"/>
+        <dynobject id="9" name="small_stone" type="ZELDA" rect_x="74" rect_y="34" rect_w="14" rect_h="14" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="10" name="big_stone" type="ZELDA" rect_x="53" rect_y="34" rect_w="18" rect_h="19" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <pokemons num="12">
         <pokemon id="1" name="Golem" mode_stone="true" speed="50" dir="down" hp="5" attack="1" pos_x="544" pos_y="439"/>

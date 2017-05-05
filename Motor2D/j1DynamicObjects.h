@@ -4,7 +4,7 @@
 
 #include "SceneElements.h"
 
-enum DynObjectState { D_IDLE = 0, D_DYING };
+enum DynObjectState { D_IDLE = 0, D_DYING, D_PICKED };
 
 class Text;
 
@@ -37,11 +37,14 @@ public:
 
 	//bool Save();
 
+	void Erase(int px, int py);
+
 
 public:
 	Collider* collision = nullptr;
 	SDL_Rect rect;
 	int item_id = 0;
+	bool pickable = false;
 
 private:
 	DynObjectState state = D_IDLE;
