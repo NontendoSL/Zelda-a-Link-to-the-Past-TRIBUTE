@@ -247,6 +247,8 @@ void Button::Draw()
 
 void Button::Update(j1GuiEntity* focused)
 {
+	if (this->belong == ZELDA_MENU_OPTION)
+		LOG("ZELDA OPTION=======================");
 	if (anim != nullptr) {
 		texture2 = anim->GetCurrentFrame();
 	}
@@ -788,6 +790,7 @@ void ZeldaMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich axis do we move (x=true/y=false)
 {
 	App->gui->MoveGroup(ZELDA_MENU, x_axis, speed);
+	App->gui->MoveGroup(ZELDA_MENU_OPTION, x_axis, speed);
 }
 
 Button* ZeldaMenu::GetFirst()

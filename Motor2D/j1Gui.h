@@ -13,6 +13,7 @@ enum GuiGroup
 	MAIN_MENU,
 	ZELDA_HUD,
 	ZELDA_MENU,
+	ZELDA_MENU_OPTION,
 	POKEMON_COMBAT
 };
 enum FontName;

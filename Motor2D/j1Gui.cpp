@@ -32,6 +32,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	gui_groups_name.push_back("Main_Menu");
 	gui_groups_name.push_back("Zelda_HUD");
 	gui_groups_name.push_back("Zelda_Menu");
+	gui_groups_name.push_back("Zelda_Menu_Options");
 	gui_groups_name.push_back("PokemonCombat_HUD");
 
 	return ret;
@@ -52,9 +53,9 @@ bool j1Gui::PreUpdate()
 	ReceiveInput();
 	for (uint i = 0; i < entities.size(); i++)
 	{
-		if (status == ZELDA_HUD || status == ZELDA_MENU)
+		if (status == ZELDA_HUD || status == ZELDA_MENU || status == ZELDA_MENU_OPTION)
 		{
-			if (entities[i]->belong == ZELDA_HUD || entities[i]->belong == ZELDA_MENU)
+			if (entities[i]->belong == ZELDA_HUD || entities[i]->belong == ZELDA_MENU || entities[i]->belong == ZELDA_MENU_OPTION)
 			{
 				if (entities[i]->visible)
 					entities[i]->Update(focused);
@@ -96,9 +97,9 @@ bool j1Gui::PostUpdate()
 {
 	for (uint i = 0; i < entities.size(); i++)
 	{
-		if (status == ZELDA_HUD || status == ZELDA_MENU)
+		if (status == ZELDA_HUD || status == ZELDA_MENU || status == ZELDA_MENU_OPTION)
 		{
-			if (entities[i]->belong == ZELDA_HUD || entities[i]->belong == ZELDA_MENU)
+			if (entities[i]->belong == ZELDA_HUD || entities[i]->belong == ZELDA_MENU || entities[i]->belong == ZELDA_MENU_OPTION)
 			{
 				if (entities[i]->visible)
 					entities[i]->Draw();
