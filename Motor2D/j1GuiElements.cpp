@@ -583,11 +583,14 @@ ZeldaMenu::ZeldaMenu()
 	items.push_back(new ItemMenu((Button*)App->gui->GetEntity("bow")));
 	items.push_back(new ItemMenu((Button*)App->gui->GetEntity("hookshot")));
 	items.push_back(new ItemMenu((Button*)App->gui->GetEntity("bomb")));
-
 	for (int i = 0; i < items.size(); i++)
 	{
 		items[i]->ui_button->visible = false; //setting all the items invisible (unpicked)
 	}
+	//options buttons
+	options.push_back(((Button*)App->gui->GetEntity("save_opt")));
+	options.push_back(((Button*)App->gui->GetEntity("menu_opt")));
+	options.push_back(((Button*)App->gui->GetEntity("quit_opt")));
 
 	position = { 0,-224 };
 	identifier = "start_menu";
@@ -721,17 +724,67 @@ void ZeldaMenu::Update(j1GuiEntity* focused)
 
 }
 
+void ZeldaMenu::SelectOption(bool down)
+{
+	for (int i = 0; i < options.size(); i++)
+	{
+		if (options[i] == App->gui->GetFocused())
+		{
+			if (down)
+			{
+				if (options[i] != options.back())
+				{
+					App->gui->SetFocus(options[i + 1]);
+					return;
+				}
+				else 
+				{
+					App->gui->SetFocus(options[0]);
+					return;
+				}
+			}
+			else
+			{
+				if (options[i] != options.front())
+				{
+					App->gui->SetFocus(options[i - 1]);
+					return;
+				}
+				else
+				{
+					App->gui->SetFocus(options[options.size()-1]);
+					return;
+				}
+			}
+		}
+	}
+}
+
 void ZeldaMenu::Input()
 {
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+	if (on_options == false)
 	{
-		Select(true);
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+		{
+			Select(true);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+		{
+			Select(false);
+		}
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+	else
 	{
-		Select(false);
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+		{
+			SelectOption(true);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+		{
+			SelectOption(false);
+		}
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 	{
 		//assert(App->gui->GetFocused()->listener != nullptr);
 		if (App->gui->GetFocused() != nullptr)
@@ -744,6 +797,18 @@ void ZeldaMenu::Input()
 		if (App->gui->GetFocused() != nullptr)
 		{
 			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_SELECT) == EVENTSTATE::E_DOWN)
+	{
+		on_options = !on_options;
+		if (on_options)
+		{
+			App->gui->SetGui(ZELDA_MENU_OPTION);
+		}
+		else
+		{
+			App->gui->SetGui(ZELDA_MENU);
 		}
 	}
 }
@@ -793,17 +858,24 @@ void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich 
 	App->gui->MoveGroup(ZELDA_MENU_OPTION, x_axis, speed);
 }
 
-Button* ZeldaMenu::GetFirst()
+Button* ZeldaMenu::GetFirst(bool option)
 {
-
-	for (int i = 0; i < items.size(); i++)
+	if (option)
 	{
-		if (items[i]->picked == true)
+		return options[0];
+	}
+	else 
+	{
+		for (int i = 0; i < items.size(); i++)
 		{
-			if (items[i]->ui_button != nullptr)
-				return items[i]->ui_button;
+			if (items[i]->picked == true)
+			{
+				if (items[i]->ui_button != nullptr)
+					return items[i]->ui_button;
+			}
 		}
 	}
+
 	return nullptr;
 }
 

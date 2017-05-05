@@ -121,9 +121,13 @@ public:
 	uint help_timer = 0;
 	bool help_bool = true;
 
+	//provisional app close
+	bool update_return = true;
+
 private:
 	bool useTP = false;
 	uint volume = 120;
+
 };
 
 #endif // __j1SCENE_H__

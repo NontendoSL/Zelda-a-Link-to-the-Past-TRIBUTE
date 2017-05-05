@@ -203,22 +203,10 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
-	bool ret = true;
-
 	//Draw a map
 	App->map->Draw(false);
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		ret = false;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-	{
-
-	}
-
-
-	return ret;
+	return update_return;
 }
 
 // Called before quitting
@@ -270,8 +258,40 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			start_menu->Equip("bomb");
 		}
 	}
-
-
+	if (element->identifier == "save_opt")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "menu_opt")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "quit_opt")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			update_return = false;
+		}
+	}
 }
 
 void j1Scene::CreateTeleports()

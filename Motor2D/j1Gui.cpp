@@ -86,6 +86,9 @@ void j1Gui::ReceiveInput()
 	case GuiGroup::ZELDA_MENU:
 		App->scene->start_menu->Input();
 		break;
+	case GuiGroup::ZELDA_MENU_OPTION:
+		App->scene->start_menu->Input();
+		break;
 	case GuiGroup::POKEMON_COMBAT:
 		App->scene->pokecombat->Input();
 		break;
@@ -211,7 +214,10 @@ void j1Gui::SetGui(GuiGroup guistate)
 		SetFocus(nullptr);
 		return;
 	case ZELDA_MENU:
-		SetFocus(App->scene->start_menu->GetFirst());
+		SetFocus(App->scene->start_menu->GetFirst(false));
+		return;
+	case ZELDA_MENU_OPTION:
+		SetFocus(App->scene->start_menu->GetFirst(true));
 		return;
 	default:
 		SetFocus(nullptr);

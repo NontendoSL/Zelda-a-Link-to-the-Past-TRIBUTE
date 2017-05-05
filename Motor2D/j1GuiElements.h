@@ -175,21 +175,18 @@ public:
 	void Select(bool next); //true for next, false for previous
 							//void OpenClose(bool open); //not necessary if on j1Gui we bypass elements on wich world they are?
 	void Move(bool axis, float speed);
-	void Click();
-	void UnClick();
-	void Do();
 	void Equip(const char* item);
 	void ShowItemInfo();
 	void PickItem(const char* name);
-	Button* GetFirst();
-private: //mirar com fer Draw dels elements de la ui segons el mon on estem (ojo amb tema obrir menu/hud etc) //potser ficar doble condicio al fer draw (zeldahud || zeldamenu)
-	std::vector<ItemMenu*>items; //inside each item button, put its description and image for "ShowItemInfo", aswell the info when equiped
-								 //std::map<ItemMenu*, bool>items;
+	void SelectOption(bool down);
+	Button* GetFirst(bool option); //bool option on true, for getting first element on option mini menu instead of the items list
+private: 
+	std::vector<ItemMenu*>items;
+	std::vector<Button*>options;
 	Image* item_info, *item_equiped;
 	Text* item_info_name, *item_eq_name, *item_info_desc;
 	bool empty = true;
-	//uint n_items;
-	// when action is BUTTON_DOWN, put the equiped item info on menu
+	bool on_options = false;
 };
 
 //----------------------------------------------------------
