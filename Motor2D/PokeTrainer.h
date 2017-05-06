@@ -34,7 +34,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	Pokemon* GetPokemon();
+	PokemonCombat* GetPokemon();
 
 
 

@@ -27,7 +27,8 @@ class MainMenu;
 class ZeldaHud;
 class ZeldaMenu;
 class PokemonCombatHud;
-class Pokemon;
+class PokemonWorldHud;
+class PokemonCombat;
 class Selector;
 
 // ---------------------------------------------------
@@ -76,7 +77,9 @@ public:
 
 	ZeldaMenu* CreateZeldaMenu();
 
-	PokemonCombatHud* CreatePokemonCombatHud(Pokemon* Link, Pokemon* Brendan);
+	PokemonCombatHud* CreatePokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan);
+
+	PokemonWorldHud* CreatePokemonWorldHud();
 
 	void Erase(j1GuiEntity* to_delete);
 

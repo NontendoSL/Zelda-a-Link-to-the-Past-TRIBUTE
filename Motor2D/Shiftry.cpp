@@ -483,5 +483,5 @@ bool Shiftry::Movebyhit()
 
 int Shiftry::CheckPlayerPos()
 {
-	int distance_player = App->scene->player->position.DistanceTo(position);
+	return App->scene->player->position.DistanceTo(position);
 }

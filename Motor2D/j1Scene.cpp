@@ -393,7 +393,7 @@ void j1Scene::GoMainMenu()
 
 		if (poketrainer != nullptr)
 		{
-			Pokemon* poke = poketrainer->GetPokemon();
+			PokemonCombat* poke = poketrainer->GetPokemon();
 			delete poke;
 			poke = nullptr;
 		}
@@ -460,7 +460,7 @@ void j1Scene::SwitchMap(bool isTP)
 
 			if (poketrainer != nullptr)
 			{
-				Pokemon* poke = poketrainer->GetPokemon();
+				PokemonCombat* poke = poketrainer->GetPokemon();
 				delete poke;
 				poke = nullptr;
 			}

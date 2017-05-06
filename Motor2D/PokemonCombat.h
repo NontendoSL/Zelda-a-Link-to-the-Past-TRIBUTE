@@ -6,7 +6,7 @@
 #include "j1Window.h"
 #include "j1Collision.h"
 
-enum PokemonCombatState { PC_IDLE = 0, PC_WALKING, PC_ATTACKING, PC_SPECIAL, PC_HIT, PC_DYING, PC_STATIC, PC_HIT, PC_CHASING };
+enum PokemonCombatState { PC_IDLE = 0, PC_WALKING, PC_ATTACKING, PC_SPECIAL, PC_HIT, PC_DYING, PC_STATIC, PC_CHASING };
 enum PokemonParticles { BUBBLE, LEAF };
 
 class PokemonCombat : public NPC

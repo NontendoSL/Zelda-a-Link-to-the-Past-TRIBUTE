@@ -11,7 +11,7 @@ enum FontName { GANONF, PIXEL, PIXELMORE, POKE1 };
 struct 	_TTF_Font;
 class Animation;
 class InputManager;
-class Pokemon;
+class PokemonCombat;
 // ---------------------------------------------------
 
 class Image : public j1GuiEntity
@@ -197,7 +197,7 @@ public:
 class PokemonCombatHud :public j1GuiEntity
 {
 public:
-	PokemonCombatHud(Pokemon* Link, Pokemon* Brendan);
+	PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan);
 	~PokemonCombatHud();
 public:
 	void Input();
@@ -206,8 +206,8 @@ public:
 	void SetCd(uint newcd);
 	//void OpenClose(bool open);//true open false close
 	void Move(bool x_axis, float speed);
-	void LoadNewPokemon(Pokemon* pokemon, bool trainer);
-	void CombatInfo(Pokemon* pokemon_1, Pokemon* pokemon_2);
+	void LoadNewPokemon(PokemonCombat* pokemon, bool trainer);
+	void CombatInfo(PokemonCombat* pokemon_1, PokemonCombat* pokemon_2);
 	void GetDamage(uint damage, bool trainer);
 public:
 	bool cooldown = false;
@@ -224,6 +224,17 @@ private:
 	iPoint hpbar_pBrendan = { 0,0 };
 	char buffer[25]; //hp
 	iPoint num_pokemons = { 0,0 };
+
+};
+
+//---------------------------------------
+
+class PokemonWorldHud :public j1GuiEntity
+{
+public:
+	PokemonWorldHud();
+	~PokemonWorldHud();
+public:
 
 };
 #endif // __j1GUIELEMENTS_H__

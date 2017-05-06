@@ -12,7 +12,7 @@
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
 #include "j1Player.h"
-#include "Pokemon.h"
+#include "PokemonCombat.h"
 #include "CombatManager.h"
 #include "j1Weapon.h"
 #include "j1Window.h"
@@ -934,7 +934,7 @@ ZeldaMenu::~ZeldaMenu()
 
 /////////////////////////////////////POKEMON COMBAT HUD//////////////////////////
 
-PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
+PokemonCombatHud::PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 {
 
 	int hotfix = App->win->GetHeight() / App->win->GetScale();
@@ -956,6 +956,7 @@ PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 	poke_hp_Brendan = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 }, true, "poke_hp_brendan", POKEMON_COMBAT);
 	App->gui->GetEntity("right box")->elements.push_back(poke_hp_Brendan);
 
+
 	//x-> Link - y->Brendan
 	num_pokemons = { 3, 3 };
 	cooldown = false;
@@ -972,7 +973,7 @@ void PokemonCombatHud::Move(bool x_axis, float speed)
 	App->gui->GetEntity("bottom hud")->position.x += speed;
 }
 
-void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Link - false Brendan
+void PokemonCombatHud::LoadNewPokemon(PokemonCombat* pokemon, bool trainer) //true Link - false Brendan
 {
 	if (pokemon != nullptr)
 	{
@@ -1129,7 +1130,7 @@ void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Lin
 
 }
 
-void PokemonCombatHud::CombatInfo(Pokemon* pokemon, Pokemon* pokemon_2)
+void PokemonCombatHud::CombatInfo(PokemonCombat* pokemon, PokemonCombat* pokemon_2)
 {
 	//pokemon 1
 	((Text*)App->gui->GetEntity("link_pk_name"))->Write(pokemon->name.c_str());
@@ -1245,5 +1246,18 @@ PokemonCombatHud::~PokemonCombatHud()
 
 }
 
+/////////////////////////////////////POKEMON WORLD HUD//////////////////////////
+
+PokemonWorldHud::PokemonWorldHud()
+{
+
+
+}
+
+PokemonWorldHud::~PokemonWorldHud()
+{
+
+
+}
 
 // Entity Elements ---------------------------------------------------

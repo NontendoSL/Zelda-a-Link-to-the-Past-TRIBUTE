@@ -483,5 +483,5 @@ bool Walrein::Movebyhit()
 
 int Walrein::CheckPlayerPos()
 {
-	int distance_player = App->scene->player->position.DistanceTo(position);
+	return  App->scene->player->position.DistanceTo(position);
 }

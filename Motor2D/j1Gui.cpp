@@ -296,9 +296,16 @@ ZeldaMenu* j1Gui::CreateZeldaMenu()
 	return element;
 }
 
-PokemonCombatHud* j1Gui::CreatePokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
+PokemonCombatHud* j1Gui::CreatePokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 {
 	PokemonCombatHud* element = new PokemonCombatHud(Link, Brendan);
+	entities.push_back(element);
+	return element;
+}
+
+PokemonWorldHud* j1Gui::CreatePokemonWorldHud()
+{
+	PokemonWorldHud* element = new PokemonWorldHud();
 	entities.push_back(element);
 	return element;
 }
@@ -361,7 +368,7 @@ void j1Gui::LoadEntities()
 			}
 		}
 		actual = (GuiGroup)(actual + 1);
-		if (actual > 5)
+		if (actual > gui_groups_name.size())
 		{
 			LOG("GUI ENTITIES LOADED=======================================");
 			for (int i = 0; i < entities.size(); i++)

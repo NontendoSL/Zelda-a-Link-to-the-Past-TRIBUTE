@@ -18,7 +18,6 @@ bool PokeTrainer::Awake(pugi::xml_node &conf)
 	for (pugi::xml_node temp = conf.child("pokemon"); temp != NULL; temp = temp.next_sibling())
 	{
 		PokemonCombat* poke = App->combatmanager->CreatePokemon(temp, temp.attribute("id").as_int(1));
-		poke->pokemon_player = false;
 		pokedex= poke;
 	}
 	
@@ -72,7 +71,7 @@ void PokeTrainer::Draw()
 	}
 }
 
-Pokemon* PokeTrainer::GetPokemon()
+PokemonCombat* PokeTrainer::GetPokemon()
 {
 	return pokedex;
 }

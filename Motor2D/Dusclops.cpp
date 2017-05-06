@@ -483,5 +483,5 @@ bool Dusclops::Movebyhit()
 
 int Dusclops::CheckPlayerPos()
 {
-	int distance_player = App->scene->player->position.DistanceTo(position);
+	return App->scene->player->position.DistanceTo(position);
 }
