@@ -35,7 +35,6 @@ bool Geodude::Awake(pugi::xml_node &conf, uint id, iPoint pos)
 	else
 		direction = RIGHT;
 
-	cooldown = conf.attribute("cooldown").as_int(0);
 	mode_stone = conf.attribute("mode_stone").as_bool(false);
 	if(mode_stone)
 		position = iPoint(pos.x, pos.y);
