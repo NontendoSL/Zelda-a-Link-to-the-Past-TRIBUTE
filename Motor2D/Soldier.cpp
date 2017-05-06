@@ -11,6 +11,7 @@
 #include "j1Audio.h"
 #include "j1Player.h"
 #include "j1Weapon.h"
+#include "j1DynamicObjects.h"
 
 Soldier::Soldier():NPC()
 {
@@ -103,6 +104,22 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 				dir_hit = c2->arrow_callback->direction;
 				prev_position = position;
 				c2->arrow_callback->step = IMPACT; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
+			}
+		}
+
+		//DYNOBJECT COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_DYNOBJECT && c2->callback != nullptr)
+		{
+			if (((DynamicObjects*)c2->callback)->GetState() == D_AIR)
+			{
+				App->audio->PlayFx(12);
+				knockback_time.Start();
+				hp -= 2; // TODO LOW -> set attack dmg to each type of dynobject.
+				state = S_HIT;
+				anim_state = S_IDLE;
+				dir_hit = c2->callback->direction;
+				prev_position = position;
+				((DynamicObjects*)c2->callback)->SetState(D_DYING);
 			}
 		}
 	}

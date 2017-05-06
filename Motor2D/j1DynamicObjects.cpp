@@ -64,8 +64,8 @@ bool DynamicObjects::Start()
 
 	if (pickable == true) //Set variables of throwing and impacting
 	{
-		speed = 150;
-		lifetime = 1;
+		speed = 200;
+		lifetime = 0.3;
 	}
 
 	return true;
@@ -73,7 +73,7 @@ bool DynamicObjects::Start()
 
 bool DynamicObjects::Update(float dt)
 {
-	if (to_follow != nullptr)
+	if (to_follow != nullptr && state == D_PICKED)
 	{
 		position.x = to_follow->position.x - to_follow->offset_x;
 		position.y = to_follow->position.y - to_follow->offset_y - 20;
@@ -87,22 +87,12 @@ bool DynamicObjects::Update(float dt)
 			state = D_DYING;
 		}
 
-		else 
+		else
 		{
 			KeepGoing(dt);
+			IsImpact(App->scene->player->GetFloor()); //Check for wall impact
 			collision->SetPos(position.x, position.y);
-
-			//Check for a WALL IMPACT.
-			if (IsImpact(App->scene->player->GetFloor()) == D_DYING)
-			{
-				App->audio->PlayFx(17);
-			}
 		}
-	}
-
-	else if (state == D_DYING)
-	{
-		//Erase();
 	}
 
 	return true;
@@ -144,6 +134,7 @@ void DynamicObjects::Throw(Direction dir)
 {
 	state = D_AIR;
 	direction = dir;
+	timer.Start();
 }
 
 void DynamicObjects::KeepGoing(float dt)
@@ -206,17 +197,6 @@ DynObjectState DynamicObjects::IsImpact(int actual_floor)
 	}
 
 	return state;
-}
-
-void DynamicObjects::Erase()
-{
-	iPoint item_pos;
-	item_pos.x = position.x + 4;
-	item_pos.y = position.y;
-
-	App->entity_elements->CreateItem(item_id, item_pos);
-	App->entity_elements->DeleteDynObject(this);
-
 }
 
 DynObjectState DynamicObjects::GetState() const

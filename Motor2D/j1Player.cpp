@@ -344,7 +344,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					App->audio->PlayFx(15);
 					//create item
 					iPoint position;
-					position.x = c2->callback->position.x + c2->rect.w*0.5;
+					position.x = c2->callback->position.x + c2->rect.w*0.3;
 					position.y = c2->callback->position.y + c2->rect.h;
 					DynamicObjects* temp = (DynamicObjects*)c2->callback;
 					App->entity_elements->CreateItem(temp->item_id, position); //TODO LOW call Drop item() function
@@ -354,12 +354,30 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 				if (((DynamicObjects*)c2->callback)->pickable == true && ((DynamicObjects*)c2->callback)->GetState() == D_IDLE) //TO PICK VASES AND BUSHES
 				{
-					((DynamicObjects*)c2->callback)->ModifyTileCost(0);
-					((DynamicObjects*)c2->callback)->SetState(D_PICKED);
-					((DynamicObjects*)c2->callback)->SetAnimState(D_IDLE);
-					//SetAnimState(L_PICKING);
-					picked_object = ((DynamicObjects*)c2->callback);
-					((DynamicObjects*)c2->callback)->Follow((SceneElement*)this);
+					if (picked_object == nullptr) // Only carry one object.
+					{
+						// DROP THE ITEM INSIDE -----------------------
+						iPoint position;
+						position.x = c2->callback->position.x + 4;
+						position.y = c2->callback->position.y;
+						App->entity_elements->CreateItem(((DynamicObjects*)c2->callback)->item_id, position);
+						// --------------------------------------------
+
+						((DynamicObjects*)c2->callback)->ModifyTileCost(0);
+						((DynamicObjects*)c2->callback)->SetState(D_PICKED);
+						((DynamicObjects*)c2->callback)->SetAnimState(D_IDLE);
+						//SetAnimState(L_PICKING);
+						picked_object = ((DynamicObjects*)c2->callback);
+						((DynamicObjects*)c2->callback)->Follow((SceneElement*)this);
+
+						//Set texture rect -----
+						if (((DynamicObjects*)c2->callback)->name == "bush_plant")
+						{
+							((DynamicObjects*)c2->callback)->rect.x = 2;
+							((DynamicObjects*)c2->callback)->rect.y = 17;
+						}
+						//----------------------
+					}
 				}
 			}
 
@@ -443,6 +461,12 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					hp_hearts.y--;
 					dir_hit = c2->callback->direction;
 					prev_position = position;
+
+					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
+					{
+						picked_object->SetState(D_DYING);
+						picked_object = nullptr;
+					}
 				}
 			}
 
@@ -958,7 +982,7 @@ bool Player::Interact()
 void Player::ThrowObject()
 {
 	picked_object->Throw(direction);
-	picked_object == nullptr;
+	picked_object = nullptr;
 }
 
 bool Player::Hooking()

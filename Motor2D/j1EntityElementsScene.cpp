@@ -80,6 +80,14 @@ bool j1EntityElementScene::Update(float dt)
 		while (item3 != elementscene.end())
 		{
 			item3._Ptr->_Myval->Update(dt);
+
+			if (((DynamicObjects*)item3._Ptr->_Myval)->GetState() == D_DYING)
+			{
+				//TODO -> if animation finished, then delete.
+				App->entity_elements->DeleteDynObject(((DynamicObjects*)item3._Ptr->_Myval)); // Delete Dynobject
+				App->audio->PlayFx(17);
+			}
+
 			item3++;
 		}
 	}

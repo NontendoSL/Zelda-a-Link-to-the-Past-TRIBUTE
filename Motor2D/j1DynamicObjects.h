@@ -39,7 +39,6 @@ public:
 	void Throw(Direction dir);
 	void KeepGoing(float dt);
 	DynObjectState IsImpact(int actual_floor);
-	void Erase();
 	//-------------------------------------
 
 	DynObjectState GetState() const;
