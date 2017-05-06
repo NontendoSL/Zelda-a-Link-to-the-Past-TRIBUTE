@@ -20,7 +20,6 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_POKEMON] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_TRAINER] = true;
-
 	matrix[COLLIDER_PLAYER][COLLIDER_VILAGER] = true;
 
 	matrix[COLLIDER_BCTROOPER_MAZE][COLLIDER_PLAYER] = true;
@@ -45,6 +44,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_POKEMON][COLLIDER_POKEMON_ATTACK] = true;
 	matrix[COLLIDER_POKEMON][COLLIDER_SWORD] = true; 
 
+	matrix[COLLIDER_POKEMON_SPECIAL_ATTACK][COLLIDER_POKEMON] = true;
 	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKEMON] = false;
 
 }
@@ -212,6 +212,11 @@ void j1Collision::DebugDraw()
 		case COLLIDER_POKEMON_ATTACK:
 			App->render->DrawQuad(colliders[i]->rect, 125, 0, 50, alpha);
 			break;
+
+		case COLLIDER_POKEMON_SPECIAL_ATTACK:
+			App->render->DrawQuad(colliders[i]->rect, 125, 0, 150, alpha);
+			break;
+
 			//BCTropper ------------
 		case COLLIDER_BCTROOPER:
 			App->render->DrawQuad(colliders[i]->rect, 200, 125, 30, alpha);
