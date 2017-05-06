@@ -201,6 +201,10 @@ bool j1Scene::Update(float dt)
 				App->scene->player->position.x = App->input->GetMousePosition().x;
 				App->scene->player->position.y = App->input->GetMousePosition().y;
 			}
+			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+			{
+				App->gui->SetGui(POKEMON_HUD);
+			}
 			//-------------------------------------------------------
 			// TP LEVEL
 		}

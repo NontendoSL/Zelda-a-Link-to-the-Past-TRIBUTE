@@ -34,6 +34,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	gui_groups_name.push_back("Zelda_Menu");
 	gui_groups_name.push_back("Zelda_Menu_Options");
 	gui_groups_name.push_back("PokemonCombat_HUD");
+	gui_groups_name.push_back("PokemonWorld_HUD");
 
 	return ret;
 }
@@ -361,6 +362,14 @@ void j1Gui::LoadEntities()
 					}
 					anim_picker->anim->speed = temp_inside.attribute("anim_speed").as_double();
 				}
+				if (temp_inside.attribute("inside").as_bool(false))
+				{
+					for (pugi::xml_node anim = temp_inside.child("entity"); anim != NULL; anim = anim.next_sibling())
+					{
+						inside_picker = App->gui->CreateImage({ anim.attribute("rect.x").as_int(0), anim.attribute("rect.y").as_int(0), anim.attribute("rect.w").as_int(0), anim.attribute("rect.h").as_int(0) }, { anim.attribute("pos.x").as_int(0), anim.attribute("pos.y").as_int(0) }, anim.attribute("identifier").as_string(""), actual, anim.attribute("movable").as_bool(true));
+						anim_picker->elements.push_back(inside_picker);
+					}
+				}
 			}
 			if (type == "text")
 			{
@@ -373,7 +382,7 @@ void j1Gui::LoadEntities()
 			LOG("GUI ENTITIES LOADED=======================================");
 			for (int i = 0; i < entities.size(); i++)
 			{
-				if (entities[i]->belong == POKEMON_COMBAT)
+				if (entities[i]->belong == POKEMON_HUD)
 				{
 					LOG("%s", entities[i]->identifier.c_str());
 				}

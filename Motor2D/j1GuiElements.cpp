@@ -248,6 +248,25 @@ void Button::Draw()
 
 void Button::Update(j1GuiEntity* focused)
 {
+	if (start == true)
+	{
+
+		for (int i = 0; i<elements.size(); i++)
+		{
+			elements[i]->position.x += position.x;
+			elements[i]->position.y += position.y;
+			elements[i]->diferential.x = (elements[i]->position.x - position.x);
+			elements[i]->diferential.y = (elements[i]->position.y - position.y);
+		}
+		start = false;
+	}
+
+	for (int i = 0; i<elements.size(); i++)
+	{
+		elements[i]->position.x = position.x + elements[i]->diferential.x;
+		elements[i]->position.y = position.y + elements[i]->diferential.y;
+	}
+
 	if (anim != nullptr) {
 		texture2 = anim->GetCurrentFrame();
 	}
