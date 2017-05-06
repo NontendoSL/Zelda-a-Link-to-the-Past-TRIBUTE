@@ -273,6 +273,24 @@ bool j1EntityElementScene::DeleteElement(std::string name)
 	return true;
 }
 
+bool j1EntityElementScene::DeletePlayer(Player* player)
+{
+	if (player != nullptr)
+	{
+		elementscene.remove(player);
+		//delete App->scene->player;
+		App->scene->player = nullptr;
+		player->collision_feet->to_delete = true;
+		//player = nullptr;
+		//delete player;
+		return true;
+	}
+	return false;
+}
+
+
+
+
 Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 {
 	Item* element = new Item();

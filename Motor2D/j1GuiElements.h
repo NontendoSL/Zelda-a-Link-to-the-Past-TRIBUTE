@@ -86,7 +86,6 @@ public:
 	void Draw();
 	void Update(j1GuiEntity* focused);
 	void PushLine(bool push);
-private:
 	void Clear();
 public:
 	float diferential = 0.5;
@@ -173,7 +172,6 @@ public:
 public:
 	void ResetInventory();
 	void Select(bool next); //true for next, false for previous
-							//void OpenClose(bool open); //not necessary if on j1Gui we bypass elements on wich world they are?
 	void Move(bool axis, float speed);
 	void Equip(const char* item);
 	void ShowItemInfo();
@@ -186,6 +184,7 @@ private:
 	Image* item_info, *item_equiped;
 	Text* item_info_name, *item_eq_name, *item_info_desc;
 	bool empty = true;
+public:
 	bool on_options = false;
 };
 

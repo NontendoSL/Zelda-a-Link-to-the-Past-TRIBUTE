@@ -122,7 +122,6 @@ bool j1SceneIntro::Update(float dt)
 			{
 				App->scene->ingame = true;
 				App->scene->Start();
-				//main_menu->OpenClose(false);
 				goHouse = false;
 			}
 		}
@@ -147,10 +146,6 @@ bool j1SceneIntro::PostUpdate()
 			{
 				LoadMainMenu();
 			}
-			//if (main_menu->id_selected == 1)
-			//{
-			//	goHouse = true;  CHANGE THIS TO ONGUI
-			//}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP)
 		{

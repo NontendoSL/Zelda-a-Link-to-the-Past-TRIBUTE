@@ -82,11 +82,12 @@ public:
 	void SwitchMap(bool isTP);
 
 private:
-	SDL_Texture* debug_tex;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	void LoadUi();
+	void GoMainMenu();
 
 public:
+	SDL_Texture* debug_tex;
 	GameState gamestate = INGAME;
 	//Teleports
 	std::vector<Teleport> teleports;
@@ -121,9 +122,9 @@ public:
 	uint help_timer = 0;
 	bool help_bool = true;
 
-	//provisional app close
+	//provisional app close and game loop
 	bool update_return = true;
-
+	bool first_loop = true;
 private:
 	bool useTP = false;
 	uint volume = 120;

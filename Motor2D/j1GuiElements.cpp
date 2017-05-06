@@ -247,8 +247,6 @@ void Button::Draw()
 
 void Button::Update(j1GuiEntity* focused)
 {
-	if (this->belong == ZELDA_MENU_OPTION)
-		LOG("ZELDA OPTION=======================");
 	if (anim != nullptr) {
 		texture2 = anim->GetCurrentFrame();
 	}
@@ -292,12 +290,13 @@ Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
 		i -= lines->length;
 	}
 	enters--;
+	App->scene->player->SetAnimState(LinkState::L_IDLE);
 }
 
 void Dialogue::Draw()
 {
 	
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);//178 50
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
 	SDL_Rect viewport = { (position.x*2)+6*2, (position.y * 2) + 6*2, 178*2, 50*2 };
 	SDL_RenderSetViewport(App->render->renderer, &viewport);
 	//App->render->DrawQuad({ -500,-500,999,999 }, 255, 255, 255, 170); UNCOMMENT TO SEE VIEWPORT
@@ -332,13 +331,8 @@ void Dialogue::PushLine(bool push)
 		}
 		pushes++;
 	}
-
-	//	options = App->gui->CreateSelector("Yes", "No", this);
-	//	options->parent = this;
-	//	end = true;
 }
 
-//TODO WORK on clear dialogue lines when u delete dialog
 void Dialogue::Clear()
 {
 	App->gui->Erase(App->gui->GetEntity("dialogue text"));
@@ -348,7 +342,7 @@ void Dialogue::Clear()
 
 Dialogue::~Dialogue()
 {
-	//need to clear text;
+
 }
 
 Selector::Selector(const char* first_option, const char* second_option, j1GuiEntity* parent)
@@ -519,6 +513,13 @@ void ZeldaHud::Input()
 
 void ZeldaHud::Equip(const char* item)
 {
+	if (item == "none")
+	{
+		picked->Hitbox.y = 260;
+		charge->Hitbox.x = 18;
+		charge->Hitbox.y = 44;
+		return;
+	}
 	if (item == "bow")
 	{
 		picked->Hitbox.y = 276;
@@ -599,22 +600,19 @@ ZeldaMenu::ZeldaMenu()
 
 void ZeldaMenu::ResetInventory()
 {
-	/*if (menu_buttons.size() > 0)
+
+	for (int i = 0; i < items.size(); i++)
 	{
-	menu_buttons.clear();
+		items[i]->picked = false;
+		items[i]->ui_button->visible = false;
 	}
-	selected = nullptr;
-	App->scene->hud->GetImage(1)->elements[0]->Hitbox.y = 257; //setting item selected in box to nothing
-	menu_texts[2]->Visible(false);
-	menu_texts[3]->Visible(false);
-	menu_texts[4]->Visible(false);
-	menu_images[1]->Hitbox.y = 372;
-	menu_images[2]->Hitbox.y = 256;
-	menu_texts[0]->Write("SELECT AN ITEM");
-	menu_texts[1]->Write("PICK ITEM");*/
-
-	//TODO MED-> redo this function
-
+	item_info->Hitbox.y = 370;
+	item_info_name->Write("SELECT AN ITEM");
+	item_equiped->Hitbox.y = 257;
+	item_eq_name->Write("   PICK ITEM");
+	item_info_desc->Write("Search for items!");
+	empty = true;
+	App->scene->hud->Equip("none");
 }
 
 void ZeldaMenu::Select(bool next)

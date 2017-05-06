@@ -22,6 +22,7 @@
 #include "PokeTrainer.h"
 #include "j1Collision.h"
 #include "j1Weapon.h"
+#include "j1SceneIntro.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -46,29 +47,36 @@ bool j1Scene::Start()
 {
 	if (ingame == true)
 	{
-		LoadUi();
+		if (first_loop)
+		{
+			LoadUi();
+			
+			//App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
+			App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
+			App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
+			App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
+			App->audio->LoadFx("audio/fx/LTTP_Sword_Attack.wav");//5
+			App->audio->LoadFx("audio/fx/LTTP_Bomb_Lay.wav");//6
+			App->audio->LoadFx("audio/fx/LTTP_Bomb_Explosion.wav");//7
+			App->audio->LoadFx("audio/fx/PKMN_Scratch_Attack.wav");//8
+			App->audio->LoadFx("audio/fx/PKMN_Blaziken_Attack.wav");//9
+			App->audio->LoadFx("audio/fx/PKMN_Tackle_Attack.wav");//10
+			App->audio->LoadFx("audio/fx/LTTP_Enemy_Death.wav");//11
+			App->audio->LoadFx("audio/fx/LTTP_Enemy_Hit.wav");//12
+			App->audio->LoadFx("audio/fx/LTTP_Link_Hurt.wav");//13
+			App->audio->LoadFx("audio/fx/LTTP_Fall.wav");//14
+			App->audio->LoadFx("audio/fx/LTTP_Chest_Open.wav");//15
+			App->audio->LoadFx("audio/fx/LTTP_BombBreaksWall.wav");//16 Arrow charge GOOD
+			App->audio->LoadFx("audio/fx/LTTP_ArrowHitWall.wav");//17 Arrow hit
+			App->audio->LoadFx("audio/fx/LTTP_Arrow.wav");//18
+			//Inicialitzate All teleports
+			CreateTeleports();
+			first_loop = false;
+		}
 		Load_new_map(1, false);
-		//App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
-		App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
-		App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
-		App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
-		App->audio->LoadFx("audio/fx/LTTP_Sword_Attack.wav");//5
-		App->audio->LoadFx("audio/fx/LTTP_Bomb_Lay.wav");//6
-		App->audio->LoadFx("audio/fx/LTTP_Bomb_Explosion.wav");//7
-		App->audio->LoadFx("audio/fx/PKMN_Scratch_Attack.wav");//8
-		App->audio->LoadFx("audio/fx/PKMN_Blaziken_Attack.wav");//9
-		App->audio->LoadFx("audio/fx/PKMN_Tackle_Attack.wav");//10
-		App->audio->LoadFx("audio/fx/LTTP_Enemy_Death.wav");//11
-		App->audio->LoadFx("audio/fx/LTTP_Enemy_Hit.wav");//12
-		App->audio->LoadFx("audio/fx/LTTP_Link_Hurt.wav");//13
-		App->audio->LoadFx("audio/fx/LTTP_Fall.wav");//14
-		App->audio->LoadFx("audio/fx/LTTP_Chest_Open.wav");//15
-		App->audio->LoadFx("audio/fx/LTTP_BombBreaksWall.wav");//16 Arrow charge GOOD
-		App->audio->LoadFx("audio/fx/LTTP_ArrowHitWall.wav");//17 Arrow hit
-		App->audio->LoadFx("audio/fx/LTTP_Arrow.wav");//18
 		help_timer = SDL_GetTicks();
-		//Inicialitzate All teleports
-		CreateTeleports();
+		App->gui->SetGui(ZELDA_HUD);
+		start_menu->ResetInventory();
 	}
 	inventory = false;
 	switch_map = 0;
@@ -278,6 +286,8 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			start_menu->on_options = false;
+			GoMainMenu();
 		}
 	}
 	if (element->identifier == "quit_opt")
@@ -362,9 +372,52 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 			inventory = false;
 			gamestate = INGAME;
 			App->gui->SetGui(ZELDA_HUD);
+			start_menu->on_options = false;
 		}
 	}
 
+}
+
+void j1Scene::GoMainMenu()
+{
+	if (App->map->CleanUp())
+	{
+		App->collision->EreseAllColiderPlayer();
+		if (player->equiped_item != nullptr)
+		{
+			weapon_equiped = player->equiped_item->Wtype;
+		}
+		App->entity_elements->DelteElements();
+		App->combatmanager->DeleteElements_combat();
+
+		if (poketrainer != nullptr)
+		{
+			if (poketrainer->pokedex.size() > 0)
+			{
+				poketrainer->pokedex.clear();
+			}
+		}
+		if (player->pokedex.size() > 0)
+		{
+			player->pokedex.clear();
+		}
+	}
+	
+	if (inventory)
+	{
+		start_menu->Move(false, -App->gui->GetEntity("bg")->Hitbox.h);
+		hud->Move(false, -App->gui->GetEntity("bg")->Hitbox.h);
+		gamestate = INGAME;
+	}
+	if (player->dialog != nullptr)
+	{
+		player->dialog->Clear();
+	}
+
+	App->entity_elements->DeletePlayer(player);
+	ingame = false;
+	App->intro->fade = true;
+	App->gui->SetGui(MAIN_MENU);
 }
 
 void j1Scene::ChangeState(GameState state)

@@ -63,13 +63,14 @@ private:
 	bool			right = false;
 	bool			menu = false;
 
-	bool goHouse = false;
-	bool fade;
+
 	uint Menu_Cursor;
 	uint volume = 120;
 
 public:
 	MainMenu* main_menu = nullptr;
+	bool goHouse = false;
+	bool fade;
 };
 
 #endif
