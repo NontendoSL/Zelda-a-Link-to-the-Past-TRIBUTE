@@ -6,7 +6,7 @@
 #include "j1Creature.h"
 #include "j1InputManager.h"
 
-enum LinkState { L_IDLE = 0, L_WALKING, L_ATTACKING, L_DYING, L_HOOKTHROWN, L_HIT, L_INTERACTING };
+enum LinkState { L_IDLE = 0, L_WALKING, L_ATTACKING, L_DYING, L_PICKING, L_HOOKTHROWN, L_HIT, L_INTERACTING };
 
 class Creature;
 class InputListener;
@@ -19,6 +19,7 @@ class Bow;
 class BombContainer;
 class Dialogue;
 class Image;
+class DynamicObjects;
 
 class Player : public Creature, public InputListener
 {
@@ -64,6 +65,7 @@ public:
 	bool Attack();
 	bool Interact();
 	//----------------------
+	void ThrowObject();
 
 	void GetfloorLvl(iPoint pos);
 	int GetFloor() const;
@@ -108,7 +110,9 @@ public:
 	Hookshot* hook = nullptr;
 	BombContainer* bombmanager = nullptr;
 	Bow* bow = nullptr;
+
 	Weapon* equiped_item = nullptr;
+	DynamicObjects* picked_object = nullptr;
 
 	//Pokemons has Link
 	std::list<Pokemon*> pokedex;
@@ -152,7 +156,7 @@ private:
 	Animation* current_animation = nullptr;
 
 	//Current release test
-	bool sword_equiped = false;
+	bool sword_equiped = true;
 };
 
 

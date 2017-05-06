@@ -317,26 +317,20 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c2->callback != nullptr)
 			{
-				if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest")
+				if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest") //c2->callback->destruvtible == true
 				{
-					iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
 					//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
+
+					((DynamicObjects*)c2->callback)->ModifyTileCost(0);
+
 					int canDrop = 1;
 					if (canDrop == 1)
 					{
 						iPoint position;
 						position.x = c2->callback->position.x + 4;
 						position.y = c2->callback->position.y;
-						DynamicObjects* temp = (DynamicObjects*)c2->callback;
-						App->entity_elements->CreateItem(temp->item_id, position);
-
+						App->entity_elements->CreateItem(((DynamicObjects*)c2->callback)->item_id, position);
 					}
-
-					App->map->EditCost(pos_dyn.x, pos_dyn.y, 0);
-					App->map->EditCost(pos_dyn.x + 1, pos_dyn.y, 0);
-					App->map->EditCost(pos_dyn.x, pos_dyn.y + 1, 0);
-					App->map->EditCost(pos_dyn.x + 1, pos_dyn.y + 1, 0);
-
 
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 				}
@@ -356,6 +350,16 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					App->entity_elements->CreateItem(temp->item_id, position); //TODO LOW call Drop item() function
 					score += 75;
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
+				}
+
+				if (((DynamicObjects*)c2->callback)->pickable == true && ((DynamicObjects*)c2->callback)->GetState() == D_IDLE) //TO PICK VASES AND BUSHES
+				{
+					((DynamicObjects*)c2->callback)->ModifyTileCost(0);
+					((DynamicObjects*)c2->callback)->SetState(D_PICKED);
+					((DynamicObjects*)c2->callback)->SetAnimState(D_IDLE);
+					//SetAnimState(L_PICKING);
+					picked_object = ((DynamicObjects*)c2->callback);
+					((DynamicObjects*)c2->callback)->Follow((SceneElement*)this);
 				}
 			}
 
@@ -654,7 +658,7 @@ bool Player::Idle()
 		anim_state = L_WALKING;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && sword_equiped == true)
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && sword_equiped == true && picked_object == nullptr)
 	{
 		state = L_ATTACKING;
 		anim_state = L_ATTACKING;
@@ -664,11 +668,17 @@ bool Player::Idle()
 
 	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
-		state = L_INTERACTING;
-		anim_state = L_IDLE;
-		//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-		//current_animation->Reset();
-
+		if (picked_object == nullptr)
+		{
+			state = L_INTERACTING;
+			anim_state = L_IDLE;
+			//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+			//current_animation->Reset();
+		}
+		else
+		{
+			ThrowObject();
+		}
 	}
 
 	else
@@ -691,7 +701,7 @@ bool Player::Walking(float dt)
 		anim_state = L_IDLE;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && sword_equiped == true)
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && sword_equiped == true && picked_object == nullptr)
 	{
 		state = L_ATTACKING;
 		anim_state = L_ATTACKING;
@@ -701,11 +711,17 @@ bool Player::Walking(float dt)
 
 	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
-		state = L_INTERACTING;
-		anim_state = L_IDLE;
-		//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-		//current_animation->Reset();
-
+		if (picked_object == nullptr)
+		{
+			state = L_INTERACTING;
+			anim_state = L_IDLE;
+			//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+			//current_animation->Reset();
+		}
+		else
+		{
+			ThrowObject();
+		}
 	}
 
 	else
@@ -937,6 +953,12 @@ bool Player::Interact()
 		}
 	}
 	return true;
+}
+
+void Player::ThrowObject()
+{
+	picked_object->Throw(direction);
+	picked_object == nullptr;
 }
 
 bool Player::Hooking()
@@ -1292,7 +1314,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		{
 	case BUTTON_X:
 	{
-		if (e_state == E_DOWN && state != L_HOOKTHROWN && sword_equiped)
+		if (e_state == E_DOWN && state != L_HOOKTHROWN && sword_equiped == true)
 		{
 			state = L_ATTACKING;
 			anim_state = L_ATTACKING;
