@@ -286,11 +286,10 @@ Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
 	
 	identifier = "dialogue";
 	App->scene->gamestate = GameState::CUTSCENE;
-	for (int i = lines->Hitbox.w*2; i > lines->length; enters++)
+	for (int i = lines->Hitbox.w*2; i > lines->length*2; enters++)
 	{
 		i -= lines->length;
 	}
-	enters--;
 	App->scene->player->SetAnimState(LinkState::L_IDLE);
 }
 
