@@ -171,7 +171,7 @@ public:
 public:
 	void Update(j1GuiEntity* focused);
 	void Input();
-	void OnInputCallback(INPUTEVENT, EVENTSTATE); //TODO LOW -> check if its better to put button inputs here or not
+	void OnInputCallback(INPUTEVENT action, EVENTSTATE e_state); //TODO LOW -> check if its better to put button inputs here or not
 public:
 	void ResetInventory();
 	void Select(bool next); //true for next, false for previous
@@ -229,12 +229,23 @@ private:
 
 //---------------------------------------
 
-class PokemonWorldHud :public j1GuiEntity
+class PokemonWorldHud :public j1GuiEntity, public InputListener
 {
 public:
 	PokemonWorldHud();
 	~PokemonWorldHud();
 public:
-
+	void Input();
+	void OnInputCallback(INPUTEVENT action, EVENTSTATE e_state);
+	Button* GetFirst();
+	void Select(bool down);
+	void MoveOut(bool out, int id = -1); //true for out, false for in
+	void CloseAll();
+	void SwapBars(uint first, uint second);
+private:
+	std::vector<Button*>poke_bar;
+public:
+	bool active = false;
+	bool selecting = false;
 };
 #endif // __j1GUIELEMENTS_H__

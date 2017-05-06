@@ -1269,8 +1269,158 @@ PokemonCombatHud::~PokemonCombatHud()
 
 PokemonWorldHud::PokemonWorldHud()
 {
+	App->input_manager->AddListener(this);
+	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_1"));
+	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_2"));
+	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_3"));
+}
+
+void PokemonWorldHud::Input()
+{
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_SELECT) == EVENTSTATE::E_DOWN)
+	{
+		active = !active;
+		if (active)
+		{
+			App->gui->SetFocus(GetFirst());
+			App->scene->gamestate = INMENU;
+		}
+		else
+		{
+			CloseAll();
+			App->scene->gamestate = INGAME;
+		}
+	}
+	if (active)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
+		{
+			Select(true);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
+		{
+			Select(false);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+		{
+			selecting = !selecting;
+			MoveOut(selecting);
+			if (selecting)
+				App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+			else
+				App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+		}
+	}
+}
+
+void PokemonWorldHud::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
+{
+
+}
+
+void PokemonWorldHud::Select(bool down)
+{
+	iPoint swap = { 0, 0 };
+		for (int i = 0; i < poke_bar.size(); i++)
+		{
+			if (App->gui->GetFocused() == poke_bar[i])
+			{
+				swap.x = i;
+				if (down)
+				{
+					if (i == poke_bar.size() - 1)
+					{
+						swap.y = 0;
+					}
+					else
+					{
+						swap.y = i + 1;
+					}
+				}
+				else
+				{
+					if (i == 0)
+					{
+						swap.y = poke_bar.size() - 1;
+					}
+					else
+					{
+						swap.y = i - 1;
+					}
+				}
+			}
+		}
+		if (selecting)
+		{
+			SwapBars(swap.x, swap.y);
+		}
+		else
+		{
+			App->gui->SetFocus(poke_bar[swap.y]);
+		}
+	
+}
+
+void PokemonWorldHud::SwapBars(uint first, uint second)
+{
+	int first_pos = poke_bar[first]->position.y;
+	poke_bar[first]->position.y = poke_bar[second]->position.y;
+	poke_bar[second]->position.y = first_pos;
+
+	Button* first_b = poke_bar[first];
+	poke_bar[first] = poke_bar[second];
+	poke_bar[second] = first_b;
 
 
+	//PLACEHOLDER FOR SWAPING POKEMONS ORDER IN PLAYER CODE SO IT AFFECTS COMBATS
+}
+
+void PokemonWorldHud::MoveOut(bool out, int id)
+{
+	if (id == -1) // this is if we wanna move in/out an especific bar and not the focused one (testing)
+	{
+		if (out)
+		{
+			if(App->gui->GetFocused()->position.x<-65)
+				App->gui->GetFocused()->position.x += 69;
+		}
+		else
+		{
+			if (App->gui->GetFocused()->position.x>-65)
+				App->gui->GetFocused()->position.x -= 69;
+		}
+	}
+	else
+	{
+		if (out)
+		{
+			if (App->gui->GetFocused()->position.x<-65)
+				poke_bar[id]->position.x += 69;
+		}
+		else
+		{
+			if (App->gui->GetFocused()->position.x>-65)
+				poke_bar[id]->position.x -= 69;
+		}
+	}
+}
+
+void PokemonWorldHud::CloseAll()
+{
+	if (selecting)
+	{
+		MoveOut(false);
+		selecting = false;
+	}
+	App->gui->SetFocus(nullptr);
+}
+
+Button* PokemonWorldHud::GetFirst()
+{
+	if (active)
+		return poke_bar[0];
+	else
+		return nullptr;
 }
 
 PokemonWorldHud::~PokemonWorldHud()
@@ -1278,5 +1428,4 @@ PokemonWorldHud::~PokemonWorldHud()
 
 
 }
-
 // Entity Elements ---------------------------------------------------

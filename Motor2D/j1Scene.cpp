@@ -198,8 +198,8 @@ bool j1Scene::Update(float dt)
 			}
 			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			{
-				App->scene->player->position.x = App->input->GetMousePosition().x;
-				App->scene->player->position.y = App->input->GetMousePosition().y;
+			//	App->scene->player->position.x = App->input->GetMousePosition().x;
+			//	App->scene->player->position.y = App->input->GetMousePosition().y;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 			{
@@ -306,6 +306,39 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			update_return = false;
 		}
 	}
+	if (element->identifier == "pk_bar_hud_1")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pk_bar_hud_2")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pk_bar_hud_3")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
 }
 
 void j1Scene::CreateTeleports()
@@ -334,6 +367,7 @@ void j1Scene::LoadUi()
 	//UI
 	hud = App->gui->CreateZeldaHud();
 	start_menu = App->gui->CreateZeldaMenu();
+	poke_hud = App->gui->CreatePokemonWorldHud();
 	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
 	hud->Move(true, win_marge);
 	start_menu->Move(true, win_marge);
