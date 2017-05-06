@@ -19,6 +19,7 @@
 #include "j1FileSystem.h"
 #include "BCTrooper.h"
 #include "j1Weapon.h"
+#include "Vilager.h"
 
 
 j1EntityElementScene::j1EntityElementScene()
@@ -172,15 +173,12 @@ bool j1EntityElementScene::DelteElements()
 	return true;
 }
 
-Soldier* j1EntityElementScene::CreateSoldier(uint id, pugi::xml_node& config)
+void j1EntityElementScene::CreateSoldier(uint id, pugi::xml_node& config)
 {
-
 	Soldier* element = new Soldier();
 	element->Awake(config, id);
 	element->Start();
 	elementscene.push_back(element);
-
-	return element;
 }
 
 bool j1EntityElementScene::DeleteEnemy(Soldier* enemy)
@@ -288,10 +286,22 @@ bool j1EntityElementScene::DeletePlayer(Player* player)
 	return false;
 }
 
+bool j1EntityElementScene::DeleteVilager(Vilager* vilager)
+{
+	if (vilager != nullptr)
+	{
+		elementscene.remove(vilager);
+		delete vilager;
+		vilager = nullptr;
+		return true;
+	}
+	return false;
+}
 
 
 
-Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
+
+void j1EntityElementScene::CreateItem(uint id, iPoint position)
 {
 	Item* element = new Item();
 	pugi::xml_document	config_file;
@@ -300,7 +310,6 @@ Item* j1EntityElementScene::CreateItem(uint id, iPoint position)
 	element->Awake(config.child(element->name.c_str()), id, position);
 	element->Start();
 	elementscene.push_front(element);
-	return element;
 }
 
 Hookshot* j1EntityElementScene::CreateHookshot()
@@ -329,7 +338,7 @@ BombContainer* j1EntityElementScene::CreateBombContainer()
 	return element;
 }
 
-Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id, iPoint pos)
+void j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id, iPoint pos)
 {
 	if (id == 1)
 	{
@@ -337,7 +346,6 @@ Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id, iPoi
 		temp->Awake(conf, id);
 		temp->Start();
 		elementscene.push_back(temp);
-		return temp;
 	}
 	else if (id == 2)
 	{
@@ -345,7 +353,6 @@ Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id, iPoi
 		temp->Awake(conf, id, pos);
 		temp->Start();
 		elementscene.push_back(temp);
-		return temp;
 	}
 	else if (id == 3)
 	{
@@ -353,9 +360,7 @@ Pokemon* j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id, iPoi
 		temp->Awake(conf, id);
 		temp->Start();
 		elementscene.push_back(temp);
-		return temp;
 	}
-	return nullptr;
 }
 
 
@@ -368,16 +373,23 @@ PokeTrainer* j1EntityElementScene::CreateTrainer(pugi::xml_node& conf, uint id)
 	return temp;
 }
 
-BCTrooper* j1EntityElementScene::CreateBCTrooper(pugi::xml_node& conf)
+void j1EntityElementScene::CreateBCTrooper(pugi::xml_node& conf)
 {
 	BCTrooper* temp = new BCTrooper();
 	temp->Awake(conf, 1);
 	temp->Start();
 	elementscene.push_back(temp);
-	return nullptr;
 }
 
-DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)
+void j1EntityElementScene::CreateVilager(pugi::xml_node& conf)
+{
+	Vilager* temp = new Vilager();
+	temp->Awake(conf);
+	temp->Start();
+	elementscene.push_back(temp);
+}
+
+void j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)
 {
 	DynamicObjects* element = new DynamicObjects();
 	pugi::xml_document	config_file;
@@ -397,9 +409,6 @@ DynamicObjects* j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint 
 			stop_rearch = true;
 		}
 	}
-
-
-	return element;
 }
 
 Player* j1EntityElementScene::CreatePlayer()

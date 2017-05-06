@@ -1,8 +1,11 @@
-#include "Vilagers.h"
+#include "Vilager.h"
 #include "j1EntityElementsScene.h"
+#include "j1Collision.h"
+#include "j1Gui.h"
 
 Vilager::Vilager()
 {
+	name = "vilager";
 }
 
 Vilager::~Vilager()
@@ -14,9 +17,9 @@ bool Vilager::Awake(pugi::xml_node& conf)
 	position.x = conf.attribute("pos_x").as_int(0);
 	position.y = conf.attribute("pos_y").as_int(0);
 	name = conf.attribute("name").as_string("");
-	active = conf.attribute("active").as_bool(false);
+	active = conf.attribute("active").as_bool(true);
 
-	dialog = conf.attribute("dialog").as_string(" ERROR LOAD DIALOG ");
+	dialog = conf.attribute("dialog").as_string("");
 
 	return true;
 }
@@ -28,7 +31,7 @@ bool Vilager::Start()
 	anim_state = V_IDLE;
 
 	if (active)
-		collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 21 }, COLLIDER_TRAINER, this);
+		collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 21 }, COLLIDER_VILAGER, this);
 
 	return true;
 }
@@ -69,3 +72,11 @@ bool Vilager::CleanUp()
 {
 	return false;
 }
+
+std::string Vilager::GetDialog()
+{
+	return dialog;
+}
+
+
+//	App->gui->CreateDialogue(dialog.c_str());

@@ -137,7 +137,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 1;
+				switch_map = 13;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -397,6 +397,7 @@ void j1Scene::GoMainMenu()
 			delete poke;
 			poke = nullptr;
 		}
+
 		if (player->pokedex.size() > 0)
 		{
 			player->pokedex.clear();
@@ -463,7 +464,7 @@ void j1Scene::SwitchMap(bool isTP)
 				delete poke;
 				poke = nullptr;
 			}
-			if (player->pokedex.size() > 0)
+			if (player->pokedex.size() > 0) //TODO ELLIOT No with this method
 			{
 				player->pokedex.clear();
 			}
@@ -599,6 +600,11 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 				App->entity_elements->CreateBCTrooper(temp_bctrooper);
 			}
 
+			//Vilagers
+			for (pugi::xml_node vilager = temp.child("vilagers").child("vilager"); vilager != NULL; vilager = vilager.next_sibling())
+			{
+				App->entity_elements->CreateVilager(vilager);
+			}
 
 			//Camera position
 			int scale = App->win->GetScale();
@@ -662,7 +668,7 @@ bool j1Scene::Load_Combat_map(int n)
 		if (temp.attribute("n").as_int(0) == n)
 		{
 			//Pokemon Link
-			if (n == 7)
+			if (n == 13)
 			{
 				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon"), 1));
 				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon").next_sibling(), 2));

@@ -127,7 +127,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Sudowoodo.cpp" />
     <ClCompile Include="Swampert.cpp" />
-    <ClCompile Include="Vilagers.cpp" />
+    <ClCompile Include="Vilager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -186,7 +186,7 @@
     <ClInclude Include="SceneElements.h" />
     <ClInclude Include="Sudowoodo.h" />
     <ClInclude Include="Swampert.h" />
-    <ClInclude Include="Vilagers.h" />
+    <ClInclude Include="Vilager.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml">

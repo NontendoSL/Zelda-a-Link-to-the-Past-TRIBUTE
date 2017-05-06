@@ -1,9 +1,8 @@
 #pragma once
-#ifndef __VILAGERS_H_
-#define __VILAGERS_H_
+#ifndef __VILAGER_H_
+#define __VILAGER_H_
 
 #include "NPC.h"
-#include "Pokemon.h"
 
 enum VilagerState { V_IDLE = 0, V_TALKING };
 
@@ -34,6 +33,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	std::string GetDialog();
 
 
 private:
@@ -47,6 +47,6 @@ private:
 
 };
 
-#endif //__VILAGERS_H_
+#endif //__VILAGER_H_
 
 
