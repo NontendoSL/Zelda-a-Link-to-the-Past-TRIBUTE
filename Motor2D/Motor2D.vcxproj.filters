@@ -43,22 +43,10 @@
     <ClCompile Include="j1SceneIntro.cpp">
       <Filter>Zelda Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Blaziken.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClCompile>
-    <ClCompile Include="Geodude.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClCompile>
     <ClCompile Include="Golem.cpp">
       <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
-    <ClCompile Include="Sceptyle.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClCompile>
     <ClCompile Include="Sudowoodo.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClCompile>
-    <ClCompile Include="Swampert.cpp">
       <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
     <ClCompile Include="Functions.cpp">
@@ -96,9 +84,6 @@
     </ClCompile>
     <ClCompile Include="j1EntityElementsScene.cpp">
       <Filter>Zelda Game\Modules\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="PokeTrainer.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
     <ClCompile Include="BCTrooper.cpp">
       <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
@@ -153,6 +138,36 @@
     </ClCompile>
     <ClCompile Include="Vilager.cpp">
       <Filter>Zelda Game\ElementsScene\NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="Blaziken.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Sceptyle.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Geodude.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
+    </ClCompile>
+    <ClCompile Include="Swampert.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Walrein.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Salamance.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Shiftry.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Dusclops.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Groudon.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClCompile>
+    <ClCompile Include="PokeTrainer.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,19 +237,7 @@
     <ClInclude Include="Pokemon.h">
       <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
-    <ClInclude Include="Geodude.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClInclude>
     <ClInclude Include="Golem.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClInclude>
-    <ClInclude Include="Swampert.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClInclude>
-    <ClInclude Include="Blaziken.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClInclude>
-    <ClInclude Include="Sceptyle.h">
       <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="Sudowoodo.h">
@@ -266,9 +269,6 @@
     </ClInclude>
     <ClInclude Include="j1EntityElementsScene.h">
       <Filter>Zelda Game\Modules\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="PokeTrainer.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
     </ClInclude>
     <ClInclude Include="Soldier.h">
       <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
@@ -327,6 +327,39 @@
     <ClInclude Include="Vilager.h">
       <Filter>Zelda Game\ElementsScene\NPCs</Filter>
     </ClInclude>
+    <ClInclude Include="Blaziken.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Sceptyle.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Geodude.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
+    </ClInclude>
+    <ClInclude Include="Swampert.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Walrein.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Salamance.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Shiftry.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Dusclops.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Groudon.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonCombat.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="PokeTrainer.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Zelda Game">
@@ -376,6 +409,9 @@
     </Filter>
     <Filter Include="Zelda Game\Modules\Particle System">
       <UniqueIdentifier>{9a75331e-9c95-48f9-89e9-415be607b6a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zelda Game\ElementsScene\NPCs\POKECOMBAT">
+      <UniqueIdentifier>{ddb98437-effe-409d-8da7-6be560583198}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

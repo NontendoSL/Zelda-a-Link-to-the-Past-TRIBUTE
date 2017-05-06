@@ -81,10 +81,12 @@
     <ClCompile Include="Blaziken.cpp" />
     <ClCompile Include="CombatManager.cpp" />
     <ClCompile Include="CutsceneManager.cpp" />
+    <ClCompile Include="Dusclops.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Ganon.cpp" />
     <ClCompile Include="Geodude.cpp" />
     <ClCompile Include="Golem.cpp" />
+    <ClCompile Include="Groudon.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Creature.cpp" />
     <ClCompile Include="j1DynamicObjects.cpp" />
@@ -98,8 +100,10 @@
     <ClCompile Include="P_Fire.cpp" />
     <ClCompile Include="P_Firework.cpp" />
     <ClCompile Include="P_Follow.cpp" />
+    <ClCompile Include="Salamance.cpp" />
     <ClCompile Include="SceneElements.cpp" />
     <ClCompile Include="Sceptyle.cpp" />
+    <ClCompile Include="Shiftry.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="j1Item.cpp" />
     <ClCompile Include="j1AnimationManager.cpp" />
@@ -128,6 +132,7 @@
     <ClCompile Include="Sudowoodo.cpp" />
     <ClCompile Include="Swampert.cpp" />
     <ClCompile Include="Vilager.cpp" />
+    <ClCompile Include="Walrein.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -135,9 +140,11 @@
     <ClInclude Include="Blaziken.h" />
     <ClInclude Include="CombatManager.h" />
     <ClInclude Include="CutsceneManager.h" />
+    <ClInclude Include="Dusclops.h" />
     <ClInclude Include="Ganon.h" />
     <ClInclude Include="Geodude.h" />
     <ClInclude Include="Golem.h" />
+    <ClInclude Include="Groudon.h" />
     <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1SceneIntro.h" />
     <ClInclude Include="j1Collision.h" />
@@ -149,11 +156,14 @@
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="PokemonCombat.h" />
     <ClInclude Include="P_Explosion.h" />
     <ClInclude Include="P_Fire.h" />
     <ClInclude Include="P_Firework.h" />
     <ClInclude Include="P_Follow.h" />
+    <ClInclude Include="Salamance.h" />
     <ClInclude Include="Sceptyle.h" />
+    <ClInclude Include="Shiftry.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="j1AnimationManager.h" />
     <ClInclude Include="j1EntityElementsScene.h" />
@@ -187,6 +197,7 @@
     <ClInclude Include="Sudowoodo.h" />
     <ClInclude Include="Swampert.h" />
     <ClInclude Include="Vilager.h" />
+    <ClInclude Include="Walrein.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml">
