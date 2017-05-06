@@ -335,7 +335,7 @@ void j1Gui::LoadEntities()
 						inside_picker->elements.push_back(inside_picker_push);
 						if (push.attribute("inside").as_bool(false))
 						{
-							for (pugi::xml_node push2 = temp_inside.child("entity"); push2 != NULL; push2 = push2.next_sibling())
+							for (pugi::xml_node push2 = push.child("entity"); push2 != NULL; push2 = push2.next_sibling())
 							{
 								inside_picker_push->elements.push_back(App->gui->CreateImage({ push2.attribute("rect.x").as_int(0), push2.attribute("rect.y").as_int(0), push2.attribute("rect.w").as_int(0), push2.attribute("rect.h").as_int(0) }, { push2.attribute("pos.x").as_int(0), push2.attribute("pos.y").as_int(0) }, push2.attribute("identifier").as_string(""), actual, push2.attribute("movable").as_bool(true)));
 							}
@@ -361,9 +361,16 @@ void j1Gui::LoadEntities()
 			}
 		}
 		actual = (GuiGroup)(actual + 1);
-		if (actual > 4)
+		if (actual > 5)
 		{
 			LOG("GUI ENTITIES LOADED=======================================");
+			for (int i = 0; i < entities.size(); i++)
+			{
+				if (entities[i]->belong == POKEMON_COMBAT)
+				{
+					LOG("%s", entities[i]->identifier.c_str());
+				}
+			}
 			return;
 		}
 		else
@@ -372,6 +379,8 @@ void j1Gui::LoadEntities()
 		}
 	}
 
+
+	
 
 }
 

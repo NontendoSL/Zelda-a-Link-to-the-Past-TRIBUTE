@@ -661,7 +661,7 @@ bool j1Scene::Load_Combat_map(int n)
 	//start_menu->OpenClose(false);
 	//hud->OpenClose(false);
 
-	float win_marge = (App->win->GetWidth() - start_menu->Hitbox.w*App->win->GetScale()) / 4;
+	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
 
 	for (pugi::xml_node temp = config.child("map_combat").child("map"); stop_rearch == false; temp = temp.next_sibling())
 	{
@@ -702,7 +702,7 @@ bool j1Scene::Load_Combat_map(int n)
 			stop_rearch = true;
 		}
 	}
-
+	App->gui->SetGui(POKEMON_COMBAT);
 	return true;
 }
 

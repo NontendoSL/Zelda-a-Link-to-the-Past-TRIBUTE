@@ -942,7 +942,7 @@ PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 	//hp bar left
 	hp1 = (Image*)App->gui->GetEntity("left hp");
 	//hp bar right
-	hp2 = App->gui->CreateImage({ 464,110,48,2 }, { 38,16 }, "right hp", POKEMON_COMBAT);
+	hp2 = (Image*)App->gui->GetEntity("right hp");
 	//Names
 	App->gui->GetEntity("left box")->elements.push_back(App->gui->CreateText(POKE1, Link->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "link_pk_name", POKEMON_COMBAT));
 	App->gui->GetEntity("right box")->elements.push_back(App->gui->CreateText(POKE1, Brendan->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "brendan_pk_name", POKEMON_COMBAT));
@@ -963,13 +963,14 @@ PokemonCombatHud::PokemonCombatHud(Pokemon* Link, Pokemon* Brendan)
 	cdtime = iPoint(Link->cooldown, Link->cooldown);
 	Link->target = Brendan;
 	Brendan->target = Link;
-
+	Image*test = (Image*)App->gui->GetEntity("bottom hud");
+	App->gui->GetEntity("bottom hud")->position.y = (App->win->GetHeight()/2) - App->gui->GetEntity("bottom hud")->Hitbox.h;
 }
 
 void PokemonCombatHud::Move(bool x_axis, float speed)
 {
-	App->gui->GetEntity("left box")->position.x += speed;
-	App->gui->GetEntity("right box")->position.x += speed;
+	App->gui->GetEntity("top hud")->position.x += speed;
+	App->gui->GetEntity("bottom hud")->position.x += speed;
 }
 
 void PokemonCombatHud::LoadNewPokemon(Pokemon* pokemon, bool trainer) //true Link - false Brendan
