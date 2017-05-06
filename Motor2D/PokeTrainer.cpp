@@ -1,7 +1,6 @@
 #include "PokeTrainer.h"
 #include "CombatManager.h"
 #include "j1EntityElementsScene.h"
-#include "j1App.h"
 
 PokeTrainer::PokeTrainer() :NPC()
 {
@@ -20,7 +19,7 @@ bool PokeTrainer::Awake(pugi::xml_node &conf)
 	{
 		Pokemon* poke = App->combatmanager->CreatePokemon(temp, temp.attribute("id").as_int(1));
 		poke->pokemon_player = false;
-		pokedex.push_back(poke);
+		pokedex= poke;
 	}
 	
 	active = conf.attribute("active").as_bool(false);
@@ -73,17 +72,9 @@ void PokeTrainer::Draw()
 	}
 }
 
-Pokemon* PokeTrainer::GetPokemon(uint position)
+Pokemon* PokeTrainer::GetPokemon()
 {
-	std::list<Pokemon*>::iterator item = pokedex.begin();
-	for (uint i = 0; i < pokedex.size(); i++)
-	{
-		if (i == position)
-		{
-			return item._Ptr->_Myval;
-		}
-		item++;
-	}
+	return pokedex;
 }
 
 bool PokeTrainer::CleanUp()

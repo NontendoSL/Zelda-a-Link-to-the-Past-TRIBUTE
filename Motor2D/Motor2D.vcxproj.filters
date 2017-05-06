@@ -151,6 +151,9 @@
     <ClCompile Include="CutsceneManager.cpp">
       <Filter>Zelda Game\Modules\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Vilagers.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -320,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="CutsceneManager.h">
       <Filter>Zelda Game\Modules\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vilagers.h">
+      <Filter>Zelda Game\ElementsScene\NPCs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

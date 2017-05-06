@@ -34,16 +34,16 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	Pokemon* GetPokemon(uint position);
+	Pokemon* GetPokemon();
 
-	std::list<Pokemon*> pokedex;
+
 
 private:
 	TrainerState state = T_IDLE;
 	TrainerState anim_state = T_IDLE;
 	//Item* drop;
 	bool stunned = false;
-
+	Pokemon* pokedex;
 	//SDL_Texture* texture = nullptr;
 	//std::string file_name;
 	bool active = false;

@@ -393,10 +393,9 @@ void j1Scene::GoMainMenu()
 
 		if (poketrainer != nullptr)
 		{
-			if (poketrainer->pokedex.size() > 0)
-			{
-				poketrainer->pokedex.clear();
-			}
+			Pokemon* poke = poketrainer->GetPokemon();
+			delete poke;
+			poke = nullptr;
 		}
 		if (player->pokedex.size() > 0)
 		{
@@ -460,10 +459,9 @@ void j1Scene::SwitchMap(bool isTP)
 
 			if (poketrainer != nullptr)
 			{
-				if (poketrainer->pokedex.size() > 0)
-				{
-					poketrainer->pokedex.clear();
-				}
+				Pokemon* poke = poketrainer->GetPokemon();
+				delete poke;
+				poke = nullptr;
 			}
 			if (player->pokedex.size() > 0)
 			{
@@ -676,13 +674,13 @@ bool j1Scene::Load_Combat_map(int n)
 
 			if (pokecombat == nullptr)
 			{
-				pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon(0)); //TODO ELliot no need GetPokemon()
+				pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon()); //TODO ELliot no need GetPokemon()
 				pokecombat->Move(true, win_marge);
 			}
 			else
 			{
 				//pokecombat->OpenClose(true);
-				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon(0));
+				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon());
 			}
 
 			//map
