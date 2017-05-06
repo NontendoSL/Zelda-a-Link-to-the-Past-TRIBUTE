@@ -467,6 +467,12 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						picked_object->SetState(D_DYING);
 						picked_object = nullptr;
 					}
+
+					if (interaction == true)
+					{
+						collision_interact->to_delete = true;
+						interaction = false;
+					}
 				}
 			}
 
@@ -946,7 +952,7 @@ bool Player::Interact()
 		{
 			//if (current_animation->Finished())
 			//{
-			App->collision->EraseCollider(collision_interact);
+			collision_interact->to_delete = true;
 			interaction = false;
 			//current_animation->Reset();
 			//current_animation = nullptr;
