@@ -18,15 +18,14 @@ bool Vilager::Awake(pugi::xml_node& conf)
 	position.y = conf.attribute("pos_y").as_int(0);
 	name = conf.attribute("name").as_string("");
 	active = conf.attribute("active").as_bool(true);
-
 	dialog = conf.attribute("dialog").as_string("");
-
+	switch_map = conf.attribute("switch_map").as_int(0);
 	return true;
 }
 
 bool Vilager::Start()
 {
-	direction = DOWN;
+	direction = DOWN; //maybe in levels.xml
 	state = V_IDLE;
 	anim_state = V_IDLE;
 
@@ -38,7 +37,7 @@ bool Vilager::Start()
 
 bool Vilager::Update(float dt)
 {
-	return false;
+	return true;
 }
 
 void Vilager::Draw()
@@ -70,7 +69,7 @@ void Vilager::Draw()
 
 bool Vilager::CleanUp()
 {
-	return false;
+	return true;
 }
 
 std::string Vilager::GetDialog()

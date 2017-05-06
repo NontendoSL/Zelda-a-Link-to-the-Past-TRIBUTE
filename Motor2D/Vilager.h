@@ -42,6 +42,7 @@ private:
 	//Item* drop;
 	bool stunned = false;
 	bool active = false;
+	int switch_map = 0;
 
 	std::string dialog;
 
