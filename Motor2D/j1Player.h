@@ -12,7 +12,7 @@ class Creature;
 class InputListener;
 class Animation;
 class Text;
-class Pokemon;
+class PokemonCombat;
 class Hookshot;
 class Weapon;
 class Bow;
@@ -115,7 +115,7 @@ public:
 	DynamicObjects* picked_object = nullptr;
 
 	//Pokemons has Link
-	std::list<Pokemon*> pokedex;
+	std::list<PokemonCombat*> pokedex;
 
 	bool camera_follow = false;
 

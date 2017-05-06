@@ -214,6 +214,10 @@ void BCTrooper::Walk(float dt)
 			//Move BCTrooper
 			Move(dt);
 		}
+		if (canmove > 500)
+		{
+			canmove = 0;
+		}
 		canmove++;
 	}
 	else
