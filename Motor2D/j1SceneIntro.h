@@ -61,16 +61,16 @@ private:
 	SDL_Texture*	Menu_bg = nullptr;
 	float			bg_anim = 0;
 	bool			right = false;
-	bool			menu = false;
 
 
 	uint Menu_Cursor;
 	uint volume = 120;
 
 public:
-	MainMenu* main_menu = nullptr;
-	bool goHouse = false;
-	bool fade;
+	MainMenu*		main_menu = nullptr;
+	bool			goHouse = false;
+	bool			fade;
+	bool			menu = false;
 };
 
 #endif

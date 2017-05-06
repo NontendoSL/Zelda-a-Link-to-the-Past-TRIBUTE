@@ -164,7 +164,7 @@ bool j1SceneIntro::PostUpdate()
 
 void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 {
-	App->audio->PlayFx(Menu_Cursor);
+	
 	if (element->identifier == "Newgame_b")
 	{
 		if (event == GuiAction::CLICK_DOWN)
@@ -172,12 +172,14 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 			if (menu == true)
 			{
 				((Button*)element)->click = true;
+				App->audio->PlayFx(Menu_Cursor);
 			}
 		}
 		else if (event == GuiAction::CLICK_UP)
 		{
 			if (menu == true)
 			{
+				main_menu->active = false;
 				goHouse = true;
 				((Button*)element)->click = false;
 				return;
@@ -191,12 +193,14 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 			if (menu == true)
 			{
 				((Button*)element)->click = true;
+				App->audio->PlayFx(Menu_Cursor);
 			}
 		}
 		else if (event == GuiAction::CLICK_UP)
 		{
 			if (menu == true)
 			{
+				main_menu->active = false;
 				goHouse = true;
 				((Button*)element)->click = false;
 				return;

@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include "Animation.h"
 #include "j1Scene.h"
+#include "j1SceneIntro.h"
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
 #include "j1GuiElements.h"
@@ -402,6 +403,7 @@ Selector::~Selector() {}
 
 MainMenu::MainMenu()
 {
+	App->input_manager->AddListener(this);
 	options.push_back((Button*)App->gui->GetEntity("Continue_b"));
 	options.push_back((Button*)App->gui->GetEntity("Newgame_b"));
 	options.push_back((Button*)App->gui->GetEntity("Loadgame_b"));
@@ -416,27 +418,47 @@ MainMenu::MainMenu()
 
 void MainMenu::Input()
 {
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
+	if (active)
 	{
-		Select(false);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
-	{
-		Select(true);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
-	{
-		//assert(App->gui->GetFocused()->listener != nullptr);
-		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP); //TODO HIGH MARC -> CLICK_DOWN
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP)
-	{
-		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
+		{
+			Select(false);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
+		{
+			Select(true);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+		{
+			//assert(App->gui->GetFocused()->listener != nullptr);
+			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN); //TODO HIGH MARC -> CLICK_DOWN
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP)
+		{
+			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+		}
 	}
 }
 
+void MainMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
+{
+	if (active)
+	{
+		switch (action)
+		{
+		case BUTTON_B:
+			if (e_state == E_UP)
+			{
+				App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+			}
+		}
+	}
+}
+
+
 Button* MainMenu::GetElement(uint id)
 {
+	active = true;
 	return options[id];
 }
 
@@ -760,85 +782,68 @@ void ZeldaMenu::SelectOption(bool down)
 
 void ZeldaMenu::Input()
 {
-	if (on_options == false)
+	if (active)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+		if (on_options == false)
 		{
-			Select(true);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
-		{
-			Select(false);
-		}
-	}
-	else
-	{
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
-		{
-			SelectOption(true);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
-		{
-			SelectOption(false);
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
-	{
-		//assert(App->gui->GetFocused()->listener != nullptr);
-		if (App->gui->GetFocused() != nullptr)
-		{
-			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP)
-	{
-		if (App->gui->GetFocused() != nullptr)
-		{
-			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_SELECT) == EVENTSTATE::E_DOWN)
-	{
-		on_options = !on_options;
-		if (on_options)
-		{
-			App->gui->SetGui(ZELDA_MENU_OPTION);
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+			{
+				Select(true);
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+			{
+				Select(false);
+			}
 		}
 		else
 		{
-			App->gui->SetGui(ZELDA_MENU);
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
+			{
+				SelectOption(true);
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
+			{
+				SelectOption(false);
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+		{
+			//assert(App->gui->GetFocused()->listener != nullptr);
+			if (App->gui->GetFocused() != nullptr)
+			{
+				App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
+		{
+			if (App->gui->GetFocused() != nullptr)
+			{
+				App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_SELECT) == EVENTSTATE::E_DOWN)
+		{
+			on_options = !on_options;
+			if (on_options)
+			{
+				App->gui->SetGui(ZELDA_MENU_OPTION);
+			}
+			else
+			{
+				App->gui->SetGui(ZELDA_MENU);
+			}
 		}
 	}
 }
 
 void ZeldaMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
-	if (App->scene->inventory && App->scene->ingame && this->identifier == "start_menu" && App->scene->gamestate == INMENU)
+	if (active)
 	{
 		switch (action)
 		{
-
-		case MRIGHT:
-			if (e_state == E_DOWN)
-			{
-				Select(true);
-			}
-			break;
-		case MLEFT:
-			if (e_state == E_DOWN)
-			{
-				Select(false);
-			}
-			break;
-		case BUTTON_A:
-			if (e_state == E_DOWN)
-			{
-				if (App->gui->GetFocused() != nullptr)
-				{
-					App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
-				}
-			}
-			else if (e_state == E_UP)
+		case BUTTON_B:
+			if (e_state == E_UP)
 			{
 				if (App->gui->GetFocused() != nullptr)
 				{
@@ -858,6 +863,7 @@ void ZeldaMenu::Move(bool x_axis, float speed) //bool x_axis is to know in wich 
 
 Button* ZeldaMenu::GetFirst(bool option)
 {
+	active = true;
 	if (option)
 	{
 		return options[0];

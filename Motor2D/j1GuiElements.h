@@ -111,7 +111,7 @@ private:
 	bool position = true;//true up false down
 };
 // ------------------------------------------------------
-class MainMenu : public j1GuiEntity
+class MainMenu : public j1GuiEntity, public InputListener
 {
 public:
 	MainMenu();
@@ -120,8 +120,11 @@ public:
 	void Input();
 	void Select(bool next); //true for next, false for prev
 	Button* GetElement(uint id);
+	void OnInputCallback(INPUTEVENT action, EVENTSTATE e_state);
 private:
 	std::vector<Button*>options;
+public:
+	bool active = false;
 	//placeholder for create/save game and name editor
 };
 
@@ -186,6 +189,7 @@ private:
 	bool empty = true;
 public:
 	bool on_options = false;
+	bool active = false;
 };
 
 //----------------------------------------------------------

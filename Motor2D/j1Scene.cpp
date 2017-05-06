@@ -364,6 +364,7 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 			//hud->OpenClose(true);
 			start_menu->Move(false, -6.0);
 			hud->Move(false, -6.0, true);
+			start_menu->active = false;
 		}
 		else
 		{
@@ -413,7 +414,7 @@ void j1Scene::GoMainMenu()
 	{
 		player->dialog->Clear();
 	}
-
+	start_menu->active = false;
 	App->entity_elements->DeletePlayer(player);
 	ingame = false;
 	App->intro->fade = true;
