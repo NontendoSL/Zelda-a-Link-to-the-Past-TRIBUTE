@@ -2,10 +2,10 @@
 #ifndef __BLAZIKEN_H_
 #define __BLAZIKEN_H_
 
-#include "Pokemon.h"
+#include "PokemonCombat.h"
 
 
-class Blaziken : public Pokemon
+class Blaziken : public PokemonCombat
 {
 public:
 	Blaziken();
@@ -34,19 +34,13 @@ public:
 
 	bool Idle();
 
-	bool Walking();
+	bool Walking(float dt);
 
-	bool Move();
+	bool Move(float dt);
 
 	bool Attack();
 
-	bool Idle_IA();
-
-	bool Walking_IA();
-
-	bool Move_IA();
-
-	bool Attack_IA();
+	bool Special_Attack();
 
 	void OnCollision(Collider*, Collider*);
 

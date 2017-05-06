@@ -40,9 +40,8 @@ bool Sceptyle::Awake(pugi::xml_node &conf )
 
 bool Sceptyle::Start()
 {
-	pokemon_player = true;
-	state = P_IDLE;
-	anim_state = P_IDLE;
+	state = PC_IDLE;
+	anim_state = PC_IDLE;
 	scale = App->win->GetScale();
 	offset_x = 7;
 	timetoplay = SDL_GetTicks();
@@ -62,76 +61,40 @@ bool Sceptyle::Update(float dt)
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
-		if (pokemon_player)
+		//pokemon controlled by player
+		switch (state)
 		{
-			//pokemon controlled by player
-			switch (state)
-			{
-			case P_IDLE:
-			{
-				Idle();
-				break;
-			}
-			case P_WALKING:
-			{
-				Walking();
-				break;
-			}
-			case P_ATTACKING:
-			{
-				Attack();
-				break;
-			}
-			case P_HIT:
-			{
-				Movebyhit();
-				break;
-			}
-			default:
-			{
-				break;
-			}
-
-			}
+		case PC_IDLE:
+		{
+			Idle();
+			break;
 		}
-		else
+		case PC_WALKING:
 		{
-			//Pokemon IA
-			switch (state)
-			{
-			case P_IDLE:
-			{
-				Idle_IA();
-				break;
-			}
-			case P_WALKING:
-			{
-				Walking_IA();
-				/*if (target != nullptr && orient_time.ReadSec() >= 2)
-				{
-					orient_time.Start();
-					OrientateTo(target->position);
-				}*/
-				break;
-			}
-			case P_ATTACKING:
-			{
-				Attack_IA();
-				break;
-			}
-			case P_HIT:
-			{
-				Movebyhit();
-				break;
-			}
-			default:
-			{
-				break;
-			}
-
-			}
+			Walking(dt);
+			break;
+		}
+		case PC_ATTACKING:
+		{
+			Attack();
+			break;
+		}
+		case PC_SPECIAL:
+		{
+			Special_Attack();
+			break;
+		}
+		case PC_HIT:
+		{
+			Movebyhit();
+			break;
+		}
+		default:
+		{
+			break;
 		}
 
+		}
 	}
 	else if (App->scene->gamestate == INMENU)
 	{
@@ -144,6 +107,10 @@ bool Sceptyle::Update(float dt)
 			App->scene->gamestate = INGAME;
 		}
 	}*/
+	if (drawThrowSP)
+	{
+		ThrowSP();
+	}
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -152,15 +119,32 @@ bool Sceptyle::Update(float dt)
 
 void Sceptyle::Draw()
 {
-	if (sp_attacking == true)
+	if (drawThrowSP)
 	{
-		ThrowSP();
+		if (sp_attack != nullptr)
+		{
+			switch (sp_direction)
+			{
+			case 0:
+				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
+				sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
+				break;
+			case 1:
+				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
+				sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
+				break;
+			case 2:
+				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
+				sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
+				break;
+			case 3:
+				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
+				sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
+				break;
+			}
+		}
 	}
-
-	else
-	{
-		App->anim_manager->Drawing_Manager(anim_state, direction, position, SCEPTILE);
-	}
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, SCEPTILE);
 }
 
 bool Sceptyle::CleanUp()
@@ -172,85 +156,80 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		Pokemon* isActive = (Pokemon*)c1->callback;
-		Pokemon* isActive_2 = (Pokemon*)c2->callback;
+		PokemonCombat* isActive = (PokemonCombat*)c1->callback;
+		PokemonCombat* isActive_2 = (PokemonCombat*)c2->callback;
 		if (isActive != nullptr && isActive_2 != nullptr)
 		{
 			if (isActive->active && isActive_2->active)
 			{
-				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
-				{
-					if (pokemon_player)
-					{
-						Pokemon* temp = (Pokemon*)c2->callback;
-						temp->knockback_time.Start();
-						temp->hp -= attack;
-						getdamage = true;
-						App->scene->pokecombat->GetDamage(attack, false);
-						temp->SetState(P_HIT);
-						temp->SetAnimState(P_DYING);
-						temp->dir_hit = c1->callback->direction;
-						temp->prev_position = temp->position;
-					}
-				}
-
 				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
 				{
-					if (pokemon_player && c1->callback != c2->callback)
-					{
-						Pokemon* temp = (Pokemon*)c2->callback;
-						temp->hp -= sp_damage;
-						getdamage = true;
-						App->scene->pokecombat->GetDamage(sp_damage, false);
-						temp->SetState(P_HIT);
-						temp->SetAnimState(P_DYING);
-						temp->dir_hit = c1->callback->direction;
-						temp->prev_position = temp->position;
-					}
+					PokemonCombat* temp = (PokemonCombat*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= sp_damage;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(sp_damage, false);
+					temp->SetState(PC_HIT);
+					temp->SetAnimState(PC_HIT);
+					temp->dir_hit = c1->callback->direction;
+					temp->prev_position = temp->position;
+				}
+
+				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+				{
+					PokemonCombat* temp = (PokemonCombat*)c2->callback;
+					temp->knockback_time.Start();
+					temp->hp -= attack;
+					getdamage = true;
+					App->scene->pokecombat->GetDamage(attack, false);
+					temp->SetState(PC_HIT);
+					temp->SetAnimState(PC_HIT);
+					temp->dir_hit = c1->callback->direction;
+					temp->prev_position = temp->position;
 				}
 			}
 		}
 	}
 }
 
-void Sceptyle::AttackSpecial()
+void Sceptyle::Special_Attack()
 {
-	sp_attacking = true;
-	sp_direction = direction;
-	sp_start = position;
-	sp_attack = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_ATTACK, this);
+	if (sp_attacking)
+	{
+		if (current_animation->Finished())
+		{
+			App->collision->EraseCollider(sp_attack);
+			sp_attacking = false;
+			current_animation->Reset();
+			current_animation = nullptr;
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
+			if (getdamage)
+			{
+				getdamage = false;
+			}
+		}
+	}
+	else
+	{
+		sp_attacking = true;
+		sp_direction = direction;
+		sp_start = position;
+		drawThrowSP = true;
+		sp_attack = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+		//audio TODO
+		//App->audio->PlayFx(7);
+	}
 }
 
 void Sceptyle::ThrowSP()
-{
-	if (sp_attack != nullptr)
-	{
-		switch (sp_direction)
-		{
-		case 0:
-			App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
-			sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
-			break;
-		case 1:
-			App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
-			sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
-			break;
-		case 2:
-			App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
-			sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
-			break;
-		case 3:
-			App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
-			sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
-			break;
-		}
-	}
-	
+{	
 	if (range.y >= range.x)
 	{
 		range.y = 0;
 		App->collision->EraseCollider(sp_attack);
 		sp_attacking = false;
+		drawThrowSP = false;
 		getdamage = false;
 	}
 	else
@@ -267,15 +246,18 @@ bool Sceptyle::Idle()
 		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_REPEAT ||
 		App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_REPEAT)
 	{
-		state = P_WALKING;
-		anim_state = P_WALKING;
+		state = PC_WALKING;
+		anim_state = PC_WALKING;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 	{
 		if (App->scene->pokecombat->cooldown == false)
 		{
-			AttackSpecial();
+			state = PC_SPECIAL;
+			anim_state = PC_SPECIAL;
+			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+			current_animation->Reset();
 			App->scene->pokecombat->cooldown = true;
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
 		}
@@ -284,36 +266,39 @@ bool Sceptyle::Idle()
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
-		state = P_ATTACKING;
-		anim_state = P_ATTACKING;
+		state = PC_ATTACKING;
+		anim_state = PC_ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(state, direction, SCEPTILE); //this number may need to be changed?
 		current_animation->Reset();
 	}
 
 	else
 	{
-		state = P_IDLE;
-		anim_state = P_IDLE;
+		state = PC_IDLE;
+		anim_state = PC_IDLE;
 	}
 	return true;
 }
 
-bool Sceptyle::Walking()
+bool Sceptyle::Walking(float dt)
 {
 	walking = false;
-	Move();
+	Move(dt);
 
 	if (walking == false)
 	{
-		state = P_IDLE;
-		anim_state = P_IDLE;
+		state = PC_IDLE;
+		anim_state = PC_IDLE;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 	{
 		if (App->scene->pokecombat->cooldown == false)
 		{
-			AttackSpecial();
+			state = PC_SPECIAL;
+			anim_state = PC_SPECIAL;
+			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+			current_animation->Reset();
 			App->scene->pokecombat->cooldown = true;
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
 		}
@@ -321,21 +306,21 @@ bool Sceptyle::Walking()
 
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
-		state = P_ATTACKING;
-		anim_state = P_ATTACKING;
+		state = PC_ATTACKING;
+		anim_state = PC_ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(state, direction, SCEPTILE); //This number may need to be changed?
 		current_animation->Reset();
 	}
 
 	else
 	{
-		state = P_WALKING;
-		anim_state = P_WALKING;
+		state = PC_WALKING;
+		anim_state = PC_WALKING;
 	}
 	return false;
 }
 
-bool Sceptyle::Move()
+bool Sceptyle::Move(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
@@ -399,8 +384,8 @@ bool Sceptyle::Attack()
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;
-			state = P_IDLE;
-			anim_state = P_IDLE;
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
 			getdamage = false;
 		}
 	}
@@ -431,161 +416,19 @@ bool Sceptyle::Attack()
 	return true;
 }
 
-bool Sceptyle::Idle_IA()
-{
-	if (movable)
-	{
-		if (reset_run)
-		{
-			timetorun = SDL_GetTicks();
-			reset_run = false;
-		}
-		else
-		{
-			if (SDL_GetTicks() - timetorun > 200)
-			{
-				int direc_select = rand() % 4 + 1;
-				if (direc_select == 1)
-				{
-					direction = UP;
-				}
-				else if (direc_select == 2)
-				{
-					direction = DOWN;
-				}
-				else if (direc_select == 3)
-				{
-					direction = LEFT;
-				}
-				else if (direc_select == 4)
-				{
-					direction = RIGHT;
-				}
-				state = P_WALKING;
-				anim_state = P_WALKING;
-				orient_time.Start();
-				reset_distance = true;
-			}
-		}
-	}
-	return true;
-}
-
-bool Sceptyle::Walking_IA()
-{
-	walking = false;
-	if (reset_distance)
-	{
-		distance = rand() % 60 + 20;
-		dis_moved = 0;
-		reset_distance = false;
-	}
-	Move_IA();
-
-	if (dis_moved >= distance)
-	{
-		walking = false;
-		reset_run = true;
-	}
-
-
-	if (walking == false)
-	{
-		state = P_IDLE;
-		anim_state = P_IDLE;
-	}
-
-	else
-	{
-		state = P_WALKING;
-		anim_state = P_WALKING;
-	}
-	return true;
-}
-
-bool Sceptyle::Move_IA()
-{
-	//App->pathfinding->CreatePath(position, target->Getposition());
-	//App->pathfinding->CreatePath(position, target->Getposition());
-	if (direction == LEFT)
-	{
-		//App->map->MovementCost(position.x - speed, position.y, LEFT)
-		if (App->map->MovementCost(collision_feet->rect.x - speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
-		{
-			position.x -= speed;
-			dis_moved++;
-		}
-		else
-		{
-			//Function to change direction
-			dis_moved++;
-		}
-		walking = true;
-	}
-
-	if (direction == RIGHT)
-	{
-		//App->map->MovementCost(position.x + (speed + width), position.y, RIGHT)
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + speed, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
-		{
-			position.x += speed;
-			dis_moved++;
-		}
-		else
-		{
-			dis_moved++;
-		}
-		walking = true;
-	}
-	if (direction == UP)
-	{
-		//App->map->MovementCost(position.x, position.y - speed, UP)
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - speed, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
-		{
-			position.y -= speed;
-			dis_moved++;
-		}
-		else
-		{
-			dis_moved++;
-		}
-		walking = true;
-	}
-	if (direction == DOWN)
-	{
-		//App->map->MovementCost(position.x, position.y + (speed + height), DOWN)
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + speed, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
-		{
-			position.y += speed;
-			dis_moved++;
-		}
-		else
-		{
-			dis_moved++;
-		}
-		walking = true;
-	}
-	return true;
-}
-
-bool Sceptyle::Attack_IA()
-{
-	return true;
-}
-
 bool Sceptyle::Movebyhit()
 {
 	if (hp <= 0)
 	{
-		state = P_DYING;
-		anim_state = P_DYING;
+		state = PC_DYING;
+		anim_state = PC_DYING;
 		return true;
 	}
 
 	if (knockback_time.ReadSec() >= 0.2)
 	{
-		state = P_IDLE;
-		anim_state = P_IDLE;
+		state = PC_IDLE;
+		anim_state = PC_IDLE;
 		return true;
 	}
 

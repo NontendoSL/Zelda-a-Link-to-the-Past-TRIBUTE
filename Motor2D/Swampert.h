@@ -2,9 +2,9 @@
 #ifndef __SWAMPERT_H_
 #define __SWAMPERT_H_
 
-#include "Pokemon.h"
+#include "PokemonCombat.h"
 
-class Swampert : public Pokemon
+class Swampert : public PokemonCombat
 {
 public:
 	Swampert();
@@ -35,26 +35,15 @@ public:
 
 	bool Idle();
 
-	bool Walking();
+	bool Walking(float dt);
 
-	bool Move();
+	bool Move(float dt);
 
 	bool Attack();
 
-	bool Idle_IA();
-
-	bool Walking_IA();
-
-	bool Move_IA();
-
-	bool CheckTargetPos();
-
-	bool Attack_IA();
-
 	bool Movebyhit();
 
-	void AttackSpecial();
-
+	void Special_Attack();
 	void ThrowSP();
 
 private:
@@ -66,6 +55,7 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
+	bool drawThrowSP = false;
 };
 
 #endif //__SWAMPERT_H_

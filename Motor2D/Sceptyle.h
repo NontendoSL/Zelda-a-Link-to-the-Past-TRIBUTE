@@ -2,9 +2,9 @@
 #ifndef __SCEPTYLE_H_
 #define __SCEPTYLE_H_
 
-#include "Pokemon.h"
+#include "PokemonCombat.h"
 
-class Sceptyle : public Pokemon
+class Sceptyle : public PokemonCombat
 {
 public:
 	Sceptyle();
@@ -33,25 +33,17 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
-	void AttackSpecial();
-
+	//Special Attack
+	void Special_Attack();
 	void ThrowSP();
 
 	bool Idle();
 
-	bool Walking();
+	bool Walking(float dt);
 
-	bool Move();
+	bool Move(float dt);
 
 	bool Attack();
-
-	bool Idle_IA();
-
-	bool Walking_IA();
-
-	bool Move_IA();
-
-	bool Attack_IA();
 
 	bool Movebyhit();
 
@@ -64,6 +56,8 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
+	bool drawThrowSP = false;
+
 };
 
 #endif //__SCEPTYLE_H_
