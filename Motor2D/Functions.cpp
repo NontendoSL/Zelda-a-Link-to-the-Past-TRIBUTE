@@ -1,3 +1,21 @@
+/*bool Swampert::CheckTargetPos()
+{
+int distance_target = target->position.DistanceTo(position);
+
+if (distance_target <= radar)
+{
+if (attacker == false && state != PC_ATTACKING)
+{
+state = PC_ATTACKING;
+anim_state = PC_ATTACKING;
+current_animation = App->anim_manager->GetAnimation(anim_state, direction, SWAMPERT); //this number may need to be changed?
+current_animation->Reset();
+}
+}
+
+return true;
+}*/
+
 /*//TEST CHANGE RESOLUTION AND SIZE OF SCREEN
 if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 {

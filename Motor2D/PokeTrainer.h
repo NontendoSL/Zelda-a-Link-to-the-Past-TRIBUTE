@@ -3,7 +3,7 @@
 #define __POKETRAINER_H_
 
 #include "NPC.h"
-#include "Pokemon.h"
+#include "PokemonCombat.h"
 
 enum TrainerState { T_IDLE = 0, T_TALKING };
 
@@ -43,7 +43,7 @@ private:
 	TrainerState anim_state = T_IDLE;
 	//Item* drop;
 	bool stunned = false;
-	Pokemon* pokedex;
+	PokemonCombat* pokedex;
 	//SDL_Texture* texture = nullptr;
 	//std::string file_name;
 	bool active = false;

@@ -140,7 +140,7 @@ void CombatManager::CreateTargets()
 	}*/
 }
 
-Pokemon* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
+PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 {
 	if (id == 1)
 	{
@@ -189,11 +189,11 @@ bool CombatManager::DeleteElements_combat()
 	return true;
 }
 
-Pokemon* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
+PokemonCombat* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
 {
 	if (trainer) //Link
 	{
-		std::list<Pokemon*>::iterator item = App->scene->player->pokedex.begin();
+		std::list<PokemonCombat*>::iterator item = App->scene->player->pokedex.begin();
 		while (item != App->scene->player->pokedex.end())
 		{
 			if (item._Ptr->_Myval->active == true)

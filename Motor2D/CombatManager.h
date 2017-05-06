@@ -9,7 +9,7 @@
 
 class Player;
 class NPC;
-class Pokemon;
+class PokemonCombat;
 class PokeTrainer;
 // ---------------------------------------------------
 class CombatManager : public j1Module
@@ -38,12 +38,12 @@ public:
 
 	void CreateTargets();
 	//Create Functions 
-	Pokemon* CreatePokemon(pugi::xml_node&, uint id);
+	PokemonCombat* CreatePokemon(pugi::xml_node&, uint id);
 	PokeTrainer* CreateTrainer(pugi::xml_node&, uint id);
 	// delete elements
 	bool DeleteElements_combat();
 	//Change Pokemon
-	Pokemon* change_pokemon(bool trainer);
+	PokemonCombat* change_pokemon(bool trainer);
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;
