@@ -5,7 +5,6 @@
 
 Vilager::Vilager()
 {
-	name = "vilager";
 }
 
 Vilager::~Vilager()

@@ -64,7 +64,22 @@
     <weapon id="2" name="bomb" equiped="false" picked="false" file="textures/Items.png"/>
     <weapon id="3" name="bow" equiped="false" picked="false" file="textures/Items.png"/>
   </weapons>
-
+  
+  <!--VILAGERS - TRAINNERS-->
+  <vilagers>
+    <vilager id="1" name="Uncle" pos_x="" pos_y="" dialog=""/>
+    <vilager id="2" name="Mey" pos_x="" pos_y="" dialog=""/>
+    <vilager id="3" name="Brendan" pos_x="" pos_y="" dialog=""/>
+    <vilager id="4" name="Joy" pos_x="" pos_y="" dialog=""/>
+    <vilager id="5" name="Sidney" pos_x="" pos_y="" dialog=""/>
+    <vilager id="6" name="Phoebe" pos_x="" pos_y="" dialog=""/>
+    <vilager id="7" name="Glacia" pos_x="" pos_y="" dialog=""/>
+    <vilager id="8" name="Drake" pos_x="" pos_y="" dialog=""/>
+    <vilager id="9" name="Red" pos_x="" pos_y="" dialog=""/>
+  </vilagers>
+  
+  
+  
   <maps>
     <map n="1" file="TiledLinkHouse.tmx">
       <camera follow="false"/>
@@ -247,6 +262,9 @@
 
     <map n="12" file="EliteFour02.tmx">
       <camera follow="false"/>
+      <vilagers>
+        <vilager id="1" name="Mey" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?" switch_map="7"/>
+      </vilagers>
       <!-- <trainer id="1" name="Phoebe" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="7" name="DUSCLOPS" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="7" active=""/>
       </trainer>-->
