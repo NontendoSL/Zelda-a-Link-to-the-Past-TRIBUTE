@@ -198,8 +198,8 @@ bool j1Scene::Update(float dt)
 			}
 			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			{
-			//	App->scene->player->position.x = App->input->GetMousePosition().x;
-			//	App->scene->player->position.y = App->input->GetMousePosition().y;
+				//	App->scene->player->position.x = App->input->GetMousePosition().x;
+				//	App->scene->player->position.y = App->input->GetMousePosition().y;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 			{
@@ -380,17 +380,19 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 	{
 		if (start_menu->position.y < 0)
 		{
-			//start_menu->OpenClose(true);
+			if (gamestate != INMENU)
+			{
+				gamestate = INMENU;
+				App->audio->PlayFx(3);
+			}
 			start_menu->Move(false, 6.0);
 			hud->Move(false, 6.0, true);
 		}
 		else
 		{
-			//hud->OpenClose(false);
 			start_menu->position.y = 0;
 			switch_menu = false;
 			inventory = true;
-			gamestate = INMENU;
 			App->gui->SetGui(ZELDA_MENU);
 			start_menu->ShowItemInfo();
 		}
@@ -399,14 +401,16 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 	{
 		if (hud->position.y > 0)
 		{
-			//hud->OpenClose(true);
+			if (start_menu->position.y == 0)
+			{
+				App->audio->PlayFx(2);
+			}
 			start_menu->Move(false, -6.0);
 			hud->Move(false, -6.0, true);
 			start_menu->active = false;
 		}
 		else
 		{
-			//start_menu->OpenClose(false);
 			switch_menu = false;
 			inventory = false;
 			gamestate = INGAME;

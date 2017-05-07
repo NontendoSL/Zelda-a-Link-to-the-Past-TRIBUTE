@@ -270,17 +270,7 @@ bool Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fadetoblack->IsFading())
 	{
-		if (App->scene->inventory) //TODO LOW -> If pressed to fast you can listen fx twice.
-		{
-			App->audio->PlayFx(3);
-		}
-		else
-		{
-			App->audio->PlayFx(2);
-		}
 
-		App->scene->switch_menu = true;
-		App->scene->gamestate = INMENU;
 	}
 	
 	//Collision follow the player
@@ -1400,50 +1390,6 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		}
 		break;
 		}
-
-	case BUTTON_START:
-	{
-		if (e_state == E_DOWN)
-		{
-			if (App->scene->combat == false)
-			{
-				if (App->scene->inventory)
-				{
-					App->audio->PlayFx(2);
-				}
-				else
-				{
-					App->audio->PlayFx(3);
-				}
-
-				App->scene->switch_menu = true;
-				App->scene->gamestate = INMENU;
-			}
-			if (App->scene->gamestate == INMENU)
-			{
-				if (gameover != nullptr)
-				{
-					gameover->visible = false;
-					for (int i = 0; i < gameover->elements.size(); i++)
-					{
-						gameover->elements[i]->visible = false;
-					}
-				}
-				if (winover != nullptr)
-				{
-					winover->visible = false;
-					for (int i = 0; i < winover->elements.size(); i++)
-					{
-						winover->elements[i]->visible = false;
-					}
-				}
-
-				App->scene->gamestate = INGAME;
-			}
-			break;
-		}
-	}
-
 	}
 }
 

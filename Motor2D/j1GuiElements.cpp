@@ -548,7 +548,10 @@ void ZeldaHud::Update(j1GuiEntity* focused)
 
 void ZeldaHud::Input()
 {
-
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
+	{
+		App->scene->switch_menu = true;
+	}
 }
 
 void ZeldaHud::Equip(const char* item)
@@ -850,6 +853,10 @@ void ZeldaMenu::Input()
 			{
 				App->gui->SetGui(ZELDA_MENU);
 			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
+		{
+			App->scene->switch_menu = true;
 		}
 	}
 }
