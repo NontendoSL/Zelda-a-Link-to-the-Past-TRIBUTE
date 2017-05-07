@@ -15,7 +15,8 @@ enum GuiGroup
 	ZELDA_MENU,
 	ZELDA_MENU_OPTION,
 	POKEMON_COMBAT,
-	POKEMON_HUD
+	POKEMON_HUD,
+	POKEMON_MENU
 };
 enum FontName;
 
@@ -29,6 +30,7 @@ class ZeldaHud;
 class ZeldaMenu;
 class PokemonCombatHud;
 class PokemonWorldHud;
+class PokemonWorldMenu;
 class PokemonCombat;
 class Selector;
 
@@ -81,6 +83,8 @@ public:
 	PokemonCombatHud* CreatePokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan);
 
 	PokemonWorldHud* CreatePokemonWorldHud();
+
+	PokemonWorldMenu* CreatePokemonWorldMenu();
 
 	void Erase(j1GuiEntity* to_delete);
 

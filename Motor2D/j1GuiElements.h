@@ -248,4 +248,21 @@ public:
 	bool active = false;
 	bool selecting = false;
 };
+
+class PokemonWorldMenu :public j1GuiEntity, public InputListener
+{
+public:
+	PokemonWorldMenu();
+	~PokemonWorldMenu();
+public:
+	void Input();
+	void OnInputCallback(INPUTEVENT action, EVENTSTATE e_state);
+	Button* GetFirst();
+	void Select(bool down);
+	void MoveIn(bool inside);
+private:
+	std::vector<Button*>menu_opt;
+public:
+	bool active = false;
+};
 #endif // __j1GUIELEMENTS_H__

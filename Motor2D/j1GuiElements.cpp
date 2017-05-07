@@ -1299,6 +1299,18 @@ void PokemonWorldHud::Input()
 			App->scene->gamestate = INGAME;
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
+	{
+		if (active)
+		{
+			CloseAll();
+			active = false;
+		}
+		App->scene->poke_menu->active = true;
+		App->scene->poke_menu->MoveIn(true);
+		App->gui->SetGui(POKEMON_MENU);
+		App->scene->gamestate = INMENU;
+	}
 	if (active)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
@@ -1434,6 +1446,120 @@ Button* PokemonWorldHud::GetFirst()
 PokemonWorldHud::~PokemonWorldHud()
 {
 
+
+}
+
+//----------------------------POKEMON WORLD MENU----------------------------
+
+PokemonWorldMenu::PokemonWorldMenu()
+{
+	Image* bg_poke = (Image*)App->gui->GetEntity("pokemon menu bg");
+	bg_poke->position.x = App->win->GetWidth() / 2;
+	for (int i = 0; i < bg_poke->elements.size(); i++)
+	{
+		menu_opt.push_back((Button*)bg_poke->elements[i]);
+	}
+}
+
+void PokemonWorldMenu::Input()
+{
+	if (active)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
+		{
+			Select(true);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
+		{
+			Select(false);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+		{
+			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP )
+		{
+			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
+		{
+			active = false;
+			MoveIn(false);
+			App->gui->SetGui(POKEMON_HUD);
+		}
+	}
+
+}
+
+void PokemonWorldMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
+{
+	switch (action)
+	{
+	case BUTTON_A:
+		if (e_state == E_UP)
+		{
+			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+		}
+	}
+}
+
+void PokemonWorldMenu::Select(bool down)
+{
+
+	for (int i = 0; i < menu_opt.size(); i++)
+	{
+		if (App->gui->GetFocused() == menu_opt[i])
+		{
+			if (down)
+			{
+				if (menu_opt[i] == menu_opt.back())
+				{
+					App->gui->SetFocus(menu_opt[0]);
+					return;
+				}
+				else
+				{
+					App->gui->SetFocus(menu_opt[i+1]);
+					return;
+				}
+			}
+			else
+			{
+				if (menu_opt[i] == menu_opt.front())
+				{
+					App->gui->SetFocus(menu_opt[menu_opt.size() - 1]);
+					return;
+				}
+				else
+				{
+					App->gui->SetFocus(menu_opt[i - 1]);
+					return;
+				}
+			}
+		}
+	}
+}
+
+void PokemonWorldMenu::MoveIn(bool inside)
+{
+	if (inside)
+	{
+		App->gui->GetEntity("pokemon menu bg")->position.x -= App->gui->GetEntity("pokemon menu bg")->Hitbox.w;
+	}
+	else
+	{
+		App->gui->GetEntity("pokemon menu bg")->position.x += App->gui->GetEntity("pokemon menu bg")->Hitbox.w;
+	}
+}
+
+Button* PokemonWorldMenu::GetFirst()
+{
+	return menu_opt[0];
+}
+
+
+PokemonWorldMenu::~PokemonWorldMenu()
+{
 
 }
 // Entity Elements ---------------------------------------------------

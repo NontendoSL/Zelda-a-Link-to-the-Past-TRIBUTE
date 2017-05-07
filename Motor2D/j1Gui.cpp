@@ -35,6 +35,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	gui_groups_name.push_back("Zelda_Menu_Options");
 	gui_groups_name.push_back("PokemonCombat_HUD");
 	gui_groups_name.push_back("PokemonWorld_HUD");
+	gui_groups_name.push_back("PokemonWorld_Menu");
 
 	return ret;
 }
@@ -57,6 +58,14 @@ bool j1Gui::PreUpdate()
 		if (status == ZELDA_HUD || status == ZELDA_MENU || status == ZELDA_MENU_OPTION)
 		{
 			if (entities[i]->belong == ZELDA_HUD || entities[i]->belong == ZELDA_MENU || entities[i]->belong == ZELDA_MENU_OPTION)
+			{
+				if (entities[i]->visible)
+					entities[i]->Update(focused);
+			}
+		}
+		else if (status == POKEMON_HUD || status == POKEMON_MENU)
+		{
+			if (entities[i]->belong == POKEMON_HUD || entities[i]->belong == POKEMON_MENU)
 			{
 				if (entities[i]->visible)
 					entities[i]->Update(focused);
@@ -96,6 +105,9 @@ void j1Gui::ReceiveInput()
 	case GuiGroup::POKEMON_HUD:
 		App->scene->poke_hud->Input();
 		break;
+	case GuiGroup::POKEMON_MENU:
+		App->scene->poke_menu->Input();
+		return;
 	}
 }
 
@@ -107,6 +119,14 @@ bool j1Gui::PostUpdate()
 		if (status == ZELDA_HUD || status == ZELDA_MENU || status == ZELDA_MENU_OPTION)
 		{
 			if (entities[i]->belong == ZELDA_HUD || entities[i]->belong == ZELDA_MENU || entities[i]->belong == ZELDA_MENU_OPTION)
+			{
+				if (entities[i]->visible)
+					entities[i]->Draw();
+			}
+		}
+		else if (status == POKEMON_HUD || status == POKEMON_MENU)
+		{
+			if (entities[i]->belong == POKEMON_HUD || entities[i]->belong == POKEMON_MENU)
 			{
 				if (entities[i]->visible)
 					entities[i]->Draw();
@@ -226,6 +246,9 @@ void j1Gui::SetGui(GuiGroup guistate)
 	case POKEMON_HUD:
 		SetFocus(App->scene->poke_hud->GetFirst());
 		return;
+	case POKEMON_MENU:
+		SetFocus(App->scene->poke_menu->GetFirst());
+		return;
 	default:
 		SetFocus(nullptr);
 		return;
@@ -317,6 +340,13 @@ PokemonWorldHud* j1Gui::CreatePokemonWorldHud()
 	return element;
 }
 
+PokemonWorldMenu* j1Gui::CreatePokemonWorldMenu()
+{
+	PokemonWorldMenu* element = new PokemonWorldMenu();
+	entities.push_back(element);
+	return element;
+}
+
 // --------------------------------------------- Entities Loading
 void j1Gui::LoadEntities()
 {
@@ -343,16 +373,28 @@ void j1Gui::LoadEntities()
 				inside_picker = App->gui->CreateImage({ temp_inside.attribute("rect.x").as_int(0), temp_inside.attribute("rect.y").as_int(0), temp_inside.attribute("rect.w").as_int(0), temp_inside.attribute("rect.h").as_int(0) }, { temp_inside.attribute("pos.x").as_int(0),temp_inside.attribute("pos.y").as_int(0) }, temp_inside.attribute("identifier").as_string(""), actual, temp_inside.attribute("movable").as_bool(true));
 				if (temp_inside.attribute("inside").as_bool(false))
 				{
+					if (std::string(temp_inside.attribute("identifier").as_string("")) == "pokemon menu bg")
+					{
+						int a = 0;
+					}
 					for (pugi::xml_node push = temp_inside.child("entity"); push != NULL; push = push.next_sibling())
 					{
-						inside_picker_push = App->gui->CreateImage({ push.attribute("rect.x").as_int(0), push.attribute("rect.y").as_int(0), push.attribute("rect.w").as_int(0), push.attribute("rect.h").as_int(0) }, { push.attribute("pos.x").as_int(0), push.attribute("pos.y").as_int(0) }, push.attribute("identifier").as_string(""), actual, push.attribute("movable").as_bool(true));
-						inside_picker->elements.push_back(inside_picker_push);
-						if (push.attribute("inside").as_bool(false))
+						if (std::string(push.attribute("type").as_string("")) == "image")
 						{
-							for (pugi::xml_node push2 = push.child("entity"); push2 != NULL; push2 = push2.next_sibling())
+							inside_picker_push = App->gui->CreateImage({ push.attribute("rect.x").as_int(0), push.attribute("rect.y").as_int(0), push.attribute("rect.w").as_int(0), push.attribute("rect.h").as_int(0) }, { push.attribute("pos.x").as_int(0), push.attribute("pos.y").as_int(0) }, push.attribute("identifier").as_string(""), actual, push.attribute("movable").as_bool(true));
+							inside_picker->elements.push_back(inside_picker_push);
+							if (push.attribute("inside").as_bool(false))
 							{
-								inside_picker_push->elements.push_back(App->gui->CreateImage({ push2.attribute("rect.x").as_int(0), push2.attribute("rect.y").as_int(0), push2.attribute("rect.w").as_int(0), push2.attribute("rect.h").as_int(0) }, { push2.attribute("pos.x").as_int(0), push2.attribute("pos.y").as_int(0) }, push2.attribute("identifier").as_string(""), actual, push2.attribute("movable").as_bool(true)));
+								for (pugi::xml_node push2 = push.child("entity"); push2 != NULL; push2 = push2.next_sibling())
+								{
+									inside_picker_push->elements.push_back(App->gui->CreateImage({ push2.attribute("rect.x").as_int(0), push2.attribute("rect.y").as_int(0), push2.attribute("rect.w").as_int(0), push2.attribute("rect.h").as_int(0) }, { push2.attribute("pos.x").as_int(0), push2.attribute("pos.y").as_int(0) }, push2.attribute("identifier").as_string(""), actual, push2.attribute("movable").as_bool(true)));
+								}
 							}
+						}
+						if (std::string(push.attribute("type").as_string("")) == "button")
+						{
+							Button* temp = App->gui->CreateButton(App->Search(push.attribute("listener").as_string("")), { push.attribute("rect.x").as_int(0), push.attribute("rect.y").as_int(0), push.attribute("rect.w").as_int(0), push.attribute("rect.h").as_int(0) }, { push.attribute("pos.x").as_int(0), push.attribute("pos.y").as_int(0) }, { push.attribute("state2.x").as_int(0) ,push.attribute("state2.y").as_int(0) }, { push.attribute("state3.x").as_int(0) ,push.attribute("state3.y").as_int(0) }, push.attribute("animated").as_bool(false), push.attribute("identifier").as_string(""), actual);
+							inside_picker->elements.push_back(temp);
 						}
 					}
 				}
@@ -386,13 +428,6 @@ void j1Gui::LoadEntities()
 		if (actual > gui_groups_name.size())
 		{
 			LOG("GUI ENTITIES LOADED=======================================");
-			for (int i = 0; i < entities.size(); i++)
-			{
-				if (entities[i]->belong == POKEMON_HUD)
-				{
-					LOG("%s", entities[i]->identifier.c_str());
-				}
-			}
 			return;
 		}
 		else
@@ -401,8 +436,6 @@ void j1Gui::LoadEntities()
 		}
 	}
 
-
-	
 
 }
 
