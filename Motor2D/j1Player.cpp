@@ -25,6 +25,7 @@
 #include "Geodude.h"
 #include "Animation.h"
 #include "Pokemon.h"
+#include "Vilager.h"
 
 //Constructor
 Player::Player() : Creature()
@@ -227,14 +228,6 @@ bool Player::Update(float dt)
 				}
 			}
 		}
-		if (dialog != nullptr)
-		{
-			if (dialog->end == false)
-			{
-				if(App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-					dialog->PushLine(true);
-			}
-		}
 	}
 
 	/*else if (gamestate == TIMETOPLAY) //TODO JORDI - ELLIOT
@@ -328,6 +321,22 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 			if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT && c2->callback != nullptr)
 			{
+				if (c2->callback->name == "sign")
+				{
+					if (App->scene->gamestate == INGAME)
+					{
+						if (dialog == nullptr)
+						{
+							App->scene->gamestate = INMENU;
+							interaction = false;
+							DynamicObjects* dynobj = (DynamicObjects*)c2->callback;
+							dialog = App->gui->CreateDialogue(dynobj->GetDialog().c_str());
+							collision_interact->to_delete = true;
+							state = L_IDLE;
+							anim_state = L_IDLE;
+						}
+					}
+				}
 				if (c2->callback->name == "chest" || c2->callback->name == "bigchest")
 				{
 					iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
@@ -483,6 +492,31 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							App->scene->switch_map = App->scene->teleports[i].id_map;
 							App->scene->newPosition = App->scene->teleports[i].position;
 						}
+					}
+				}
+			}
+
+			if (c1 == collision_interact && c2->type == COLLIDER_VILAGER && c2->callback != nullptr)
+			{
+				if (App->scene->gamestate == INGAME)
+				{
+					if (dialog == nullptr)
+					{
+						App->scene->gamestate = INMENU;
+						if (direction == UP)
+							c2->callback->direction = DOWN;
+						else if (direction == DOWN)
+							c2->callback->direction = UP;
+						else if (direction == LEFT)
+							c2->callback->direction = RIGHT;
+						else
+							c2->callback->direction = LEFT;
+						Vilager* vilager = (Vilager*)c2->callback;
+						dialog = App->gui->CreateDialogue(vilager->GetDialog().c_str());
+						collision_interact->to_delete = true;
+						interaction = false;
+						state = L_IDLE;
+						anim_state = L_IDLE;
 					}
 				}
 			}

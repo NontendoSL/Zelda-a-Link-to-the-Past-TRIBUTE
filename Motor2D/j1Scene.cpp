@@ -110,7 +110,7 @@ bool j1Scene::Update(float dt)
 				help_bool = false;
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
 				if (player->dialog != nullptr)
 				{
@@ -607,6 +607,15 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			{
 				App->entity_elements->CreateItem(temp_item.attribute("id").as_int(0), iPoint(temp_item.attribute("pos_x").as_int(0), temp_item.attribute("pos_y").as_int(0)));
 				temp_item = temp_item.next_sibling();
+			}
+
+			//DynObjects - ONLY SING
+			for (pugi::xml_node dynobject = temp.child("dynobjects").child("dynobject"); dynobject != NULL; dynobject = dynobject.next_sibling())
+			{
+				if (dynobject.attribute("id").as_int(1) == 1)
+				{
+					App->entity_elements->CreateDynObject(iPoint(dynobject.attribute("pos_x").as_int(0), dynobject.attribute("pos_y").as_int(0)), dynobject.attribute("id").as_int(1), n, true, dynobject);
+				}
 			}
 
 			//Pokemons
