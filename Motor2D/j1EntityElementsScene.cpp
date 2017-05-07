@@ -65,7 +65,8 @@ bool j1EntityElementScene::Start()
 
 bool j1EntityElementScene::PreUpdate()
 {
-	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan)
+	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
+
 
 	return true;
 }
@@ -85,6 +86,12 @@ bool j1EntityElementScene::Update(float dt)
 			{
 				//TODO -> if animation finished, then delete.
 				App->entity_elements->DeleteDynObject(((DynamicObjects*)item3._Ptr->_Myval)); // Delete Dynobject
+				App->audio->PlayFx(17);
+			}
+			if (((BCTrooper*)item3._Ptr->_Myval)->GetState() == BC_DYING)
+			{
+				//TODO -> if animation finished, then delete.
+				App->entity_elements->DeleteBCTrooper((BCTrooper*)item3._Ptr->_Myval); // Delete Dynobject
 				App->audio->PlayFx(17);
 			}
 
@@ -254,6 +261,8 @@ bool j1EntityElementScene::DeleteBCTrooper(BCTrooper* bctrooper)
 	if (bctrooper != nullptr)
 	{
 		elementscene.remove(bctrooper);
+		bctrooper->collision_feet->to_delete = true;
+		bctrooper->GetColliderMaze()->to_delete = true;
 		delete bctrooper;
 		bctrooper = nullptr;
 	}

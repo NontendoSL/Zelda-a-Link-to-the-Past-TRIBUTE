@@ -9,6 +9,8 @@
 
 enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_HIT, BC_DEFEND,BC_DYING };
 
+class P_Follow;
+
 class BCTrooper : public NPC
 {
 public:
@@ -48,6 +50,9 @@ public:
 	bool ChangeRadius_degrade(int radius_to_stop, bool increment);
 	bool ChangeRadius_insta(int radius_to_go, bool increment);
 
+	BCTrooperState GetState() const;
+	Collider* GetColliderMaze();
+
 	//Collision----------------------------------
 	void OnCollision(Collider*, Collider*);
 
@@ -56,6 +61,7 @@ private:
 	AnimationStruct animation;
 	SDL_Rect anim_rect;
 
+	P_Follow* particle_maze;
 	//state
 	BCTrooperState state = BC_IDLE;
 	SDL_Texture* texture = nullptr;

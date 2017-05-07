@@ -1,6 +1,7 @@
 #include "BCTrooper.h"
 #include "j1Scene.h"
 #include "ParticleManager.h"
+#include "P_Follow.h"
 #include "j1Collision.h"
 #include "j1Map.h"
 #include "j1Player.h"
@@ -48,6 +49,7 @@ bool BCTrooper::Start()
 	collision_feet = App->collision->AddCollider({ position.x - 8, position.y - 5, 16, 15 }, COLLIDER_BCTROOPER, this);
 	collision_maze = App->collision->AddCollider({ bole.x - 7, bole.y - 7, 14, 14 }, COLLIDER_BCTROOPER_MAZE, this);
 	App->particlemanager->CreateFollow_P(nullptr, &bole, SDL_Rect{ 0,10,2,0 }, iPoint(5,5), iPoint(18,8), 4, 30, true);
+	particle_maze = App->particlemanager->Group_Follow.back();
 	return true;
 }
 
@@ -160,7 +162,16 @@ void BCTrooper::Draw()
 			//Draw Bole
 			SDL_Rect temp_2 = { 0,7,14,14 };
 			App->render->Blit(texture, bole.x - 5, bole.y - 4, &temp_2);
+			particle_maze->active = true;
 		}
+		else
+		{
+			particle_maze->active = false;
+		}
+	}
+	else
+	{
+		particle_maze->active = false;
 	}
 }
 
@@ -374,6 +385,16 @@ bool BCTrooper::ChangeRadius_insta(int radius_to_go, bool incremenet)
 		}
 	}
 	return true;
+}
+
+BCTrooperState BCTrooper::GetState() const
+{
+	return state;
+}
+
+Collider* BCTrooper::GetColliderMaze()
+{
+	return collision_maze;
 }
 
 void BCTrooper::OnCollision(Collider* c1, Collider* c2)
