@@ -55,7 +55,7 @@ void Image::Update(j1GuiEntity* focused)
 void Image::Draw()
 {
 
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0);
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &Hitbox, 0,resize);
 
 }
 
@@ -194,9 +194,8 @@ void Text::Update(j1GuiEntity* focused)
 
 void Text::Write(const char* string)
 {
-
+	SDL_DestroyTexture(text_texture);
 	text = string;
-	//font = App->font->Load("fonts/zelda_fonts/ReturnofGanon.ttf", 23);
 	text_texture = App->font->Print(text.c_str(), length, color, font);
 
 }
@@ -1280,6 +1279,8 @@ PokemonWorldHud::PokemonWorldHud()
 	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_1"));
 	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_2"));
 	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_3"));
+	j1GuiEntity*tt = App->gui->GetEntity("bag_coins_pk");
+	App->gui->GetEntity("bag_coins_pk")->position.x = App->win->GetWidth()/2 - App->gui->GetEntity("bag_coins_pk")->position.x;
 }
 
 void PokemonWorldHud::Input()
