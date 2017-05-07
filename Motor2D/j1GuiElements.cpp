@@ -308,6 +308,10 @@ Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
 	{
 		i -= lines->length;
 	}
+	if (enters == 0)
+	{
+		enters++;
+	}
 	App->scene->player->SetAnimState(LinkState::L_IDLE);
 }
 
