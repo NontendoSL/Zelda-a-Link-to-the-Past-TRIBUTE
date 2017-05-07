@@ -19,30 +19,45 @@ DynamicObjects::~DynamicObjects()
 
 }
 
-bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos)
+bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos, bool isSign)
 {
 	bool stop_search = false;
-	pugi::xml_node temp = conf.child("dynobjects").child("dynobject");
-	if (temp != NULL)
+	if (isSign)
 	{
-		for (int s_id = temp.attribute("id").as_int(0); stop_search == false; s_id = temp.attribute("id").as_int(0))
+		name = conf.attribute("name").as_string("");
+		if (id == 1)
 		{
-			if (id == s_id)
+			dialog = conf.attribute("dialog").as_string("");
+		}
+		position.x = pos.x;
+		position.y = pos.y;
+		rect = { conf.attribute("rect_x").as_int(0), conf.attribute("rect_y").as_int(0), conf.attribute("rect_w").as_int(0), conf.attribute("rect_h").as_int(0) };
+		item_id = conf.attribute("item_id").as_int(0);
+		pickable = conf.attribute("pickable").as_bool(false);
+	}
+	else
+	{
+		pugi::xml_node temp = conf.child("dynobjects").child("dynobject");
+		if (temp != NULL)
+		{
+			for (int s_id = temp.attribute("id").as_int(0); stop_search == false; s_id = temp.attribute("id").as_int(0))
 			{
-				name = temp.attribute("name").as_string("");
-				if (App->entity_elements->texture_dynobjects != nullptr)
+				if (id == s_id)
 				{
-					/*std::string es = temp.attribute("file").as_string("");
-					texture = App->tex->Load(es.c_str());*/
+					name = temp.attribute("name").as_string("");
+					if (id == 1)
+					{
+						dialog = temp.attribute("dialog").as_string("");
+					}
+					position.x = pos.x;
+					position.y = pos.y;
+					rect = { temp.attribute("rect_x").as_int(0), temp.attribute("rect_y").as_int(0), temp.attribute("rect_w").as_int(0), temp.attribute("rect_h").as_int(0) };
+					item_id = temp.attribute("item_id").as_int(0);
+					pickable = temp.attribute("pickable").as_bool(false);
+					stop_search = true;
 				}
-				position.x = pos.x;
-				position.y = pos.y;
-				rect = { temp.attribute("rect_x").as_int(0), temp.attribute("rect_y").as_int(0), temp.attribute("rect_w").as_int(0), temp.attribute("rect_h").as_int(0) };
-				item_id = temp.attribute("item_id").as_int(0);
-				pickable = temp.attribute("pickable").as_bool(false);
-				stop_search = true;
+				temp = temp.next_sibling();
 			}
-			temp = temp.next_sibling();
 		}
 	}
 	return true;
@@ -212,4 +227,9 @@ void DynamicObjects::SetState(DynObjectState s_state)
 void DynamicObjects::SetAnimState(DynObjectState a_state)
 {
 	anim_state = a_state;
+}
+
+std::string DynamicObjects::GetDialog()
+{
+	return dialog;
 }

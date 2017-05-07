@@ -397,26 +397,36 @@ void j1EntityElementScene::CreateVilager(pugi::xml_node& conf)
 	elementscene.push_back(temp);
 }
 
-void j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map)
+void j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map, bool isSign, pugi::xml_node& conf)
 {
 	DynamicObjects* element = new DynamicObjects();
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-	config = LoadConfig(config_file);
-	bool stop_rearch = false;
-	LOG("Create DynObjects");
-	config = config.child("maps").child("map");
-	for (; stop_rearch == false; config = config.next_sibling())
+	if (isSign)
 	{
-		if (config.attribute("n").as_int(0) == id_map)
+		element->Awake(conf, id, pos, isSign);
+		element->Start();
+		elementscene.push_back(element);
+	}
+	else
+	{
+		pugi::xml_document	config_file;
+		pugi::xml_node		config;
+		config = LoadConfig(config_file);
+		bool stop_rearch = false;
+		LOG("Create DynObjects");
+		config = config.child("maps").child("map");
+		for (; stop_rearch == false; config = config.next_sibling())
 		{
-			element->Awake(config, id, pos);
-			element->Start();
-			elementscene.push_back(element);
-			LOG("Created!!");
-			stop_rearch = true;
+			if (config.attribute("n").as_int(0) == id_map)
+			{
+				element->Awake(config, id, pos);
+				element->Start();
+				elementscene.push_back(element);
+				LOG("Created!!");
+				stop_rearch = true;
+			}
 		}
 	}
+
 }
 
 Player* j1EntityElementScene::CreatePlayer()

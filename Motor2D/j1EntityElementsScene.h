@@ -55,7 +55,7 @@ public:
 	void CreateItem(uint id, iPoint position);
 	Hookshot* CreateHookshot();
 	Bow* CreateBow();
-	void CreateDynObject(iPoint pos, uint id, uint id_map);
+	void CreateDynObject(iPoint pos, uint id, uint id_map, bool isSign = false, pugi::xml_node& conf = pugi::xml_node(NULL));
 	Player* CreatePlayer();
 	BombContainer* CreateBombContainer();
 	void CreatePokemon(pugi::xml_node&, uint id, iPoint pos = (iPoint(0,0)));

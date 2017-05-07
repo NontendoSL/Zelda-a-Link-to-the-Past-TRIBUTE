@@ -17,7 +17,7 @@ public:
 	~DynamicObjects();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&, uint, iPoint pos);
+	bool Awake(pugi::xml_node&, uint, iPoint pos, bool isSign = false);
 
 	// Called before the first frame
 	bool Start();
@@ -44,6 +44,7 @@ public:
 	DynObjectState GetState() const;
 	void SetState(DynObjectState state);
 	void SetAnimState(DynObjectState state);
+	std::string GetDialog();
 
 
 public:
@@ -52,6 +53,7 @@ public:
 	int item_id = 0;
 	bool pickable = false;
 
+
 private:
 	DynObjectState state = D_IDLE;
 	DynObjectState anim_state = D_IDLE;
@@ -59,6 +61,7 @@ private:
 	float speed = 0;
 	j1Timer timer;
 	float lifetime = 0;
+	std::string dialog;
 };
 
 
