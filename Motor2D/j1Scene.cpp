@@ -339,6 +339,84 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			((Button*)element)->click = false;
 		}
 	}
+	if (element->identifier == "pk_menu:pokemon")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pk_menu:bag")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pk_menu:link")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pk_menu:menu")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pk_menu:save")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pk_menu:options")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pk_menu:exit")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			update_return = false;
+		}
+	}
 }
 
 void j1Scene::CreateTeleports()
@@ -368,6 +446,7 @@ void j1Scene::LoadUi()
 	hud = App->gui->CreateZeldaHud();
 	start_menu = App->gui->CreateZeldaMenu();
 	poke_hud = App->gui->CreatePokemonWorldHud();
+	poke_menu = App->gui->CreatePokemonWorldMenu();
 	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
 	hud->Move(true, win_marge);
 	start_menu->Move(true, win_marge);

@@ -19,6 +19,7 @@ class ZeldaHud;
 class ZeldaMenu;
 class PokemonCombatHud;
 class PokemonWorldHud;
+class PokemonWorldMenu;
 
 class Player;
 class Item;
@@ -100,6 +101,7 @@ public:
 	ZeldaMenu* start_menu = nullptr;
 	PokemonCombatHud* pokecombat = nullptr;
 	PokemonWorldHud* poke_hud = nullptr;
+	PokemonWorldMenu* poke_menu = nullptr;
 	Player* player = nullptr;
 	PokeTrainer* poketrainer = nullptr;
 
