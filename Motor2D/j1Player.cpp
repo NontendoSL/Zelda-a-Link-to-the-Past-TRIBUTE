@@ -398,6 +398,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						{
 							bombmanager = App->entity_elements->CreateBombContainer();
 							App->scene->start_menu->PickItem("bomb");
+							App->audio->PlayFx(20);
 							score += 75;
 							bombs += 4;
 						}
@@ -411,16 +412,18 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						{
 							hook = App->entity_elements->CreateHookshot();
 							App->scene->start_menu->PickItem("hookshot");
+							App->audio->PlayFx(20);
 							score += 75;
 						}
 					}
 					if (c2->callback->name == "bow")
 					{
-						//First time picking a hookshot
+						//First time picking a bow
 						if (bow == nullptr)
 						{
 							bow = App->entity_elements->CreateBow();
 							App->scene->start_menu->PickItem("bow");
+							App->audio->PlayFx(20);
 							arrows += 5;
 							score += 75;
 						}
@@ -441,6 +444,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					{
 						sword_equiped = true;
 						dialog = App->gui->CreateDialogue("With great power comes great responsability       -Uncle Link");
+						App->audio->PlayFx(20);
 					}
 
 					//Delete item when picked

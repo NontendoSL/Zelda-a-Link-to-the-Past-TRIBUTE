@@ -70,6 +70,7 @@ bool j1Scene::Start()
 			App->audio->LoadFx("audio/fx/LTTP_ArrowHitWall.wav");//17 Arrow hit
 			App->audio->LoadFx("audio/fx/LTTP_Arrow.wav");//18
 			App->audio->LoadFx("audio/fx/LTTP_Stun.wav");//19
+			App->audio->LoadFx("audio/fx/LTTP_ItemGet.wav");//20
 
 			//Init All teleports
 			CreateTeleports();
