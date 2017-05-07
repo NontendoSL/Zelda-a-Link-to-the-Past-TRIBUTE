@@ -485,7 +485,7 @@ void j1Scene::SwitchMap(bool isTP)
 
 	if (App->fadetoblack->Checkfadetoblack() && now_switch)
 	{
-		if (switch_map > FIRST_LEVEL_COMBAT - 1) //id 13 = level combat map - need 12 
+		if (switch_map >= FIRST_LEVEL_COMBAT) //id 17 = First level combat map
 		{
 			combat = true;
 		}
@@ -529,19 +529,9 @@ void j1Scene::SwitchMap(bool isTP)
 	}
 	if (App->fadetoblack->Checkfadefromblack())
 	{
-		if (combat && switch_map == 6 && id_map > FIRST_LEVEL_COMBAT - 1) //TODO LOW Create lvl GameOver
-		{
-			switch_map = 0;
-			fade = false;
-			combat = false;
-			//gamestate = GAMEOVER;
-		}
-		else
-		{
-			switch_map = 0;
-			fade = false;
-			gamestate = INGAME;
-		}
+		switch_map = 0;
+		fade = false;
+		gamestate = INGAME;
 		id_map = switch_map;
 		useTP = false;
 	}

@@ -4,7 +4,7 @@
 #include "j1Module.h"
 #include "j1EntityElementsScene.h"
 
-#define FIRST_LEVEL_COMBAT 13
+#define FIRST_LEVEL_COMBAT 17
 
 enum GameState { INGAME, INMENU, TIMETOPLAY, GAMEOVER, CUTSCENE};
 
