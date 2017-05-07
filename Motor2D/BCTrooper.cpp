@@ -6,6 +6,7 @@
 #include "j1Player.h"
 #include "j1Weapon.h"
 #include "j1Audio.h"
+#include "j1DynamicObjects.h"
 
 BCTrooper::BCTrooper() : NPC()
 {
@@ -44,8 +45,8 @@ bool BCTrooper::Start()
 	hp = 50;
 	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(BC_TROOPER);
-	collision_feet = App->collision->AddCollider({ position.x, position.y, 16, 15 }, COLLIDER_BCTROOPER, this);
-	collision_maze = App->collision->AddCollider({ bole.x, bole.y, 14, 14 }, COLLIDER_BCTROOPER_MAZE, this);
+	collision_feet = App->collision->AddCollider({ position.x - 8, position.y - 5, 16, 15 }, COLLIDER_BCTROOPER, this);
+	collision_maze = App->collision->AddCollider({ bole.x - 7, bole.y - 7, 14, 14 }, COLLIDER_BCTROOPER_MAZE, this);
 	App->particlemanager->CreateFollow_P(nullptr, &bole, SDL_Rect{ 0,10,2,0 }, iPoint(5,5), iPoint(18,8), 4, 30, true);
 	return true;
 }
@@ -122,8 +123,8 @@ bool BCTrooper::Update(float dt)
 		speed_bole = 5;
 	}
 	//Update colliders position
-	collision_feet->SetPos(position.x, position.y);
-	collision_maze->SetPos(bole.x, bole.y);
+	collision_feet->SetPos(position.x - 8, position.y - 5);
+	collision_maze->SetPos(bole.x - 7, bole.y - 7);
 	return true;
 }
 
@@ -392,9 +393,16 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 				link->GetDamage();
 				link->dir_hit = direction;
 				link->prev_position = position;
+
+				if (link->picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
+				{
+					link->picked_object->SetState(D_DYING);
+					link->picked_object = nullptr;
+				}
 			}
 		}
 
+		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD)
 		{
 			if (Wait_attack.ReadSec() > 1 && stunned)
@@ -408,6 +416,8 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 			}
 
 		}
+
+		// ARROW COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_ARROW)
 		{
 			if (stunned == false)
@@ -416,6 +426,19 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 				reset_time = true;
 				stunned = true;
 				c2->arrow_callback->step = IMPACT;
+			}
+		}
+
+		//DYNOBJECT COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_DYNOBJECT && c2->callback != nullptr)
+		{
+			if (((DynamicObjects*)c2->callback)->GetState() == D_AIR)
+			{
+				App->audio->PlayFx(12);
+				state = BC_HIT;
+				reset_time = true;
+				stunned = true;
+				((DynamicObjects*)c2->callback)->SetState(D_DYING);
 			}
 		}
 	}
