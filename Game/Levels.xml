@@ -50,6 +50,7 @@
   
   <!--DYNOBJECTS INFORMATION (not use, only information)-->
   <dynobjects>
+    <dynobject id="1" name="sign" type="ZELDA" rect_x="77" rect_y="1" rect_w="16" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
     <dynobject id="2" name="bush_plant" type="ZELDA" rect_x="37" rect_y="17" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png" />
     <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png" />
     <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -77,7 +78,6 @@
     <vilager id="8" name="Drake" pos_x="" pos_y="" dialog=""/>
     <vilager id="9" name="Red" pos_x="" pos_y="" dialog=""/>
   </vilagers>
-  
   
   
   <maps>
@@ -122,9 +122,9 @@
       </soldier>
 
       <dynobjects>
-        <dynobject id="1" name="door_house_link" type="ZELDA" rect_x="1" rect_y="131" rect_w="32" rect_h="44" pickable ="false" file="textures/DynObjectsSpriteSheet.png"/>
+        <dynobject id="1" name="sign" type="ZELDA" pos_x="488" pos_y="928" rect_x="77" rect_y="1" rect_w="16" rect_h="16" pickable ="false" dialog="Bridge to castle of Hyrule" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="1" name="sign" type="ZELDA" pos_x="720" pos_y="1296" rect_x="77" rect_y="1" rect_w="16" rect_h="16" pickable ="false" dialog="Link's House" file="textures/DynObjectsSpriteSheet.png" />
         <dynobject id="2" name="bush_plant" type="ZELDA" rect_x="37" rect_y="17" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
-        <dynobject id="7" name="roof_Link" type="ZELDA" rect_x="34" rect_y="174" rect_w="96" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       
       <switch blue="1" yellow="3" />
@@ -249,12 +249,15 @@
     <map n="10" file="LeagueHall.tmx">
       <camera follow="true"/>
       <vilagers>
-        <vilager id="1" name="Mey" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?" switch_map="7"/>
+        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
       </vilagers>
     </map>
 
     <map n="11" file="EliteFour01.tmx">
       <camera follow="false"/>
+      <vilagers>
+        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+      </vilagers>
       <!--<trainer id="1" name="Sidney" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="6" name="SHIFTRY" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="6" active=""/>
       </trainer>-->
@@ -263,7 +266,7 @@
     <map n="12" file="EliteFour02.tmx">
       <camera follow="false"/>
       <vilagers>
-        <vilager id="1" name="Mey" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?" switch_map="7"/>
+        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
       </vilagers>
       <!-- <trainer id="1" name="Phoebe" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="7" name="DUSCLOPS" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="7" active=""/>
@@ -272,6 +275,9 @@
 
     <map n="13" file="EliteFour03.tmx">
       <camera follow="false"/>
+      <vilagers>
+        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+      </vilagers>
       <!--<trainer id="1" name="Glacia" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="4" name="WALREIN" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="4" active=""/>
       </trainer>-->
@@ -279,13 +285,19 @@
 
     <map n="14" file="EliteFour04.tmx">
       <camera follow="false"/>
-      <trainer id="1" name="Drake" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
+      <vilagers>
+        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+      </vilagers>
+      <!--<trainer id="1" name="Drake" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="5" name="SALAMANCE" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="5" active=""/>
       </trainer>-->
     </map>
 
     <map n="15" file="RedCombatMap.tmx">
       <camera follow="false"/>
+      <vilagers>
+        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+      </vilagers>
       <!--<trainer id="1" name="Red" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="8" name="GROUDON" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="8" active=""/>
       </trainer>-->
