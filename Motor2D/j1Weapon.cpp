@@ -229,8 +229,18 @@ void Bow::Shoot(iPoint pos, Direction dir, float charge)
 
 // ARROW -------------------------------------------------------
 Arrow::Arrow(iPoint pos, Direction dir, Bow* container, float speed):
-	position(pos),direction(dir), container(container),arrow_speed(speed)
+	direction(dir), container(container),arrow_speed(speed)
 {
+	if (direction == LEFT || direction == RIGHT)
+	{
+		position.x = pos.x;
+		position.y = pos.y - 6;
+	}
+	else
+	{
+		position = pos;
+	}
+
 	lifetime = 1; //Seconds before disappearing.
 	step = AIR;
 	App->particlemanager->CreateFollow_P(nullptr, &position, { 0,2,2,0 }, { 2,2 }, { 30,15 }, 4, 10, true);

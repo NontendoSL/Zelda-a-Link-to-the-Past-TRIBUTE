@@ -69,7 +69,9 @@ bool j1Scene::Start()
 			App->audio->LoadFx("audio/fx/LTTP_BombBreaksWall.wav");//16 Arrow charge GOOD
 			App->audio->LoadFx("audio/fx/LTTP_ArrowHitWall.wav");//17 Arrow hit
 			App->audio->LoadFx("audio/fx/LTTP_Arrow.wav");//18
-			//Inicialitzate All teleports
+			App->audio->LoadFx("audio/fx/LTTP_Stun.wav");//19
+
+			//Init All teleports
 			CreateTeleports();
 			first_loop = false;
 		}
@@ -110,7 +112,8 @@ bool j1Scene::Update(float dt)
 				help_bool = false;
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			//Make advance the dialogue text.
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
 			{
 				if (player->dialog != nullptr)
 				{

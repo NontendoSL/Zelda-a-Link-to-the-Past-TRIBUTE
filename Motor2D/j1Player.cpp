@@ -1361,68 +1361,66 @@ void Player::ThrowHookshot(uint charge)
 //UTILITY METHODS ----------------------------------------------------------------
 void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 {
-
-	switch (action)
+	if (App->scene->gamestate == INGAME)
 	{
-		if (App->scene->gamestate == INGAME)
+		switch (action)
 		{
-	case BUTTON_X:
-	{
-		if (e_state == E_DOWN && state != L_HOOKTHROWN && sword_equiped == true && picked_object == nullptr)
+		case BUTTON_X:
 		{
-			state = L_ATTACKING;
-			anim_state = L_ATTACKING;
-			current_animation = App->anim_manager->GetAnimation(anim_state, direction, LINK);
-			current_animation->Reset();
-		}
-		break;
-	}
-	case BUTTON_A:
-	{
-		if (e_state == E_DOWN && state != L_HOOKTHROWN)
-		{
-			if (picked_object == nullptr)
+			if (e_state == E_DOWN && state != L_HOOKTHROWN && sword_equiped == true && picked_object == nullptr)
 			{
-				state = L_INTERACTING;
-				anim_state = L_IDLE;
-				//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-				//current_animation->Reset();
+				state = L_ATTACKING;
+				anim_state = L_ATTACKING;
+				current_animation = App->anim_manager->GetAnimation(anim_state, direction, LINK);
+				current_animation->Reset();
 			}
-			else
-			{
-				ThrowObject();
-			}
+			break;
 		}
-		break;
-	}
-
-	case BUTTON_B:
-		if (hook != nullptr && equiped_item == hook && hook->in_use == false)
+		case BUTTON_A:
 		{
-			if (e_state == E_UP)
+			if (e_state == E_DOWN && state != L_HOOKTHROWN)
 			{
-				state = L_HOOKTHROWN;
-				anim_state = L_IDLE;
-				ThrowHookshot(charge);
+				if (picked_object == nullptr)
+				{
+					state = L_INTERACTING;
+					anim_state = L_IDLE;
+					//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
+					//current_animation->Reset();
+				}
+				else
+				{
+					ThrowObject();
+				}
 			}
+			break;
 		}
-		else if (bombmanager != nullptr && equiped_item == bombmanager && bombs > 0)
-		{
-			if (e_state == E_UP)
+		case BUTTON_B:
+			if (hook != nullptr && equiped_item == hook && hook->in_use == false)
 			{
-				bombmanager->Drop(position);
-				bombs--;
+				if (e_state == E_UP)
+				{
+					state = L_HOOKTHROWN;
+					anim_state = L_IDLE;
+					ThrowHookshot(charge);
+				}
 			}
-		}
-		else if (bow != nullptr && equiped_item == bow && arrows > 0 && charge > 17)
-		{
-			if (e_state == E_UP)
+			else if (bombmanager != nullptr && equiped_item == bombmanager && bombs > 0)
 			{
-				bow->Shoot(position, direction, charge);
-				arrows--;
+				if (e_state == E_UP)
+				{
+					bombmanager->Drop(position);
+					bombs--;
+				}
 			}
-		}
-		break;
+			else if (bow != nullptr && equiped_item == bow && arrows > 0 && charge > 17)
+			{
+				if (e_state == E_UP)
+				{
+					bow->Shoot(position, direction, charge);
+					arrows--;
+				}
+			}
+			break;
 		}
 	}
 }
