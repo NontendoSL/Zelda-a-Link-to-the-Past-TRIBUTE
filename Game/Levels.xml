@@ -242,13 +242,13 @@
 
     <map n="9" file="VictoryExterior.tmx">
       <camera follow="true"/>
-      <trainer id="1" name="Brendan" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
-        <!--<pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>-->
-      </trainer>
+      <!--<trainer id="1" name="Brendan" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
+        <pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>-->
+      <!--</trainer>-->
     </map>
 
     <map n="10" file="LeagueHall.tmx">
-      <camera follow="true"/>
+      <camera follow="false"/>
       <vilagers>
         <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
       </vilagers>
@@ -304,7 +304,8 @@
       </trainer>-->
     </map>
 
-    <map id="16" file="PiramidofPowerTileSet.tmx">
+    <map n="16" file="PiramidofPowerTileSet.tmx">
+      <camera follow="true"/>
       <!--FINAL BOSS-->
     </map>
 
@@ -388,9 +389,9 @@
     </map> 
     
     <map id="7"> <!--Victory 1-->
-      <port name="Victory_2" rect_x="368" rect_y="560" switch_map="8" pos_x="472" pos_y="424"/>
+      <port name="Victory_2" rect_x="368" rect_y="560" switch_map="8" pos_x="472" pos_y="427"/>
       <port name="Victory_2" rect_x="176" rect_y="272" switch_map="8" pos_x="120" pos_y="72"/>
-      <port name="Victory_Exterior" rect_x="656" rect_y="144" switch_map="9" pos_x="200" pos_y="448"/>
+      <port name="Victory_Exterior" rect_x="656" rect_y="144" switch_map="9" pos_x="200" pos_y="453"/>
     </map> 
     
     <map id="8"> <!--Victory 2-->
@@ -404,7 +405,7 @@
     </map> 
     
     <map id="10"> <!--LeagueHall-->
-      <port name="EliteFour_01" rect_x="168" rect_y="16" switch_map="11" pos_x="160" pos_y="216"/>
+      <port name="EliteFour_01" rect_x="168" rect_y="8" switch_map="11" pos_x="160" pos_y="216"/>
       <port name="Victory_Exterior" rect_x="168" rect_y="192" switch_map="9" pos_x="200" pos_y="95"/>
     </map> 
 
@@ -417,11 +418,11 @@
     </map>
 
     <map id="13"> <!--EliteFour 03-->
-      <port name="" rect_x="EliteFour_04" rect_y="144" switch_map="14" pos_x="160" pos_y="200"/>
+      <port name="EliteFour_04" rect_x="144" rect_y="24" switch_map="14" pos_x="160" pos_y="200"/>
     </map>
 
     <map id="14"> <!--EliteFour 04-->
-      <port name="" rect_x="RedCombatMap" rect_y="160" switch_map="15" pos_x="176" pos_y="256"/>
+      <port name="RedCombatMap" rect_x="160" rect_y="24" switch_map="15" pos_x="176" pos_y="256"/>
     </map>
 
     <map id="15"> <!--RedCombatMap-->

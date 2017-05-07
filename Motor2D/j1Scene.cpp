@@ -18,6 +18,7 @@
 #include "j1DynamicObjects.h"
 #include "j1FileSystem.h"
 #include "CombatManager.h"
+#include "ParticleManager.h"
 #include "j1FadeToBlack.h"
 #include "PokeTrainer.h"
 #include "j1Collision.h"
@@ -154,7 +155,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 13;
+				switch_map = 9;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -215,8 +216,8 @@ bool j1Scene::Update(float dt)
 			}
 			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			{
-				//	App->scene->player->position.x = App->input->GetMousePosition().x;
-				//	App->scene->player->position.y = App->input->GetMousePosition().y;
+					App->scene->player->position.x = App->input->GetMousePosition().x;
+					App->scene->player->position.y = App->input->GetMousePosition().y;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 			{
@@ -588,13 +589,17 @@ void j1Scene::SwitchMap(bool isTP)
 		now_switch = false;
 		if (App->map->CleanUp())
 		{
+			App->particlemanager->DeleteAllGroups();
 			App->collision->EreseAllColiderPlayer();
 			if (player->equiped_item != nullptr)
 			{
 				weapon_equiped = player->equiped_item->Wtype;
 			}
 			App->entity_elements->DelteElements();
-			App->combatmanager->DeleteElements_combat();
+			if (combat)
+			{
+				App->combatmanager->DeleteElements_combat();
+			}
 
 			if (poketrainer != nullptr)
 			{
@@ -696,11 +701,11 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);
 
-			//Trainers
+			/*//Trainers
 			if (temp.child("trainer"))
 			{
 				poketrainer = App->entity_elements->CreateTrainer(temp.child("trainer"), 1);
-			}
+			}*/
 
 			//items
 			pugi::xml_node temp_item = temp.child("items").child("item");

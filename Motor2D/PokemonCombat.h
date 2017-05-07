@@ -15,7 +15,7 @@ public:
 	PokemonCombat()
 	{}
 
-	~PokemonCombat()
+	virtual ~PokemonCombat()
 	{}
 
 	iPoint Getposition() const
