@@ -428,6 +428,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (Wait_attack.ReadSec() > 1 && stunned)
 			{
+				App->audio->PlayFx(12);
 				hp -= 10;
 				if (hp <= 0)
 				{
@@ -443,6 +444,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (stunned == false)
 			{
+				App->audio->PlayFx(19);
 				state = BC_HIT;
 				reset_time = true;
 				stunned = true;
@@ -455,7 +457,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (((DynamicObjects*)c2->callback)->GetState() == D_AIR)
 			{
-				App->audio->PlayFx(12);
+				App->audio->PlayFx(19);
 				state = BC_HIT;
 				reset_time = true;
 				stunned = true;
