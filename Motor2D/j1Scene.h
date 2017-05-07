@@ -121,6 +121,9 @@ public:
 	bool now_switch = false;
 	WeaponType weapon_equiped;
 
+	//ONLY Release 0.7
+	bool goPokemon = false;
+	bool dialog_inmapZelda = false;
 
 	////DIALOGUE VICENTE METHOD PROVISIONAL TILL WE IMPLEMENT IT PROPERLY
 	uint help_timer = 0;

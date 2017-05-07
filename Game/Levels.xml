@@ -187,6 +187,7 @@
     
     <map n="7" file="Victory_Road.tmx">
       <camera follow="true"/>
+      <Link pos_x="280" pos_y="656"/>
       <dynobjects>
         <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id ="4"/>
         <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id ="3"/>

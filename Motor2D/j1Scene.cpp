@@ -76,7 +76,7 @@ bool j1Scene::Start()
 			CreateTeleports();
 			first_loop = false;
 		}
-		Load_new_map(1, false);
+		Load_new_map(1, true);
 		help_timer = SDL_GetTicks();
 		App->gui->SetGui(ZELDA_HUD);
 		start_menu->ResetInventory();
@@ -122,6 +122,19 @@ bool j1Scene::Update(float dt)
 				}
 			}
 			
+			if (goPokemon && player->dialog != nullptr)
+			{
+				dialog_inmapZelda = true;
+			}
+
+			if (dialog_inmapZelda && player->dialog == nullptr)
+			{
+				switch_map = 7;
+				useTP = true;
+				dialog_inmapZelda = false;
+				goPokemon = false;
+			}
+
 			// Change Volume Music -------------------------------------
 			if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
 			{
@@ -632,6 +645,11 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 		player->gems = 0;
 		//hud->OpenClose(true);
 	}
+
+	if (n == 5)
+	{
+		goPokemon = true;
+	}
 	/*//SET WEAPONS WHEN MAP CHANGES
 	if (weapon_equiped == BOMB)
 	{
@@ -654,7 +672,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			if (n == 1 && switch_map == 0 || switch_map == 7 || switch_map == 8 || pokecombat != nullptr && n==1 || isTP)
+			if (isTP)
 			{
 				//player position
 				player->position.x = temp.child("Link").attribute("pos_x").as_int(0);
