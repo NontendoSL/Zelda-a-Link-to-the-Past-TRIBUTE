@@ -307,7 +307,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c2->callback != nullptr)
 			{
-				if (c1 == collision_attack && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest") //c2->callback->destruvtible == true
+				if (c1->type == COLLIDER_SWORD && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest") //c2->callback->destruvtible == true
 				{
 					//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
 
@@ -503,7 +503,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						else
 							c2->callback->direction = LEFT;
 						dialog = App->gui->CreateDialogue("Hey, what are you doing in my world? Here we fight with creatures called pokemon, not with weapons, let's try it");
-						App->collision->EraseCollider(collision_interact);
+						collision_interact->to_delete = true;
 						interaction = false;
 						state = L_IDLE;
 						anim_state = L_IDLE;
@@ -899,7 +899,7 @@ bool Player::Attack()
 	{
 		if (current_animation->Finished())
 		{
-			App->collision->EraseCollider(collision_attack);
+			collision_attack->to_delete = true;
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;
@@ -1334,7 +1334,7 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 		{
 	case BUTTON_X:
 	{
-		if (e_state == E_DOWN && state != L_HOOKTHROWN && sword_equiped == true)
+		if (e_state == E_DOWN && state != L_HOOKTHROWN && sword_equiped == true && picked_object == nullptr)
 		{
 			state = L_ATTACKING;
 			anim_state = L_ATTACKING;
@@ -1347,23 +1347,23 @@ void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
 	{
 		if (e_state == E_DOWN && state != L_HOOKTHROWN)
 		{
-			if (dialog == nullptr)
+			if (picked_object == nullptr)
 			{
 				state = L_INTERACTING;
 				anim_state = L_IDLE;
 				//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
 				//current_animation->Reset();
 			}
-			else if (dialog->end == false)
+			else
 			{
-				dialog->PushLine(true);
+				ThrowObject();
 			}
 		}
 		break;
 	}
 
 	case BUTTON_B:
-		if (equiped_item != nullptr && equiped_item == hook && hook->in_use == false)
+		if (hook != nullptr && equiped_item == hook && hook->in_use == false)
 		{
 			if (e_state == E_UP)
 			{
