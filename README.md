@@ -1,11 +1,11 @@
-ÔªøWhat is The Legend of Zelda: A Link to Pokemon World?
+What is The Legend of Zelda: A Link to Pokemon World?
 	
 	It's a project for a subject called Project 2 of Video Games Design and Development  
-	degree at Centre de la Imatge i Multim√®dia (CITM), Terrassa. 
+	degree at Centre de la Imatge i MultimËdia (CITM), Terrassa. 
 	It's an action RPG game based on the original "A Link to The past" (1991, SNES)
-	and mixed with Pok√©mon Emerald (2004, GBA). 
+	and mixed with PokÈmon Emerald (2004, GBA). 
 	We have taken the essence of Zelda: a Link to the Past and 
-	added our personal touch: an amazing journey to the Pok√©mon World. Link will become the best Pok√©mon 
+	added our personal touch: an amazing journey to the PokÈmon World. Link will become the best PokÈmon 
 	trainer after fighting against some of them with his sword on his hand. Ganon has rapped the princess 
 	Zelda and you will have to do this travel to rescue her.
 
@@ -16,7 +16,7 @@ CONTROLS
 	
 		Arrow Keys -> Move in any of the 8 directions and navigate through the menu.
 		Enter -> Start game from menu and open/close menu when in game.
-		Spacebar -> Use the equipped item. Hold it to charge the stamina bar.
+		Spacebar -> Use the equipped item. Hold it to charge the stamina bar. Click it to continue dialogs.
 		R -> Select item in the menu.
 		E -> Attack.
 		Q -> Interact with chests and NPCs.
@@ -36,7 +36,7 @@ CONTROLS
 		F1 -> Display navigation map.
 		F2 -> Display weapons collision map.
 		F10 -> Display colliders.
-		X -> Lower Pok√©mon HP in combat.
+		X -> Lower PokÈmon HP in combat.
 		I,J,K,L -> Movement mini-teleports (4 directions).
 		1 -> teleport to Link House.
 		2 -> teleport to Hyrule Outdoors.
@@ -51,22 +51,43 @@ OBJECTIVE
 	it into 3 different parts:
 		1st STAGE -> we are in Kakariko Village. Fight agains some soldiers to reach the "magic hole".
 
-		2nd STAGE -> We are teletransported into the Victory Road of Hoenn, a beautiful region of the Pok√©mon World. Link is
+		2nd STAGE -> We are teletransported into the Victory Road of Hoenn, a beautiful region of the PokÈmon World. Link is
 			     confused, so he will explore this big cave to come back to his home.
 			     - FIRST FLOOR > explore this level until achieve the hookshot inside a big chest. You will be able to pass across
-			     the broken bridges, with the help of sudowoodos (the Pok√©mon Tree)
+			     the broken bridges, with the help of sudowoodos (the PokÈmon Tree)
 			     - SECOND FLOOR > big rocks will block your path, so take the bombs inside the other big chest and place them next
 			     to the rocks. You will wake up the slept golems, and will chase you annoy them.
-		3rd STAGE -> Wou will be in the combat arena, where Brendan will give you a little taste of an intense Pok√©mon Combat.
+		3rd STAGE -> Wou will be in the combat arena, where Brendan will give you a little taste of an intense PokÈmon Combat.
 
-THE POK√âMON COMBAT
+THE POK…MON COMBAT
 	
-	You will have 3 Pok√©mon with a melee and a special attack, that will do more damage to the Pok√©mon enemy. The special attack
+	You will have 3 PokÈmon with a melee and a special attack, that will do more damage to the PokÈmon enemy. The special attack
 	has got a cooldown time to be cast again. At the moment, enemy IA won't attack you. It's only a test to see how this mechanic
-	will work. (different Pok√©mon with different attacks & types that will do more or less damage depending the Pok√©mon).
+	will work. (different PokÈmon with different attacks & types that will do more or less damage depending the PokÈmon).
 	 
 
 CHANGELOG
+v0.7
+
+	Added Pokemon World maps:
+	- Victory League Outdoor.
+	- Victory League Indoor.
+	- Elite Four Dark Room.
+	- Elite Four Ghost Room.
+	- Elite Four Ice Room.
+	- Elite Four Dragon Room.
+	- League Champion Room.
+	Added Zelda World last map:
+	- Pyramid of Power.
+	Added signs to show the path.
+	More sounds, musics and Fx added.
+	Now the bow has an indicator of when the arrow will be shot.
+	Objects can be grabbed and can be thrown at enemies.
+	Zelda UI upgraded, now you can exit by selecting exit option.
+	Pokemon UI upgraded.
+	Minor changes in sounds and Fx.
+	Some dialog addition and changes.
+	Added all pokemon NPC.
 
 v0.6
 
@@ -96,8 +117,8 @@ v0.5 VERTICAL SLICE
 	Game over screen added.
 	Victory screen added (it shows playtime and score).
 	More sounds, musics & Fx added.
-	Added NPC Brendan. The player can talk to him to trigger an event (Pok√©mon combat).
-	Pok√©mon combat prototype implemented with a new combat map.
+	Added NPC Brendan. The player can talk to him to trigger an event (PokÈmon combat).
+	PokÈmon combat prototype implemented with a new combat map.
 	Victory Road has been modified in certain spots that would allow the player to finish the game
 	sooner than intended.	
 
@@ -142,13 +163,13 @@ AUTHORS
 
 	We are a group of Video Games students from CITM, UPC fundation in Terrassa. Our members are:
 		
-		Jordi O√±a
-		Elliot Jim√©nez
-		Sergio √Ålvarez
-		Sergio S√°ez
-		Yabel Rodr√≠guez
+		Jordi OÒa
+		Elliot JimÈnez
+		Sergio ¡lvarez
+		Sergio S·ez
+		Yabel RodrÌguez
 		Albert Llopart
-		Marc Fabi√°n
+		Marc Fabi·n
 
 SOCIAL MEDIA
 
