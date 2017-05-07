@@ -211,3 +211,40 @@ bool ParticleManager::DeleteFirework_p(P_Firework* group)
 	}
 	return true;
 }
+
+bool ParticleManager::DeleteAllGroups()
+{
+	std::list<P_Follow*>::iterator follow = Group_Follow.begin();
+	while (follow != Group_Follow.end())
+	{
+		follow._Ptr->_Myval->particle.clear();
+		follow++;
+	}
+	Group_Follow.clear();
+
+	std::list<P_Fire*>::iterator fire = Group_Fire.begin();
+	while (fire != Group_Fire.end())
+	{
+		fire._Ptr->_Myval->particle.clear();
+		fire++;
+	}
+	Group_Fire.clear();
+
+	std::list<P_Explosion*>::iterator explosion = Group_Explosion.begin();
+	while (explosion != Group_Explosion.end())
+	{
+		explosion._Ptr->_Myval->particle.clear();
+		explosion++;
+	}
+	Group_Explosion.clear();
+
+	std::list<P_Firework*>::iterator firework = Group_Firework.begin();
+	while (firework != Group_Firework.end())
+	{
+		firework._Ptr->_Myval->particle.clear();
+		firework++;
+	}
+	Group_Firework.clear();
+
+	return true;
+}

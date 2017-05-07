@@ -73,6 +73,9 @@ public:
 	void CreateFirework_Particle(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Rect initial_rect, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, iPoint next_textures = { 0, 4 }, iPoint last_textures = { 0, 4 });
 	bool DeleteFirework_p(P_Firework* group);
 
+	//Delete all particles
+	bool DeleteAllGroups();
+
 
 public:
 
