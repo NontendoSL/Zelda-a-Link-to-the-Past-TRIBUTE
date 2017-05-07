@@ -161,57 +161,57 @@ bool Soldier::Update(float dt)
 {
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Pink);
 	// STATE MACHINE ------------------
-		if (App->scene->gamestate == INGAME)
+	if (App->scene->gamestate == INGAME)
+	{
+		if (soldier_type == AGGRESSIVE)
 		{
-			if (soldier_type == AGGRESSIVE)
+			switch (state)
 			{
-				switch (state)
-				{
-				case S_IDLE:
-				{
-					CheckPlayerPos();
-					Idle();
-					break;
-				}
-				case S_WALKING:
-				{
-					CheckPlayerPos();
-					Walking(dt);
-					break;
-				}
-				case S_DYING:
-				{
-					Die();
-					break;
-				}
-				case S_HIT:
-				{
-					Movebyhit(dt);
-					break;
-				}
-				case S_CHASING:
-				{
-					CheckPlayerPos();
-					Chase(dt);
-					break;
-				}
-				case S_ATTACKING:
-				{
-					Attack();
-					break;
-				}
-				default:
-				{
-					break;
-				}
-				}
-			
-
+			case S_IDLE:
+			{
+				CheckPlayerPos();
+				Idle();
+				break;
+			}
+			case S_WALKING:
+			{
+				CheckPlayerPos();
+				Walking(dt);
+				break;
+			}
+			case S_DYING:
+			{
+				Die();
+				break;
+			}
+			case S_HIT:
+			{
+				Movebyhit(dt);
+				break;
+			}
+			case S_CHASING:
+			{
+				CheckPlayerPos();
+				Chase(dt);
+				break;
+			}
+			case S_ATTACKING:
+			{
+				Attack();
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
 		}
-
-		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
-
+		if (collision_feet != nullptr)
+		{
+			collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+		}
 	}
+
 	else if (App->scene->gamestate == INMENU)
 	{
 
