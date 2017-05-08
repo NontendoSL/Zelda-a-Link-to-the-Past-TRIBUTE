@@ -163,11 +163,11 @@
     <ClCompile Include="Groudon.cpp">
       <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
     </ClCompile>
-    <ClCompile Include="PokeTrainer.cpp">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClCompile>
     <ClCompile Include="Villager.cpp">
       <Filter>Zelda Game\ElementsScene\NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="PokeTrainer.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -354,11 +354,11 @@
     <ClInclude Include="PokemonCombat.h">
       <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
     </ClInclude>
-    <ClInclude Include="PokeTrainer.h">
-      <Filter>Zelda Game\ElementsScene\NPCs\POKEMON</Filter>
-    </ClInclude>
     <ClInclude Include="Villager.h">
       <Filter>Zelda Game\ElementsScene\NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="PokeTrainer.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

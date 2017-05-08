@@ -619,12 +619,8 @@ void j1Scene::SwitchMap(bool isTP)
 				delete poke;
 				poke = nullptr;
 			}
-			if (player->pokedex.size() > 0) //TODO ELLIOT No with this method
-			{
-				player->pokedex.clear();
-			}
 
-			if (switch_map < FIRST_LEVEL_COMBAT) //id 13 is the first combat map
+			if (switch_map < FIRST_LEVEL_COMBAT) //id 17 is the first combat map
 			{
 				combat = false;
 				Load_new_map(switch_map, isTP);
@@ -813,6 +809,12 @@ bool j1Scene::Load_Combat_map(int n)
 
 	//start_menu->OpenClose(false);
 	//hud->OpenClose(false);
+	if (player->pokedex.size() == 0)
+	{
+		player->pokedex.push_back(App->combatmanager->CreatePokemon(config.child("map_combat").child("Link").child("pokemon"), 1));
+		player->pokedex.push_back(App->combatmanager->CreatePokemon(config.child("map_combat").child("Link").child("pokemon").next_sibling(), 2));
+		player->pokedex.push_back(App->combatmanager->CreatePokemon(config.child("map_combat").child("Link").child("pokemon").next_sibling().next_sibling(), 3));
+	}
 
 	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
 
@@ -821,12 +823,7 @@ bool j1Scene::Load_Combat_map(int n)
 		if (temp.attribute("n").as_int(0) == n)
 		{
 			//Pokemon Link
-			if (n == 13)
-			{
-				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon"), 1));
-				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon").next_sibling(), 2));
-				player->pokedex.push_back(App->combatmanager->CreatePokemon(temp.child("Link").child("pokemon").next_sibling().next_sibling(), 3));
-			}
+
 
 			//trainer
 			poketrainer = App->combatmanager->CreateTrainer(temp.child("trainer"), 1);

@@ -307,6 +307,12 @@
 
   <map_combat>
 
+    <Link>
+      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="60" dir="left" hp="80" attack="3" special_attack="10" pos_x="0" pos_y="0" type="1" active="false"/>
+      <pokemon id="2" name="SCEPTILE" speed="1" cooldown="190" dir="left" hp="100" attack="4" special_attack="15" pos_x="0" pos_y="0" type="2" active="false"/>
+      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="250" dir="left" hp="150" attack="5" special_attack="20" pos_x="0" pos_y="0" type="3" active="false"/>
+    </Link>
+
     <map n="17" file="VictoryExterior.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Brendan" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">

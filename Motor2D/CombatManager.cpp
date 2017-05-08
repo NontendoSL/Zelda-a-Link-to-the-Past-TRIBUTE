@@ -17,6 +17,11 @@
 #include "Swampert.h"
 #include "Sceptyle.h"
 #include "Blaziken.h"
+#include "Salamance.h"
+#include "Walrein.h"
+#include "Dusclops.h"
+#include "Groudon.h"
+#include "Shiftry.h"
 #include "PokeTrainer.h"
 
 
@@ -55,33 +60,6 @@ bool CombatManager::Update(float dt)
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	if (App->scene->combat)
 	{
-		/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		{
-			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-			Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
-			Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
-			temp->active = true;
-			temp_2->active = false;
-			temp_3->active = false;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		{
-			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-			Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
-			Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
-			temp->active = false;
-			temp_2->active = true;
-			temp_3->active = false;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-		{
-			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-			Pokemon* temp_2 = (Pokemon*)item._Ptr->_Next->_Myval;
-			Pokemon* temp_3 = (Pokemon*)item._Ptr->_Next->_Next->_Myval;
-			temp->active = false;
-			temp_2->active = false;
-			temp_3->active = true;
-		}*/
 		while (item != elementcombat.end())
 		{
 			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
@@ -146,26 +124,71 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 	{
 		Blaziken* temp = new Blaziken();
 		temp->Awake(conf);
-		temp->Start();
+		//temp->Start();
 		elementcombat.push_back(temp);
 		return temp;
 	}
-	if (id == 2)
+	else if (id == 2)
 	{
 		Sceptyle* temp = new Sceptyle();
 		temp->Awake(conf);
-		temp->Start();
+		//temp->Start();
 		elementcombat.push_back(temp);
 		return temp;
 	}
-	if (id == 3)
+	else if (id == 3)
 	{
 		Swampert* temp = new Swampert();
+		temp->Awake(conf);
+		//temp->Start();
+		elementcombat.push_back(temp);
+		return temp;
+	}
+	else if (id == 4)
+	{
+		Walrein* temp = new Walrein();
 		temp->Awake(conf);
 		temp->Start();
 		elementcombat.push_back(temp);
 		return temp;
 	}
+	else if (id == 5)
+	{
+		Salamance* temp = new Salamance();
+		temp->Awake(conf);
+		temp->Start();
+		elementcombat.push_back(temp);
+		return temp;
+	}
+	else if (id == 6)
+	{
+		Shiftry* temp = new Shiftry();
+		temp->Awake(conf);
+		temp->Start();
+		elementcombat.push_back(temp);
+		return temp;
+	}
+	else if (id == 7)
+	{
+		Dusclops* temp = new Dusclops();
+		temp->Awake(conf);
+		temp->Start();
+		elementcombat.push_back(temp);
+		return temp;
+	}
+	else if (id == 8)
+	{
+		Groudon* temp = new Groudon();
+		temp->Awake(conf);
+		temp->Start();
+		elementcombat.push_back(temp);
+		return temp;
+	}
+	else
+	{
+		LOG("ERROR id");
+	}
+	return nullptr;
 }
 
 PokeTrainer* CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)
