@@ -242,6 +242,7 @@ public:
 	void MoveOut(bool out, int id = -1); //true for out, false for in
 	void CloseAll();
 	void SwapBars(uint first, uint second);
+	std::string GetPokeOrder(uint poke_n);
 private:
 	std::vector<Button*>poke_bar;
 public:

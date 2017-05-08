@@ -1399,6 +1399,11 @@ void PokemonWorldHud::SwapBars(uint first, uint second)
 	//PLACEHOLDER FOR SWAPING POKEMONS ORDER IN PLAYER CODE SO IT AFFECTS COMBATS
 }
 
+std::string PokemonWorldHud::GetPokeOrder(uint poke_n)
+{
+	return poke_bar[poke_n]->elements[1]->identifier;
+}
+
 void PokemonWorldHud::MoveOut(bool out, int id)
 {
 	if (id == -1) // this is if we wanna move in/out an especific bar and not the focused one (testing)

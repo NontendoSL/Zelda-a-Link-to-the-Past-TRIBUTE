@@ -17,8 +17,7 @@ bool PokeTrainer::Awake(pugi::xml_node &conf)
 	name = conf.attribute("name").as_string("");
 	for (pugi::xml_node temp = conf.child("pokemon"); temp != NULL; temp = temp.next_sibling())
 	{
-		PokemonCombat* poke = App->combatmanager->CreatePokemon(temp, temp.attribute("id").as_int(1));
-		pokedex= poke;
+		pokedex = App->combatmanager->CreatePokemon(temp, temp.attribute("id").as_int(1));
 	}
 	
 	active = conf.attribute("active").as_bool(false);
