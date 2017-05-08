@@ -5,6 +5,7 @@
 #include "j1GuiEntity.h"
 #include "j1Audio.h"
 #include "j1GuiElements.h"
+#include "CombatManager.h"
 
 Groudon::Groudon()
 {
@@ -483,5 +484,5 @@ bool Groudon::Movebyhit()
 
 int Groudon::CheckPlayerPos()
 {
-	return App->scene->player->position.DistanceTo(position);
+	return App->combatmanager->pokemon_active_link->position.DistanceTo(position);
 }

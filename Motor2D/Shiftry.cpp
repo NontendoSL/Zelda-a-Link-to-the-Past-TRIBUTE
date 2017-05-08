@@ -5,6 +5,7 @@
 #include "j1GuiEntity.h"
 #include "j1Audio.h"
 #include "j1GuiElements.h"
+#include "CombatManager.h"
 
 Shiftry::Shiftry()
 {
@@ -128,6 +129,9 @@ bool Shiftry::Update(float dt)
 	{
 		Orientate();
 		state = PC_ATTACKING;
+		anim_state = PC_SPECIAL;
+		current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+		current_animation->Reset();
 	}
 
 	//Collision follow the player
@@ -483,5 +487,5 @@ bool Shiftry::Movebyhit()
 
 int Shiftry::CheckPlayerPos()
 {
-	return App->scene->player->position.DistanceTo(position);
+	return App->combatmanager->pokemon_active_link->position.DistanceTo(position);
 }
