@@ -68,15 +68,15 @@
   
   <!--VILAGERS - TRAINNERS-->
   <vilagers>
-    <vilager id="1" name="Uncle" pos_x="" pos_y="" dialog=""/>
-    <vilager id="2" name="Mey" pos_x="" pos_y="" dialog=""/>
-    <vilager id="3" name="Brendan" pos_x="" pos_y="" dialog=""/>
-    <vilager id="4" name="Joy" pos_x="" pos_y="" dialog=""/>
-    <vilager id="5" name="Sidney" pos_x="" pos_y="" dialog=""/>
-    <vilager id="6" name="Phoebe" pos_x="" pos_y="" dialog=""/>
-    <vilager id="7" name="Glacia" pos_x="" pos_y="" dialog=""/>
-    <vilager id="8" name="Drake" pos_x="" pos_y="" dialog=""/>
-    <vilager id="9" name="Red" pos_x="" pos_y="" dialog=""/>
+    <vilager id="1" name="Uncle" rect_x="" rect_y="" rect_w="" rect_h="" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="2" name="Mey" rect_x="98" rect_y="42" rect_w="14" rect_h="20" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="3" name="Brendan" rect_x="0" rect_y="0" rect_w="14" rect_h="21" pos_x="344" pos_y="256" dialog=""/> <!--No need this-->
+    <vilager id="4" name="Joy" rect_x="74" rect_y="82" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="5" name="Sidney" rect_x="72" rect_y="104" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="6" name="Phoebe" rect_x="106" rect_y="21" rect_w="16" rect_h="19" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="7" name="Glacia" rect_x="14" rect_y="82" rect_w="16" rect_h="22" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="8" name="Drake" rect_x="42" rect_y="21" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="160" pos_y="136" dialog=""/>
   </vilagers>
   
   
@@ -93,10 +93,6 @@
         <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true"  file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
         <dynobject id="4" name="chest" type="ZELDA" rect_x="20" rect_y="17" rect_w="16" rect_h="16" pickable ="false"  file="textures/DynObjectsSpriteSheet.png" item_id="1"/>
       </dynobjects>
-
-      <vilagers>
-        <vilager id="1" name="test" pos_x="100" pos_y="60" dialog="I dont now, what you say!"/>
-      </vilagers>
     </map>
 
     <map n="2" file="Link_OverWorld.tmx">
@@ -249,15 +245,12 @@
 
     <map n="10" file="LeagueHall.tmx">
       <camera follow="false"/>
-      <vilagers>
-        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
-      </vilagers>
     </map>
 
     <map n="11" file="EliteFour01.tmx">
       <camera follow="false"/>
       <vilagers>
-        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+        <vilager id="5" name="Sidney" rect_x="72" rect_y="104" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog=""/>
       </vilagers>
       <!--<trainer id="1" name="Sidney" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="6" name="SHIFTRY" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="6" active=""/>
@@ -267,7 +260,7 @@
     <map n="12" file="EliteFour02.tmx">
       <camera follow="false"/>
       <vilagers>
-        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+        <vilager id="6" name="Phoebe" rect_x="106" rect_y="21" rect_w="16" rect_h="19" pos_x="160" pos_y="136" dialog=""/>
       </vilagers>
       <!-- <trainer id="1" name="Phoebe" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="7" name="DUSCLOPS" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="7" active=""/>
@@ -277,7 +270,7 @@
     <map n="13" file="EliteFour03.tmx">
       <camera follow="false"/>
       <vilagers>
-        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+        <vilager id="7" name="Glacia" rect_x="14" rect_y="82" rect_w="16" rect_h="22" pos_x="160" pos_y="136" dialog=""/>
       </vilagers>
       <!--<trainer id="1" name="Glacia" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="4" name="WALREIN" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="4" active=""/>
@@ -287,7 +280,7 @@
     <map n="14" file="EliteFour04.tmx">
       <camera follow="false"/>
       <vilagers>
-        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+        <vilager id="8" name="Drake" rect_x="42" rect_y="21" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog=""/>
       </vilagers>
       <!--<trainer id="1" name="Drake" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="5" name="SALAMANCE" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="5" active=""/>
@@ -297,7 +290,7 @@
     <map n="15" file="RedCombatMap.tmx">
       <camera follow="false"/>
       <vilagers>
-        <vilager id="1" name="test" pos_x="336" pos_y="48" dialog="Hey Link, the Zelda is in Pokemon World. You go?"/>
+        <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="160" pos_y="136" dialog=""/>
       </vilagers>
       <!--<trainer id="1" name="Red" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="8" name="GROUDON" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="8" active=""/>

@@ -87,6 +87,7 @@ public:
 private:
 	std::list<SceneElement*> elementscene;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
+	BCTrooper* bct;
 	
 };
 
