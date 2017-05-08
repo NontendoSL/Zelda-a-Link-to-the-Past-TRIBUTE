@@ -17,6 +17,7 @@ j1Input::j1Input() : j1Module()
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
+	memset(controller_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_CONTROLLER_BUTTONS);
 }
 
 // Destructor
@@ -117,6 +118,7 @@ bool j1Input::PreUpdate()
 			
 		if (controller_buttons[i] == KEY_UP)
 		{
+			App->input_manager->InputDetected(i, EVENTSTATE::E_UP);
 			controller_buttons[i] = KEY_IDLE;
 		}
 	}
@@ -183,7 +185,7 @@ bool j1Input::PreUpdate()
 
 		case SDL_CONTROLLERBUTTONUP:
 			controller_buttons[event.cbutton.button] = KEY_UP;
-			App->input_manager->InputDetected(event.cbutton.button, EVENTSTATE::E_UP);
+			//App->input_manager->InputDetected(event.cbutton.button, EVENTSTATE::E_UP);
 			break;
 
 
