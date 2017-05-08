@@ -1547,11 +1547,11 @@ void PokemonWorldMenu::Select(bool down)
 
 void PokemonWorldMenu::MoveIn(bool inside)
 {
-	if (inside)
+	if (inside && App->gui->GetEntity("pokemon menu bg")->position.x >= App->win->GetWidth()/2)
 	{
 		App->gui->GetEntity("pokemon menu bg")->position.x -= App->gui->GetEntity("pokemon menu bg")->Hitbox.w;
 	}
-	else
+	else if (App->gui->GetEntity("pokemon menu bg")->position.x<App->win->GetWidth() / 2)
 	{
 		App->gui->GetEntity("pokemon menu bg")->position.x += App->gui->GetEntity("pokemon menu bg")->Hitbox.w;
 	}
