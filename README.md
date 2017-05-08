@@ -43,6 +43,8 @@ CONTROLS
 		3 -> teleport to Uncle's Room.
 		4 -> teleport to Hyrule Castle.
 		5 -> teleport to miniboss Room.
+		7 -> teleport to Victory Road.
+		9 -> teleport to Pokémon League.
 		
 
 OBJECTIVE
@@ -69,7 +71,7 @@ THE POKÉMON COMBAT
 CHANGELOG
 v0.7
 
-	Added Pokemon World maps:
+	Added Pokémon World maps:
 	- Victory League Outdoor.
 	- Victory League Indoor.
 	- Elite Four Dark Room.
@@ -84,7 +86,7 @@ v0.7
 	Now the bow has an indicator of when the arrow will be shot.
 	Objects can be grabbed and can be thrown at enemies.
 	Zelda UI upgraded, now you can exit by selecting exit option.
-	Pokemon UI upgraded.
+	Pokémon UI upgraded.
 	Minor changes in sounds and Fx.
 	Some dialog addition and changes.
 	Added all pokemon NPC.
