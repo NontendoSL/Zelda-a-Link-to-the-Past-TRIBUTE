@@ -1,9 +1,7 @@
 #include "CombatManager.h"
-#include "j1Item.h"
 #include "j1Player.h"
 #include "j1DynamicObjects.h"
 #include "j1Scene.h"
-#include "j1App.h"
 #include "j1Input.h"
 #include "p2Log.h"
 #include "j1Textures.h"
@@ -23,6 +21,9 @@
 #include "Groudon.h"
 #include "Shiftry.h"
 #include "PokeTrainer.h"
+#include "j1Gui.h"
+#include "j1GuiElements.h"
+#include "j1GuiEntity.h"
 
 
 CombatManager::CombatManager()
@@ -57,15 +58,29 @@ bool CombatManager::Update(float dt)
 {
 	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
 
+	//Pokemon of Player is dead
+
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	if (App->scene->combat)
 	{
 		while (item != elementcombat.end())
 		{
-			Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-			if (temp->active)
+			PokemonCombat* poke = (PokemonCombat*)item._Ptr->_Myval;
+			if (poke->active)
 			{
-				item._Ptr->_Myval->Update(dt);
+				if (poke->hp <= 0)
+				{
+					poke->collision_feet->to_delete = true;
+					poke->collision_attack->to_delete = true;
+					poke->sp_attack->to_delete = true;
+					elementcombat.erase(item);
+					pokemon_order++;
+					change_pokemon();
+				}
+				else
+				{
+					item._Ptr->_Myval->Update(dt);
+				}
 			}
 			item++;
 		}
@@ -118,6 +133,20 @@ void CombatManager::CreateTargets()
 	}*/
 }
 
+void CombatManager::PrepareToCombat(PokemonCombat* pokemon)
+{
+	if (pokemon->active == false)
+	{
+		pokemon->active = true;
+		pokemon->Start();
+		//pokemon->SetPotions();
+		pokemon->target = pokemon_active_trainer;
+		pokemon_active_trainer->target = pokemon;
+		elementcombat.push_back(pokemon);
+		pokemon_active_link = (PokemonCombat*)elementcombat.back();
+	}
+}
+
 PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 {
 	if (id == 1)
@@ -125,7 +154,7 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 		Blaziken* temp = new Blaziken();
 		temp->Awake(conf);
 		//temp->Start();
-		elementcombat.push_back(temp);
+		//elementcombat.push_back(temp);
 		return temp;
 	}
 	else if (id == 2)
@@ -133,7 +162,7 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 		Sceptyle* temp = new Sceptyle();
 		temp->Awake(conf);
 		//temp->Start();
-		elementcombat.push_back(temp);
+		//elementcombat.push_back(temp);
 		return temp;
 	}
 	else if (id == 3)
@@ -141,7 +170,7 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 		Swampert* temp = new Swampert();
 		temp->Awake(conf);
 		//temp->Start();
-		elementcombat.push_back(temp);
+		//elementcombat.push_back(temp);
 		return temp;
 	}
 	else if (id == 4)
@@ -150,6 +179,7 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 		temp->Awake(conf);
 		temp->Start();
 		elementcombat.push_back(temp);
+		pokemon_active_trainer = (PokemonCombat*)elementcombat.back();
 		return temp;
 	}
 	else if (id == 5)
@@ -158,6 +188,7 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 		temp->Awake(conf);
 		temp->Start();
 		elementcombat.push_back(temp);
+		pokemon_active_trainer = (PokemonCombat*)elementcombat.back();
 		return temp;
 	}
 	else if (id == 6)
@@ -166,6 +197,7 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 		temp->Awake(conf);
 		temp->Start();
 		elementcombat.push_back(temp);
+		pokemon_active_trainer = (PokemonCombat*)elementcombat.back();
 		return temp;
 	}
 	else if (id == 7)
@@ -174,6 +206,7 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 		temp->Awake(conf);
 		temp->Start();
 		elementcombat.push_back(temp);
+		pokemon_active_trainer = (PokemonCombat*)elementcombat.back();
 		return temp;
 	}
 	else if (id == 8)
@@ -182,6 +215,7 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 		temp->Awake(conf);
 		temp->Start();
 		elementcombat.push_back(temp);
+		pokemon_active_trainer = (PokemonCombat*)elementcombat.back();
 		return temp;
 	}
 	else
@@ -202,6 +236,10 @@ PokeTrainer* CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)
 
 bool CombatManager::DeleteElements_combat()
 {
+	// First nullptr the targets
+	pokemon_active_trainer = nullptr;
+	pokemon_active_link = nullptr;
+	// Delete from List
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	while (item != elementcombat.end())
 	{
@@ -212,54 +250,23 @@ bool CombatManager::DeleteElements_combat()
 	return true;
 }
 
-PokemonCombat* CombatManager::change_pokemon(bool trainer)//true Link - false Brendan
+PokemonCombat* CombatManager::change_pokemon()//true Link - false Brendan
 {
-	if (trainer) //Link
+	//Pokemon Link
+	if (App->scene->poke_hud->GetPokeOrder(pokemon_order) == "pk_bar_blaziken")
 	{
-		std::list<PokemonCombat*>::iterator item = App->scene->player->pokedex.begin();
-		while (item != App->scene->player->pokedex.end())
-		{
-			if (item._Ptr->_Myval->active == true)
-			{
-				item._Ptr->_Myval->active = false;
-				item++;
-				if (item == App->scene->player->pokedex.end())
-				{
-					return nullptr;
-				}
-				else
-				{
-					item._Ptr->_Myval->active = true;
-					return item._Ptr->_Myval;
-				}
-			}
-			item++;
-		}
-		return nullptr;
+		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Myval);
+		return App->scene->player->pokedex.begin()._Ptr->_Myval;
 	}
-	else //Brendan
+	else if (App->scene->poke_hud->GetPokeOrder(pokemon_order) == "pk_bar_sceptile")
 	{
-		//TODO HIGH -> ELLIOT no list only 1 pokemon
-		/*std::list<Pokemon*>::iterator item = App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.begin();
-		while (item != App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.end())
-		{
-			if (item._Ptr->_Myval->active == true)
-			{
-				item._Ptr->_Myval->active = false;
-				item++;
-				if (item == App->scene->poketrainer.begin()._Ptr->_Myval->pokedex.end())
-				{
-					return nullptr;
-				}
-				else if(item._Ptr->_Myval!=nullptr)
-				{
-					item._Ptr->_Myval->active = true;
-					return item._Ptr->_Myval;
-				}
-			}
-			item++;
-		}*/
-		return nullptr;
+		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Next->_Myval);
+		return App->scene->player->pokedex.begin()._Ptr->_Next->_Myval;
+	}
+	else
+	{
+		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Next->_Next->_Myval);
+		return App->scene->player->pokedex.begin()._Ptr->_Next->_Next->_Myval;
 	}
 	return nullptr;
 }
