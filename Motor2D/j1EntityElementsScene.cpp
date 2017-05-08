@@ -19,7 +19,7 @@
 #include "j1FileSystem.h"
 #include "BCTrooper.h"
 #include "j1Weapon.h"
-#include "Vilager.h"
+#include "Villager.h"
 
 
 j1EntityElementScene::j1EntityElementScene()
@@ -308,7 +308,7 @@ bool j1EntityElementScene::DeletePlayer(Player* player)
 	return false;
 }
 
-bool j1EntityElementScene::DeleteVilager(Vilager* vilager)
+bool j1EntityElementScene::DeleteVilager(Villager* vilager)
 {
 	if (vilager != nullptr)
 	{
@@ -404,9 +404,9 @@ void j1EntityElementScene::CreateBCTrooper(pugi::xml_node& conf)
 	elementscene.push_back(temp);
 }
 
-void j1EntityElementScene::CreateVilager(pugi::xml_node& conf)
+void j1EntityElementScene::CreateVillager(pugi::xml_node& conf)
 {
-	Vilager* temp = new Vilager();
+	Villager* temp = new Villager();
 	temp->Awake(conf);
 	temp->Start();
 	elementscene.push_back(temp);

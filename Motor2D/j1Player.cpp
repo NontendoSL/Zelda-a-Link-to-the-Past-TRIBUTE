@@ -25,7 +25,7 @@
 #include "Geodude.h"
 #include "Animation.h"
 #include "Pokemon.h"
-#include "Vilager.h"
+#include "Villager.h"
 
 //Constructor
 Player::Player() : Creature()
@@ -515,8 +515,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							c2->callback->direction = RIGHT;
 						else
 							c2->callback->direction = LEFT;
-						Vilager* vilager = (Vilager*)c2->callback;
-						dialog = App->gui->CreateDialogue(vilager->GetDialog().c_str());
+						Villager* villager = (Villager*)c2->callback;
+						dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
 						collision_interact->to_delete = true;
 						interaction = false;
 						state = L_IDLE;

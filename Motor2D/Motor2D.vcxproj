@@ -131,7 +131,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Sudowoodo.cpp" />
     <ClCompile Include="Swampert.cpp" />
-    <ClCompile Include="Vilager.cpp" />
+    <ClCompile Include="Villager.cpp" />
     <ClCompile Include="Walrein.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,7 +196,7 @@
     <ClInclude Include="SceneElements.h" />
     <ClInclude Include="Sudowoodo.h" />
     <ClInclude Include="Swampert.h" />
-    <ClInclude Include="Vilager.h" />
+    <ClInclude Include="Villager.h" />
     <ClInclude Include="Walrein.h" />
   </ItemGroup>
   <ItemGroup>

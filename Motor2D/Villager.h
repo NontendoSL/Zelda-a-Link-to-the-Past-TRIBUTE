@@ -4,14 +4,14 @@
 
 #include "NPC.h"
 
-enum VilagerState { V_IDLE = 0, V_TALKING };
+enum VillagerState { V_IDLE = 0, V_TALKING };
 
-class Vilager : public NPC
+class Villager : public NPC
 {
 public:
-	Vilager();
+	Villager();
 
-	~Vilager();
+	~Villager();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -37,8 +37,8 @@ public:
 
 
 private:
-	VilagerState state = V_IDLE;
-	VilagerState anim_state = V_IDLE;
+	VillagerState state = V_IDLE;
+	VillagerState anim_state = V_IDLE;
 	//Item* drop;
 	bool stunned = false;
 	bool active = false;

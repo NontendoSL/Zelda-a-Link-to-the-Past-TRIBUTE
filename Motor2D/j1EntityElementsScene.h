@@ -19,7 +19,7 @@ class Pokemon;
 class BombContainer;
 class PokeTrainer;
 class BCTrooper;
-class Vilager;
+class Villager;
 
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
@@ -61,7 +61,7 @@ public:
 	void CreatePokemon(pugi::xml_node&, uint id, iPoint pos = (iPoint(0,0)));
 	PokeTrainer* CreateTrainer(pugi::xml_node&, uint id);
 	void CreateBCTrooper(pugi::xml_node&);
-	void CreateVilager(pugi::xml_node&);
+	void CreateVillager(pugi::xml_node&);
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);
@@ -72,7 +72,7 @@ public:
 	bool DeleteBCTrooper(BCTrooper* bctrooper);
 	bool DeleteElement(std::string name);
 	bool DeletePlayer(Player* player);
-	bool DeleteVilager(Vilager* Vilager);
+	bool DeleteVilager(Villager* Vilager);
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;

@@ -1,17 +1,17 @@
-#include "Vilager.h"
+#include "Villager.h"
 #include "j1EntityElementsScene.h"
 #include "j1Collision.h"
 #include "j1Gui.h"
 
-Vilager::Vilager()
+Villager::Villager()
 {
 }
 
-Vilager::~Vilager()
+Villager::~Villager()
 {
 }
 
-bool Vilager::Awake(pugi::xml_node& conf)
+bool Villager::Awake(pugi::xml_node& conf)
 {
 	position.x = conf.attribute("pos_x").as_int(0);
 	position.y = conf.attribute("pos_y").as_int(0);
@@ -23,7 +23,7 @@ bool Vilager::Awake(pugi::xml_node& conf)
 	return true;
 }
 
-bool Vilager::Start()
+bool Villager::Start()
 {
 	direction = DOWN; //maybe in levels.xml
 	state = V_IDLE;
@@ -35,12 +35,12 @@ bool Vilager::Start()
 	return true;
 }
 
-bool Vilager::Update(float dt)
+bool Villager::Update(float dt)
 {
 	return true;
 }
 
-void Vilager::Draw()
+void Villager::Draw()
 {
 	if (active)
 	{
@@ -68,12 +68,12 @@ void Vilager::Draw()
 	}
 }
 
-bool Vilager::CleanUp()
+bool Villager::CleanUp()
 {
 	return true;
 }
 
-std::string Vilager::GetDialog()
+std::string Villager::GetDialog()
 {
 	return dialog;
 }
