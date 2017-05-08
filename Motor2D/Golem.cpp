@@ -464,7 +464,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback != nullptr)
+		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && state != P_STATIC)
 		{
 			if (((Player*)c2->callback)->GetState() != L_HIT && ((Player*)c2->callback)->GetState() != L_HOOKTHROWN)
 			{

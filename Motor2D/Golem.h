@@ -35,7 +35,7 @@ public:
 
 	// STATE MACHINE -----------
 	bool Idle();
-	bool Walking(float dt);
+	//bool Walking(float dt);
 	bool Move(float dt);
 	bool Chase(float dt);
 	bool Attack();
