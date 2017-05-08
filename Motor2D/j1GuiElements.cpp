@@ -1490,6 +1490,7 @@ void PokemonWorldMenu::Input()
 			active = false;
 			MoveIn(false);
 			App->gui->SetGui(POKEMON_HUD);
+			App->scene->gamestate = INGAME;
 		}
 	}
 

@@ -45,7 +45,7 @@ bool j1SceneIntro::Start()
 	TitleScreen_bg = App->tex->Load("gui/title_screen/bg_anim.png"); //TODO LOW -> .png
 	Menu_bg = App->tex->Load("gui/title_screen/menu_bg.png");
 	Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
-	//App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
+	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	App->input_manager->AddListener(this);
 	fade = true;
 	return true;
