@@ -86,6 +86,7 @@ bool BCTrooper::Update(float dt)
 			//
 		case BC_DYING:
 			Death();
+			App->audio->PlayMusic("audio/music/ZELDA/ZeldaPrincessRescue.ogg");
 			break;
 
 		default:
