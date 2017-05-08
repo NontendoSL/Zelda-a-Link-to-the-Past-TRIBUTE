@@ -52,7 +52,7 @@ bool j1Scene::Start()
 		{
 			LoadUi();
 			
-			//App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
+			App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
 			App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
@@ -636,7 +636,7 @@ void j1Scene::SwitchMap(bool isTP)
 			if (switch_map == 4 && notrepeatmusic)
 			{
 				notrepeatmusic = false;
-				//App->audio->PlayMusic("audio/music/ZELDA/ZeldaHyruleCastle.ogg");
+				App->audio->PlayMusic("audio/music/ZELDA/ZeldaHyruleCastle.ogg");
 			}
 		}
 	}
@@ -661,6 +661,11 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 		player->score = 0;
 		player->gems = 0;
 		//hud->OpenClose(true);
+	}
+
+	if (n == 9)
+	{
+		App->gui->SetGui(POKEMON_HUD);
 	}
 
 	if (n == 5)
