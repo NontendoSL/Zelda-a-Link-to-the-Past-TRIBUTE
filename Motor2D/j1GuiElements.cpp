@@ -423,7 +423,6 @@ Selector::~Selector() {}
 
 MainMenu::MainMenu()
 {
-	App->input_manager->AddListener(this);
 	options.push_back((Button*)App->gui->GetEntity("Continue_b"));
 	options.push_back((Button*)App->gui->GetEntity("Newgame_b"));
 	options.push_back((Button*)App->gui->GetEntity("Loadgame_b"));
@@ -459,22 +458,6 @@ void MainMenu::Input()
 		}
 	}
 }
-
-void MainMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
-{
-	if (active)
-	{
-		switch (action)
-		{
-		case BUTTON_B:
-			if (e_state == E_UP)
-			{
-				App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
-			}
-		}
-	}
-}
-
 
 Button* MainMenu::GetElement(uint id)
 {
@@ -618,7 +601,6 @@ ZeldaHud::~ZeldaHud()
 ZeldaMenu::ZeldaMenu()
 {
 	type = MENU;
-	App->input_manager->AddListener(this);
 
 	item_info = (Image*)App->gui->GetEntity("item_info");
 	item_info_name = (Text*)App->gui->GetEntity("item_info_name");
@@ -837,7 +819,7 @@ void ZeldaMenu::Input()
 				App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
 			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP)
 		{
 			if (App->gui->GetFocused() != nullptr)
 			{
@@ -859,25 +841,6 @@ void ZeldaMenu::Input()
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 		{
 			App->scene->switch_menu = true;
-		}
-	}
-}
-
-void ZeldaMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
-{
-	if (active)
-	{
-		switch (action)
-		{
-		case BUTTON_B:
-			if (e_state == E_UP)
-			{
-				if (App->gui->GetFocused() != nullptr)
-				{
-					App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
-				}
-			}
-			break;
 		}
 	}
 }
@@ -1276,7 +1239,6 @@ PokemonCombatHud::~PokemonCombatHud()
 
 PokemonWorldHud::PokemonWorldHud()
 {
-	App->input_manager->AddListener(this);
 	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_1"));
 	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_2"));
 	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_3"));
@@ -1332,11 +1294,6 @@ void PokemonWorldHud::Input()
 				App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
 		}
 	}
-}
-
-void PokemonWorldHud::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
-{
-
 }
 
 void PokemonWorldHud::Select(bool down)
@@ -1483,7 +1440,7 @@ void PokemonWorldMenu::Input()
 		{
 			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
 		}
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP )
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
 		{
 			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
 		}
@@ -1498,17 +1455,6 @@ void PokemonWorldMenu::Input()
 
 }
 
-void PokemonWorldMenu::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
-{
-	switch (action)
-	{
-	case BUTTON_A:
-		if (e_state == E_UP)
-		{
-			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
-		}
-	}
-}
 
 void PokemonWorldMenu::Select(bool down)
 {

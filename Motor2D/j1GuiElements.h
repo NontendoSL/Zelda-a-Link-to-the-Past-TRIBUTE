@@ -111,7 +111,7 @@ private:
 	bool position = true;//true up false down
 };
 // ------------------------------------------------------
-class MainMenu : public j1GuiEntity, public InputListener
+class MainMenu : public j1GuiEntity
 {
 public:
 	MainMenu();
@@ -120,7 +120,6 @@ public:
 	void Input();
 	void Select(bool next); //true for next, false for prev
 	Button* GetElement(uint id);
-	void OnInputCallback(INPUTEVENT action, EVENTSTATE e_state);
 private:
 	std::vector<Button*>options;
 public:
@@ -163,7 +162,7 @@ struct ItemMenu
 	std::string description;
 };
 
-class ZeldaMenu : public j1GuiEntity, public InputListener
+class ZeldaMenu : public j1GuiEntity
 {
 public:
 	ZeldaMenu();
@@ -171,7 +170,6 @@ public:
 public:
 	void Update(j1GuiEntity* focused);
 	void Input();
-	void OnInputCallback(INPUTEVENT action, EVENTSTATE e_state); //TODO LOW -> check if its better to put button inputs here or not
 public:
 	void ResetInventory();
 	void Select(bool next); //true for next, false for previous
@@ -214,7 +212,6 @@ public:
 	iPoint cdtime = { 0,0 }; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME
 
 private:
-	//std::vector<Image*>hud_images;
 	Image* ability = nullptr;
 	Image* hp1 = nullptr;
 	Image* hp2 = nullptr;
@@ -229,14 +226,13 @@ private:
 
 //---------------------------------------
 
-class PokemonWorldHud :public j1GuiEntity, public InputListener
+class PokemonWorldHud :public j1GuiEntity
 {
 public:
 	PokemonWorldHud();
 	~PokemonWorldHud();
 public:
 	void Input();
-	void OnInputCallback(INPUTEVENT action, EVENTSTATE e_state);
 	Button* GetFirst();
 	void Select(bool down);
 	void MoveOut(bool out, int id = -1); //true for out, false for in
@@ -250,14 +246,13 @@ public:
 	bool selecting = false;
 };
 
-class PokemonWorldMenu :public j1GuiEntity, public InputListener
+class PokemonWorldMenu :public j1GuiEntity
 {
 public:
 	PokemonWorldMenu();
 	~PokemonWorldMenu();
 public:
 	void Input();
-	void OnInputCallback(INPUTEVENT action, EVENTSTATE e_state);
 	Button* GetFirst();
 	void Select(bool down);
 	void MoveIn(bool inside);
