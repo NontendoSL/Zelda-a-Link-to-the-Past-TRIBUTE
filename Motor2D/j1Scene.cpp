@@ -168,30 +168,30 @@ bool j1Scene::Update(float dt)
 			{
 				useTP = true;
 				switch_map = 3;
-			}
+			}*/
 
 			if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 4;
+				switch_map = 7;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 5;
+				switch_map = 19;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 7;
-			}*/
+				switch_map = 20;
+			}
 
 			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 9;
+				switch_map = 21;
 			}
 			// --------------------------------------------------------
 
@@ -615,9 +615,10 @@ void j1Scene::SwitchMap(bool isTP)
 
 			if (poketrainer != nullptr)
 			{
-				PokemonCombat* poke = poketrainer->GetPokemon();
+				poketrainer = nullptr;
+				/*PokemonCombat* poke = poketrainer->GetPokemon();
 				delete poke;
-				poke = nullptr;
+				poke = nullptr;*/
 			}
 
 			if (switch_map < FIRST_LEVEL_COMBAT) //id 17 is the first combat map
@@ -702,12 +703,6 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);
-
-			/*//Trainers
-			if (temp.child("trainer"))
-			{
-				poketrainer = App->entity_elements->CreateTrainer(temp.child("trainer"), 1);
-			}*/
 
 			//items
 			pugi::xml_node temp_item = temp.child("items").child("item");
@@ -822,15 +817,26 @@ bool j1Scene::Load_Combat_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
-			//Pokemon Link
-
-
 			//trainer
 			poketrainer = App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 
+			//Pokemon Link
+			if (App->scene->poke_hud->GetPokeOrder(0) == "pk_bar_blaziken")
+			{
+				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Myval);
+			}
+			else if (App->scene->poke_hud->GetPokeOrder(0) == "pk_bar_sceptile")
+			{
+				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Next->_Myval);
+			}
+			else
+			{
+				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Next->_Next->_Myval);
+			}
+
 			if (pokecombat == nullptr)
 			{
-				pokecombat = App->gui->CreatePokemonCombatHud(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon()); //TODO ELliot no need GetPokemon()
+				pokecombat = App->gui->CreatePokemonCombatHud(App->combatmanager->pokemon_active_link, poketrainer->GetPokemon()); //TODO ELliot no need GetPokemon()
 				pokecombat->Move(true, win_marge);
 			}
 			else
@@ -842,11 +848,6 @@ bool j1Scene::Load_Combat_map(int n)
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);
-			//Edit
-			App->map->EditCost(18, 17, 0);
-			App->map->EditCost(19, 17, 0);
-			App->map->EditCost(18, 18, 0);
-			App->map->EditCost(19, 18, 0);
 
 			//Load UI (?)
 			stop_rearch = true;
