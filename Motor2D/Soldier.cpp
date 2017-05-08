@@ -435,7 +435,7 @@ bool Soldier::Die()
 	{
 		App->entity_elements->CreateItem(item_id, position);
 	}
-	App->entity_elements->DeleteEnemy(this);
+	to_delete = true;
 	return true;
 }
 

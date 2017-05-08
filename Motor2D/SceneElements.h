@@ -63,6 +63,8 @@ public:
 	int offset_x = 0;
 	int offset_y = 0;
 
+	bool to_delete = false;
+
 	Direction direction;
 	ElementType type;
 	std::string	name;

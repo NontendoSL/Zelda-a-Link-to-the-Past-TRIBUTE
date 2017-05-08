@@ -308,7 +308,7 @@ bool Geodude::Death()
 		App->entity_elements->CreateItem(2, pos);
 	}
 
-	App->entity_elements->DeletePokemon(this);
+	to_delete = true;
 	return true;
 }
 

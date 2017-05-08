@@ -77,29 +77,35 @@ bool j1EntityElementScene::Update(float dt)
 	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
 	if (App->scene->combat == false)
 	{
-		std::list<SceneElement*>::iterator item3 = elementscene.begin();
-		while (item3 != elementscene.end())
+		std::list<SceneElement*>::iterator item = elementscene.begin();
+		while (item != elementscene.end())
 		{
-			item3._Ptr->_Myval->Update(dt);
-
-			if (((DynamicObjects*)item3._Ptr->_Myval)->GetState() == D_DYING)
+			//Comprovate if elements is not to_delete == true
+			if (item._Ptr->_Myval->to_delete)
 			{
-				//TODO -> if animation finished, then delete.
-				App->entity_elements->DeleteDynObject(((DynamicObjects*)item3._Ptr->_Myval)); // Delete Dynobject
-				App->audio->PlayFx(17);
-			}
-			if (bct != nullptr)
-			{
-				if (((BCTrooper*)item3._Ptr->_Myval)->GetState() == BC_DYING)
+				if (item._Ptr->_Myval->type == DYNOBJECT)
 				{
-					//TODO -> if animation finished, then delete.
-					App->entity_elements->DeleteBCTrooper((BCTrooper*)item3._Ptr->_Myval); // Delete Dynobject
-					App->audio->PlayFx(17);
+					DeleteDynObject((DynamicObjects*)item._Ptr->_Myval);
+				}
+				else if (item._Ptr->_Myval->type == CREATURE)
+				{
+					DeleteCreature((Creature*)item._Ptr->_Myval);
+				}
+				if (bct != nullptr)
+				{
+					if (((BCTrooper*)item._Ptr->_Myval)->GetState() == BC_DYING)
+					{
+						//TODO -> if animation finished, then delete.
+						App->entity_elements->DeleteBCTrooper((BCTrooper*)item._Ptr->_Myval); // Delete Dynobject
+						App->audio->PlayFx(17);
+					}
 				}
 			}
-
-
-			item3++;
+			else
+			{
+				item._Ptr->_Myval->Update(dt);
+			}
+			item++;
 		}
 	}
 
@@ -246,20 +252,6 @@ bool j1EntityElementScene::DeletePokemon(Pokemon* pokemon)
 	return false;
 }
 
-bool j1EntityElementScene::DeleteTrainer(PokeTrainer* trainer)
-{
-	if (trainer != nullptr)
-	{
-		elementscene.remove(trainer);
-		delete App->scene->poketrainer;
-		App->scene->poketrainer = nullptr;
-		trainer->collision_feet->to_delete = true;
-		trainer = nullptr;
-		delete trainer;
-	}
-	return true;
-}
-
 bool j1EntityElementScene::DeleteBCTrooper(BCTrooper* bctrooper)
 {
 	if (bctrooper != nullptr)
@@ -318,6 +310,18 @@ bool j1EntityElementScene::DeleteVilager(Villager* vilager)
 		return true;
 	}
 	return false;
+}
+
+bool j1EntityElementScene::DeleteCreature(Creature* creature)
+{
+	if (creature != nullptr)
+	{
+		elementscene.remove(creature);
+		creature->collision_feet->to_delete = true;
+		delete creature;
+		creature = nullptr;
+	}
+	return true;
 }
 
 
@@ -383,16 +387,6 @@ void j1EntityElementScene::CreatePokemon(pugi::xml_node& conf, uint id, iPoint p
 		temp->Start();
 		elementscene.push_back(temp);
 	}
-}
-
-
-PokeTrainer* j1EntityElementScene::CreateTrainer(pugi::xml_node& conf, uint id)
-{
-	PokeTrainer* temp = new PokeTrainer();
-	temp->Awake(conf);
-	temp->Start();
-	elementscene.push_back(temp);
-	return temp;
 }
 
 void j1EntityElementScene::CreateBCTrooper(pugi::xml_node& conf)

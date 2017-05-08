@@ -12,6 +12,7 @@ class Item;
 class Player;
 class DynamicObjects;
 class NPC;
+class Creature;
 class Hookshot;
 class Bow;
 class Weapon;
@@ -59,7 +60,6 @@ public:
 	Player* CreatePlayer();
 	BombContainer* CreateBombContainer();
 	void CreatePokemon(pugi::xml_node&, uint id, iPoint pos = (iPoint(0,0)));
-	PokeTrainer* CreateTrainer(pugi::xml_node&, uint id);
 	void CreateBCTrooper(pugi::xml_node&);
 	void CreateVillager(pugi::xml_node&);
 
@@ -68,11 +68,11 @@ public:
 	bool DeleteDynObject(DynamicObjects* dynobject);
 	bool DeleteItem(Item* enemy);
 	bool DeletePokemon(Pokemon* enemy);
-	bool DeleteTrainer(PokeTrainer* trainer);
 	bool DeleteBCTrooper(BCTrooper* bctrooper);
 	bool DeleteElement(std::string name);
 	bool DeletePlayer(Player* player);
 	bool DeleteVilager(Villager* Vilager);
+	bool DeleteCreature(Creature* creature);
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;

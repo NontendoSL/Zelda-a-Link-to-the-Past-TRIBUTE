@@ -328,6 +328,7 @@ void BCTrooper::Death()
 	App->map->EditCost(40, 13, 0);
 	App->map->EditCost(41, 13, 0);
 	App->entity_elements->DeleteElement("door");
+	to_delete = true;
 }
 
 bool BCTrooper::ChangeRadius_degrade(int radius_to_stop, bool incremenet)
