@@ -237,7 +237,8 @@
     </map>
 
     <map n="9" file="VictoryExterior.tmx">
-      <camera follow="true"/>
+      <camera follow="true"/> 
+      <Link pos_x="200" pos_y="453"/>
       <!--<trainer id="1" name="Brendan" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>-->
       <!--</trainer>-->
@@ -260,7 +261,7 @@
     <map n="12" file="EliteFour02.tmx">
       <camera follow="false"/>
       <vilagers>
-        <vilager id="6" name="Phoebe" rect_x="106" rect_y="21" rect_w="16" rect_h="19" pos_x="160" pos_y="136" dialog="I'm phoebe, and I like scary things. Speaking about fear, I hope you've brought another pair of pants with you, 'cause you're about to get schooled!"/>
+        <vilager id="6" name="Phoebe" rect_x="106" rect_y="21" rect_w="16" rect_h="19" pos_x="160" pos_y="136" dialog="I'm Phoebe, and I like scary things. Speaking about fear, I hope you've brought another pair of pants with you, 'cause you're about to get schooled!"/>
       </vilagers>
       <!-- <trainer id="1" name="Phoebe" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
         <pokemon id="7" name="DUSCLOPS" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="7" active=""/>
