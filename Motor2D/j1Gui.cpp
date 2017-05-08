@@ -36,6 +36,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	gui_groups_name.push_back("PokemonCombat_HUD");
 	gui_groups_name.push_back("PokemonWorld_HUD");
 	gui_groups_name.push_back("PokemonWorld_Menu");
+	gui_groups_name.push_back("PokemonWorld_Bag");
 
 	return ret;
 }
@@ -395,6 +396,18 @@ void j1Gui::LoadEntities()
 						{
 							Button* temp = App->gui->CreateButton(App->Search(push.attribute("listener").as_string("")), { push.attribute("rect.x").as_int(0), push.attribute("rect.y").as_int(0), push.attribute("rect.w").as_int(0), push.attribute("rect.h").as_int(0) }, { push.attribute("pos.x").as_int(0), push.attribute("pos.y").as_int(0) }, { push.attribute("state2.x").as_int(0) ,push.attribute("state2.y").as_int(0) }, { push.attribute("state3.x").as_int(0) ,push.attribute("state3.y").as_int(0) }, push.attribute("animated").as_bool(false), push.attribute("identifier").as_string(""), actual);
 							inside_picker->elements.push_back(temp);
+							if (push.attribute("inside").as_bool(false))
+							{
+								for (pugi::xml_node push3 = push.child("entity"); push3 != NULL; push3 = push3.next_sibling())
+								{
+									//image inside button
+									if (std::string(push3.attribute("type").as_string("")) == "image")
+									{
+										Image* prov = App->gui->CreateImage({ push3.attribute("rect.x").as_int(0), push3.attribute("rect.y").as_int(0), push3.attribute("rect.w").as_int(0), push3.attribute("rect.h").as_int(0) }, { push3.attribute("pos.x").as_int(0), push3.attribute("pos.y").as_int(0) }, push3.attribute("identifier").as_string(""), actual, push3.attribute("movable").as_bool(true));
+										temp->elements.push_back(prov);
+									}
+								}
+							}
 						}
 					}
 				}
