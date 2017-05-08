@@ -441,9 +441,10 @@ void Bomb::Update(float dt)
 		App->audio->PlayFx(7);
 		step = EXPLOSION;
 		collision = App->collision->AddCollider({ position.x - radius,position.y - radius,radius * 2,radius * 2 }, COLLIDER_BOMB);
-		current = App->anim_manager->GetAnimation((WeaponState)2, DOWN, BOMB);
+		current = App->anim_manager->GetAnimation(W_DYING, DOWN, BOMB);
 		current->Reset();
 	}
+
 	if (step == EXPLOSION && current->Finished())
 	{
 		Die();
