@@ -110,7 +110,7 @@ bool j1Scene::Update(float dt)
 
 			if (help_timer + 2000 < SDL_GetTicks() && help_bool)
 			{
-				player->dialog = App->gui->CreateDialogue("Save me...... Save me...... Link in need your help!, Ganon kidnapped me in the hyrule castle!");
+				player->dialog = App->gui->CreateDialogue("Link... I need your help. Head to the castle and you'll find guidance. Hurry up!");
 				help_bool = false;
 			}
 
