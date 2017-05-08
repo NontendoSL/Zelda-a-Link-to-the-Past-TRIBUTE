@@ -108,7 +108,7 @@ bool j1Scene::Update(float dt)
 
 			player->ShowHearts();
 
-			if (help_timer + 5000 < SDL_GetTicks() && help_bool)
+			if (help_timer + 2000 < SDL_GetTicks() && help_bool)
 			{
 				player->dialog = App->gui->CreateDialogue("Save me...... Save me...... Link in need your help!, Ganon kidnapped me in the hyrule castle!");
 				help_bool = false;
@@ -655,17 +655,6 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 	{
 		goPokemon = true;
 	}
-	/*//SET WEAPONS WHEN MAP CHANGES
-	if (weapon_equiped == BOMB)
-	{
-		player->bombmanager = App->entity_elements->CreateBombContainer();
-		player->equiped_item = (Weapon*)player->bombmanager;
-	}
-	if (weapon_equiped == HOOKSHOT)
-	{
-		player->hook = App->entity_elements->CreateHookshot();
-		player->equiped_item = (Weapon*)player->hook;
-	}*/
 
 	bool stop_rearch = false;
 
@@ -750,7 +739,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			//Vilagers
 			for (pugi::xml_node vilager = temp.child("vilagers").child("vilager"); vilager != NULL; vilager = vilager.next_sibling())
 			{
-				App->entity_elements->CreateVilager(vilager);
+				App->entity_elements->CreateVillager(vilager);
 			}
 
 			//Camera position
