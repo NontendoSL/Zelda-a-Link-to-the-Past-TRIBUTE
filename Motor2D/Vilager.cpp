@@ -18,6 +18,7 @@ bool Vilager::Awake(pugi::xml_node& conf)
 	name = conf.attribute("name").as_string("");
 	active = conf.attribute("active").as_bool(true);
 	dialog = conf.attribute("dialog").as_string("");
+	rect = { conf.attribute("rect_x").as_int(0), conf.attribute("rect_y").as_int(0), conf.attribute("rect_w").as_int(0), conf.attribute("rect_h").as_int(0) };
 	switch_map = conf.attribute("switch_map").as_int(0);
 	return true;
 }
@@ -43,7 +44,7 @@ void Vilager::Draw()
 {
 	if (active)
 	{
-		if (direction == UP)
+		/*if (direction == UP)
 		{
 			SDL_Rect r = { 1,1,14,21 };
 			App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &r);
@@ -62,7 +63,8 @@ void Vilager::Draw()
 		{
 			SDL_Rect r = { 16,45,14,21 };
 			App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &r);
-		}
+		}*/
+		App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &rect);
 	}
 }
 

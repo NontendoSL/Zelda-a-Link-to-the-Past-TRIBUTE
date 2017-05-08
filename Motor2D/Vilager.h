@@ -43,7 +43,7 @@ private:
 	bool stunned = false;
 	bool active = false;
 	int switch_map = 0;
-
+	SDL_Rect rect;
 	std::string dialog;
 
 };
