@@ -395,18 +395,18 @@
     </map> 
     
     <map id="8"> <!--Victory 2-->
-      <port name="Victory_1" rect_x="96" rect_y="48" switch_map="7" pos_x="184" pos_y="296"/>
-      <port name="Victory_1" rect_x="464" rect_y="400" switch_map="7" pos_x="392" pos_y="560"/>
+      <port name="Victory_1" rect_x="96" rect_y="48" switch_map="7" pos_x="184" pos_y="300"/>
+      <port name="Victory_1" rect_x="464" rect_y="400" switch_map="7" pos_x="397" pos_y="569"/>
     </map> 
     
     <map id="9"> <!--Victory Exterior--><!--Before enter League-->
       <port name="Victory_1" rect_x="192" rect_y="424" switch_map="7" pos_x="664" pos_y="128"/>
-      <port name="LeagueHall" rect_x="192" rect_y="72" switch_map="10" pos_x="176" pos_y="176"/>
+      <port name="LeagueHall" rect_x="192" rect_y="72" switch_map="10" pos_x="176" pos_y="179"/>
     </map> 
     
     <map id="10"> <!--LeagueHall-->
       <port name="EliteFour_01" rect_x="168" rect_y="8" switch_map="11" pos_x="160" pos_y="216"/>
-      <port name="Victory_Exterior" rect_x="168" rect_y="192" switch_map="9" pos_x="200" pos_y="95"/>
+      <port name="Victory_Exterior" rect_x="168" rect_y="192" switch_map="9" pos_x="200" pos_y="105"/>
     </map> 
 
     <map id="11"> <!--EliteFour 01-->
