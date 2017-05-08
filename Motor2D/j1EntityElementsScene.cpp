@@ -88,12 +88,16 @@ bool j1EntityElementScene::Update(float dt)
 				App->entity_elements->DeleteDynObject(((DynamicObjects*)item3._Ptr->_Myval)); // Delete Dynobject
 				App->audio->PlayFx(17);
 			}
-			if (((BCTrooper*)item3._Ptr->_Myval)->GetState() == BC_DYING)
+			if (bct != nullptr)
 			{
-				//TODO -> if animation finished, then delete.
-				App->entity_elements->DeleteBCTrooper((BCTrooper*)item3._Ptr->_Myval); // Delete Dynobject
-				App->audio->PlayFx(17);
+				if (((BCTrooper*)item3._Ptr->_Myval)->GetState() == BC_DYING)
+				{
+					//TODO -> if animation finished, then delete.
+					App->entity_elements->DeleteBCTrooper((BCTrooper*)item3._Ptr->_Myval); // Delete Dynobject
+					App->audio->PlayFx(17);
+				}
 			}
+
 
 			item3++;
 		}
@@ -263,6 +267,7 @@ bool j1EntityElementScene::DeleteBCTrooper(BCTrooper* bctrooper)
 		elementscene.remove(bctrooper);
 		bctrooper->collision_feet->to_delete = true;
 		bctrooper->GetColliderMaze()->to_delete = true;
+		bct = nullptr;
 		delete bctrooper;
 		bctrooper = nullptr;
 	}
@@ -395,6 +400,7 @@ void j1EntityElementScene::CreateBCTrooper(pugi::xml_node& conf)
 	BCTrooper* temp = new BCTrooper();
 	temp->Awake(conf, 1);
 	temp->Start();
+	bct = temp;
 	elementscene.push_back(temp);
 }
 
