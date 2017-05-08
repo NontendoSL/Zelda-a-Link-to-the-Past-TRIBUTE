@@ -21,7 +21,7 @@ class Dialogue;
 class Image;
 class DynamicObjects;
 
-class Player : public Creature, public InputListener
+class Player : public Creature
 {
 public:
 	Player();
@@ -80,7 +80,6 @@ public:
 	void PickUpHook();
 	void MoveTo(const iPoint& pos);
 	//----------------------------------
-	void OnInputCallback(INPUTEVENT, EVENTSTATE);
 
 	int GetnuminputUse();
 

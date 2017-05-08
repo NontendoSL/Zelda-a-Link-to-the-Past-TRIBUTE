@@ -74,7 +74,6 @@ bool Player::Start()
 	/*timetoplay.Start();*/
 	canSwitchMap = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
-	App->input_manager->AddListener(this);
 	game_timer.Start();
 	return ret;
 }
@@ -130,7 +129,7 @@ bool Player::Update(float dt)
 			{
 				charge++;
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP)
 			{
 				state = L_HOOKTHROWN;
 				anim_state = L_IDLE;
@@ -142,11 +141,14 @@ bool Player::Update(float dt)
 			}
 		}
 
-		if (equiped_item != nullptr && equiped_item == bombmanager && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && bombs > 0)
+		if (equiped_item != nullptr && equiped_item == bombmanager && bombs > 0)
 		{
-			bombmanager->Drop(position);
-			bombs--;
-			App->audio->PlayFx(6);
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP)
+			{
+				bombmanager->Drop(position);
+				bombs--;
+				App->audio->PlayFx(6);
+			}
 		}
 
 		if (equiped_item != nullptr && equiped_item == bow)
@@ -158,7 +160,7 @@ bool Player::Update(float dt)
 					App->audio->PlayFx(16);
 				}
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && charge >= 17)
+			else if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP) && charge >= 17)
 			{
 				if (arrows > 0)
 				{
@@ -215,6 +217,7 @@ bool Player::Update(float dt)
 
 		}
 	}
+
 	else if (App->scene->gamestate == INMENU)
 	{
 		if (winover != nullptr)
@@ -716,7 +719,7 @@ bool Player::Idle()
 		anim_state = L_WALKING;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && sword_equiped == true && picked_object == nullptr)
+	else if ((App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN) && sword_equiped == true && picked_object == nullptr)
 	{
 		state = L_ATTACKING;
 		anim_state = L_ATTACKING;
@@ -724,7 +727,7 @@ bool Player::Idle()
 		current_animation->Reset();
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
 	{
 		if (picked_object == nullptr)
 		{
@@ -759,7 +762,7 @@ bool Player::Walking(float dt)
 		anim_state = L_IDLE;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && sword_equiped == true && picked_object == nullptr)
+	else if ((App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN) && sword_equiped == true && picked_object == nullptr)
 	{
 		state = L_ATTACKING;
 		anim_state = L_ATTACKING;
@@ -767,7 +770,7 @@ bool Player::Walking(float dt)
 		current_animation->Reset();
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	else if ((App->input->GetKey(SDL_SCANCODE_Q) || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN) == KEY_DOWN)
 	{
 		if (picked_object == nullptr)
 		{
@@ -1361,73 +1364,6 @@ void Player::ThrowHookshot(uint charge)
 }
 
 //-----------------
-
-//UTILITY METHODS ----------------------------------------------------------------
-void Player::OnInputCallback(INPUTEVENT action, EVENTSTATE e_state)
-{
-	if (App->scene->gamestate == INGAME)
-	{
-		switch (action)
-		{
-		case BUTTON_X:
-		{
-			if (e_state == E_DOWN && state != L_HOOKTHROWN && sword_equiped == true && picked_object == nullptr)
-			{
-				state = L_ATTACKING;
-				anim_state = L_ATTACKING;
-				current_animation = App->anim_manager->GetAnimation(anim_state, direction, LINK);
-				current_animation->Reset();
-			}
-			break;
-		}
-		case BUTTON_A:
-		{
-			if (e_state == E_DOWN && state != L_HOOKTHROWN)
-			{
-				if (picked_object == nullptr)
-				{
-					state = L_INTERACTING;
-					anim_state = L_IDLE;
-					//current_animation = App->anim_manager->GetAnimation(state, direction, 0);
-					//current_animation->Reset();
-				}
-				else
-				{
-					ThrowObject();
-				}
-			}
-			break;
-		}
-		case BUTTON_B:
-			if (hook != nullptr && equiped_item == hook && hook->in_use == false)
-			{
-				if (e_state == E_UP)
-				{
-					state = L_HOOKTHROWN;
-					anim_state = L_IDLE;
-					ThrowHookshot(charge);
-				}
-			}
-			else if (bombmanager != nullptr && equiped_item == bombmanager && bombs > 0)
-			{
-				if (e_state == E_UP)
-				{
-					bombmanager->Drop(position);
-					bombs--;
-				}
-			}
-			else if (bow != nullptr && equiped_item == bow && arrows > 0 && charge > 17)
-			{
-				if (e_state == E_UP)
-				{
-					bow->Shoot(position, direction, charge);
-					arrows--;
-				}
-			}
-			break;
-		}
-	}
-}
 
 int Player::GetnuminputUse()
 {
