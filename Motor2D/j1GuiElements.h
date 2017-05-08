@@ -2,6 +2,7 @@
 #define __j1GUIELEMENTS_H__
 
 #include "j1Module.h"
+#include "j1GuiEntity.h"
 #include "j1InputManager.h"
 
 enum ButtonState { normal, over, clicked };
@@ -11,7 +12,6 @@ enum FontName { GANONF, PIXEL, PIXELMORE, POKE1 };
 struct 	_TTF_Font;
 class Animation;
 class InputManager;
-class PokemonCombat;
 // ---------------------------------------------------
 
 class Image : public j1GuiEntity

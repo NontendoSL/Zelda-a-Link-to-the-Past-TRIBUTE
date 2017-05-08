@@ -9,7 +9,6 @@
 #include "j1Scene.h"
 #include "j1SceneIntro.h"
 #include "j1Gui.h"
-#include "j1GuiEntity.h"
 #include "j1GuiElements.h"
 #include "j1Player.h"
 #include "PokemonCombat.h"
@@ -990,8 +989,6 @@ PokemonCombatHud::PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 	num_pokemons = { 3, 3 };
 	cooldown = false;
 	cdtime = iPoint(Link->cooldown, Link->cooldown);
-	Link->target = Brendan;
-	Brendan->target = Link;
 	Image*test = (Image*)App->gui->GetEntity("bottom hud");
 	App->gui->GetEntity("bottom hud")->position.y = (App->win->GetHeight()/2) - App->gui->GetEntity("bottom hud")->Hitbox.h;
 }
@@ -1250,12 +1247,12 @@ void PokemonCombatHud::Update(j1GuiEntity* focused)
 		if (hpbar_pLink.y <= 0)
 		{
 			num_pokemons.x--;
-			LoadNewPokemon(App->combatmanager->change_pokemon(true), true);
+			LoadNewPokemon(App->combatmanager->change_pokemon(), true);
 		}
 		else if (hpbar_pBrendan.y <= 0)
 		{
-			num_pokemons.y--;
-			LoadNewPokemon(App->combatmanager->change_pokemon(false), false);
+			num_pokemons.y--; //TODO HIGH MARC
+			LoadNewPokemon(App->combatmanager->change_pokemon(), false);
 		}
 		if (hpbar_pLink.x>0)
 			hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)
