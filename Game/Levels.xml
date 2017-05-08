@@ -308,50 +308,50 @@
   <map_combat>
 
     <Link>
-      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="60" dir="left" hp="80" attack="3" special_attack="10" pos_x="0" pos_y="0" type="1" active="false"/>
-      <pokemon id="2" name="SCEPTILE" speed="1" cooldown="190" dir="left" hp="100" attack="4" special_attack="15" pos_x="0" pos_y="0" type="2" active="false"/>
-      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="250" dir="left" hp="150" attack="5" special_attack="20" pos_x="0" pos_y="0" type="3" active="false"/>
+      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="60" dir="right" hp="80" attack="3" special_attack="10" pos_x="96" pos_y="128" type="1" active="false"/>
+      <pokemon id="2" name="SCEPTILE" speed="1" cooldown="190" dir="right" hp="100" attack="4" special_attack="15" pos_x="96" pos_y="128" type="2" active="false"/>
+      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="250" dir="right" hp="150" attack="5" special_attack="20" pos_x="96" pos_y="128" type="3" active="false"/>
     </Link>
 
     <map n="17" file="VictoryExterior.tmx">
       <camera follow="false"/>
-      <trainer id="1" name="Brendan" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
+      <trainer id="1" name="Brendan" active="false" pos_x="0" pos_y="0" file="textures/PokemonCharacters.png">
         <!--<pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>-->
       </trainer>
     </map>
-    
+
     <map n="18" file="EliteFour01.tmx">
       <camera follow="false"/>
-      <trainer id="1" name="Sidney" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
-        <pokemon id="6" name="SHIFTRY" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="6" active=""/>
+      <trainer id="1" name="Sidney" active="false" pos_x="0" pos_y="0" file="textures/PokemonCharacters.png">
+        <pokemon id="6" name="SHIFTRY" speed="1" cooldown="150" dir="left" hp="130" attack="5" special_attack="23" pos_x="208" pos_y="136" type="6" active="true"/>
       </trainer>
     </map>
 
     <map n="19" file="EliteFour02.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Phoebe" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
-        <pokemon id="7" name="DUSCLOPS" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="7" active=""/>
+        <pokemon id="7" name="DUSCLOPS" speed="1" cooldown="150" dir="left" hp="250" attack="3" special_attack="12" pos_x="208" pos_y="136" type="7" active="true"/>
       </trainer>
     </map>
 
     <map n="20" file="EliteFour03.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Glacia" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
-        <pokemon id="4" name="WALREIN" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="4" active=""/>
+        <pokemon id="4" name="WALREIN" speed="1" cooldown="150" dir="left" hp="700" attack="6" special_attack="21" pos_x="208" pos_y="136" type="4" active="true"/>
       </trainer>
     </map>
 
     <map n="21" file="EliteFour04.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Drake" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
-        <pokemon id="5" name="SALAMANCE" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="5" active=""/>
+        <pokemon id="5" name="SALAMANCE" speed="1" cooldown="150" dir="left" hp="400" attack="3" special_attack="12" pos_x="208" pos_y="136" type="5" active="true"/>
       </trainer>
     </map>
 
     <map n="22" file="RedCombatMap.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Red" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
-        <pokemon id="8" name="GROUDON" speed="" cooldown="" dir="" hp="" attack="" special_attack="" pos_x="" pos_y="" type="8" active=""/>
+        <pokemon id="8" name="GROUDON" speed="1" cooldown="150" dir="left" hp="69" attack="3" special_attack="12" pos_x="208" pos_y="136" type="8" active="true"/>
       </trainer>
     </map>
   </map_combat>
