@@ -169,6 +169,12 @@
     <ClCompile Include="PokeTrainer.cpp">
       <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
     </ClCompile>
+    <ClCompile Include="RedMinion.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClCompile>
+    <ClCompile Include="GreenMinion.cpp">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -359,6 +365,12 @@
     </ClInclude>
     <ClInclude Include="PokeTrainer.h">
       <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
+    </ClInclude>
+    <ClInclude Include="RedMinion.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenMinion.h">
+      <Filter>Zelda Game\ElementsScene\NPCs\ZELDA</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

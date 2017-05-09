@@ -86,6 +86,7 @@
     <ClCompile Include="Ganon.cpp" />
     <ClCompile Include="Geodude.cpp" />
     <ClCompile Include="Golem.cpp" />
+    <ClCompile Include="GreenMinion.cpp" />
     <ClCompile Include="Groudon.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Creature.cpp" />
@@ -100,6 +101,7 @@
     <ClCompile Include="P_Fire.cpp" />
     <ClCompile Include="P_Firework.cpp" />
     <ClCompile Include="P_Follow.cpp" />
+    <ClCompile Include="RedMinion.cpp" />
     <ClCompile Include="Salamance.cpp" />
     <ClCompile Include="SceneElements.cpp" />
     <ClCompile Include="Sceptyle.cpp" />
@@ -144,6 +146,7 @@
     <ClInclude Include="Ganon.h" />
     <ClInclude Include="Geodude.h" />
     <ClInclude Include="Golem.h" />
+    <ClInclude Include="GreenMinion.h" />
     <ClInclude Include="Groudon.h" />
     <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1SceneIntro.h" />
@@ -161,6 +164,7 @@
     <ClInclude Include="P_Fire.h" />
     <ClInclude Include="P_Firework.h" />
     <ClInclude Include="P_Follow.h" />
+    <ClInclude Include="RedMinion.h" />
     <ClInclude Include="Salamance.h" />
     <ClInclude Include="Sceptyle.h" />
     <ClInclude Include="Shiftry.h" />

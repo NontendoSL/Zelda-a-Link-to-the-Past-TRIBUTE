@@ -75,6 +75,10 @@ private:
 	Collider* collision_attack = nullptr;
 	// ----------------------
 
+	//MOVEMENT VARIABLES ---
+
+	// -------------------
+
 	//2ND PHASE VARIABLES ---
 	j1Timer spawn_timer;
 	int spawn_rate = 0;
