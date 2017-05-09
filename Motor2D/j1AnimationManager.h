@@ -16,7 +16,8 @@ enum AnimationElement
 	SOLDIER,
 	BC_TROOPER,
 	GANON,
-	
+	GREENMINION,
+	REDMINION,
 	//WEAPONS ---------
 	HOOKSHOT,
 	BOMB,

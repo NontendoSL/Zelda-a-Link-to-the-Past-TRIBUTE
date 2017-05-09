@@ -295,11 +295,11 @@ void Ganon::Spawn()
 	// TODO -> TRY what type of enemies to spawn: Pokemon will be a great idea
 	if (minions_spawned % 5 == 0)
 	{
-		//Spawn Miniboss
+		//Spawn Red Minion
 	}
 	else
 	{
-		//Spawn normal soldier
+		//Spawn Green Minion
 	}
 	minions_spawned++;
 }

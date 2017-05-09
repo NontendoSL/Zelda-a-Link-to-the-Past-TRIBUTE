@@ -37,6 +37,8 @@
     <file file="animation/Enemies.xml"/>
     <file file="animation/BCTrooper.xml"/>
     <file file="animation/GanonAnimations.xml"/>
+    <file file="animation/GreenMinion.xml"/>
+    <file file="animation/RedMinion.xml"/>
     
     <!--WEAPONS-->
     <file file="animation/Hookshot.xml"/>
@@ -55,6 +57,7 @@
 
     <!--PARTICLES-->
 	  <file file="animation/AnimationsAndEffects.xml"/>
+
 
     
 	</animation>
