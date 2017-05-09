@@ -725,6 +725,7 @@ bool Player::Idle()
 		anim_state = L_ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(anim_state, direction, LINK);
 		current_animation->Reset();
+		LOG("HIT");
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)

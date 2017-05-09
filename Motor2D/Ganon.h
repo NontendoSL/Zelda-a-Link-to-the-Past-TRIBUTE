@@ -63,7 +63,17 @@ private:
 	GanonState state = G_WALKING;
 	GanonState anim_state = G_WALKING;
 	GanonPhase phase = SLEEP;
+	Animation* current_animation = nullptr;
 	int item_id = -1;
+
+	//HIT TIMERS/VARIABLES ---
+	j1Timer HitTime;
+	// -------------------------
+
+	//ATTACK VARIABLES ---
+	bool StartAttack = false;
+	Collider* collision_attack = nullptr;
+	// ----------------------
 
 	//2ND PHASE VARIABLES ---
 	j1Timer spawn_timer;

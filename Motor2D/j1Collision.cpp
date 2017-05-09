@@ -49,6 +49,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKEMON] = false;
 
 	matrix[COLLIDER_GANON][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_GANON][COLLIDER_SWORD] = true;
 
 }
 j1Collision::~j1Collision() {}
@@ -229,7 +230,11 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		case COLLIDER_GANON:
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+		case COLLIDER_GANON_FORK:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
 		}
 	}
 }

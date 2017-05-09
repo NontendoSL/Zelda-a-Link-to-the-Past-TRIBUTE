@@ -2,6 +2,7 @@
 #include "j1Scene.h"
 #include "j1Collision.h"
 #include "j1AnimationManager.h"
+#include "j1Audio.h"
 
 Ganon::Ganon() :NPC()
 {
@@ -22,11 +23,11 @@ bool Ganon::Start()
 	//Load initial position & direction
 	position.x = 264;
 	position.y = 200;
-	direction = UP;
+	direction = DOWN;
 
 	//Animation States & initial Phase
 	state = G_WALKING;
-	anim_state = G_SPECIAL_1;
+	anim_state = G_WALKING;
 	phase = INITIAL;
 
 	//Set stats
@@ -117,9 +118,14 @@ bool Ganon::InitialUpdate(float dt)
 	// START NEXT PHASE
 	else
 	{
+		position.x = 264;
+		position.y = 110;
+		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 		phase = INVINCIBLE;
 		state = G_SHIELD;
+		anim_state = G_SHIELD;
 		spawn_timer.Start();
+		LOG("SHIELD PHASE");
 	}
 	return true;
 }
@@ -206,6 +212,35 @@ void Ganon::Walk(float dt)
 
 void Ganon::MeleeAttack()
 {
+	if (StartAttack == true)
+	{
+		//Set Attack Animation
+		StartAttack = false;
+		current_animation = App->anim_manager->GetAnimation(anim_state, direction, GANON);
+		current_animation->Reset();
+
+		//Set Attack Collider
+		if (direction == DOWN)
+		{
+			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 10, 48, 48 }, COLLIDER_GANON_FORK, this);
+		}
+		else if (direction == UP)
+		{
+			//collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 10, 48, 48 }, COLLIDER_GANON_FORK, this);
+		}
+
+	}
+
+	else
+	{
+		if (current_animation->Finished())
+		{
+			collision_attack->to_delete = true;
+			current_animation = nullptr;
+			state = G_WALKING;
+			anim_state = G_WALKING;
+		}
+	}
 }
 
 void Ganon::SpecialAttack()
@@ -243,6 +278,16 @@ void Ganon::FireCircle()
 
 void Ganon::Hit()
 {
+	if (HitTime.ReadSec() >= 0.3)
+	{
+		state = G_ATTACKING;
+		anim_state = G_MELEE;
+		StartAttack = true;
+	}
+	if (collision_attack != nullptr)
+	{
+		collision_attack->to_delete = true;
+	}
 }
 
 void Ganon::Spawn()
@@ -264,8 +309,24 @@ bool Ganon::CleanUp()
 	return true;
 }
 
-void Ganon::OnCollision(Collider *, Collider *)
+void Ganon::OnCollision(Collider* c1, Collider* c2)
 {
+	if (c1 != nullptr && c2 != nullptr)
+	{
+		//SWORD COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
+		{
+			if (state != G_HIT && state != G_ATTACKING)
+			{
+				App->audio->PlayFx(12);
+				HitTime.Start();
+				hp -= 10;
+				state = G_HIT;
+				anim_state = G_HIT;
+				LOG("HP:%i", hp);
+			}
+		}
+	}
 }
 
 GanonState Ganon::GetState()
