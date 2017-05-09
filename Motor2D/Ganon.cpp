@@ -22,11 +22,11 @@ bool Ganon::Start()
 	//Load initial position & direction
 	position.x = 264;
 	position.y = 200;
-	direction = DOWN;
+	direction = UP;
 
 	//Animation States & initial Phase
 	state = G_WALKING;
-	anim_state = G_SHIELD;
+	anim_state = G_SPECIAL_1;
 	phase = INITIAL;
 
 	//Set stats
