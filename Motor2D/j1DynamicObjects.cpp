@@ -110,6 +110,10 @@ bool DynamicObjects::Update(float dt)
 			collision->SetPos(position.x, position.y);
 		}
 	}
+	else if (state == D_DYING)
+	{
+		to_delete = true;
+	}
 
 	return true;
 }

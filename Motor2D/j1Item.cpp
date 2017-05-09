@@ -12,7 +12,9 @@ Item::Item() :SceneElement()
 }
 
 Item::~Item()
-{}
+{
+	App->tex->UnLoad(texture);
+}
 
 bool Item::Awake(pugi::xml_node &conf, uint item_id, iPoint pos)
 {

@@ -67,7 +67,6 @@ private:
 	AnimationStruct animation;
 	SDL_Rect anim_rect;
 	iPoint pivot;
-	//Item* drop;
 	bool stunned = false;
 
 	int item_id = 0;
