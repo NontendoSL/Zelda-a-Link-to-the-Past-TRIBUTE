@@ -21,6 +21,7 @@ class BombContainer;
 class PokeTrainer;
 class BCTrooper;
 class Villager;
+class Ganon;
 
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
@@ -61,6 +62,7 @@ public:
 	BombContainer* CreateBombContainer();
 	void CreatePokemon(pugi::xml_node&, uint id, iPoint pos = (iPoint(0,0)));
 	void CreateBCTrooper(pugi::xml_node&);
+	void CreateGanon(pugi::xml_node&);
 	void CreateVillager(pugi::xml_node&);
 
 	//Delete Functions

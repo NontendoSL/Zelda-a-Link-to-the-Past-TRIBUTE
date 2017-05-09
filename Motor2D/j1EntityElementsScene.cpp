@@ -20,6 +20,7 @@
 #include "BCTrooper.h"
 #include "j1Weapon.h"
 #include "Villager.h"
+#include "Ganon.h"
 
 
 j1EntityElementScene::j1EntityElementScene()
@@ -396,6 +397,14 @@ void j1EntityElementScene::CreateBCTrooper(pugi::xml_node& conf)
 	temp->Start();
 	elementscene.push_back(temp);
 	bct = (BCTrooper*)elementscene.back();
+}
+
+void j1EntityElementScene::CreateGanon(pugi::xml_node& conf)
+{
+	Ganon* temp = new Ganon();
+	temp->Awake(conf, 1);
+	temp->Start();
+	elementscene.push_back(temp);
 }
 
 void j1EntityElementScene::CreateVillager(pugi::xml_node& conf)

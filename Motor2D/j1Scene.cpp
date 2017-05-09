@@ -751,7 +751,13 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 				App->entity_elements->CreateBCTrooper(temp_bctrooper);
 			}
 
-			//Vilagers
+			if (temp.child("Ganon"))
+			{
+				pugi::xml_node temp_Ganon = temp.child("Ganon");
+				App->entity_elements->CreateGanon(temp_Ganon);
+			}
+
+			//Villagers
 			for (pugi::xml_node vilager = temp.child("vilagers").child("vilager"); vilager != NULL; vilager = vilager.next_sibling())
 			{
 				App->entity_elements->CreateVillager(vilager);

@@ -33,29 +33,30 @@
 	
   <animation>
     <!--ZELDA NPCS-->
-    <!--id= 0--> <file file="animation/LinkAnimations.xml"/>
-    <!--id= 1--> <file file="animation/Enemies.xml"/>
+    <file file="animation/LinkAnimations.xml"/>
+    <file file="animation/Enemies.xml"/>
+    <file file="animation/BCTrooper.xml"/>
+    <file file="animation/GanonAnimations.xml"/>
     
     <!--WEAPONS-->
-    <!--id= 2--> <file file="animation/Hookshot.xml"/>
-    <!--id= 3--> <file file="animation/Bomb.xml"/>
-    <!--id= 4--> <file file="animation/Arrow.xml"/>
+    <file file="animation/Hookshot.xml"/>
+    <file file="animation/Bomb.xml"/>
+    <file file="animation/Arrow.xml"/>
     
     <!--VICTORY ROAD-->
-    <!--id= 5--> <file file="animation/GeodudeAnimations.xml"/>
-    <!--id= 6--> <file file="animation/GolemAnimations.xml"/>
-    <!--id= 7--> <file file="animation/SudowoodoAnimations.xml"/>
+    <file file="animation/GeodudeAnimations.xml"/>
+    <file file="animation/GolemAnimations.xml"/>
+    <file file="animation/SudowoodoAnimations.xml"/>
     
     <!--POKEMON COMBATS-->
-    <!--id= 8--> <file file="animation/BlazikenAnimations.xml"/>
-    <!--id= 9--> <file file="animation/SceptileAnimations.xml"/>
-    <!--id= 10--> <file file="animation/SwampertAnimations.xml"/>
+    <file file="animation/BlazikenAnimations.xml"/>
+    <file file="animation/SceptileAnimations.xml"/>
+    <file file="animation/SwampertAnimations.xml"/>
 
     <!--PARTICLES-->
-	  <!--id= 11--> <file file="animation/AnimationsAndEffects.xml"/>
+	  <file file="animation/AnimationsAndEffects.xml"/>
 
-    <!--BCTrooper-->
-    <!--id= 12--> <file file="animation/BCTrooper.xml"/>
+    
 	</animation>
   
 	<window>

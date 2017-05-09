@@ -48,6 +48,8 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_POKEMON_SPECIAL_ATTACK][COLLIDER_POKEMON] = true;
 	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKEMON] = false;
 
+	matrix[COLLIDER_GANON][COLLIDER_PLAYER] = true;
+
 }
 j1Collision::~j1Collision() {}
 
@@ -175,7 +177,6 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 0, 180, 125, alpha);
 			break;
 		}
-
 		case COLLIDER_ENEMY: // white
 			App->render->DrawQuad(colliders[i]->rect, 177, 255, 140, alpha);
 			break;
@@ -201,7 +202,6 @@ void j1Collision::DebugDraw()
 				App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		}
-
 		case COLLIDER_VILAGER:
 			App->render->DrawQuad(colliders[i]->rect, 74, 74, 150, alpha);
 			break;
@@ -227,6 +227,9 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_ARROW:
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_GANON:
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 		}
 	}
 }

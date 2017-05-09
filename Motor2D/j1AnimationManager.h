@@ -14,7 +14,8 @@ enum AnimationElement
 	//ZELDA NPCS -------------
 	LINK,
 	SOLDIER,
-	//GANON,
+	BC_TROOPER,
+	GANON,
 	
 	//WEAPONS ---------
 	HOOKSHOT,
@@ -37,7 +38,6 @@ enum AnimationElement
 
 	//PARTICLES ------------
 	PARTICLES,
-	BC_TROOPER,
 
 	//TRAINERS -----------
 	TRAINER

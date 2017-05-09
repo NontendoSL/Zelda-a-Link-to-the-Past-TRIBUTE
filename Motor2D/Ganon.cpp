@@ -1,5 +1,7 @@
 #include "Ganon.h"
 #include "j1Scene.h"
+#include "j1Collision.h"
+#include "j1AnimationManager.h"
 
 Ganon::Ganon() :NPC()
 {
@@ -12,14 +14,29 @@ Ganon::~Ganon()
 
 bool Ganon::Awake(pugi::xml_node &conf, uint id)
 {
-
-
 	return true;
 }
 
 bool Ganon::Start()
 {
+	//Load initial position & direction
+	position.x = 264;
+	position.y = 200;
+	direction = DOWN;
 
+	//Animation States & initial Phase
+	state = G_WALKING;
+	anim_state = G_SHIELD;
+	phase = INITIAL;
+
+	//Set stats
+	speed = 10;
+	hp = 100;
+
+	//Set Collision
+	offset_x = 18;
+	offset_y = 5;
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 36, 22 }, COLLIDER_GANON, this);
 
 	return true;
 }
@@ -65,7 +82,7 @@ bool Ganon::Update(float dt)
 
 void Ganon::Draw()
 {
-
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, GANON);
 }
 
 //PHASE UPDATES MACHINE ------------------
@@ -80,16 +97,16 @@ bool Ganon::InitialUpdate(float dt)
 			Idle();
 			break;
 
+		case G_HIT:
+			Hit();
+			break;
+
 		case G_WALKING:
 			Walk(dt);
 			break;
 
 		case G_ATTACKING:
 			MeleeAttack();
-			break;
-
-		case G_HIT:
-			Hit();
 			break;
 
 		default:

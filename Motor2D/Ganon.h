@@ -5,8 +5,8 @@
 #include "NPC.h"
 
 enum GanonPhase { SLEEP = 0, INITIAL, INVINCIBLE, RAGE, DEATH };
-enum GanonState { G_IDLE = 0, G_WALKING, G_MELEE, G_SPECIAL_1, G_SPECIAL_2, G_SHIELD, G_HIT, G_DYING, G_ATTACKING};
-enum SpawnType { };
+enum GanonState { G_WALKING = 0, G_HIT, G_MELEE, G_SPECIAL_1/*Jump&Fire*/, G_SPECIAL_2/*FireBats*/, G_SHIELD, G_DYING, G_ATTACKING, G_IDLE};
+enum SpawnType { GREEN, RED };
 
 class Ganon : public NPC
 {
@@ -60,8 +60,8 @@ public:
 	void SetAnimState(GanonState state);
 
 private:
-	GanonState state = G_IDLE;
-	GanonState anim_state = G_IDLE;
+	GanonState state = G_WALKING;
+	GanonState anim_state = G_WALKING;
 	GanonPhase phase = SLEEP;
 	int item_id = -1;
 
