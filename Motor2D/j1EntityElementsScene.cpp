@@ -394,8 +394,8 @@ void j1EntityElementScene::CreateBCTrooper(pugi::xml_node& conf)
 	BCTrooper* temp = new BCTrooper();
 	temp->Awake(conf, 1);
 	temp->Start();
-	bct = temp;
 	elementscene.push_back(temp);
+	bct = (BCTrooper*)elementscene.back();
 }
 
 void j1EntityElementScene::CreateVillager(pugi::xml_node& conf)
