@@ -50,8 +50,6 @@ public:
 
 	//void LoadNewMap(int id);
 
-	void OnInputCallback(INPUTEVENT, EVENTSTATE);
-
 	void OnGui(j1GuiEntity* element, GuiAction event);
 
 private:

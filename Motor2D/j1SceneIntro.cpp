@@ -62,6 +62,7 @@ bool j1SceneIntro::PreUpdate()
 // Called each loop iteration
 bool j1SceneIntro::Update(float dt)
 {
+	bool ret = true;
 	if (App->scene->ingame == false)
 	{
 		if (menu == false)
@@ -127,27 +128,22 @@ bool j1SceneIntro::Update(float dt)
 		}
 	}
 
-	return true;
-}
 
-// Called each loop iteration
-bool j1SceneIntro::PostUpdate()
-{
-	bool ret = true;
 	if (App->scene->ingame == false)
 	{
+
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
 			ret = false;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 		{
 			if (menu == false)
 			{
 				LoadMainMenu();
 			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP)
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_UP)
 		{
 			if (menu == false)
 			{
@@ -158,8 +154,14 @@ bool j1SceneIntro::PostUpdate()
 			}
 		}
 	}
-
 	return ret;
+	
+}
+
+// Called each loop iteration
+bool j1SceneIntro::PostUpdate()
+{
+	return true;
 }
 
 void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
@@ -214,28 +216,6 @@ void j1SceneIntro::LoadMainMenu()
 	main_menu = App->gui->CreateMainMenu();
 }
 
-void j1SceneIntro::OnInputCallback(INPUTEVENT action, EVENTSTATE state)
-{
-	if (App->scene->ingame == false)
-	{
-		switch (action)
-		{
-		case BUTTON_START:
-			if (state == E_DOWN)
-			{
-				if (menu == false)
-				{
-					LoadMainMenu();
-					menu = true;
-					bg_anim = 0;
-					TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
-					App->gui->SetGui(MAIN_MENU);
-				}
-			}
-			break;
-		}
-	}
-}
 
 // Called before quitting
 bool j1SceneIntro::CleanUp()

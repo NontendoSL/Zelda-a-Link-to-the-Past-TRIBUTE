@@ -292,6 +292,7 @@
     </map>
 
     <map n="16" file="PiramidofPowerTileSet.tmx">
+      <Link pos_x="264" pos_y="248" />
       <camera follow="true"/>
       <!--FINAL BOSS-->
     </map>
