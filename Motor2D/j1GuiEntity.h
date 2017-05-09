@@ -30,6 +30,7 @@ public:
 
 	void CalculateDiferential();
 
+	void MoveInside(iPoint new_pos);
 public:
 	GuiType type;
 	SDL_Rect Hitbox;

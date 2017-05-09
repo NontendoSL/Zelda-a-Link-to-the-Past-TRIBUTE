@@ -269,6 +269,7 @@ struct BagItem
 	}
 	Button* ui_button = nullptr;
 	uint amount = 0;
+	int order = -1;
 
 };
 
@@ -281,8 +282,14 @@ public:
 	void Input();
 	Button* GetFirst();
 	void MoveIn(bool in); // true for enter, false for out
+	void Select(bool down);
+	bool AddItem(const char* identifier, bool add);
+	void Insert(uint item_id);
+	void Remove(uint item_id);
+	void SetAmmount(uint item_id);
 private:
 	std::vector<BagItem*>bag_item;
+	bool empty = false;
 public:
 	bool active = false;
 };

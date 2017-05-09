@@ -109,6 +109,9 @@ void j1Gui::ReceiveInput()
 	case GuiGroup::POKEMON_MENU:
 		App->scene->poke_menu->Input();
 		return;
+	case GuiGroup::POKEMON_BAG:
+		App->scene->poke_bag->Input();
+		return;
 	}
 }
 
@@ -250,6 +253,9 @@ void j1Gui::SetGui(GuiGroup guistate)
 		return;
 	case POKEMON_MENU:
 		SetFocus(App->scene->poke_menu->GetFirst());
+		return;
+	case POKEMON_BAG:
+		SetFocus(App->scene->poke_bag->GetFirst());
 		return;
 	default:
 		SetFocus(nullptr);

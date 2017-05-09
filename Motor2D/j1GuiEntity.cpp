@@ -26,6 +26,15 @@ void j1GuiEntity::CalculateDiferential()
 	}
 }
 
+void j1GuiEntity::MoveInside(iPoint new_pos)
+{
+	if (parent != nullptr)
+	{
+		position = new_pos - parent->position;
+		CalculateDiferential();
+	}
+}
+
 void j1GuiEntity::Update(j1GuiEntity* focused) {
 
 

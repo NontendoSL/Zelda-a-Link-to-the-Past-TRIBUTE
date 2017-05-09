@@ -484,7 +484,10 @@ void j1Scene::LoadUi()
 	poke_hud = App->gui->CreatePokemonWorldHud();
 	poke_menu = App->gui->CreatePokemonWorldMenu();
 	poke_bag = App->gui->CreatePokemonWorldBag();
-	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
+	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("pokemon bag")->Hitbox.w*App->win->GetScale()) / 4;
+	App->gui->GetEntity("pokemon bag")->position.x += win_marge;
+	float h_marge = (App->win->GetHeight() - App->gui->GetEntity("pokemon bag")->Hitbox.h*App->win->GetScale()) / 4;
+	App->gui->GetEntity("pokemon bag")->position.y += h_marge;
 	hud->Move(true, win_marge);
 	start_menu->Move(true, win_marge);
 	App->gui->SetGui(ZELDA_HUD);

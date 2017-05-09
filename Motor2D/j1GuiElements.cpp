@@ -1501,13 +1501,22 @@ PokemonWorldMenu::~PokemonWorldMenu()
 
 PokemonWorldBag::PokemonWorldBag()
 {
-	Button* tt = (Button*)App->gui->GetEntity("pokemon bag");
 
 	for (int i = 0; i < App->gui->GetEntity("pokemon bag")->elements.size(); i++)
 	{
-		if(App->gui->GetEntity("pokemon bag")->elements[i]->type==BUTTON)
+		if (App->gui->GetEntity("pokemon bag")->elements[i]->type == BUTTON)
+		{
 			bag_item.push_back(new BagItem((Button*)App->gui->GetEntity("pokemon bag")->elements[i]));
+			if (App->gui->GetEntity("pokemon bag")->elements[i]->identifier != "pk_bag:CLOSE")
+			{
+				bag_item[i - 1]->ui_button->visible = false;
+				bag_item[i - 1]->ui_button->elements[0]->visible = false;
+			}
+		}
+		App->gui->GetEntity("pokemon bag")->elements[i]->parent = App->gui->GetEntity("pokemon bag");
 	}
+	bag_item[4]->amount = 1;
+	bag_item[4]->order = 0;
 }
 
 PokemonWorldBag::~PokemonWorldBag()
@@ -1519,18 +1528,218 @@ void PokemonWorldBag::Input()
 {
 	if (active)
 	{
-
-
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
+		{
+			Select(true);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
+		{
+			Select(false);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+		{
+			AddItem("pk_bag:DEF PROTEIN", true);
+			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
+		{
+			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		{
+			AddItem("pk_bag:DEF PROTEIN", false);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+		{
+			AddItem("pk_bag:CITRUS BERRY", true);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+		{
+			AddItem("pk_bag:CITRUS BERRY", false);
+		}
 	}
+}
+
+void PokemonWorldBag::Select(bool down)
+{
+	if (empty == false)
+	{
+		//int picked_id = 0;
+		int number_pickeds = 0;
+		int picked_order_id = 0;
+		for (int i = 0; i < bag_item.size(); i++)
+		{
+			if (App->gui->GetFocused()->identifier == bag_item[i]->ui_button->identifier)
+			{
+				picked_order_id = bag_item[i]->order;
+			}
+			if (bag_item[i]->order > 0)
+			{
+				number_pickeds++;
+			}
+		}
+		if (down)
+		{
+			if (picked_order_id != 0)
+			{
+				for (int i = 0; i < bag_item.size(); i++)
+				{
+					if (bag_item[i]->amount > 0 && bag_item[i]->order == picked_order_id - 1)
+					{
+						App->gui->SetFocus(bag_item[i]->ui_button);
+						//ShowItemInfo();
+						return;
+					}
+				}
+			}
+			/*else
+			{
+				for (int i = 0; i < bag_item.size(); i++)
+				{
+					if (bag_item[i]->amount > 0 && i == number_pickeds)
+					{
+						App->gui->SetFocus(bag_item[i]->ui_button);
+						//ShowItemInfo();
+						return;
+					}
+				}
+			}*/
+		}
+		else
+		{
+			if (picked_order_id != number_pickeds)
+			{
+				for (int i = 0; i < bag_item.size(); i++)
+				{
+					if (bag_item[i]->amount > 0 && bag_item[i]->order == picked_order_id + 1)
+					{
+						App->gui->SetFocus(bag_item[i]->ui_button);
+						//ShowItemInfo();
+						return;
+					}
+				}
+			}
+			/*else
+			{
+					App->gui->SetFocus(bag_item[bag_item.size()-1]->ui_button);
+					//ShowItemInfo();
+					return;
+			}*/
+		}
+	}
+
 }
 
 Button * PokemonWorldBag::GetFirst()
 {
-	//search for first one bought;
-	return nullptr;
+	active = true;
+	return bag_item[bag_item.size() - 1]->ui_button;
 }
 
 void PokemonWorldBag::MoveIn(bool in)
 {
+
+}
+
+bool PokemonWorldBag::AddItem(const char* identifier, bool add) //ret false if cant add more items (MAX 3)
+{
+	for (int i = 0; i < bag_item.size(); i++)
+	{
+		if (bag_item[i]->ui_button->identifier == identifier)
+		{
+			if (add)
+			{
+				if (bag_item[i]->amount == 0)
+				{
+					Insert(i);
+					bag_item[i]->amount++;
+					SetAmmount(i);
+				}
+				else if (bag_item[i]->amount == 3)
+				{
+					return false;
+				}
+				else
+				{
+					bag_item[i]->amount++;
+					SetAmmount(i);
+				}
+			}
+			else
+			{
+				if (bag_item[i]->amount == 1)
+				{
+					bag_item[i]->amount--;
+					Remove(i);
+				}
+				else if (bag_item[i]->amount>1)
+				{
+					bag_item[i]->amount--;
+					SetAmmount(i);
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+void PokemonWorldBag::Insert(uint item_id) // TODO VERY VERY HIGH FOR GOLD (NOT FOR ALPHA) REDO THIS POSITION CALCULATION BCAUSE MOTHER OF GOD...
+{
+	bag_item[item_id]->ui_button->visible = true;
+	bag_item[item_id]->ui_button->elements[0]->visible = true;
+	bag_item[item_id]->ui_button->MoveInside(bag_item[bag_item.size() - 1]->ui_button->position);
+	bag_item[bag_item.size() - 1]->ui_button->MoveInside({ bag_item[bag_item.size() - 1]->ui_button->position.x,bag_item[bag_item.size() - 1]->ui_button->position.y + bag_item[bag_item.size() - 1]->ui_button->Hitbox.h });
+	bag_item[item_id]->order = 1;
+	for (int i = 0; i < bag_item.size(); i++)
+	{
+		if (bag_item[i]->order > 0 && bag_item[item_id] != bag_item[i])
+		{
+			bag_item[i]->order++;
+		}
+	}
+}
+
+void PokemonWorldBag::Remove(uint item_id)
+{
+	bag_item[item_id]->ui_button->visible = false;
+	bag_item[item_id]->ui_button->elements[0]->visible = false;
+	for (int i = 0; i < bag_item.size(); i++)
+	{
+		if (bag_item[i]->ui_button->position.y > bag_item[item_id]->ui_button->position.y) // we check if the button is below the one we want to remove (so we have to push him up)
+		{
+			bag_item[i]->ui_button->MoveInside({ bag_item[i]->ui_button->position.x,bag_item[i]->ui_button->position.y - 18 });
+		}
+	}
+	if (bag_item[item_id]->ui_button == App->gui->GetFocused())
+	{
+		Select(true);
+	}
+	for (int i = 0; i < bag_item.size(); i++)
+	{
+		if (bag_item[i]->order > bag_item[item_id]->order)
+		{
+			bag_item[i]->order--;
+		}
+	}
+}
+
+void PokemonWorldBag::SetAmmount(uint item_id)
+{
+	switch (bag_item[item_id]->amount)
+	{
+	case 0:
+		Remove(item_id);
+		break;
+	case 1:
+		bag_item[item_id]->ui_button->elements[0]->Hitbox.x = 631;
+		break;
+	case 2:
+		bag_item[item_id]->ui_button->elements[0]->Hitbox.x = 648;
+		break;
+	case 3:
+		bag_item[item_id]->ui_button->elements[0]->Hitbox.x = 665;
+		break;
+	}
 
 }
