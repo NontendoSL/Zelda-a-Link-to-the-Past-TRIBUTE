@@ -260,4 +260,31 @@ private:
 public:
 	bool active = false;
 };
+
+struct BagItem
+{
+	BagItem(Button* but)
+	{
+		ui_button = but;
+	}
+	Button* ui_button = nullptr;
+	bool bought = false;
+	uint amount = 0;
+
+};
+
+class PokemonWorldBag :public j1GuiEntity
+{
+public:
+	PokemonWorldBag();
+	~PokemonWorldBag();
+public:
+	void Input();
+	Button* GetFirst();
+	void MoveIn(bool in); // true for enter, false for out
+private:
+	std::vector<BagItem*>bag_item;
+public:
+	bool active = false;
+};
 #endif // __j1GUIELEMENTS_H__

@@ -1498,3 +1498,32 @@ PokemonWorldMenu::~PokemonWorldMenu()
 
 }
 // Entity Elements ---------------------------------------------------
+
+PokemonWorldBag::PokemonWorldBag()
+{
+
+}
+
+PokemonWorldBag::~PokemonWorldBag()
+{
+
+}
+
+void PokemonWorldBag::Input()
+{
+	if (active)
+	{
+
+
+	}
+}
+
+Button * PokemonWorldBag::GetFirst()
+{
+	//search for first one bought;
+}
+
+void PokemonWorldBag::MoveIn(bool in)
+{
+
+}
