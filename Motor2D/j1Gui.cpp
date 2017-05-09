@@ -349,6 +349,13 @@ PokemonWorldMenu* j1Gui::CreatePokemonWorldMenu()
 	return element;
 }
 
+PokemonWorldBag * j1Gui::CreatePokemonWorldBag()
+{
+	PokemonWorldBag* element = new PokemonWorldBag();
+	entities.push_back(element);
+	return element;
+}
+
 // --------------------------------------------- Entities Loading
 void j1Gui::LoadEntities()
 {

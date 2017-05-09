@@ -268,7 +268,6 @@ struct BagItem
 		ui_button = but;
 	}
 	Button* ui_button = nullptr;
-	bool bought = false;
 	uint amount = 0;
 
 };

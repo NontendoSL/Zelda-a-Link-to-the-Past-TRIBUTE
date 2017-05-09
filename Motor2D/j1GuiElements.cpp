@@ -1501,7 +1501,13 @@ PokemonWorldMenu::~PokemonWorldMenu()
 
 PokemonWorldBag::PokemonWorldBag()
 {
+	Button* tt = (Button*)App->gui->GetEntity("pokemon bag");
 
+	for (int i = 0; i < App->gui->GetEntity("pokemon bag")->elements.size(); i++)
+	{
+		if(App->gui->GetEntity("pokemon bag")->elements[i]->type==BUTTON)
+			bag_item.push_back(new BagItem((Button*)App->gui->GetEntity("pokemon bag")->elements[i]));
+	}
 }
 
 PokemonWorldBag::~PokemonWorldBag()
@@ -1521,6 +1527,7 @@ void PokemonWorldBag::Input()
 Button * PokemonWorldBag::GetFirst()
 {
 	//search for first one bought;
+	return nullptr;
 }
 
 void PokemonWorldBag::MoveIn(bool in)

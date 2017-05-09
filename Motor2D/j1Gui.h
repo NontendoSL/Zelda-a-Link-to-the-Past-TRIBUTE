@@ -32,6 +32,7 @@ class ZeldaMenu;
 class PokemonCombatHud;
 class PokemonWorldHud;
 class PokemonWorldMenu;
+class PokemonWorldBag;
 class PokemonCombat;
 class Selector;
 
@@ -86,6 +87,8 @@ public:
 	PokemonWorldHud* CreatePokemonWorldHud();
 
 	PokemonWorldMenu* CreatePokemonWorldMenu();
+
+	PokemonWorldBag* CreatePokemonWorldBag();
 
 	void Erase(j1GuiEntity* to_delete);
 

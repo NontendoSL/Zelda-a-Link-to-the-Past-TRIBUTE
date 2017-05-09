@@ -233,7 +233,7 @@ bool j1Scene::Update(float dt)
 			}
 			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 			{
-				App->gui->SetGui(POKEMON_HUD);
+				App->gui->SetGui(POKEMON_BAG);
 			}
 			//-------------------------------------------------------
 			// TP LEVEL
@@ -477,6 +477,7 @@ void j1Scene::LoadUi()
 	start_menu = App->gui->CreateZeldaMenu();
 	poke_hud = App->gui->CreatePokemonWorldHud();
 	poke_menu = App->gui->CreatePokemonWorldMenu();
+	poke_bag = App->gui->CreatePokemonWorldBag();
 	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
 	hud->Move(true, win_marge);
 	start_menu->Move(true, win_marge);
