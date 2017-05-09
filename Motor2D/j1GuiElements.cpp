@@ -143,27 +143,6 @@ Text::Text(FontName search, const char* write, SDL_Color color, uint length, iPo
 	App->font->CalcSize(write, Hitbox.w, Hitbox.h, font);
 }
 
-void Text::Visible(bool yes)
-{
-	Text* item = next_line;
-	if (yes) {
-		visible = true;
-		while (item != nullptr)
-		{
-			item->visible = true;
-			item = item->next_line;
-		}
-	}
-	else {
-		visible = false;
-		while (item != nullptr)
-		{
-			item->visible = false;
-			item = item->next_line;
-		}
-	}
-}
-
 void Text::CheckString(std::string string)
 { //SDL has already a function that does this :////////////////////////
   /*
@@ -193,14 +172,17 @@ void Text::Update(j1GuiEntity* focused)
 
 void Text::Write(const char* string)
 {
-	SDL_DestroyTexture(text_texture);
+	App->tex->UnLoad(text_texture);
 	text = string;
 	text_texture = App->font->Print(text.c_str(), length, color, font);
 
 }
 
-Text::~Text() {
+Text::~Text() 
+{
 
+	App->tex->UnLoad(text_texture);
+	App->font->UnLoad(font);
 }
 
 /////////////////////////////// BUTTON METHODS ///////////////////////////////
@@ -356,7 +338,7 @@ void Dialogue::PushLine(bool push)
 
 void Dialogue::Clear()
 {
-	App->gui->Erase(App->gui->GetEntity("dialogue text"));
+	RELEASE(lines);
 	App->gui->Erase(App->gui->GetEntity(identifier.c_str()));
 	App->scene->player->dialog = nullptr;
 }

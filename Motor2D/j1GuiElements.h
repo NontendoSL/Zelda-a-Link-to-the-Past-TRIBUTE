@@ -62,14 +62,13 @@ public:
 	void Update(j1GuiEntity* focused);
 	void Write(const char* string); // adapt to write paragrahps
 	void CheckString(std::string string);
-	void Visible(bool yes);
 private:
 	std::string text;
 	SDL_Texture* text_texture = nullptr;
 	_TTF_Font* font = nullptr;
 public:
 	uint length = 50, size = 30;
-	Text* next_line = nullptr;
+	//Text* next_line = nullptr;
 	FontName font_name = GANONF;
 	SDL_Color color = { 255,255,255,255 };
 	bool draw = true;

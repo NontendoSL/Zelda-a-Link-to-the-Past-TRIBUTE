@@ -173,7 +173,8 @@ void j1Gui::Erase(j1GuiEntity* to_delete)
 	{
 		if (entities[i] == to_delete)
 		{
-			entities.erase(entities.begin() + i);
+ 			entities.erase(entities.begin() + i);
+			delete to_delete;
 			return;
 		}
 	}
