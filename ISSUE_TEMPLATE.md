@@ -1,7 +1,7 @@
 **Category:**
-[ ]Rattata
-[ ]Charmeleon
-[ ]Dragonite
+[ ]Rattata    
+[ ]Charmeleon    
+[ ]Dragonite    
 
 **Priority:**
 [ ]Urgent  
@@ -9,7 +9,8 @@
 [ ]Normal  
 [ ]Low  
 
-**Description**
+**Description:**
+
 
 
 **Steps to reproduce:**
@@ -19,4 +20,5 @@
 **Frequency:**
 
 
-**Other info / SS / GIF**
+
+**Other info / SS / GIF:**
