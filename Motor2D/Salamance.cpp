@@ -163,7 +163,7 @@ void Salamance::Draw()
 	}
 	}
 	}*/
-	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, SALAMENCE);
 }
 
 bool Salamance::CleanUp()

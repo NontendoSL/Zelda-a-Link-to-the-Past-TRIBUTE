@@ -121,18 +121,18 @@ bool Shiftry::Update(float dt)
 
 	if (CheckPlayerPos() < 30 && state == PC_WALKING)
 	{
-		Orientate();
-		state = PC_CHASING;
+		//Orientate();
+		//state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < 6 && (state == PC_WALKING || state == PC_CHASING))
+	/*if (CheckPlayerPos() < 6 && (state == PC_WALKING || state == PC_CHASING))
 	{
 		Orientate();
 		state = PC_ATTACKING;
-		anim_state = PC_SPECIAL;
-		current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+		anim_state = PC_ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(state, direction, SHIFTRY);
 		current_animation->Reset();
-	}
+	}*/
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -166,7 +166,7 @@ void Shiftry::Draw()
 	}
 	}
 	}*/
-	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, SHIFTRY);
 }
 
 bool Shiftry::CleanUp()

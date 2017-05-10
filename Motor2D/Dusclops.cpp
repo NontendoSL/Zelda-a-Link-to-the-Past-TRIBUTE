@@ -119,7 +119,7 @@ bool Dusclops::Update(float dt)
 		ThrowSP();
 	}*/
 
-	if (CheckPlayerPos() < 30 && state == PC_WALKING)
+	/*if (CheckPlayerPos() < 30 && state == PC_WALKING)
 	{
 		Orientate();
 		state = PC_CHASING;
@@ -129,7 +129,7 @@ bool Dusclops::Update(float dt)
 	{
 		Orientate();
 		state = PC_ATTACKING;
-	}
+	}*/
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -163,7 +163,7 @@ void Dusclops::Draw()
 			}
 		}
 	}*/
-	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, DUSCLOPS);
 }
 
 bool Dusclops::CleanUp()

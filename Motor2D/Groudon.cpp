@@ -163,7 +163,7 @@ void Groudon::Draw()
 	}
 	}
 	}*/
-	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, GROUDON);
 }
 
 bool Groudon::CleanUp()

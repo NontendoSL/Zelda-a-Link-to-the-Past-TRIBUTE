@@ -119,7 +119,7 @@ bool Walrein::Update(float dt)
 	ThrowSP();
 	}*/
 
-	if (CheckPlayerPos() < 30 && state == PC_WALKING)
+	/*if (CheckPlayerPos() < 30 && state == PC_WALKING)
 	{
 		Orientate();
 		state = PC_CHASING;
@@ -129,7 +129,7 @@ bool Walrein::Update(float dt)
 	{
 		Orientate();
 		state = PC_ATTACKING;
-	}
+	}*/
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -163,7 +163,7 @@ void Walrein::Draw()
 	}
 	}
 	}*/
-	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, WALREIN);
 }
 
 bool Walrein::CleanUp()
@@ -422,8 +422,8 @@ bool Walrein::Chasing(float dt)
 	}
 	else
 	{
-		state = PC_WALKING;
-		anim_state = PC_WALKING;
+		state = PC_CHASING;
+		anim_state = PC_CHASING;
 	}
 	return true;
 }
