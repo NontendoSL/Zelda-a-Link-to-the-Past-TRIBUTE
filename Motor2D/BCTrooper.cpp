@@ -16,7 +16,11 @@ BCTrooper::BCTrooper() : NPC()
 }
 
 BCTrooper::~BCTrooper()
-{}
+{
+	points.clear();
+	App->tex->UnLoad(texture);
+	texture = nullptr;
+}
 
 bool BCTrooper::Awake(pugi::xml_node &conf, uint id)
 {
@@ -86,7 +90,6 @@ bool BCTrooper::Update(float dt)
 			//
 		case BC_DYING:
 			Death();
-			App->audio->PlayMusic("audio/music/ZELDA/ZeldaPrincessRescue.ogg");
 			break;
 
 		default:
@@ -114,6 +117,12 @@ bool BCTrooper::Update(float dt)
 		}
 		bole.x = points[pos_in_vect].x;
 		bole.y = points[pos_in_vect].y;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	{
+		hp = 0;
+		state = BC_DYING;
 	}
 
 	//Increment dificult
@@ -435,6 +444,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 				if (hp <= 0)
 				{
 					state = BC_DYING;
+					App->audio->PlayMusic("audio/music/ZELDA/ZeldaPrincessRescue.ogg");
 				}
 				Wait_attack.Start();
 			}

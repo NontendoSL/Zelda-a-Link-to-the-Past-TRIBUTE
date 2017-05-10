@@ -84,14 +84,6 @@ bool j1EntityElementScene::Update(float dt)
 			//Comprovate if elements is not to_delete == true
 			if (item._Ptr->_Myval->to_delete)
 			{
-				if (item._Ptr->_Myval->type == DYNOBJECT)
-				{
-					DeleteDynObject((DynamicObjects*)item._Ptr->_Myval);
-				}
-				else if (item._Ptr->_Myval->type == CREATURE)
-				{
-					DeleteCreature((Creature*)item._Ptr->_Myval);
-				}
 				if (bct != nullptr)
 				{
 					if (((BCTrooper*)item._Ptr->_Myval)->GetState() == BC_DYING)
@@ -99,7 +91,17 @@ bool j1EntityElementScene::Update(float dt)
 						//TODO -> if animation finished, then delete.
 						App->entity_elements->DeleteBCTrooper((BCTrooper*)item._Ptr->_Myval); // Delete Dynobject
 						App->audio->PlayFx(17);
+						item++;
+						continue;
 					}
+				}
+				if (item._Ptr->_Myval->type == DYNOBJECT)
+				{
+					DeleteDynObject((DynamicObjects*)item._Ptr->_Myval);
+				}
+				else if (item._Ptr->_Myval->type == CREATURE)
+				{
+					DeleteCreature((Creature*)item._Ptr->_Myval);
 				}
 			}
 			else
@@ -259,7 +261,11 @@ bool j1EntityElementScene::DeleteBCTrooper(BCTrooper* bctrooper)
 	{
 		elementscene.remove(bctrooper);
 		bctrooper->collision_feet->to_delete = true;
-		bctrooper->GetColliderMaze()->to_delete = true;
+		if (bctrooper->GetColliderMaze() != nullptr)
+		{
+			bctrooper->GetColliderMaze()->to_delete = true;
+		}
+
 		bct = nullptr;
 		delete bctrooper;
 		bctrooper = nullptr;
