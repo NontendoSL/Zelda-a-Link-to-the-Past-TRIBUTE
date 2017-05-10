@@ -1,6 +1,7 @@
 #include "GreenMinion.h"
 #include "j1Scene.h"
 #include "j1Collision.h"
+#include "j1Audio.h"
 
 GreenMinion::GreenMinion()
 {
@@ -33,7 +34,7 @@ bool GreenMinion::Start(iPoint pos)
 	//Set Collision
 	offset_x = 8;
 	offset_y = 4;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 10 }, COLLIDER_ENEMY, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 10 }, COLLIDER_GMINION, this);
 
 	//Spawn Timer
 	spawn_time.Start();
@@ -59,6 +60,7 @@ bool GreenMinion::Update(float dt)
 		}
 		case GM_WALKING:
 		{
+			Orientate();
 			Walking(dt);
 			break;
 		}
@@ -124,21 +126,121 @@ bool GreenMinion::Idle()
 
 bool GreenMinion::Walking(float dt)
 {
+	if (canmove % 2 == 0)
+	{
+		Move(dt);
+	}
+
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
+
 	return true;
 }
 
 bool GreenMinion::Move(float dt)
 {
+	if (direction == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= ceil(speed*dt);
+		}
+	}
+
+	else if (direction == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += ceil(speed*dt);
+		}
+	}
+
+	else if (direction == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= ceil(speed*dt);
+		}
+	}
+
+	else if (direction == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += ceil(speed*dt);
+		}
+	}
+
+	dis_moved++;
+	walking = true;
+
 	return true;
 }
 
 bool GreenMinion::Movebyhit(float dt)
 {
+	//CHECK FOR DEATH
+	if (hp <= 0)
+	{
+		state = GM_DYING;
+		anim_state = GM_IDLE;
+		return true;
+	}
+
+	//CHECK FOR RESET WALKING
+	if (knockback_time.ReadSec() >= 0.2)
+	{
+		state = GM_WALKING;
+		anim_state = GM_WALKING;
+		return true;
+	}
+
+	//CHECK HIT DIRECTION -------
+	if (dir_hit == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= ceil(240 * dt);
+		}
+	}
+	else if (dir_hit == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += ceil(240 * dt);
+		}
+	}
+	else if (dir_hit == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= ceil(240 * dt);
+		}
+	}
+	else if (dir_hit == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += ceil(240 * dt);
+		}
+	}
+	//------------------------------
+
 	return true;
 }
 
 bool GreenMinion::Die()
 {
+	App->audio->PlayFx(11);
+	if (item_id != -1)
+	{
+		App->entity_elements->CreateItem(item_id, position);
+	}
+	to_delete = true;
+
 	return true;
 }
 

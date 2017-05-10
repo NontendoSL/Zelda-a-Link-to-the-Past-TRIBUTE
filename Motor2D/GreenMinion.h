@@ -37,6 +37,7 @@ public:
 	bool Die();
 	// -----------------------
 
+
 private:
 	GMinionState state = GM_IDLE;
 
@@ -51,10 +52,14 @@ private:
 	iPoint pivot;
 	// ---------------------------------
 
-	//HIT TIMERS/VARIABLES ---
+	//MOVEMENT VARIABLES ---
 	int distance = 0;
 	int dis_moved = 0;
+	int canmove = 0;
 	// -------------------------
+
+	//ITEM VARIABLES
+	int item_id = -1;
 
 };
 

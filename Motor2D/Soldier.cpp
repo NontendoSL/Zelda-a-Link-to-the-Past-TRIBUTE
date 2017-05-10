@@ -483,13 +483,7 @@ bool Soldier::Movebyhit(float dt)
 			position.x += ceil(240 * dt);
 		}
 	}
-	/*if (position.x > (prev_position.x + 65) ||
-	position.x < (prev_position.x + 65) ||
-	position.y >(prev_position.y + 65) ||
-	position.y < (prev_position.y + 65))
-	{
-	state = L_IDLE;
-	}*/
+
 	return true;
 }
 
