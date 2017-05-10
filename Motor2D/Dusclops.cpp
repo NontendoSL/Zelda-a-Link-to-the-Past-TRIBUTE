@@ -54,6 +54,9 @@ bool Dusclops::Start()
 	reset_distance = false;
 	sp_attacking = false;
 	reset_run = true;
+	texture_special = App->tex->Load("Dusclops_special_2.png");
+	rect_special = { 0,0,30,30 };
+	pos_special = iPoint(0,0);
 	return true;
 }
 
@@ -136,6 +139,29 @@ bool Dusclops::Update(float dt)
 		current_animation->Reset();
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+	{
+		hp = 40;
+	}
+
+	if (hp < 50 && use_special == false)
+	{
+		state = PC_SPECIAL;
+		anim_state = PC_SPECIAL;
+		current_animation = App->anim_manager->GetAnimation(state, direction, DUSCLOPS);
+		current_animation->Reset();
+	}
+
+	if (use_special && rect_special.w < 700)
+	{
+		IncrementSpecial();
+	}
+	if (rect_special.w >= 700)
+	{
+		stop_anim_special = true;
+	}
+
+	LOG("%i", rect_special.w);
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
@@ -143,31 +169,10 @@ bool Dusclops::Update(float dt)
 
 void Dusclops::Draw()
 {
-	/*if (drawThrowSP)  **Only the special attack is launch.**
+	if (use_special)
 	{
-		if (sp_attack != nullptr)
-		{
-			switch (sp_direction)
-			{
-			case 0:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
-				sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
-				break;
-			case 1:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
-				sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
-				break;
-			case 2:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
-				sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
-				break;
-			case 3:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
-				sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
-				break;
-			}
-		}
-	}*/
+		App->render->Blit(texture_special, position.x - 15 - pos_special.x, position.y - 20 - pos_special.y, &rect_special, 0, true, angle_special);
+	}
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, DUSCLOPS);
 }
 
@@ -391,14 +396,29 @@ bool Dusclops::Attack()
 	return true;
 }
 
-/*void Dusclops::ThrowSP() **Only the special attack is launch.**
-{
-
-}*/
-
 void Dusclops::Special_Attack()
 {
+	use_special = true;
+	if (current_animation->Finished() && stop_anim_special)
+	{
+		current_animation->Reset();
+		current_animation = nullptr;
+		state = PC_IDLE;
+		anim_state = PC_IDLE;
+	}
+}
 
+void Dusclops::IncrementSpecial()
+{
+	rect_special.w += SPEED;
+	rect_special.h += SPEED;
+	pos_special.x += SPEED / 2;
+	pos_special.y += SPEED / 2;
+	angle_special += SPEED * 4;
+	if (angle_special > 360)
+	{
+		angle_special = 0;
+	}
 }
 
 bool Dusclops::Chasing(float dt)
@@ -491,3 +511,5 @@ int Dusclops::CheckPlayerPos()
 {
 	return App->combatmanager->pokemon_active_link->position.DistanceTo(position);
 }
+
+

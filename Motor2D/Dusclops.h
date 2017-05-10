@@ -4,6 +4,9 @@
 
 #include "PokemonCombat.h"
 
+#define SPEED 2
+#define MAX_SIZE 1000
+
 class Dusclops : public PokemonCombat
 {
 public:
@@ -40,7 +43,8 @@ public:
 	bool Attack();
 
 	void Special_Attack();
-	//void ThrowSP(); **Only the special attack is launch.**
+
+	void IncrementSpecial();
 
 	bool Chasing(float dt);
 
@@ -49,6 +53,8 @@ public:
 	bool Movebyhit();
 
 	int CheckPlayerPos();
+
+	bool use_special = false;
 
 private:
 
@@ -59,6 +65,12 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
+
+	SDL_Texture* texture_special = nullptr;
+	SDL_Rect rect_special;
+	iPoint pos_special;
+	bool stop_anim_special = false;
+	int angle_special = 0;
 	//bool drawThrowSP = false; **Only the special attack is launch.**
 
 };

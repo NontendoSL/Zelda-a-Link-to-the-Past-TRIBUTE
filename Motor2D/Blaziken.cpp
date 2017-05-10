@@ -139,7 +139,7 @@ void Blaziken::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (isActive->active && isActive_2->active)
 			{
-				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false && isActive_2->GetState() != PC_SPECIAL)
 				{
 					PokemonCombat* temp = (PokemonCombat*)c2->callback;
 					temp->knockback_time.Start();
@@ -152,7 +152,7 @@ void Blaziken::OnCollision(Collider* c1, Collider* c2)
 					temp->prev_position = temp->position;
 				}
 
-				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false && isActive_2->GetState() != PC_SPECIAL)
 				{
 					PokemonCombat* temp = (PokemonCombat*)c2->callback;
 					temp->knockback_time.Start();
