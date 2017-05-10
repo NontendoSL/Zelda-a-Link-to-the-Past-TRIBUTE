@@ -14,7 +14,7 @@ public:
 	~GreenMinion();
 
 	// Called before the first frame
-	bool Start();
+	bool Start(iPoint pos);
 
 	// Called each loop iteration
 	bool Update(float dt);
@@ -29,6 +29,7 @@ public:
 	//bool CheckPlayerPos();
 
 	////STATE MACHINE ----------
+	bool Spawning();
 	bool Idle();
 	bool Walking(float dt);
 	bool Move(float dt);
@@ -38,6 +39,10 @@ public:
 
 private:
 	GMinionState state = GM_IDLE;
+
+	//SPAWN VARIABLES ---
+	j1Timer spawn_time;
+	// -----------------------
 
 	//ANIMATION VARIABLES -------
 	GMinionState anim_state = GM_WALKING;

@@ -1,5 +1,6 @@
 #include "GreenMinion.h"
 #include "j1Scene.h"
+#include "j1Collision.h"
 
 GreenMinion::GreenMinion()
 {
@@ -12,13 +13,17 @@ GreenMinion::~GreenMinion()
 {
 }
 
-bool GreenMinion::Start()
+bool GreenMinion::Start(iPoint pos)
 {
-	//Load initial position & direction & movement speed
-	position.x = 0;
-	position.y = 0;
+	//Load initial position & direction
+	position.x = pos.x;
+	position.y = pos.y;
 	direction = DOWN;
-	speed = 0;
+
+	//Load Stats
+	hp = 3;
+	speed = 40;
+	attack = 10;
 
 	//Animation
 	state = GM_SPAWNING;
@@ -26,9 +31,12 @@ bool GreenMinion::Start()
 	animation = *App->anim_manager->GetAnimStruct(GREENMINION);
 
 	//Set Collision
-	offset_x = 0;
-	offset_y = 0;
-	collision_feet = nullptr;
+	offset_x = 8;
+	offset_y = 4;
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 10 }, COLLIDER_ENEMY, this);
+
+	//Spawn Timer
+	spawn_time.Start();
 
 	return true;
 }
@@ -41,7 +49,7 @@ bool GreenMinion::Update(float dt)
 		{
 		case GM_SPAWNING:
 		{
-			Movebyhit(dt);
+			Spawning();
 			break;
 		}
 		case GM_IDLE:
@@ -97,6 +105,16 @@ void GreenMinion::Draw()
 	}
 
 	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+}
+
+bool GreenMinion::Spawning()
+{
+	if (spawn_time.ReadSec() >= 0.7)
+	{
+		state = GM_WALKING;
+		anim_state = GM_WALKING;
+	}
+	return true;
 }
 
 bool GreenMinion::Idle()
