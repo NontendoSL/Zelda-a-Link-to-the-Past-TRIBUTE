@@ -51,9 +51,14 @@
     <file file="animation/SudowoodoAnimations.xml"/>
     
     <!--POKEMON COMBATS-->
-    <file file="animation/BlazikenAnimations.xml"/>
-    <file file="animation/SceptileAnimations.xml"/>
-    <file file="animation/SwampertAnimations.xml"/>
+    <file file="animation/BlazikenAnimations.xml"/> <!--1-->
+    <file file="animation/SceptileAnimations.xml"/> <!--2-->
+    <file file="animation/SwampertAnimations.xml"/> <!--3-->
+    <file file="animation/WalreinAnimations.xml"/> <!--4-->
+    <file file="animation/SalamanceAnimations.xml"/> <!--5-->
+    <file file="animation/ShiftryAnimations.xml"/> <!--6-->
+    <file file="animation/DusclopsAnimations.xml"/> <!--7-->
+    <file file="animation/GroudonAnimations.xml"/> <!--8-->
 
     <!--PARTICLES-->
 	  <file file="animation/AnimationsAndEffects.xml"/>
