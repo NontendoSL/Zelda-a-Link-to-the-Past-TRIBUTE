@@ -61,7 +61,6 @@ bool Shiftry::Start()
 bool Shiftry::Update(float dt)
 {
 	// STATE MACHINE ------------------
-	LOG("HP = %i", hp);
 	if (App->scene->gamestate == INGAME)
 	{
 		//pokemon controlled by player

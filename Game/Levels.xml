@@ -240,11 +240,12 @@
 
     <map n="11" file="EliteFour01.tmx">
       <camera follow="false"/>
+      <Link pos_x="160" pos_y="216"/>
       <vilagers>
         <vilager id="5" name="Sidney" rect_x="72" rect_y="104" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog="Hi, I'm Sidney, first member of the Elite Four. Get ready for my dark type moves. You won't see them comming!"/>
       </vilagers>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="3" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="3" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="19" pos_y="6" />
@@ -258,7 +259,7 @@
         <vilager id="6" name="Phoebe" rect_x="106" rect_y="21" rect_w="16" rect_h="19" pos_x="160" pos_y="136" dialog="I'm Phoebe, and I like scary things. Speaking about fear, I hope you've brought another pair of pants with you, 'cause you're about to get schooled!"/>
       </vilagers>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="19" pos_y="7" />
@@ -272,7 +273,7 @@
         <vilager id="7" name="Glacia" rect_x="14" rect_y="82" rect_w="16" rect_h="22" pos_x="160" pos_y="136" dialog="The name's Glacia, and I'm the third member of the Elite Four. My ice pokemon will freeze your soul!"/>
       </vilagers>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="55" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="55" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="19" pos_y="7" />
@@ -286,7 +287,7 @@
         <vilager id="8" name="Drake" rect_x="42" rect_y="21" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog="I'm Drake, Lord of Dragons and the last member of the Elite Four. Be ready to face the most powerful and honorable pokemon type there is!"/>
       </vilagers>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="81" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="81" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="19" pos_y="7" />
@@ -300,7 +301,7 @@
         <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="160" pos_y="136" dialog="..."/>
       </vilagers>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="21" pos_y="11" />
@@ -339,7 +340,7 @@
         <pokemon id="6" name="SHIFTRY" speed="1" cooldown="150" dir="left" hp="120" attack="5" special_attack="23" defense="5" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="3" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="3" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="17" pos_y="26" />
@@ -357,7 +358,7 @@
         <pokemon id="7" name="DUSCLOPS" speed="1" cooldown="150" dir="left" hp="250" attack="3" special_attack="12" defense="2" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="18" pos_y="26" />
@@ -373,7 +374,7 @@
         <pokemon id="4" name="WALREIN" speed="1" cooldown="150" dir="left" hp="700" attack="6" special_attack="21" defense="4" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="55" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="55" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
     </map>
 
@@ -383,7 +384,7 @@
         <pokemon id="5" name="SALAMANCE" speed="1" cooldown="150" dir="left" hp="400" attack="3" special_attack="12" defense="3" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="81" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="81" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="18" pos_y="25" />
@@ -399,7 +400,7 @@
         <pokemon id="8" name="GROUDON" speed="1" cooldown="150" dir="left" hp="69" attack="3" special_attack="12" defense="8" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
-        <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="63" rect_w="26" rect_h="20" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
         <edit pos_x="20" pos_y="30" />

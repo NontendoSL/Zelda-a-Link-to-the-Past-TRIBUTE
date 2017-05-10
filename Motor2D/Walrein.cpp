@@ -121,13 +121,13 @@ bool Walrein::Update(float dt)
 	ThrowSP();
 	}*/
 
-	if (CheckPlayerPos() < 50 && state == PC_WALKING)
+	if (CheckPlayerPos() < 100 && state == PC_WALKING)
 	{
 		OrientatePokeLink();
 		state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < 10 && (state == PC_WALKING || state == PC_CHASING))
+	if (CheckPlayerPos() < 20 && (state == PC_WALKING || state == PC_CHASING))
 	{
 		OrientatePokeLink();
 		/*state = PC_ATTACKING;
