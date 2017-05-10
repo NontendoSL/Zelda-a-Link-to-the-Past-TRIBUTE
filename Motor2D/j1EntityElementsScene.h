@@ -21,6 +21,8 @@ class BombContainer;
 class PokeTrainer;
 class BCTrooper;
 class Villager;
+class GreenMinion;
+class RedMinion;
 class Ganon;
 
 // ---------------------------------------------------
@@ -64,6 +66,8 @@ public:
 	void CreateBCTrooper(pugi::xml_node&);
 	void CreateGanon(pugi::xml_node&);
 	void CreateVillager(pugi::xml_node&);
+	void CreateGMinion(iPoint pos);
+	void CreateRMinion(iPoint pos);
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);

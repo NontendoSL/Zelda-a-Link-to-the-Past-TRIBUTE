@@ -293,13 +293,13 @@ void Ganon::Hit()
 void Ganon::Spawn()
 {
 	// TODO -> TRY what type of enemies to spawn: Pokemon will be a great idea
-	if (minions_spawned % 5 == 0)
+	if (minions_spawned % 5 == 0 && minions_spawned > 0)
 	{
-		//Spawn Red Minion
+		App->entity_elements->CreateRMinion({ 300, 200 });
 	}
 	else
 	{
-		//Spawn Green Minion
+		App->entity_elements->CreateGMinion({ 200, 200 });
 	}
 	minions_spawned++;
 }
