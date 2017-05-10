@@ -51,7 +51,7 @@ public:
 	j1Timer knockback_time;
 
 protected:
-	uint speed; //TODO JORDI
+	uint speed;
 };
 
 #endif // __J1CREATURE_H__
