@@ -40,6 +40,12 @@ public:
 	//Modify to active pokemon (only pokemons Link)
 	void PrepareToCombat(PokemonCombat* pokemon);
 
+	void ModifyPosition(pugi::xml_node&);
+
+	void CreateDynObject(iPoint pos, uint id, uint id_map);
+
+	int Getsize_elements();
+
 	//Create Functions 
 	PokemonCombat* CreatePokemon(pugi::xml_node&, uint id);
 	PokeTrainer* CreateTrainer(pugi::xml_node&, uint id);

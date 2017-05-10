@@ -84,9 +84,9 @@ bool CombatManager::Update(float dt)
 					else //pokemon_active_trainer == poke
 					{
 						App->scene->combat = false;
-						elementcombat.clear();
 						App->scene->switch_map = App->scene->last_map;
-						App->scene->pokecombat = nullptr;
+						App->scene->useTP = true;
+						App->scene->player->state_complet = true;
 					}
 
 				}
@@ -109,16 +109,25 @@ bool CombatManager::Update(float dt)
 bool CombatManager::PostUpdate()
 {
 	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green);
-
-	std::list<SceneElement*>::iterator item = elementcombat.begin();
-	while (item != elementcombat.end())
+	if (App->scene->combat)
 	{
-		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-		if (temp->active)
+		std::list<SceneElement*>::iterator item = elementcombat.begin();
+		while (item != elementcombat.end())
 		{
-			item._Ptr->_Myval->Draw();
+			if (item._Ptr->_Myval->type == DYNOBJECT)
+			{
+				item._Ptr->_Myval->Draw();
+			}
+			else
+			{
+				PokemonCombat* temp = (PokemonCombat*)item._Ptr->_Myval;
+				if (temp->active)
+				{
+					item._Ptr->_Myval->Draw();
+				}
+			}
+			item++;
 		}
-		item++;
 	}
 	return true;
 }
@@ -161,6 +170,38 @@ void CombatManager::PrepareToCombat(PokemonCombat* pokemon)
 		elementcombat.push_back(pokemon);
 		pokemon_active_link = (PokemonCombat*)elementcombat.back();
 	}
+}
+
+void CombatManager::ModifyPosition(pugi::xml_node& conf)
+{
+
+}
+
+void CombatManager::CreateDynObject(iPoint pos, uint id, uint id_map)
+{
+	DynamicObjects* element = new DynamicObjects();
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	config = LoadConfig(config_file);
+	bool stop_rearch = false;
+	LOG("Create DynObjects");
+	config = config.child("map_combat").child("map");
+	for (; stop_rearch == false; config = config.next_sibling())
+	{
+		if (config.attribute("n").as_int(0) == id_map)
+		{
+			element->Awake(config, id, pos);
+			element->Start();
+			elementcombat.push_back(element);
+			LOG("Created!!");
+			stop_rearch = true;
+		}
+	}
+}
+
+int CombatManager::Getsize_elements()
+{
+	return elementcombat.size();
 }
 
 PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
@@ -263,6 +304,7 @@ bool CombatManager::DeleteElements_combat()
 		elementcombat.erase(item);
 		item++;
 	}
+	elementcombat.clear();
 	return true;
 }
 

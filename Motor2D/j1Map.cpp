@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Scene.h"
+#include "CombatManager.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -500,30 +501,39 @@ void j1Map::DynObjectFromTiled(uint id_map)
 				tile_id >= data.tilesets[0]->firstgid + 10 && tile_id <= data.tilesets[0]->firstgid + 15)
 			{
 				if ((id_map == 3 && App->scene->player->bow != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
-					(id_map == 4 && App->scene->player->hook != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
-					(id_map == 5 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[0]->firstgid + 10))
+					(id_map == 7 && App->scene->player->hook != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
+					(id_map == 8 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[0]->firstgid + 10))
 				{
 					//DON'T CREATE AGAIN THE BIG CHEST TODO MED -> REMODELATE THIS METHOD!!!!
 				}
 				else
 				{
-					if (tile_id >= data.tilesets[0]->firstgid + 10)
+					if (App->scene->player->state_complet == false)
 					{
-						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[0]->firstgid - 5, id_map);
-						if (tile_id - data.tilesets[0]->firstgid - 5 == 6)
+						if (tile_id >= data.tilesets[0]->firstgid + 10)
 						{
-							EditCost(x, y, 0);
+							if (id_map > 16)
+							{
+								App->combatmanager->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[0]->firstgid - 5, id_map);
+							}
+							else
+							{
+								App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[0]->firstgid - 5, id_map);
+							}
+							if (tile_id - data.tilesets[0]->firstgid - 5 == 6)
+							{
+								EditCost(x, y, 0);
+							}
+							else
+								EditCost(x, y, data.tilesets[0]->firstgid + 1);
 						}
 						else
+						{
+							App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[0]->firstgid - 1, id_map);
 							EditCost(x, y, data.tilesets[0]->firstgid + 1);
-					}
-					else
-					{
-						App->entity_elements->CreateDynObject(iPoint(positionObject.x, positionObject.y), tile_id - data.tilesets[0]->firstgid - 1, id_map);
-						EditCost(x, y, data.tilesets[0]->firstgid + 1);
+						}
 					}
 				}
-
 			}
 			if (tile_id == teleport)
 			{
