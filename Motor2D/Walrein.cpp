@@ -119,13 +119,13 @@ bool Walrein::Update(float dt)
 	ThrowSP();
 	}*/
 
-	/*if (CheckPlayerPos() < 30 && state == PC_WALKING)
+	if (CheckPlayerPos() < 50 && state == PC_WALKING)
 	{
 		Orientate();
-		state = PC_CHASING;
+		//state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < 6 && (state == PC_WALKING || state == PC_CHASING))
+	/*if (CheckPlayerPos() < 10 && (state == PC_WALKING || state == PC_CHASING))
 	{
 		Orientate();
 		state = PC_ATTACKING;
@@ -423,7 +423,7 @@ bool Walrein::Chasing(float dt)
 	else
 	{
 		state = PC_CHASING;
-		anim_state = PC_CHASING;
+		anim_state = PC_WALKING;
 	}
 	return true;
 }
