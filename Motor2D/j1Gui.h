@@ -65,6 +65,8 @@ public:
 
 	const SDL_Texture* GetAtlas() const;
 
+	void OnGui(j1GuiEntity* element, GuiAction event);
+
 	// create img
 	Image* CreateImage(SDL_Rect rect, iPoint pos, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE, bool movable = true);
 	// create text

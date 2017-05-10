@@ -453,6 +453,60 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			update_return = false;
 		}
 	}
+	if (element->identifier == "pk_bag:CLOSE")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			App->gui->SetGui(POKEMON_HUD);
+		}
+	}
+	if (element->identifier == "pk_bag:BLAZIKEN")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			poke_bag->selecting_poke = false;
+			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
+			App->gui->SetFocus(poke_bag->GetFirst());
+		}
+	}
+	if (element->identifier == "pk_bag:SWAMPERT")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			poke_bag->selecting_poke = false;
+			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
+			App->gui->SetFocus(poke_bag->GetFirst());
+		}
+	}
+	if (element->identifier == "pk_bag:SCEPTILE")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			poke_bag->selecting_poke = false;
+			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
+			App->gui->SetFocus(poke_bag->GetFirst());
+		}
+	}
 }
 
 void j1Scene::CreateTeleports()

@@ -447,8 +447,6 @@ Button* MainMenu::GetElement(uint id)
 	return options[id];
 }
 
-
-
 void MainMenu::Select(bool next)
 {
 	for (int i = 0; i < options.size(); i++)
@@ -1502,7 +1500,7 @@ PokemonWorldMenu::~PokemonWorldMenu()
 PokemonWorldBag::PokemonWorldBag()
 {
 
-	for (int i = 0; i < App->gui->GetEntity("pokemon bag")->elements.size(); i++)
+	for (int i = 0; i < App->gui->GetEntity("pokemon bag")->elements.size()-3; i++)
 	{
 		if (App->gui->GetEntity("pokemon bag")->elements[i]->type == BUTTON)
 		{
@@ -1515,8 +1513,17 @@ PokemonWorldBag::PokemonWorldBag()
 		}
 		App->gui->GetEntity("pokemon bag")->elements[i]->parent = App->gui->GetEntity("pokemon bag");
 	}
+	bag_poke.push_back((Button*)App->gui->GetEntity("pk_bag:BLAZIKEN"));
+	bag_poke.push_back((Button*)App->gui->GetEntity("pk_bag:SWAMPERT"));
+	bag_poke.push_back((Button*)App->gui->GetEntity("pk_bag:SCEPTILE"));
 	bag_item[4]->amount = 1;
 	bag_item[4]->order = 0;
+
+	AddItem("pk_bag:DEF PROTEIN", true);
+	AddItem("pk_bag:HP UP", true);
+	AddItem("pk_bag:X ATTACK", true);
+	AddItem("pk_bag:CITRUS BERRY", true);
+
 }
 
 PokemonWorldBag::~PokemonWorldBag()
@@ -1526,7 +1533,7 @@ PokemonWorldBag::~PokemonWorldBag()
 
 void PokemonWorldBag::Input()
 {
-	if (active)
+	if (selecting_poke == false)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
 		{
@@ -1536,34 +1543,30 @@ void PokemonWorldBag::Input()
 		{
 			Select(false);
 		}
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+	}
+	else
+	{
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
 		{
-			AddItem("pk_bag:DEF PROTEIN", true);
-			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+			SelectPoke(true);
 		}
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
 		{
-			App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+			SelectPoke(false);
 		}
-		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-		{
-			AddItem("pk_bag:DEF PROTEIN", false);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
-		{
-			AddItem("pk_bag:CITRUS BERRY", true);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-		{
-			AddItem("pk_bag:CITRUS BERRY", false);
-		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+	{
+		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
+	{
+		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
 	}
 }
 
 void PokemonWorldBag::Select(bool down)
 {
-	if (empty == false)
-	{
 		//int picked_id = 0;
 		int number_pickeds = 0;
 		int picked_order_id = 0;
@@ -1626,14 +1629,51 @@ void PokemonWorldBag::Select(bool down)
 					return;
 			}*/
 		}
-	}
-
 }
 
-Button * PokemonWorldBag::GetFirst()
+void PokemonWorldBag::SelectPoke(bool right)
 {
-	active = true;
-	return bag_item[bag_item.size() - 1]->ui_button;
+	for (int i = 0; i < bag_poke.size(); i++)
+	{
+		if (App->gui->GetFocused() == bag_poke[i])
+		{
+			if (right)
+			{
+				if (i != bag_poke.size() - 1)
+				{
+					App->gui->SetFocus(bag_poke[i + 1]);
+					return;
+				}
+				else
+				{
+					App->gui->SetFocus(bag_poke[0]);
+					return;
+				}
+			}
+			else
+			{
+				if (i != 0)
+				{
+					App->gui->SetFocus(bag_poke[i - 1]);
+					return;
+				}
+				else
+				{
+					App->gui->SetFocus(bag_poke[bag_poke.size()-1]);
+					return;
+				}
+			}
+		}
+	}
+}
+
+Button * PokemonWorldBag::GetFirst(bool items)
+{
+	if (items)
+	{
+		return bag_item[bag_item.size() - 1]->ui_button;
+	}
+	return bag_poke[0];
 }
 
 void PokemonWorldBag::MoveIn(bool in)
@@ -1643,6 +1683,9 @@ void PokemonWorldBag::MoveIn(bool in)
 
 bool PokemonWorldBag::AddItem(const char* identifier, bool add) //ret false if cant add more items (MAX 3)
 {
+	if (identifier == "pk_bag:CLOSE")
+		return false;
+
 	for (int i = 0; i < bag_item.size(); i++)
 	{
 		if (bag_item[i]->ui_button->identifier == identifier)
@@ -1686,18 +1729,22 @@ bool PokemonWorldBag::AddItem(const char* identifier, bool add) //ret false if c
 
 void PokemonWorldBag::Insert(uint item_id) // TODO VERY VERY HIGH FOR GOLD (NOT FOR ALPHA) REDO THIS POSITION CALCULATION BCAUSE MOTHER OF GOD...
 {
-	bag_item[item_id]->ui_button->visible = true;
-	bag_item[item_id]->ui_button->elements[0]->visible = true;
-	bag_item[item_id]->ui_button->MoveInside(bag_item[bag_item.size() - 1]->ui_button->position);
-	bag_item[bag_item.size() - 1]->ui_button->MoveInside({ bag_item[bag_item.size() - 1]->ui_button->position.x,bag_item[bag_item.size() - 1]->ui_button->position.y + bag_item[bag_item.size() - 1]->ui_button->Hitbox.h });
-	bag_item[item_id]->order = 1;
-	for (int i = 0; i < bag_item.size(); i++)
+	if (item_id != bag_item.size() - 1)
 	{
-		if (bag_item[i]->order > 0 && bag_item[item_id] != bag_item[i])
+		bag_item[item_id]->ui_button->visible = true;
+		bag_item[item_id]->ui_button->elements[0]->visible = true;
+		bag_item[item_id]->ui_button->MoveInside(bag_item[bag_item.size() - 1]->ui_button->position);
+		bag_item[bag_item.size() - 1]->ui_button->MoveInside({ bag_item[bag_item.size() - 1]->ui_button->position.x,bag_item[bag_item.size() - 1]->ui_button->position.y + bag_item[bag_item.size() - 1]->ui_button->Hitbox.h });
+		bag_item[item_id]->order = 1;
+		for (int i = 0; i < bag_item.size(); i++)
 		{
-			bag_item[i]->order++;
+			if (bag_item[i]->order > 0 && bag_item[item_id] != bag_item[i])
+			{
+				bag_item[i]->order++;
+			}
 		}
 	}
+
 }
 
 void PokemonWorldBag::Remove(uint item_id)

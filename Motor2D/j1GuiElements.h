@@ -280,9 +280,10 @@ public:
 	~PokemonWorldBag();
 public:
 	void Input();
-	Button* GetFirst();
+	Button* GetFirst(bool items=true);
 	void MoveIn(bool in); // true for enter, false for out
 	void Select(bool down);
+	void SelectPoke(bool right);
 	bool AddItem(const char* identifier, bool add);
 	void Insert(uint item_id);
 	void Remove(uint item_id);
@@ -290,8 +291,10 @@ public:
 	void ShowItemInfo();
 private:
 	std::vector<BagItem*>bag_item;
-	bool empty = false;
+	std::vector<Button*>bag_poke;
 public:
-	bool active = false;
+	std::string selected_name;
+	bool selecting_poke = false;
+	//bool active = false;
 };
 #endif // __j1GUIELEMENTS_H__

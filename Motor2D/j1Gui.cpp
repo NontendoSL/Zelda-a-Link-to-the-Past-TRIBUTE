@@ -170,6 +170,63 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
+void j1Gui::OnGui(j1GuiEntity * element, GuiAction event)
+{
+	if (element->identifier == "pk_bag:DEF PROTEIN")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			App->scene->poke_bag->selecting_poke = true;
+			App->gui->SetFocus(App->scene->poke_bag->GetFirst(false));
+			App->scene->poke_bag->selected_name = element->identifier;
+		}
+	}
+	if (element->identifier == "pk_bag:HP UP")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			App->scene->poke_bag->selecting_poke = true;
+			App->gui->SetFocus(App->scene->poke_bag->GetFirst(false));
+			App->scene->poke_bag->selected_name = element->identifier;
+		}
+	}
+	if (element->identifier == "pk_bag:X ATTACK")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+			App->scene->poke_bag->selecting_poke = true;
+			App->gui->SetFocus(App->scene->poke_bag->GetFirst(false));
+			App->scene->poke_bag->selected_name = element->identifier;
+		}
+	}
+	if (element->identifier == "pk_bag:CITRUS BERRY")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+}
+
 void j1Gui::Erase(j1GuiEntity* to_delete)
 {
 	for (int i = 0; i < entities.size(); i++)
