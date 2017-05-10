@@ -23,6 +23,7 @@
 #include "Ganon.h"
 #include "GreenMinion.h"
 #include "RedMinion.h"
+#include "FireBat.h"
 
 
 j1EntityElementScene::j1EntityElementScene()
@@ -434,6 +435,13 @@ void j1EntityElementScene::CreateRMinion(iPoint pos)
 {
 	RedMinion* temp = new RedMinion();
 	temp->Start(pos);
+	elementscene.push_back(temp);
+}
+
+void j1EntityElementScene::CreateFireBat(iPoint* path)
+{
+	FireBat* temp = new FireBat();
+	temp->Start(path);
 	elementscene.push_back(temp);
 }
 

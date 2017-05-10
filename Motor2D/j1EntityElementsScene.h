@@ -24,6 +24,7 @@ class Villager;
 class GreenMinion;
 class RedMinion;
 class Ganon;
+class FireBat;
 
 // ---------------------------------------------------
 class j1EntityElementScene : public j1Module
@@ -68,6 +69,7 @@ public:
 	void CreateVillager(pugi::xml_node&);
 	void CreateGMinion(iPoint pos);
 	void CreateRMinion(iPoint pos);
+	void CreateFireBat(iPoint* path);
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);
@@ -79,6 +81,8 @@ public:
 	bool DeletePlayer(Player* player);
 	bool DeleteVilager(Villager* Vilager);
 	bool DeleteCreature(Creature* creature);
+
+	// TODO HIGH -> CREATE DELETE FUNCTIONS
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;
