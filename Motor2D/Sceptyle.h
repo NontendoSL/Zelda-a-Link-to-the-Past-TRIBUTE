@@ -45,6 +45,8 @@ public:
 
 	bool Attack();
 
+	void Stunned();
+
 	bool Movebyhit();
 
 private:

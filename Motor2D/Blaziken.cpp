@@ -36,6 +36,7 @@ bool Blaziken::Awake(pugi::xml_node &conf)
 	position.y = conf.attribute("pos_y").as_int(0);
 	active = conf.attribute("active").as_bool(false);
 	sp_damage = conf.attribute("special_attack").as_int(0);
+	defense = conf.attribute("defense").as_int(0);
 	return true;
 }
 
@@ -87,6 +88,11 @@ bool Blaziken::Update(float dt)
 		case PC_HIT:
 		{
 			Movebyhit();
+			break;
+		}
+		case PC_STUNNED:
+		{
+			Stunned();
 			break;
 		}
 		default:
@@ -182,7 +188,7 @@ bool Blaziken::Idle()
 			App->scene->pokecombat->cooldown = true;
 			state = PC_SPECIAL;
 			anim_state = PC_SPECIAL;
-			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+			current_animation = App->anim_manager->GetAnimation(anim_state, direction, BLAZIKEN);
 			current_animation->Reset();
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
 		}
@@ -192,7 +198,7 @@ bool Blaziken::Idle()
 	{
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+		current_animation = App->anim_manager->GetAnimation(anim_state, direction, BLAZIKEN);
 		current_animation->Reset();
 	}
 
@@ -222,7 +228,7 @@ bool Blaziken::Walking(float dt)
 			App->scene->pokecombat->cooldown = true;
 			state = PC_SPECIAL;
 			anim_state = PC_SPECIAL;
-			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+			current_animation = App->anim_manager->GetAnimation(anim_state, direction, BLAZIKEN);
 			current_animation->Reset();
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
 		}
@@ -232,7 +238,7 @@ bool Blaziken::Walking(float dt)
 	{
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+		current_animation = App->anim_manager->GetAnimation(anim_state, direction, BLAZIKEN);
 		current_animation->Reset();
 	}
 
@@ -378,6 +384,52 @@ bool Blaziken::Special_Attack()
 	}
 
 	return true;
+}
+
+void Blaziken::Stunned()
+{
+	if (hp <= 0)
+	{
+		state = PC_DYING;
+		anim_state = PC_DYING;
+	}
+	else
+	{
+		if (time_stunned.ReadSec() >= 1)
+		{
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
+		}
+
+		if (dir_hit == UP)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+			{
+				position.y -= 2;
+			}
+		}
+		else if (dir_hit == DOWN)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+			{
+				position.y += 2;
+			}
+		}
+		else if (dir_hit == LEFT)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+			{
+				position.x -= 2;
+			}
+		}
+		else if (dir_hit == RIGHT)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+			{
+				position.x += 2;
+			}
+		}
+	}
 }
 
 bool Blaziken::Movebyhit()

@@ -37,6 +37,7 @@ bool Groudon::Awake(pugi::xml_node &conf)
 	position.y = conf.attribute("pos_y").as_int(0);
 	active = conf.attribute("active").as_bool(false);
 	sp_damage = conf.attribute("special_attack").as_int(0);
+	defense = conf.attribute("defense").as_int(0);
 	return true;
 }
 
@@ -76,8 +77,9 @@ bool Groudon::Update(float dt)
 		}
 		case PC_CHASING:
 		{
-			Orientate();
+			OrientatePokeLink();
 			Chasing(dt);
+			break;
 		}
 		case PC_ATTACKING:
 		{
@@ -121,14 +123,17 @@ bool Groudon::Update(float dt)
 
 	if (CheckPlayerPos() < 30 && state == PC_WALKING)
 	{
-		Orientate();
+		OrientatePokeLink();
 		state = PC_CHASING;
 	}
 
 	if (CheckPlayerPos() < 6 && (state == PC_WALKING || state == PC_CHASING))
 	{
-		Orientate();
+		OrientatePokeLink();
 		state = PC_ATTACKING;
+		anim_state = PC_ATTACKING;
+		current_animation = App->anim_manager->GetAnimation(state, direction, GROUDON);
+		current_animation->Reset();
 	}
 
 	//Collision follow the player

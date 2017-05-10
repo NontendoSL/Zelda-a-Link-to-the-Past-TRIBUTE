@@ -43,6 +43,8 @@ public:
 
 	bool Movebyhit();
 
+	void Stunned();
+
 	void Special_Attack();
 	void ThrowSP();
 

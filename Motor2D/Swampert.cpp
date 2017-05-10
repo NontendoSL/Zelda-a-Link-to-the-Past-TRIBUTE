@@ -36,6 +36,7 @@ bool Swampert::Awake(pugi::xml_node &conf)
 	position.y = conf.attribute("pos_y").as_int(0);
 	sp_damage = conf.attribute("special_attack").as_int(0);
 	active = conf.attribute("active").as_bool(false);
+	defense = conf.attribute("defense").as_int(0);
 
 	return true;
 }
@@ -91,6 +92,11 @@ bool Swampert::Update(float dt)
 		case PC_HIT:
 		{
 			Movebyhit();
+			break;
+		}
+		case PC_STUNNED:
+		{
+			Stunned();
 			break;
 		}
 		default:
@@ -419,6 +425,53 @@ bool Swampert::Attack()
 		App->audio->PlayFx(10);
 	}
 	return true;
+}
+
+
+void Swampert::Stunned()
+{
+	if (hp <= 0)
+	{
+		state = PC_DYING;
+		anim_state = PC_DYING;
+	}
+	else
+	{
+		if (time_stunned.ReadSec() >= 1)
+		{
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
+		}
+
+		if (dir_hit == UP)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+			{
+				position.y -= 2;
+			}
+		}
+		else if (dir_hit == DOWN)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+			{
+				position.y += 2;
+			}
+		}
+		else if (dir_hit == LEFT)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+			{
+				position.x -= 2;
+			}
+		}
+		else if (dir_hit == RIGHT)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+			{
+				position.x += 2;
+			}
+		}
+	}
 }
 
 bool Swampert::Movebyhit()

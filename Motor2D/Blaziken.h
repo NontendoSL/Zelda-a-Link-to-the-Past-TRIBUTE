@@ -40,6 +40,8 @@ public:
 
 	bool Attack();
 
+	void Stunned();
+
 	bool Special_Attack();
 
 	void OnCollision(Collider*, Collider*);
