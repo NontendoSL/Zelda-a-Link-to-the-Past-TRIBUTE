@@ -37,6 +37,7 @@ bool Walrein::Awake(pugi::xml_node &conf)
 	position.y = conf.attribute("pos_y").as_int(0);
 	active = conf.attribute("active").as_bool(false);
 	sp_damage = conf.attribute("special_attack").as_int(0);
+	defense = conf.attribute("defense").as_int(0);
 	return true;
 }
 
@@ -76,8 +77,9 @@ bool Walrein::Update(float dt)
 		}
 		case PC_CHASING:
 		{
-			Orientate();
+			OrientatePokeLink();
 			Chasing(dt);
+			break;
 		}
 		case PC_ATTACKING:
 		{
@@ -121,15 +123,20 @@ bool Walrein::Update(float dt)
 
 	if (CheckPlayerPos() < 50 && state == PC_WALKING)
 	{
-		Orientate();
-		//state = PC_CHASING;
+		OrientatePokeLink();
+		state = PC_CHASING;
 	}
 
-	/*if (CheckPlayerPos() < 10 && (state == PC_WALKING || state == PC_CHASING))
+	if (CheckPlayerPos() < 10 && (state == PC_WALKING || state == PC_CHASING))
 	{
-		Orientate();
-		state = PC_ATTACKING;
-	}*/
+		OrientatePokeLink();
+		/*state = PC_ATTACKING;
+		anim_state = PC_ATTACKING;*/
+		state = PC_SPECIAL;
+		anim_state = PC_SPECIAL;
+		current_animation = App->anim_manager->GetAnimation(anim_state, direction, WALREIN);
+		current_animation->Reset();
+	}
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -183,15 +190,33 @@ void Walrein::OnCollision(Collider* c1, Collider* c2)
 			{
 				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
 				{
-					PokemonCombat* temp = (PokemonCombat*)c2->callback;
-					temp->knockback_time.Start();
-					temp->hp -= sp_damage;
-					getdamage = true;
-					App->scene->pokecombat->GetDamage(sp_damage, false);
-					temp->SetState(PC_HIT);
-					temp->SetAnimState(PC_HIT);
-					temp->dir_hit = c1->callback->direction;
-					temp->prev_position = temp->position;
+					num_hits++;
+					if (num_hits < 3)
+					{
+						PokemonCombat* temp = (PokemonCombat*)c2->callback;
+						temp->knockback_time.Start();
+						temp->hp -= sp_damage;
+						getdamage = true;
+						App->scene->pokecombat->GetDamage(sp_damage, false);
+						temp->SetState(PC_HIT);
+						temp->SetAnimState(PC_HIT);
+						temp->dir_hit = c1->callback->direction;
+						temp->prev_position = temp->position;
+					}
+					else
+					{
+						num_hits = 0;
+						PokemonCombat* temp = (PokemonCombat*)c2->callback;
+						temp->time_stunned.Start();
+						temp->hp -= sp_damage;
+						getdamage = true;
+						App->scene->pokecombat->GetDamage(sp_damage, false);
+						temp->SetState(PC_STUNNED);
+						temp->SetAnimState(PC_HIT);
+						temp->dir_hit = c1->callback->direction;
+						temp->prev_position = temp->position;
+					}
+
 				}
 
 				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
@@ -393,7 +418,43 @@ bool Walrein::Attack()
 
 void Walrein::Special_Attack()
 {
-
+	if (attacker)
+	{
+		if (current_animation->Finished())
+		{
+			App->collision->EraseCollider(sp_attack);
+			attacker = false;
+			current_animation->Reset();
+			current_animation = nullptr;
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
+			getdamage = false;
+		}
+	}
+	else
+	{
+		attacker = true;
+		if (direction == UP)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == RIGHT)
+		{
+			sp_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == DOWN)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == LEFT)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+		}
+	}
 }
 
 bool Walrein::Chasing(float dt)

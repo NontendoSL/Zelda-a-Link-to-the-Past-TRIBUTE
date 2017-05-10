@@ -5,6 +5,7 @@
 #include "NPC.h"
 #include "j1Window.h"
 #include "j1Collision.h"
+#include "CombatManager.h"
 
 enum PokemonCombatState { PC_IDLE = 0, PC_WALKING, PC_ATTACKING, PC_SPECIAL, PC_HIT, PC_DYING, PC_STATIC, PC_STUNNED, PC_CHASING };
 enum PokemonParticles { BUBBLE, LEAF };
@@ -36,6 +37,48 @@ public:
 		anim_state = a_state;
 	}
 
+	bool OrientatePokeLink()
+	{
+		iPoint pokemon = App->combatmanager->pokemon_active_link->position;
+
+		Direction prev_dir = direction;
+		if (abs(pokemon.x - position.x) < abs(pokemon.y - position.y))
+		{
+			if (pokemon.y > position.y)
+			{
+				direction = DOWN;
+			}
+
+			else
+			{
+				direction = UP;
+			}
+		}
+
+		else
+		{
+			if (pokemon.x < position.x)
+			{
+				direction = LEFT;
+			}
+
+			else
+			{
+				direction = RIGHT;
+			}
+		}
+
+		if (prev_dir == direction)
+		{
+			return false;
+		}
+
+		else
+		{
+			return true;
+		}
+	}
+
 public:
 
 	bool active = false;
@@ -59,6 +102,7 @@ public:
 
 	Collider* sp_attack = nullptr;
 	Collider* collision_attack = nullptr;
+	j1Timer time_stunned;
 
 protected:
 
@@ -69,8 +113,6 @@ protected:
 
 	bool attacker = false;
 	bool getdamage = false;
-
-	j1Timer time_wait;
 
 };
 
