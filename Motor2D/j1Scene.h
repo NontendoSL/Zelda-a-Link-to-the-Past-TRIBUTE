@@ -114,8 +114,11 @@ public:
 	bool ingame = false;
 	bool switch_menu = false;
 	bool inventory = false;
+
+	//id maps -------------------------------
 	int switch_map = 0;
 	int id_map = 0;
+	int last_map = 0;
 
 	bool notrepeatmusic;
 

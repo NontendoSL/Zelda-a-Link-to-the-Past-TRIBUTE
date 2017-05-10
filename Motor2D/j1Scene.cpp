@@ -803,6 +803,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			stop_rearch = true;
 		}
 	}
+	last_map = n;
 	return true;
 }
 

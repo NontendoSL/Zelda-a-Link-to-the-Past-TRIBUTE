@@ -6,7 +6,7 @@
 #include "j1Window.h"
 #include "j1Collision.h"
 
-enum PokemonCombatState { PC_IDLE = 0, PC_WALKING, PC_ATTACKING, PC_SPECIAL, PC_HIT, PC_DYING, PC_STATIC, PC_CHASING };
+enum PokemonCombatState { PC_IDLE = 0, PC_WALKING, PC_ATTACKING, PC_SPECIAL, PC_HIT, PC_DYING, PC_STATIC, PC_STUNNED, PC_CHASING };
 enum PokemonParticles { BUBBLE, LEAF };
 
 class PokemonCombat : public NPC
@@ -48,11 +48,15 @@ public:
 
 	//special attack
 	iPoint range; //.X shows max range, .Y shows distance moved
+	//special attack stats
 	iPoint sp_start;
 	bool sp_attacking = false;
 	int sp_direction = 0;
 	int sp_speed = 0;
 	uint sp_damage = 0;
+
+	uint defense = 0;
+
 	Collider* sp_attack = nullptr;
 	Collider* collision_attack = nullptr;
 
