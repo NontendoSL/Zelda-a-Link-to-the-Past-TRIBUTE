@@ -39,6 +39,7 @@
     <file file="animation/GanonAnimations.xml"/>
     <file file="animation/GreenMinion.xml"/>
     <file file="animation/RedMinion.xml"/>
+    <file file="animation/FireBat.xml"/>
     
     <!--WEAPONS-->
     <file file="animation/Hookshot.xml"/>
