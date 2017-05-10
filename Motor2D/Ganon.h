@@ -42,6 +42,8 @@ public:
 	// STATE MACHINE ----------------
 	void Idle();
 	void Walk(float dt);
+	bool Move(float dt);
+	void Reorientate();
 	void MeleeAttack();
 	void SpecialAttack();
 	void Flare();
@@ -76,7 +78,7 @@ private:
 	// ----------------------
 
 	//MOVEMENT VARIABLES ---
-
+	int canmove = 0;
 	// -------------------
 
 	//2ND PHASE VARIABLES ---

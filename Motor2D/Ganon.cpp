@@ -3,6 +3,7 @@
 #include "j1Collision.h"
 #include "j1AnimationManager.h"
 #include "j1Audio.h"
+#include "j1Player.h"
 
 Ganon::Ganon() :NPC()
 {
@@ -31,7 +32,7 @@ bool Ganon::Start()
 	phase = INITIAL;
 
 	//Set stats
-	speed = 10;
+	speed = 40;
 	hp = 100;
 
 	//Set Collision
@@ -77,8 +78,13 @@ bool Ganon::Update(float dt)
 		default:
 			break;
 		}
-		return true;
+
+		if (collision_feet != nullptr)
+		{
+			collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+		}
 	}
+	return true;
 }
 
 void Ganon::Draw()
@@ -103,7 +109,9 @@ bool Ganon::InitialUpdate(float dt)
 			break;
 
 		case G_WALKING:
+			Orientate();
 			Walk(dt);
+			Reorientate();
 			break;
 
 		case G_ATTACKING:
@@ -162,7 +170,9 @@ bool Ganon::RageUpdate(float dt)
 			break;
 
 		case G_WALKING:
+			Orientate();
 			Walk(dt);
+			Reorientate(); //Ganon only has 2 directions: UP & DOWN.
 			break;
 
 		case G_ATTACKING:
@@ -208,6 +218,66 @@ void Ganon::Idle()
 
 void Ganon::Walk(float dt)
 {
+	if (canmove % 2 == 0)
+	{
+		Move(dt);
+	}
+
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
+}
+
+bool Ganon::Move(float dt)
+{
+	if (direction == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= ceil(speed*dt);
+		}
+	}
+
+	else if (direction == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += ceil(speed*dt);
+		}
+	}
+
+	else if (direction == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= ceil(speed*dt);
+		}
+	}
+
+	else if (direction == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += ceil(speed*dt);
+		}
+	}
+
+	walking = true;
+	return true;
+}
+
+void Ganon::Reorientate()
+{
+	if (App->scene->player->position.y > position.y)
+	{
+		direction = DOWN;
+	}
+	else
+	{
+		direction = UP;
+	}
 }
 
 void Ganon::MeleeAttack()
@@ -226,9 +296,8 @@ void Ganon::MeleeAttack()
 		}
 		else if (direction == UP)
 		{
-			//collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 10, 48, 48 }, COLLIDER_GANON_FORK, this);
+			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 15, 48, 48 }, COLLIDER_GANON_FORK, this);
 		}
-
 	}
 
 	else
@@ -313,8 +382,8 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		//SWORD COLLISION
-		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
+		// SWORD COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_SWORD)
 		{
 			if (state != G_HIT && state != G_ATTACKING)
 			{
@@ -324,6 +393,17 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 				state = G_HIT;
 				anim_state = G_HIT;
 				LOG("HP:%i", hp);
+			}
+		}
+
+		// PLAYER COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER)
+		{
+			if (state != G_HIT && state != G_ATTACKING)
+			{
+				state = G_ATTACKING;
+				anim_state = G_MELEE;
+				StartAttack = true;
 			}
 		}
 	}

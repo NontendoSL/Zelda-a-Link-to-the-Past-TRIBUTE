@@ -55,24 +55,20 @@ bool Creature::GoTo(iPoint destination, int speed)
 	if (destination.x > position.x)
 	{
 		toMove.x = 1;
-		direction = RIGHT;
 	}
 	else if (destination.x < position.x)
 	{
 		toMove.x = -1;
-		direction = LEFT;
 	}
 
 	if (destination.y > position.y)
 	{
 		toMove.y = 1;
-		direction = DOWN;
 	}
 
 	else if (destination.y < position.y)
 	{
 		toMove.y = -1;
-		direction = UP;
 	}
 
 	if (toMove.IsZero())

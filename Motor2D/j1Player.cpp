@@ -303,6 +303,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c2->callback != nullptr)
 			{
+				// BREAKING OBJECTS -----------
 				if (c1->type == COLLIDER_SWORD && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "bigchest") //c2->callback->destruvtible == true
 				{
 					//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
@@ -321,9 +322,12 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 				}
 			}
+			// ------------------------------
 
+			// INTERACTING WITH OBJECTS ------------------
 			if (c1 == collision_interact && c2->type == COLLIDER_DYNOBJECT && c2->callback != nullptr)
 			{
+				// SIGNS INFO TEXT
 				if (c2->callback->name == "sign")
 				{
 					if (App->scene->gamestate == INGAME)
@@ -340,6 +344,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						}
 					}
 				}
+
+				// OPENING CHESTS
 				if (c2->callback->name == "chest" || c2->callback->name == "bigchest")
 				{
 					iPoint pos_dyn = App->map->WorldToMap(c2->callback->position.x, c2->callback->position.y);
@@ -354,6 +360,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 				}
 
+				// PICKING OBJECTS 
 				if (((DynamicObjects*)c2->callback)->pickable == true && ((DynamicObjects*)c2->callback)->GetState() == D_IDLE) //TO PICK VASES AND BUSHES
 				{
 					if (picked_object == nullptr) // Only carry one object.
@@ -382,8 +389,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
+			// --------------------------------------------------------
 
-
+			// OBTAINING ITEMS -------------------
 			if (c1 == collision_feet && c2->type == COLLIDER_ITEM && c2->callback != nullptr)
 			{
 				Item* temp = (Item*)c2->callback;
@@ -454,7 +462,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					App->entity_elements->DeleteItem((Item*)c2->callback);
 				}
 			}
+			// -----------------------
 			
+			// LINK HIT BY ENEMY -------------------
 			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY) //If green soldier attacks you
 			{
 				if (state != L_HIT && invincible_timer.ReadSec() >= 1)
@@ -481,7 +491,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
+			// --------------------------------------
 
+			// MAP TELEPORTING ---------------
 			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
 			{
 				if (canSwitchMap == false) // TODO LOW -> delete canSwitchMap
@@ -502,7 +514,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
+			// ---------------------
 
+			// NPC INTERACTING --------------
 			if (c1 == collision_interact && c2->type == COLLIDER_VILAGER && c2->callback != nullptr)
 			{
 				if (App->scene->gamestate == INGAME)
@@ -527,7 +541,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
+			// ----------------------
 
+			// TRAINER INTERACTING -------------
 			if (c1 == collision_interact && c2->type == COLLIDER_TRAINER && c2->callback != nullptr)
 			{
 				if (App->scene->gamestate == INGAME)
@@ -551,7 +567,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
+			// ------------
 
+			// BOMB HIT
 			if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
 			{
 				if (hp_hearts.y > 0)
@@ -559,6 +577,35 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					GetDamage();
 				}
 			}
+
+			// GANON HIT ----------------
+			if (c1 == collision_feet && c2->type == COLLIDER_GANON_FORK) //If green soldier attacks you
+			{
+				if (state != L_HIT && invincible_timer.ReadSec() >= 1)
+				{
+					App->audio->PlayFx(13);
+					state = L_HIT;
+					anim_state = L_IDLE;
+					hurt_timer.Start();
+					invincible_timer.Start();
+					hp_hearts.y--;
+					dir_hit = c2->callback->direction;
+					prev_position = position;
+
+					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
+					{
+						picked_object->SetState(D_DYING);
+						picked_object = nullptr;
+					}
+
+					if (interaction == true) // Delete interaction collider
+					{
+						collision_interact->to_delete = true;
+						interaction = false;
+					}
+				}
+			}
+			// -----------------------
 		}
 	}
 }
@@ -1060,11 +1107,13 @@ bool Player::Hooking()
 
 bool Player::Hit()
 {
+	// Delete collision attack
 	if (collision_attack != nullptr)
 	{
 		collision_attack->to_delete = true;
 	}
 
+	// Check if hit is finished
 	if (hurt_timer.ReadSec() >= 0.2)
 	{
 		state = L_IDLE;
