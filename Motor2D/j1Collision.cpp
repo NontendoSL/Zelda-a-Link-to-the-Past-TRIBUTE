@@ -22,6 +22,8 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_TRAINER] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_VILAGER] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_GANON_FORK] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_GMINION] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_RMINION] = true;
 
 	matrix[COLLIDER_BCTROOPER_MAZE][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_BCTROOPER][COLLIDER_SWORD] = true;
@@ -50,6 +52,9 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_GANON][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_GANON][COLLIDER_SWORD] = true;
+
+	matrix[COLLIDER_GMINION][COLLIDER_SWORD] = true;
+	matrix[COLLIDER_RMINION][COLLIDER_SWORD] = true;
 
 }
 j1Collision::~j1Collision() {}

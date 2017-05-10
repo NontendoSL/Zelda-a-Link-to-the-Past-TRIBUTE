@@ -113,6 +113,27 @@ void GreenMinion::Draw()
 	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 }
 
+void GreenMinion::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c1 != nullptr && c2 != nullptr)
+	{
+		//SWORD COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
+		{
+			if (state != GM_HIT)
+			{
+				App->audio->PlayFx(12);
+				knockback_time.Start();
+				hp--;
+				state = GM_HIT;
+				anim_state = GM_WALKING;
+				dir_hit = c2->callback->direction;
+				prev_position = position;
+			}
+		}
+	}
+}
+
 bool GreenMinion::Spawning()
 {
 	if (spawn_time.ReadSec() >= 0.7)

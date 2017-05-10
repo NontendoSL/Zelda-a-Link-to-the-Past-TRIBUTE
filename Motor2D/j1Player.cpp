@@ -465,7 +465,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			// -----------------------
 			
 			// LINK HIT BY ENEMY -------------------
-			if (c1 == collision_feet && c2->type == COLLIDER_ENEMY) //If green soldier attacks you
+			if (c1 == collision_feet && (c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_GMINION)) //If green soldier attacks you
 			{
 				if (state != L_HIT && invincible_timer.ReadSec() >= 1)
 				{
@@ -605,7 +605,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
-			// -----------------------
+			// -----------------------			
+
 		}
 	}
 }
