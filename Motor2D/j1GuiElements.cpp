@@ -1587,7 +1587,7 @@ void PokemonWorldBag::Select(bool down)
 					if (bag_item[i]->amount > 0 && bag_item[i]->order == picked_order_id - 1)
 					{
 						App->gui->SetFocus(bag_item[i]->ui_button);
-						//ShowItemInfo();
+						ShowItemInfo();
 						return;
 					}
 				}
@@ -1614,7 +1614,7 @@ void PokemonWorldBag::Select(bool down)
 					if (bag_item[i]->amount > 0 && bag_item[i]->order == picked_order_id + 1)
 					{
 						App->gui->SetFocus(bag_item[i]->ui_button);
-						//ShowItemInfo();
+						ShowItemInfo();
 						return;
 					}
 				}
@@ -1742,4 +1742,34 @@ void PokemonWorldBag::SetAmmount(uint item_id)
 		break;
 	}
 
+}
+
+void PokemonWorldBag::ShowItemInfo()
+{
+
+	if (App->gui->GetFocused()->identifier == "pk_bag:DEF PROTEIN")
+	{
+		((Text*)App->gui->GetEntity("bag_item_description"))->Write("Protein that raises a pokemon defense.");
+		App->gui->GetEntity("item png")->Hitbox.x = 175;
+	}
+	if (App->gui->GetFocused()->identifier == "pk_bag:HP UP")
+	{
+		((Text*)App->gui->GetEntity("bag_item_description"))->Write("Increases the maximum HP of a pokemon.");
+		App->gui->GetEntity("item png")->Hitbox.x = 197;
+	}
+	if (App->gui->GetFocused()->identifier == "pk_bag:X ATTACK")
+	{
+		((Text*)App->gui->GetEntity("bag_item_description"))->Write("Raises a pokemon basic attack damage.");
+		App->gui->GetEntity("item png")->Hitbox.x = 241;
+	}
+	if (App->gui->GetFocused()->identifier == "pk_bag:CITRUS BERRY")
+	{
+		((Text*)App->gui->GetEntity("bag_item_description"))->Write("This magical berry fully heals your pokemons at the end of each combat.");
+		App->gui->GetEntity("item png")->Hitbox.x = 219;
+	}
+	if (App->gui->GetFocused()->identifier == "pk_bag:CLOSE")
+	{
+		((Text*)App->gui->GetEntity("bag_item_description"))->Write("Closes the bag.");
+		App->gui->GetEntity("item png")->Hitbox.x = 153;
+	}
 }

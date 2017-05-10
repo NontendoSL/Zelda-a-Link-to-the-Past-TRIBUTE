@@ -423,6 +423,11 @@ void j1Gui::LoadEntities()
 								}
 							}
 						}
+						if (std::string(push.attribute("type").as_string("")) == "text")
+						{
+							Text* ins = App->gui->CreateText((FontName)push.attribute("font").as_int(0), push.attribute("string").as_string(""), push.attribute("length").as_int(0), { push.attribute("pos.x").as_int(0), push.attribute("pos.y").as_int(0) }, push.attribute("size").as_int(0), { push.attribute("rgb.x").as_int(255), push.attribute("rgb.y").as_int(255), push.attribute("rgb.w").as_int(255), push.attribute("rgb.h").as_int(255) }, true, push.attribute("identifier").as_string(""), actual);
+							inside_picker->elements.push_back(ins);
+						}
 					}
 				}
 			}

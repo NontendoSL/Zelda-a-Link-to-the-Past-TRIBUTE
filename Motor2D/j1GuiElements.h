@@ -287,6 +287,7 @@ public:
 	void Insert(uint item_id);
 	void Remove(uint item_id);
 	void SetAmmount(uint item_id);
+	void ShowItemInfo();
 private:
 	std::vector<BagItem*>bag_item;
 	bool empty = false;
