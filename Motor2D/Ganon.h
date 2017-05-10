@@ -4,6 +4,9 @@
 
 #include "NPC.h"
 
+#define NUM_POINTS_CIRCLE 90
+#define MULTI_P 4
+
 enum GanonPhase { SLEEP = 0, INITIAL, INVINCIBLE, RAGE, DEATH };
 enum GanonState { G_WALKING = 0, G_HIT, G_MELEE, G_SPECIAL_1/*Jump&Fire*/, G_SPECIAL_2/*FireBats*/, G_SHIELD, G_DYING, G_ATTACKING, G_IDLE};
 enum SpawnType { GREEN, RED };
@@ -46,7 +49,7 @@ public:
 	void Reorientate();
 	void MeleeAttack();
 	void SpecialAttack();
-	void Flare();
+	void FireBats();
 	void FireCircle();
 	void Hit();
 	void Spawn();
@@ -89,8 +92,10 @@ private:
 	// -----------------------
 
 	//3D PHASE VARIABLES -----
-	int flare = 0;
-	int circle = 0;
+	int radius = 10;
+	j1Timer firebat_spawn;
+	float firebat_rate = 0.4;
+	std::vector<iPoint> points;
 	GanonState special_attack = G_SPECIAL_1;
 	// -----------------------
 

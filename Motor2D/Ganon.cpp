@@ -154,6 +154,19 @@ bool Ganon::InvincibleUpdate(float dt)
 	else
 	{
 		phase = RAGE;
+		float factor = (float)M_PI / 180.0f * MULTI_P;
+		for (uint i = 0; i < NUM_POINTS_CIRCLE; ++i)
+		{
+			iPoint temp;
+			temp.x = (int)(position.x + radius * cos(i * factor));
+			temp.y = (int)(position.y + radius * sin(i * factor));
+			points.push_back(temp);
+		}
+
+		firebat_spawn.Start();
+
+		state = G_ATTACKING;
+		special_attack = G_SPECIAL_1;
 	}
 	return true;
 }
@@ -314,16 +327,11 @@ void Ganon::MeleeAttack()
 
 void Ganon::SpecialAttack()
 {
-	// ATTACK PATTERN: 2 flares, then 1 circle attack.
-	if (flare % 2 == 0 /*&& Animation finished*/)
-	{
-		special_attack = G_SPECIAL_2;
-	}
-
+	// ATTACK PATTERN: 1 Fire Bats, then 1 Jump and Circle attack.
 	switch (special_attack)
 	{
 	case G_SPECIAL_1:
-		Flare();
+		FireBats();
 		break;
 
 	case G_SPECIAL_2:
@@ -335,14 +343,23 @@ void Ganon::SpecialAttack()
 	}
 }
 
-void Ganon::Flare()
+void Ganon::FireBats()
 {
-	flare++;
+	if (firebat_spawn.ReadSec() >= firebat_rate)
+	{
+		//App->entity_elements->CreateFireBat(pos);
+	}
+
+	anim_state = G_SPECIAL_1;
+	special_attack = G_SPECIAL_2;
 }
 
 void Ganon::FireCircle()
 {
-	circle++;
+
+
+	anim_state = G_SPECIAL_2;
+	special_attack = G_SPECIAL_1;
 }
 
 void Ganon::Hit()
