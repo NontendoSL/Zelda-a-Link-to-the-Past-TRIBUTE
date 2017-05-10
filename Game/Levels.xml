@@ -255,6 +255,7 @@
 
     <map n="12" file="EliteFour02.tmx">
       <camera follow="false"/>
+      <Link pos_x="160" pos_y="216"/>
       <vilagers>
         <vilager id="6" name="Phoebe" rect_x="106" rect_y="21" rect_w="16" rect_h="19" pos_x="160" pos_y="136" dialog="I'm Phoebe, and I like scary things. Speaking about fear, I hope you've brought another pair of pants with you, 'cause you're about to get schooled!"/>
       </vilagers>
@@ -269,6 +270,7 @@
 
     <map n="13" file="EliteFour03.tmx">
       <camera follow="false"/>
+      <Link pos_x="160" pos_y="216"/>
       <vilagers>
         <vilager id="7" name="Glacia" rect_x="14" rect_y="82" rect_w="16" rect_h="22" pos_x="160" pos_y="136" dialog="The name's Glacia, and I'm the third member of the Elite Four. My ice pokemon will freeze your soul!"/>
       </vilagers>
@@ -283,6 +285,7 @@
 
     <map n="14" file="EliteFour04.tmx">
       <camera follow="false"/>
+      <Link pos_x="160" pos_y="216"/>
       <vilagers>
         <vilager id="8" name="Drake" rect_x="42" rect_y="21" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog="I'm Drake, Lord of Dragons and the last member of the Elite Four. Be ready to face the most powerful and honorable pokemon type there is!"/>
       </vilagers>
@@ -297,6 +300,7 @@
 
     <map n="15" file="RedCombatMap.tmx">
       <camera follow="false"/>
+      <Link pos_x="160" pos_y="216"/>
       <vilagers>
         <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="160" pos_y="136" dialog="..."/>
       </vilagers>
