@@ -437,12 +437,12 @@ void j1EntityElementScene::CreateRMinion(iPoint pos)
 	elementscene.push_back(temp);
 }
 
-void j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map, bool isSign, pugi::xml_node& conf)
+void j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map, bool isSign, pugi::xml_node& special_config)
 {
 	DynamicObjects* element = new DynamicObjects();
 	if (isSign)
 	{
-		element->Awake(conf, id, pos, isSign);
+		element->Awake(special_config, id, pos, isSign);
 		element->Start();
 		elementscene.push_back(element);
 	}

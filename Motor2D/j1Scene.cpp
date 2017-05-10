@@ -155,34 +155,34 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 3;
+				switch_map = 11;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 5;
+				switch_map = 18;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 3;
+				switch_map = 19;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 7;
+				switch_map = 20;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 18;
+				switch_map = 21;
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
 			{
 				useTP = true;
 				switch_map = 20;
@@ -198,7 +198,7 @@ bool j1Scene::Update(float dt)
 			{
 				useTP = true;
 				switch_map = 21;
-			}
+			}*/
 			// --------------------------------------------------------
 
 			if (switch_map > 0)
@@ -604,10 +604,6 @@ void j1Scene::SwitchMap(bool isTP)
 
 	if (App->fadetoblack->Checkfadetoblack() && now_switch)
 	{
-		if (switch_map >= FIRST_LEVEL_COMBAT) //id 17 = First level combat map
-		{
-			combat = true;
-		}
 		now_switch = false;
 		if (App->map->CleanUp())
 		{
@@ -618,7 +614,7 @@ void j1Scene::SwitchMap(bool isTP)
 				weapon_equiped = player->equiped_item->Wtype;
 			}
 			App->entity_elements->DelteElements();
-			if (combat)
+			if (App->combatmanager->Getsize_elements() > 0)
 			{
 				App->combatmanager->DeleteElements_combat();
 			}
@@ -638,6 +634,7 @@ void j1Scene::SwitchMap(bool isTP)
 			}
 			else
 			{
+				combat = true;
 				Load_Combat_map(switch_map);
 			}
 			if (switch_map == 4 && notrepeatmusic)
@@ -722,7 +719,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 				temp_item = temp_item.next_sibling();
 			}
 
-			//DynObjects - ONLY SING
+			//DynObjects - ¡¡ONLY SING!!
 			for (pugi::xml_node dynobject = temp.child("dynobjects").child("dynobject"); dynobject != NULL; dynobject = dynobject.next_sibling())
 			{
 				if (dynobject.attribute("id").as_int(1) == 1)
@@ -764,6 +761,17 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			for (pugi::xml_node vilager = temp.child("vilagers").child("vilager"); vilager != NULL; vilager = vilager.next_sibling())
 			{
 				App->entity_elements->CreateVillager(vilager);
+			}
+
+			//EditCost (Only in EliteFour)
+			if (player->state_complet == true)
+			{
+				App->gui->SetGui(ZELDA_HUD);
+				for (pugi::xml_node editcost = temp.child("editcost").child("edit"); editcost != NULL; editcost = editcost.next_sibling())
+				{
+					App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), 0);
+				}
+				player->state_complet = false;
 			}
 
 			//Camera position
@@ -865,6 +873,13 @@ bool j1Scene::Load_Combat_map(int n)
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);
+
+
+			//Edit Cost
+			for (pugi::xml_node editcost = temp.child("editcost").child("edit"); editcost != NULL; editcost = editcost.next_sibling())
+			{
+				App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), App->map->data.tilesets[0]->firstgid + 1);
+			}
 
 			//Load UI (?)
 			stop_rearch = true;

@@ -137,8 +137,8 @@ public:
 	//provisional app close and game loop
 	bool update_return = true;
 	bool first_loop = true;
-private:
 	bool useTP = false;
+private:
 	uint volume = 120;
 
 };
