@@ -82,6 +82,7 @@
     <ClCompile Include="CombatManager.cpp" />
     <ClCompile Include="CutsceneManager.cpp" />
     <ClCompile Include="Dusclops.cpp" />
+    <ClCompile Include="FireBat.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Ganon.cpp" />
     <ClCompile Include="Geodude.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="CombatManager.h" />
     <ClInclude Include="CutsceneManager.h" />
     <ClInclude Include="Dusclops.h" />
+    <ClInclude Include="FireBat.h" />
     <ClInclude Include="Ganon.h" />
     <ClInclude Include="Geodude.h" />
     <ClInclude Include="Golem.h" />

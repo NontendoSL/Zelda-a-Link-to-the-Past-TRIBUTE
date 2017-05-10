@@ -18,6 +18,7 @@ enum AnimationElement
 	GANON,
 	GREENMINION,
 	REDMINION,
+	FIREBAT,
 	//WEAPONS ---------
 	HOOKSHOT,
 	BOMB,
