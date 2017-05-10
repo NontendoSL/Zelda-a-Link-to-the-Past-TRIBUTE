@@ -50,6 +50,7 @@ private:
 	AnimationStruct animation;
 	SDL_Rect anim_rect;
 	iPoint pivot;
+	Animation explosion_anim;
 	// ---------------------------------
 
 	//MOVEMENT VARIABLES ---

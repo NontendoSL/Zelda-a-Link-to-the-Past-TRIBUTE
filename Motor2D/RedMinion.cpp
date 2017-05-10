@@ -30,6 +30,7 @@ bool RedMinion::Start(iPoint pos)
 	state = RM_SPAWNING;
 	anim_state = RM_WALKING;
 	animation = *App->anim_manager->GetAnimStruct(REDMINION);
+	explosion_anim = *App->anim_manager->GetAnimation(1, DOWN, BOMB);
 
 	//Set Collision
 	offset_x = 8;
