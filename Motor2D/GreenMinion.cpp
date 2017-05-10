@@ -34,7 +34,7 @@ bool GreenMinion::Start(iPoint pos)
 	//Set Collision
 	offset_x = 8;
 	offset_y = 4;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 10 }, COLLIDER_GMINION, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 17 }, COLLIDER_GMINION, this);
 
 	//Spawn Timer
 	spawn_time.Start();
@@ -79,6 +79,10 @@ bool GreenMinion::Update(float dt)
 			break;
 		}
 		}
+	}
+	if (collision_feet != nullptr)
+	{
+		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	}
 	return true;
 }

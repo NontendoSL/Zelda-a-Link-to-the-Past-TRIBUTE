@@ -81,7 +81,7 @@ private:
 
 	//2ND PHASE VARIABLES ---
 	j1Timer spawn_timer;
-	int spawn_rate = 0;
+	int spawn_rate = 2;
 	int minions_killed = 0;
 	int minions_spawned = 0;
 	// -----------------------

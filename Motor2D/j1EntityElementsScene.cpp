@@ -21,6 +21,8 @@
 #include "j1Weapon.h"
 #include "Villager.h"
 #include "Ganon.h"
+#include "GreenMinion.h"
+#include "RedMinion.h"
 
 
 j1EntityElementScene::j1EntityElementScene()
@@ -418,6 +420,20 @@ void j1EntityElementScene::CreateVillager(pugi::xml_node& conf)
 	Villager* temp = new Villager();
 	temp->Awake(conf);
 	temp->Start();
+	elementscene.push_back(temp);
+}
+
+void j1EntityElementScene::CreateGMinion(iPoint pos)
+{
+	GreenMinion* temp = new GreenMinion();
+	temp->Start(pos);
+	elementscene.push_back(temp);
+}
+
+void j1EntityElementScene::CreateRMinion(iPoint pos)
+{
+	RedMinion* temp = new RedMinion();
+	temp->Start(pos);
 	elementscene.push_back(temp);
 }
 
