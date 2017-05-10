@@ -192,7 +192,7 @@ void CombatManager::CreateDynObject(iPoint pos, uint id, uint id_map)
 		{
 			element->Awake(config, id, pos);
 			element->Start();
-			elementcombat.push_back(element);
+			elementcombat.push_front(element);
 			LOG("Created!!");
 			stop_rearch = true;
 		}
