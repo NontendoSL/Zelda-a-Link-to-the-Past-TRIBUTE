@@ -179,7 +179,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 19;
+				switch_map = 18;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)

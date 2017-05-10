@@ -59,6 +59,7 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
+	int hp_max = 0;
 	//bool drawThrowSP = false; **Only the special attack is launch.**
 
 };

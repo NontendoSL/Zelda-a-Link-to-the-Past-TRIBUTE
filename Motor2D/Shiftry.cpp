@@ -54,12 +54,14 @@ bool Shiftry::Start()
 	reset_distance = false;
 	sp_attacking = false;
 	reset_run = true;
+	hp_max = hp;
 	return true;
 }
 
 bool Shiftry::Update(float dt)
 {
 	// STATE MACHINE ------------------
+	LOG("HP = %i", hp);
 	if (App->scene->gamestate == INGAME)
 	{
 		//pokemon controlled by player
@@ -136,38 +138,26 @@ bool Shiftry::Update(float dt)
 		current_animation->Reset();
 	}
 
+	if (hp <= hp_max / 2)
+	{
+		state = PC_SPECIAL;
+		anim_state = PC_SPECIAL;
+		current_animation = App->anim_manager->GetAnimation(state, direction, SHIFTRY);
+		current_animation->Reset();
+	}
+
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+	{
+		hp -= 10;
+	}
 	return true;
 }
 
 void Shiftry::Draw()
 {
-	/*if (drawThrowSP)  **Only the special attack is launch.**
-	{
-	if (sp_attack != nullptr)
-	{
-	switch (sp_direction)
-	{
-	case 0:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
-	sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
-	break;
-	case 1:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
-	sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
-	break;
-	case 2:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
-	sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
-	break;
-	case 3:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
-	sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
-	break;
-	}
-	}
-	}*/
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, SHIFTRY);
 }
 
@@ -391,14 +381,15 @@ bool Shiftry::Attack()
 	return true;
 }
 
-/*void Dusclops::ThrowSP() **Only the special attack is launch.**
-{
-
-}*/
 
 void Shiftry::Special_Attack()
 {
-
+	hp += 1;
+	if(hp == hp_max)
+	{
+		state = PC_IDLE;
+		anim_state = PC_IDLE;
+	}
 }
 
 bool Shiftry::Chasing(float dt)

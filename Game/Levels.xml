@@ -312,10 +312,10 @@
       </trainer>
     </map>
 
-    <map n="18" file="EliteFour01.tmx">
+    <map n="18" file="EliteFour03.tmx">
       <camera follow="false"/>
       <trainer id="1" name="Sidney" active="false" pos_x="0" pos_y="0" file="textures/PokemonCharacters.png">
-        <pokemon id="6" name="SHIFTRY" speed="1" cooldown="150" dir="left" hp="130" attack="5" special_attack="23" defense="5" pos_x="208" pos_y="136" active="true"/>
+        <pokemon id="6" name="SHIFTRY" speed="1" cooldown="150" dir="left" hp="120" attack="5" special_attack="23" defense="5" pos_x="208" pos_y="136" active="true"/>
       </trainer>
     </map>
 
