@@ -70,12 +70,25 @@ bool CombatManager::Update(float dt)
 			{
 				if (poke->hp <= 0)
 				{
-					poke->collision_feet->to_delete = true;
-					poke->collision_attack->to_delete = true;
-					poke->sp_attack->to_delete = true;
-					elementcombat.erase(item);
-					pokemon_order++;
-					change_pokemon();
+					if (pokemon_active_link == poke)
+					{
+						poke->collision_feet->to_delete = true;
+						if (poke->collision_attack != nullptr)
+							poke->collision_attack->to_delete = true;
+						if (poke->sp_attack != nullptr)
+							poke->sp_attack->to_delete = true;
+						elementcombat.erase(item);
+						pokemon_order++;
+						change_pokemon();
+					}
+					else //pokemon_active_trainer == poke
+					{
+						App->scene->combat = false;
+						elementcombat.clear();
+						App->scene->switch_map = App->scene->last_map;
+						App->scene->pokecombat = nullptr;
+					}
+
 				}
 				else
 				{
@@ -85,7 +98,10 @@ bool CombatManager::Update(float dt)
 			item++;
 		}
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	{
+		pokemon_active_trainer->hp -= 1000;
+	}
 
 	return true;
 }
