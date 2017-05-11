@@ -412,6 +412,7 @@ void Ganon::FireBats()
 
 void Ganon::ResetFireBats()
 {
+	radius = 40;
 	firebats_dead = 0;
 	num_firebats = 0;
 	time_to_create = 0;
@@ -424,6 +425,7 @@ void Ganon::StartJump()
 	jump_origin = position;
 	jump_dest = App->scene->player->position;
 	jump_timer.Start();
+	num_jumps++;
 }
 
 void Ganon::FireJump()
@@ -433,13 +435,25 @@ void Ganon::FireJump()
 		DoJump();
 	}
 
-	else
+	else if(num_jumps < max_jumps)
 	{
 		StartJump();
 	}
 
-	anim_state = G_SPECIAL_1;
-	special_attack = G_SPECIAL_1;
+	else
+	{
+		ResetJump();
+		float factor = (float)M_PI / 180.0f * MULTI_P;
+		for (uint i = 0; i < NUM_POINTS_CIRCLE; ++i)
+		{
+			points[i].x = (int)(position.x + radius * cos(i * factor));
+			points[i].y = (int)(position.y + radius * sin(i * factor));
+		}
+
+		state = G_ATTACKING;
+		anim_state = G_SPECIAL_2;
+		special_attack = G_SPECIAL_2;
+	}
 }
 
 void Ganon::DoJump()
@@ -453,6 +467,11 @@ void Ganon::DoJump()
 	// LINEAR
 	position.x = jump_origin.x + (jump_dest.x - jump_origin.x) * jump_time;
 	//position.y = jump_origin.y + (jump_dest.y - jump_origin.y) * jump_time;
+}
+
+void Ganon::ResetJump()
+{
+	num_jumps = 0;
 }
 
 void Ganon::Hit()

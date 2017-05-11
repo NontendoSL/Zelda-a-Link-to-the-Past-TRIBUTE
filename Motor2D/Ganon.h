@@ -54,6 +54,7 @@ public:
 	void StartJump();
 	void FireJump();
 	void DoJump();
+	void ResetJump();
 	void Hit();
 	void Spawn();
 	// -----------------------------
@@ -118,6 +119,8 @@ private:
 	float jump_time;
 	iPoint jump_origin;
 	iPoint jump_dest;
+	int num_jumps = 0;
+	int max_jumps = 3;
 	// -----------------------
 
 	bool test = true;
