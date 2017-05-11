@@ -923,7 +923,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			//EditCost (Only in EliteFour)
 			if (player->state_complet == true)
 			{
-				App->gui->SetGui(ZELDA_HUD);
+				App->gui->SetGui(POKEMON_HUD);
 				for (pugi::xml_node editcost = temp.child("editcost").child("edit"); editcost != NULL; editcost = editcost.next_sibling())
 				{
 					App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), 0);
