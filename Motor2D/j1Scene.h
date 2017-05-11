@@ -119,6 +119,7 @@ public:
 	int switch_map = 0;
 	int id_map = 0;
 	int last_map = 0;
+	int combat_map_id = 0;
 
 	bool notrepeatmusic;
 

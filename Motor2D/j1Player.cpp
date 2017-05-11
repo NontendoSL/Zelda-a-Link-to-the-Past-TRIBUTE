@@ -533,6 +533,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						else
 							c2->callback->direction = LEFT;
 						Villager* villager = (Villager*)c2->callback;
+						App->scene->combat_map_id = villager->switch_map;
 						dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
 						collision_interact->to_delete = true;
 						interaction = false;

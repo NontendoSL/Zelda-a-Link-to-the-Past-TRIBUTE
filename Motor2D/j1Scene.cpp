@@ -123,17 +123,21 @@ bool j1Scene::Update(float dt)
 				}
 			}
 			
-			if (goPokemon && player->dialog != nullptr)
+			if (/*goPokemon && */player->dialog != nullptr)
 			{
 				dialog_inmapZelda = true;
 			}
 
 			if (dialog_inmapZelda && player->dialog == nullptr)
 			{
-				switch_map = 7;
-				useTP = true;
-				dialog_inmapZelda = false;
-				goPokemon = false;
+				if (combat_map_id != 0)
+				{
+					switch_map = combat_map_id;
+					combat_map_id = 0;
+					useTP = true;
+					dialog_inmapZelda = false;
+					goPokemon = false;
+				}
 			}
 
 			// Change Volume Music -------------------------------------

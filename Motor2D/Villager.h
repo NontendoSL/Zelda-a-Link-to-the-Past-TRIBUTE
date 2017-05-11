@@ -35,6 +35,7 @@ public:
 
 	std::string GetDialog();
 
+	int switch_map = 0;
 
 private:
 	VillagerState state = V_IDLE;
@@ -42,7 +43,6 @@ private:
 	//Item* drop;
 	bool stunned = false;
 	bool active = false;
-	int switch_map = 0;
 	SDL_Rect rect;
 	std::string dialog;
 
