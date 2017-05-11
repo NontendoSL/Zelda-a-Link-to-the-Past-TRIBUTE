@@ -128,6 +128,9 @@ public:
 	j1Timer invincible_timer;
 	j1Timer hurt_timer;
 
+	//Current release test
+	bool sword_equiped = false;
+
 private:
 
 	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)
@@ -156,8 +159,7 @@ private:
 
 	Animation* current_animation = nullptr;
 
-	//Current release test
-	bool sword_equiped = true;
+
 };
 
 

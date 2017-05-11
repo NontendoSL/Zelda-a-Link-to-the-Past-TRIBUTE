@@ -259,12 +259,12 @@ void j1App::FinishUpdate()
 	static char title[256];
 	if (App->scene->ingame == true)
 	{
-		sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i ZELDA A LINK TO POKEMON WORK",
+		sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i ZELDA A LINK TO POKEMON WORLD",
 			avg_fps, last_frame_ms, frames_on_last_update);
 	}
 	else
 	{
-		sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i ZELDA A LINK TO POKEMON WORK",
+		sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i ZELDA A LINK TO POKEMON WORLD",
 			avg_fps, last_frame_ms, frames_on_last_update);
 	}
 	App->win->SetTitle(title);

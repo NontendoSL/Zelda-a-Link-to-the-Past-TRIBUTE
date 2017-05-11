@@ -194,6 +194,7 @@ bool j1Scene::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 			{
+				player->sword_equiped = true;
 				useTP = true;
 				switch_map = 16;
 			}
