@@ -111,7 +111,10 @@ bool FireBat::Update(float dt)
 		//------------------------------
 	}
 
-	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+	if (collision_feet != nullptr)
+	{
+		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+	}
 
 	return true;
 }

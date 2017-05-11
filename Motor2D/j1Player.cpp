@@ -493,6 +493,54 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 			// --------------------------------------
 
+			// LINK HIT BY firebat -------------------
+			if (c1 == collision_feet && c2->type == COLLIDER_FIREBAT) //If green soldier attacks you
+			{
+				if (state != L_HIT && invincible_timer.ReadSec() >= 0.5)
+				{
+					App->audio->PlayFx(13);
+					state = L_HIT;
+					anim_state = L_IDLE;
+					hurt_timer.Start();
+					invincible_timer.Start();
+					hp_hearts.y--;
+
+					//Knockback ---------
+					if (direction == UP)
+					{
+						dir_hit = DOWN;
+					}
+					else if (direction == DOWN)
+					{
+						dir_hit = UP;
+					}
+					else if (direction == LEFT)
+					{
+						dir_hit = RIGHT;
+					}
+					else
+					{
+						dir_hit = LEFT;
+					}
+					// ---------------
+
+					prev_position = position;
+
+					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
+					{
+						picked_object->SetState(D_DYING);
+						picked_object = nullptr;
+					}
+
+					if (interaction == true)
+					{
+						collision_interact->to_delete = true;
+						interaction = false;
+					}
+				}
+			}
+			// --------------------------------------
+
 			// MAP TELEPORTING ---------------
 			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
 			{
