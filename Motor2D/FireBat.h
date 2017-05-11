@@ -23,6 +23,8 @@ public:
 
 	void Fly();
 
+	bool Die();
+
 private:
 
 	//POSITION & MOVEMENT VARIABLES ---

@@ -50,7 +50,10 @@ public:
 	void MeleeAttack();
 	void SpecialAttack();
 	void FireBats();
-	void FireCircle();
+	void ResetFireBats();
+	void StartJump();
+	void FireJump();
+	void DoJump();
 	void Hit();
 	void Spawn();
 	// -----------------------------
@@ -70,7 +73,8 @@ public:
 
 	bool start_augment = false;
 	bool start_awake = false;
-
+	int num_firebats = 0;
+	int firebats_dead = 0;
 
 private:
 	GanonState state = G_WALKING;
@@ -96,7 +100,6 @@ private:
 	j1Timer spawn_timer;
 	int spawn_rate = 2;
 	int max_spawns = 6;
-	int num_firebats = 0;
 	int minions_killed = 0;
 	int minions_spawned = 0;
 	// -----------------------
@@ -110,6 +113,11 @@ private:
 	std::vector<iPoint> points;
 	int augment_radius = 2;
 	GanonState special_attack = G_SPECIAL_1;
+
+	j1Timer jump_timer;
+	float jump_time;
+	iPoint jump_origin;
+	iPoint jump_dest;
 	// -----------------------
 
 	bool test = true;

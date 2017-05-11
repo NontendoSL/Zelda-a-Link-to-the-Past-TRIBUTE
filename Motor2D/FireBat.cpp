@@ -35,7 +35,7 @@ bool FireBat::Start()
 	//Set Collision
 	offset_x = 2;
 	offset_y = 2;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 4, 4 }, COLLIDER_GMINION, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 4, 4 }, COLLIDER_FIREBAT, this);
 
 	//Spawn Timer
 	spawn_time.Start();
@@ -86,8 +86,7 @@ bool FireBat::Update(float dt)
 	{
 		if (animation.anim[anim_state].South_action.Finished())
 		{
-			//to_delete = true;
-			collision_feet->to_delete = true;
+			Die();
 		}
 	}
 	}
@@ -121,7 +120,7 @@ void FireBat::Draw()
 void FireBat::Fly()
 {
 	time = fly_timer.ReadSec();
-	time *= 1.2;
+	time *= 1.5;
 	// QUADRATIC
 	//position.x = (1 - time) * (1 - time)*origin.x + 2 * time * (1 - time) * (origin.x + 5) + time * time * dest.x;
 	//position.y = (1 - time) * (1 - time)*origin.y + 2 * time * (1 - time) * (origin.y + 5) + time * time * dest.y;
@@ -130,4 +129,14 @@ void FireBat::Fly()
 	position.x = origin.x + (dest.x - origin.x) * time;
 	position.y = origin.y + (dest.y - origin.y) * time;
 
+}
+
+bool FireBat::Die()
+{
+	to_delete = true;
+	if (App->entity_elements->ganon != nullptr)
+	{
+		App->entity_elements->ganon->firebats_dead++;
+	}
+	return true;
 }

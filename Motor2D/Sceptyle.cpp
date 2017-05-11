@@ -45,6 +45,7 @@ bool Sceptyle::Start()
 	anim_state = PC_IDLE;
 	scale = App->win->GetScale();
 	offset_x = 7;
+	offset_y = 17;
 	timetoplay = SDL_GetTicks();
 	movable = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);

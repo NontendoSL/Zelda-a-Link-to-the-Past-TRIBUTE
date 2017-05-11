@@ -73,10 +73,12 @@ void j1Map::Draw(bool floor_2)
 		if (layer->properties.Get("NoDraw_2") != 0 && navigation_map_2 == false)
 			continue;
 
-		int marge = Checkpositions();
-		for(int y = pos_camera.y; y < pos_camera.y + win_size.y + marge; ++y)
+		iPoint marge = Checkpositions();
+
+
+		for(int y = pos_camera.y; y < pos_camera.y + win_size.y + marge.y; ++y)
 		{
-			for(int x = pos_camera.x; x < pos_camera.x + win_size.x + marge; ++x)
+			for(int x = pos_camera.x; x < pos_camera.x + win_size.x + marge.x; ++x)
 			{
 				int tile_id = layer->Get(x, y);
 				if(tile_id > 0)
@@ -93,9 +95,9 @@ void j1Map::Draw(bool floor_2)
 	}
 }
 
-int j1Map::Checkpositions()
+iPoint j1Map::Checkpositions()
 {
-	int ret = 0;
+	iPoint ret = { 0, 0 };
 	int scale = App->win->GetScale();
 	pos_camera = WorldToMap(-(App->render->camera.x / scale), -(App->render->camera.y / scale));
 	win_size = WorldToMap(App->win->GetWidth() / scale, App->win->GetHeight() / scale);
@@ -114,7 +116,7 @@ int j1Map::Checkpositions()
 	}
 	else
 	{
-		ret = 1;
+		ret.x = 1;
 	}
 	if (win_size.y > data.height)
 	{
@@ -122,7 +124,7 @@ int j1Map::Checkpositions()
 	}
 	else
 	{
-		ret = 1;
+		ret.y = 1;
 	}
 
 	return ret;

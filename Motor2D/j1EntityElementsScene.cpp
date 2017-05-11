@@ -335,8 +335,6 @@ bool j1EntityElementScene::DeleteCreature(Creature* creature)
 }
 
 
-
-
 void j1EntityElementScene::CreateItem(uint id, iPoint position)
 {
 	Item* element = new Item();

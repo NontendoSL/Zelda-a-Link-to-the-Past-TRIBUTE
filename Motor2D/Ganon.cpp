@@ -348,7 +348,7 @@ void Ganon::SpecialAttack()
 	switch (special_attack)
 	{
 	case G_SPECIAL_1:
-		FireCircle();
+		FireJump();
 		break;
 	case G_SPECIAL_2:
 		FireBats();
@@ -397,12 +397,62 @@ void Ganon::FireBats()
 		augment_radius++;
 	}
 	// -----------------------------------------------------
+
+	// All FireBats are dead ---------
+	if (firebats_dead >= max_spawns)
+	{
+		ResetFireBats();
+		StartJump();
+		state = G_ATTACKING;
+		anim_state = G_SPECIAL_1;
+		special_attack = G_SPECIAL_1;
+	}
+	//--------------------------------
 }
 
-void Ganon::FireCircle()
+void Ganon::ResetFireBats()
 {
-	anim_state = G_SPECIAL_2;
+	firebats_dead = 0;
+	num_firebats = 0;
+	time_to_create = 0;
+	start_awake = false;
+	start_augment = false;
+}
+
+void Ganon::StartJump()
+{
+	jump_origin = position;
+	jump_dest = App->scene->player->position;
+	jump_timer.Start();
+}
+
+void Ganon::FireJump()
+{
+	if (position.DistanceTo(jump_dest) >= 5)
+	{
+		DoJump();
+	}
+
+	else
+	{
+		StartJump();
+	}
+
+	anim_state = G_SPECIAL_1;
 	special_attack = G_SPECIAL_1;
+}
+
+void Ganon::DoJump()
+{
+	jump_time = jump_timer.ReadSec();
+	//jump_time *= 1.5;
+	// QUADRATIC
+	//position.x = (1 - jump_time) * (1 - jump_time)*jump_origin.x + 2 * jump_time * (1 - jump_time) * (jump_origin.x + 5) + jump_time * jump_time * jump_dest.x;
+	position.y = (1 - jump_time) * (1 - jump_time)*jump_origin.y + 2 * jump_time * (1 - jump_time) * (jump_origin.y - 50) + jump_time * jump_time * jump_dest.y;
+
+	// LINEAR
+	position.x = jump_origin.x + (jump_dest.x - jump_origin.x) * jump_time;
+	//position.y = jump_origin.y + (jump_dest.y - jump_origin.y) * jump_time;
 }
 
 void Ganon::Hit()
@@ -421,7 +471,7 @@ void Ganon::Hit()
 
 void Ganon::Spawn()
 {
-	// TODO -> TRY what type of enemies to spawn: Pokemon will be a great idea
+	// TODO -> TRY what type of enemies to spawn
 	if (minions_spawned % 5 == 0 && minions_spawned > 0)
 	{
 		App->entity_elements->CreateRMinion({ 300, 200 });
