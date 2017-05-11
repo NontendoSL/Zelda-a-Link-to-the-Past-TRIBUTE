@@ -536,6 +536,14 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			if (poke_bag->AddItem("pk_bag:DEF PROTEIN", true))
+			{
+				poke_shop->PopText(" PROTEIN PURCHASED");
+			}
+			else
+			{
+				poke_shop->PopText("MAXIMUM PROTEINS REACHED");
+			}
 		}
 	}
 	if (element->identifier == "pcshop:BUTTON2")
@@ -547,6 +555,14 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			if (poke_bag->AddItem("pk_bag:HP UP", true))
+			{
+				poke_shop->PopText("   HP UP PURCHASED");
+			}
+			else
+			{
+				poke_shop->PopText("MAXIMUM HP UP REACHED");
+			}
 		}
 	}
 	if (element->identifier == "pcshop:BUTTON3")
@@ -558,6 +574,14 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			if (poke_bag->AddItem("pk_bag:X ATTACK", true))
+			{
+				poke_shop->PopText(" X ATTACK PURCHASED");
+			}
+			else
+			{
+				poke_shop->PopText("MAXIMUM X ATTACK REACHED");
+			}
 		}
 	}
 }

@@ -312,12 +312,14 @@ class PokemonWorldShop :public j1GuiEntity
 public:
 	PokemonWorldShop();
 	~PokemonWorldShop();
-public:
+public: //TODO HIGHH-> SET THAT WHEN WE BUY THE 3RD ITEM, LOCK THE NEXT PURCHASES (USE THE 3 ITEMS AND BUY THE SAME 3 AGAIN)
+	void Update(j1GuiEntity* focus);
 	void Input();
 	Button* GetFirst();
 	void Select(bool right); //true for right, false for left
+	void PopText(const char* text);
 private:
 	std::vector<Button*>shop_item;
-
+	uint text_timer = 0;
 };
 #endif // __j1GUIELEMENTS_H__

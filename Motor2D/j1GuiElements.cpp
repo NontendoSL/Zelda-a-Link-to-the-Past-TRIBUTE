@@ -1468,6 +1468,7 @@ PokemonWorldMenu::PokemonWorldMenu()
 	{
 		menu_opt.push_back((Button*)bg_poke->elements[i]);
 	}
+
 }
 
 void PokemonWorldMenu::Input()
@@ -1586,10 +1587,10 @@ PokemonWorldBag::PokemonWorldBag()
 	bag_item[4]->amount = 1;
 	bag_item[4]->order = 0;
 
-	AddItem("pk_bag:DEF PROTEIN", true);
-	AddItem("pk_bag:HP UP", true);
-	AddItem("pk_bag:X ATTACK", true);
-	AddItem("pk_bag:CITRUS BERRY", true);
+	//AddItem("pk_bag:DEF PROTEIN", true);
+	//AddItem("pk_bag:HP UP", true);
+	//AddItem("pk_bag:X ATTACK", true);
+	//AddItem("pk_bag:CITRUS BERRY", true);
 
 }
 
@@ -1893,6 +1894,7 @@ void PokemonWorldBag::ShowItemInfo()
 
 PokemonWorldShop::PokemonWorldShop()
 {
+	belong = POKEMON_SHOP;
 	shop_item.push_back((Button*)App->gui->GetEntity("pcshop:BUTTON1"));
 	shop_item.push_back((Button*)App->gui->GetEntity("pcshop:BUTTON2"));
 	shop_item.push_back((Button*)App->gui->GetEntity("pcshop:BUTTON3"));
@@ -1901,6 +1903,14 @@ PokemonWorldShop::PokemonWorldShop()
 PokemonWorldShop::~PokemonWorldShop()
 {
 
+}
+
+void PokemonWorldShop::Update(j1GuiEntity * focus)
+{
+	if (text_timer + 1400 < SDL_GetTicks())
+	{
+		((Text*)App->gui->GetEntity("item bought text"))->Write("WELCOME TO THE SHOP");
+	}
 }
 
 void PokemonWorldShop::Input()
@@ -1968,4 +1978,10 @@ void PokemonWorldShop::Select(bool right)
 			}
 		}
 	}
+}
+
+void PokemonWorldShop::PopText(const char * text)
+{
+	((Text*)App->gui->GetEntity("item bought text"))->Write(text);
+	text_timer = SDL_GetTicks();
 }
