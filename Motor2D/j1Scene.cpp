@@ -243,7 +243,7 @@ bool j1Scene::Update(float dt)
 			}
 			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 			{
-				App->gui->SetGui(POKEMON_BAG);
+				App->gui->SetGui(POKEMON_SHOP);
 			}
 			//-------------------------------------------------------
 			// TP LEVEL
@@ -554,6 +554,7 @@ void j1Scene::LoadUi()
 	poke_hud = App->gui->CreatePokemonWorldHud();
 	poke_menu = App->gui->CreatePokemonWorldMenu();
 	poke_bag = App->gui->CreatePokemonWorldBag();
+	poke_shop = App->gui->CreatePokemonWorldShop();
 	float win_marge = (App->win->GetWidth() - App->gui->GetEntity("pokemon bag")->Hitbox.w*App->win->GetScale()) / 4;
 	App->gui->GetEntity("pokemon bag")->position.x += win_marge;
 	float h_marge = (App->win->GetHeight() - App->gui->GetEntity("pokemon bag")->Hitbox.h*App->win->GetScale()) / 4;

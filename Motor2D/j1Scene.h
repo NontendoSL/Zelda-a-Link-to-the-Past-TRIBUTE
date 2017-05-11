@@ -21,6 +21,7 @@ class PokemonCombatHud;
 class PokemonWorldHud;
 class PokemonWorldMenu;
 class PokemonWorldBag;
+class PokemonWorldShop;
 
 class Player;
 class Item;
@@ -104,6 +105,7 @@ public:
 	PokemonWorldHud* poke_hud = nullptr;
 	PokemonWorldMenu* poke_menu = nullptr;
 	PokemonWorldBag* poke_bag = nullptr;
+	PokemonWorldShop* poke_shop = nullptr;
 	Player* player = nullptr;
 	PokeTrainer* poketrainer = nullptr;
 

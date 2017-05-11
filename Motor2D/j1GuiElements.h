@@ -245,6 +245,8 @@ public:
 	bool selecting = false;
 };
 
+//---------------------------------------
+
 class PokemonWorldMenu :public j1GuiEntity
 {
 public:
@@ -260,6 +262,8 @@ private:
 public:
 	//bool active = false;
 };
+
+//---------------------------------------
 
 struct BagItem
 {
@@ -296,5 +300,21 @@ public:
 	std::string selected_name;
 	bool selecting_poke = false;
 	//bool active = false;
+};
+
+//---------------------------------------
+
+class PokemonWorldShop :public j1GuiEntity
+{
+public:
+	PokemonWorldShop();
+	~PokemonWorldShop();
+public:
+	void Input();
+	Button* GetFirst();
+	void Select(bool right); //true for right, false for left
+private:
+	std::vector<Button*>shop_item;
+
 };
 #endif // __j1GUIELEMENTS_H__

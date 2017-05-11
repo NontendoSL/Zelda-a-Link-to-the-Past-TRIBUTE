@@ -1495,6 +1495,7 @@ PokemonWorldMenu::~PokemonWorldMenu()
 {
 
 }
+
 // Entity Elements ---------------------------------------------------
 
 PokemonWorldBag::PokemonWorldBag()
@@ -1818,5 +1819,82 @@ void PokemonWorldBag::ShowItemInfo()
 	{
 		((Text*)App->gui->GetEntity("bag_item_description"))->Write("Closes the bag.");
 		App->gui->GetEntity("item png")->Hitbox.x = 153;
+	}
+}
+
+//---------------------------------------
+
+
+PokemonWorldShop::PokemonWorldShop()
+{
+	shop_item.push_back((Button*)App->gui->GetEntity("pcshop:BUTTON1"));
+	shop_item.push_back((Button*)App->gui->GetEntity("pcshop:BUTTON2"));
+	shop_item.push_back((Button*)App->gui->GetEntity("pcshop:BUTTON3"));
+}
+
+PokemonWorldShop::~PokemonWorldShop()
+{
+
+}
+
+void PokemonWorldShop::Input()
+{
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+	{
+		Select(true);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+	{
+		Select(false);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+	{
+		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
+	{
+		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
+	}
+
+}
+
+Button * PokemonWorldShop::GetFirst()
+{
+	return shop_item[0];
+}
+
+void PokemonWorldShop::Select(bool right)
+{
+	for (int i = 0; i < shop_item.size(); i++)
+	{
+		if (shop_item[i] == App->gui->GetFocused())
+		{
+			if (right)
+			{
+				if (i != shop_item.size() - 1)
+				{
+					App->gui->SetFocus(shop_item[i + 1]);
+					return;
+				}
+				else
+				{
+					App->gui->SetFocus(shop_item[0]);
+					return;
+				}
+			}
+			else
+			{
+				if (i != 0)
+				{
+					App->gui->SetFocus(shop_item[i - 1]);
+					return;
+				}
+				else
+				{
+					App->gui->SetFocus(shop_item[shop_item.size() - 1]);
+					return;
+				}
+			}
+		}
 	}
 }
