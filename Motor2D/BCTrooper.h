@@ -67,8 +67,17 @@ private:
 	SDL_Texture* texture = nullptr;
 	std::vector<iPoint> points;
 	iPoint bole;
+	iPoint bole_2;
+	iPoint bole_3;
+	iPoint bole_4;
 	int pos_in_vect = 1;
+	int pos_in_vect_2 = 22;
+	int pos_in_vect_3 = 44;
+	int pos_in_vect_4 = 66;
 	int radius = 10;
+	int radius_2 = 10;
+	int radius_3 = 10;
+	int radius_4 = 10;
 	int speed_bole = 1;
 	int save_speed = 0;
 	int canmove = 0;

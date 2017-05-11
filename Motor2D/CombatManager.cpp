@@ -97,12 +97,11 @@ bool CombatManager::Update(float dt)
 			}
 			item++;
 		}
+		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+		{
+			pokemon_active_trainer->hp -= 1000;
+		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
-	{
-		pokemon_active_trainer->hp -= 1000;
-	}
-
 	return true;
 }
 
