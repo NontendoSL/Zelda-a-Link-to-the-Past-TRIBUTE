@@ -46,10 +46,10 @@ bool Salamance::Start()
 	state = PC_IDLE;
 	anim_state = PC_IDLE;
 	scale = App->win->GetScale();
-	offset_x = 7;
-	offset_y = 17;
+	offset_x = 13;
+	offset_y = 21;
 	timetoplay = SDL_GetTicks();
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKECOMBAT, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 26, 19 }, COLLIDER_POKECOMBAT, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	sp_attacking = false;
