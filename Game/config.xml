@@ -60,6 +60,7 @@
     <file file="animation/ShiftryAnimations.xml"/> <!--6-->
     <file file="animation/DusclopsAnimations.xml"/> <!--7-->
     <file file="animation/GroudonAnimations.xml"/> <!--8-->
+    <file file="animation/TrainingDollAnimations.xml"/> <!--9-->
 
     <!--PARTICLES-->
 	  <file file="animation/AnimationsAndEffects.xml"/>

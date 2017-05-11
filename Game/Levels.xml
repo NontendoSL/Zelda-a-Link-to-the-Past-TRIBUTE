@@ -36,6 +36,7 @@
     <pokemon id="6" name="SHIFTRY" speed="" cooldown="" dir="" hp="" attack="" special_attack="" defense="" pos_x="" pos_y="" active=""/>
     <pokemon id="7" name="DUSCLOPS" speed="" cooldown="" dir="" hp="" attack="" special_attack="" defense="" pos_x="" pos_y="" active=""/>
     <pokemon id="8" name="GROUDON" speed="" cooldown="" dir="" hp="" attack="" special_attack="" defense="" pos_x="" pos_y="" active=""/>
+    <pokemon id="9" name="TRAININGDOLL" speed="" cooldown="" dir="" hp="" attack="" special_attack="" defense="" pos_x="" pos_y="" active=""/>
   </pokemons>
   
   <!--DYNOBJECTS INFORMATION (not use, only information)-->
