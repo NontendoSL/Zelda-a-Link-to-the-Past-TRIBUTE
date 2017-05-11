@@ -304,7 +304,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			if (c2->callback != nullptr)
 			{
 				// BREAKING OBJECTS -----------
-				if (c1->type == COLLIDER_SWORD && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "door" && c2->callback->name != "bigchest") //c2->callback->destruvtible == true
+				if (c1->type == COLLIDER_SWORD && c2->type == COLLIDER_DYNOBJECT && c2->callback->name != "chest" && c2->callback->name != "sign" && c2->callback->name != "bigchest") //c2->callback->destruvtible == true
 				{
 					//srand(time(NULL)); 		int canDrop = rand() % 5 + 1;
 
