@@ -124,6 +124,7 @@ private:
 	int num_jumps = 0;
 	int max_jumps = 3;
 	bool jump_finished = false;
+	j1Timer explosion_timer;
 	// -----------------------
 
 	bool test = true;

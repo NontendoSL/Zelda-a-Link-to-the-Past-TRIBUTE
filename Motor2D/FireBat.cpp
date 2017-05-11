@@ -33,9 +33,9 @@ bool FireBat::Start()
 	animation = *App->anim_manager->GetAnimStruct(FIREBAT);
 
 	//Set Collision
-	offset_x = 2;
-	offset_y = 2;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 4, 4 }, COLLIDER_FIREBAT, this);
+	offset_x = 3;
+	offset_y = 3;
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 6, 6 }, COLLIDER_FIREBAT, this);
 
 	//Spawn Timer
 	spawn_time.Start();
@@ -66,6 +66,13 @@ bool FireBat::Update(float dt)
 			fly_timer.Start();
 			state = B_FLYING;
 			anim_state = B_FLYING;
+
+			//Modify collider ----------
+			offset_x = 13;
+			offset_y = 5;
+			collision_feet->rect.w = 25;
+			collision_feet->rect.h = 9;
+			//--------------------------
 		}
 		break;
 	}
@@ -104,7 +111,7 @@ bool FireBat::Update(float dt)
 		//------------------------------
 	}
 
-	collision_feet->SetPos(position.x, position.y);
+	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 
 	return true;
 }

@@ -191,6 +191,11 @@ bool Ganon::RageUpdate(float dt)
 		new_fire_bat = 30;
 	}
 
+	if (collision_attack != nullptr && explosion_timer.ReadSec() >= 0.2)
+	{
+		collision_attack->to_delete = true;
+	}
+
 	//Until Ganon is alive.
 	if (hp > 0)
 	{
@@ -245,6 +250,7 @@ bool Ganon::DeathUpdate(float dt)
 
 void Ganon::Idle()
 {
+
 }
 
 void Ganon::Walk(float dt)
@@ -323,11 +329,11 @@ void Ganon::MeleeAttack()
 		//Set Attack Collider
 		if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 10, 48, 48 }, COLLIDER_GANON_FORK, this);
+			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 10, 48, 48 }, COLLIDER_GANON_ATTACK, this);
 		}
 		else if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 15, 48, 48 }, COLLIDER_GANON_FORK, this);
+			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 15, 48, 48 }, COLLIDER_GANON_ATTACK, this);
 		}
 	}
 
@@ -454,7 +460,10 @@ void Ganon::FireJump()
 	// THIRD JUMP ----------
 	else if (num_jumps == max_jumps && jump_finished == true)
 	{
-		ResetJump();
+		//Set Attack Collider ---------------
+		collision_attack = App->collision->AddCollider({ position.x - offset_x - 12, position.y - offset_y - 20, 60, 60 }, COLLIDER_GANON_ATTACK, this);
+		//----------------------------
+
 		App->particlemanager->CreateExplosion_Particle(nullptr, nullptr, position, SDL_Rect{ 0, 4, 2, 0 }, CIRCLE, iPoint(10, 10), iPoint(10, 2), fPoint(60, 60), P_RANDOM, 22);
 
 		float factor = (float)M_PI / 180.0f * MULTI_P;
@@ -469,8 +478,10 @@ void Ganon::FireJump()
 		special_attack = G_SPECIAL_2;
 
 		Reorientate();
+		ResetJump();
+		explosion_timer.Start();
 	}
-	// -------------------------
+	// -----------------------------
 }
 
 void Ganon::DoJump()

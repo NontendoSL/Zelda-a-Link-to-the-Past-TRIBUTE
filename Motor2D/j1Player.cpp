@@ -580,7 +580,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 
 			// GANON HIT ----------------
-			if (c1 == collision_feet && c2->type == COLLIDER_GANON_FORK) //If green soldier attacks you
+			if (c1 == collision_feet && c2->type == COLLIDER_GANON_ATTACK) //If green soldier attacks you
 			{
 				if (state != L_HIT && invincible_timer.ReadSec() >= 1)
 				{
