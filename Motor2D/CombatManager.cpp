@@ -423,6 +423,18 @@ PokemonCombat* CombatManager::change_pokemon()//true Link - false Brendan
 	return nullptr;
 }
 
+void CombatManager::Kill(bool trainer)
+{
+	if (trainer)
+	{
+		pokemon_active_link->hp = 0;
+	}
+	else
+	{
+		pokemon_active_trainer->hp = 0;
+	}
+}
+
 
 // ---------------------------------------------
 pugi::xml_node CombatManager::LoadConfig(pugi::xml_document& config_file) const

@@ -907,7 +907,7 @@ ZeldaMenu::~ZeldaMenu()
 
 PokemonCombatHud::PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 {
-
+	belong = POKEMON_COMBAT;
 	int hotfix = App->win->GetHeight() / App->win->GetScale();
 	//hp bar left
 	hp1 = (Image*)App->gui->GetEntity("left hp");
@@ -994,107 +994,6 @@ void PokemonCombatHud::LoadNewPokemon(PokemonCombat* pokemon, bool trainer) //tr
 
 			sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
 			poke_hp_Brendan->Write(buffer);
-		}
-	}
-	else
-	{
-		//FINAL COMBAT
-		if (trainer) //LOSE
-		{
-			if (App->scene->player->gameover == nullptr)
-			{
-				App->scene->player->gameover = App->gui->CreateImage({ 525,235,320,240 }, { 0,0 }, "lose");
-			}
-			else
-			{
-				App->scene->player->gameover->visible = true;
-			}
-			App->scene->switch_map = 6;
-			//OpenClose(false);
-			//App->scene->start_menu->OpenClose(true);
-			//App->scene->hud->OpenClose(true);
-			if (App->scene->player->score - 250 > 0)
-			{
-				App->scene->player->score -= 250;
-			}
-		}
-		else//VICTORY
-		{
-			int divider = 1;
-			if (App->scene->player->winover != nullptr)
-			{
-				divider = 2;
-			}
-			switch (num_pokemons.x)
-			{
-			case 3:
-				App->scene->player->score += (500 / divider);
-				break;
-			case 2:
-				App->scene->player->score += (250 / divider);
-				break;
-			case 1:
-				App->scene->player->score += (125 / divider);
-				break;
-			}
-			if (App->scene->player->winover == nullptr || App->scene->player->winover->identifier == "lose") //first loop win
-			{
-				App->scene->player->winover = App->gui->CreateImage({ 1,481,320,240 }, { 0,0 }, "win");
-				App->scene->player->winover->elements.push_back(App->gui->CreateText(POKE1, "LINK", 10, { 72,74 }, 40, { 38,38,38,255 }));
-				App->scene->player->winover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(App->scene->player->gems) + " RP").c_str(), 10, { 81,106 }, 40, { 38,38,38,255 }));
-				int minutes = App->scene->player->game_timer.ReadSec() / 60;
-				int sec = App->scene->player->game_timer.ReadSec() - minutes * 60;
-				if (sec < 10)
-					sec = 10;
-				App->scene->player->winover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(minutes) + ":" + std::to_string(sec)).c_str(), 10, { 106,127 }, 40, { 38,38,38,255 }));
-				App->scene->player->score += App->scene->player->gems * 5;
-				if (App->scene->player->score - App->scene->player->game_timer.ReadSec() > 0)
-				{
-					App->scene->player->score -= App->scene->player->game_timer.ReadSec();
-				}
-				App->scene->player->winover->elements.push_back(App->gui->CreateText(POKE1, std::string(std::to_string(App->scene->player->score)).c_str(), 10, { 83,149 }, 40, { 128,0,0,255 }));
-
-				App->scene->switch_map = 1;
-				App->scene->gamestate = INMENU;
-				//App->scene->pokecombat->OpenClose(false);
-				App->scene->player->Unequip();
-				App->entity_elements->DelteWeapons();
-				App->scene->player->hook = nullptr;
-				App->scene->player->bombmanager = nullptr;
-				App->scene->start_menu->ResetInventory();
-			}
-			else if (App->scene->player->winover->identifier == "win" && App->scene->player->winover->visible == false) //second loop win
-			{
-				App->scene->player->winover->visible = true;
-				Text* item = (Text*)App->scene->player->winover->elements[1];
-				item->Write(std::string(std::to_string(App->scene->player->gems) + " RP").c_str());
-				item = (Text*)App->scene->player->winover->elements[2];
-				int minutes = App->scene->player->game_timer.ReadSec() / 60;
-				int sec = App->scene->player->game_timer.ReadSec() - minutes * 60;
-				if (sec < 10)
-					sec = 10;
-				item->Write(std::string(std::to_string(minutes) + ":" + std::to_string(sec)).c_str());
-				App->scene->player->score += App->scene->player->gems * 5;
-				if (App->scene->player->score - App->scene->player->game_timer.ReadSec() > 0)
-				{
-					App->scene->player->score -= App->scene->player->game_timer.ReadSec();
-				}
-				item = (Text*)App->scene->player->winover->elements[3];
-				item->Write(std::string(std::to_string(App->scene->player->score)).c_str());
-				App->scene->switch_map = 1;
-				App->scene->gamestate = INMENU;
-				//App->scene->pokecombat->OpenClose(false);
-				for (int i = 0; i < App->scene->player->winover->elements.size(); i++)
-				{
-					App->scene->player->winover->elements[i]->visible = true;
-				}
-				App->scene->player->Unequip();
-				App->entity_elements->DelteWeapons();
-				App->scene->player->hook = nullptr;
-				App->scene->player->bombmanager = nullptr;
-				App->scene->start_menu->ResetInventory();
-
-			}
 		}
 	}
 
@@ -1191,12 +1090,16 @@ void PokemonCombatHud::Update(j1GuiEntity* focused)
 		if (hpbar_pLink.y <= 0)
 		{
 			num_pokemons.x--;
+			App->combatmanager->Kill(true);
 			LoadNewPokemon(App->combatmanager->change_pokemon(), true);
+
+			//App->combatmanager->
 		}
 		else if (hpbar_pBrendan.y <= 0)
 		{
-			num_pokemons.y--; //TODO HIGH MARC
-			LoadNewPokemon(App->combatmanager->change_pokemon(), false);
+			//num_pokemons.y--; //TODO HIGH MARC
+			//LoadNewPokemon(App->combatmanager->change_pokemon(), false);
+			App->combatmanager->Kill(false);
 		}
 		if (hpbar_pLink.x>0)
 			hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)

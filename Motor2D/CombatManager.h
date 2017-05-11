@@ -64,6 +64,8 @@ public:
 	//Change Pokemon
 	PokemonCombat* change_pokemon();
 
+	void Kill(bool trainer);
+public:
 	pugi::xml_node conf;
 	pugi::xml_document XML;
 
