@@ -68,6 +68,8 @@ public:
 	bool ChangeRadius_degrade(int radius_to_stop, bool increment);
 	//-----------------------------
 
+	bool start_augment = false;
+	bool start_awake = false;
 
 
 private:
@@ -100,11 +102,13 @@ private:
 	// -----------------------
 
 	//3D PHASE VARIABLES -----
+	j1Timer attack_timer;
 	int radius = 30;
 	int time_to_create = 0;
 	int firebat_rate = 2;
 	int new_fire_bat = 30;
 	std::vector<iPoint> points;
+	int augment_radius = 2;
 	GanonState special_attack = G_SPECIAL_1;
 	// -----------------------
 

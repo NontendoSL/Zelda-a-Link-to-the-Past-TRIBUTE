@@ -21,10 +21,17 @@ public:
 
 	void Draw();
 
+	void Fly();
+
 private:
 
 	//POSITION & MOVEMENT VARIABLES ---
 	int pos_in_vect = 0;
+	iPoint dest;
+	iPoint origin;
+	j1Timer fly_timer;
+	float time;
+	bool start_chase = false;
 	// -------------
 
 	FireBatState state = B_SLEEP;

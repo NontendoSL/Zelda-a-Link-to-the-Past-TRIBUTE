@@ -172,7 +172,7 @@ bool Ganon::InvincibleUpdate(float dt)
 
 bool Ganon::RageUpdate(float dt)
 {
-	if (test)
+	if (test) // TODO -> delete this
 	{
 		float factor = (float)M_PI / 180.0f * MULTI_P;
 		for (uint i = 0; i < NUM_POINTS_CIRCLE; ++i)
@@ -189,6 +189,7 @@ bool Ganon::RageUpdate(float dt)
 		firebat_rate = 1;
 		new_fire_bat = 30;
 	}
+
 	//Until Ganon is alive.
 	if (hp > 0)
 	{
@@ -346,14 +347,12 @@ void Ganon::SpecialAttack()
 	// ATTACK PATTERN: 1 Fire Bats, then 1 Jump and Circle attack.
 	switch (special_attack)
 	{
-	case G_SPECIAL_2:
-		FireBats();
-		break;
-
 	case G_SPECIAL_1:
 		FireCircle();
 		break;
-
+	case G_SPECIAL_2:
+		FireBats();
+		break;
 	default:
 		break;
 	}
@@ -361,6 +360,7 @@ void Ganon::SpecialAttack()
 
 void Ganon::FireBats()
 {
+	// Firebats Creation --------------------------------
 	if (num_firebats < max_spawns)
 	{
 		time_to_create += firebat_rate;
@@ -371,14 +371,32 @@ void Ganon::FireBats()
 			time_to_create = 0;
 		}
 	}
-	else if (ChangeRadius_degrade(70, true))
-	{
-
-	}
 	else
 	{
-
+		start_augment = true;
+		attack_timer.Start();
 	}
+	// -----------------------------------------------
+
+	// Firebats Awakening --------------------------------------
+	if (start_augment == true)
+	{
+		if (augment_radius % 2 == 0)
+		{
+			if (ChangeRadius_degrade(60, true))
+			{
+				start_awake = true;
+				start_augment = false;
+			}
+		}
+
+		if (augment_radius > 500)
+		{
+			augment_radius = 0;
+		}
+		augment_radius++;
+	}
+	// -----------------------------------------------------
 }
 
 void Ganon::FireCircle()
