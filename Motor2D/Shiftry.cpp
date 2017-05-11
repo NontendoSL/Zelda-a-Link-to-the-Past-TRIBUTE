@@ -9,6 +9,7 @@
 
 Shiftry::Shiftry()
 {
+	type = CREATURE;
 }
 
 Shiftry::~Shiftry()

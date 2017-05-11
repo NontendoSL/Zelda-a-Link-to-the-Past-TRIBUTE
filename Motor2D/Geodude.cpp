@@ -13,6 +13,7 @@
 
 Geodude::Geodude()
 {
+	type = CREATURE;
 }
 
 Geodude::~Geodude()

@@ -9,6 +9,7 @@
 
 Dusclops::Dusclops()
 {
+	type = CREATURE;
 }
 
 Dusclops::~Dusclops()

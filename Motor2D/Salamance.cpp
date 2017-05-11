@@ -9,6 +9,7 @@
 
 Salamance::Salamance()
 {
+	type = CREATURE;
 }
 
 Salamance::~Salamance()

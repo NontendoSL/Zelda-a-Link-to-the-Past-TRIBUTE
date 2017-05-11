@@ -9,6 +9,7 @@
 
 Walrein::Walrein()
 {
+	type = CREATURE;
 }
 
 Walrein::~Walrein()

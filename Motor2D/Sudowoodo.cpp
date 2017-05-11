@@ -2,6 +2,7 @@
 
 Sudowoodo::Sudowoodo()
 {
+	type = CREATURE;
 }
 
 Sudowoodo::~Sudowoodo()

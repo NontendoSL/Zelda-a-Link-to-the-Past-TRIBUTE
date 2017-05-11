@@ -156,10 +156,10 @@ bool j1Scene::Update(float dt)
 			// --------------------------------------------------------
 
 			// TP LEVEL -----------------------------------------
-			/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 10;
+				switch_map = 7;
 			}
 
 			/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)

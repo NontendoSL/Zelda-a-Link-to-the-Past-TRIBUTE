@@ -10,6 +10,7 @@
 
 Swampert::Swampert()
 {
+	type = CREATURE;
 }
 
 Swampert::~Swampert()

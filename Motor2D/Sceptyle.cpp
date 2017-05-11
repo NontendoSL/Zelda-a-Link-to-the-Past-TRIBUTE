@@ -9,6 +9,7 @@
 
 Sceptyle::Sceptyle()
 {
+	type = CREATURE;
 }
 
 Sceptyle::~Sceptyle()

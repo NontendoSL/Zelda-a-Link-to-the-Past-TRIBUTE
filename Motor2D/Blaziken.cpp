@@ -9,6 +9,7 @@
 
 Blaziken::Blaziken()
 {
+	type = CREATURE;
 }
 
 Blaziken::~Blaziken()

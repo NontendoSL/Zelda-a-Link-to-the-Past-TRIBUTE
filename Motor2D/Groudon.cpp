@@ -9,6 +9,7 @@
 
 Groudon::Groudon()
 {
+	type = CREATURE;
 }
 
 Groudon::~Groudon()

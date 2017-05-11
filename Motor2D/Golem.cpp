@@ -13,6 +13,7 @@
 
 Golem::Golem()
 {
+	type = CREATURE;
 }
 
 Golem::~Golem()
