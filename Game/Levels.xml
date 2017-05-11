@@ -230,8 +230,10 @@
     <map n="9" file="VictoryExterior.tmx">
       <camera follow="true"/> 
       <Link pos_x="200" pos_y="453"/>
-      <!--<trainer id="1" name="Brendan" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
-        <pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>-->
+      <vilagers>
+        <vilager id="3" name="Brendan" rect_x="0" rect_y="0" rect_w="14" rect_h="21" pos_x="304" pos_y="190" switch_map="17" dialog="Hi, I'm Brendan, in this world we don't fight with swords, we combat with the pokemons, i will teach you"/>
+      </vilagers>  
+      <!--<pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>-->
       <!--</trainer>-->
     </map>
 
