@@ -48,6 +48,7 @@ public:
 	void Idle();
 	void Walk(float dt);
 	bool Move(float dt);
+	void StartMovement();
 	void Reorientate();
 	void MeleeAttack();
 	void SpecialAttack();
@@ -101,6 +102,14 @@ private:
 	//MOVEMENT VARIABLES ---
 	int canmove = 0;
 	// -------------------
+
+	//1ST PHASE VARIABLES --
+	j1Timer mov_timer;
+	iPoint mov_origin;
+	iPoint mov_dest;
+	float mov_time;
+	bool mov_finished = true;
+	// -----------------
 
 	//2ND PHASE VARIABLES ---
 	j1Timer spawn_timer;

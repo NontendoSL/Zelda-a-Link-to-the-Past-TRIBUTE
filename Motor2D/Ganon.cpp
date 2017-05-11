@@ -111,9 +111,7 @@ bool Ganon::InitialUpdate(float dt)
 			break;
 
 		case G_WALKING:
-			Orientate();
 			Walk(dt);
-			Reorientate();
 			break;
 
 		case G_ATTACKING:
@@ -255,21 +253,26 @@ void Ganon::Idle()
 
 void Ganon::Walk(float dt)
 {
-	if (canmove % 2 == 0)
+	// MOVEMENT FINISHED ----------------------
+	if (mov_finished == true)
+	{
+		mov_finished = false;
+		StartMovement();
+	}
+	else if (position.DistanceTo(mov_dest) >= 5 && mov_finished == false)
 	{
 		Move(dt);
 	}
-
-	if (canmove > 500)
+	else
 	{
-		canmove = 0;
+		mov_finished = true;
 	}
-	canmove++;
+	// ---------------------------------------
 }
 
 bool Ganon::Move(float dt)
 {
-	if (direction == LEFT)
+	/*if (direction == LEFT)
 	{
 		if (App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
@@ -299,10 +302,46 @@ bool Ganon::Move(float dt)
 		{
 			position.y += ceil(speed*dt);
 		}
+	}*/
+
+	mov_time = mov_timer.ReadSec();
+
+	// QUADRATIC
+	//position.x = (1 - time) * (1 - time)*origin.x + 2 * time * (1 - time) * (origin.x + 5) + time * time * dest.x;
+	//position.y = (1 - time) * (1 - time)*origin.y + 2 * time * (1 - time) * (origin.y + 5) + time * time * dest.y;
+
+	// LINEAR
+	position.x = mov_origin.x + (mov_dest.x - mov_origin.x) * mov_time;
+	position.y = mov_origin.y + (mov_dest.y - mov_origin.y) * mov_time;
+
+	/*if (mov_origin.x >= mov_dest.x)
+	{
+		position.x = (1 - mov_time) * (1 - mov_time)*mov_origin.x + 2 * mov_time * (1 - mov_time) * (mov_origin.x + 10) + mov_time * mov_time * mov_dest.x;
 	}
+	else
+	{
+		position.x = (1 - mov_time) * (1 - mov_time)*mov_origin.x + 2 * mov_time * (1 - mov_time) * (mov_origin.x - 10) + mov_time * mov_time * mov_dest.x;
+	}
+
+	if (mov_origin.y >= mov_dest.y)
+	{
+		position.y = (1 - mov_time) * (1 - mov_time)*mov_origin.y + 2 * mov_time * (1 - mov_time) * (mov_origin.y + 10) + mov_time * mov_time * mov_dest.y;
+	}
+	else
+	{
+		position.y = (1 - mov_time) * (1 - mov_time)*mov_origin.y + 2 * mov_time * (1 - mov_time) * (mov_origin.y - 10) + mov_time * mov_time * mov_dest.y;
+	}*/
 
 	walking = true;
 	return true;
+}
+
+void Ganon::StartMovement()
+{
+	Reorientate();
+	mov_origin = position;
+	mov_dest = App->scene->player->position;
+	mov_timer.Start();
 }
 
 void Ganon::Reorientate()
@@ -345,6 +384,8 @@ void Ganon::MeleeAttack()
 			current_animation = nullptr;
 			state = G_WALKING;
 			anim_state = G_WALKING;
+			mov_finished = false;
+			StartMovement();
 		}
 	}
 }
