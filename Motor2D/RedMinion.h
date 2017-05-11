@@ -24,7 +24,7 @@ public:
 	// Called before quitting
 	//bool CleanUp();
 
-	//void OnCollision(Collider*, Collider*);
+	void OnCollision(Collider*, Collider*);
 
 	//bool CheckPlayerPos();
 

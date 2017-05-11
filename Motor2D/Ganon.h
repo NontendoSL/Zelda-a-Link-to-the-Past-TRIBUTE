@@ -60,6 +60,7 @@ public:
 	void Hit();
 	void HitRage();
 	void Spawn();
+	bool Die();
 	// -----------------------------
 
 	// Called before quitting
@@ -73,6 +74,7 @@ public:
 	void SetAnimState(GanonState state);
 	iPoint GetPosinVect(int index);
 	bool ChangeRadius_degrade(int radius_to_stop, bool increment);
+	void IncreaseDeadMinions();
 	//-----------------------------
 
 	bool start_augment = false;
@@ -112,7 +114,7 @@ private:
 	j1Timer attack_timer;
 	int radius = 30;
 	int time_to_create = 0;
-	int firebat_rate = 2;
+	int firebat_rate = 1;
 	int new_fire_bat = 30;
 	std::vector<iPoint> points;
 	int augment_radius = 2;

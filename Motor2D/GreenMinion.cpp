@@ -2,6 +2,8 @@
 #include "j1Scene.h"
 #include "j1Collision.h"
 #include "j1Audio.h"
+#include "Ganon.h"
+#include "j1EntityElementsScene.h"
 
 GreenMinion::GreenMinion()
 {
@@ -22,7 +24,7 @@ bool GreenMinion::Start(iPoint pos)
 	direction = DOWN;
 
 	//Load Stats
-	hp = 3;
+	hp = 2;
 	speed = 40;
 	attack = 10;
 
@@ -226,30 +228,30 @@ bool GreenMinion::Movebyhit(float dt)
 	//CHECK HIT DIRECTION -------
 	if (dir_hit == UP)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(100 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= ceil(240 * dt);
+			position.y -= ceil(100 * dt);
 		}
 	}
 	else if (dir_hit == DOWN)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(100 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += ceil(240 * dt);
+			position.y += ceil(100 * dt);
 		}
 	}
 	else if (dir_hit == LEFT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x - ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(100 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= ceil(240 * dt);
+			position.x -= ceil(100 * dt);
 		}
 	}
 	else if (dir_hit == RIGHT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(100 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += ceil(240 * dt);
+			position.x += ceil(100 * dt);
 		}
 	}
 	//------------------------------
@@ -264,6 +266,12 @@ bool GreenMinion::Die()
 	{
 		App->entity_elements->CreateItem(item_id, position);
 	}
+
+	if (App->entity_elements->ganon != nullptr)
+	{
+		App->entity_elements->ganon->IncreaseDeadMinions();
+	}
+
 	to_delete = true;
 
 	return true;

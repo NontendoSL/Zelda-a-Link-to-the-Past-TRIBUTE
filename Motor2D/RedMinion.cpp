@@ -2,7 +2,8 @@
 #include "j1Scene.h"
 #include "j1Collision.h"
 #include "j1Audio.h"
-
+#include "Ganon.h"
+#include "j1EntityElementsScene.h"
 RedMinion::RedMinion()
 {
 	name = "RedMinion";
@@ -22,8 +23,8 @@ bool RedMinion::Start(iPoint pos)
 	direction = DOWN;
 
 	//Load Stats
-	hp = 3;
-	speed = 40;
+	hp = 1;
+	speed = 70;
 	attack = 10;
 
 	//Animation
@@ -35,7 +36,7 @@ bool RedMinion::Start(iPoint pos)
 	//Set Collision
 	offset_x = 8;
 	offset_y = 4;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 17 }, COLLIDER_GMINION, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 17 }, COLLIDER_RMINION, this);
 
 	//Spawn Timer
 	spawn_time.Start();
@@ -112,6 +113,27 @@ void RedMinion::Draw()
 	}
 
 	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+}
+
+void RedMinion::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c1 != nullptr && c2 != nullptr)
+	{
+		//SWORD COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
+		{
+			if (state != RM_HIT)
+			{
+				App->audio->PlayFx(12);
+				knockback_time.Start();
+				hp--;
+				state = RM_HIT;
+				anim_state = RM_WALKING;
+				dir_hit = c2->callback->direction;
+				prev_position = position;
+			}
+		}
+	}
 }
 
 bool RedMinion::Spawning()
@@ -206,30 +228,30 @@ bool RedMinion::Movebyhit(float dt)
 	//CHECK HIT DIRECTION -------
 	if (dir_hit == UP)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(100 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= ceil(240 * dt);
+			position.y -= ceil(100 * dt);
 		}
 	}
 	else if (dir_hit == DOWN)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(100 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += ceil(240 * dt);
+			position.y += ceil(100 * dt);
 		}
 	}
 	else if (dir_hit == LEFT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x - ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x - ceil(100 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= ceil(240 * dt);
+			position.x -= ceil(100 * dt);
 		}
 	}
 	else if (dir_hit == RIGHT)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(100 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += ceil(240 * dt);
+			position.x += ceil(100 * dt);
 		}
 	}
 	//------------------------------
@@ -244,6 +266,12 @@ bool RedMinion::Die()
 	{
 		App->entity_elements->CreateItem(item_id, position);
 	}
+
+	if (App->entity_elements->ganon != nullptr)
+	{
+		App->entity_elements->ganon->IncreaseDeadMinions();
+	}
+
 	to_delete = true;
 
 	return true;

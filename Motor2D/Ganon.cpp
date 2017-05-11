@@ -10,6 +10,7 @@ Ganon::Ganon() :NPC()
 {
 	name = "Ganon";
 	type = CREATURE;
+	srand(time(NULL));
 }
 
 Ganon::~Ganon()
@@ -28,9 +29,9 @@ bool Ganon::Start()
 	direction = DOWN;
 
 	//Animation States & initial Phase
-	state = G_ATTACKING;
-	anim_state = G_SPECIAL_2;
-	phase = RAGE;
+	state = G_WALKING;
+	anim_state = G_WALKING;
+	phase = INITIAL;
 
 	//Set stats
 	speed = 40;
@@ -133,6 +134,7 @@ bool Ganon::InitialUpdate(float dt)
 		phase = INVINCIBLE;
 		state = G_SHIELD;
 		anim_state = G_SHIELD;
+		direction = DOWN;
 		spawn_timer.Start();
 		LOG("SHIELD PHASE");
 	}
@@ -142,9 +144,9 @@ bool Ganon::InitialUpdate(float dt)
 bool Ganon::InvincibleUpdate(float dt)
 {
 	// Until player hasn't killed a certain amount of enemies.
-	if (minions_killed < 20)
+	if (minions_killed < 10)
 	{
-		if (spawn_timer.ReadSec() >= spawn_rate)
+		if (spawn_timer.ReadSec() >= spawn_rate && minions_spawned < 10)
 		{
 			Spawn();
 			spawn_timer.Start();
@@ -167,13 +169,14 @@ bool Ganon::InvincibleUpdate(float dt)
 		state = G_ATTACKING;
 		special_attack = G_SPECIAL_2;
 		anim_state = G_SPECIAL_2;
+		hp = 30;
 	}
 	return true;
 }
 
 bool Ganon::RageUpdate(float dt)
 {
-	if (test) // TODO -> delete this
+	/*if (test) // TODO -> delete this
 	{
 		float factor = (float)M_PI / 180.0f * MULTI_P;
 		for (uint i = 0; i < NUM_POINTS_CIRCLE; ++i)
@@ -189,7 +192,7 @@ bool Ganon::RageUpdate(float dt)
 		test = false;
 		firebat_rate = 1;
 		new_fire_bat = 30;
-	}
+	}*/
 
 	if (collision_attack != nullptr && explosion_timer.ReadSec() >= 0.2)
 	{
@@ -197,7 +200,7 @@ bool Ganon::RageUpdate(float dt)
 	}
 
 	//Until Ganon is alive.
-	if (hp > -1000000)
+	if (hp > 0)
 	{
 		switch (state)
 		{
@@ -235,15 +238,7 @@ bool Ganon::RageUpdate(float dt)
 
 bool Ganon::DeathUpdate(float dt)
 {
-	/*if (player->celdaball->empty == true)
-	{
-		//PLAY POKEBALL CINEMATIC
-	}
-
-	else
-	{
-		//PLAY NORMAL DEATH CINEMATIC
-	}*/
+	to_delete = true;
 	return true;
 }
 //--------------------------------------
@@ -256,8 +251,6 @@ void Ganon::Idle()
 		anim_state = G_SPECIAL_2;
 		special_attack = G_SPECIAL_2;
 	}
-
-
 }
 
 void Ganon::Walk(float dt)
@@ -533,16 +526,23 @@ void Ganon::HitRage()
 
 void Ganon::Spawn()
 {
-	// TODO -> TRY what type of enemies to spawn
 	if (minions_spawned % 5 == 0 && minions_spawned > 0)
 	{
-		App->entity_elements->CreateRMinion({ 300, 200 });
+		App->entity_elements->CreateRMinion({ 200 + (rand() % 100), 200 + (rand() % 100) });
 	}
+
 	else
 	{
-		App->entity_elements->CreateGMinion({ 200, 200 });
+		App->entity_elements->CreateGMinion({ 200 + (rand() % 100), 200 + (rand() % 100) });
 	}
+
 	minions_spawned++;
+}
+
+bool Ganon::Die()
+{
+
+	return true;
 }
 
 bool Ganon::CleanUp()
@@ -651,6 +651,11 @@ bool Ganon::ChangeRadius_degrade(int radius_to_stop, bool increment)
 		}
 	}
 	return false;
+}
+
+void Ganon::IncreaseDeadMinions()
+{
+	minions_killed++;
 }
 
 

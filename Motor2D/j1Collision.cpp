@@ -56,7 +56,9 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_GANON][COLLIDER_SWORD] = true;
 
 	matrix[COLLIDER_GMINION][COLLIDER_SWORD] = true;
+	matrix[COLLIDER_GMINION][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_RMINION][COLLIDER_SWORD] = true;
+	matrix[COLLIDER_RMINION][COLLIDER_PLAYER] = false;
 
 }
 j1Collision::~j1Collision() {}
@@ -156,7 +158,6 @@ bool j1Collision::CleanUp()
 
 void j1Collision::DebugDraw()
 {
-
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		debug = !debug;
 
@@ -248,6 +249,9 @@ void j1Collision::DebugDraw()
 		case COLLIDER_GMINION:
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 125, alpha);
 			break;
+		case COLLIDER_RMINION:
+			App->render->DrawQuad(colliders[i]->rect, 255, 125, 125, alpha);
+			break;
 		case COLLIDER_FIREBAT:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 125, alpha);
 			break;
@@ -278,7 +282,6 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneEleme
 			break;
 		}
 	}
-
 	return ret;
 }
 
