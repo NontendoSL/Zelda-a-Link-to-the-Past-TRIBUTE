@@ -41,7 +41,7 @@ public:
 
 	bool Attack();
 
-	bool Movebyhit();
+	bool Movebyhit(int speed);
 
 	void Stunned();
 

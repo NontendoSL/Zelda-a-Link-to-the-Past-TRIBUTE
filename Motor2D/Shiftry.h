@@ -46,7 +46,7 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
-	bool Movebyhit();
+	bool Movebyhit(int speed);
 
 	int CheckPlayerPos();
 
