@@ -536,13 +536,22 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
-			if (poke_bag->AddItem("pk_bag:DEF PROTEIN", true))
+			if (player->pokecash >= 30)
 			{
-				poke_shop->PopText(" PROTEIN PURCHASED");
+				player->pokecash -= 30;
+				poke_hud->RefreshMoney();
+				if (poke_bag->AddItem("pk_bag:DEF PROTEIN", true))
+				{
+					poke_shop->PopText(" PROTEIN PURCHASED");
+				}
+				else
+				{
+					poke_shop->PopText("MAX PROTEINS REACHED");
+				}
 			}
 			else
 			{
-				poke_shop->PopText("MAXIMUM PROTEINS REACHED");
+				poke_shop->PopText("NOT ENOUGH POKECASH");
 			}
 		}
 	}
@@ -555,13 +564,22 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
-			if (poke_bag->AddItem("pk_bag:HP UP", true))
+			if (player->pokecash >= 40)
 			{
-				poke_shop->PopText("   HP UP PURCHASED");
+				player->pokecash -= 40;
+				poke_hud->RefreshMoney();
+				if (poke_bag->AddItem("pk_bag:HP UP", true))
+				{
+					poke_shop->PopText("   HP UP PURCHASED");
+				}
+				else
+				{
+					poke_shop->PopText("  MAXHP UP REACHED");
+				}
 			}
 			else
 			{
-				poke_shop->PopText("MAXIMUM HP UP REACHED");
+				poke_shop->PopText("NOT ENOUGH POKECASH");
 			}
 		}
 	}
@@ -574,13 +592,22 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
-			if (poke_bag->AddItem("pk_bag:X ATTACK", true))
+			if (player->pokecash >= 50)
 			{
-				poke_shop->PopText(" X ATTACK PURCHASED");
+				player->pokecash -= 50;
+				poke_hud->RefreshMoney();
+				if (poke_bag->AddItem("pk_bag:X ATTACK", true))
+				{
+					poke_shop->PopText(" X ATTACK PURCHASED");
+				}
+				else
+				{
+					poke_shop->PopText("MAX X ATTACK REACHED");
+				}
 			}
 			else
 			{
-				poke_shop->PopText("MAXIMUM X ATTACK REACHED");
+				poke_shop->PopText("NOT ENOUGH POKECASH");
 			}
 		}
 	}
