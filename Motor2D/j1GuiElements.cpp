@@ -913,7 +913,8 @@ PokemonCombatHud::PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 	hp1 = (Image*)App->gui->GetEntity("left hp");
 	//hp bar right
 	hp2 = (Image*)App->gui->GetEntity("right hp");
-	//Names
+	//Names 
+	ability = (Image*)App->gui->GetEntity("left ability");
 	App->gui->GetEntity("left box")->elements.push_back(App->gui->CreateText(POKE1, Link->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "link_pk_name", POKEMON_COMBAT));
 	App->gui->GetEntity("right box")->elements.push_back(App->gui->CreateText(POKE1, Brendan->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "brendan_pk_name", POKEMON_COMBAT));
 	// HP Poke Link

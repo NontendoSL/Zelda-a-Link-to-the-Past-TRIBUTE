@@ -523,6 +523,39 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			poke_bag->ShowItemInfo();
 		}
 	}
+	if (element->identifier == "pcshop:BUTTON1")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pcshop:BUTTON2")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
+	if (element->identifier == "pcshop:BUTTON3")
+	{
+		if (event == CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+		}
+		else
+		{
+			((Button*)element)->click = false;
+		}
+	}
 }
 
 void j1Scene::CreateTeleports()
