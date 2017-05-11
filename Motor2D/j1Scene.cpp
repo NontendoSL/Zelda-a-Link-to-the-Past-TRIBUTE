@@ -384,6 +384,11 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			//poke_menu->active = false;
+			poke_menu->MoveIn(false);
+			App->gui->SetGui(POKEMON_HUD);
+			poke_hud->active = true;
+			App->gui->SetFocus(poke_hud->GetFirst());
 		}
 	}
 	if (element->identifier == "pk_menu:bag")
@@ -395,6 +400,8 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			//poke_menu->MoveIn(false);
+			App->gui->SetGui(POKEMON_BAG);
 		}
 	}
 	if (element->identifier == "pk_menu:link")
@@ -417,6 +424,8 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			poke_menu->MoveIn(false);
+			GoMainMenu();
 		}
 	}
 	if (element->identifier == "pk_menu:save")
@@ -462,7 +471,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
-			App->gui->SetGui(POKEMON_HUD);
+			App->gui->SetGui(POKEMON_MENU);
 		}
 	}
 	if (element->identifier == "pk_bag:BLAZIKEN")
@@ -477,6 +486,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			poke_bag->selecting_poke = false;
 			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 			App->gui->SetFocus(poke_bag->GetFirst());
+			poke_bag->ShowItemInfo();
 		}
 	}
 	if (element->identifier == "pk_bag:SWAMPERT")
@@ -491,6 +501,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			poke_bag->selecting_poke = false;
 			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 			App->gui->SetFocus(poke_bag->GetFirst());
+			poke_bag->ShowItemInfo();
 		}
 	}
 	if (element->identifier == "pk_bag:SCEPTILE")
@@ -505,6 +516,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			poke_bag->selecting_poke = false;
 			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 			App->gui->SetFocus(poke_bag->GetFirst());
+			poke_bag->ShowItemInfo();
 		}
 	}
 }

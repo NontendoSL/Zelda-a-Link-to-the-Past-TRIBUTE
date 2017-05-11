@@ -1249,7 +1249,7 @@ void PokemonWorldHud::Input()
 			CloseAll();
 			active = false;
 		}
-		App->scene->poke_menu->active = true;
+		//App->scene->poke_menu->active = true;
 		App->scene->poke_menu->MoveIn(true);
 		App->gui->SetGui(POKEMON_MENU);
 		App->scene->gamestate = INMENU;
@@ -1406,8 +1406,8 @@ PokemonWorldMenu::PokemonWorldMenu()
 
 void PokemonWorldMenu::Input()
 {
-	if (active)
-	{
+	//if (active)
+	//{
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
 		{
 			Select(true);
@@ -1426,12 +1426,12 @@ void PokemonWorldMenu::Input()
 		}
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 		{
-			active = false;
+			//active = false;
 			MoveIn(false);
 			App->gui->SetGui(POKEMON_HUD);
 			App->scene->gamestate = INGAME;
 		}
-	}
+	//}
 
 }
 
