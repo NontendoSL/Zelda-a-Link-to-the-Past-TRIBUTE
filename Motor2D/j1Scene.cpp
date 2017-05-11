@@ -827,6 +827,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 	{
 		App->gui->SetGui(POKEMON_HUD);
 		player->pokecash = player->gems * 3;
+		player->pokecash += 50;
 		poke_hud->RefreshMoney();
 	}
 
