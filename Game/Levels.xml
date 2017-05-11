@@ -230,9 +230,9 @@
     <map n="9" file="VictoryExterior.tmx">
       <camera follow="true"/> 
       <Link pos_x="200" pos_y="453"/>
-      <vilagers>
+      <!--<vilagers>
         <vilager id="3" name="Brendan" rect_x="0" rect_y="0" rect_w="14" rect_h="21" pos_x="304" pos_y="190" switch_map="17" dialog="Hi, I'm Brendan, in this world we don't fight with swords, we combat with the pokemons, i will teach you"/>
-      </vilagers>  
+      </vilagers>-->   
       <!--<pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>-->
       <!--</trainer>-->
     </map>
@@ -291,7 +291,7 @@
       <camera follow="false"/>
       <Link pos_x="160" pos_y="216"/>
       <vilagers>
-        <vilager id="8" name="Drake" rect_x="42" rect_y="21" rect_w="16" rect_h="21" pos_x="155" pos_y="120" switch_map="21" dialog="I'm Drake, Lord of Dragons and the last member of the Elite Four. Be ready to face the most powerful and honorable pokemon type there is!"/>
+        <vilager id="8" name="Drake" rect_x="42" rect_y="21" rect_w="16" rect_h="21" pos_x="150" pos_y="120" switch_map="21" dialog="I'm Drake, Lord of Dragons and the last member of the Elite Four. Be ready to face the most powerful and honorable pokemon type there is!"/>
       </vilagers>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="81" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -338,9 +338,9 @@
     <map n="17" file="VictoryExterior.tmx">
       <camera follow="false"/>
       <poke_Link pos_x="150" pos_y="240"/>
-      <trainer id="1" name="Brendan" active="false" pos_x="0" pos_y="0" file="textures/PokemonCharacters.png">
-        <!--<pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>-->
-      </trainer>
+      <!--<trainer id="1" name="Brendan" active="false" pos_x="0" pos_y="0" file="textures/PokemonCharacters.png">
+       <pokemon id="3" name="SWAMPERT" speed="1" cooldown="320" dir="left" hp="70" attack="4" special_attack="20" pos_x="160" pos_y="130" active="true"/>
+      </trainer>-->
     </map>
 
     <map n="18" file="EliteFour01.tmx">
@@ -363,11 +363,11 @@
       <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="19" pos_y="17" />
-        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="15" />
         <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="17" />
         <delete_edit pos_x="20" pos_y="16" />
-        <delete_edit pos_x="19" pos_y="18" />
-        <delete_edit pos_x="20" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="15" />
       </deletecost>
     </map>
 
@@ -389,11 +389,11 @@
       <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="19" pos_y="17" />
-        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="15" />
         <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="17" />
         <delete_edit pos_x="20" pos_y="16" />
-        <delete_edit pos_x="19" pos_y="18" />
-        <delete_edit pos_x="20" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="15" />
       </deletecost>
     </map>
 
@@ -409,11 +409,11 @@
       <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="19" pos_y="17" />
-        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="15" />
         <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="17" />
         <delete_edit pos_x="20" pos_y="16" />
-        <delete_edit pos_x="19" pos_y="18" />
-        <delete_edit pos_x="20" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="15" />
       </deletecost>
     </map>
 
@@ -435,11 +435,11 @@
       <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="19" pos_y="17" />
-        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="15" />
         <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="17" />
         <delete_edit pos_x="20" pos_y="16" />
-        <delete_edit pos_x="19" pos_y="18" />
-        <delete_edit pos_x="20" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="15" />
       </deletecost>
     </map>
 
@@ -460,12 +460,12 @@
       </editcost>
       <deletecost>
         <!--Trainer wall-->
-        <delete_edit pos_x="21" pos_y="20" />
-        <delete_edit pos_x="22" pos_y="20" />
-        <delete_edit pos_x="21" pos_y="21" />
-        <delete_edit pos_x="22" pos_y="21" />
-        <delete_edit pos_x="21" pos_y="22" />
-        <delete_edit pos_x="22" pos_y="22" />
+        <delete_edit pos_x="19" pos_y="18" />
+        <delete_edit pos_x="19" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="20" pos_y="16" />
       </deletecost>
     </map>
   </map_combat>
