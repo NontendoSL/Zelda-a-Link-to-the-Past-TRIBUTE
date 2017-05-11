@@ -4,6 +4,7 @@
 #include "j1AnimationManager.h"
 #include "j1Audio.h"
 #include "j1Player.h"
+#include "ParticleManager.h"
 
 Ganon::Ganon() :NPC()
 {
@@ -383,7 +384,7 @@ void Ganon::FireBats()
 	{
 		if (augment_radius % 2 == 0)
 		{
-			if (ChangeRadius_degrade(60, true))
+			if (ChangeRadius_degrade(50, true))
 			{
 				start_awake = true;
 				start_augment = false;
@@ -437,6 +438,7 @@ void Ganon::FireJump()
 
 	else if(num_jumps < max_jumps)
 	{
+		App->particlemanager->CreateExplosion_Particle(nullptr, nullptr, position, SDL_Rect{ 0,4,2,0 },CIRCLE, iPoint(10, 10), iPoint(10, 2), fPoint(60, 60), P_RANDOM, 22);
 		StartJump();
 	}
 

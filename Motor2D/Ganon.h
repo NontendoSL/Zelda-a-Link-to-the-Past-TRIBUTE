@@ -11,6 +11,8 @@ enum GanonPhase { SLEEP = 0, INITIAL, INVINCIBLE, RAGE, DEATH };
 enum GanonState { G_WALKING = 0, G_HIT, G_MELEE, G_SPECIAL_1/*Jump&Fire*/, G_SPECIAL_2/*FireBats*/, G_SHIELD, G_DYING, G_ATTACKING, G_IDLE};
 enum SpawnType { GREEN, RED };
 
+
+
 class Ganon : public NPC
 {
 public:
