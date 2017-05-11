@@ -43,7 +43,7 @@ bool FireBat::Start()
 
 bool FireBat::Update(float dt)
 {
-	pos_in_vect += speed * 2;
+	pos_in_vect += speed;
 	if (pos_in_vect >= 180)
 	{
 		pos_in_vect = 0;

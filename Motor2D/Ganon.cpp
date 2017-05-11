@@ -186,7 +186,7 @@ bool Ganon::RageUpdate(float dt)
 		special_attack = G_SPECIAL_2;
 		anim_state = G_SPECIAL_2;
 		test = false;
-		firebat_rate = 2;
+		firebat_rate = 1;
 		new_fire_bat = 30;
 	}
 	//Until Ganon is alive.

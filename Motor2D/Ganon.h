@@ -100,7 +100,7 @@ private:
 	// -----------------------
 
 	//3D PHASE VARIABLES -----
-	int radius = 40;
+	int radius = 30;
 	int time_to_create = 0;
 	int firebat_rate = 2;
 	int new_fire_bat = 30;
