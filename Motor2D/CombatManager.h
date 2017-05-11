@@ -57,7 +57,7 @@ public:
 
 	//Create Functions 
 	PokemonCombat* CreatePokemon(pugi::xml_node&, uint id);
-	PokeTrainer* CreateTrainer(pugi::xml_node&, uint id);
+	void CreateTrainer(pugi::xml_node&, uint id);
 	// delete elements
 	bool DeleteElements_combat();
 	//Change Pokemon
@@ -74,6 +74,7 @@ public:
 private:
 	std::list<SceneElement*> elementcombat;
 	std::vector<Item_pokeCombat> bag_items;
+	//PokeTrainer* trainer;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	int pokemon_order = 0;
 };

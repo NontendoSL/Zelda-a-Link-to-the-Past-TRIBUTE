@@ -27,7 +27,7 @@ class Player;
 class Item;
 class Soldier;
 class DynamicObjects;
-class PokeTrainer;
+class PokemonCombat;
 enum WeaponType;
 
 struct Teleport
@@ -107,7 +107,7 @@ public:
 	PokemonWorldBag* poke_bag = nullptr;
 	PokemonWorldShop* poke_shop = nullptr;
 	Player* player = nullptr;
-	PokeTrainer* poketrainer = nullptr;
+	PokemonCombat* poke_enemy = nullptr;
 
 	pugi::xml_node		config;
 

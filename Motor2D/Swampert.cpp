@@ -88,6 +88,7 @@ bool Swampert::Update(float dt)
 		case PC_SPECIAL:
 		{
 			Special_Attack();
+			break;
 		}
 		case PC_HIT:
 		{
@@ -118,10 +119,10 @@ bool Swampert::Update(float dt)
 			App->scene->gamestate = INGAME;
 		}
 	}*/
-	if (drawThrowSP)
+	/*if (drawThrowSP)
 	{
 		ThrowSP();
-	}
+	}*/
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -130,7 +131,7 @@ bool Swampert::Update(float dt)
 
 void Swampert::Draw()
 {
-	if (drawThrowSP)
+	/*if (drawThrowSP)
 	{
 		if (sp_attack != nullptr)
 		{
@@ -154,7 +155,7 @@ void Swampert::Draw()
 				break;
 			}
 		}
-	}
+	}*/
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, SWAMPERT);
 }
 
@@ -171,7 +172,7 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 		PokemonCombat* isActive_2 = (PokemonCombat*)c2->callback;
 		if (isActive != nullptr && isActive_2 != nullptr)
 		{
-			if (isActive->active && isActive_2->active)
+			if (isActive->active && isActive_2->active && isActive != isActive_2)
 			{
 				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
 				{
@@ -210,7 +211,7 @@ void Swampert::Special_Attack()
 	{
 		if (current_animation->Finished())
 		{
-			App->collision->EraseCollider(sp_attack);
+			//App->collision->EraseCollider(sp_attack);
 			sp_attacking = false;
 			current_animation->Reset();
 			current_animation = nullptr;
@@ -225,12 +226,12 @@ void Swampert::Special_Attack()
 	else
 	{
 		sp_attacking = true;
-		sp_direction = direction;
+		/*sp_direction = direction;
 		sp_start = position;
 		drawThrowSP = true;
 		sp_attack = App->collision->AddCollider({ position.x,position.y, 8, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 		//audio TODO
-		//App->audio->PlayFx(7);
+		//App->audio->PlayFx(7);*/
 	}
 }
 
@@ -268,10 +269,10 @@ bool Swampert::Idle()
 		{
 			state = PC_SPECIAL;
 			anim_state = PC_SPECIAL;
+			current_animation = App->anim_manager->GetAnimation(state, direction, SWAMPERT);
+			current_animation->Reset();
 			App->scene->pokecombat->cooldown = true;
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
-			current_animation->Reset();
-			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
 		}
 	}
 
@@ -308,10 +309,10 @@ bool Swampert::Walking(float dt)
 		{
 			state = PC_SPECIAL;
 			anim_state = PC_SPECIAL;
+			current_animation = App->anim_manager->GetAnimation(state, direction, SWAMPERT);
+			current_animation->Reset();
 			App->scene->pokecombat->cooldown = true;
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
-			current_animation->Reset();
-			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
 		}
 	}
 

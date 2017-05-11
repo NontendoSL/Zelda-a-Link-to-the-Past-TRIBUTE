@@ -69,42 +69,58 @@ bool CombatManager::Update(float dt)
 	{
 		while (item != elementcombat.end())
 		{
-			PokemonCombat* poke = (PokemonCombat*)item._Ptr->_Myval;
-			if (poke->active)
+			if (item._Ptr->_Myval->type == CREATURE)
 			{
-				if (poke->hp <= 0)
+				PokemonCombat* poke = (PokemonCombat*)item._Ptr->_Myval;
+				if (poke->active)
 				{
-					if (pokemon_active_link == poke)
+					if (poke->hp <= 0)
 					{
-						pokemon_active_link->active = false;
-						poke->collision_feet->to_delete = true;
-						if (poke->collision_attack != nullptr)
-							poke->collision_attack->to_delete = true;
-						if (poke->sp_attack != nullptr)
-							poke->sp_attack->to_delete = true;
-						elementcombat.erase(item);
-						pokemon_order++;
-						change_pokemon();
-					}
-					else //pokemon_active_trainer == poke
-					{
-						App->scene->combat = false;
-						App->scene->switch_map = App->scene->last_map;
-						App->scene->useTP = true;
-						App->scene->player->state_complet = true;
-					}
+						if (pokemon_active_link == poke)
+						{
+							pokemon_active_link->active = false;
+							poke->collision_feet->to_delete = true;
+							if (poke->collision_attack != nullptr)
+								poke->collision_attack->to_delete = true;
+							if (poke->sp_attack != nullptr)
+								poke->sp_attack->to_delete = true;
+							elementcombat.erase(item);
+							pokemon_order++;
+							change_pokemon();
+						}
+						else //pokemon_active_trainer == poke
+						{
+							App->scene->combat = false;
+							App->scene->switch_map = App->scene->last_map;
+							App->scene->useTP = true;
+							App->scene->player->state_complet = true;
+						}
 
-				}
-				else
-				{
-					item._Ptr->_Myval->Update(dt);
+					}
+					else
+					{
+						item._Ptr->_Myval->Update(dt);
+					}
 				}
 			}
+			else
+			{
+				item._Ptr->_Myval->Update(dt);
+			}
 			item++;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
+		{
+			App->scene->pokecombat->cooldown = false;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		{
 			pokemon_active_trainer->hp -= 1000;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		{
+			pokemon_active_link->hp -= 1000;
+			App->scene->pokecombat->cooldown = false;
 		}
 	}
 	return true;
@@ -150,16 +166,6 @@ bool CombatManager::CleanUp()
 
 void CombatManager::CreateTargets()
 {
-	/*std::list<SceneElement*>::iterator item = elementcombat.begin();
-	while (item != elementcombat.end())
-	{
-		Pokemon* temp = (Pokemon*)item._Ptr->_Myval;
-		if (temp->active)
-		{
-			item._Ptr->_Myval->Draw();
-		}
-		item++;
-	}*/
 }
 
 void CombatManager::CreateDynObject(iPoint pos, uint id, uint id_map)
@@ -311,13 +317,12 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 	return nullptr;
 }
 
-PokeTrainer* CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)
+void CombatManager::CreateTrainer(pugi::xml_node& conf, uint id)
 {
-	PokeTrainer* temp = new PokeTrainer();
+	/*PokeTrainer* temp = new PokeTrainer();
 	temp->Awake(conf);
 	temp->Start();
-	elementcombat.push_back(temp);
-	return temp;
+	trainer = temp;*/
 }
 
 bool CombatManager::DeleteElements_combat()
@@ -329,7 +334,11 @@ bool CombatManager::DeleteElements_combat()
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	while (item != elementcombat.end())
 	{
-		delete item._Ptr->_Myval;
+		if (item._Ptr->_Myval->name != "BLAZIKEN")
+		{
+			delete item._Ptr->_Myval;
+		}
+
 		elementcombat.erase(item);
 		item++;
 	}

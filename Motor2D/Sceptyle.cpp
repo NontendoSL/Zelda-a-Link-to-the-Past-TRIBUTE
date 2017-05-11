@@ -167,7 +167,7 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 		PokemonCombat* isActive_2 = (PokemonCombat*)c2->callback;
 		if (isActive != nullptr && isActive_2 != nullptr)
 		{
-			if (isActive->active && isActive_2->active)
+			if (isActive->active && isActive_2->active && isActive != isActive_2)
 			{
 				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
 				{
@@ -263,7 +263,7 @@ bool Sceptyle::Idle()
 		{
 			state = PC_SPECIAL;
 			anim_state = PC_SPECIAL;
-			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+			current_animation = App->anim_manager->GetAnimation(state, direction, SCEPTILE);
 			current_animation->Reset();
 			App->scene->pokecombat->cooldown = true;
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
@@ -304,7 +304,7 @@ bool Sceptyle::Walking(float dt)
 		{
 			state = PC_SPECIAL;
 			anim_state = PC_SPECIAL;
-			current_animation = App->anim_manager->GetAnimation(state, direction, BLAZIKEN);
+			current_animation = App->anim_manager->GetAnimation(state, direction, SCEPTILE);
 			current_animation->Reset();
 			App->scene->pokecombat->cooldown = true;
 			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;

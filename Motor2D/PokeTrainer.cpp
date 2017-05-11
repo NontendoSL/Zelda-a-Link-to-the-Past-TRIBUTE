@@ -26,13 +26,13 @@ bool PokeTrainer::Awake(pugi::xml_node &conf)
 
 bool PokeTrainer::Start()
 {
-	direction = DOWN;
+	/*direction = DOWN;
 	state = T_IDLE;
 	anim_state = T_IDLE;
 
 	if(active)
 		collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 21 }, COLLIDER_TRAINER, this);
-
+		*/
 	return true;
 }
 
@@ -45,7 +45,7 @@ bool PokeTrainer::Update(float dt)
 
 void PokeTrainer::Draw()
 {
-	if (active)
+	/*if (active)
 	{
 		if (direction == UP)
 		{
@@ -67,7 +67,7 @@ void PokeTrainer::Draw()
 			SDL_Rect r = { 16,45,14,21 };
 			App->render->Blit(App->entity_elements->texture_trainer, position.x, position.y, &r);
 		}
-	}
+	}*/
 }
 
 PokemonCombat* PokeTrainer::GetPokemon()

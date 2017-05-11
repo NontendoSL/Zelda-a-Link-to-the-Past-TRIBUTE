@@ -623,11 +623,9 @@ void j1Scene::GoMainMenu()
 		App->entity_elements->DelteElements();
 		App->combatmanager->DeleteElements_combat();
 
-		if (poketrainer != nullptr)
+		if (poke_enemy != nullptr)
 		{
-			PokemonCombat* poke = poketrainer->GetPokemon();
-			delete poke;
-			poke = nullptr;
+			poke_enemy = nullptr;
 		}
 
 		if (player->pokedex.size() > 0)
@@ -690,12 +688,9 @@ void j1Scene::SwitchMap(bool isTP)
 				App->combatmanager->DeleteElements_combat();
 			}
 
-			if (poketrainer != nullptr)
+			if (poke_enemy != nullptr)
 			{
-				poketrainer = nullptr;
-				/*PokemonCombat* poke = poketrainer->GetPokemon();
-				delete poke;
-				poke = nullptr;*/
+				poke_enemy = nullptr;
 			}
 
 			if (switch_map < FIRST_LEVEL_COMBAT) //id 17 is the first combat map
@@ -914,7 +909,8 @@ bool j1Scene::Load_Combat_map(int n)
 		if (temp.attribute("n").as_int(0) == n)
 		{
 			//trainer
-			poketrainer = App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
+			//poketrainer = App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
+			poke_enemy = App->combatmanager->CreatePokemon(temp.child("trainer").child("pokemon"), temp.child("trainer").child("pokemon").attribute("id").as_int(4));
 
 			//idMap
 			App->combatmanager->id_map_combat = n;
@@ -935,13 +931,13 @@ bool j1Scene::Load_Combat_map(int n)
 
 			if (pokecombat == nullptr)
 			{
-				pokecombat = App->gui->CreatePokemonCombatHud(App->combatmanager->pokemon_active_link, poketrainer->GetPokemon()); //TODO ELliot no need GetPokemon()
+				pokecombat = App->gui->CreatePokemonCombatHud(App->combatmanager->pokemon_active_link, App->combatmanager->pokemon_active_trainer); //TODO ELliot no need GetPokemon()
 				pokecombat->Move(true, win_marge);
 			}
 			else
 			{
 				//pokecombat->OpenClose(true);
-				pokecombat->CombatInfo(App->combatmanager->pokemon_active_link, poketrainer->GetPokemon());
+				pokecombat->CombatInfo(App->combatmanager->pokemon_active_link, App->combatmanager->pokemon_active_trainer);
 			}
 
 			//map
