@@ -155,7 +155,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 11;
+				switch_map = 5;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -911,18 +911,21 @@ bool j1Scene::Load_Combat_map(int n)
 			//trainer
 			poketrainer = App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 
+			//idMap
+			App->combatmanager->id_map_combat = n;
+
 			//Pokemon Link
 			if (App->scene->poke_hud->GetPokeOrder(0) == "pk_bar_blaziken")
 			{
-				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Myval);
+				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Myval, n, 1);
 			}
 			else if (App->scene->poke_hud->GetPokeOrder(0) == "pk_bar_sceptile")
 			{
-				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Next->_Myval);
+				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Next->_Myval, n, 2);
 			}
 			else
 			{
-				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Next->_Next->_Myval);
+				App->combatmanager->PrepareToCombat(player->pokedex.begin()._Ptr->_Next->_Next->_Myval, n, 3);
 			}
 
 			if (pokecombat == nullptr)

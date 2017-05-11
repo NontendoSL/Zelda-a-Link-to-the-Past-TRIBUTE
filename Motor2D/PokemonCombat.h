@@ -37,6 +37,23 @@ public:
 		anim_state = a_state;
 	}
 
+	void ModifyStats(const Item_pokeCombat* items)
+	{
+		if (items->def_protein)
+		{
+			defense += 1;
+		}
+		if (items->hp_up)
+		{
+			hp += 50;
+		}
+		if (items->x_attack)
+		{
+			attack += 4;
+			sp_damage += 8;
+		}
+	}
+
 	bool OrientatePokeLink()
 	{
 		iPoint pokemon = App->combatmanager->pokemon_active_link->position;

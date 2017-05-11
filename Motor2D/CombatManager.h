@@ -7,6 +7,13 @@
 #include "SceneElements.h"
 #include "PugiXml\src\pugixml.hpp"
 
+struct Item_pokeCombat
+{
+	bool hp_up = false;
+	bool def_protein = false;
+	bool x_attack = false;
+};
+
 class NPC;
 class PokemonCombat;
 class PokeTrainer;
@@ -38,13 +45,15 @@ public:
 	void CreateTargets();
 
 	//Modify to active pokemon (only pokemons Link)
-	void PrepareToCombat(PokemonCombat* pokemon);
+	void PrepareToCombat(PokemonCombat* pokemon, uint idMap, int id_pokemon);
 
-	void ModifyPosition(pugi::xml_node&);
+	void ModifyStats(pugi::xml_node&, PokemonCombat* pokemon, Item_pokeCombat bag);
 
 	void CreateDynObject(iPoint pos, uint id, uint id_map);
 
 	int Getsize_elements();
+
+	bool GiveItem(int id_pokemon, const char* item_name);
 
 	//Create Functions 
 	PokemonCombat* CreatePokemon(pugi::xml_node&, uint id);
@@ -60,8 +69,11 @@ public:
 	PokemonCombat* pokemon_active_link = nullptr;
 	PokemonCombat* pokemon_active_trainer = nullptr;
 
+	uint id_map_combat = 0;
+
 private:
 	std::list<SceneElement*> elementcombat;
+	std::vector<Item_pokeCombat> bag_items;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	int pokemon_order = 0;
 };

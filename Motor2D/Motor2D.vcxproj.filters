@@ -428,16 +428,16 @@
     <Filter Include="Zelda Game\ElementsScene\NPCs\POKECOMBAT">
       <UniqueIdentifier>{ddb98437-effe-409d-8da7-6be560583198}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Zelda Game\1- XML">
+    <Filter Include="Zelda Game\.XML">
       <UniqueIdentifier>{6a882597-537e-47fe-8328-a787353c0983}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml">
-      <Filter>Zelda Game\1- XML</Filter>
+      <Filter>Zelda Game\.XML</Filter>
     </Xml>
     <Xml Include="..\Game\Levels.xml">
-      <Filter>Zelda Game\1- XML</Filter>
+      <Filter>Zelda Game\.XML</Filter>
     </Xml>
   </ItemGroup>
 </Project>

@@ -44,7 +44,11 @@ bool CombatManager::Awake(pugi::xml_node &config)
 bool CombatManager::Start()
 {
 	bool ret = true;
-
+	for (int i = 0; i < 3; i++)
+	{
+		Item_pokeCombat id;
+		bag_items.push_back(id);
+	}
 	return ret;
 }
 
@@ -157,25 +161,6 @@ void CombatManager::CreateTargets()
 	}*/
 }
 
-void CombatManager::PrepareToCombat(PokemonCombat* pokemon)
-{
-	if (pokemon->active == false)
-	{
-		pokemon->active = true;
-		pokemon->Start();
-		//pokemon->SetPotions();
-		pokemon->target = pokemon_active_trainer;
-		pokemon_active_trainer->target = pokemon;
-		elementcombat.push_back(pokemon);
-		pokemon_active_link = (PokemonCombat*)elementcombat.back();
-	}
-}
-
-void CombatManager::ModifyPosition(pugi::xml_node& conf)
-{
-
-}
-
 void CombatManager::CreateDynObject(iPoint pos, uint id, uint id_map)
 {
 	DynamicObjects* element = new DynamicObjects();
@@ -201,6 +186,50 @@ void CombatManager::CreateDynObject(iPoint pos, uint id, uint id_map)
 int CombatManager::Getsize_elements()
 {
 	return elementcombat.size();
+}
+
+bool CombatManager::GiveItem(int id_pokemon, const char* item_name)
+{
+	if (item_name == "pk_bag:HP UP")
+	{
+		if (bag_items[id_pokemon].hp_up)
+		{
+			return false;
+		}
+		else
+		{
+			bag_items[id_pokemon].hp_up = true;
+			return true;
+		}
+	}
+	else if (item_name == "pk_bag:DEF PROTEIN")
+	{
+		if (bag_items[id_pokemon].def_protein)
+		{
+			return false;
+		}
+		else
+		{
+			bag_items[id_pokemon].def_protein = true;
+			return true;
+		}
+	}
+	else if (item_name == "pk_bag:X ATTACK")
+	{
+		if (bag_items[id_pokemon].x_attack)
+		{
+			return false;
+		}
+		else
+		{
+			bag_items[id_pokemon].x_attack = true;
+			return true;
+		}
+	}
+	else
+	{
+		return false;
+	}
 }
 
 PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
@@ -304,7 +333,39 @@ bool CombatManager::DeleteElements_combat()
 		item++;
 	}
 	elementcombat.clear();
+	id_map_combat = 0;
 	return true;
+}
+
+void CombatManager::PrepareToCombat(PokemonCombat* pokemon, uint idMap, int id_pokemon)
+{
+	if (pokemon->active == false)
+	{
+		pugi::xml_document	config_file;
+		pugi::xml_node		config;
+		config = LoadConfig(config_file);
+		config = config.child("map_combat").child("map");
+		for (; config != NULL; config = config.next_sibling())
+		{
+			if (config.attribute("n").as_int(0) == idMap)
+			{
+				pokemon->active = true;
+				pokemon->Start();
+				ModifyStats(config, pokemon, bag_items[id_pokemon - 1]);
+				pokemon->target = pokemon_active_trainer;
+				pokemon_active_trainer->target = pokemon;
+				elementcombat.push_back(pokemon);
+				pokemon_active_link = (PokemonCombat*)elementcombat.back();
+			}
+		}
+	}
+}
+
+void CombatManager::ModifyStats(pugi::xml_node& conf, PokemonCombat* pokemon, Item_pokeCombat bag)
+{
+	pokemon->position.x = conf.child("poke_Link").attribute("pos_x").as_int(0);
+	pokemon->position.y = conf.child("poke_Link").attribute("pos_y").as_int(0);
+	pokemon->ModifyStats(&bag);
 }
 
 PokemonCombat* CombatManager::change_pokemon()//true Link - false Brendan
@@ -312,17 +373,17 @@ PokemonCombat* CombatManager::change_pokemon()//true Link - false Brendan
 	//Pokemon Link
 	if (App->scene->poke_hud->GetPokeOrder(pokemon_order) == "pk_bar_blaziken")
 	{
-		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Myval);
+		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Myval, id_map_combat, 1);
 		return App->scene->player->pokedex.begin()._Ptr->_Myval;
 	}
 	else if (App->scene->poke_hud->GetPokeOrder(pokemon_order) == "pk_bar_sceptile")
 	{
-		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Next->_Myval);
+		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Next->_Myval, id_map_combat, 2);
 		return App->scene->player->pokedex.begin()._Ptr->_Next->_Myval;
 	}
 	else
 	{
-		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Next->_Next->_Myval);
+		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Next->_Next->_Myval, id_map_combat, 3);
 		return App->scene->player->pokedex.begin()._Ptr->_Next->_Next->_Myval;
 	}
 	return nullptr;
