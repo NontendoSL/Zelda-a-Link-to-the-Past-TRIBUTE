@@ -9,9 +9,10 @@
 
 struct Item_pokeCombat
 {
-	bool hp_up = false;
-	bool def_protein = false;
-	bool x_attack = false;
+	int hp_up = 0;
+	int def_protein = 0;
+	int x_attack = 0;
+	int items_equiped = 3;
 };
 
 class NPC;

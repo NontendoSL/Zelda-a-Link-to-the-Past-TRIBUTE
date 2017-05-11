@@ -49,7 +49,7 @@ bool Groudon::Start()
 	offset_x = 7;
 	offset_y = 17;
 	timetoplay = SDL_GetTicks();
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKEMON, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKECOMBAT, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	sp_attacking = false;
@@ -93,7 +93,12 @@ bool Groudon::Update(float dt)
 		}
 		case PC_HIT:
 		{
-			Movebyhit();
+			Movebyhit(4);
+			break;
+		}
+		case PC_COLLISION:
+		{
+			Movebyhit(1);
 			break;
 		}
 		default:
@@ -180,36 +185,34 @@ void Groudon::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		PokemonCombat* isActive = (PokemonCombat*)c1->callback;
-		PokemonCombat* isActive_2 = (PokemonCombat*)c2->callback;
-		if (isActive != nullptr && isActive_2 != nullptr)
+		PokemonCombat* pokemon_1 = (PokemonCombat*)c1->callback;
+		PokemonCombat* pokemon_2 = (PokemonCombat*)c2->callback;
+		if (pokemon_1 != nullptr && pokemon_2 != nullptr)
 		{
-			if (isActive->active && isActive_2->active)
+			if (pokemon_1->active && pokemon_2->active && pokemon_1 != pokemon_2)
 			{
-				if (c1 == sp_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+				if (c1 == sp_attack && c2->type == COLLIDER_POKECOMBAT && getdamage == false)
 				{
-					PokemonCombat* temp = (PokemonCombat*)c2->callback;
-					temp->knockback_time.Start();
-					temp->hp -= sp_damage;
+					pokemon_2->knockback_time.Start();
+					pokemon_2->hp -= sp_damage;
 					getdamage = true;
 					App->scene->pokecombat->GetDamage(sp_damage, false);
-					temp->SetState(PC_HIT);
-					temp->SetAnimState(PC_HIT);
-					temp->dir_hit = c1->callback->direction;
-					temp->prev_position = temp->position;
+					pokemon_2->SetState(PC_HIT);
+					pokemon_2->SetAnimState(PC_HIT);
+					pokemon_2->dir_hit = c1->callback->direction;
+					pokemon_2->prev_position = pokemon_2->position;
 				}
 
-				if (c1 == collision_attack && c2->type == COLLIDER_POKEMON && getdamage == false)
+				if (c1 == collision_attack && c2->type == COLLIDER_POKECOMBAT && getdamage == false)
 				{
-					PokemonCombat* temp = (PokemonCombat*)c2->callback;
-					temp->knockback_time.Start();
-					temp->hp -= attack;
+					pokemon_2->knockback_time.Start();
+					pokemon_2->hp -= attack;
 					getdamage = true;
 					App->scene->pokecombat->GetDamage(attack, false);
-					temp->SetState(PC_HIT);
-					temp->SetAnimState(PC_HIT);
-					temp->dir_hit = c1->callback->direction;
-					temp->prev_position = temp->position;
+					pokemon_2->SetState(PC_HIT);
+					pokemon_2->SetAnimState(PC_HIT);
+					pokemon_2->dir_hit = c1->callback->direction;
+					pokemon_2->prev_position = pokemon_2->position;
 				}
 			}
 		}
@@ -433,7 +436,7 @@ bool Groudon::Chasing(float dt)
 	return true;
 }
 
-bool Groudon::Movebyhit()
+bool Groudon::Movebyhit(int speed)
 {
 	if (hp <= 0)
 	{
@@ -453,37 +456,30 @@ bool Groudon::Movebyhit()
 	{
 		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			position.y -= 4;
+			position.y -= speed;
 		}
 	}
 	else if (dir_hit == DOWN)
 	{
 		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			position.y += 4;
+			position.y += speed;
 		}
 	}
 	else if (dir_hit == LEFT)
 	{
 		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			position.x -= 4;
+			position.x -= speed;
 		}
 	}
 	else if (dir_hit == RIGHT)
 	{
 		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			position.x += 4;
+			position.x += speed;
 		}
 	}
-	/*if (position.x > (prev_position.x + 65) ||
-	position.x < (prev_position.x + 65) ||
-	position.y >(prev_position.y + 65) ||
-	position.y < (prev_position.y + 65))
-	{
-	state = IDLE;
-	}*/
 	return true;
 }
 

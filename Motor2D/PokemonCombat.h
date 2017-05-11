@@ -7,7 +7,7 @@
 #include "j1Collision.h"
 #include "CombatManager.h"
 
-enum PokemonCombatState { PC_IDLE = 0, PC_WALKING, PC_ATTACKING, PC_SPECIAL, PC_HIT, PC_DYING, PC_STATIC, PC_STUNNED, PC_CHASING };
+enum PokemonCombatState { PC_IDLE = 0, PC_WALKING, PC_ATTACKING, PC_SPECIAL, PC_HIT, PC_DYING, PC_STATIC, PC_STUNNED, PC_COLLISION, PC_CHASING };
 enum PokemonParticles { BUBBLE, LEAF };
 
 class PokemonCombat : public NPC
@@ -39,18 +39,18 @@ public:
 
 	void ModifyStats(const Item_pokeCombat* items)
 	{
-		if (items->def_protein)
+		if (items->def_protein > 0)
 		{
-			defense += 1;
+			defense += items->def_protein;
 		}
-		if (items->hp_up)
+		if (items->hp_up > 0)
 		{
-			hp += 50;
+			hp += items->hp_up;
 		}
-		if (items->x_attack)
+		if (items->x_attack > 0)
 		{
-			attack += 4;
-			sp_damage += 8;
+			attack += items->x_attack;
+			sp_damage += items->x_attack * 2;
 		}
 	}
 

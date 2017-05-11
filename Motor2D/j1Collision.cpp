@@ -47,8 +47,9 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_POKEMON][COLLIDER_POKEMON] = false;
 	matrix[COLLIDER_POKEMON][COLLIDER_SWORD] = true; 
 
-	matrix[COLLIDER_POKEMON_SPECIAL_ATTACK][COLLIDER_POKEMON] = true;
-	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKEMON] = true;
+	matrix[COLLIDER_POKECOMBAT][COLLIDER_POKECOMBAT] = true;
+	matrix[COLLIDER_POKEMON_SPECIAL_ATTACK][COLLIDER_POKECOMBAT] = true;
+	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKECOMBAT] = true;
 
 	matrix[COLLIDER_GANON][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_GANON][COLLIDER_SWORD] = true;
@@ -203,9 +204,12 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_POKEMON: // Green
 		{
-			Pokemon* temp = (Pokemon*)colliders[i]->callback;
-			if (temp->active || App->scene->combat == false)
-				App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
+		}
+		case COLLIDER_POKECOMBAT:
+		{
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		}
 		case COLLIDER_VILAGER:

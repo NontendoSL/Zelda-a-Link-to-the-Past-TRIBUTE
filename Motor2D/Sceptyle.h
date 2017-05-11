@@ -47,7 +47,7 @@ public:
 
 	void Stunned();
 
-	bool Movebyhit();
+	bool Movebyhit(int speed);
 
 private:
 

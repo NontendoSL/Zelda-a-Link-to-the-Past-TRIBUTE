@@ -85,6 +85,7 @@ bool CombatManager::Update(float dt)
 							if (poke->sp_attack != nullptr)
 								poke->sp_attack->to_delete = true;
 							elementcombat.erase(item);
+							item++;
 							pokemon_order++;
 							change_pokemon();
 						}
@@ -94,20 +95,21 @@ bool CombatManager::Update(float dt)
 							App->scene->switch_map = App->scene->last_map;
 							App->scene->useTP = true;
 							App->scene->player->state_complet = true;
+							item++;
 						}
-
 					}
 					else
 					{
 						item._Ptr->_Myval->Update(dt);
+						item++;
 					}
 				}
 			}
 			else
 			{
 				item._Ptr->_Myval->Update(dt);
+				item++;
 			}
-			item++;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
 		{
@@ -197,44 +199,59 @@ int CombatManager::Getsize_elements()
 
 bool CombatManager::GiveItem(int id_pokemon, const char* item_name)
 {
-	if (item_name == "pk_bag:HP UP")
+	if (bag_items[id_pokemon].items_equiped < 3)
 	{
-		if (bag_items[id_pokemon].hp_up)
+		if (item_name == "pk_bag:HP UP")
 		{
-			return false;
+			if (bag_items[id_pokemon].hp_up >= 3)
+			{
+				return false;
+			}
+			else
+			{
+				LOG("Item Equiped!");
+				bag_items[id_pokemon].hp_up++;
+				bag_items[id_pokemon].items_equiped++;
+				return true;
+			}
+		}
+		else if (item_name == "pk_bag:DEF PROTEIN")
+		{
+			if (bag_items[id_pokemon].def_protein >= 3)
+			{
+				return false;
+			}
+			else
+			{
+				LOG("Item Equiped!");
+				bag_items[id_pokemon].def_protein++;
+				bag_items[id_pokemon].items_equiped++;
+				return true;
+			}
+		}
+		else if (item_name == "pk_bag:X ATTACK")
+		{
+			if (bag_items[id_pokemon].x_attack >= 3)
+			{
+				return false;
+			}
+			else
+			{
+				LOG("Item Equiped!");
+				bag_items[id_pokemon].x_attack++;
+				bag_items[id_pokemon].items_equiped++;
+				return true;
+			}
 		}
 		else
 		{
-			bag_items[id_pokemon].hp_up = true;
-			return true;
-		}
-	}
-	else if (item_name == "pk_bag:DEF PROTEIN")
-	{
-		if (bag_items[id_pokemon].def_protein)
-		{
+			LOG("Error name!");
 			return false;
-		}
-		else
-		{
-			bag_items[id_pokemon].def_protein = true;
-			return true;
-		}
-	}
-	else if (item_name == "pk_bag:X ATTACK")
-	{
-		if (bag_items[id_pokemon].x_attack)
-		{
-			return false;
-		}
-		else
-		{
-			bag_items[id_pokemon].x_attack = true;
-			return true;
 		}
 	}
 	else
 	{
+		LOG("Can't equip more items!");
 		return false;
 	}
 }
