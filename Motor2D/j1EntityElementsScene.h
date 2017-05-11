@@ -69,7 +69,7 @@ public:
 	void CreateVillager(pugi::xml_node&);
 	void CreateGMinion(iPoint pos);
 	void CreateRMinion(iPoint pos);
-	void CreateFireBat(iPoint* path);
+	void CreateFireBat();
 
 	//Delete Functions
 	bool DeleteEnemy(Soldier* enemy);
@@ -93,6 +93,8 @@ public:
 	//texture Brendan
 	SDL_Texture* texture_trainer = nullptr;
 	std::string file_tex_trainer;
+
+	Ganon* ganon = nullptr;
 
 private:
 	std::list<SceneElement*> elementscene;

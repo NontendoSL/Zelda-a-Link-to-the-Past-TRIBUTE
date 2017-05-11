@@ -27,9 +27,9 @@ bool Ganon::Start()
 	direction = DOWN;
 
 	//Animation States & initial Phase
-	state = G_WALKING;
-	anim_state = G_WALKING;
-	phase = INITIAL;
+	state = G_ATTACKING;
+	anim_state = G_SPECIAL_1;
+	phase = RAGE;
 
 	//Set stats
 	speed = 40;
@@ -173,6 +173,20 @@ bool Ganon::InvincibleUpdate(float dt)
 
 bool Ganon::RageUpdate(float dt)
 {
+	if (test)
+	{
+		float factor = (float)M_PI / 180.0f * MULTI_P;
+		for (uint i = 0; i < NUM_POINTS_CIRCLE; ++i)
+		{
+			iPoint temp;
+			temp.x = (int)(position.x + radius * cos(i * factor));
+			temp.y = (int)(position.y + radius * sin(i * factor));
+			points.push_back(temp);
+		}
+
+		firebat_spawn.Start();
+		test = false;
+	}
 	//Until Ganon is alive.
 	if (hp > 0)
 	{
@@ -347,7 +361,7 @@ void Ganon::FireBats()
 {
 	if (firebat_spawn.ReadSec() >= firebat_rate)
 	{
-		//App->entity_elements->CreateFireBat(pos);
+		App->entity_elements->CreateFireBat();
 	}
 
 	anim_state = G_SPECIAL_1;
@@ -439,6 +453,18 @@ void Ganon::SetState(GanonState s_state)
 void Ganon::SetAnimState(GanonState a_state)
 {
 	anim_state = a_state;
+}
+
+iPoint Ganon::GetPosinVect(int index)
+{
+	if (index > 0 && index < points.size())
+	{
+		return points[index];
+	}
+	else
+	{
+		return{ 0,0 };
+	}
 }
 
 

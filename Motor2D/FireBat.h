@@ -14,7 +14,7 @@ public:
 	~FireBat();
 
 	// Called before the first frame
-	bool Start(iPoint* path);
+	bool Start();
 
 	// Called each loop iteration
 	bool Update(float dt);
@@ -24,7 +24,7 @@ public:
 private:
 
 	//POSITION & MOVEMENT VARIABLES ---
-	iPoint* path = nullptr;
+	int pos_in_vect = 0;
 	// -------------
 
 	FireBatState state = B_SLEEP;

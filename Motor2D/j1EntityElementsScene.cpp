@@ -414,6 +414,7 @@ void j1EntityElementScene::CreateGanon(pugi::xml_node& conf)
 	temp->Awake(conf, 1);
 	temp->Start();
 	elementscene.push_back(temp);
+	ganon = (Ganon*)elementscene.back();
 }
 
 void j1EntityElementScene::CreateVillager(pugi::xml_node& conf)
@@ -438,10 +439,10 @@ void j1EntityElementScene::CreateRMinion(iPoint pos)
 	elementscene.push_back(temp);
 }
 
-void j1EntityElementScene::CreateFireBat(iPoint* path)
+void j1EntityElementScene::CreateFireBat()
 {
 	FireBat* temp = new FireBat();
-	temp->Start(path);
+	temp->Start();
 	elementscene.push_back(temp);
 }
 

@@ -1,5 +1,7 @@
 #include "FireBat.h"
 #include "j1Collision.h"
+#include "j1EntityElementsScene.h"
+#include "Ganon.h"
 
 FireBat::FireBat()
 {
@@ -11,10 +13,11 @@ FireBat::~FireBat()
 {
 }
 
-bool FireBat::Start(iPoint* path_pos)
+bool FireBat::Start()
 {
 	//Load initial position & direction
-	path = path_pos;
+	pos_in_vect = 0;
+	position = App->entity_elements->ganon->GetPosinVect(pos_in_vect);
 	direction = DOWN;
 
 	//Load Stats
@@ -40,10 +43,14 @@ bool FireBat::Start(iPoint* path_pos)
 
 bool FireBat::Update(float dt)
 {
-
-	return false;
+	position = App->entity_elements->ganon->GetPosinVect(++pos_in_vect);
+	return true;
 }
 
 void FireBat::Draw()
 {
+	anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
+	pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
+
+	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 }

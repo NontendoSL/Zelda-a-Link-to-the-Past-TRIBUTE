@@ -60,9 +60,14 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
+	//UTILITY FUNCTIONS -----
 	GanonState GetState();
 	void SetState(GanonState state);
 	void SetAnimState(GanonState state);
+	iPoint GetPosinVect(int index);
+	//-----------------------------
+
+
 
 private:
 	GanonState state = G_WALKING;
@@ -98,6 +103,8 @@ private:
 	std::vector<iPoint> points;
 	GanonState special_attack = G_SPECIAL_1;
 	// -----------------------
+
+	bool test = true;
 
 };
 
