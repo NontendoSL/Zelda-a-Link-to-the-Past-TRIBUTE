@@ -54,7 +54,7 @@ bool Dusclops::Start()
 	reset_distance = false;
 	sp_attacking = false;
 	reset_run = true;
-	texture_special = App->tex->Load("Dusclops_special_2.png");
+	texture_special = App->tex->Load("textures/Dusclops_special_2.png");
 	rect_special = { 0,0,30,30 };
 	pos_special = iPoint(0,0);
 	return true;

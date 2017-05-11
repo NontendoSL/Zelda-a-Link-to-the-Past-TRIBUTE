@@ -72,9 +72,6 @@
 	<window>
     <resolution width="640" height="480" scale="2" />
 		<fullscreen value="false" />
-		<borderless value="false" />
-		<resizable value="false" />
-		<fullscreen_window value="false" />
 	</window>
   
 	<file_system>
