@@ -344,7 +344,7 @@
     <map n="18" file="EliteFour01.tmx">
       <camera follow="false"/>
       <poke_Link pos_x="96" pos_y="128"/>
-      <trainer id="1" name="Sidney" active="false" pos_x="0" pos_y="0" file="textures/PokemonCharacters.png">
+      <trainer id="1" name="Sidney" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
         <pokemon id="6" name="SHIFTRY" speed="1" cooldown="150" dir="left" hp="120" attack="5" special_attack="23" defense="1" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
@@ -357,13 +357,20 @@
         <edit pos_x="20" pos_y="26" />
         <edit pos_x="21" pos_y="26" />
         <edit pos_x="22" pos_y="26" />
+        <!--Trainer wall-->
+        <delete_edit pos_x="19" pos_y="17" />
+        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="16" />
+        <delete_edit pos_x="19" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="18" />
       </editcost>
     </map>
 
     <map n="19" file="EliteFour02.tmx">
       <camera follow="false"/>
       <poke_Link pos_x="96" pos_y="128"/>
-      <trainer id="1" name="Phoebe" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
+      <trainer id="1" name="Phoebe" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
         <pokemon id="7" name="DUSCLOPS" speed="1" cooldown="150" dir="left" hp="250" attack="3" special_attack="12" defense="1" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
@@ -374,24 +381,40 @@
         <edit pos_x="19" pos_y="26" />
         <edit pos_x="20" pos_y="26" />
         <edit pos_x="21" pos_y="26" />
+        <!--Trainer wall-->
+        <delete_edit pos_x="19" pos_y="17" />
+        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="16" />
+        <delete_edit pos_x="19" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="18" />
       </editcost>
     </map>
 
     <map n="20" file="EliteFour03.tmx">
       <camera follow="false"/>
       <poke_Link pos_x="96" pos_y="128"/>
-      <trainer id="1" name="Glacia" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
+      <trainer id="1" name="Glacia" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
         <pokemon id="4" name="WALREIN" speed="1" cooldown="150" dir="left" hp="700" attack="6" special_attack="21" defense="1" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="55" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
+      <editcost>
+        <!--Trainer wall-->
+        <delete_edit pos_x="19" pos_y="17" />
+        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="16" />
+        <delete_edit pos_x="19" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="18" />
+      </editcost>
     </map>
 
     <map n="21" file="EliteFour04.tmx">
       <camera follow="false"/>
       <poke_Link pos_x="96" pos_y="128"/>
-      <trainer id="1" name="Drake" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
+      <trainer id="1" name="Drake" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
         <pokemon id="5" name="SALAMANCE" speed="1" cooldown="150" dir="left" hp="400" attack="3" special_attack="12" defense="1" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
@@ -402,13 +425,20 @@
         <edit pos_x="19" pos_y="25" />
         <edit pos_x="20" pos_y="25" />
         <edit pos_x="21" pos_y="25" />
+        <!--Trainer wall-->
+        <delete_edit pos_x="19" pos_y="17" />
+        <delete_edit pos_x="20" pos_y="17" />
+        <delete_edit pos_x="19" pos_y="16" />
+        <delete_edit pos_x="20" pos_y="16" />
+        <delete_edit pos_x="19" pos_y="18" />
+        <delete_edit pos_x="20" pos_y="18" />
       </editcost>
     </map>
 
     <map n="22" file="RedCombatMap.tmx">
       <camera follow="false"/>
       <poke_Link pos_x="96" pos_y="128"/>
-      <trainer id="1" name="Red" active="false" pos_x="145" pos_y="135" file="textures/PokemonCharacters.png">
+      <trainer id="1" name="Red" active="false" pos_x="168" pos_y="160" file="textures/PokemonCharacters.png">
         <pokemon id="8" name="GROUDON" speed="1" cooldown="150" dir="left" hp="69" attack="3" special_attack="12" defense="1" pos_x="208" pos_y="136" active="true"/>
       </trainer>
       <dynobjects>
@@ -419,6 +449,13 @@
         <edit pos_x="21" pos_y="30" />
         <edit pos_x="22" pos_y="30" />
         <edit pos_x="23" pos_y="30" />
+        <!--Trainer wall-->
+        <delete_edit pos_x="21" pos_y="20" />
+        <delete_edit pos_x="22" pos_y="20" />
+        <delete_edit pos_x="21" pos_y="21" />
+        <delete_edit pos_x="22" pos_y="21" />
+        <delete_edit pos_x="21" pos_y="22" />
+        <delete_edit pos_x="22" pos_y="22" />
       </editcost>
     </map>
   </map_combat>
