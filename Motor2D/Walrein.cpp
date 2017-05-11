@@ -201,7 +201,7 @@ void Walrein::OnCollision(Collider* c1, Collider* c2)
 						pokemon_2->knockback_time.Start();
 						pokemon_2->hp -= sp_damage;
 						getdamage = true;
-						App->scene->pokecombat->GetDamage(sp_damage, false);
+						App->scene->pokecombat->GetDamage(sp_damage, true);
 						pokemon_2->SetState(PC_HIT);
 						pokemon_2->SetAnimState(PC_HIT);
 						pokemon_2->dir_hit = c1->callback->direction;
@@ -213,7 +213,7 @@ void Walrein::OnCollision(Collider* c1, Collider* c2)
 						pokemon_2->time_stunned.Start();
 						pokemon_2->hp -= sp_damage;
 						getdamage = true;
-						App->scene->pokecombat->GetDamage(sp_damage, false);
+						App->scene->pokecombat->GetDamage(sp_damage, true);
 						pokemon_2->SetState(PC_STUNNED);
 						pokemon_2->SetAnimState(PC_HIT);
 						pokemon_2->dir_hit = c1->callback->direction;

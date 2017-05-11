@@ -359,6 +359,8 @@
         <edit pos_x="20" pos_y="26" />
         <edit pos_x="21" pos_y="26" />
         <edit pos_x="22" pos_y="26" />
+      </editcost>
+      <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="19" pos_y="17" />
         <delete_edit pos_x="20" pos_y="17" />
@@ -366,7 +368,7 @@
         <delete_edit pos_x="20" pos_y="16" />
         <delete_edit pos_x="19" pos_y="18" />
         <delete_edit pos_x="20" pos_y="18" />
-      </editcost>
+      </deletecost>
     </map>
 
     <map n="19" file="EliteFour02.tmx">
@@ -383,6 +385,8 @@
         <edit pos_x="19" pos_y="26" />
         <edit pos_x="20" pos_y="26" />
         <edit pos_x="21" pos_y="26" />
+      </editcost>
+      <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="19" pos_y="17" />
         <delete_edit pos_x="20" pos_y="17" />
@@ -390,7 +394,7 @@
         <delete_edit pos_x="20" pos_y="16" />
         <delete_edit pos_x="19" pos_y="18" />
         <delete_edit pos_x="20" pos_y="18" />
-      </editcost>
+      </deletecost>
     </map>
 
     <map n="20" file="EliteFour03.tmx">
@@ -402,7 +406,7 @@
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="55" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
-      <editcost>
+      <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="19" pos_y="17" />
         <delete_edit pos_x="20" pos_y="17" />
@@ -410,7 +414,7 @@
         <delete_edit pos_x="20" pos_y="16" />
         <delete_edit pos_x="19" pos_y="18" />
         <delete_edit pos_x="20" pos_y="18" />
-      </editcost>
+      </deletecost>
     </map>
 
     <map n="21" file="EliteFour04.tmx">
@@ -427,6 +431,8 @@
         <edit pos_x="19" pos_y="25" />
         <edit pos_x="20" pos_y="25" />
         <edit pos_x="21" pos_y="25" />
+      </editcost>
+      <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="19" pos_y="17" />
         <delete_edit pos_x="20" pos_y="17" />
@@ -434,7 +440,7 @@
         <delete_edit pos_x="20" pos_y="16" />
         <delete_edit pos_x="19" pos_y="18" />
         <delete_edit pos_x="20" pos_y="18" />
-      </editcost>
+      </deletecost>
     </map>
 
     <map n="22" file="RedCombatMap.tmx">
@@ -451,6 +457,8 @@
         <edit pos_x="21" pos_y="30" />
         <edit pos_x="22" pos_y="30" />
         <edit pos_x="23" pos_y="30" />
+      </editcost>
+      <deletecost>
         <!--Trainer wall-->
         <delete_edit pos_x="21" pos_y="20" />
         <delete_edit pos_x="22" pos_y="20" />
@@ -458,7 +466,7 @@
         <delete_edit pos_x="22" pos_y="21" />
         <delete_edit pos_x="21" pos_y="22" />
         <delete_edit pos_x="22" pos_y="22" />
-      </editcost>
+      </deletecost>
     </map>
   </map_combat>
   

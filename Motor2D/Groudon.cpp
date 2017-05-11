@@ -196,7 +196,7 @@ void Groudon::OnCollision(Collider* c1, Collider* c2)
 					pokemon_2->knockback_time.Start();
 					pokemon_2->hp -= sp_damage;
 					getdamage = true;
-					App->scene->pokecombat->GetDamage(sp_damage, false);
+					App->scene->pokecombat->GetDamage(sp_damage, true);
 					pokemon_2->SetState(PC_HIT);
 					pokemon_2->SetAnimState(PC_HIT);
 					pokemon_2->dir_hit = c1->callback->direction;
@@ -208,7 +208,7 @@ void Groudon::OnCollision(Collider* c1, Collider* c2)
 					pokemon_2->knockback_time.Start();
 					pokemon_2->hp -= attack;
 					getdamage = true;
-					App->scene->pokecombat->GetDamage(attack, false);
+					App->scene->pokecombat->GetDamage(attack, true);
 					pokemon_2->SetState(PC_HIT);
 					pokemon_2->SetAnimState(PC_HIT);
 					pokemon_2->dir_hit = c1->callback->direction;

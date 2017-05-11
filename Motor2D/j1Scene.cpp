@@ -1041,6 +1041,10 @@ bool j1Scene::Load_Combat_map(int n)
 			{
 				App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), App->map->data.tilesets[0]->firstgid + 1);
 			}
+			for (pugi::xml_node editcost = temp.child("deletecost").child("delete_edit"); editcost != NULL; editcost = editcost.next_sibling())
+			{
+				App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), 0);
+			}
 
 			//Load UI (?)
 			stop_rearch = true;
