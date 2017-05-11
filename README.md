@@ -22,6 +22,7 @@ CONTROLS
 		Q -> Interact with chests and NPCs.
 		Z -> Cast the special Ability in combat.
 		+/- -> Up/Down the audio volume.
+		0 -> Open shop in Pokémon World.
 		
 	Controller:
 	
@@ -38,13 +39,8 @@ CONTROLS
 		F10 -> Display colliders.
 		X -> Lower Pokémon HP in combat.
 		I,J,K,L -> Movement mini-teleports (4 directions).
-		1 -> teleport to Link House.
-		2 -> teleport to Hyrule Outdoors.
-		3 -> teleport to Uncle's Room.
-		4 -> teleport to Hyrule Castle.
-		5 -> teleport to miniboss Room.
-		7 -> teleport to Victory Road.
-		9 -> teleport to Pokémon League.
+		G -> Defeats enemy pokémon to instawin the combat.
+		8 -> teleport to Pyramid of Power(Boss Fight).
 		
 
 OBJECTIVE
@@ -69,6 +65,22 @@ THE POKÉMON COMBAT
 	 
 
 CHANGELOG
+
+v0.8
+
+	The boss has been implemented.
+	Added new enemies for the boss fight.
+	All pokémon combat implemented and working.
+	Player bag implemented.
+	Bag UI implemented.
+	Pokémon items implemented.
+	Pokémon money implemented.
+	The shop has been implemented, use 0 in Pokémon World.
+	Shop UI implemented.
+	All elite four members working properly.
+	Minor map changes.
+	Minor animation changes.
+
 v0.7
 
 	Added Pokémon World maps:
