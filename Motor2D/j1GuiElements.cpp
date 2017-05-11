@@ -1753,6 +1753,7 @@ bool PokemonWorldBag::AddItem(const char* identifier, bool add) //ret false if c
 {
 	if (identifier == "pk_bag:CLOSE")
 		return false;
+
 	for (int i = 0; i < bag_item.size(); i++)
 	{
 		if (bag_item[i]->ui_button->identifier == identifier)
