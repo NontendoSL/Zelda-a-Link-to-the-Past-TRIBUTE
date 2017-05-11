@@ -423,6 +423,7 @@ void Ganon::ResetFireBats()
 
 void Ganon::StartJump()
 {
+	Reorientate();
 	jump_origin = position;
 	jump_dest = App->scene->player->position;
 	jump_timer.Start();
@@ -466,6 +467,8 @@ void Ganon::FireJump()
 		state = G_ATTACKING;
 		anim_state = G_SPECIAL_2;
 		special_attack = G_SPECIAL_2;
+
+		Reorientate();
 	}
 	// -------------------------
 }
