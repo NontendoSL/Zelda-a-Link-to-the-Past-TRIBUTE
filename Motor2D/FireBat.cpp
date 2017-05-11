@@ -22,7 +22,7 @@ bool FireBat::Start()
 
 	//Load Stats
 	hp = 1;
-	speed = 60;
+	speed = 1;
 	attack = 5;
 
 	//Animation
@@ -31,7 +31,7 @@ bool FireBat::Start()
 	animation = *App->anim_manager->GetAnimStruct(FIREBAT);
 
 	//Set Collision
-	offset_x =2;
+	offset_x = 2;
 	offset_y = 2;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 4, 4 }, COLLIDER_GMINION, this);
 
@@ -43,7 +43,13 @@ bool FireBat::Start()
 
 bool FireBat::Update(float dt)
 {
-	position = App->entity_elements->ganon->GetPosinVect(++pos_in_vect);
+	pos_in_vect += speed * 2;
+	if (pos_in_vect >= 180)
+	{
+		pos_in_vect = 0;
+	}
+	position = App->entity_elements->ganon->GetPosinVect(pos_in_vect);
+	collision_feet->SetPos(position.x, position.y);
 	return true;
 }
 

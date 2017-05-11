@@ -28,7 +28,7 @@ bool Ganon::Start()
 
 	//Animation States & initial Phase
 	state = G_ATTACKING;
-	anim_state = G_SPECIAL_1;
+	anim_state = G_SPECIAL_2;
 	phase = RAGE;
 
 	//Set stats
@@ -163,10 +163,9 @@ bool Ganon::InvincibleUpdate(float dt)
 			points.push_back(temp);
 		}
 
-		firebat_spawn.Start();
-
 		state = G_ATTACKING;
-		special_attack = G_SPECIAL_1;
+		special_attack = G_SPECIAL_2;
+		anim_state = G_SPECIAL_2;
 	}
 	return true;
 }
@@ -183,9 +182,12 @@ bool Ganon::RageUpdate(float dt)
 			temp.y = (int)(position.y + radius * sin(i * factor));
 			points.push_back(temp);
 		}
-
-		firebat_spawn.Start();
+		state = G_ATTACKING;
+		special_attack = G_SPECIAL_2;
+		anim_state = G_SPECIAL_2;
 		test = false;
+		firebat_rate = 2;
+		new_fire_bat = 30;
 	}
 	//Until Ganon is alive.
 	if (hp > 0)
@@ -344,11 +346,11 @@ void Ganon::SpecialAttack()
 	// ATTACK PATTERN: 1 Fire Bats, then 1 Jump and Circle attack.
 	switch (special_attack)
 	{
-	case G_SPECIAL_1:
+	case G_SPECIAL_2:
 		FireBats();
 		break;
 
-	case G_SPECIAL_2:
+	case G_SPECIAL_1:
 		FireCircle();
 		break;
 
@@ -359,19 +361,28 @@ void Ganon::SpecialAttack()
 
 void Ganon::FireBats()
 {
-	if (firebat_spawn.ReadSec() >= firebat_rate)
+	if (num_firebats < max_spawns)
 	{
-		App->entity_elements->CreateFireBat();
+		time_to_create += firebat_rate;
+		if (time_to_create >= new_fire_bat && num_firebats < max_spawns)
+		{
+			App->entity_elements->CreateFireBat();
+			num_firebats++;
+			time_to_create = 0;
+		}
 	}
+	else if (ChangeRadius_degrade(70, true))
+	{
 
-	anim_state = G_SPECIAL_1;
-	special_attack = G_SPECIAL_2;
+	}
+	else
+	{
+
+	}
 }
 
 void Ganon::FireCircle()
 {
-
-
 	anim_state = G_SPECIAL_2;
 	special_attack = G_SPECIAL_1;
 }
@@ -465,6 +476,39 @@ iPoint Ganon::GetPosinVect(int index)
 	{
 		return{ 0,0 };
 	}
+}
+
+bool Ganon::ChangeRadius_degrade(int radius_to_stop, bool increment)
+{
+	if (increment && radius != radius_to_stop)
+	{
+		radius += 1;
+		float factor = (float)M_PI / 180.0f * MULTI_P;
+		for (uint i = 0; i < NUM_POINTS_CIRCLE; ++i)
+		{
+			points[i].x = (int)(position.x + radius * cos(i * factor));
+			points[i].y = (int)(position.y + radius * sin(i * factor));
+		}
+		if (radius == radius_to_stop)
+		{
+			return true;
+		}
+	}
+	else if (radius != radius_to_stop)
+	{
+		radius -= 1;
+		float factor = (float)M_PI / 180.0f * MULTI_P;
+		for (uint i = 0; i < NUM_POINTS_CIRCLE; ++i)
+		{
+			points[i].x = (int)(position.x + radius * cos(i * factor));
+			points[i].y = (int)(position.y + radius * sin(i * factor));
+		}
+		if (radius == radius_to_stop)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 

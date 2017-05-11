@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-enum FireBatState { B_AWAKENING = 0, B_FLYING, B_DYING, B_SLEEP };
+enum FireBatState { B_SLEEP = 0, B_AWAKENING, B_FLYING, B_DYING };
 
 
 class FireBat : public NPC

@@ -4,8 +4,8 @@
 
 #include "NPC.h"
 
-#define NUM_POINTS_CIRCLE 90
-#define MULTI_P 4
+#define NUM_POINTS_CIRCLE 180
+#define MULTI_P 2
 
 enum GanonPhase { SLEEP = 0, INITIAL, INVINCIBLE, RAGE, DEATH };
 enum GanonState { G_WALKING = 0, G_HIT, G_MELEE, G_SPECIAL_1/*Jump&Fire*/, G_SPECIAL_2/*FireBats*/, G_SHIELD, G_DYING, G_ATTACKING, G_IDLE};
@@ -65,6 +65,7 @@ public:
 	void SetState(GanonState state);
 	void SetAnimState(GanonState state);
 	iPoint GetPosinVect(int index);
+	bool ChangeRadius_degrade(int radius_to_stop, bool increment);
 	//-----------------------------
 
 
@@ -92,14 +93,17 @@ private:
 	//2ND PHASE VARIABLES ---
 	j1Timer spawn_timer;
 	int spawn_rate = 2;
+	int max_spawns = 6;
+	int num_firebats = 0;
 	int minions_killed = 0;
 	int minions_spawned = 0;
 	// -----------------------
 
 	//3D PHASE VARIABLES -----
-	int radius = 10;
-	j1Timer firebat_spawn;
-	float firebat_rate = 0.4;
+	int radius = 40;
+	int time_to_create = 0;
+	int firebat_rate = 2;
+	int new_fire_bat = 30;
 	std::vector<iPoint> points;
 	GanonState special_attack = G_SPECIAL_1;
 	// -----------------------
