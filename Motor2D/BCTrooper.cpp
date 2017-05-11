@@ -41,14 +41,19 @@ bool BCTrooper::Start()
 		temp.y = (int)(position.y + radius * sin(i * factor));
 		points.push_back(temp);
 	}
-	bole.x = points[0].x;
-	bole.y = points[0].y;
-	bole_2.x = points[22].x;
-	bole_2.y = points[22].y;
-	bole_3.x = points[44].x;
-	bole_3.y = points[44].y;
-	bole_4.x = points[66].x;
-	bole_4.y = points[66].y;
+	
+	for (int i = 0, pos = 0; i < 4; i++, pos += 22)
+	{
+		Bole temp;
+		temp.position = points[pos];
+		temp.pos_in_vect = pos;
+		temp.active = true;
+		boles.push_back(temp);
+	}
+	for (int i = 1; i < 4; i++)
+	{
+		boles[i].active = false;
+	}
 	prev_position = position;
 	Wait_attack.Start();
 	speed = 10;
@@ -57,8 +62,8 @@ bool BCTrooper::Start()
 	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(BC_TROOPER);
 	collision_feet = App->collision->AddCollider({ position.x - 8, position.y - 5, 16, 15 }, COLLIDER_BCTROOPER, this);
-	collision_maze = App->collision->AddCollider({ bole.x - 7, bole.y - 7, 14, 14 }, COLLIDER_BCTROOPER_MAZE, this);
-	App->particlemanager->CreateFollow_P(nullptr, &bole, SDL_Rect{ 0,10,2,0 }, iPoint(5,5), iPoint(18,8), 4, 30, true);
+	collision_maze = App->collision->AddCollider({ boles[0].position.x - 7, boles[0].position.y - 7, 14, 14 }, COLLIDER_BCTROOPER_MAZE, this);
+	App->particlemanager->CreateFollow_P(nullptr, &boles[0].position, SDL_Rect{ 0,10,2,0 }, iPoint(5,5), iPoint(18,8), 4, 30, true);
 	particle_maze = App->particlemanager->Group_Follow.back();
 	return true;
 }
@@ -103,6 +108,15 @@ bool BCTrooper::Update(float dt)
 		}
 	}
 
+	if (hp < 40 && next_phase == false)
+	{
+		for (int i = 1; i < 4; i++)
+		{
+			boles[i].active = true;
+		}
+		next_phase = true;
+	}
+
 	if (state != BC_HIT && state != BC_DYING)
 	{
 		if (position.x != prev_position.x || position.y != prev_position.y)
@@ -116,46 +130,17 @@ bool BCTrooper::Update(float dt)
 			}
 		}
 		
-		pos_in_vect += speed_bole;
-		if (pos_in_vect >= NUM_POINTS_CIRCLE)
+		for (int i = 0; i < boles.size(); i++)
 		{
-			pos_in_vect = 1;
-		}
-		pos_in_vect_2 += speed_bole;
-		if (pos_in_vect_2 >= NUM_POINTS_CIRCLE)
-		{
-			pos_in_vect_2 = 1;
-		}
-		pos_in_vect_3 += speed_bole;
-		if (pos_in_vect_3 >= NUM_POINTS_CIRCLE)
-		{
-			pos_in_vect_3 = 1;
-		}
-		pos_in_vect_4 += speed_bole;
-		if (pos_in_vect_4 >= NUM_POINTS_CIRCLE)
-		{
-			pos_in_vect_4 = 1;
-		}
-		if (hp > 40)
-		{
-			bole.x = points[pos_in_vect].x;
-			bole.y = points[pos_in_vect].y;
-		}
-		else
-		{
-			bole.x = points[pos_in_vect].x;
-			bole.y = points[pos_in_vect].y;
+			boles[i].pos_in_vect += speed_bole;
+			if (boles[i].pos_in_vect >= NUM_POINTS_CIRCLE)
+			{
+				boles[i].pos_in_vect = 1;
+			}
 
-			bole_2.x = points[pos_in_vect_2].x;
-			bole_2.y = points[pos_in_vect_2].y;
-
-			bole_3.x = points[pos_in_vect_3].x;
-			bole_3.y = points[pos_in_vect_3].y;
-
-			bole_4.x = points[pos_in_vect_4].x;
-			bole_4.y = points[pos_in_vect_4].y;
+			boles[i].position.x = points[boles[i].pos_in_vect].x;
+			boles[i].position.y = points[boles[i].pos_in_vect].y;
 		}
-
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
@@ -178,7 +163,7 @@ bool BCTrooper::Update(float dt)
 	}
 	//Update colliders position
 	collision_feet->SetPos(position.x - 8, position.y - 5);
-	collision_maze->SetPos(bole.x - 7, bole.y - 7);
+	collision_maze->SetPos(boles[0].position.x - 7, boles[0].position.y - 7);
 	return true;
 }
 
@@ -206,57 +191,20 @@ void BCTrooper::Draw()
 					App->render->Blit(texture, points[i].x, points[i].y, &temp);
 				}
 			}
-
-			if (hp > 40)
+			for (int i = 0; i < boles.size(); i++)
 			{
-				//Draw Chain
-				SDL_Rect temp_3 = { 0,0,radius,6 };
-				App->render->Blit(texture, position.x, position.y, &temp_3, 1, true, pos_in_vect * MULTI_P, 5, 5);
+				if (boles[i].active)
+				{
+					//Draw Chain
+					SDL_Rect chain_r = { 0,0,radius,6 };
+					App->render->Blit(texture, position.x, position.y, &chain_r, 1, true, boles[i].pos_in_vect * MULTI_P, 5, 5);
 
-				//Draw Bole
-				SDL_Rect temp_2 = { 0,7,14,14 };
-				App->render->Blit(texture, bole.x - 5, bole.y - 4, &temp_2);
-				particle_maze->active = true;
+					//Draw Bole
+					SDL_Rect bole_r = { 0,7,14,14 };
+					App->render->Blit(texture, boles[i].position.x - 5, boles[i].position.y - 4, &bole_r);
+				}
 			}
-			else
-			{
-				//Draw Chain
-				SDL_Rect temp_3 = { 0,0,radius,6 };
-				App->render->Blit(texture, position.x, position.y, &temp_3, 1, true, pos_in_vect * MULTI_P, 5, 5);
-
-				//Draw Bole
-				SDL_Rect temp_2 = { 0,7,14,14 };
-				App->render->Blit(texture, bole.x - 5, bole.y - 4, &temp_2);
-				particle_maze->active = true;
-
-				//Draw Chain --------------------------------------
-				temp_3 = { 0,0,radius,6 };
-				App->render->Blit(texture, position.x, position.y, &temp_3, 1, true, pos_in_vect_2 * MULTI_P, 5, 5);
-
-				//Draw Bole
-				temp_2 = { 0,7,14,14 };
-				App->render->Blit(texture, bole_2.x - 5, bole_2.y - 4, &temp_2);
-				particle_maze->active = true;
-
-				//Draw Chain ---------------------------------------
-				temp_3 = { 0,0,radius,6 };
-				App->render->Blit(texture, position.x, position.y, &temp_3, 1, true, pos_in_vect_3 * MULTI_P, 5, 5);
-
-				//Draw Bole
-				temp_2 = { 0,7,14,14 };
-				App->render->Blit(texture, bole_3.x - 5, bole_3.y - 4, &temp_2);
-				particle_maze->active = true;
-
-				//Draw Chain --------------------------------
-				temp_3 = { 0,0,radius,6 };
-				App->render->Blit(texture, position.x, position.y, &temp_3, 1, true, pos_in_vect_4 * MULTI_P, 5, 5);
-
-				//Draw Bole
-				temp_2 = { 0,7,14,14 };
-				App->render->Blit(texture, bole_4.x - 5, bole_4.y - 4, &temp_2);
-				particle_maze->active = true;
-			}
-
+			particle_maze->active = true;
 		}
 		else
 		{
