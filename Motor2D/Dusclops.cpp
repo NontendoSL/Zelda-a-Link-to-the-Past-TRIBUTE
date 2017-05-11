@@ -384,7 +384,7 @@ bool Dusclops::Attack()
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y + 1, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == LEFT)
