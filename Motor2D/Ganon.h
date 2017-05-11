@@ -58,6 +58,7 @@ public:
 	void DoJump();
 	void ResetJump();
 	void Hit();
+	void HitRage();
 	void Spawn();
 	// -----------------------------
 
@@ -125,6 +126,7 @@ private:
 	int max_jumps = 3;
 	bool jump_finished = false;
 	j1Timer explosion_timer;
+	j1Timer wait_time;
 	// -----------------------
 
 	bool test = true;

@@ -197,7 +197,7 @@ bool Ganon::RageUpdate(float dt)
 	}
 
 	//Until Ganon is alive.
-	if (hp > 0)
+	if (hp > -1000000)
 	{
 		switch (state)
 		{
@@ -216,7 +216,7 @@ bool Ganon::RageUpdate(float dt)
 			break;
 
 		case G_HIT:
-			Hit();
+			HitRage();
 			break;
 			
 		default:
@@ -250,6 +250,13 @@ bool Ganon::DeathUpdate(float dt)
 
 void Ganon::Idle()
 {
+	if (wait_time.ReadSec() >= 1)
+	{
+		state = G_ATTACKING;
+		anim_state = G_SPECIAL_2;
+		special_attack = G_SPECIAL_2;
+	}
+
 
 }
 
@@ -472,14 +479,12 @@ void Ganon::FireJump()
 			points[i].x = (int)(position.x + radius * cos(i * factor));
 			points[i].y = (int)(position.y + radius * sin(i * factor));
 		}
-
-		state = G_ATTACKING;
-		anim_state = G_SPECIAL_2;
-		special_attack = G_SPECIAL_2;
-
 		Reorientate();
 		ResetJump();
 		explosion_timer.Start();
+		wait_time.Start();
+		state = G_IDLE;
+		anim_state = G_WALKING;
 	}
 	// -----------------------------
 }
@@ -517,6 +522,15 @@ void Ganon::Hit()
 	}
 }
 
+void Ganon::HitRage()
+{
+	if (HitTime.ReadSec() >= 0.3)
+	{
+		state = G_IDLE;
+		anim_state = G_IDLE;
+	}
+}
+
 void Ganon::Spawn()
 {
 	// TODO -> TRY what type of enemies to spawn
@@ -543,21 +557,33 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 		// SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD)
 		{
-			if (state != G_HIT && state != G_ATTACKING)
+			if (state != G_HIT)
 			{
-				App->audio->PlayFx(12);
-				HitTime.Start();
-				hp -= 10;
-				state = G_HIT;
-				anim_state = G_HIT;
-				LOG("HP:%i", hp);
+				if (phase == INITIAL && state != G_ATTACKING)
+				{
+					App->audio->PlayFx(12);
+					HitTime.Start();
+					hp -= 10;
+					state = G_HIT;
+					anim_state = G_HIT;
+					LOG("HP initial:%i", hp);
+				}
+				else if (phase == RAGE && state == G_IDLE)
+				{
+					App->audio->PlayFx(12);
+					HitTime.Start();
+					hp -= 10;
+					state = G_HIT;
+					anim_state = G_HIT;
+					LOG("HP rage:%i", hp);
+				}
 			}
 		}
 
 		// PLAYER COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER)
 		{
-			if (state != G_HIT && state != G_ATTACKING)
+			if (state != G_HIT &&  phase == INITIAL && state != G_ATTACKING)
 			{
 				state = G_ATTACKING;
 				anim_state = G_MELEE;
