@@ -237,6 +237,7 @@
 
     <map n="10" file="LeagueHall.tmx">
       <camera follow="false"/>
+      <Link pos_x="176" pos_y="179"/>
     </map>
 
     <map n="11" file="EliteFour01.tmx">

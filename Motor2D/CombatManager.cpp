@@ -76,6 +76,7 @@ bool CombatManager::Update(float dt)
 				{
 					if (pokemon_active_link == poke)
 					{
+						pokemon_active_link->active = false;
 						poke->collision_feet->to_delete = true;
 						if (poke->collision_attack != nullptr)
 							poke->collision_attack->to_delete = true;
@@ -332,6 +333,13 @@ bool CombatManager::DeleteElements_combat()
 		elementcombat.erase(item);
 		item++;
 	}
+	std::list<PokemonCombat*>::iterator Link_pokedex = App->scene->player->pokedex.begin();
+	while (Link_pokedex != App->scene->player->pokedex.end())
+	{
+		Link_pokedex._Ptr->_Myval->active = false;
+		Link_pokedex++;
+	}
+
 	elementcombat.clear();
 	id_map_combat = 0;
 	return true;

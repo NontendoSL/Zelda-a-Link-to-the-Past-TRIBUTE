@@ -159,7 +159,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 5;
+				switch_map = 10;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -940,7 +940,7 @@ bool j1Scene::Load_Combat_map(int n)
 			else
 			{
 				//pokecombat->OpenClose(true);
-				pokecombat->CombatInfo(player->pokedex.begin()._Ptr->_Myval, poketrainer->GetPokemon());
+				pokecombat->CombatInfo(App->combatmanager->pokemon_active_link, poketrainer->GetPokemon());
 			}
 
 			//map
