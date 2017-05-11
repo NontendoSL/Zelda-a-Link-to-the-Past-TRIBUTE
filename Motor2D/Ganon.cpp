@@ -527,7 +527,7 @@ void Ganon::HitRage()
 	if (HitTime.ReadSec() >= 0.3)
 	{
 		state = G_IDLE;
-		anim_state = G_IDLE;
+		anim_state = G_WALKING;
 	}
 }
 
