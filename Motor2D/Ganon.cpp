@@ -431,20 +431,31 @@ void Ganon::StartJump()
 
 void Ganon::FireJump()
 {
+	// CHECK JUMP MOVEMENT -----------------------
 	if (position.DistanceTo(jump_dest) >= 5)
 	{
 		DoJump();
 	}
-
-	else if(num_jumps < max_jumps)
+	else 
 	{
-		App->particlemanager->CreateExplosion_Particle(nullptr, nullptr, position, SDL_Rect{ 0,4,2,0 },CIRCLE, iPoint(10, 10), iPoint(10, 2), fPoint(60, 60), P_RANDOM, 22);
+		jump_finished = true;
+	}
+	// ---------------------------------------------
+
+	// JUMP FINISHED ----------------------
+	if(num_jumps < max_jumps && jump_finished == true)
+	{
+		jump_finished = false;
 		StartJump();
 	}
+	// ---------------------------------------
 
-	else
+	// THIRD JUMP ----------
+	else if (num_jumps == max_jumps && jump_finished == true)
 	{
 		ResetJump();
+		App->particlemanager->CreateExplosion_Particle(nullptr, nullptr, position, SDL_Rect{ 0, 4, 2, 0 }, CIRCLE, iPoint(10, 10), iPoint(10, 2), fPoint(60, 60), P_RANDOM, 22);
+
 		float factor = (float)M_PI / 180.0f * MULTI_P;
 		for (uint i = 0; i < NUM_POINTS_CIRCLE; ++i)
 		{
@@ -456,6 +467,7 @@ void Ganon::FireJump()
 		anim_state = G_SPECIAL_2;
 		special_attack = G_SPECIAL_2;
 	}
+	// -------------------------
 }
 
 void Ganon::DoJump()
@@ -474,6 +486,7 @@ void Ganon::DoJump()
 void Ganon::ResetJump()
 {
 	num_jumps = 0;
+	jump_finished = false;
 }
 
 void Ganon::Hit()
