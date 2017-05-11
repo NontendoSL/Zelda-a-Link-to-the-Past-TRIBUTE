@@ -1225,6 +1225,7 @@ PokemonWorldHud::PokemonWorldHud()
 	poke_bar.push_back((Button*)App->gui->GetEntity("pk_bar_hud_3"));
 	j1GuiEntity*tt = App->gui->GetEntity("bag_coins_pk");
 	App->gui->GetEntity("bag_coins_pk")->position.x = App->win->GetWidth()/2 - App->gui->GetEntity("bag_coins_pk")->position.x;
+	coin = (Image*)App->gui->GetEntity("bag_coins_pk");
 }
 
 void PokemonWorldHud::Input()
@@ -1339,6 +1340,65 @@ std::string PokemonWorldHud::GetPokeOrder(uint poke_n)
 	return poke_bar[poke_n]->elements[1]->identifier;
 }
 
+void PokemonWorldHud::RefreshMoney()
+{
+	uint cash = App->scene->player->pokecash;
+	int number = cash % 10;
+	SetMoneyHitbox((Image*)coin->elements[3], number);
+	number = (cash % 100) / 10;
+	SetMoneyHitbox((Image*)coin->elements[2], number);
+	number = (cash % 1000) / 100;
+	SetMoneyHitbox((Image*)coin->elements[1], number);
+	number = cash / 1000;
+	SetMoneyHitbox((Image*)coin->elements[0], number);
+}
+
+void PokemonWorldHud::SetMoneyHitbox(Image * number, uint ammount)
+{
+	switch (ammount)
+	{
+	case 0:
+		number->Hitbox.x = 259;
+		number->Hitbox.y = 30;
+		break;
+	case 1:
+		number->Hitbox.x = 267;
+		number->Hitbox.y = 30;
+		break;
+	case 2:
+		number->Hitbox.x = 275;
+		number->Hitbox.y = 30;
+		break;
+	case 3:
+		number->Hitbox.x = 283;
+		number->Hitbox.y = 30;
+		break;
+	case 4:
+		number->Hitbox.x = 291;
+		number->Hitbox.y = 30;
+		break;
+	case 5:
+		number->Hitbox.x = 259;
+		number->Hitbox.y = 38;
+		break;
+	case 6:
+		number->Hitbox.x = 267;
+		number->Hitbox.y = 38;
+	case 7:
+		number->Hitbox.x = 275;
+		number->Hitbox.y = 38;
+		break;
+	case 8:
+		number->Hitbox.x = 283;
+		number->Hitbox.y = 38;
+		break;
+	case 9:
+		number->Hitbox.x = 291;
+		number->Hitbox.y = 38;
+		break;
+	}
+}
+
 void PokemonWorldHud::MoveOut(bool out, int id)
 {
 	if (id == -1) // this is if we wanna move in/out an especific bar and not the focused one (testing)
@@ -1381,6 +1441,11 @@ void PokemonWorldHud::CloseAll()
 
 Button* PokemonWorldHud::GetFirst()
 {
+	App->gui->GetEntity("bag_coins_pk")->belong = POKEMON_HUD;
+	for (int i = 0; i < App->gui->GetEntity("bag_coins_pk")->elements.size(); i++)
+	{
+		App->gui->GetEntity("bag_coins_pk")->elements[i]->belong = POKEMON_HUD;
+	}
 	if (active)
 		return poke_bar[0];
 	else
@@ -1861,6 +1926,11 @@ void PokemonWorldShop::Input()
 
 Button * PokemonWorldShop::GetFirst()
 {
+	App->gui->GetEntity("bag_coins_pk")->belong = POKEMON_SHOP;
+	for (int i = 0; i < App->gui->GetEntity("bag_coins_pk")->elements.size(); i++)
+	{
+		App->gui->GetEntity("bag_coins_pk")->elements[i]->belong = POKEMON_SHOP;
+	}
 	return shop_item[0];
 }
 

@@ -102,6 +102,7 @@ public:
 
 	//ITEMS ----------
 	uint gems = 0;
+	uint pokecash = 0;
 	uint bombs = 0;
 	uint arrows = 0;
 	uint charge = 0;

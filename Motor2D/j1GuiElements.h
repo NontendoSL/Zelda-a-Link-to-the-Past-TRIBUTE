@@ -238,8 +238,11 @@ public:
 	void CloseAll();
 	void SwapBars(uint first, uint second);
 	std::string GetPokeOrder(uint poke_n);
+	void RefreshMoney();
+	void SetMoneyHitbox(Image* number, uint ammount);
 private:
 	std::vector<Button*>poke_bar;
+	Image* coin = nullptr;
 public:
 	bool active = false;
 	bool selecting = false;

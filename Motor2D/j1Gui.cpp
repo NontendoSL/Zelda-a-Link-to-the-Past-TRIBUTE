@@ -34,10 +34,10 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	gui_groups_name.push_back("Zelda_Menu");
 	gui_groups_name.push_back("Zelda_Menu_Options");
 	gui_groups_name.push_back("PokemonCombat_HUD");
-	gui_groups_name.push_back("PokemonWorld_HUD");
 	gui_groups_name.push_back("PokemonWorld_Menu");
 	gui_groups_name.push_back("PokemonWorld_Bag"); 
 	gui_groups_name.push_back("PokemonWorld_Shop");
+	gui_groups_name.push_back("PokemonWorld_HUD");
 
 	return ret;
 }

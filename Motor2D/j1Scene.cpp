@@ -245,6 +245,10 @@ bool j1Scene::Update(float dt)
 			{
 				App->gui->SetGui(POKEMON_SHOP);
 			}
+			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_UP)
+			{
+				App->gui->SetGui(POKEMON_HUD);
+			}
 			//-------------------------------------------------------
 			// TP LEVEL
 		}
@@ -769,6 +773,8 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 	if (n == 9)
 	{
 		App->gui->SetGui(POKEMON_HUD);
+		player->pokecash = player->gems * 3;
+		poke_hud->RefreshMoney();
 	}
 
 	if (n == 5)
