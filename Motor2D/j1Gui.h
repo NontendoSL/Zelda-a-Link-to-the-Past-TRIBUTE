@@ -113,6 +113,8 @@ public:
 	void LoadEntities();
 
 	j1GuiEntity* GetEntity(const char* identifier);
+
+	GuiGroup GetGuiState();
 public:
 	int Next_id = 0;
 

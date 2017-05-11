@@ -571,5 +571,10 @@ j1GuiEntity* j1Gui::GetEntity(const char* identifier)
 
 }
 
+GuiGroup j1Gui::GetGuiState()
+{
+	return status;
+}
+
 
 // class Gui ---------------------------------------------------
