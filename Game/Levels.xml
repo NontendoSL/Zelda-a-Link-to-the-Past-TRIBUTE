@@ -240,7 +240,7 @@
       <camera follow="false"/>
       <Link pos_x="176" pos_y="179"/>
       <dynobjects>
-        <dynobject id="7" name="pc" type="POKEMON" rect_x="77" rect_y="1" rect_w="16" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+        <dynobject id="7" name="pc" type="POKEMON" rect_x="94" rect_y="1" rect_w="16" rect_h="32" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
     </map>
 
