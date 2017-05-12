@@ -408,16 +408,19 @@ PokemonCombat* CombatManager::change_pokemon()//true Link - false Brendan
 	if (App->scene->poke_hud->GetPokeOrder(pokemon_order) == "pk_bar_blaziken")
 	{
 		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Myval, id_map_combat, 1);
+		App->scene->pokecombat->LoadNewPokemon(pokemon_active_link, true);
 		return App->scene->player->pokedex.begin()._Ptr->_Myval;
 	}
 	else if (App->scene->poke_hud->GetPokeOrder(pokemon_order) == "pk_bar_sceptile")
 	{
 		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Next->_Myval, id_map_combat, 2);
+		App->scene->pokecombat->LoadNewPokemon(pokemon_active_link, true);
 		return App->scene->player->pokedex.begin()._Ptr->_Next->_Myval;
 	}
 	else
 	{
 		PrepareToCombat(App->scene->player->pokedex.begin()._Ptr->_Next->_Next->_Myval, id_map_combat, 3);
+		App->scene->pokecombat->LoadNewPokemon(pokemon_active_link, true);
 		return App->scene->player->pokedex.begin()._Ptr->_Next->_Next->_Myval;
 	}
 	return nullptr;

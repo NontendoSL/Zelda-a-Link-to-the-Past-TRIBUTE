@@ -476,7 +476,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 				if (hp <= 0)
 				{
 					state = BC_DYING;
-					App->audio->PlayMusic("audio/music/ZELDA/ZeldaPrincessRescue.ogg");
+					App->audio->PlayMusic("audio/music/ZELDA/ZeldaPrincessRescue.ogg"); //TODO HIGH -> FIX FPS DROP
 				}
 				Wait_attack.Start();
 			}
