@@ -655,7 +655,18 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 			// -----------------------			
-
+			if (c1 == collision_interact && c2->type == COLLIDER_PC && c2->callback != nullptr)
+			{
+				if (App->scene->gamestate == INGAME)
+				{
+					App->scene->gamestate = INMENU;
+					collision_interact->to_delete = true;
+					interaction = false;
+					state = L_IDLE;
+					anim_state = L_IDLE;
+					App->gui->SetGui(POKEMON_SHOP);
+				}
+			}
 		}
 	}
 }
