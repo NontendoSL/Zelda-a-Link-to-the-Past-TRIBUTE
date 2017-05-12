@@ -218,7 +218,6 @@ private:
 	Text* poke_hp_Brendan = nullptr;
 	iPoint hpbar_pLink = { 0,0 };//.X SHOWS MAX HP, .Y SHOWS ACTUAL LIFE (SAME AS ABOVE) used for triangle operations with atlas pixels
 	iPoint hpbar_pBrendan = { 0,0 };
-	char buffer[25]; //hp
 	iPoint num_pokemons = { 0,0 };
 
 };

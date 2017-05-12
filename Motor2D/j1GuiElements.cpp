@@ -919,13 +919,11 @@ PokemonCombatHud::PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 	App->gui->GetEntity("right box")->elements.push_back(App->gui->CreateText(POKE1, Brendan->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "brendan_pk_name", POKEMON_COMBAT));
 	// HP Poke Link
 	hpbar_pLink = iPoint(Link->hp, Link->hp);
-	sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);// CANVIAR A STD::STRING FRASE(%I,VALUE)
-	poke_hp_Link = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 }, true, "poke_hp_Link", POKEMON_COMBAT);
+	poke_hp_Link = App->gui->CreateText(POKE1, std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str(), 50, { 3,15 }, 12, { 0,0,0,255 }, true, "poke_hp_Link", POKEMON_COMBAT);
 	App->gui->GetEntity("left box")->elements.push_back(poke_hp_Link);
 	// HP Poke Brendan
 	hpbar_pBrendan = iPoint(Brendan->hp, Brendan->hp);
-	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x); //CHANGE THIS FOR NOT USING THE BUFFER
-	poke_hp_Brendan = App->gui->CreateText(POKE1, buffer, 50, { 4,15 }, 12, { 0,0,0,255 }, true, "poke_hp_brendan", POKEMON_COMBAT);
+	poke_hp_Brendan = App->gui->CreateText(POKE1, std::string(std::to_string(hpbar_pBrendan.y) + "/" + std::to_string(hpbar_pBrendan.x)).c_str(), 50, { 3,15 }, 12, { 0,0,0,255 }, true, "poke_hp_brendan", POKEMON_COMBAT);
 	App->gui->GetEntity("right box")->elements.push_back(poke_hp_Brendan);
 
 
@@ -967,13 +965,12 @@ void PokemonCombatHud::LoadNewPokemon(PokemonCombat* pokemon, bool trainer) //tr
 			cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
 			if (hpbar_pLink.x > 0)
 			{
-				hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;
+				hp1->Hitbox.w = (hpbar_pLink.y * 47) / hpbar_pLink.x;
 			}
 
 			ability->elements[0]->Hitbox.h = 0;
 			cooldown = false;
-			sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
-			poke_hp_Link->Write(buffer);
+			poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
 		}
 		else //Brendan
 		{
@@ -989,11 +986,9 @@ void PokemonCombatHud::LoadNewPokemon(PokemonCombat* pokemon, bool trainer) //tr
 			((Text*)App->gui->GetEntity("brendan_pk_name"))->Write(pokemon->name.c_str());
 			hpbar_pBrendan = iPoint(pokemon->hp, pokemon->hp);
 			if (hpbar_pBrendan.x > 0) {
-				hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
+				hp2->Hitbox.w = (hpbar_pBrendan.y * 47) / hpbar_pBrendan.x;
 			}
-
-			sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
-			poke_hp_Brendan->Write(buffer);
+			poke_hp_Brendan->Write(std::string(std::to_string(hpbar_pBrendan.y) + "/" + std::to_string(hpbar_pBrendan.x)).c_str());
 		}
 	}
 
@@ -1005,19 +1000,17 @@ void PokemonCombatHud::CombatInfo(PokemonCombat* pokemon, PokemonCombat* pokemon
 	((Text*)App->gui->GetEntity("link_pk_name"))->Write(pokemon->name.c_str());
 	hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
 	cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
-	hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;
+	hp1->Hitbox.w = (hpbar_pLink.y * 47) / hpbar_pLink.x;
 	ability->elements[0]->Hitbox.h = 0;
 	cooldown = false;
-	sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
-	poke_hp_Link->Write(buffer);
+	poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
 	pokemon->target = pokemon_2;
 
 	//Pokemon 2
 	((Text*)App->gui->GetEntity("brendan_pk_name"))->Write(pokemon_2->name.c_str());
 	hpbar_pBrendan = iPoint(pokemon_2->hp, pokemon_2->hp);
-	hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;
-	sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
-	poke_hp_Brendan->Write(buffer);
+	hp2->Hitbox.w = (hpbar_pBrendan.y * 47) / hpbar_pBrendan.x;
+	poke_hp_Brendan->Write(std::string(std::to_string(hpbar_pBrendan.y) + "/" + std::to_string(hpbar_pBrendan.x)).c_str());
 	pokemon_2->target = pokemon;
 
 	//TOP HUD BALLS
@@ -1032,19 +1025,18 @@ void PokemonCombatHud::CombatInfo(PokemonCombat* pokemon, PokemonCombat* pokemon
 	num_pokemons = { 3, 3 };
 }
 
+
 void PokemonCombatHud::GetDamage(uint damage, bool trainer)
 {
 	if (trainer)
 	{
 		hpbar_pLink.y -= damage;
-		sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
-		poke_hp_Link->Write(buffer);
+		poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
 	}
 	else
 	{
 		hpbar_pBrendan.y -= damage;
-		sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
-		poke_hp_Brendan->Write(buffer);
+		poke_hp_Brendan->Write(std::string(std::to_string(hpbar_pBrendan.y) + "/" + std::to_string(hpbar_pBrendan.x)).c_str());
 	}
 }
 
@@ -1059,14 +1051,12 @@ void PokemonCombatHud::Input()
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT && hpbar_pLink.y>0)
 	{
 		hpbar_pLink.y--;
-		sprintf_s(buffer, 25, "%i/%i", hpbar_pLink.y, hpbar_pLink.x);
-		poke_hp_Link->Write(buffer);
+		poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
 	}
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT && hpbar_pBrendan.y>0)
 	{
 		hpbar_pBrendan.y--;
-		sprintf_s(buffer, 25, "%i/%i", hpbar_pBrendan.y, hpbar_pBrendan.x);
-		poke_hp_Brendan->Write(buffer);
+		poke_hp_Brendan->Write(std::string(std::to_string(hpbar_pBrendan.y) + "/" + std::to_string(hpbar_pBrendan.x)).c_str());
 	}
 }
 
@@ -1102,9 +1092,9 @@ void PokemonCombatHud::Update(j1GuiEntity* focused)
 			App->combatmanager->Kill(false);
 		}
 		if (hpbar_pLink.x>0)
-			hp1->Hitbox.w = (hpbar_pLink.y * 48) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)
+			hp1->Hitbox.w = (hpbar_pLink.y * 47) / hpbar_pLink.x;//being 48 the max pixels hp can have (atlas)
 		if (hpbar_pBrendan.x>0)
-			hp2->Hitbox.w = (hpbar_pBrendan.y * 48) / hpbar_pBrendan.x;//being 48 the max pixels hp can have (atlas)
+			hp2->Hitbox.w = (hpbar_pBrendan.y * 47) / hpbar_pBrendan.x;//being 48 the max pixels hp can have (atlas)
 
 	}
 }
