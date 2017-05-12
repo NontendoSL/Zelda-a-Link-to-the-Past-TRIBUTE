@@ -109,8 +109,8 @@ public:
 
 private:
 
-	Collider* colliders[MAX_COLLIDERS];
-	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
+	std::vector<Collider*> colliders;
+	bool matrix[MAX_COLLIDERS][MAX_COLLIDERS];
 	bool debug = false;
 };
 

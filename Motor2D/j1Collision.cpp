@@ -10,8 +10,11 @@ j1Collision::j1Collision()
 {
 	name = "collision";
 
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-		colliders[i] = nullptr;
+	for (int i = 0; i < MAX_COLLIDERS; i++) {
+		for (int j = 0; j < MAX_COLLIDERS; j++) {
+			matrix[i][j] = false;
+		}
+	}
 
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
@@ -76,7 +79,7 @@ bool j1Collision::Start()
 bool j1Collision::PreUpdate()
 {
 	// Remove all colliders scheduled for deletion
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	/*for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] != nullptr && colliders[i]->to_delete == true)
 		{
@@ -84,6 +87,14 @@ bool j1Collision::PreUpdate()
 			colliders[i] = nullptr;
 			if(num_colliders > 1)
 				num_colliders--;
+		}
+	}*/
+	for (std::vector<Collider*>::const_iterator item = colliders.cbegin(); item != colliders.cend(); ++item)
+	{
+		if ((*item) != nullptr && (*item)->to_delete == true)
+		{
+			colliders.erase(item);
+			--item;
 		}
 	}
 	waittodelete = false;
@@ -97,7 +108,7 @@ bool j1Collision::Update(float dt)
 	Collider* c1 = nullptr;
 	Collider* c2 = nullptr;
 
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < colliders.size(); ++i)
 	{
 		// skip empty colliders
 		if (colliders[i] == nullptr)
@@ -106,7 +117,7 @@ bool j1Collision::Update(float dt)
 		c1 = colliders[i];
 
 		// avoid checking collisions already checked
-		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
+		for (uint k = i + 1; k < colliders.size(); ++k)
 		{
 			// skip empty colliders
 			if (colliders[k] == nullptr)
@@ -144,15 +155,10 @@ bool j1Collision::PostUpdate()
 bool j1Collision::CleanUp()
 {
 	LOG("Freeing all colliders");
+	for (std::vector<Collider*>::iterator item = colliders.begin(); item != colliders.cend(); ++item)
+		RELEASE(*item);
+	colliders.clear();
 
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if (colliders[i] != nullptr)
-		{
-			delete colliders[i];
-			colliders[i] = nullptr;
-		}
-	}
 	return true;
 }
 
@@ -166,7 +172,7 @@ void j1Collision::DebugDraw()
 		return;
 
 	Uint8 alpha = 80;
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < colliders.size(); ++i)
 	{
 		if (colliders[i] == nullptr)
 			continue;
@@ -270,26 +276,16 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, SceneEleme
 {
 	Collider* ret = nullptr;
 
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if (colliders[i] == nullptr)
-		{
-			ret = colliders[i] = new ColliderRect(rect, type, callback, a_callback);
-			if (colliders[i]->to_delete == true)
-			{
-				colliders[i]->to_delete = false;
-			}
-			num_colliders++;
-			break;
-		}
-	}
+	ret = new ColliderRect(rect, type, callback, a_callback);
+	colliders.push_back(ret);
+
 	return ret;
 }
 
 
 bool j1Collision::EraseCollider(Collider* collider)
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	/*for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == collider)
 		{
@@ -300,12 +296,27 @@ bool j1Collision::EraseCollider(Collider* collider)
 			return true;
 		}
 	}
+	return false;*/
+	if (collider != nullptr)
+	{
+		// we still search for it in case we received a dangling pointer
+		for (uint i = 0; i < colliders.size(); ++i)
+		{
+			if (colliders[i] == collider)
+			{
+				collider->to_delete = true;
+				break;
+			}
+		}
+	}
+
+
 	return false;
 }
 
 void j1Collision::EreseAllColiderPlayer()
 {
-	for (uint i = 1; i < MAX_COLLIDERS; ++i)
+	for (uint i = 1; i < colliders.size(); ++i)
 	{
 		if (colliders[i] != nullptr)
 		{
