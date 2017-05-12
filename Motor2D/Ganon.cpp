@@ -5,6 +5,7 @@
 #include "j1Audio.h"
 #include "j1Player.h"
 #include "ParticleManager.h"
+#include "j1Weapon.h"
 
 Ganon::Ganon() :NPC()
 {
@@ -607,7 +608,6 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 					hp -= 10;
 					state = G_HIT;
 					anim_state = G_HIT;
-					LOG("HP initial:%i", hp);
 				}
 				else if (phase == RAGE && state == G_IDLE)
 				{
@@ -616,7 +616,6 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 					hp -= 10;
 					state = G_HIT;
 					anim_state = G_HIT;
-					LOG("HP rage:%i", hp);
 				}
 			}
 		}
@@ -629,6 +628,36 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 				state = G_ATTACKING;
 				anim_state = G_MELEE;
 				StartAttack = true;
+			}
+		}
+
+		// ARROW COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
+		{
+			if (c2->arrow_callback->step == AIR && state != G_HIT) //&& phase != INVINCIBLE)
+			{
+				if (phase == INITIAL && state != G_ATTACKING)
+				{
+					App->audio->PlayFx(12);
+					knockback_time.Start();
+					hp -= 10;
+					state = G_HIT;
+					anim_state = G_HIT;
+					dir_hit = c2->arrow_callback->direction;
+					prev_position = position;
+					c2->arrow_callback->step = IMPACT;
+				}
+				else if (phase == RAGE && state == G_IDLE)
+				{
+					App->audio->PlayFx(12);
+					knockback_time.Start();
+					hp -= 10;
+					state = G_HIT;
+					anim_state = G_HIT;
+					dir_hit = c2->arrow_callback->direction;
+					prev_position = position;
+					c2->arrow_callback->step = IMPACT; 
+				}		
 			}
 		}
 	}
