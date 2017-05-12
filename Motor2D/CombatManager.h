@@ -80,6 +80,7 @@ private:
 	//PokeTrainer* trainer;
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	int pokemon_order = 0;
+	bool ordering = false;
 };
 
 #endif // __COMBATMANAGER_H__

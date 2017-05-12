@@ -134,6 +134,18 @@ bool CombatManager::PostUpdate()
 	BROFILER_CATEGORY("Draw_ComabatPokemon", Profiler::Color::Green);
 	if (App->scene->combat)
 	{
+		// Ordering by position.y
+		ordering = !ordering;
+		if (ordering)
+		{
+			PokemonCombat* first = (PokemonCombat*)elementcombat.end()._Ptr->_Prev->_Prev->_Myval;
+			PokemonCombat* second = (PokemonCombat*)elementcombat.end()._Ptr->_Prev->_Myval;
+			if (first->position.y > second->position.y)
+			{
+				std::swap(elementcombat.end()._Ptr->_Prev->_Prev->_Myval, elementcombat.end()._Ptr->_Prev->_Myval);
+			}
+		}
+
 		std::list<SceneElement*>::iterator item = elementcombat.begin();
 		while (item != elementcombat.end())
 		{
