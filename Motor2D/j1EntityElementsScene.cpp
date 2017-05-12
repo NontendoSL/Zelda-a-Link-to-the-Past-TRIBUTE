@@ -268,9 +268,12 @@ bool j1EntityElementScene::DeleteBCTrooper(BCTrooper* bctrooper)
 	{
 		elementscene.remove(bctrooper);
 		bctrooper->collision_feet->to_delete = true;
-		if (bctrooper->GetColliderMaze() != nullptr)
+		for (uint i = 0; i < bctrooper->GetMazeSize(); i++)
 		{
-			bctrooper->GetColliderMaze()->to_delete = true;
+			if (bctrooper->GetColliderMaze(i) != nullptr)
+			{
+				bctrooper->GetColliderMaze(i)->to_delete = true;
+			}
 		}
 
 		bct = nullptr;

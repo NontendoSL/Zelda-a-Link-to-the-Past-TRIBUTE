@@ -50,6 +50,14 @@ bool BCTrooper::Start()
 		temp.active = true;
 		boles.push_back(temp);
 	}
+	// Create Particles
+	for (int i = 0; i < 4; i++)
+	{
+		App->particlemanager->CreateFollow_P(nullptr, &boles[i].position, SDL_Rect{ 0,10,2,0 }, iPoint(5, 5), iPoint(18, 8), 4, 30, false);
+		boles[i].particle_maze = App->particlemanager->Group_Follow.back();
+	}
+	boles[0].particle_maze->active = true;
+	//Only active 1 Maze
 	for (int i = 1; i < 4; i++)
 	{
 		boles[i].active = false;
@@ -62,9 +70,7 @@ bool BCTrooper::Start()
 	//Get the animations
 	animation = *App->anim_manager->GetAnimStruct(BC_TROOPER);
 	collision_feet = App->collision->AddCollider({ position.x - 8, position.y - 5, 16, 15 }, COLLIDER_BCTROOPER, this);
-	collision_maze = App->collision->AddCollider({ boles[0].position.x - 7, boles[0].position.y - 7, 14, 14 }, COLLIDER_BCTROOPER_MAZE, this);
-	App->particlemanager->CreateFollow_P(nullptr, &boles[0].position, SDL_Rect{ 0,10,2,0 }, iPoint(5,5), iPoint(18,8), 4, 30, true);
-	particle_maze = App->particlemanager->Group_Follow.back();
+	boles[0].collision_maze = App->collision->AddCollider({ boles[0].position.x - 7, boles[0].position.y - 7, 14, 14 }, COLLIDER_BCTROOPER_MAZE, this);
 	return true;
 }
 
@@ -113,6 +119,7 @@ bool BCTrooper::Update(float dt)
 		for (int i = 1; i < 4; i++)
 		{
 			boles[i].active = true;
+			boles[i].collision_maze = App->collision->AddCollider({ boles[i].position.x - 7, boles[i].position.y - 7, 14, 14 }, COLLIDER_BCTROOPER_MAZE, this);
 		}
 		next_phase = true;
 	}
@@ -163,7 +170,14 @@ bool BCTrooper::Update(float dt)
 	}
 	//Update colliders position
 	collision_feet->SetPos(position.x - 8, position.y - 5);
-	collision_maze->SetPos(boles[0].position.x - 7, boles[0].position.y - 7);
+	for (int i = 0; i < boles.size(); i++)
+	{
+		if (boles[i].active)
+		{
+			boles[i].collision_maze->SetPos(boles[i].position.x - 7, boles[i].position.y - 7);
+		}
+	}
+
 	return true;
 }
 
@@ -204,16 +218,34 @@ void BCTrooper::Draw()
 					App->render->Blit(texture, boles[i].position.x - 5, boles[i].position.y - 4, &bole_r);
 				}
 			}
-			particle_maze->active = true;
+			for (int i = 0; i < 4; i++)
+			{
+				if (boles[i].active)
+				{
+					boles[i].particle_maze->active = true;
+				}
+			}
 		}
 		else
 		{
-			particle_maze->active = false;
+			for (int i = 0; i < 4; i++)
+			{
+				if (boles[i].active)
+				{
+					boles[i].particle_maze->active = false;
+				}
+			}
 		}
 	}
 	else
 	{
-		particle_maze->active = false;
+		for (int i = 0; i < 4; i++)
+		{
+			if (boles[i].active)
+			{
+				boles[i].particle_maze->active = false;
+			}
+		}
 	}
 }
 
@@ -435,16 +467,22 @@ BCTrooperState BCTrooper::GetState() const
 	return state;
 }
 
-Collider* BCTrooper::GetColliderMaze()
+Collider* BCTrooper::GetColliderMaze(uint pos)
 {
-	return collision_maze;
+	return boles[pos].collision_maze;
+}
+
+uint BCTrooper::GetMazeSize() const
+{
+	return boles.size();
 }
 
 void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
-		if (c1 == collision_maze && c2->type == COLLIDER_PLAYER)
+		if ((c1 == boles[0].collision_maze || c1 == boles[1].collision_maze ||
+			c1 == boles[2].collision_maze || c1 == boles[3].collision_maze)	&& c2->type == COLLIDER_PLAYER)
 		{
 			Player* link = (Player*)c2->callback;
 			if (link->invincible_timer.ReadSec() >= 1 && state != BC_HIT)
@@ -469,7 +507,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD)
 		{
-			if (Wait_attack.ReadSec() > 1 && stunned)
+			if (Wait_attack.ReadSec() > 1)
 			{
 				App->audio->PlayFx(12);
 				hp -= 10;

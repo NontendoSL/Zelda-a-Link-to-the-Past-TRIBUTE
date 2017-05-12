@@ -9,14 +9,16 @@
 
 enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_HIT, BC_DEFEND,BC_DYING };
 
+class P_Follow;
+
 struct Bole
 {
 	iPoint position;
 	int pos_in_vect = 1;
 	bool active = false;
+	Collider* collision_maze = nullptr;
+	P_Follow* particle_maze = nullptr;
 };
-
-class P_Follow;
 
 class BCTrooper : public NPC
 {
@@ -58,7 +60,9 @@ public:
 	bool ChangeRadius_insta(int radius_to_go, bool increment);
 
 	BCTrooperState GetState() const;
-	Collider* GetColliderMaze();
+	Collider* GetColliderMaze(uint pos);
+
+	uint GetMazeSize() const;
 
 	//Collision----------------------------------
 	void OnCollision(Collider*, Collider*);
@@ -67,8 +71,6 @@ private:
 	//Animation
 	AnimationStruct animation;
 	SDL_Rect anim_rect;
-
-	P_Follow* particle_maze;
 	//state
 	BCTrooperState state = BC_IDLE;
 	SDL_Texture* texture = nullptr;
@@ -85,7 +87,10 @@ private:
 	bool stunned = false;
 
 	bool reset_time = true;
-	Collider* collision_maze = nullptr;
+
+	Collider* collision_maze_2 = nullptr;
+	Collider* collision_maze_3 = nullptr;
+	Collider* collision_maze_4 = nullptr;
 };
 
 #endif//__BCTROOPER_H_
