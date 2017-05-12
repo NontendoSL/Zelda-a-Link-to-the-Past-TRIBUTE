@@ -48,6 +48,8 @@ public:
 	Direction dir_hit;
 	j1Timer knockback_time;
 
+	void SetKnockbackDir();
+
 private:
 
 	//Animation

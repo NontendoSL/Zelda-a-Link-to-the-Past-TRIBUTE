@@ -150,6 +150,21 @@ void GreenMinion::OnCollision(Collider* c1, Collider* c2)
 				c2->arrow_callback->step = IMPACT; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
 			}
 		}
+
+		//BOMB COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_BOMB && c1->callback != nullptr)
+		{
+			if (state != GM_HIT)
+			{
+				App->audio->PlayFx(12);
+				knockback_time.Start();
+				hp--;
+				state = GM_HIT;
+				anim_state = GM_WALKING;
+				SetKnockbackDir();
+				prev_position = position;
+			}
+		}
 	}
 }
 
@@ -292,6 +307,26 @@ bool GreenMinion::Die()
 	to_delete = true;
 
 	return true;
+}
+
+void GreenMinion::SetKnockbackDir()
+{
+	if (direction == UP)
+	{
+		dir_hit = DOWN;
+	}
+	else if (direction == DOWN)
+	{
+		dir_hit = UP;
+	}
+	else if (direction == LEFT)
+	{
+		dir_hit = RIGHT;
+	}
+	else
+	{
+		dir_hit = LEFT;
+	}
 }
 
 

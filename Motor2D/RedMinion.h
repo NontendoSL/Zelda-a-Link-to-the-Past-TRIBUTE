@@ -37,6 +37,7 @@ public:
 	bool Die();
 	// -----------------------
 
+	void SetKnockbackDir();
 
 private:
 	RMinionState state = RM_IDLE;

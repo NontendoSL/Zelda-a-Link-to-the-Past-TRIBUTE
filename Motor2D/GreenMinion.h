@@ -36,7 +36,8 @@ public:
 	bool Movebyhit(float dt);
 	bool Die();
 	// -----------------------
-
+	
+	void SetKnockbackDir();
 
 private:
 	GMinionState state = GM_IDLE;

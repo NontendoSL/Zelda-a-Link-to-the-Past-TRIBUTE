@@ -384,6 +384,7 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 				state = P_HIT;
 				anim_state = P_DYING;
 				dir_hit = c2->callback->direction;
+				prev_position = position;
 				hp--;
 			}
 		}
@@ -417,15 +418,52 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c2->arrow_callback->step == AIR && state != P_HIT)
 			{
-				App->audio->PlayFx(12);
 				knockback_time.Start();
-				hp--;
+				animation.anim[P_DYING].ResetAnimations();
+				hurt_timer.Start();
 				state = P_HIT;
-				anim_state = P_IDLE;
-				dir_hit = c2->arrow_callback->direction;
-				prev_position = position;
+				anim_state = P_DYING;
+				dir_hit = c2->callback->direction;
+				hp--;
 				c2->arrow_callback->step = IMPACT; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
+				prev_position = position;
 			}
 		}
+		// HIT BY BOMB -------------------
+		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
+		{
+			if (state != P_HIT)
+			{
+				knockback_time.Start();
+				animation.anim[P_DYING].ResetAnimations();
+				hurt_timer.Start();
+				state = P_HIT;
+				anim_state = P_DYING;
+				SetKnockbackDir();
+				prev_position = position;
+				hp--;
+			}
+		}
+		// --------------------------------------
+	}
+}
+
+void Geodude::SetKnockbackDir()
+{
+	if (direction == UP)
+	{
+		dir_hit = DOWN;
+	}
+	else if (direction == DOWN)
+	{
+		dir_hit = UP;
+	}
+	else if (direction == LEFT)
+	{
+		dir_hit = RIGHT;
+	}
+	else
+	{
+		dir_hit = LEFT;
 	}
 }

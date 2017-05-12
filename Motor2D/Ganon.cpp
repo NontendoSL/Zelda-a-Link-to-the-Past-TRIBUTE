@@ -660,6 +660,30 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 				}		
 			}
 		}
+
+		// BOMB COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
+		{
+			if (state != G_HIT)
+			{
+				if (phase == INITIAL && state != G_ATTACKING)
+				{
+					App->audio->PlayFx(12);
+					HitTime.Start();
+					hp -= 10;
+					state = G_HIT;
+					anim_state = G_HIT;
+				}
+				else if (phase == RAGE && state == G_IDLE)
+				{
+					App->audio->PlayFx(12);
+					HitTime.Start();
+					hp -= 10;
+					state = G_HIT;
+					anim_state = G_HIT;
+				}
+			}
+		}
 	}
 }
 

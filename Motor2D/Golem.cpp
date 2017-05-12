@@ -68,7 +68,7 @@ bool Golem::Start()
 
 	// Test for Vertical Slice /// TODO MED-> read stats from XML
 	radar = 40;
-	chase_speed = 60;
+	chase_speed = 50;
 
 	return true;
 }
@@ -449,7 +449,6 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 				App->map->EditCost(temp.x - 1, temp.y, 0);
 				App->map->EditCost(temp.x, temp.y - 1, 0);
 				App->map->EditCost(temp.x - 1, temp.y - 1, 0);
-
 			}
 		}
 
@@ -473,13 +472,13 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c2->arrow_callback->step == AIR && state != P_HIT)
 			{
-				App->audio->PlayFx(12);
 				knockback_time.Start();
-				hp--;
+				animation.anim[P_DYING].ResetAnimations();
+				hurt_timer.Start();
+				dir_hit = c2->callback->direction;
 				state = P_HIT;
-				anim_state = P_IDLE;
-				dir_hit = c2->arrow_callback->direction;
-				prev_position = position;
+				anim_state = P_DYING;
+				hp--;
 				c2->arrow_callback->step = IMPACT; 
 			}
 		}
