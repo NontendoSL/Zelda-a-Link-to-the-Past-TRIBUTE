@@ -327,10 +327,21 @@ void Dialogue::PushLine(bool push)
 		lines->position.y -= lines->Hitbox.h/4+1;
 		timer = SDL_GetTicks();
 		this->push = push;
-		if (pushes == 15 || pushes == enters*2-1)
+		if (enters <= 2)
 		{
-			end = true;
-			App->scene->gamestate = GameState::INGAME;
+			if (pushes == 15 || pushes == enters * 2 - 1)
+			{
+				end = true;
+				App->scene->gamestate = GameState::INGAME;
+			}
+		}
+		else
+		{
+			if (pushes == 15 || pushes == enters * 2 - 4)
+			{
+				end = true;
+				App->scene->gamestate = GameState::INGAME;
+			}
 		}
 		pushes++;
 	}

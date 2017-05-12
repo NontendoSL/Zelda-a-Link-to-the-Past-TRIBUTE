@@ -229,7 +229,7 @@ bool j1Scene::Update(float dt)
 			}
 
 			//MINI TP -----------------------------------------------
-			/*if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 			{
 				App->scene->player->position.x += 50;
 				App->render->camera.x -= 100;
@@ -253,7 +253,7 @@ bool j1Scene::Update(float dt)
 			{
 					//App->scene->player->position.x = App->input->GetMousePosition().x;
 					//App->scene->player->position.y = App->input->GetMousePosition().y;
-			}*/
+			}
 			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && App->gui->GetGuiState()==POKEMON_HUD)
 			{
 				App->gui->SetGui(POKEMON_SHOP);
