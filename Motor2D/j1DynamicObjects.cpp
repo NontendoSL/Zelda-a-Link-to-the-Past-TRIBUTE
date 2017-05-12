@@ -71,10 +71,15 @@ bool DynamicObjects::Start()
 		{
 			collision = App->collision->AddCollider({ position.x, position.y, 32, 24 }, COLLIDER_DYNOBJECT, this);
 		}
+		else if (name == "pc")
+		{
+			collision = App->collision->AddCollider({ position.x, position.y, 32, 24 }, COLLIDER_PC, this);
+		}
 		else
 		{
 			collision = App->collision->AddCollider({ position.x, position.y, 16, 16 }, COLLIDER_DYNOBJECT, this);
 		}
+
 	}
 
 	if (pickable == true) //Set variables of throwing and impacting

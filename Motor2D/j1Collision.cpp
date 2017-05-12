@@ -64,6 +64,8 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_RMINION][COLLIDER_SWORD] = true;
 	matrix[COLLIDER_RMINION][COLLIDER_PLAYER] = false;
 
+	matrix[COLLIDER_PLAYER][COLLIDER_PC] = true;
+
 }
 j1Collision::~j1Collision() {}
 
@@ -262,6 +264,9 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 125, 125, alpha);
 			break;
 		case COLLIDER_FIREBAT:
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 125, alpha);
+			break;
+		case COLLIDER_PC:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 125, alpha);
 			break;
 		}

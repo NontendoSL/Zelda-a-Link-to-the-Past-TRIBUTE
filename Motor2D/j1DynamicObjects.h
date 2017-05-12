@@ -6,8 +6,6 @@
 
 enum DynObjectState { D_IDLE = 0, D_DYING, D_PICKED, D_AIR };
 
-class Text;
-
 class DynamicObjects : public SceneElement
 {
 public:
