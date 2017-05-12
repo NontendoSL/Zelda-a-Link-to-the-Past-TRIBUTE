@@ -10,6 +10,7 @@
 #include "j1Collision.h"
 #include "j1EntityElementsScene.h"
 #include "j1Audio.h"
+#include "j1Weapon.h"
 
 Geodude::Geodude()
 {
@@ -372,6 +373,7 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr && state != P_DYING)
 	{
+		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && state != P_HIT)
 		{
 			if (c2->callback != nullptr)
@@ -386,6 +388,7 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
+		//PLAYER COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && c2->callback != nullptr)
 		{
 			if (((Player*)c2->callback)->GetState() != L_HIT && ((Player*)c2->callback)->GetState() != L_HOOKTHROWN)
@@ -408,71 +411,21 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 				}
 			}
 		}
-		/*if (c1 == collision_feet && c2->type == COLLIDER_POKEMON && c2->callback != nullptr)
-		{
-			if (state != HOOKTHROWN)//TODO MED -> change this (we will have golbats int the future)
-			{
-				if (c2->callback->name == "Golem" && c2->callback->state == STATIC)
-				{
-					//Not dammage
-				}
-				else if (state != STATIC)
-				{
-					if (hurt == false)
-					{
-						timer.Start();
-						hurt = true;
-						if (hp_hearts.y > 0)
-						{
-							hp_hearts.y--;
-						}
 
-						if (direction == UP)
-						{
-							if (App->map->MovementCost(position.x, position.y + 15, offset_x, offset_y, DOWN) == 0)
-							{
-								position.y += 15;
-								if (Camera_inside(iPoint(0, 15)))
-									App->render->camera.y -= 15;
-							}
-						}
-						if (direction == DOWN)
-						{
-							if (App->map->MovementCost(position.x, position.y - 15, offset_x, offset_y, UP) == 0)
-							{
-								position.y -= 15;
-								if (Camera_inside(iPoint(0, 15)))
-									App->render->camera.y += 15;
-							}
-						}
-						if (direction == LEFT)
-						{
-							if (App->map->MovementCost(position.x + 15, position.y, offset_x, offset_y, RIGHT) == 0)
-							{
-								position.x += 15;
-								if (Camera_inside(iPoint(15, 0)))
-									App->render->camera.x -= 15;
-							}
-						}
-						if (direction == RIGHT)
-						{
-							if (App->map->MovementCost(position.x - 15, position.y, offset_x, offset_y, LEFT) == 0)
-							{
-								position.x -= 15;
-								if (Camera_inside(iPoint(15, 0)))
-									App->render->camera.x += 15;
-							}
-						}
-					}
-					else
-					{
-						if (timer.ReadSec() >= 1)
-						{
-							hurt = false;
-						}
-					}
-				}
+		//ARROW COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
+		{
+			if (c2->arrow_callback->step == AIR && state != P_HIT)
+			{
+				App->audio->PlayFx(12);
+				knockback_time.Start();
+				hp--;
+				state = P_HIT;
+				anim_state = P_IDLE;
+				dir_hit = c2->arrow_callback->direction;
+				prev_position = position;
+				c2->arrow_callback->step = IMPACT; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
 			}
-		}*/
+		}
 	}
 }

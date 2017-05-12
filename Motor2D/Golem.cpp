@@ -10,6 +10,7 @@
 #include "j1Player.h"
 #include "j1EntityElementsScene.h"
 #include "j1Audio.h"
+#include "j1Weapon.h"
 
 Golem::Golem()
 {
@@ -436,6 +437,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 != nullptr && c2 != nullptr)
 	{
+		//BOMB COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
 		{
 			if (state == P_STATIC)
@@ -451,6 +453,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
+		//SWORD COLLISION
 		if(c1 == collision_feet && c2->type == COLLIDER_SWORD && state != P_HIT && state != P_STATIC && state != P_SPECIAL)
 		{
 			if (c2->callback != nullptr)
@@ -465,6 +468,23 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
+		//ARROW COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
+		{
+			if (c2->arrow_callback->step == AIR && state != P_HIT)
+			{
+				App->audio->PlayFx(12);
+				knockback_time.Start();
+				hp--;
+				state = P_HIT;
+				anim_state = P_IDLE;
+				dir_hit = c2->arrow_callback->direction;
+				prev_position = position;
+				c2->arrow_callback->step = IMPACT; 
+			}
+		}
+
+		//PLAYER COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER && state != P_STATIC)
 		{
 			if (((Player*)c2->callback)->GetState() != L_HIT && ((Player*)c2->callback)->GetState() != L_HOOKTHROWN)
