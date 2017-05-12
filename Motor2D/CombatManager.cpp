@@ -20,6 +20,7 @@
 #include "Dusclops.h"
 #include "Groudon.h"
 #include "Shiftry.h"
+#include "TrainingDoll.h"
 #include "PokeTrainer.h"
 #include "j1Gui.h"
 #include "j1GuiElements.h"
@@ -321,6 +322,15 @@ PokemonCombat* CombatManager::CreatePokemon(pugi::xml_node& conf, uint id)
 	else if (id == 8)
 	{
 		Groudon* temp = new Groudon();
+		temp->Awake(conf);
+		temp->Start();
+		elementcombat.push_back(temp);
+		pokemon_active_trainer = (PokemonCombat*)elementcombat.back();
+		return temp;
+	}
+	else if (id == 9)
+	{
+		TrainingDoll* temp = new TrainingDoll();
 		temp->Awake(conf);
 		temp->Start();
 		elementcombat.push_back(temp);
