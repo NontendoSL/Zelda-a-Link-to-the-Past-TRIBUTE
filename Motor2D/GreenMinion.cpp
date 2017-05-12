@@ -4,6 +4,7 @@
 #include "j1Audio.h"
 #include "Ganon.h"
 #include "j1EntityElementsScene.h"
+#include "j1Weapon.h"
 
 GreenMinion::GreenMinion()
 {
@@ -131,6 +132,22 @@ void GreenMinion::OnCollision(Collider* c1, Collider* c2)
 				anim_state = GM_WALKING;
 				dir_hit = c2->callback->direction;
 				prev_position = position;
+			}
+		}
+
+		//ARROW COLLISION
+		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
+		{
+			if (c2->arrow_callback->step == AIR && state != GM_HIT)
+			{
+				App->audio->PlayFx(12);
+				knockback_time.Start();
+				hp--;
+				state = GM_HIT;
+				anim_state = GM_WALKING;
+				dir_hit = c2->arrow_callback->direction;
+				prev_position = position;
+				c2->arrow_callback->step = IMPACT; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
 			}
 		}
 	}
