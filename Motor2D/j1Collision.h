@@ -5,7 +5,7 @@
 #include "SDL/include/SDL_rect.h"
 #include "SceneElements.h"
 
-#define MAX_COLLIDERS 800
+#define MAX_COLLIDERS 400
 
 struct SDL_Rect;
 class Arrow;

@@ -18,7 +18,6 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_BOMB] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_SWITCH_MAP] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DYNOBJECT] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_POKEMON] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_TRAINER] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_VILAGER] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_GANON_ATTACK] = true;
@@ -106,7 +105,6 @@ bool j1Collision::Update(float dt)
 
 		c1 = colliders[i];
 
-
 		// avoid checking collisions already checked
 		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
 		{
@@ -116,16 +114,19 @@ bool j1Collision::Update(float dt)
 
 			c2 = colliders[k];
 
-			if (c1->CheckCollision(c2) == true)
+			if (c1->to_delete == false && c2->to_delete == false)
 			{
-				if (matrix[c1->type][c2->type] == true && c1->callback != nullptr && waittodelete == false)
+				if (c1->CheckCollision(c2) == true)
 				{
-					c1->callback->OnCollision(c1, c2);
-				}
+					if (matrix[c1->type][c2->type] == true && c1->callback != nullptr && waittodelete == false)
+					{
+						c1->callback->OnCollision(c1, c2);
+					}
 
-				if (matrix[c2->type][c1->type] == true && c2->callback != nullptr && waittodelete == false)
-				{
-					c2->callback->OnCollision(c2, c1);
+					if (matrix[c2->type][c1->type] == true && c2->callback != nullptr && waittodelete == false)
+					{
+						c2->callback->OnCollision(c2, c1);
+					}
 				}
 			}
 		}
