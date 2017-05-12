@@ -206,6 +206,7 @@ public:
 	void LoadNewPokemon(PokemonCombat* pokemon, bool trainer);
 	void CombatInfo(PokemonCombat* pokemon_1, PokemonCombat* pokemon_2);
 	void GetDamage(uint damage, bool trainer);
+	void SetHudType(PokemonCombat* enemy_poke);
 public:
 	bool cooldown = false;
 	iPoint cdtime = { 0,0 }; //.X SHOWS CD TIME AND .Y SHOWS REMAINING CD TIME

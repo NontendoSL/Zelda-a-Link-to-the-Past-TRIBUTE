@@ -915,6 +915,16 @@ PokemonCombatHud::PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 	hp2 = (Image*)App->gui->GetEntity("right hp");
 	//Names 
 	ability = (Image*)App->gui->GetEntity("left ability");
+	if (Link->name == "SCEPTILE")
+	{
+		ability->Hitbox.y = 120;
+		ability->elements[0]->Hitbox.y = 120;
+	}
+	else if (Link->name == "SWAMPERT")
+	{
+		ability->Hitbox.y = 190;
+		ability->elements[0]->Hitbox.y = 190;
+	}
 	App->gui->GetEntity("left box")->elements.push_back(App->gui->CreateText(POKE1, Link->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "link_pk_name", POKEMON_COMBAT));
 	App->gui->GetEntity("right box")->elements.push_back(App->gui->CreateText(POKE1, Brendan->name.c_str(), 50, { 6,4 }, 15, { 0,0,0,255 }, true, "brendan_pk_name", POKEMON_COMBAT));
 	// HP Poke Link
@@ -931,8 +941,8 @@ PokemonCombatHud::PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 	num_pokemons = { 3, 3 };
 	cooldown = false;
 	cdtime = iPoint(Link->cooldown, Link->cooldown);
-	Image*test = (Image*)App->gui->GetEntity("bottom hud");
 	App->gui->GetEntity("bottom hud")->position.y = (App->win->GetHeight()/2) - App->gui->GetEntity("bottom hud")->Hitbox.h;
+	SetHudType(Brendan);
 }
 
 void PokemonCombatHud::Move(bool x_axis, float speed)
@@ -1000,6 +1010,8 @@ void PokemonCombatHud::CombatInfo(PokemonCombat* pokemon, PokemonCombat* pokemon
 	((Text*)App->gui->GetEntity("link_pk_name"))->Write(pokemon->name.c_str());
 	hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
 	cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
+	if (hpbar_pLink.x == 0)
+		hpbar_pLink.x = 1;
 	hp1->Hitbox.w = (hpbar_pLink.y * 47) / hpbar_pLink.x;
 	ability->elements[0]->Hitbox.h = 0;
 	cooldown = false;
@@ -1019,10 +1031,23 @@ void PokemonCombatHud::CombatInfo(PokemonCombat* pokemon, PokemonCombat* pokemon
 		App->gui->GetEntity("top hud")->elements[i]->Hitbox.x = 344;
 	}
 	//ability sprites
-	ability->Hitbox.y = 155;
-	ability->elements[0]->Hitbox.y = 155;
-
-	num_pokemons = { 3, 3 };
+	if (pokemon->name == "BLAZIKEN")
+	{
+		ability->Hitbox.y = 155;
+		ability->elements[0]->Hitbox.y = 155;
+	}
+	else if (pokemon->name == "SCEPTILE")
+	{
+		ability->Hitbox.y = 120;
+		ability->elements[0]->Hitbox.y = 120;
+	}
+	else if (pokemon->name == "SWAMPERT")
+	{
+		ability->Hitbox.y = 190;
+		ability->elements[0]->Hitbox.y = 190;
+	}
+	SetHudType( pokemon_2);
+	num_pokemons = { 3, 1 };
 }
 
 
@@ -1031,12 +1056,40 @@ void PokemonCombatHud::GetDamage(uint damage, bool trainer)
 	if (trainer)
 	{
 		hpbar_pLink.y -= damage;
+		if (hpbar_pLink.y < 0)
+			hpbar_pLink.y = 0;
 		poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
 	}
 	else
 	{
 		hpbar_pBrendan.y -= damage;
+		if (hpbar_pBrendan.y < 0)
+			hpbar_pBrendan.y = 0;
 		poke_hp_Brendan->Write(std::string(std::to_string(hpbar_pBrendan.y) + "/" + std::to_string(hpbar_pBrendan.x)).c_str());
+	}
+}
+
+void PokemonCombatHud::SetHudType(PokemonCombat * enemy_poke)
+{
+	if (enemy_poke->name == "WALREIN")
+	{
+		App->gui->GetEntity("top hud")->Hitbox = { 548,236,258,51 };
+		App->gui->GetEntity("bottom hud")->Hitbox = { 549,506,254,33 };
+	}
+	else if (enemy_poke->name == "SHIFTRY")
+	{
+		App->gui->GetEntity("top hud")->Hitbox = { 550,403,254,47 };
+		App->gui->GetEntity("bottom hud")->Hitbox = { 549,461,254,33 };
+	}
+	else if (enemy_poke->name == "DUSCLOPS")
+	{
+		App->gui->GetEntity("top hud")->Hitbox = { 547,353,260,46 };
+		App->gui->GetEntity("bottom hud")->Hitbox = { 1018,420,254,33 };
+	}
+	else if (enemy_poke->name == "SALAMANCE")
+	{
+		App->gui->GetEntity("top hud")->Hitbox = { 549,296,256,50 };
+		App->gui->GetEntity("bottom hud")->Hitbox = { 1018,371,254,33 };
 	}
 }
 
