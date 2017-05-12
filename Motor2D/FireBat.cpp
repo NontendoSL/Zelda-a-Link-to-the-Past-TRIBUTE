@@ -19,7 +19,7 @@ bool FireBat::Start()
 {
 	//Load initial position & direction
 	pos_in_vect = 0;
-	position = App->entity_elements->ganon->GetPosinVect(pos_in_vect);
+	position = App->entity_elements->ganon->GetPosinVect(pos_in_vect); //TODO JORDI_F Posible dont ttake correctly pos_in_vect
 	direction = DOWN;
 
 	//Load Stats
