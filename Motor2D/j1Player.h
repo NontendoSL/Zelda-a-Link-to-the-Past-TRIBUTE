@@ -86,6 +86,7 @@ public:
 	void AddHeartContainer();
 	void ShowHearts();
 	void GetDamage();
+	void SetKnockbackDir();
 
 	LinkState GetState() const;
 	void SetState(LinkState state);

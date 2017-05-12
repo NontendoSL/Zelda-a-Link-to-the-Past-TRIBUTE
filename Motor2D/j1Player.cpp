@@ -493,8 +493,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 			// --------------------------------------
 
-			// LINK HIT BY firebat -------------------
-			if (c1 == collision_feet && c2->type == COLLIDER_FIREBAT) //If green soldier attacks you
+			// LINK HIT BY FIREBAT OR BOMB (same mechanic) -------------------
+			if (c1 == collision_feet && (c2->type == COLLIDER_FIREBAT || c2->type == COLLIDER_BOMB))
 			{
 				if (state != L_HIT && invincible_timer.ReadSec() >= 0.5)
 				{
@@ -506,22 +506,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					hp_hearts.y--;
 
 					//Knockback ---------
-					if (direction == UP)
-					{
-						dir_hit = DOWN;
-					}
-					else if (direction == DOWN)
-					{
-						dir_hit = UP;
-					}
-					else if (direction == LEFT)
-					{
-						dir_hit = RIGHT;
-					}
-					else
-					{
-						dir_hit = LEFT;
-					}
+					SetKnockbackDir();
 					// ---------------
 
 					prev_position = position;
@@ -1565,6 +1550,26 @@ void Player::GetDamage()
 {
 	if (hp_hearts.y>0)
 		hp_hearts.y--;
+}
+
+void Player::SetKnockbackDir()
+{
+	if (direction == UP)
+	{
+		dir_hit = DOWN;
+	}
+	else if (direction == DOWN)
+	{
+		dir_hit = UP;
+	}
+	else if (direction == LEFT)
+	{
+		dir_hit = RIGHT;
+	}
+	else
+	{
+		dir_hit = LEFT;
+	}
 }
 
 
