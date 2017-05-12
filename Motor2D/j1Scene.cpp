@@ -123,20 +123,32 @@ bool j1Scene::Update(float dt)
 				}
 			}
 			
-			if (/*goPokemon && */player->dialog != nullptr)
+			if (player->dialog != nullptr)
 			{
 				dialog_inmapZelda = true;
+				if (notrepeatCombat == false)
+				{
+					notrepeatCombat = true;
+				}
 			}
 
 			if (dialog_inmapZelda && player->dialog == nullptr)
 			{
 				if (combat_map_id != 0)
 				{
-					switch_map = combat_map_id;
-					combat_map_id = 0;
-					useTP = true;
-					dialog_inmapZelda = false;
-					goPokemon = false;
+					if (notrepeatCombat)
+					{
+						switch_map = combat_map_id;
+						combat_map_id = 0;
+						useTP = true;
+						dialog_inmapZelda = false;
+						goPokemon = false;
+					}
+					else
+					{
+						dialog_inmapZelda = false;
+					}
+
 				}
 			}
 
@@ -159,7 +171,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 7;
+				switch_map = 10;
 			}
 
 			/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -931,6 +943,10 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 					App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), 0);
 				}
 				player->state_complet = false;
+			}
+			else
+			{
+				notrepeatCombat = false;
 			}
 
 			//Camera position

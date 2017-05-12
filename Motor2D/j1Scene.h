@@ -143,6 +143,7 @@ public:
 	bool useTP = false;
 private:
 	uint volume = 120;
+	bool notrepeatCombat = false;
 
 };
 
