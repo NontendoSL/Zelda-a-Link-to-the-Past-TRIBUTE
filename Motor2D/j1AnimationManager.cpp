@@ -97,6 +97,7 @@ bool j1AnimationManager::Start()
 			}
 			temp_animat.anim.push_back(*stanim);
 			state = state.next_sibling();
+			delete stanim;
 		}
 		//Add new AnimationStruct in animat -------------------------
 		animat.push_back(temp_animat);

@@ -651,7 +651,7 @@ void Ganon::SetAnimState(GanonState a_state)
 
 iPoint Ganon::GetPosinVect(int index)
 {
-	if (index > 0 && index < points.size())
+	if (index >= 0 && index < points.size())
 	{
 		return points[index];
 	}

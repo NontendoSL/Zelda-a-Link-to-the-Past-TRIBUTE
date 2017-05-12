@@ -70,15 +70,6 @@ bool j1EntityElementScene::Start()
 bool j1EntityElementScene::PreUpdate()
 {
 	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
-
-
-	return true;
-}
-
-bool j1EntityElementScene::Update(float dt)
-{
-	bool ret = true;
-	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
 	if (App->scene->combat == false)
 	{
 		std::list<SceneElement*>::iterator item = elementscene.begin();
@@ -102,15 +93,28 @@ bool j1EntityElementScene::Update(float dt)
 				{
 					DeleteDynObject((DynamicObjects*)item._Ptr->_Myval);
 				}
-				else if (item._Ptr->_Myval->type == CREATURE)
+				if (item._Ptr->_Myval->type == CREATURE)
 				{
 					DeleteCreature((Creature*)item._Ptr->_Myval);
 				}
 			}
-			else
-			{
-				item._Ptr->_Myval->Update(dt);
-			}
+			item++;
+		}
+	}
+
+	return true;
+}
+
+bool j1EntityElementScene::Update(float dt)
+{
+	bool ret = true;
+	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
+	if (App->scene->combat == false)
+	{
+		std::list<SceneElement*>::iterator item = elementscene.begin();
+		while (item != elementscene.end())
+		{
+			item._Ptr->_Myval->Update(dt);
 			item++;
 		}
 	}
@@ -195,8 +199,8 @@ bool j1EntityElementScene::DelteElements()
 		{
 			if (item._Ptr->_Myval->type != WEAPON)
 			{
+				elementscene.remove(item._Ptr->_Myval);
 				delete item._Ptr->_Myval;
-				elementscene.erase(item);
 			}
 			item--;
 		}
@@ -473,7 +477,6 @@ void j1EntityElementScene::CreateDynObject(iPoint pos, uint id, uint id_map, boo
 			}
 		}
 	}
-
 }
 
 Player* j1EntityElementScene::CreatePlayer()
