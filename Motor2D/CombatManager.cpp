@@ -373,12 +373,16 @@ bool CombatManager::DeleteElements_combat()
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	while (item != elementcombat.end())
 	{
-		if (item._Ptr->_Myval->name != "BLAZIKEN")
+		if (item._Ptr->_Myval->name != "BLAZIKEN" && item._Ptr->_Myval->name != "SCEPTYLE"
+			&& item._Ptr->_Myval->name != "SWAMPERT")
 		{
 			delete item._Ptr->_Myval;
+			elementcombat.erase(item);
 		}
-
-		elementcombat.erase(item);
+		else
+		{
+			elementcombat.remove(item._Ptr->_Myval);
+		}
 		item++;
 	}
 	std::list<PokemonCombat*>::iterator Link_pokedex = App->scene->player->pokedex.begin();
