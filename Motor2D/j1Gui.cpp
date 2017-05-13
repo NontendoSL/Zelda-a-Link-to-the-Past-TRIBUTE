@@ -301,7 +301,7 @@ void j1Gui::SetGui(GuiGroup guistate)
 		SetFocus(App->intro->main_menu->GetElement(0));
 		return;
 	case ZELDA_HUD:
-		SetFocus(nullptr);
+		SetFocus(App->scene->hud->GetFirst());
 		return;
 	case ZELDA_MENU:
 		SetFocus(App->scene->start_menu->GetFirst(false));
@@ -528,6 +528,8 @@ void j1Gui::LoadEntities()
 			}
 		}
 		actual = (GuiGroup)(actual + 1);
+		if (actual == ZELDA_MENU)
+			int a;
 		if (actual > gui_groups_name.size())
 		{
 			LOG("GUI ENTITIES LOADED=======================================");

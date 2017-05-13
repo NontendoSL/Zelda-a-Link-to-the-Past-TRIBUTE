@@ -33,7 +33,7 @@ bool GreenMinion::Start(iPoint pos)
 	state = GM_SPAWNING;
 	anim_state = GM_WALKING;
 	animation = *App->anim_manager->GetAnimStruct(GREENMINION);
-
+	animation.anim[anim_state].ResetAnimations();
 	//Set Collision
 	offset_x = 8;
 	offset_y = 4;
@@ -175,6 +175,7 @@ bool GreenMinion::Spawning()
 		state = GM_WALKING;
 		anim_state = GM_WALKING;
 	}
+
 	return true;
 }
 

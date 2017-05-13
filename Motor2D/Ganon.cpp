@@ -4,6 +4,8 @@
 #include "j1AnimationManager.h"
 #include "j1Audio.h"
 #include "j1Player.h"
+#include "j1Gui.h"
+#include "j1GuiEntity.h"
 #include "ParticleManager.h"
 #include "j1Weapon.h"
 
@@ -24,6 +26,8 @@ bool Ganon::Awake(pugi::xml_node &conf, uint id)
 
 bool Ganon::Start()
 {
+	App->gui->GetEntity("boss bar")->visible = true;
+	App->gui->GetEntity("hp boss")->visible = true;
 	//Load initial position & direction
 	position.x = 264;
 	position.y = 200;
@@ -48,6 +52,7 @@ bool Ganon::Start()
 
 bool Ganon::Update(float dt)
 {
+	App->gui->GetEntity("hp boss")->Hitbox.w = (hp * 149) / 100;
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Red);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
@@ -142,6 +147,8 @@ bool Ganon::InitialUpdate(float dt)
 
 bool Ganon::InvincibleUpdate(float dt)
 {
+	if(hp<100)
+		hp+=0.1f;
 	// Until player hasn't killed a certain amount of enemies.
 	if (minions_killed < 10)
 	{

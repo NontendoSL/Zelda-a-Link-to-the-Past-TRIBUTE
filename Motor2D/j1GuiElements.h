@@ -139,6 +139,7 @@ public:
 	void Input();
 	// TU DU heart container manager
 	void Equip(const char* item);
+	Button* GetFirst();
 public:
 	Image* charge = nullptr;
 	Image* force = nullptr;

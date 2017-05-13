@@ -563,6 +563,13 @@ void ZeldaHud::Equip(const char* item)
 	}
 }
 
+Button* ZeldaHud::GetFirst()
+{
+	App->gui->GetEntity("boss bar")->visible = false;
+	App->gui->GetEntity("hp boss")->visible = false;
+	return nullptr;
+}
+
 void ZeldaHud::Move(bool axis, float speed, bool move_all)
 {
 	App->gui->MoveGroup(ZELDA_HUD, axis, speed, move_all);

@@ -32,7 +32,7 @@ public:
 	virtual bool OrientateTo(iPoint pos);
 
 public:
-	int hp = 0;
+	float hp = 0;
 	bool walking = false;
 	int attack = 0;
 	float chase_speed;
