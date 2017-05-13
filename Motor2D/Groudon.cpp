@@ -47,10 +47,10 @@ bool Groudon::Start()
 	state = PC_IDLE;
 	anim_state = PC_IDLE;
 	scale = App->win->GetScale();
-	offset_x = 7;
-	offset_y = 17;
+	offset_x = 15;
+	offset_y = 34;
 	timetoplay = SDL_GetTicks();
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKECOMBAT, this);
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 30, 30 }, COLLIDER_POKECOMBAT, this);
 	timetoplay = SDL_GetTicks();
 	reset_distance = false;
 	sp_attacking = false;
