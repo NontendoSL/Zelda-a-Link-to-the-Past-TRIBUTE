@@ -1398,6 +1398,7 @@ void PokemonWorldHud::CloseAll()
 
 Button* PokemonWorldHud::GetFirst()
 {
+	App->scene->gamestate = INGAME;
 	App->gui->GetEntity("bag_coins_pk")->belong = POKEMON_HUD;
 	for (int i = 0; i < App->gui->GetEntity("bag_coins_pk")->elements.size(); i++)
 	{
@@ -1866,6 +1867,7 @@ void PokemonWorldShop::Update(j1GuiEntity * focus)
 {
 	if (text_timer + 1400 < SDL_GetTicks())
 	{
+		((Text*)App->gui->GetEntity("item bought text"))->color = { 255,255,255,255 };
 		((Text*)App->gui->GetEntity("item bought text"))->Write("WELCOME TO THE SHOP");
 	}
 }
@@ -1939,6 +1941,7 @@ void PokemonWorldShop::Select(bool right)
 
 void PokemonWorldShop::PopText(const char * text)
 {
+	((Text*)App->gui->GetEntity("item bought text"))->color = { 0,0,0,255 };
 	((Text*)App->gui->GetEntity("item bought text"))->Write(text);
 	text_timer = SDL_GetTicks();
 }

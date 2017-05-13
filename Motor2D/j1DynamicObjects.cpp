@@ -73,7 +73,7 @@ bool DynamicObjects::Start()
 		}
 		else if (name == "pc")
 		{
-			collision = App->collision->AddCollider({ position.x, position.y, 32, 24 }, COLLIDER_PC, this);
+			collision = App->collision->AddCollider({ position.x, position.y, 18, 32 }, COLLIDER_PC, this);
 		}
 		else
 		{
