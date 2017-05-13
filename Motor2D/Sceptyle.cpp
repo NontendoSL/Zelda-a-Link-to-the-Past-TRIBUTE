@@ -208,7 +208,22 @@ void Sceptyle::OnCollision(Collider* c1, Collider* c2)
 
 					pokemon_2->SetState(PC_COLLISION);
 					pokemon_2->SetAnimState(PC_IDLE);
-					pokemon_2->dir_hit = direction;
+					if (pokemon_2->direction == UP)
+					{
+						pokemon_2->dir_hit = DOWN;
+					}
+					else if (pokemon_2->direction == DOWN)
+					{
+						pokemon_2->dir_hit = UP;
+					}
+					else if (pokemon_2->direction == RIGHT)
+					{
+						pokemon_2->dir_hit = LEFT;
+					}
+					else
+					{
+						pokemon_2->dir_hit = RIGHT;
+					}
 					pokemon_2->knockback_time.Start();
 				}
 			}
