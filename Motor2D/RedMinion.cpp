@@ -331,7 +331,7 @@ void RedMinion::SetKnockbackDir()
 
 int RedMinion::DropItem()
 {
-	item_id = 7;
+	item_id = 2;
 	return item_id;
 }
 

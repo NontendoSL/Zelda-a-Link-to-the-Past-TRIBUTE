@@ -47,7 +47,7 @@ public:
 	// STATE MACHINE ----------------
 	void Idle();
 	void Walk(float dt);
-	bool Move(float dt);
+	void IdleRage();
 	void StartMovement();
 	void Reorientate();
 	void MeleeAttack();
@@ -76,6 +76,7 @@ public:
 	iPoint GetPosinVect(int index);
 	bool ChangeRadius_degrade(int radius_to_stop, bool increment);
 	void IncreaseDeadMinions();
+	void SetDestination();
 	//-----------------------------
 
 	bool start_augment = false;

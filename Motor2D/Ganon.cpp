@@ -34,7 +34,7 @@ bool Ganon::Start()
 	direction = DOWN;
 
 	//Animation States & initial Phase
-	state = G_WALKING;
+	state = G_IDLE;
 	anim_state = G_WALKING;
 	phase = INITIAL;
 
@@ -47,6 +47,8 @@ bool Ganon::Start()
 	offset_y = 5;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 36, 22 }, COLLIDER_GANON, this);
 
+	//Idle State Test
+	wait_time.Start();
 	return true;
 }
 
@@ -118,6 +120,7 @@ bool Ganon::InitialUpdate(float dt)
 
 		case G_WALKING:
 			Walk(dt);
+			Reorientate();
 			break;
 
 		case G_ATTACKING:
@@ -211,13 +214,7 @@ bool Ganon::RageUpdate(float dt)
 		switch (state)
 		{
 		case G_IDLE:
-			Idle();
-			break;
-
-		case G_WALKING:
-			Orientate();
-			Walk(dt);
-			Reorientate(); //Ganon only has 2 directions: UP & DOWN.
+			IdleRage();
 			break;
 
 		case G_ATTACKING:
@@ -249,7 +246,7 @@ bool Ganon::DeathUpdate(float dt)
 }
 //--------------------------------------
 
-void Ganon::Idle()
+void Ganon::IdleRage()
 {
 	if (wait_time.ReadSec() >= 1)
 	{
@@ -259,10 +256,8 @@ void Ganon::Idle()
 	}
 }
 
-void Ganon::Walk(float dt)
+void Ganon::Idle()
 {
-	// MOVEMENT FINISHED ----------------------
-	if (mov_finished == true)
 	{
 		mov_finished = false;
 		StartMovement();
@@ -273,75 +268,35 @@ void Ganon::Walk(float dt)
 	}
 	else
 	{
-		mov_finished = true;
+		state = G_WALKING;
+		anim_state = G_SPECIAL_1;
+		StartJump();
 	}
-	// ---------------------------------------
 }
 
-bool Ganon::Move(float dt)
+void Ganon::Walk(float dt)
 {
-	/*if (direction == LEFT)
+	// CHECK JUMP MOVEMENT -----------------------
+	if (position.DistanceTo(jump_dest) >= 5)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
-		{
-			position.x -= ceil(speed*dt);
-		}
-	}
-
-	else if (direction == RIGHT)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
-		{
-			position.x += ceil(speed*dt);
-		}
-	}
-
-	else if (direction == UP)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
-		{
-			position.y -= ceil(speed*dt);
-		}
-	}
-
-	else if (direction == DOWN)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
-		{
-			position.y += ceil(speed*dt);
-		}
-	}*/
-
-	mov_time = mov_timer.ReadSec();
-
-	// QUADRATIC
-	//position.x = (1 - time) * (1 - time)*origin.x + 2 * time * (1 - time) * (origin.x + 5) + time * time * dest.x;
-	//position.y = (1 - time) * (1 - time)*origin.y + 2 * time * (1 - time) * (origin.y + 5) + time * time * dest.y;
-
-	// LINEAR
-	position.x = mov_origin.x + (mov_dest.x - mov_origin.x) * mov_time;
-	position.y = mov_origin.y + (mov_dest.y - mov_origin.y) * mov_time;
-
-	/*if (mov_origin.x >= mov_dest.x)
-	{
-		position.x = (1 - mov_time) * (1 - mov_time)*mov_origin.x + 2 * mov_time * (1 - mov_time) * (mov_origin.x + 10) + mov_time * mov_time * mov_dest.x;
+		DoJump();
 	}
 	else
 	{
-		position.x = (1 - mov_time) * (1 - mov_time)*mov_origin.x + 2 * mov_time * (1 - mov_time) * (mov_origin.x - 10) + mov_time * mov_time * mov_dest.x;
+		jump_finished = true;
 	}
+	// ---------------------------------------------
 
-	if (mov_origin.y >= mov_dest.y)
+	// JUMP FINISHED ----------------------
+	if (jump_finished == true)
 	{
-		position.y = (1 - mov_time) * (1 - mov_time)*mov_origin.y + 2 * mov_time * (1 - mov_time) * (mov_origin.y + 10) + mov_time * mov_time * mov_dest.y;
+		ResetJump();
+		Reorientate();
+		state = G_ATTACKING;
+		anim_state = G_MELEE;
+		StartAttack = true;
 	}
-	else
-	{
-		position.y = (1 - mov_time) * (1 - mov_time)*mov_origin.y + 2 * mov_time * (1 - mov_time) * (mov_origin.y - 10) + mov_time * mov_time * mov_dest.y;
-	}*/
-
-	walking = true;
-	return true;
+	// ---------------------------------------
 }
 
 void Ganon::StartMovement()
@@ -380,7 +335,7 @@ void Ganon::MeleeAttack()
 		}
 		else if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 15, 48, 48 }, COLLIDER_GANON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 20, 48, 48 }, COLLIDER_GANON_ATTACK, this);
 		}
 	}
 
@@ -390,10 +345,9 @@ void Ganon::MeleeAttack()
 		{
 			collision_attack->to_delete = true;
 			current_animation = nullptr;
-			state = G_WALKING;
+			state = G_IDLE;
 			anim_state = G_WALKING;
-			mov_finished = false;
-			StartMovement();
+			wait_time.Start();
 		}
 	}
 }
@@ -554,13 +508,8 @@ void Ganon::Hit()
 {
 	if (HitTime.ReadSec() >= 0.3)
 	{
-		state = G_ATTACKING;
-		anim_state = G_MELEE;
-		StartAttack = true;
-	}
-	if (collision_attack != nullptr)
-	{
-		collision_attack->to_delete = true;
+		state = G_IDLE;
+		anim_state = G_WALKING;
 	}
 }
 
@@ -608,7 +557,7 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (state != G_HIT)
 			{
-				if (phase == INITIAL && state != G_ATTACKING)
+				if (phase == INITIAL && state == G_IDLE)
 				{
 					App->audio->PlayFx(12);
 					HitTime.Start();
@@ -627,23 +576,12 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		// PLAYER COLLISION
-		if (c1 == collision_feet && c2->type == COLLIDER_PLAYER)
-		{
-			if (state != G_HIT &&  phase == INITIAL && state != G_ATTACKING)
-			{
-				state = G_ATTACKING;
-				anim_state = G_MELEE;
-				StartAttack = true;
-			}
-		}
-
 		// ARROW COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
 		{
 			if (c2->arrow_callback->step == AIR && state != G_HIT) //&& phase != INVINCIBLE)
 			{
-				if (phase == INITIAL && state != G_ATTACKING)
+				if (phase == INITIAL && state == G_IDLE)
 				{
 					App->audio->PlayFx(12);
 					knockback_time.Start();
@@ -673,7 +611,7 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (state != G_HIT)
 			{
-				if (phase == INITIAL && state != G_ATTACKING)
+				if (phase == INITIAL && state == G_IDLE)
 				{
 					App->audio->PlayFx(12);
 					HitTime.Start();
@@ -757,6 +695,28 @@ bool Ganon::ChangeRadius_degrade(int radius_to_stop, bool increment)
 void Ganon::IncreaseDeadMinions()
 {
 	minions_killed++;
+}
+
+void Ganon::SetDestination()
+{
+	jump_dest = App->scene->player->position;
+	switch (App->scene->player->direction)
+	{
+	case UP:
+		jump_dest.y -= 10;
+		break;
+	case DOWN:
+		jump_dest.y += 10;
+		break;
+	case LEFT:
+		jump_dest.x -= 10;
+		break;
+	case RIGHT:
+		jump_dest.x += 10;
+		break;
+	default:
+		break;
+	}
 }
 
 
