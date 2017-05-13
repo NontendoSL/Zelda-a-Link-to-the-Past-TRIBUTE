@@ -9,10 +9,11 @@
 
 struct Item_pokeCombat
 {
+
 	int hp_up = 0;
 	int def_protein = 0;
 	int x_attack = 0;
-	int items_equiped = 3;
+	int items_equiped = 0;
 };
 
 class NPC;
@@ -54,7 +55,7 @@ public:
 
 	int Getsize_elements();
 
-	bool GiveItem(int id_pokemon, const char* item_name);
+	bool GiveItem(int id_pokemon, std::string item_name);
 
 	//Create Functions 
 	PokemonCombat* CreatePokemon(pugi::xml_node&, uint id);

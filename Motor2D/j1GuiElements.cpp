@@ -1356,6 +1356,45 @@ void PokemonWorldHud::SetMoneyHitbox(Image * number, uint ammount)
 	}
 }
 
+void PokemonWorldHud::GiveItem(std::string pokemon, std::string item_id)
+{
+	std::string pk_bar_identifier;
+	if (pokemon == "BLAZIKEN")
+		pk_bar_identifier = "pk_bar_hud_1";
+	if (pokemon == "SCEPTILE")
+		pk_bar_identifier = "pk_bar_hud_2";
+	if (pokemon == "SWAMPERT")
+		pk_bar_identifier = "pk_bar_hud_3";
+
+		for(int i=0;i<poke_bar.size();i++)
+		{
+			if (poke_bar[i]->identifier == pk_bar_identifier)
+			{
+				for (int j = 0; j < poke_bar[i]->elements.size(); j++)
+				{
+					if (poke_bar[i]->elements[j]->identifier == "item_eq_bar" && poke_bar[i]->elements[j]->Hitbox.x == 821)
+					{
+						if (item_id == "pk_bag:HP UP")
+						{
+							poke_bar[i]->elements[j]->Hitbox.x = 827;
+							return;
+						}
+						else if (item_id == "pk_bag:DEF PROTEIN")
+						{
+							poke_bar[i]->elements[j]->Hitbox.x = 837;
+							return;
+						}
+						else if (item_id == "pk_bag:X ATTACK")
+						{
+							poke_bar[i]->elements[j]->Hitbox.x = 847;
+							return;
+						}
+					}
+				}
+			}
+		}
+}
+
 void PokemonWorldHud::MoveOut(bool out, int id)
 {
 	if (id == -1) // this is if we wanna move in/out an especific bar and not the focused one (testing)

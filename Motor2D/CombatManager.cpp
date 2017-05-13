@@ -210,7 +210,7 @@ int CombatManager::Getsize_elements()
 	return elementcombat.size();
 }
 
-bool CombatManager::GiveItem(int id_pokemon, const char* item_name)
+bool CombatManager::GiveItem(int id_pokemon, std::string item_name)
 {
 	if (bag_items[id_pokemon].items_equiped < 3)
 	{

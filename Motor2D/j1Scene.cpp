@@ -514,10 +514,19 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			if (App->combatmanager->GiveItem(0, poke_bag->selected_name.c_str()))
+			{
+				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
+				poke_hud->GiveItem("BLAZIKEN", poke_bag->selected_name.c_str());
+				App->gui->SetFocus(poke_bag->GetFirst());
+				poke_bag->ShowItemInfo();
+				//TEXT POPOUT ITEM EQUIPED
+			}
+			else
+			{
+				//TEXT POPOUT ITEM NOT EQUIPED
+			}
 			poke_bag->selecting_poke = false;
-			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
-			App->gui->SetFocus(poke_bag->GetFirst());
-			poke_bag->ShowItemInfo();
 		}
 	}
 	if (element->identifier == "pk_bag:SWAMPERT")
@@ -529,10 +538,19 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			if (App->combatmanager->GiveItem(2, poke_bag->selected_name.c_str()))
+			{
+				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
+				poke_hud->GiveItem("SWAMPERT", poke_bag->selected_name.c_str());
+				App->gui->SetFocus(poke_bag->GetFirst());
+				poke_bag->ShowItemInfo();
+				//TEXT POPOUT ITEM EQUIPED
+			}
+			else
+			{
+				//TEXT POPOUT ITEM NOT EQUIPED
+			}
 			poke_bag->selecting_poke = false;
-			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
-			App->gui->SetFocus(poke_bag->GetFirst());
-			poke_bag->ShowItemInfo();
 		}
 	}
 	if (element->identifier == "pk_bag:SCEPTILE")
@@ -544,10 +562,19 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			if (App->combatmanager->GiveItem(1, poke_bag->selected_name.c_str()))
+			{
+				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
+				poke_hud->GiveItem("SCEPTILE", poke_bag->selected_name.c_str());
+				App->gui->SetFocus(poke_bag->GetFirst());
+				poke_bag->ShowItemInfo();
+				//ITEM TEXT PLAEHOLDER
+			}
+			else
+			{
+				//TEXT PLACEHOLDER
+			}
 			poke_bag->selecting_poke = false;
-			poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
-			App->gui->SetFocus(poke_bag->GetFirst());
-			poke_bag->ShowItemInfo();
 		}
 	}
 	if (element->identifier == "pcshop:BUTTON1")
@@ -561,11 +588,11 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			((Button*)element)->click = false;
 			if (player->pokecash >= 30)
 			{
-				player->pokecash -= 30;
-				poke_hud->RefreshMoney();
 				if (poke_bag->AddItem("pk_bag:DEF PROTEIN", true))
 				{
 					poke_shop->PopText(" PROTEIN PURCHASED");
+					player->pokecash -= 30;
+					poke_hud->RefreshMoney();
 				}
 				else
 				{
@@ -589,10 +616,10 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			((Button*)element)->click = false;
 			if (player->pokecash >= 40)
 			{
-				player->pokecash -= 40;
-				poke_hud->RefreshMoney();
 				if (poke_bag->AddItem("pk_bag:HP UP", true))
 				{
+					player->pokecash -= 40;
+					poke_hud->RefreshMoney();
 					poke_shop->PopText("   HP UP PURCHASED");
 				}
 				else
@@ -618,11 +645,11 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			((Button*)element)->click = false;
 			if (player->pokecash >= 50)
 			{
-				player->pokecash -= 50;
-				poke_hud->RefreshMoney();
 				if (poke_bag->AddItem("pk_bag:X ATTACK", true))
 				{
 					poke_shop->PopText(" X ATTACK PURCHASED");
+					player->pokecash -= 50;
+					poke_hud->RefreshMoney();
 				}
 				else
 				{
