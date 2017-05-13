@@ -39,6 +39,8 @@ public:
 	
 	void SetKnockbackDir();
 
+	int DropItem();
+
 private:
 	GMinionState state = GM_IDLE;
 
@@ -59,8 +61,6 @@ private:
 	int canmove = 0;
 	// -------------------------
 
-	//ITEM VARIABLES
-	int item_id = -1;
 
 };
 

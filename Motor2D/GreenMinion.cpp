@@ -246,7 +246,7 @@ bool GreenMinion::Movebyhit(float dt)
 	if (hp <= 0)
 	{
 		state = GM_DYING;
-		anim_state = GM_IDLE;
+		anim_state = GM_WALKING;
 		return true;
 	}
 
@@ -297,7 +297,7 @@ bool GreenMinion::Die()
 	App->audio->PlayFx(11);
 	if (item_id != -1)
 	{
-		App->entity_elements->CreateItem(item_id, position);
+		App->entity_elements->CreateItem(DropItem(), position);
 	}
 
 	if (App->entity_elements->ganon != nullptr)
@@ -328,6 +328,26 @@ void GreenMinion::SetKnockbackDir()
 	{
 		dir_hit = LEFT;
 	}
+}
+
+int GreenMinion::DropItem()
+{
+	int id = rand() % 100 + 1;
+
+	if (id > 0 && id <= 40)
+	{
+		item_id = 7;
+	}
+	else if (id > 40 && id <= 60)
+	{
+		item_id = 2;
+	}
+	else
+	{
+		item_id = 0;
+	}
+
+	return item_id;
 }
 
 
