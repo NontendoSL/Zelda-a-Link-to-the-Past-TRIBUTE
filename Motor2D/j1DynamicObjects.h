@@ -37,6 +37,7 @@ public:
 	void Throw(Direction dir);
 	void KeepGoing(float dt);
 	DynObjectState IsImpact(int actual_floor);
+	int DropItem();
 	//-------------------------------------
 
 	DynObjectState GetState() const;
@@ -48,7 +49,6 @@ public:
 public:
 	Collider* collision = nullptr;
 	SDL_Rect rect;
-	int item_id = 0;
 	bool pickable = false;
 
 
