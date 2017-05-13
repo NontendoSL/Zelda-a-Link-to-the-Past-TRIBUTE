@@ -85,7 +85,7 @@ bool CombatManager::Update(float dt)
 								poke->collision_attack->to_delete = true;
 							if (poke->sp_attack != nullptr)
 								poke->sp_attack->to_delete = true;
-							elementcombat.erase(item);
+							elementcombat.remove(item._Ptr->_Myval);
 							item++;
 							pokemon_order++;
 							change_pokemon();

@@ -70,6 +70,7 @@
     <vilager id="7" name="Glacia" rect_x="14" rect_y="82" rect_w="16" rect_h="22" pos_x="160" pos_y="136" dialog=""/>
     <vilager id="8" name="Drake" rect_x="42" rect_y="21" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog=""/>
     <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="10" name="Ric" rect_x="16" rect_y="125" rect_w="20" rect_h="25" pos_x="160" pos_y="136" dialog=""/>
   </vilagers>
   
   
@@ -136,7 +137,7 @@
         <dynobject id="6" name="door" type="ZELDA" rect_x="1" rect_y="84" rect_w="32" rect_h="24" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <vilagers>
-        <vilager id="1" name="Uncle" rect_x="23" rect_y="198" rect_w="16" rect_h="23" pos_x="336" pos_y="64" dialog="Hey Link, take my sword!" />
+        <vilager id="1" name="Uncle" rect_x="0" rect_y="125" rect_w="17" rect_h="23" pos_x="336" pos_y="64" dialog="Hey Link, take my sword!" />
       </vilagers>
       <editcost>
         <edit pos_x="11" pos_y="50" />

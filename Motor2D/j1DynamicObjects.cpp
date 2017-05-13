@@ -65,7 +65,7 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos, bool isSig
 
 bool DynamicObjects::Start()
 {
-	if(name != "door" || name != "door_2")
+	if(name != "door" && name != "door_2")
 	{
 		if (name == "bigchest") //Only created if player picked the item inside
 		{
