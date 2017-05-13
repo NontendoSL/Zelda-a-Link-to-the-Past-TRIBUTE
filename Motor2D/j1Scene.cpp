@@ -959,6 +959,14 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 				notrepeatCombat = false;
 			}
 
+			if (n == 3 && player->bow == nullptr)
+			{
+				for (pugi::xml_node editcost = temp.child("editcost").child("edit"); editcost != NULL; editcost = editcost.next_sibling())
+				{
+					App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), 0);
+				}
+			}
+
 			//Camera position
 			int scale = App->win->GetScale();
 			player->camera_follow = temp.child("camera").attribute("follow").as_bool();
