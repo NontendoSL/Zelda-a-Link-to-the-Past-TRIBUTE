@@ -124,10 +124,6 @@ bool j1Scene::Update(float dt)
 			if (player->dialog != nullptr)
 			{
 				dialog_inmapZelda = true;
-				if (notrepeatCombat == false)
-				{
-					notrepeatCombat = true;
-				}
 			}
 
 			if (dialog_inmapZelda && player->dialog == nullptr)
@@ -141,6 +137,7 @@ bool j1Scene::Update(float dt)
 						useTP = true;
 						dialog_inmapZelda = false;
 						goPokemon = false;
+						notrepeatCombat = false;
 					}
 					else
 					{
@@ -980,7 +977,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			}
 			else
 			{
-				notrepeatCombat = false;
+				notrepeatCombat = true;
 			}
 
 			if (n == 3 && player->bow != nullptr)

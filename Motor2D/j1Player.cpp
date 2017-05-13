@@ -571,8 +571,17 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						else
 							c2->callback->direction = LEFT;
 						Villager* villager = (Villager*)c2->callback;
-						App->scene->combat_map_id = villager->switch_map;
-						dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+						if (App->scene->notrepeatCombat)
+						{
+							App->scene->combat_map_id = villager->switch_map;
+							dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+						}
+						else
+						{
+							App->scene->combat_map_id = 0;
+							dialog = App->gui->CreateDialogue("Congratulations! you defeated me, you see the next coach. He will not lose so easily...");
+						}
+
 						collision_interact->to_delete = true;
 						interaction = false;
 						state = L_IDLE;

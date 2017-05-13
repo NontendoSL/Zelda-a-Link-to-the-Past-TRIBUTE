@@ -141,10 +141,11 @@ public:
 	bool update_return = true;
 	bool first_loop = true;
 	bool useTP = false;
+	bool notrepeatCombat = true;
 
 private:
 	uint volume = 120;
-	bool notrepeatCombat = false;
+
 
 };
 
