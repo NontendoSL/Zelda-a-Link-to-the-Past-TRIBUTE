@@ -1384,16 +1384,19 @@ void PokemonWorldHud::GiveItem(std::string pokemon, std::string item_id)
 						if (item_id == "pk_bag:HP UP")
 						{
 							poke_bar[i]->elements[j]->Hitbox.x = 827;
+							App->scene->poke_bag->PopOut(std::string(pokemon+" RECIEVED HP UP!").c_str());
 							return;
 						}
 						else if (item_id == "pk_bag:DEF PROTEIN")
 						{
 							poke_bar[i]->elements[j]->Hitbox.x = 837;
+							App->scene->poke_bag->PopOut(std::string(pokemon + " RECIEVED DEF PROTEIN!").c_str());
 							return;
 						}
 						else if (item_id == "pk_bag:X ATTACK")
 						{
 							poke_bar[i]->elements[j]->Hitbox.x = 847;
+							App->scene->poke_bag->PopOut(std::string(pokemon + " RECIEVED X ATTACK!").c_str());
 							return;
 						}
 					}
@@ -1571,8 +1574,8 @@ PokemonWorldMenu::~PokemonWorldMenu()
 
 PokemonWorldBag::PokemonWorldBag()
 {
-
-	for (int i = 0; i < App->gui->GetEntity("pokemon bag")->elements.size()-3; i++)
+	belong = POKEMON_BAG;
+	for (int i = 0; i < App->gui->GetEntity("pokemon bag")->elements.size()-5; i++)
 	{
 		if (App->gui->GetEntity("pokemon bag")->elements[i]->type == BUTTON)
 		{
@@ -1591,16 +1594,27 @@ PokemonWorldBag::PokemonWorldBag()
 	bag_item[4]->amount = 1;
 	bag_item[4]->order = 0;
 
-	//AddItem("pk_bag:DEF PROTEIN", true);
-	//AddItem("pk_bag:HP UP", true);
-	//AddItem("pk_bag:X ATTACK", true);
-	//AddItem("pk_bag:CITRUS BERRY", true);
+	App->gui->GetEntity("pop_up box::bag")->visible = false;
+	App->gui->GetEntity("popup bag text")->visible = false;
 
 }
 
 PokemonWorldBag::~PokemonWorldBag()
 {
 
+}
+
+void PokemonWorldBag::Update(j1GuiEntity * nothing)
+{
+	if (poped)
+	{
+		if (timer_pop + 1200 < SDL_GetTicks())
+		{
+			App->gui->GetEntity("pop_up box::bag")->visible = false;
+			App->gui->GetEntity("popup bag text")->visible = false;
+			poped = false;
+		}
+	}
 }
 
 void PokemonWorldBag::Input()
@@ -1891,6 +1905,15 @@ void PokemonWorldBag::ShowItemInfo()
 		((Text*)App->gui->GetEntity("bag_item_description"))->Write("Closes the bag.");
 		App->gui->GetEntity("item png")->Hitbox.x = 153;
 	}
+}
+
+void PokemonWorldBag::PopOut(const char * write)
+{
+	timer_pop = SDL_GetTicks();
+	((Text*)App->gui->GetEntity("popup bag text"))->Write(write);
+	App->gui->GetEntity("pop_up box::bag")->visible = true;
+	App->gui->GetEntity("popup bag text")->visible = true;
+	poped = true;
 }
 
 //---------------------------------------

@@ -518,15 +518,14 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			{
 				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 				poke_hud->GiveItem("BLAZIKEN", poke_bag->selected_name.c_str());
-				App->gui->SetFocus(poke_bag->GetFirst());
 				poke_bag->ShowItemInfo();
-				//TEXT POPOUT ITEM EQUIPED
 			}
 			else
 			{
-				//TEXT POPOUT ITEM NOT EQUIPED
+				poke_bag->PopOut("BLAZIKEN IS ALREADY FULLY EQUIPED");
 			}
 			poke_bag->selecting_poke = false;
+			App->gui->SetFocus(poke_bag->GetFirst());
 		}
 	}
 	if (element->identifier == "pk_bag:SWAMPERT")
@@ -542,15 +541,14 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			{
 				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 				poke_hud->GiveItem("SWAMPERT", poke_bag->selected_name.c_str());
-				App->gui->SetFocus(poke_bag->GetFirst());
 				poke_bag->ShowItemInfo();
-				//TEXT POPOUT ITEM EQUIPED
 			}
 			else
 			{
-				//TEXT POPOUT ITEM NOT EQUIPED
+				poke_bag->PopOut("SWAMPERT IS ALREADY FULLY EQUIPED");
 			}
 			poke_bag->selecting_poke = false;
+			App->gui->SetFocus(poke_bag->GetFirst());
 		}
 	}
 	if (element->identifier == "pk_bag:SCEPTILE")
@@ -566,15 +564,14 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			{
 				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 				poke_hud->GiveItem("SCEPTILE", poke_bag->selected_name.c_str());
-				App->gui->SetFocus(poke_bag->GetFirst());
 				poke_bag->ShowItemInfo();
-				//ITEM TEXT PLAEHOLDER
 			}
 			else
 			{
-				//TEXT PLACEHOLDER
+				poke_bag->PopOut("SCEPTILE IS ALREADY FULLY EQUIPED");
 			}
 			poke_bag->selecting_poke = false;
+			App->gui->SetFocus(poke_bag->GetFirst());
 		}
 	}
 	if (element->identifier == "pcshop:BUTTON1")
@@ -872,11 +869,11 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 		//hud->OpenClose(true);
 	}
 
-	if (n == 9)
+	if (n == 9 || n==10)
 	{
 		App->gui->SetGui(POKEMON_HUD);
 		player->pokecash = player->gems * 3;
-		player->pokecash += 50;
+		player->pokecash += 500;
 		poke_hud->RefreshMoney();
 	}
 

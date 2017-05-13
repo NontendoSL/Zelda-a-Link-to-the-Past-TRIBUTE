@@ -288,6 +288,7 @@ public:
 	PokemonWorldBag();
 	~PokemonWorldBag();
 public:
+	void Update(j1GuiEntity* nothing);
 	void Input();
 	Button* GetFirst(bool items=true);
 	void MoveIn(bool in); // true for enter, false for out
@@ -298,13 +299,15 @@ public:
 	void Remove(uint item_id);
 	void SetAmmount(uint item_id);
 	void ShowItemInfo();
+	void PopOut(const char* write);
 private:
 	std::vector<BagItem*>bag_item;
 	std::vector<Button*>bag_poke;
 public:
 	std::string selected_name;
 	bool selecting_poke = false;
-	//bool active = false;
+	uint timer_pop = 0;
+	bool poped = false;
 };
 
 //---------------------------------------
