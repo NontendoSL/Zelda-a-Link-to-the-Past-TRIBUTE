@@ -274,6 +274,7 @@ bool j1Scene::Update(float dt)
 				App->scene->start_menu->PickItem("bomb");
 				player->bombs = 99;
 				player->setWeapons = true;
+				player->sword_equiped = true;
 			}
 			// ---------
 
@@ -902,7 +903,14 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 		if (n == 9)
 		{
 			player->Unequip();
+			player->sword_equiped = false;
 		}
+	}
+
+	if (n == 16)
+	{
+		App->gui->SetGui(ZELDA_HUD);
+		player->sword_equiped = true;
 	}
 
 	if (n == 5)

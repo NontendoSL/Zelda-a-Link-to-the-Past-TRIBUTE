@@ -130,7 +130,7 @@ public:
 	j1Timer hurt_timer;
 
 	//Current release test
-	bool sword_equiped = true;
+	bool sword_equiped = false;
 
 	//Weapons test
 	bool setWeapons = false;
