@@ -16,6 +16,7 @@
 #include "j1Weapon.h"
 #include "j1Window.h"
 #include <assert.h>
+#include "j1Audio.h"
 
 /////////////////////////////// IMAGE METHODS ///////////////////////////////
 
@@ -1224,6 +1225,7 @@ void PokemonWorldHud::Input()
 			App->scene->poke_menu->MoveIn(true);
 			App->gui->SetGui(POKEMON_MENU);
 			App->scene->gamestate = INMENU;
+			App->audio->PlayFx(24);
 		}
 	}
 	if (active)
