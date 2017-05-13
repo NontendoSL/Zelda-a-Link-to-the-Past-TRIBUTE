@@ -245,7 +245,7 @@ bool RedMinion::Movebyhit(float dt)
 	if (hp <= 0)
 	{
 		state = RM_DYING;
-		anim_state = RM_IDLE;
+		anim_state = RM_WALKING;
 		return true;
 	}
 
@@ -296,7 +296,7 @@ bool RedMinion::Die()
 	App->audio->PlayFx(11);
 	if (item_id != -1)
 	{
-		App->entity_elements->CreateItem(item_id, position);
+		App->entity_elements->CreateItem(DropItem(), position);
 	}
 
 	if (App->entity_elements->ganon != nullptr)
@@ -327,6 +327,12 @@ void RedMinion::SetKnockbackDir()
 	{
 		dir_hit = LEFT;
 	}
+}
+
+int RedMinion::DropItem()
+{
+	item_id = 7;
+	return item_id;
 }
 
 

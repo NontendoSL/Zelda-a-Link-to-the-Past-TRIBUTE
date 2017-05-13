@@ -39,6 +39,8 @@ public:
 
 	void SetKnockbackDir();
 
+	int DropItem();
+
 private:
 	RMinionState state = RM_IDLE;
 
@@ -60,8 +62,6 @@ private:
 	int canmove = 0;
 	// -------------------------
 
-	//ITEM VARIABLES
-	int item_id = -1;
 
 };
 
