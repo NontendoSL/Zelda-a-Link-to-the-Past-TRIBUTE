@@ -72,6 +72,10 @@ bool j1Scene::Start()
 			App->audio->LoadFx("audio/fx/LTTP_Arrow.wav");//18
 			App->audio->LoadFx("audio/fx/LTTP_Stun.wav");//19
 			App->audio->LoadFx("audio/fx/LTTP_ItemGet.wav");//20
+			App->audio->LoadFx("audio/fx/PKMN_Paying.wav");//21
+			App->audio->LoadFx("audio/fx/PKMN_IncreasingStat.wav");//22
+			App->audio->LoadFx("audio/fx/PKMN_Select.wav");//23
+			App->audio->LoadFx("audio/fx/PKMN_MenuOpen.wav");//24
 
 			//Init All teleports
 			CreateTeleports();
@@ -383,10 +387,12 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->audio->PlayFx(23);
 		}
 		else
 		{
 			((Button*)element)->click = false;
+			App->audio->PlayFx(23);
 		}
 	}
 	if (element->identifier == "pk_bar_hud_2")
@@ -394,10 +400,12 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->audio->PlayFx(23);
 		}
 		else
 		{
 			((Button*)element)->click = false;
+			App->audio->PlayFx(23);
 		}
 	}
 	if (element->identifier == "pk_bar_hud_3")
@@ -405,10 +413,12 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->audio->PlayFx(23);
 		}
 		else
 		{
 			((Button*)element)->click = false;
+			App->audio->PlayFx(23);
 		}
 	}
 	if (element->identifier == "pk_menu:pokemon")
@@ -416,6 +426,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->audio->PlayFx(24);
 		}
 		else
 		{
@@ -432,6 +443,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->audio->PlayFx(24);
 		}
 		else
 		{
@@ -503,6 +515,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->audio->PlayFx(24);
 		}
 		else
 		{
@@ -523,6 +536,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			{
 				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 				poke_hud->GiveItem("BLAZIKEN", poke_bag->selected_name.c_str());
+				App->audio->PlayFx(22);
 				poke_bag->ShowItemInfo();
 			}
 			else
@@ -546,6 +560,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			{
 				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 				poke_hud->GiveItem("SWAMPERT", poke_bag->selected_name.c_str());
+				App->audio->PlayFx(22);
 				poke_bag->ShowItemInfo();
 			}
 			else
@@ -569,6 +584,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			{
 				poke_bag->AddItem(poke_bag->selected_name.c_str(), false);
 				poke_hud->GiveItem("SCEPTILE", poke_bag->selected_name.c_str());
+				App->audio->PlayFx(22);
 				poke_bag->ShowItemInfo();
 			}
 			else
@@ -595,6 +611,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 					poke_shop->PopText(" PROTEIN PURCHASED");
 					player->pokecash -= 30;
 					poke_hud->RefreshMoney();
+					App->audio->PlayFx(21);
 				}
 				else
 				{
@@ -623,6 +640,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 					player->pokecash -= 40;
 					poke_hud->RefreshMoney();
 					poke_shop->PopText("   HP UP PURCHASED");
+					App->audio->PlayFx(21);
 				}
 				else
 				{
@@ -652,6 +670,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 					poke_shop->PopText(" X ATTACK PURCHASED");
 					player->pokecash -= 50;
 					poke_hud->RefreshMoney();
+					App->audio->PlayFx(21);
 				}
 				else
 				{
