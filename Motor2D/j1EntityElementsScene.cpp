@@ -345,15 +345,26 @@ void j1EntityElementScene::SwapObject(SceneElement* obj)
 {
 	if (obj != nullptr)
 	{
-		if (obj != elementscene.begin()._Ptr->_Next->_Myval)
+		if (obj != elementscene.begin()._Ptr->_Myval)
 		{
 			std::list<SceneElement*>::iterator temp = elementscene.begin();
 			for (;temp != elementscene.end();temp++)
 			{
 				if (temp._Ptr->_Myval == obj)
 				{
-					std::swap(temp._Ptr->_Myval, elementscene.begin()._Ptr->_Next->_Myval);
+					std::swap(temp._Ptr->_Myval, elementscene.begin()._Ptr->_Myval);
 					break;
+				}
+			}
+			if (elementscene.begin()._Ptr->_Myval != App->scene->player)
+			{
+				for (temp = elementscene.begin(); temp != elementscene.end(); temp++)
+				{
+					if (temp._Ptr->_Myval == App->scene->player)
+					{
+						std::swap(temp._Ptr->_Myval, elementscene.begin()._Ptr->_Next->_Myval);
+						break;
+					}
 				}
 			}
 		}

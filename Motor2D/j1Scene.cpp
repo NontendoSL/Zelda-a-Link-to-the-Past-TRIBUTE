@@ -880,6 +880,10 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 		player->pokecash = player->gems * 3;
 		player->pokecash += 500;
 		poke_hud->RefreshMoney();
+		if (n == 9)
+		{
+			player->Unequip();
+		}
 	}
 
 	if (n == 5)
