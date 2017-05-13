@@ -1196,29 +1196,35 @@ void PokemonWorldHud::Input()
 {
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_SELECT) == EVENTSTATE::E_DOWN)
 	{
-		active = !active;
-		if (active)
+		if (App->scene->player->dialog == nullptr)
 		{
-			App->gui->SetFocus(GetFirst());
-			App->scene->gamestate = INMENU;
-		}
-		else
-		{
-			CloseAll();
-			App->scene->gamestate = INGAME;
+			active = !active;
+			if (active)
+			{
+				App->gui->SetFocus(GetFirst());
+				App->scene->gamestate = INMENU;
+			}
+			else
+			{
+				CloseAll();
+				App->scene->gamestate = INGAME;
+			}
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 	{
-		if (active)
+		if (App->scene->player->dialog == nullptr)
 		{
-			CloseAll();
-			active = false;
+			if (active)
+			{
+				CloseAll();
+				active = false;
+			}
+			//App->scene->poke_menu->active = true;
+			App->scene->poke_menu->MoveIn(true);
+			App->gui->SetGui(POKEMON_MENU);
+			App->scene->gamestate = INMENU;
 		}
-		//App->scene->poke_menu->active = true;
-		App->scene->poke_menu->MoveIn(true);
-		App->gui->SetGui(POKEMON_MENU);
-		App->scene->gamestate = INMENU;
 	}
 	if (active)
 	{

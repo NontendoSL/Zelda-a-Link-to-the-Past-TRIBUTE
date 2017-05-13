@@ -112,10 +112,6 @@ bool CombatManager::Update(float dt)
 				item++;
 			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
-		{
-			App->scene->pokecombat->cooldown = false;
-		}
 		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		{
 			pokemon_active_trainer->hp -= 1000;
@@ -123,7 +119,6 @@ bool CombatManager::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 		{
 			pokemon_active_link->hp -= 1000;
-			App->scene->pokecombat->cooldown = false;
 		}
 	}
 	return true;
