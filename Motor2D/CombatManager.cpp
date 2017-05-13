@@ -411,6 +411,9 @@ void CombatManager::PrepareToCombat(PokemonCombat* pokemon, uint idMap, int id_p
 			{
 				pokemon->active = true;
 				pokemon->Start();
+				//Restore stats (hp, speed, attack, etc...);
+				RestoreStats(config.parent().child("Link").child("pokemon"), pokemon);
+				//Modify stats (position) // Set augments (potions "+damage" "+hp" ...)
 				ModifyStats(config, pokemon, bag_items[id_pokemon - 1]);
 				pokemon->target = pokemon_active_trainer;
 				pokemon_active_trainer->target = pokemon;
@@ -426,6 +429,35 @@ void CombatManager::ModifyStats(pugi::xml_node& conf, PokemonCombat* pokemon, It
 	pokemon->position.x = conf.child("poke_Link").attribute("pos_x").as_int(0);
 	pokemon->position.y = conf.child("poke_Link").attribute("pos_y").as_int(0);
 	pokemon->ModifyStats(&bag);
+}
+
+void CombatManager::RestoreStats(pugi::xml_node& conf, PokemonCombat* pokemon)
+{
+	if (pokemon->name == "BLAZIKEN")
+	{
+		pokemon->hp = conf.attribute("hp").as_float(0);
+		pokemon->attack = conf.attribute("attack").as_int(0);
+		pokemon->defense = conf.attribute("defense").as_uint(0);
+		pokemon->sp_damage = conf.attribute("special_attack").as_uint(0);
+	}
+	else if (pokemon->name == "SCEPTILE")
+	{
+		pokemon->hp = conf.next_sibling().attribute("hp").as_float(0);
+		pokemon->attack = conf.next_sibling().attribute("attack").as_int(0);
+		pokemon->defense = conf.next_sibling().attribute("defense").as_uint(0);
+		pokemon->sp_damage = conf.next_sibling().attribute("special_attack").as_uint(0);
+	}
+	else if (pokemon->name == "SWAMPERT")
+	{
+		pokemon->hp = conf.next_sibling().next_sibling().attribute("hp").as_float(0);
+		pokemon->attack = conf.next_sibling().next_sibling().attribute("attack").as_int(0);
+		pokemon->defense = conf.next_sibling().next_sibling().attribute("defense").as_uint(0);
+		pokemon->sp_damage = conf.next_sibling().next_sibling().attribute("special_attack").as_uint(0);
+	}
+	else
+	{
+		LOG("Error Name!");
+	}
 }
 
 PokemonCombat* CombatManager::change_pokemon()//true Link - false Brendan

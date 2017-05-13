@@ -51,6 +51,8 @@ public:
 
 	void ModifyStats(pugi::xml_node&, PokemonCombat* pokemon, Item_pokeCombat bag);
 
+	void RestoreStats(pugi::xml_node&, PokemonCombat* pokemon);
+
 	void CreateDynObject(iPoint pos, uint id, uint id_map);
 
 	int Getsize_elements();
