@@ -253,6 +253,9 @@
       <dynobjects>
         <dynobject id="7" name="pc" type="POKEMON" rect_x="94" rect_y="1" rect_w="16" rect_h="32" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
+      <vilagers>
+        <vilager id="4" name="Joy" rect_x="74" rect_y="82" rect_w="16" rect_h="21" pos_x="160" dialog="Hi, I can heal you pokemons, but i dont want it!"/>
+      </vilagers>
     </map>
 
     <map n="11" file="EliteFour01.tmx">
@@ -325,8 +328,8 @@
         <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
-        <edit pos_x="21" pos_y="11" />
-        <edit pos_x="22" pos_y="11" />
+        <edit pos_x="19" pos_y="9" />
+        <edit pos_x="20" pos_y="9" />
       </editcost>
     </map>
 
@@ -466,10 +469,10 @@
         <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <editcost>
-        <edit pos_x="20" pos_y="30" />
-        <edit pos_x="21" pos_y="30" />
-        <edit pos_x="22" pos_y="30" />
-        <edit pos_x="23" pos_y="30" />
+        <edit pos_x="18" pos_y="26" />
+        <edit pos_x="19" pos_y="26" />
+        <edit pos_x="20" pos_y="26" />
+        <edit pos_x="21" pos_y="26" />
       </editcost>
       <deletecost>
         <!--Trainer wall-->
