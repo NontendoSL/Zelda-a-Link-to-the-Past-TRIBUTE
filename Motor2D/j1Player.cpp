@@ -355,6 +355,12 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					App->entity_elements->CreateItem(temp->item_id, position); //TODO LOW call Drop item() function
 					score += 75;
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
+					if (App->scene->last_map == 3)
+					{
+						App->map->EditCost(11, 50, 0);
+						App->map->EditCost(12, 50, 0);
+						App->entity_elements->DeleteElement("door");
+					}
 				}
 
 				// PICKING OBJECTS 

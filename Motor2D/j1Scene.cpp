@@ -986,7 +986,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 				notrepeatCombat = false;
 			}
 
-			if (n == 3 && player->bow == nullptr)
+			if (n == 3 && player->bow != nullptr)
 			{
 				for (pugi::xml_node editcost = temp.child("editcost").child("edit"); editcost != NULL; editcost = editcost.next_sibling())
 				{

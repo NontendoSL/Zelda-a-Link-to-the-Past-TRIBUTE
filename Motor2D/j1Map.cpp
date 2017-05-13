@@ -504,9 +504,14 @@ void j1Map::DynObjectFromTiled(uint id_map)
 			{
 				if ((id_map == 3 && App->scene->player->bow != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
 					(id_map == 7 && App->scene->player->hook != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
-					(id_map == 8 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[0]->firstgid + 10))
+					(id_map == 8 && App->scene->player->bombmanager != nullptr && tile_id == data.tilesets[0]->firstgid + 10) ||
+					(id_map == 3 && App->scene->player->bow != nullptr && tile_id == data.tilesets[0]->firstgid + 11))
 				{
 					//DON'T CREATE AGAIN THE BIG CHEST TODO MED -> REMODELATE THIS METHOD!!!!
+					if (id_map == 3)
+					{
+						EditCost(10, 50, data.tilesets[0]->firstgid + 1);
+					}
 				}
 				else
 				{
@@ -524,7 +529,10 @@ void j1Map::DynObjectFromTiled(uint id_map)
 							}
 							if (tile_id - data.tilesets[0]->firstgid - 5 == 6)
 							{
-								EditCost(x, y, 0);
+								if (id_map == 3)
+								{
+									EditCost(x, y, data.tilesets[0]->firstgid + 1);
+								}
 							}
 							else
 								EditCost(x, y, data.tilesets[0]->firstgid + 1);
