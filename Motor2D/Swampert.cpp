@@ -118,13 +118,22 @@ bool Swampert::Update(float dt)
 	{
 
 	}
-	/*else if (App->scene->gamestate == TIMETOPLAY)
+
+	if (dusclops_special == false && App->combatmanager->pokemon_active_trainer->name == "DUSCLOPS" && App->combatmanager->pokemon_active_trainer->Special_inUse())
 	{
-		if (SDL_GetTicks() - timetoplay > 1000)
+		dusclops_special = true;
+		autoAttack.Start();
+	}
+	if (dusclops_special)
+	{
+		if (autoAttack.ReadSec() > 0.5)
 		{
-			App->scene->gamestate = INGAME;
+			autoAttack.Start();
+			hp -= 1;
+			App->scene->pokecombat->GetDamage(1, true);
 		}
-	}*/
+	}
+
 	if (drawThrowSP)
 	{
 		ThrowSP();
@@ -180,7 +189,7 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (pokemon_1->active && pokemon_2->active && pokemon_1 != pokemon_2)
 			{
-				if (c1 == sp_attack && c2->type == COLLIDER_POKECOMBAT && getdamage == false)
+				if (c1 == sp_attack && c2->type == COLLIDER_POKECOMBAT && getdamage == false && pokemon_2->GetState() != PC_SPECIAL)
 				{
 					pokemon_2->knockback_time.Start();
 					pokemon_2->hp -= sp_damage;
@@ -192,7 +201,7 @@ void Swampert::OnCollision(Collider* c1, Collider* c2)
 					pokemon_2->prev_position = pokemon_2->position;
 				}
 
-				if (c1 == collision_attack && c2->type == COLLIDER_POKECOMBAT && getdamage == false)
+				if (c1 == collision_attack && c2->type == COLLIDER_POKECOMBAT && getdamage == false && pokemon_2->GetState() != PC_SPECIAL)
 				{
 					pokemon_2->knockback_time.Start();
 					pokemon_2->hp -= attack;

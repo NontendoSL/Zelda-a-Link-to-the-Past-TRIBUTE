@@ -60,9 +60,12 @@ private:
 	int timetorun = 0;
 	bool drawThrowSP = false;
 
+	j1Timer autoAttack;
+	bool dusclops_special = false;
+
 	//SP
-	 SDL_Texture* sp_leaf = nullptr;
-	 SDL_Rect sp_rect = { 47, 265, 13, 13 };
+	SDL_Texture* sp_leaf = nullptr;
+	SDL_Rect sp_rect = { 47, 265, 13, 13 };
 	std::vector<iPoint>leafs_pos;
 	uint rotation = 0;
 	Collider* top_leaf_sp = nullptr;

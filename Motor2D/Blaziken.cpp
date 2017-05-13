@@ -112,13 +112,21 @@ bool Blaziken::Update(float dt)
 	{
 
 	}
-	/*else if (App->scene->gamestate == TIMETOPLAY)
+
+	if (dusclops_special == false && App->combatmanager->pokemon_active_trainer->name == "DUSCLOPS" && App->combatmanager->pokemon_active_trainer->Special_inUse())
 	{
-		if (SDL_GetTicks() - timetoplay > 1000)
+		dusclops_special = true;
+		autoAttack.Start();
+	}
+	if (dusclops_special)
+	{
+		if (autoAttack.ReadSec() > 0.5)
 		{
-			App->scene->gamestate = INGAME;
+			autoAttack.Start();
+			hp -= 1;
+			App->scene->pokecombat->GetDamage(1, true);
 		}
-	}*/
+	}
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);

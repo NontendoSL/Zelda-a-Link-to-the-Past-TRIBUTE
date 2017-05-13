@@ -57,6 +57,8 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
+	j1Timer autoAttack;
+	bool dusclops_special = false;
 
 
 };

@@ -58,6 +58,10 @@ private:
 	bool reset_distance = false;
 	int timetorun = 0;
 	bool drawThrowSP = false;
+
+	//Auto Attack Dusclops
+	j1Timer autoAttack;
+	bool dusclops_special = false;
 };
 
 #endif //__SWAMPERT_H_
