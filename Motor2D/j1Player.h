@@ -132,6 +132,9 @@ public:
 	//Current release test
 	bool sword_equiped = true;
 
+	//Weapons test
+	bool setWeapons = false;
+
 private:
 
 	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)

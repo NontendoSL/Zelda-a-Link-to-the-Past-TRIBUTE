@@ -77,11 +77,13 @@ bool j1Scene::Start()
 			CreateTeleports();
 			first_loop = false;
 		}
+
 		Load_new_map(1, true);
 		help_timer = SDL_GetTicks();
 		App->gui->SetGui(ZELDA_HUD);
 		start_menu->ResetInventory();
 	}
+
 	inventory = false;
 	switch_map = 0;
 	notrepeatmusic = true;
@@ -92,9 +94,6 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-
-
-
 	return true;
 }
 
@@ -105,7 +104,6 @@ bool j1Scene::Update(float dt)
 
 		if (ingame == true)
 		{
-
 			player->ShowHearts();
 
 			/*if (help_timer + 2000 < SDL_GetTicks() && help_bool)
@@ -264,8 +262,20 @@ bool j1Scene::Update(float dt)
 			}
 			//-------------------------------------------------------
 			// TP LEVEL
+
+			//WEAPONS TEST ---------
+			if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P))
+			{
+				player->bow = App->entity_elements->CreateBow();
+				App->scene->start_menu->PickItem("bow");
+				player->arrows = 99;
+				player->bombmanager = App->entity_elements->CreateBombContainer();
+				App->scene->start_menu->PickItem("bomb");
+				player->bombs = 99;
+				player->setWeapons = true;
+			}
+			// ---------
 		}
-		
 	return true;
 }
 

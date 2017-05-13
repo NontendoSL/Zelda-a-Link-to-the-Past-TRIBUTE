@@ -75,6 +75,7 @@ bool Player::Start()
 	canSwitchMap = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
 	game_timer.Start();
+
 	return ret;
 }
 
@@ -99,10 +100,6 @@ bool Player::Update(float dt)
 	{
 		score = 0;
 		hp_hearts = { hp_hearts.x, hp_hearts.x };
-
-		gems = 0;
-		bombs = 0;
-		arrows = 0;
 		
 		// SWITCH MAPS ------------------
 		if (App->scene->IdMap() == 2)

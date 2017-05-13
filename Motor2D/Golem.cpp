@@ -475,7 +475,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 				knockback_time.Start();
 				animation.anim[P_DYING].ResetAnimations();
 				hurt_timer.Start();
-				dir_hit = c2->callback->direction;
+				dir_hit = c2->arrow_callback->direction;
 				state = P_HIT;
 				anim_state = P_DYING;
 				hp--;
