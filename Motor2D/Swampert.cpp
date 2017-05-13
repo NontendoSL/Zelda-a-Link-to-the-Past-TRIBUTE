@@ -125,10 +125,10 @@ bool Swampert::Update(float dt)
 			App->scene->gamestate = INGAME;
 		}
 	}*/
-	/*if (drawThrowSP)
+	if (drawThrowSP)
 	{
 		ThrowSP();
-	}*/
+	}
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -137,31 +137,31 @@ bool Swampert::Update(float dt)
 
 void Swampert::Draw()
 {
-	/*if (drawThrowSP)
+	if (drawThrowSP)
 	{
 		if (sp_attack != nullptr)
 		{
 			switch (sp_direction)
 			{
 			case 0:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
+				App->anim_manager->Drawing_Manager(BUBBLE, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
 				sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
 				break;
 			case 1:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
+				App->anim_manager->Drawing_Manager(BUBBLE, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
 				sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
 				break;
 			case 2:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
+				App->anim_manager->Drawing_Manager(BUBBLE, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
 				sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
 				break;
 			case 3:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
+				App->anim_manager->Drawing_Manager(BUBBLE, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
 				sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
 				break;
 			}
 		}
-	}*/
+	}
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, SWAMPERT);
 }
 
@@ -258,12 +258,12 @@ void Swampert::Special_Attack()
 	else
 	{
 		sp_attacking = true;
-		/*sp_direction = direction;
+		sp_direction = direction;
 		sp_start = position;
 		drawThrowSP = true;
 		sp_attack = App->collision->AddCollider({ position.x,position.y, 8, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 		//audio TODO
-		//App->audio->PlayFx(7);*/
+		//App->audio->PlayFx(7);
 	}
 }
 

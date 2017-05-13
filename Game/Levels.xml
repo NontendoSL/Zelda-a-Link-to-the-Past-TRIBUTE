@@ -320,9 +320,9 @@
 
     <map n="15" file="RedCombatMap.tmx">
       <camera follow="false"/>
-      <Link pos_x="160" pos_y="216"/>
+      <Link pos_x="160" pos_y="225"/>
       <vilagers>
-        <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="155" pos_y="120" switch_map="22" dialog="..."/>
+        <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="153" pos_y="130" switch_map="22" dialog="..."/>
       </vilagers>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -556,7 +556,7 @@
     </map>
 
     <map id="15"> <!--RedCombatMap-->
-      <port name="Fibal_boss" rect_x="168" rect_y="24" switch_map="16" pos_x="264" pos_y="648"/>
+      <port name="Fibal_boss" rect_x="152" rect_y="8" switch_map="16" pos_x="264" pos_y="648"/>
     </map>
 
     <map id="16"> 
