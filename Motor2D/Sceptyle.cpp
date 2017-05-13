@@ -37,6 +37,7 @@ bool Sceptyle::Awake(pugi::xml_node &conf )
 	active = conf.attribute("active").as_bool(false);
 	sp_damage = conf.attribute("special_attack").as_int(0);
 	defense = conf.attribute("defense").as_int(0);
+	sp_leaf = App->tex->Load("textures/AnimationsAndEffects.png");
 	return true;
 }
 
@@ -55,7 +56,12 @@ bool Sceptyle::Start()
 	reset_run = true;
 	sp_attacking = false;
 	range = { 90,0 };
-	sp_speed = 5;
+	range = { 70,0 };
+	sp_speed = 4;
+
+	leafs_pos.push_back({ 0,0 });
+	leafs_pos.push_back({ 0,0 });
+	leafs_pos.push_back({ 0,0 });
 	return true;
 }
 
@@ -136,25 +142,12 @@ void Sceptyle::Draw()
 	{
 		if (sp_attack != nullptr)
 		{
-			switch (sp_direction)
-			{
-			case 0:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
-				sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
-				break;
-			case 1:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
-				sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
-				break;
-			case 2:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
-				sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
-				break;
-			case 3:
-				App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
-				sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
-				break;
-			}
+			App->render->Blit(sp_leaf, leafs_pos[0].x, leafs_pos[0].y, &sp_rect, NULL, true, rotation, 6, 6); //1st leaf
+			sp_attack->SetPos(leafs_pos[0].x, leafs_pos[0].y);
+			App->render->Blit(sp_leaf, leafs_pos[1].x, leafs_pos[1].y, &sp_rect, NULL, true, rotation, 6, 6);  //2nd leaf
+			top_leaf_sp->SetPos(leafs_pos[1].x, leafs_pos[1].y);
+			App->render->Blit(sp_leaf, leafs_pos[2].x, leafs_pos[2].y, &sp_rect, NULL, true, rotation, 6, 6);  //3rd leaf
+			bot_leaf_sp->SetPos(leafs_pos[2].x, leafs_pos[2].y);
 		}
 	}
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, SCEPTILE);
@@ -237,8 +230,6 @@ void Sceptyle::Special_Attack()
 	{
 		if (current_animation->Finished())
 		{
-			App->collision->EraseCollider(sp_attack);
-			sp_attacking = false;
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = PC_IDLE;
@@ -256,6 +247,32 @@ void Sceptyle::Special_Attack()
 		sp_start = position;
 		drawThrowSP = true;
 		sp_attack = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+		top_leaf_sp = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+		bot_leaf_sp = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+		switch (sp_direction)
+		{
+		case 0:
+			leafs_pos[0] = { position.x,position.y - 2 };
+			leafs_pos[1] = { position.x,position.y - 2 };
+			leafs_pos[2] = { position.x,position.y - 2 };
+			break;
+		case 1:
+			leafs_pos[0] = { position.x,position.y + 2 };
+			leafs_pos[1] = { position.x,position.y + 2 };
+			leafs_pos[2] = { position.x,position.y + 2 };
+			break;
+		case 2:
+			leafs_pos[0] = { position.x - 2,position.y-8  };
+			leafs_pos[1] = { position.x - 2,position.y-8  };
+			leafs_pos[2] = { position.x - 2,position.y-8 };
+			break;
+		case 3:
+			leafs_pos[0] = { position.x + 2 ,position.y-8 };
+			leafs_pos[1] = { position.x + 2 ,position.y-8};
+			leafs_pos[2] = { position.x + 2 ,position.y-8};
+			break;
+		}
+
 		//audio TODO
 		//App->audio->PlayFx(7);
 	}
@@ -263,16 +280,65 @@ void Sceptyle::Special_Attack()
 
 void Sceptyle::ThrowSP()
 {	
-	if (range.y >= range.x)
+	if ((sp_direction == 2 && leafs_pos[0].x > position.x)|| (sp_direction == 3 && leafs_pos[0].x < position.x) || (sp_direction == 1  && leafs_pos[0].y < position.y)|| (sp_direction == 0 && leafs_pos[0].y > position.y))
 	{
 		range.y = 0;
 		App->collision->EraseCollider(sp_attack);
+		App->collision->EraseCollider(top_leaf_sp);
+		App->collision->EraseCollider(bot_leaf_sp);
+
+		for (int i = 0; i < leafs_pos.size(); i++)
+		{
+			leafs_pos[i] = { 0,0 };
+		}
 		sp_attacking = false;
 		drawThrowSP = false;
 		getdamage = false;
+		leaving = true;
 	}
 	else
 	{
+		int mult = 1;
+		if (range.y >= range.x)
+			leaving = false;
+		if(leaving == false)
+		{
+			mult*=-1;
+		}
+		rotation+=5;
+		switch (sp_direction)
+		{
+		case 3:
+			leafs_pos[0].x += mult*sp_speed;
+			leafs_pos[1].x += mult*sp_speed;
+			leafs_pos[2].x += mult*sp_speed;
+			leafs_pos[1].y -= mult;
+			leafs_pos[2].y += mult;
+			break;
+		case 2:
+			leafs_pos[0].x -= mult*sp_speed;
+			leafs_pos[1].x -= mult*sp_speed;
+			leafs_pos[2].x -= mult*sp_speed;
+			leafs_pos[1].y -= mult;
+			leafs_pos[2].y += mult;
+			break;
+		case 1:
+			
+			leafs_pos[0].y += mult*sp_speed;
+			leafs_pos[1].y += mult*sp_speed;
+			leafs_pos[2].y += mult*sp_speed;
+			leafs_pos[1].x -= mult;
+			leafs_pos[2].x += mult;
+			break;
+		case 0:
+			leafs_pos[0].y -= mult*sp_speed;
+			leafs_pos[1].y -= mult*sp_speed;
+			leafs_pos[2].y -= mult*sp_speed;
+			leafs_pos[1].x -= mult;
+			leafs_pos[2].x += mult;
+			break;
+		}
+
 		range.y += sp_speed;
 	}
 }
@@ -321,40 +387,43 @@ bool Sceptyle::Idle()
 
 bool Sceptyle::Walking(float dt)
 {
-	walking = false;
-	Move(dt);
-
-	if (walking == false)
+	if (sp_attacking == false)
 	{
-		state = PC_IDLE;
-		anim_state = PC_IDLE;
-	}
+		walking = false;
+		Move(dt);
 
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
-	{
-		if (App->scene->pokecombat->cooldown == false)
+		if (walking == false)
 		{
-			state = PC_SPECIAL;
-			anim_state = PC_SPECIAL;
-			current_animation = App->anim_manager->GetAnimation(state, direction, SCEPTILE);
-			current_animation->Reset();
-			App->scene->pokecombat->cooldown = true;
-			App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
 		}
-	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
-	{
-		state = PC_ATTACKING;
-		anim_state = PC_ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, SCEPTILE); //This number may need to be changed?
-		current_animation->Reset();
-	}
+		else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+		{
+			if (App->scene->pokecombat->cooldown == false)
+			{
+				state = PC_SPECIAL;
+				anim_state = PC_SPECIAL;
+				current_animation = App->anim_manager->GetAnimation(state, direction, SCEPTILE);
+				current_animation->Reset();
+				App->scene->pokecombat->cooldown = true;
+				App->scene->pokecombat->cdtime.y = App->scene->pokecombat->cdtime.x;
+			}
+		}
 
-	else
-	{
-		state = PC_WALKING;
-		anim_state = PC_WALKING;
+		else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
+		{
+			state = PC_ATTACKING;
+			anim_state = PC_ATTACKING;
+			current_animation = App->anim_manager->GetAnimation(state, direction, SCEPTILE); //This number may need to be changed?
+			current_animation->Reset();
+		}
+
+		else
+		{
+			state = PC_WALKING;
+			anim_state = PC_WALKING;
+		}
 	}
 	return false;
 }

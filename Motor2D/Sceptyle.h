@@ -60,6 +60,14 @@ private:
 	int timetorun = 0;
 	bool drawThrowSP = false;
 
+	//SP
+	 SDL_Texture* sp_leaf = nullptr;
+	 SDL_Rect sp_rect = { 47, 265, 13, 13 };
+	std::vector<iPoint>leafs_pos;
+	uint rotation = 0;
+	Collider* top_leaf_sp = nullptr;
+	Collider* bot_leaf_sp = nullptr;
+	bool leaving = true;
 };
 
 #endif //__SCEPTYLE_H_
