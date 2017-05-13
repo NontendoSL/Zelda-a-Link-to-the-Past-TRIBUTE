@@ -258,15 +258,7 @@ void Ganon::IdleRage()
 
 void Ganon::Idle()
 {
-	{
-		mov_finished = false;
-		StartMovement();
-	}
-	else if (position.DistanceTo(mov_dest) >= 5 && mov_finished == false)
-	{
-		Move(dt);
-	}
-	else
+	if (wait_time.ReadSec() >= 0.5)
 	{
 		state = G_WALKING;
 		anim_state = G_SPECIAL_1;
