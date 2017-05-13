@@ -254,7 +254,7 @@
         <dynobject id="7" name="pc" type="POKEMON" rect_x="94" rect_y="1" rect_w="16" rect_h="32" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <vilagers>
-        <vilager id="4" name="Joy" rect_x="74" rect_y="82" rect_w="16" rect_h="21" pos_x="160" dialog="Hi, I can heal you pokemons, but i dont want it!"/>
+        <vilager id="4" name="Joy" rect_x="74" rect_y="82" rect_w="16" rect_h="21" pos_x="128" pos_y="56" dialog="Hey, welcome to the Pokemon League, I see you haven't money so I give you 500 credits for your gems: P. Then you can buy objects to improve the stats of your pokemons."/>
       </vilagers>
     </map>
 
@@ -338,6 +338,9 @@
       <camera follow="true"/>
       <!--FINAL BOSS-->
       <Ganon pos_x="256" pos_y="304" hp="100" attack="10" dir="down" file="textures/Ganon.png" />
+      <vilagers>
+        <vilager id="10" name="Ric" rect_x="16" rect_y="125" rect_w="20" rect_h="25" pos_x="240" pos_y="552" dialog="Hey, Link take this object and go to kill Ganon.         Good Luck!"/>
+      </vilagers>
     </map>
 
   </maps>
@@ -552,7 +555,7 @@
     </map>
 
     <map id="14"> <!--EliteFour 04-->
-      <port name="RedCombatMap" rect_x="160" rect_y="24" switch_map="15" pos_x="176" pos_y="256"/>
+      <port name="RedCombatMap" rect_x="160" rect_y="24" switch_map="15" pos_x="160" pos_y="225"/>
     </map>
 
     <map id="15"> <!--RedCombatMap-->
