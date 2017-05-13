@@ -41,16 +41,16 @@ public:
 	{
 		if (items->def_protein > 0)
 		{
-			defense += items->def_protein;
+			defense += items->def_protein * potion_hp;
 		}
 		if (items->hp_up > 0)
 		{
-			hp += items->hp_up;
+			hp += items->hp_up * potion_hp;
 		}
 		if (items->x_attack > 0)
 		{
-			attack += items->x_attack;
-			sp_damage += items->x_attack * 2;
+			attack += items->x_attack * potion_attack;
+			sp_damage += items->x_attack * potion_attack;
 		}
 	}
 
@@ -130,6 +130,12 @@ protected:
 
 	bool attacker = false;
 	bool getdamage = false;
+
+private:
+
+	int potion_hp = 20;
+	int potion_attack = 4;
+	int potion_defense = 2;
 
 };
 
