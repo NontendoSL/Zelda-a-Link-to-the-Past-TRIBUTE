@@ -53,7 +53,7 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
-	bool Camera_inside();
+	bool Camera_inside(Direction direction);
 
 	bool Camera_inside(iPoint pos);
 

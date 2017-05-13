@@ -659,7 +659,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
-bool Player::Camera_inside() //TODO LOW -> Elliot
+bool Player::Camera_inside(Direction direction) //TODO LOW -> Elliot
 {
 	//256x224
 	if (camera_follow == true)
@@ -899,7 +899,7 @@ bool Player::Move(float dt)
 		int temp = App->map->MovementCost(collision_feet->rect.x - ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT);
 		if (temp == T_CONTINUE)
 		{
-			if (Camera_inside())
+			if (Camera_inside(direction))
 				App->render->camera.x += ceil(speed*dt) * scale;
 			position.x -= ceil(speed*dt);
 		}
@@ -908,7 +908,7 @@ bool Player::Move(float dt)
 			if (temp == T_UP)
 			{
 				direction = UP;
-				if (Camera_inside())
+				if (Camera_inside(direction))
 					App->render->camera.y += ceil(speed*dt) * scale;
 				position.y -= ceil(speed*dt);
 				direction = LEFT;
@@ -916,7 +916,7 @@ bool Player::Move(float dt)
 			if (temp == T_DOWN)
 			{
 				direction = DOWN;
-				if (Camera_inside())
+				if (Camera_inside(direction))
 					App->render->camera.y -= ceil(speed*dt) * scale;
 				position.y += ceil(speed*dt);
 				direction = LEFT;
@@ -931,7 +931,7 @@ bool Player::Move(float dt)
 		int temp = App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(speed*dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT);
 		if (temp == T_CONTINUE)
 		{
-			if (Camera_inside())
+			if (Camera_inside(direction))
 				App->render->camera.x -= ceil(speed*dt) * scale;
 			position.x += ceil(speed*dt);
 		}
@@ -940,7 +940,7 @@ bool Player::Move(float dt)
 			if (temp == T_UP)
 			{
 				direction = UP;
-				if (Camera_inside())
+				if (Camera_inside(direction))
 					App->render->camera.y += ceil(speed*dt) * scale;
 				position.y -= ceil(speed*dt);
 				direction = RIGHT;
@@ -948,7 +948,7 @@ bool Player::Move(float dt)
 			if (temp == T_DOWN)
 			{
 				direction = DOWN;
-				if (Camera_inside())
+				if (Camera_inside(direction))
 					App->render->camera.y -= ceil(speed*dt) * scale;
 				position.y += ceil(speed*dt);
 				direction = RIGHT;
@@ -964,7 +964,7 @@ bool Player::Move(float dt)
 		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, UP);
 		if (temp == T_CONTINUE)
 		{
-			if (Camera_inside())
+			if (Camera_inside(direction))
 				App->render->camera.y += ceil(speed*dt) * scale;
 			position.y -= ceil(speed*dt);
 		}
@@ -973,7 +973,7 @@ bool Player::Move(float dt)
 			if (temp == T_LEFT)
 			{
 				direction = LEFT;
-				if (Camera_inside())
+				if (Camera_inside(direction))
 					App->render->camera.x += ceil(speed*dt) * scale;
 				position.x -= ceil(speed*dt);
 				direction = UP;
@@ -981,7 +981,7 @@ bool Player::Move(float dt)
 			if (temp == T_RIGHT)
 			{
 				direction = RIGHT;
-				if (Camera_inside())
+				if (Camera_inside(direction))
 					App->render->camera.x -= ceil(speed*dt) * scale;
 				position.x += ceil(speed*dt);
 				direction = UP;
@@ -996,7 +996,7 @@ bool Player::Move(float dt)
 		int temp = App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(speed*dt), collision_feet->rect.w, collision_feet->rect.h, DOWN);
 		if (temp == T_CONTINUE)
 		{
-			if (Camera_inside())
+			if (Camera_inside(direction))
 				App->render->camera.y -= ceil(speed*dt) * scale;
 			position.y += ceil(speed*dt);
 		}
@@ -1005,7 +1005,7 @@ bool Player::Move(float dt)
 			if (temp == T_LEFT)
 			{
 				direction = LEFT;
-				if (Camera_inside())
+				if (Camera_inside(direction))
 					App->render->camera.x += ceil(speed*dt) * scale;
 				position.x -= ceil(speed*dt);
 				direction = DOWN;
@@ -1013,7 +1013,7 @@ bool Player::Move(float dt)
 			if (temp == T_RIGHT)
 			{
 				direction = RIGHT;
-				if (Camera_inside())
+				if (Camera_inside(direction))
 					App->render->camera.x -= ceil(speed*dt) * scale;
 				position.x += ceil(speed*dt);
 				direction = DOWN;
@@ -1180,7 +1180,7 @@ bool Player::Hit()
 	{
 		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 3, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
 		{
-			if (Camera_inside())
+			if (Camera_inside(dir_hit))
 				App->render->camera.y += 3 * scale;
 
 			position.y -= 3;
@@ -1191,7 +1191,7 @@ bool Player::Hit()
 	{
 		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 2.5, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
 		{
-			if (Camera_inside())
+			if (Camera_inside(dir_hit))
 				App->render->camera.y -= 3 * scale;
 
 			position.y += 3;
@@ -1201,7 +1201,7 @@ bool Player::Hit()
 	{
 		if (App->map->MovementCost(collision_feet->rect.x - 3, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
 		{
-			if (Camera_inside())
+			if (Camera_inside(dir_hit))
 				App->render->camera.x += 3 * scale;
 
 			position.x -= 3;
@@ -1211,7 +1211,7 @@ bool Player::Hit()
 	{
 		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 3, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
 		{
-			if (Camera_inside())
+			if (Camera_inside(dir_hit))
 				App->render->camera.x -= 3 * scale;
 
 			position.x += 3;
@@ -1343,7 +1343,7 @@ void Player::MoveTo(const iPoint& pos)
 	case UP:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y - hook->speed, UP);
-		if (Camera_inside())
+		if (Camera_inside(direction))
 			App->render->camera.y += hook->speed * scale;
 
 		position.y -= hook->speed;
@@ -1360,7 +1360,7 @@ void Player::MoveTo(const iPoint& pos)
 	case DOWN:
 	{
 		//int temp = App->map->MovementCost(position.x, position.y + (hook->speed + height), DOWN
-		if (Camera_inside())
+		if (Camera_inside(direction))
 			App->render->camera.y -= hook->speed * scale;
 		position.y += hook->speed;
 
@@ -1377,7 +1377,7 @@ void Player::MoveTo(const iPoint& pos)
 	{
 		//int temp = App->map->MovementCost(position.x - hook->speed, position.y, LEFT);
 
-		if (Camera_inside())
+		if (Camera_inside(direction))
 			App->render->camera.x += hook->speed * scale;
 		position.x -= hook->speed;
 
@@ -1394,7 +1394,7 @@ void Player::MoveTo(const iPoint& pos)
 	{
 		//int temp = App->map->MovementCost(position.x + (hook->speed + width), position.y, RIGHT
 
-		if (Camera_inside())
+		if (Camera_inside(direction))
 			App->render->camera.x -= hook->speed * scale;
 		position.x += hook->speed;
 
