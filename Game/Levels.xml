@@ -347,11 +347,11 @@
       <pokemon id="3" name="SWAMPERT" speed="1" cooldown="250" dir="right" hp="150" attack="5" special_attack="20" defense="1" pos_x="96" pos_y="128" active="false"/>
     </Link>
 
-    <map n="17" file="VictoryExterior.tmx">
+    <map n="17" file="CombatPracticeMap.tmx">
       <camera follow="false"/>
-      <poke_Link pos_x="150" pos_y="240"/>
+      <poke_Link pos_x="88" pos_y="144"/>
       <trainer id="1" name="Brendan" active="false" pos_x="0" pos_y="0" file="textures/PokemonCharacters.png">
-        <pokemon id="9" name="TRAININGDOLL" speed="0" cooldown="0" dir="down" hp="100" attack="0" special_attack="0" defense="0" pos_x="160" pos_y="130" active="true"/>
+        <pokemon id="9" name="TRAININGDOLL" speed="0" cooldown="0" dir="down" hp="100" attack="0" special_attack="0" defense="0" pos_x="228" pos_y="144" active="true"/>
       </trainer>
     </map>
 

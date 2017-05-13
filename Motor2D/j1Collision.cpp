@@ -55,6 +55,10 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_POKEMON_SPECIAL_ATTACK][COLLIDER_POKECOMBAT] = true;
 	matrix[COLLIDER_POKEMON_ATTACK][COLLIDER_POKECOMBAT] = true;
 
+	matrix[COLLIDER_TRANINGDOLL][COLLIDER_POKECOMBAT] = true;
+	matrix[COLLIDER_TRANINGDOLL][COLLIDER_POKEMON_SPECIAL_ATTACK] = true;
+	matrix[COLLIDER_TRANINGDOLL][COLLIDER_POKEMON_ATTACK] = true;
+
 	matrix[COLLIDER_GANON][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_GANON][COLLIDER_SWORD] = true;
 	matrix[COLLIDER_GANON][COLLIDER_ARROW] = true;
@@ -222,15 +226,14 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 		case COLLIDER_POKEMON: // Green
-		{
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
-		}
 		case COLLIDER_POKECOMBAT:
-		{
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
-		}
+		case COLLIDER_TRANINGDOLL:
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
 		case COLLIDER_VILAGER:
 			App->render->DrawQuad(colliders[i]->rect, 74, 74, 150, alpha);
 			break;

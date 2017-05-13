@@ -33,6 +33,8 @@ public:
 
 	bool Idle();
 
+	void Hit();
+
 	void OnCollision(Collider*, Collider*);
 
 private:
