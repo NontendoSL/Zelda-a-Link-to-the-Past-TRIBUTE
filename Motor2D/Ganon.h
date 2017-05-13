@@ -42,6 +42,7 @@ public:
 	bool InvincibleUpdate(float dt);
 	bool RageUpdate(float dt);
 	bool DeathUpdate(float dt);
+	bool InitCombat();
 	// ----------------------------------
 
 	// STATE MACHINE ----------------
@@ -102,6 +103,10 @@ private:
 	//MOVEMENT VARIABLES ---
 	int canmove = 0;
 	// -------------------
+
+	//SLEEP VARIABLES ---
+	bool start_dialogue = false;
+	//-------------------
 
 	//1ST PHASE VARIABLES --
 	j1Timer mov_timer;

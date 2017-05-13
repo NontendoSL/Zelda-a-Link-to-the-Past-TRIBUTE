@@ -26,17 +26,15 @@ bool Ganon::Awake(pugi::xml_node &conf, uint id)
 
 bool Ganon::Start()
 {
-	App->gui->GetEntity("boss bar")->visible = true;
-	App->gui->GetEntity("hp boss")->visible = true;
 	//Load initial position & direction
 	position.x = 264;
-	position.y = 200;
+	position.y = 110;
 	direction = DOWN;
 
 	//Animation States & initial Phase
 	state = G_IDLE;
 	anim_state = G_WALKING;
-	phase = INITIAL;
+	phase = SLEEP;
 
 	//Set stats
 	speed = 40;
@@ -63,6 +61,7 @@ bool Ganon::Update(float dt)
 		{
 		//He sleeps until the fight starts.
 		case SLEEP:
+			InitCombat();
 			break;
 
 		//First phase: normal melee attacks, low speed.
@@ -243,6 +242,29 @@ bool Ganon::DeathUpdate(float dt)
 {
 	to_delete = true;
 	return true;
+}
+bool Ganon::InitCombat()
+{
+	if (App->scene->player->position.y <= 195 && start_dialogue == false)
+	{
+		App->scene->player->dialog = App->gui->CreateDialogue("I'm Ganon, the Lord of the Shadow. You will never save the Two Worlds, Link. I'm gonna defeat you right now!");
+		start_dialogue = true;
+		LOG("START COMBAT");
+		return true;
+	}
+
+	else if (start_dialogue == true && App->scene->player->dialog == nullptr)
+	{
+		start_dialogue = false;
+		phase = INITIAL;
+		state = G_IDLE;
+		anim_state = G_WALKING;
+		App->gui->GetEntity("boss bar")->visible = true;
+		App->gui->GetEntity("hp boss")->visible = true;
+		return true;
+	}
+
+	return false;
 }
 //--------------------------------------
 
