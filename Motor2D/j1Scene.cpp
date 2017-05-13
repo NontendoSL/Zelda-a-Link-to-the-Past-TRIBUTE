@@ -272,6 +272,14 @@ bool j1Scene::Update(float dt)
 				player->setWeapons = true;
 			}
 			// ---------
+
+			//Set picked object the last ---
+			if (player->picked_object != nullptr && swap_object == true)
+			{
+				App->entity_elements->SwapObject(player->picked_object);
+				swap_object = false;
+			}
+			//-------------
 		}
 	return true;
 }

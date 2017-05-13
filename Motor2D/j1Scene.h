@@ -143,6 +143,8 @@ public:
 	bool useTP = false;
 	bool notrepeatCombat = true;
 
+	bool swap_object = false;
+
 private:
 	uint volume = 120;
 
