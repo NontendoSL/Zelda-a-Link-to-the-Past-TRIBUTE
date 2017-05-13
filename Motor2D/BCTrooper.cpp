@@ -136,13 +136,14 @@ bool BCTrooper::Update(float dt)
 				points[i].y = (int)(position.y + radius * sin(i * factor));
 			}
 		}
-		
+
 		for (int i = 0; i < boles.size(); i++)
 		{
 			boles[i].pos_in_vect += speed_bole;
-			if (boles[i].pos_in_vect >= NUM_POINTS_CIRCLE)
+			if (boles[i].pos_in_vect > NUM_POINTS_CIRCLE - 1)
 			{
-				boles[i].pos_in_vect = 1;
+				int reajust = boles[i].pos_in_vect - (NUM_POINTS_CIRCLE - 1);
+				boles[i].pos_in_vect = reajust;
 			}
 
 			boles[i].position.x = points[boles[i].pos_in_vect].x;
@@ -381,7 +382,7 @@ void BCTrooper::Defend()
 		Change_State.Start();
 		reset_time = false;
 		save_speed = speed_bole;
-		speed_bole = 5;
+		speed_bole = 4;
 	}
 	else
 	{
@@ -507,14 +508,17 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD)
 		{
-			if (Wait_attack.ReadSec() > 1)
+			if (Wait_attack.ReadSec() > 1.6 && state != BC_DEFEND)
 			{
 				App->audio->PlayFx(12);
 				hp -= 10;
+				state = BC_HIT;
+				reset_time = true;
+				stunned = true;
 				if (hp <= 0)
 				{
 					state = BC_DYING;
-					App->audio->PlayMusic("audio/music/ZELDA/ZeldaPrincessRescue.ogg"); //TODO HIGH -> FIX FPS DROP
+					App->audio->PlayMusic("audio/music/ZELDA/ZeldaPrincessRescue.ogg", 0); //TODO HIGH -> FIX FPS DROP
 				}
 				Wait_attack.Start();
 			}
