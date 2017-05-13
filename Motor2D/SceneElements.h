@@ -58,6 +58,8 @@ public:
 
 	void SetPos(const iPoint& pos);
 
+	virtual int DropItem();
+
 public:
 	iPoint position;
 	int offset_x = 0;
@@ -68,6 +70,7 @@ public:
 	Direction direction;
 	ElementType type;
 	std::string	name;
+	int item_id = 0;
 
 	uint scale; //TODO JORDI
 

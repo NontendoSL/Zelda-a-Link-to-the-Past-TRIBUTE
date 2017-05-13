@@ -344,13 +344,16 @@ bool j1EntityElementScene::DeleteCreature(Creature* creature)
 
 void j1EntityElementScene::CreateItem(uint id, iPoint position)
 {
-	Item* element = new Item();
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-	config = LoadConfig(config_file);
-	element->Awake(config.child(element->name.c_str()), id, position);
-	element->Start();
-	elementscene.push_front(element);
+	if (id != 0)
+	{
+		Item* element = new Item();
+		pugi::xml_document	config_file;
+		pugi::xml_node		config;
+		config = LoadConfig(config_file);
+		element->Awake(config.child(element->name.c_str()), id, position);
+		element->Start();
+		elementscene.push_front(element);
+	}
 }
 
 Hookshot* j1EntityElementScene::CreateHookshot()

@@ -88,7 +88,6 @@ private:
 	GanonState anim_state = G_WALKING;
 	GanonPhase phase = SLEEP;
 	Animation* current_animation = nullptr;
-	int item_id = -1;
 
 	//HIT TIMERS/VARIABLES ---
 	j1Timer HitTime;

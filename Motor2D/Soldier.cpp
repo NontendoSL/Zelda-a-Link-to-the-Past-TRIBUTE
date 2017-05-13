@@ -431,10 +431,7 @@ bool Soldier::Attack()
 bool Soldier::Die()
 {
 	App->audio->PlayFx(11);
-	if (item_id != 0)
-	{
-		App->entity_elements->CreateItem(item_id, position);
-	}
+	App->entity_elements->CreateItem(DropItem(), position);
 	to_delete = true;
 	return true;
 }
@@ -505,5 +502,27 @@ void Soldier::SetAnimState(SoldierState a_state)
 SoldierType Soldier::GetType() const
 {
 	return soldier_type;
+}
+
+int Soldier::DropItem()
+{
+	if (soldier_type == AGGRESSIVE)
+	{
+		int id = rand() % 100 + 1;
+
+		if (id > 0 && id <= 30)
+		{
+			item_id = 1;
+		}
+		else if (id > 30 && id <= 60)
+		{
+			item_id = 7;
+		}
+		else
+		{
+			item_id = 0;
+		}
+	}
+	return item_id;
 }
 

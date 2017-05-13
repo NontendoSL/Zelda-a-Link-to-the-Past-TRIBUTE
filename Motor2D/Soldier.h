@@ -57,6 +57,8 @@ public:
 
 	SoldierType GetType() const;
 
+	int DropItem();
+
 private:
 	SoldierType soldier_type;
 	uint id = 0;
@@ -69,7 +71,6 @@ private:
 	iPoint pivot;
 	bool stunned = false;
 
-	int item_id = 0;
 	Item* item_inside = nullptr;
 	SDL_Texture* texture = nullptr;
 
