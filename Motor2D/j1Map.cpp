@@ -80,15 +80,18 @@ void j1Map::Draw(bool floor_2)
 		{
 			for(int x = pos_camera.x; x < pos_camera.x + win_size.x + marge.x; ++x)
 			{
-				int tile_id = layer->Get(x, y);
-				if(tile_id > 0)
+				if (x < data.width && y < data.height)
 				{
-					TileSet* tileset = GetTilesetFromTileId(tile_id);
+					int tile_id = layer->Get(x, y);
+					if (tile_id > 0)
+					{
+						TileSet* tileset = GetTilesetFromTileId(tile_id);
 
-					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y);
+						SDL_Rect r = tileset->GetTileRect(tile_id);
+						iPoint pos = MapToWorld(x, y);
 
-					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+					}
 				}
 			}
 		}
