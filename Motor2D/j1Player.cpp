@@ -389,6 +389,8 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							((DynamicObjects*)c2->callback)->rect.y = 17;
 						}
 						//----------------------
+
+						App->scene->swap_object = true;
 					}
 				}
 			}
