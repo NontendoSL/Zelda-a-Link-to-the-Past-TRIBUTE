@@ -261,6 +261,13 @@ bool Ganon::InitCombat()
 		anim_state = G_WALKING;
 		App->gui->GetEntity("boss bar")->visible = true;
 		App->gui->GetEntity("hp boss")->visible = true;
+
+		//Set Entrance Door blocked
+		App->map->EditCost(32, 42, App->map->data.tilesets[0]->firstgid + 1);
+		App->map->EditCost(32, 43, App->map->data.tilesets[0]->firstgid + 1);
+		App->map->EditCost(33, 42, App->map->data.tilesets[0]->firstgid + 1);
+		App->map->EditCost(33, 43, App->map->data.tilesets[0]->firstgid + 1);
+		
 		return true;
 	}
 
@@ -349,7 +356,7 @@ void Ganon::MeleeAttack()
 		}
 		else if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 20, 48, 48 }, COLLIDER_GANON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 30, 48, 53}, COLLIDER_GANON_ATTACK, this);
 		}
 	}
 

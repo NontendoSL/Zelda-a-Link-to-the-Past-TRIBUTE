@@ -898,7 +898,10 @@ bool Player::Walking(float dt)
 		state = L_WALKING;
 		anim_state = L_WALKING;
 	}
-	return false;
+
+	LOG("x:%i y:%i", position.x, position.y);
+
+	return true;
 }
 
 bool Player::Move(float dt)
