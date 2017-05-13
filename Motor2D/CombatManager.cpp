@@ -368,7 +368,7 @@ bool CombatManager::DeleteElements_combat()
 	std::list<SceneElement*>::iterator item = elementcombat.begin();
 	while (item != elementcombat.end())
 	{
-		if (item._Ptr->_Myval->name != "BLAZIKEN" && item._Ptr->_Myval->name != "SCEPTYLE"
+		if (item._Ptr->_Myval->name != "BLAZIKEN" && item._Ptr->_Myval->name != "SCEPTILE"
 			&& item._Ptr->_Myval->name != "SWAMPERT")
 		{
 			delete item._Ptr->_Myval;
