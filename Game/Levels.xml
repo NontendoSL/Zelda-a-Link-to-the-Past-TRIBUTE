@@ -440,7 +440,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="88" pos_y="144"/>
       <trainer id="1" name="Drake" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
-        <pokemon id="5" name="SALAMANCE" speed="1" cooldown="150" dir="left" hp="120" attack="3" special_attack="12" defense="1" pos_x="228" pos_y="144" active="true"/>
+        <pokemon id="5" name="SALAMANCE" speed="1" cooldown="600" dir="left" hp="120" attack="3" special_attack="12" defense="1" pos_x="228" pos_y="144" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="81" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />

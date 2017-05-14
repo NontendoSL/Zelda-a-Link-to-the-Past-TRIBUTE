@@ -5,6 +5,8 @@
 #include "j1GuiEntity.h"
 #include "j1Audio.h"
 #include "j1GuiElements.h"
+#include "ParticleManager.h"
+#include "P_Fire.h"
 #include "CombatManager.h"
 
 Salamance::Salamance()
@@ -30,6 +32,7 @@ bool Salamance::Awake(pugi::xml_node &conf)
 		direction = RIGHT;
 
 	cooldown = conf.attribute("cooldown").as_int(0);
+	use_cooldown = 0;
 	hp = conf.attribute("hp").as_int(0);
 	attack = conf.attribute("attack").as_int(0);
 	speed = conf.attribute("speed").as_int(0);
@@ -55,6 +58,7 @@ bool Salamance::Start()
 	reset_distance = false;
 	sp_attacking = false;
 	reset_run = true;
+
 	return true;
 }
 
@@ -63,7 +67,6 @@ bool Salamance::Update(float dt)
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
-		//pokemon controlled by player
 		switch (state)
 		{
 		case PC_IDLE:
@@ -114,32 +117,35 @@ bool Salamance::Update(float dt)
 	{
 
 	}
-	/*else if (App->scene->gamestate == TIMETOPLAY)
-	{
-	if (SDL_GetTicks() - timetoplay > 1000)
-	{
-	App->scene->gamestate = INGAME;
-	}
-	}*/
-	/*	**Only the special attack is launch.**
-	if (drawThrowSP)
-	{
-	ThrowSP();
-	}*/
 
-	if (CheckPlayerPos() < 30 && state == PC_WALKING)
+	if (CheckPlayerPos() < VIEWING_DISTANCE && state == PC_WALKING)
 	{
-		OrientatePokeLink();
 		state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < 6 && (state == PC_WALKING || state == PC_CHASING))
+	if (CheckPlayerPos() < ATTACK_DISTANCE && (state == PC_WALKING || state == PC_CHASING) && wait_attack.ReadSec() > 0.5)
 	{
 		OrientatePokeLink();
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
+		attacker = false;
 		current_animation = App->anim_manager->GetAnimation(state, direction, SALAMENCE);
 		current_animation->Reset();
+	}
+
+	if (use_cooldown == cooldown && CheckPlayerPos() < ATTACK_DISTANCE * 2)
+	{
+		state = PC_SPECIAL;
+		anim_state = PC_SPECIAL;
+		use_cooldown = 0;
+		attacker = false;
+		current_animation = App->anim_manager->GetAnimation(state, direction, SALAMENCE);
+		current_animation->Reset();
+	}
+
+	if (use_cooldown < cooldown && state != PC_SPECIAL)
+	{
+		use_cooldown++;
 	}
 
 	//Collision follow the player
@@ -149,31 +155,6 @@ bool Salamance::Update(float dt)
 
 void Salamance::Draw()
 {
-	/*if (drawThrowSP)  **Only the special attack is launch.**
-	{
-	if (sp_attack != nullptr)
-	{
-	switch (sp_direction)
-	{
-	case 0:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
-	sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
-	break;
-	case 1:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
-	sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
-	break;
-	case 2:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
-	sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
-	break;
-	case 3:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
-	sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
-	break;
-	}
-	}
-	}*/
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, SALAMENCE);
 }
 
@@ -395,14 +376,66 @@ bool Salamance::Attack()
 	return true;
 }
 
-/*void Dusclops::ThrowSP() **Only the special attack is launch.**
-{
-
-}*/
-
 void Salamance::Special_Attack()
 {
-
+	if (attacker)
+	{
+		if (wait_attack.ReadSec() > 3.5)
+		{
+			particle_fire->active = false;
+		}
+		if (current_animation->Finished() && wait_attack.ReadSec() > 4)
+		{
+			App->collision->EraseCollider(sp_attack);
+			attacker = false;
+			current_animation->Reset();
+			current_animation = nullptr;
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
+			getdamage = false;
+			wait_attack.Start();
+			App->particlemanager->DeleteFire_p(particle_fire);
+			particle_fire = nullptr;
+		}
+	}
+	else
+	{
+		attacker = true;
+		wait_attack.Start();
+		if (direction == UP)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 16, 50 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+			//Particles
+			App->particlemanager->CreateFire_Particle(nullptr, nullptr, iPoint(position.x - offset_x, position.y - offset_y), { 0,12,12,0 }, { 2,5 }, { 15, 10 }, { 0, 250 }, P_UP, 100, 2);
+			particle_fire = App->particlemanager->Group_Fire.back();
+		}
+		else if (direction == RIGHT)
+		{
+			sp_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 50, 16 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+			//Particles
+			App->particlemanager->CreateFire_Particle(nullptr, nullptr, iPoint(position.x - offset_x, position.y - offset_y), { 0,12,12,0 }, { 2,5 }, { 15, 10 }, { 250, 0 }, P_RIGHT, 100, 2);
+			particle_fire = App->particlemanager->Group_Fire.back();
+		}
+		else if (direction == DOWN)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 16, 50 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+			//Particles
+			App->particlemanager->CreateFire_Particle(nullptr, nullptr, iPoint(position.x - offset_x, position.y - offset_y), { 0,12,12,0 }, { 2,5 }, { 15, 10 }, { 0, 250 }, P_DOWN, 100, 2);
+			particle_fire = App->particlemanager->Group_Fire.back();
+		}
+		else if (direction == LEFT)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 50, 16 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+			//Particles
+			App->particlemanager->CreateFire_Particle(nullptr, nullptr, iPoint(position.x - offset_x, position.y - offset_y), { 0,12,12,0 }, { 2,5 }, { 15, 10 }, { 250, 0 }, P_LEFT, 100, 2);
+			particle_fire = App->particlemanager->Group_Fire.back();
+		}
+		particle_fire->active = true;
+	}
 }
 
 bool Salamance::Chasing(float dt)

@@ -4,6 +4,8 @@
 
 #include "PokemonCombat.h"
 
+class P_Fire;
+
 class Salamance : public PokemonCombat
 {
 public:
@@ -40,7 +42,6 @@ public:
 	bool Attack();
 
 	void Special_Attack();
-	//void ThrowSP(); **Only the special attack is launch.**
 
 	bool Chasing(float dt);
 
@@ -49,6 +50,8 @@ public:
 	bool Movebyhit(int speed);
 
 	int CheckPlayerPos();
+
+	//void Create
 
 private:
 
@@ -59,7 +62,9 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
-	//bool drawThrowSP = false; **Only the special attack is launch.**
+	int use_cooldown = 0;
+
+	P_Fire* particle_fire = nullptr;
 
 };
 

@@ -1,4 +1,6 @@
 #include "Particle.h"
+#include "CombatManager.h"
+#include "PokemonCombat.h"
 
 //Constructor
 Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_particle, P_Direction p_direction, SDL_Rect pos_rect, int size, int num_tex_pixel, bool active, Wind dir, iPoint num_tex)
@@ -149,7 +151,15 @@ void Particle::render()
 		degrade.y = 0;
 	}
 	SDL_SetTextureAlphaMod(App->particlemanager->atlas_particle, degrade.y);
-	App->render->Blit(App->particlemanager->atlas_particle, position.x, position.y, &rect);
+	if (App->combatmanager->pokemon_active_trainer->name == "SALAMANCE" && App->combatmanager->pokemon_active_trainer->GetState() == PC_SPECIAL
+		&& (App->combatmanager->pokemon_active_trainer->direction == UP || App->combatmanager->pokemon_active_trainer->direction == DOWN))
+	{
+		App->render->Blit(App->particlemanager->atlas_particle, position.x, position.y, &rect, 1.0f, true, 90);
+	}
+	else
+	{
+		App->render->Blit(App->particlemanager->atlas_particle, position.x, position.y, &rect);
+	}
 }
 
 void Particle::Move(fPoint speed, Wind dir, bool Move_alternative)
