@@ -70,7 +70,7 @@
     <vilager id="7" name="Glacia" rect_x="14" rect_y="82" rect_w="16" rect_h="22" pos_x="160" pos_y="136" dialog=""/>
     <vilager id="8" name="Drake" rect_x="42" rect_y="21" rect_w="16" rect_h="21" pos_x="160" pos_y="136" dialog=""/>
     <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="160" pos_y="136" dialog=""/>
-    <vilager id="10" name="Ric" rect_x="16" rect_y="125" rect_w="20" rect_h="25" pos_x="160" pos_y="136" dialog=""/>
+    <vilager id="10" name="Ric" rect_x="16" rect_y="125" rect_w="20" rect_h="25" pos_x="159" pos_y="138" dialog=""/>
   </vilagers>
   
   
@@ -339,7 +339,7 @@
       <!--FINAL BOSS-->
       <Ganon pos_x="256" pos_y="304" hp="100" attack="10" dir="down" file="textures/Ganon.png" />
       <vilagers>
-        <vilager id="10" name="Ric" rect_x="16" rect_y="125" rect_w="20" rect_h="25" pos_x="240" pos_y="552" dialog="Hey, Link take this object and go to kill Ganon.         Good Luck!"/>
+        <vilager id="10" name="Ric" rect_x="16" rect_y="125" rect_w="20" rect_h="25" pos_x="230" pos_y="553" dialog="Hey, Link take this object and go to kill Ganon.         Good Luck!"/>
       </vilagers>
     </map>
 
