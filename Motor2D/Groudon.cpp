@@ -114,18 +114,6 @@ bool Groudon::Update(float dt)
 	{
 
 	}
-	/*else if (App->scene->gamestate == TIMETOPLAY)
-	{
-	if (SDL_GetTicks() - timetoplay > 1000)
-	{
-	App->scene->gamestate = INGAME;
-	}
-	}*/
-	/*	**Only the special attack is launch.**
-	if (drawThrowSP)
-	{
-	ThrowSP();
-	}*/
 
 	if (CheckPlayerPos() < 30 && state == PC_WALKING)
 	{
@@ -149,31 +137,6 @@ bool Groudon::Update(float dt)
 
 void Groudon::Draw()
 {
-	/*if (drawThrowSP)  **Only the special attack is launch.**
-	{
-	if (sp_attack != nullptr)
-	{
-	switch (sp_direction)
-	{
-	case 0:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
-	sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
-	break;
-	case 1:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
-	sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
-	break;
-	case 2:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
-	sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
-	break;
-	case 3:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
-	sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
-	break;
-	}
-	}
-	}*/
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, GROUDON);
 }
 

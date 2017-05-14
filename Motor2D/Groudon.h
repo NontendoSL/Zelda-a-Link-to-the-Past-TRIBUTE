@@ -40,7 +40,6 @@ public:
 	bool Attack();
 
 	void Special_Attack();
-	//void ThrowSP(); **Only the special attack is launch.**
 
 	bool Chasing(float dt);
 
@@ -59,7 +58,6 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
-	//bool drawThrowSP = false; **Only the special attack is launch.**
 
 };
 

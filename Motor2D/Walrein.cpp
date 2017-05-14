@@ -454,13 +454,6 @@ bool Walrein::Movebyhit(int speed)
 			position.x += speed;
 		}
 	}
-	/*if (position.x > (prev_position.x + 65) ||
-	position.x < (prev_position.x + 65) ||
-	position.y >(prev_position.y + 65) ||
-	position.y < (prev_position.y + 65))
-	{
-	state = IDLE;
-	}*/
 	return true;
 }
 
