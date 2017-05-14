@@ -32,8 +32,9 @@ bool RedMinion::Start(iPoint pos)
 	state = RM_SPAWNING;
 	anim_state = RM_WALKING;
 	animation = *App->anim_manager->GetAnimStruct(REDMINION);
-	explosion_anim = *App->anim_manager->GetAnimation(1, DOWN, BOMB);
+	explosion_anim = *App->anim_manager->GetAnimStruct(BOMB);
 	animation.anim[anim_state].ResetAnimations();
+	explosion_anim.anim[W_DYING].ResetAnimations();
 	//Set Collision
 	offset_x = 8;
 	offset_y = 4;
@@ -41,6 +42,9 @@ bool RedMinion::Start(iPoint pos)
 
 	//Spawn Timer
 	spawn_time.Start();
+
+	//Orient Timer
+	change_dir.Start();
 
 	return true;
 }
@@ -92,28 +96,37 @@ bool RedMinion::Update(float dt)
 
 void RedMinion::Draw()
 {
-	if (direction == UP)
+	if (state != RM_DYING)
 	{
-		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
-		pivot = animation.anim[anim_state].North_action.GetCurrentOffset();
-	}
-	else if (direction == DOWN)
-	{
-		anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
-		pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
-	}
-	else if (direction == LEFT)
-	{
-		anim_rect = animation.anim[anim_state].West_action.GetCurrentFrame();
-		pivot = animation.anim[anim_state].West_action.GetCurrentOffset();
-	}
-	else if (direction == RIGHT)
-	{
-		anim_rect = animation.anim[anim_state].East_action.GetCurrentFrame();
-		pivot = animation.anim[anim_state].East_action.GetCurrentOffset();
+		if (direction == UP)
+		{
+			anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
+			pivot = animation.anim[anim_state].North_action.GetCurrentOffset();
+		}
+		else if (direction == DOWN)
+		{
+			anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
+			pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
+		}
+		else if (direction == LEFT)
+		{
+			anim_rect = animation.anim[anim_state].West_action.GetCurrentFrame();
+			pivot = animation.anim[anim_state].West_action.GetCurrentOffset();
+		}
+		else if (direction == RIGHT)
+		{
+			anim_rect = animation.anim[anim_state].East_action.GetCurrentFrame();
+			pivot = animation.anim[anim_state].East_action.GetCurrentOffset();
+		}	
+		App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 	}
 
-	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+	else
+	{
+		anim_rect = explosion_anim.anim[W_DYING].South_action.GetCurrentFrame();
+		pivot = explosion_anim.anim[W_DYING].South_action.GetCurrentOffset();
+		App->render->Blit(explosion_anim.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+	}
 }
 
 void RedMinion::OnCollision(Collider* c1, Collider* c2)
@@ -125,7 +138,7 @@ void RedMinion::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (state != RM_HIT)
 			{
-				App->audio->PlayFx(12);
+				App->audio->PlayFx(11);
 				knockback_time.Start();
 				hp--;
 				state = RM_HIT;
@@ -293,19 +306,20 @@ bool RedMinion::Movebyhit(float dt)
 
 bool RedMinion::Die()
 {
-	App->audio->PlayFx(11);
-	if (item_id != -1)
+	if (explosion_anim.anim[W_DYING].South_action.Finished())
 	{
-		App->entity_elements->CreateItem(DropItem(), position);
+		if (item_id != -1)
+		{
+			App->entity_elements->CreateItem(DropItem(), position);
+		}
+
+		if (App->entity_elements->ganon != nullptr)
+		{
+			App->entity_elements->ganon->IncreaseDeadMinions();
+		}
+
+		to_delete = true;
 	}
-
-	if (App->entity_elements->ganon != nullptr)
-	{
-		App->entity_elements->ganon->IncreaseDeadMinions();
-	}
-
-	to_delete = true;
-
 	return true;
 }
 
@@ -333,6 +347,21 @@ int RedMinion::DropItem()
 {
 	item_id = 2;
 	return item_id;
+}
+
+void RedMinion::SetState(RMinionState s_state)
+{
+	state = s_state;
+}
+
+void RedMinion::SetAnimState(RMinionState a_state)
+{
+	anim_state = a_state;
+}
+
+RMinionState RedMinion::GetState() const
+{
+	return state;
 }
 
 

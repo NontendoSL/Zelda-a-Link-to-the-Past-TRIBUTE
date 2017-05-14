@@ -37,9 +37,15 @@ public:
 	bool Die();
 	// -----------------------
 
+	// UTILITY FUNCTIONS ---------
 	void SetKnockbackDir();
-
 	int DropItem();
+	void SetState(RMinionState state);
+	void SetAnimState(RMinionState state);
+	RMinionState GetState() const;
+	//----------------------------
+
+	AnimationStruct explosion_anim;
 
 private:
 	RMinionState state = RM_IDLE;
@@ -53,7 +59,6 @@ private:
 	AnimationStruct animation;
 	SDL_Rect anim_rect;
 	iPoint pivot;
-	Animation explosion_anim;
 	// ---------------------------------
 
 	//MOVEMENT VARIABLES ---
