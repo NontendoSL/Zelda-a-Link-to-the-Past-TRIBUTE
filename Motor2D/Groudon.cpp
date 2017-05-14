@@ -131,7 +131,7 @@ bool Groudon::Update(float dt)
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
 		attacker = false;
-		current_animation = App->anim_manager->GetAnimation(state, direction, SALAMENCE);
+		current_animation = App->anim_manager->GetAnimation(state, direction, GROUDON);
 		current_animation->Reset();
 	}
 
@@ -142,7 +142,7 @@ bool Groudon::Update(float dt)
 		use_cooldown = 0;
 		attacker = false;
 		wait_attack.Start();
-		current_animation = App->anim_manager->GetAnimation(state, direction, SALAMENCE);
+		current_animation = App->anim_manager->GetAnimation(state, direction, GROUDON);
 		current_animation->Reset();
 	}
 
@@ -355,6 +355,7 @@ bool Groudon::Attack()
 		{
 			App->collision->EraseCollider(collision_attack);
 			attacker = false;
+			collision_attack == nullptr;
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = PC_IDLE;
@@ -393,16 +394,41 @@ void Groudon::Special_Attack()
 {
 	if (attacker)
 	{
-		attacker = false;
-		current_animation->Reset();
-		current_animation = nullptr;
-		state = PC_IDLE;
-		anim_state = PC_IDLE;
-		getdamage = false;
+		if (current_animation->Finished())
+		{
+			App->collision->EraseCollider(collision_attack);
+			attacker = false;
+			sp_attack = nullptr;
+			current_animation->Reset();
+			current_animation = nullptr;
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
+			getdamage = false;
+		}
 	}
 	else
 	{
-
+		attacker = true;
+		if (direction == UP)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == RIGHT)
+		{
+			sp_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == DOWN)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+		}
+		else if (direction == LEFT)
+		{
+			sp_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			App->audio->PlayFx(10);
+		}
 	}
 }
 

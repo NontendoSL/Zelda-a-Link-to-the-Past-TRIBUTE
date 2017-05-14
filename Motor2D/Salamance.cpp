@@ -353,6 +353,7 @@ bool Salamance::Attack()
 		{
 			App->collision->EraseCollider(collision_attack);
 			attacker = false;
+			collision_attack = nullptr;
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = PC_IDLE;
@@ -398,6 +399,7 @@ void Salamance::Special_Attack()
 		if (current_animation->Finished() && wait_attack.ReadSec() > 4)
 		{
 			App->collision->EraseCollider(sp_attack);
+			sp_attack = nullptr;
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;

@@ -331,6 +331,7 @@ void Walrein::Special_Attack()
 		if (current_animation->Finished())
 		{
 			App->collision->EraseCollider(sp_attack);
+			sp_attack = nullptr;
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;

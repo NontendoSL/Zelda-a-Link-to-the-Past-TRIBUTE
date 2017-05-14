@@ -289,6 +289,7 @@ void Swampert::ThrowSP()
 	{
 		range.y = 0;
 		App->collision->EraseCollider(sp_attack);
+		sp_attack = nullptr;
 		sp_attacking = false;
 		drawThrowSP = false;
 		getdamage = false;
@@ -441,6 +442,7 @@ bool Swampert::Attack()
 		if (current_animation->Finished())
 		{
 			App->collision->EraseCollider(collision_attack);
+			collision_attack = nullptr;
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;

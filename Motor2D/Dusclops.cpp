@@ -353,6 +353,7 @@ bool Dusclops::Attack()
 		{
 			App->collision->EraseCollider(collision_attack);
 			attacker = false;
+			collision_attack = nullptr;
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = PC_IDLE;
