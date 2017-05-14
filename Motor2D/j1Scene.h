@@ -83,8 +83,11 @@ public:
 
 	void ChangeState(GameState state);
 
-	//
+	//Load maps function
 	void SwitchMap(bool isTP);
+
+	//SAVE/LOAD FUNCTION
+	bool Save(pugi::xml_node&);
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;

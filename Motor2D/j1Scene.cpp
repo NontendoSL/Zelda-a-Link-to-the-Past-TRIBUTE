@@ -896,6 +896,17 @@ void j1Scene::SwitchMap(bool isTP)
 	}
 }
 
+bool j1Scene::Save(pugi::xml_node& node)
+{
+	bool ret = false;
+
+	//Player node
+	pugi::xml_node checkpoint = node.append_child("CheckPoint");
+	player->SaveData(checkpoint);
+
+	return ret;
+}
+
 bool j1Scene::Load_new_map(int n, bool isTP)
 {
 	if (player == NULL)
@@ -1079,6 +1090,11 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			stop_rearch = true;
 		}
 	}
+
+	//Save CheckPoint Stats ---
+	player->SaveCheckPoint(n);
+	// --------------------------
+
 	last_map = n;
 	return true;
 }
