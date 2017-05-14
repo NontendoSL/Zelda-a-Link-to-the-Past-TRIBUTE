@@ -48,6 +48,7 @@ bool j1SceneIntro::Start()
 	Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
 	App->input_manager->AddListener(this);
 	SDL_Rect r = { 0, 0, 640, 480 };
+	App->video->PlayVideo("Untitled.ogv", r);
 	fade = true;
 	return true;
 }
