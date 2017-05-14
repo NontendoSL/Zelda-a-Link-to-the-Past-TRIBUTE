@@ -294,7 +294,7 @@ bool j1Scene::Update(float dt)
 			// TP LEVEL
 
 			//WEAPONS TEST ---------
-			if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P))
+			/*if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P))
 			{
 				player->bow = App->entity_elements->CreateBow();
 				App->scene->start_menu->PickItem("bow");
@@ -304,7 +304,7 @@ bool j1Scene::Update(float dt)
 				player->bombs = 99;
 				player->setWeapons = true;
 				player->sword_equiped = true;
-			}
+			}*/
 			// ---------
 
 			//Set picked object the last 
