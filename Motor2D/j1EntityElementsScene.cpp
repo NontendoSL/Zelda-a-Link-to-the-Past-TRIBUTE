@@ -371,6 +371,44 @@ void j1EntityElementScene::SwapObject(SceneElement* obj)
 	}
 }
 
+void j1EntityElementScene::SwapGanon()
+{
+	if (App->scene->player != nullptr && App->entity_elements->ganon != nullptr)
+	{
+		if (App->entity_elements->ganon != elementscene.begin()._Ptr->_Myval)
+		{
+			std::list<SceneElement*>::iterator temp = elementscene.begin();
+			for (; temp != elementscene.end(); temp++)
+			{
+				if (temp._Ptr->_Myval == App->entity_elements->ganon)
+				{
+					std::swap(temp._Ptr->_Myval, elementscene.begin()._Ptr->_Myval);
+					break;
+				}
+			}
+		}
+	}
+}
+
+void j1EntityElementScene::SwapPlayer()
+{
+	if (App->scene->player != nullptr && App->entity_elements->ganon != nullptr)
+	{
+		if (App->scene->player != elementscene.begin()._Ptr->_Myval)
+		{
+			std::list<SceneElement*>::iterator temp = elementscene.begin();
+			for (; temp != elementscene.end(); temp++)
+			{
+				if (temp._Ptr->_Myval == App->scene->player)
+				{
+					std::swap(temp._Ptr->_Myval, elementscene.begin()._Ptr->_Myval);
+					break;
+				}
+			}
+		}
+	}
+}
+
 
 
 void j1EntityElementScene::CreateItem(uint id, iPoint position)

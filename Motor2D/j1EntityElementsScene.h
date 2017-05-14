@@ -85,6 +85,8 @@ public:
 	// TODO HIGH -> CREATE DELETE FUNCTIONS
 
 	void SwapObject(SceneElement* obj);
+	void SwapGanon();
+	void SwapPlayer();
 
 	pugi::xml_node conf;
 	pugi::xml_document XML;
