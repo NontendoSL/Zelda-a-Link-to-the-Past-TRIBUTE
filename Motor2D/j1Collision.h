@@ -112,6 +112,7 @@ public:
 private:
 
 	std::vector<Collider*> colliders;
+	std::vector<Collider*> temp_del;
 	bool matrix[MAX_COLLIDERS][MAX_COLLIDERS];
 	bool debug = false;
 };

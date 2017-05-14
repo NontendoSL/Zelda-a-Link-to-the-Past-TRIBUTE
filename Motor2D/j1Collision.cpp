@@ -112,10 +112,13 @@ bool j1Collision::PreUpdate()
 	{
 		if ((*item) != nullptr && (*item)->to_delete == true)
 		{
+			temp_del.push_back(*item);
 			colliders.erase(item);
 			--item;
 		}
 	}
+	for (std::vector<Collider*>::iterator item_2 = temp_del.begin(); item_2 != temp_del.cend(); ++item_2)
+		RELEASE(*item_2);
 	waittodelete = false;
 	return true;
 }
@@ -177,6 +180,10 @@ bool j1Collision::CleanUp()
 	for (std::vector<Collider*>::iterator item = colliders.begin(); item != colliders.cend(); ++item)
 		RELEASE(*item);
 	colliders.clear();
+
+	for (std::vector<Collider*>::iterator item_2 = temp_del.begin(); item_2 != temp_del.cend(); ++item_2)
+		RELEASE(*item_2);
+	temp_del.clear();
 
 	return true;
 }
