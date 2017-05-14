@@ -82,11 +82,6 @@ bool Walrein::Update(float dt)
 			Chasing(dt);
 			break;
 		}
-		case PC_ATTACKING:
-		{
-			Attack();
-			break;
-		}
 		case PC_SPECIAL:
 		{
 			Special_Attack();
@@ -114,30 +109,15 @@ bool Walrein::Update(float dt)
 	{
 
 	}
-	/*else if (App->scene->gamestate == TIMETOPLAY)
-	{
-	if (SDL_GetTicks() - timetoplay > 1000)
-	{
-	App->scene->gamestate = INGAME;
-	}
-	}*/
-	/*	**Only the special attack is launch.**
-	if (drawThrowSP)
-	{
-	ThrowSP();
-	}*/
 
-	if (CheckPlayerPos() < 100 && state == PC_WALKING)
+	if (CheckPlayerPos() < VIEWING_DISTANCE && state == PC_WALKING)
 	{
-		OrientatePokeLink();
 		state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < 20 && (state == PC_WALKING || state == PC_CHASING))
+	if (CheckPlayerPos() < ATTACK_DISTANCE && (state == PC_WALKING || state == PC_CHASING) && wait_attack.ReadSec() > 0.5)
 	{
 		OrientatePokeLink();
-		/*state = PC_ATTACKING;
-		anim_state = PC_ATTACKING;*/
 		state = PC_SPECIAL;
 		anim_state = PC_SPECIAL;
 		current_animation = App->anim_manager->GetAnimation(anim_state, direction, WALREIN);
@@ -151,31 +131,6 @@ bool Walrein::Update(float dt)
 
 void Walrein::Draw()
 {
-	/*if (drawThrowSP)  **Only the special attack is launch.**
-	{
-	if (sp_attack != nullptr)
-	{
-	switch (sp_direction)
-	{
-	case 0:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y - range.y }, PARTICLES);
-	sp_attack->SetPos(sp_start.x, sp_start.y - range.y);
-	break;
-	case 1:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x,sp_start.y + range.y }, PARTICLES);
-	sp_attack->SetPos(sp_start.x, sp_start.y + range.y);
-	break;
-	case 2:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x - range.y,sp_start.y - 10 }, PARTICLES);
-	sp_attack->SetPos(sp_start.x - range.y, sp_start.y - 10);
-	break;
-	case 3:
-	App->anim_manager->Drawing_Manager(LEAF, (Direction)0, { sp_start.x + range.y,sp_start.y - 10 }, PARTICLES);
-	sp_attack->SetPos(sp_start.x + range.y, sp_start.y - 10);
-	break;
-	}
-	}
-	}*/
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, WALREIN);
 }
 
@@ -221,18 +176,6 @@ void Walrein::OnCollision(Collider* c1, Collider* c2)
 						pokemon_2->prev_position = pokemon_2->position;
 					}
 
-				}
-
-				if (c1 == collision_attack && c2->type == COLLIDER_POKECOMBAT && getdamage == false)
-				{
-					pokemon_2->knockback_time.Start();
-					pokemon_2->hp -= attack;
-					getdamage = true;
-					App->scene->pokecombat->GetDamage(attack, false);
-					pokemon_2->SetState(PC_HIT);
-					pokemon_2->SetAnimState(PC_HIT);
-					pokemon_2->dir_hit = c1->callback->direction;
-					pokemon_2->prev_position = pokemon_2->position;
 				}
 			}
 		}
@@ -289,6 +232,11 @@ bool Walrein::Walking(float dt)
 	{
 		Move(dt);
 	}
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
 
 
 	if (dis_moved >= distance)
@@ -372,53 +320,6 @@ bool Walrein::Move(float dt)
 	return true;
 }
 
-bool Walrein::Attack()
-{
-	if (attacker)
-	{
-		if (current_animation->Finished())
-		{
-			App->collision->EraseCollider(collision_attack);
-			attacker = false;
-			current_animation->Reset();
-			current_animation = nullptr;
-			state = PC_IDLE;
-			anim_state = PC_IDLE;
-			getdamage = false;
-		}
-	}
-	else
-	{
-		attacker = true;
-		if (direction == UP)
-		{
-			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
-			App->audio->PlayFx(10);
-		}
-		else if (direction == RIGHT)
-		{
-			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
-			App->audio->PlayFx(10);
-		}
-		else if (direction == DOWN)
-		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y + 1, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
-			App->audio->PlayFx(10);
-		}
-		else if (direction == LEFT)
-		{
-			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
-			App->audio->PlayFx(10);
-		}
-	}
-	return true;
-}
-
-/*void Dusclops::ThrowSP() **Only the special attack is launch.**
-{
-
-}*/
-
 void Walrein::Special_Attack()
 {
 	if (attacker)
@@ -432,6 +333,7 @@ void Walrein::Special_Attack()
 			state = PC_IDLE;
 			anim_state = PC_IDLE;
 			getdamage = false;
+			wait_attack.Start();
 		}
 	}
 	else
@@ -465,7 +367,7 @@ bool Walrein::Chasing(float dt)
 	walking = false;
 	if (reset_distance)
 	{
-		distance = rand() % 75 + 35;
+		distance = rand() % 75 + 50;
 		dis_moved = 0;
 		reset_distance = false;
 	}

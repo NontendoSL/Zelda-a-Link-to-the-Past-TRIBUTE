@@ -37,8 +37,6 @@ public:
 
 	bool Move(float dt);
 
-	bool Attack();
-
 	void Special_Attack();
 	//void ThrowSP(); **Only the special attack is launch.**
 
