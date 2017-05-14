@@ -627,6 +627,9 @@ ZeldaMenu::ZeldaMenu()
 	position = { 0,-224 };
 	identifier = "start_menu";
 	belong = ZELDA_MENU;
+
+	App->gui->GetEntity("pendant_poke")->visible = false;
+	App->gui->GetEntity("pendant_link")->visible = false;
 }
 
 void ZeldaMenu::ResetInventory()
