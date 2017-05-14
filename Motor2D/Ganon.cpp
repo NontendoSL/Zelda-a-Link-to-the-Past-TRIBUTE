@@ -55,7 +55,7 @@ bool Ganon::Update(float dt)
 	App->gui->GetEntity("hp boss")->Hitbox.w = (hp * 149) / 100;
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Red);
 	// STATE MACHINE ------------------
-	if (App->scene->gamestate == INGAME)
+	if (App->scene->gamestate == INGAME || App->scene->gamestate == INMENU)
 	{
 		switch (phase)
 		{
