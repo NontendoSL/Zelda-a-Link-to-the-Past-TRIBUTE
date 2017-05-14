@@ -25,6 +25,7 @@
 #include "j1Player.h"
 #include "j1FadeToBlack.h"
 #include "ParticleManager.h"
+#include "Video.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -36,6 +37,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	render = new j1Render();
 	tex = new j1Textures();
 	audio = new j1Audio();
+	video = new Video();
 	scene = new j1Scene();
 	intro= new j1SceneIntro();
 	fs = new j1FileSystem();
@@ -81,6 +83,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// render last to swap buffer
 	AddModule(fadetoblack);
+	AddModule(video);
 	AddModule(render);
 
 	PERF_PEEK(ptimer);

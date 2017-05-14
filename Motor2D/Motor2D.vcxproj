@@ -95,6 +95,7 @@
     <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1InputManager.cpp" />
     <ClCompile Include="j1SceneIntro.cpp" />
+    <ClCompile Include="Video.cpp" />
     <ClCompile Include="j1Weapon.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Sudowoodo.cpp" />
     <ClCompile Include="Swampert.cpp" />
+    <ClCompile Include="theoraplay.c" />
     <ClCompile Include="TrainingDoll.cpp" />
     <ClCompile Include="Villager.cpp" />
     <ClCompile Include="Walrein.cpp" />
@@ -158,6 +160,7 @@
     <ClInclude Include="j1DynamicObjects.h" />
     <ClInclude Include="j1InputManager.h" />
     <ClInclude Include="j1Item.h" />
+    <ClInclude Include="Video.h" />
     <ClInclude Include="j1Weapon.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Particle.h" />
@@ -203,6 +206,7 @@
     <ClInclude Include="SceneElements.h" />
     <ClInclude Include="Sudowoodo.h" />
     <ClInclude Include="Swampert.h" />
+    <ClInclude Include="theoraplay.h" />
     <ClInclude Include="TrainingDoll.h" />
     <ClInclude Include="Villager.h" />
     <ClInclude Include="Walrein.h" />

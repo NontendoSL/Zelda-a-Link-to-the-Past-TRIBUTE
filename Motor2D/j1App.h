@@ -28,6 +28,7 @@ class j1Collision;
 class j1FadeToBlack;
 class InputManager;
 class ParticleManager;
+class Video;
 
 class j1App
 {
@@ -101,6 +102,7 @@ public:
 	j1Render*				render = NULL;
 	j1Textures*				tex = NULL;
 	j1Audio*				audio = NULL;
+	Video*				video = NULL;
 	j1SceneIntro*			intro = NULL;
 	j1Scene*				scene = NULL;
 	j1FileSystem*			fs = NULL;

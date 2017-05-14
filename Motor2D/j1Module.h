@@ -6,7 +6,13 @@
 #ifndef __j1MODULE_H__
 #define __j1MODULE_H__
 
+#include "p2Defs.h"
 #include "PugiXml\src\pugixml.hpp"
+#include <list>
+#include <string>
+#include <vector>
+#include <iostream>
+#include "SDL\include\SDL.h"
 
 class j1App;
 class j1GuiEntity;

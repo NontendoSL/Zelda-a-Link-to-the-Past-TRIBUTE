@@ -24,6 +24,7 @@
 #include "j1Collision.h"
 #include "j1Weapon.h"
 #include "j1SceneIntro.h"
+#include "Video.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -180,8 +181,10 @@ bool j1Scene::Update(float dt)
 			// TP LEVEL -----------------------------------------
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
-				useTP = true;
-				switch_map = 10;
+				SDL_Rect r = { 0, 0, 640, 480 };
+				App->video->PlayVideo("video.ogv", r);
+				//useTP = true;
+				//switch_map = 10;
 			}
 
 			/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)

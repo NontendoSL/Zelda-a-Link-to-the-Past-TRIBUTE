@@ -181,6 +181,12 @@
     <ClCompile Include="TrainingDoll.cpp">
       <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
     </ClCompile>
+    <ClCompile Include="theoraplay.c">
+      <Filter>Utility\theora</Filter>
+    </ClCompile>
+    <ClCompile Include="Video.cpp">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -384,6 +390,12 @@
     <ClInclude Include="TrainingDoll.h">
       <Filter>Zelda Game\ElementsScene\NPCs\POKECOMBAT</Filter>
     </ClInclude>
+    <ClInclude Include="theoraplay.h">
+      <Filter>Utility\theora</Filter>
+    </ClInclude>
+    <ClInclude Include="Video.h">
+      <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Zelda Game">
@@ -436,6 +448,9 @@
     </Filter>
     <Filter Include="Zelda Game\.XML">
       <UniqueIdentifier>{6a882597-537e-47fe-8328-a787353c0983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\theora">
+      <UniqueIdentifier>{8788353e-327e-4e69-b991-406e69d11623}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
