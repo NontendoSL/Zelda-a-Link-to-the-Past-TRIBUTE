@@ -66,7 +66,7 @@ private:
 	SoldierState anim_state = S_IDLE;
 
 	//Soldier Test for Release 0.1
-	AnimationStruct* animation = nullptr;
+	AnimationStruct animation;
 	SDL_Rect anim_rect;
 	iPoint pivot;
 	bool stunned = false;
