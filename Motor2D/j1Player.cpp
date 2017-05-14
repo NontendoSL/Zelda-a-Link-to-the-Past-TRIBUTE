@@ -1396,7 +1396,7 @@ void Player::MoveTo(const iPoint& pos)
 
 		position.y -= hook->speed;
 
-		if (hook->position.y >= position.y)
+		if (hook->position.y >= position.y - offset_y)
 		{
 			hook->Reset();
 			state = L_IDLE;
@@ -1412,7 +1412,7 @@ void Player::MoveTo(const iPoint& pos)
 			App->render->camera.y -= hook->speed * scale;
 		position.y += hook->speed;
 
-		if (hook->position.y <= position.y)
+		if (hook->position.y <= position.y + offset_y)
 		{
 			hook->Reset();
 			state = L_IDLE;
@@ -1429,7 +1429,7 @@ void Player::MoveTo(const iPoint& pos)
 			App->render->camera.x += hook->speed * scale;
 		position.x -= hook->speed;
 
-		if (hook->position.x >= position.x)
+		if (hook->position.x >= position.x - offset_x)
 		{
 			hook->Reset();
 			state = L_IDLE;
@@ -1446,7 +1446,7 @@ void Player::MoveTo(const iPoint& pos)
 			App->render->camera.x -= hook->speed * scale;
 		position.x += hook->speed;
 
-		if (hook->position.x <= position.x)
+		if (hook->position.x <= position.x + offset_x)
 		{
 			hook->Reset();
 			state = L_IDLE;
