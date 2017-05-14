@@ -26,6 +26,7 @@
 #include "Animation.h"
 #include "Pokemon.h"
 #include "Villager.h"
+#include "RedMinion.h"
 
 //Constructor
 Player::Player() : Creature()
@@ -494,6 +495,39 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						collision_interact->to_delete = true;
 						interaction = false;
 					}
+				}
+			}
+			// --------------------------------------
+
+			// LINK HIT BY	RED MINION -------------------
+			if (c1 == collision_feet && c2->type == COLLIDER_RMINION) //If green soldier attacks you
+			{
+				if (state != L_HIT && invincible_timer.ReadSec() >= 1)
+				{
+					App->audio->PlayFx(13);
+					state = L_HIT;
+					anim_state = L_IDLE;
+					hurt_timer.Start();
+					invincible_timer.Start();
+					hp_hearts.y--;
+					dir_hit = c2->callback->direction;
+					prev_position = position;
+
+					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
+					{
+						picked_object->SetState(D_DYING);
+						picked_object = nullptr;
+					}
+
+					if (interaction == true)
+					{
+						collision_interact->to_delete = true;
+						interaction = false;
+					}
+
+					//When Red Minion impacts Link, it explodes
+					((RedMinion*)c2->callback)->SetState(RM_DYING);
+					App->audio->PlayFx(7);
 				}
 			}
 			// --------------------------------------
