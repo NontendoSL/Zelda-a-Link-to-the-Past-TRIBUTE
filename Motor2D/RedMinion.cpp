@@ -32,9 +32,10 @@ bool RedMinion::Start(iPoint pos)
 	state = RM_SPAWNING;
 	anim_state = RM_WALKING;
 	animation = *App->anim_manager->GetAnimStruct(REDMINION);
-	explosion_anim = *App->anim_manager->GetAnimStruct(BOMB);
+	//explosion_anim = *App->anim_manager->GetAnimStruct(BOMB);
 	animation.anim[anim_state].ResetAnimations();
-	explosion_anim.anim[W_DYING].ResetAnimations();
+	//explosion_anim.anim[W_DYING].ResetAnimations();
+
 	//Set Collision
 	offset_x = 8;
 	offset_y = 4;
@@ -121,12 +122,12 @@ void RedMinion::Draw()
 		App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 	}
 
-	else
-	{
-		anim_rect = explosion_anim.anim[W_DYING].South_action.GetCurrentFrame();
-		pivot = explosion_anim.anim[W_DYING].South_action.GetCurrentOffset();
-		App->render->Blit(explosion_anim.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
-	}
+	//else
+	//{
+	//	anim_rect = explosion_anim.anim[W_DYING].South_action.GetCurrentFrame();
+	//	pivot = explosion_anim.anim[W_DYING].South_action.GetCurrentOffset();
+	//	App->render->Blit(explosion_anim.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+	//}
 }
 
 void RedMinion::OnCollision(Collider* c1, Collider* c2)
@@ -306,20 +307,19 @@ bool RedMinion::Movebyhit(float dt)
 
 bool RedMinion::Die()
 {
-	if (explosion_anim.anim[W_DYING].South_action.Finished())
+
+	if (item_id != -1)
 	{
-		if (item_id != -1)
-		{
-			App->entity_elements->CreateItem(DropItem(), position);
-		}
-
-		if (App->entity_elements->ganon != nullptr)
-		{
-			App->entity_elements->ganon->IncreaseDeadMinions();
-		}
-
-		to_delete = true;
+		App->entity_elements->CreateItem(DropItem(), position);
 	}
+
+	if (App->entity_elements->ganon != nullptr)
+	{
+		App->entity_elements->ganon->IncreaseDeadMinions();
+	}
+
+	to_delete = true;
+
 	return true;
 }
 
