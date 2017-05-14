@@ -514,6 +514,8 @@ ZeldaHud::ZeldaHud()
 	position = { 0,0 };
 	identifier = "hud";
 	belong = ZELDA_HUD;
+	App->gui->GetEntity("boss bar")->visible = false;
+	App->gui->GetEntity("hp boss")->visible = false;
 }
 
 void ZeldaHud::Update(j1GuiEntity* focused)
@@ -570,8 +572,7 @@ void ZeldaHud::Equip(const char* item)
 
 Button* ZeldaHud::GetFirst()
 {
-	App->gui->GetEntity("boss bar")->visible = false;
-	App->gui->GetEntity("hp boss")->visible = false;
+
 	return nullptr;
 }
 

@@ -7,6 +7,8 @@
 #include "j1Player.h"
 #include "j1Weapon.h"
 #include "j1Audio.h"
+#include "j1Gui.h"
+#include "j1GuiEntity.h"
 #include "j1DynamicObjects.h"
 
 BCTrooper::BCTrooper() : NPC()
@@ -35,6 +37,8 @@ bool BCTrooper::Awake(pugi::xml_node &conf, uint id)
 
 bool BCTrooper::Start()
 {
+	App->gui->GetEntity("boss bar")->visible = true;
+	App->gui->GetEntity("hp boss")->visible = true;
 	texture = App->tex->Load("Particles/bctrooperl.png");
 	position.x = 200;
 	position.y = 250;
@@ -81,6 +85,7 @@ bool BCTrooper::Start()
 
 bool BCTrooper::Update(float dt)
 {
+	App->gui->GetEntity("hp boss")->Hitbox.w = (hp * 149) / 60;
 	BROFILER_CATEGORY("DoUpdate_BCTrooper", Profiler::Color::Red);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
@@ -407,6 +412,9 @@ void BCTrooper::Defend()
 
 void BCTrooper::Death()
 {
+	App->gui->GetEntity("hp boss")->Hitbox.w = 149;
+	App->gui->GetEntity("boss bar")->visible = true;
+	App->gui->GetEntity("hp boss")->visible = true;
 	//40 - 13 // 41 - 13
 	App->map->EditCost(40, 13, 0);
 	App->map->EditCost(41, 13, 0);
