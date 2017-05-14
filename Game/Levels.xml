@@ -132,7 +132,7 @@
         <item id="6" pos_x="216" pos_y="64" file="textures/Sword_Shield"/>
       </items>
       <dynobjects>
-        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png"/>
+        <dynobject id="3" name="vase" type="ZELDA" rect_x="10" rect_y="1" rect_w="16" rect_h="16" pickable ="true" file="textures/DynObjectsSpriteSheet.png" item_id ="4"/>
         <dynobject id="5" name="bigchest" type="ZELDA" rect_x="20" rect_y="34" rect_w="32" rect_h="24" pickable ="false" file="textures/DynObjectsSpriteSheet.png" item_id ="5"/>
         <dynobject id="6" name="door" type="ZELDA" rect_x="1" rect_y="84" rect_w="32" rect_h="24" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>

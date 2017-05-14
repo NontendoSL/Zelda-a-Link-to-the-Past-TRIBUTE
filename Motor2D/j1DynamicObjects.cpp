@@ -229,7 +229,7 @@ DynObjectState DynamicObjects::IsImpact(int actual_floor)
 
 int DynamicObjects::DropItem()
 {
-	if (name == "bush_plant" || name == "vase")
+	if ((name == "bush_plant" || name == "vase") && item_id == 0)
 	{
 		int id = rand() % 100 + 1;
 
@@ -242,6 +242,7 @@ int DynamicObjects::DropItem()
 			item_id = 0;
 		}
 	}
+
 	return item_id;
 }
 
