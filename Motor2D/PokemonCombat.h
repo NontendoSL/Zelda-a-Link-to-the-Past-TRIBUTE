@@ -76,44 +76,40 @@ public:
 
 	bool OrientatePokeLink()
 	{
-		iPoint pokemon = App->combatmanager->pokemon_active_link->position;
-
-		Direction prev_dir = direction;
-		if (abs(pokemon.x - position.x) < abs(pokemon.y - position.y))
+		if (change_dir.ReadSec() >= 0.5)
 		{
-			if (pokemon.y > position.y)
+			iPoint pokemon = App->combatmanager->pokemon_active_link->position;
+
+			Direction prev_dir = direction;
+			if (abs(pokemon.x - position.x) < abs(pokemon.y - position.y))
 			{
-				direction = DOWN;
+				if (pokemon.y > position.y)
+				{
+					direction = DOWN;
+				}
+
+				else
+				{
+					direction = UP;
+				}
 			}
 
 			else
 			{
-				direction = UP;
+				if (pokemon.x < position.x)
+				{
+					direction = LEFT;
+				}
+
+				else
+				{
+					direction = RIGHT;
+				}
 			}
+			change_dir.Start();
 		}
 
-		else
-		{
-			if (pokemon.x < position.x)
-			{
-				direction = LEFT;
-			}
-
-			else
-			{
-				direction = RIGHT;
-			}
-		}
-
-		if (prev_dir == direction)
-		{
-			return false;
-		}
-
-		else
-		{
-			return true;
-		}
+		return true;
 	}
 
 public:
@@ -153,6 +149,8 @@ protected:
 
 	bool attacker = false;
 	bool getdamage = false;
+
+	j1Timer change_dir;
 	
 private:
 
