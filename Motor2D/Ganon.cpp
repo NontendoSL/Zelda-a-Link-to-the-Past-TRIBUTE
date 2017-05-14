@@ -287,7 +287,7 @@ void Ganon::IdleRage()
 
 void Ganon::Idle()
 {
-	if (wait_time.ReadSec() >= 0.5)
+	if (wait_time.ReadSec() >= 0.7)
 	{
 		state = G_WALKING;
 		anim_state = G_SPECIAL_1;
@@ -316,6 +316,7 @@ void Ganon::Walk(float dt)
 		state = G_ATTACKING;
 		anim_state = G_MELEE;
 		StartAttack = true;
+		App->scene->swap_player = true;
 	}
 	// ---------------------------------------
 }
@@ -453,6 +454,7 @@ void Ganon::ResetFireBats()
 
 void Ganon::StartJump()
 {
+	App->scene->swap_ganon = true;
 	Reorientate();
 	jump_origin = position;
 	jump_dest = App->scene->player->position;
@@ -502,6 +504,7 @@ void Ganon::FireJump()
 		wait_time.Start();
 		state = G_IDLE;
 		anim_state = G_WALKING;
+		App->scene->swap_player = true;
 	}
 	// -----------------------------
 }
@@ -527,7 +530,7 @@ void Ganon::ResetJump()
 
 void Ganon::Hit()
 {
-	if (HitTime.ReadSec() >= 0.5)
+	if (HitTime.ReadSec() >= 0.7)
 	{
 		state = G_IDLE;
 		anim_state = G_WALKING;
@@ -536,7 +539,7 @@ void Ganon::Hit()
 
 void Ganon::HitRage()
 {
-	if (HitTime.ReadSec() >= 0.5)
+	if (HitTime.ReadSec() >= 0.7)
 	{
 		state = G_IDLE;
 		anim_state = G_WALKING;
