@@ -48,12 +48,12 @@ void InputManager::ChangeInput(bool isNormal)
 	if (isNormal)
 	{
 		actions_inUse = actions;
-		LOG("CONFIGURATO NORMAL");
+		//LOG("CONFIGURATO NORMAL");
 	}
 	else
 	{
 		actions_inUse = actions_2;
-		LOG("CONFIGURATO TACTIC");
+		//LOG("CONFIGURATO TACTIC");
 	}
 
 }
