@@ -413,8 +413,8 @@ void BCTrooper::Defend()
 void BCTrooper::Death()
 {
 	App->gui->GetEntity("hp boss")->Hitbox.w = 149;
-	App->gui->GetEntity("boss bar")->visible = true;
-	App->gui->GetEntity("hp boss")->visible = true;
+	App->gui->GetEntity("boss bar")->visible = false;
+	App->gui->GetEntity("hp boss")->visible = false;
 	//40 - 13 // 41 - 13
 	App->map->EditCost(40, 13, 0);
 	App->map->EditCost(41, 13, 0);
