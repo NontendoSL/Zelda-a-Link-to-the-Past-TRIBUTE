@@ -164,20 +164,20 @@ void RedMinion::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		//BOMB COLLISION
-		if (c1 == collision_feet && c2->type == COLLIDER_BOMB && c1->callback != nullptr)
-		{
-			if (state != RM_HIT)
-			{
-				App->audio->PlayFx(12);
-				knockback_time.Start();
-				hp--;
-				state = RM_HIT;
-				anim_state = RM_WALKING;
-				SetKnockbackDir();
-				prev_position = position;
-			}
-		}
+		////BOMB COLLISION
+		//if (c1 == collision_feet && c2->type == COLLIDER_BOMB && c1->callback != nullptr)
+		//{
+		//	if (state != RM_HIT)
+		//	{
+		//		App->audio->PlayFx(12);
+		//		knockback_time.Start();
+		//		hp--;
+		//		state = RM_HIT;
+		//		anim_state = RM_WALKING;
+		//		SetKnockbackDir();
+		//		prev_position = position;
+		//	}
+		//}
 	}
 }
 

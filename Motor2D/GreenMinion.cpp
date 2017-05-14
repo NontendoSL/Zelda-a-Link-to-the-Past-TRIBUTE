@@ -156,19 +156,19 @@ void GreenMinion::OnCollision(Collider* c1, Collider* c2)
 		}
 
 		//BOMB COLLISION
-		if (c1 == collision_feet && c2->type == COLLIDER_BOMB && c1->callback != nullptr)
-		{
-			if (state != GM_HIT)
-			{
-				App->audio->PlayFx(12);
-				knockback_time.Start();
-				hp--;
-				state = GM_HIT;
-				anim_state = GM_WALKING;
-				SetKnockbackDir();
-				prev_position = position;
-			}
-		}
+		//if (c1 == collision_feet && c2->type == COLLIDER_BOMB && c1->callback != nullptr)
+		//{
+		//	if (state != GM_HIT)
+		//	{
+		//		App->audio->PlayFx(12);
+		//		knockback_time.Start();
+		//		hp--;
+		//		state = GM_HIT;
+		//		anim_state = GM_WALKING;
+		//		SetKnockbackDir();
+		//		prev_position = position;
+		//	}
+		//}
 	}
 }
 
