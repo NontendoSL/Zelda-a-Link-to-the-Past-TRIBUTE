@@ -121,6 +121,8 @@ public:
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
 
+	void SetMusics(int id);
+
 	CheckPointInfo Check;
 
 private:

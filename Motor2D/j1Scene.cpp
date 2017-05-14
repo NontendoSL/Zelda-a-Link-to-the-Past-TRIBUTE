@@ -1011,6 +1011,21 @@ bool j1Scene::ContinueGame()
 	return true;
 }
 
+void j1Scene::SetMusics(int id)
+{
+	if (id == 7 && last_map != 8)
+	{
+		App->audio->PlayMusic("", 0);
+	}
+
+	if (id == 9)
+	{
+		App->audio->PlayMusic("", 0);
+	}
+
+	//if (id == )
+}
+
 
 bool j1Scene::Load_new_map(int n, bool isTP)
 {
@@ -1033,6 +1048,9 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 		App->gui->SetGui(ZELDA_HUD);
 		player->sword_equiped = true;
 	}
+
+	//Stemusic
+	SetMusics(n);
 
 	if (n == 5)
 	{

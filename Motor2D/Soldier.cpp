@@ -22,7 +22,7 @@ Soldier::Soldier():NPC()
 
 Soldier::~Soldier()
 {
-
+	collision_feet = nullptr;
 }
 
 bool Soldier::Awake(pugi::xml_node &conf, uint id)

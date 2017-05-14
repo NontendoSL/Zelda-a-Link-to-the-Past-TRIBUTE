@@ -228,6 +228,7 @@ bool j1EntityElementScene::DeleteEnemy(Soldier* enemy)
 	{
 		elementscene.remove(enemy);
 		enemy->collision_feet->to_delete = true;
+		enemy->collision_feet = nullptr;
 		delete enemy;
 		enemy = nullptr;
 	}
@@ -341,6 +342,7 @@ bool j1EntityElementScene::DeleteCreature(Creature* creature)
 	{
 		elementscene.remove(creature);
 		creature->collision_feet->to_delete = true;
+		creature->collision_feet = nullptr;
 		delete creature;
 		creature = nullptr;
 	}
