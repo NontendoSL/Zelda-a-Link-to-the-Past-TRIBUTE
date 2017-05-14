@@ -52,10 +52,6 @@ bool Ganon::Start()
 
 bool Ganon::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
-	{
-		hp = 0;
-	}
 	App->gui->GetEntity("hp boss")->Hitbox.w = (hp * 149) / 100;
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Red);
 	// STATE MACHINE ------------------
