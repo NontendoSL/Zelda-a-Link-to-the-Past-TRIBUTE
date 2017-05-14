@@ -149,7 +149,7 @@ void Sceptyle::Draw()
 {
 	if (drawThrowSP)
 	{
-		if (sp_attack != nullptr)
+		if (sp_attack != nullptr && top_leaf_sp != nullptr && bot_leaf_sp != nullptr)
 		{
 			App->render->Blit(sp_leaf, leafs_pos[0].x, leafs_pos[0].y, &sp_rect, NULL, true, rotation, 6, 6); //1st leaf
 			sp_attack->SetPos(leafs_pos[0].x, leafs_pos[0].y);
@@ -295,10 +295,12 @@ void Sceptyle::ThrowSP()
 	if ((sp_direction == 2 && leafs_pos[0].x > position.x)|| (sp_direction == 3 && leafs_pos[0].x < position.x) || (sp_direction == 1  && leafs_pos[0].y < position.y)|| (sp_direction == 0 && leafs_pos[0].y > position.y))
 	{
 		range.y = 0;
-		App->collision->EraseCollider(sp_attack);
-		App->collision->EraseCollider(top_leaf_sp);
-		App->collision->EraseCollider(bot_leaf_sp);
-
+		sp_attack->to_delete=true;
+		top_leaf_sp->to_delete = true;
+		bot_leaf_sp->to_delete = true;
+		sp_attack = nullptr;
+		top_leaf_sp = nullptr;
+		bot_leaf_sp = nullptr;
 		for (int i = 0; i < leafs_pos.size(); i++)
 		{
 			leafs_pos[i] = { 0,0 };

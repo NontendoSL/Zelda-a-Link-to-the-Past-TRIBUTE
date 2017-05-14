@@ -98,8 +98,8 @@ bool j1Collision::PreUpdate()
 	{
 		if ((*item) != nullptr && (*item)->to_delete)
 		{
-			RELEASE(*item);
 			colliders.erase(item);
+			RELEASE(*item);
 		}
 		else
 		{

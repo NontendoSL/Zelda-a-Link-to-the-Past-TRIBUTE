@@ -1104,21 +1104,37 @@ void PokemonCombatHud::SetHudType(PokemonCombat * enemy_poke)
 	{
 		App->gui->GetEntity("top hud")->Hitbox = { 548,236,258,51 };
 		App->gui->GetEntity("bottom hud")->Hitbox = { 549,506,254,33 };
+		App->gui->GetEntity("Link_Pokeball_1")->position = { 43,11 };
+		App->gui->GetEntity("Link_Pokeball_2")->position = { 53,13 };
+		App->gui->GetEntity("Link_Pokeball_3")->position = { 63,14 };
+		App->gui->GetEntity("Bren_Pokeball_1")->position = { 205,11 };
 	}
 	else if (enemy_poke->name == "SHIFTRY")
 	{
 		App->gui->GetEntity("top hud")->Hitbox = { 550,403,254,47 };
-		App->gui->GetEntity("bottom hud")->Hitbox = { 549,461,254,33 };
+		App->gui->GetEntity("bottom hud")->Hitbox = { 549,461,254,33 }; 
+		App->gui->GetEntity("Link_Pokeball_1")->position = { 42,10 };
+		App->gui->GetEntity("Link_Pokeball_2")->position = { 52,12 };
+		App->gui->GetEntity("Link_Pokeball_3")->position = { 62,13 };
+		App->gui->GetEntity("Bren_Pokeball_1")->position = { 204,10 };
 	}
 	else if (enemy_poke->name == "DUSCLOPS")
 	{
 		App->gui->GetEntity("top hud")->Hitbox = { 547,353,260,46 };
 		App->gui->GetEntity("bottom hud")->Hitbox = { 1018,420,254,33 };
+		App->gui->GetEntity("Link_Pokeball_1")->position = { 44,10 };
+		App->gui->GetEntity("Link_Pokeball_2")->position = { 54,12 };
+		App->gui->GetEntity("Link_Pokeball_3")->position = { 64,13 };
+		App->gui->GetEntity("Bren_Pokeball_1")->position = { 206,10 };
 	}
 	else if (enemy_poke->name == "SALAMANCE")
 	{
 		App->gui->GetEntity("top hud")->Hitbox = { 549,296,256,50 };
 		App->gui->GetEntity("bottom hud")->Hitbox = { 1018,371,254,33 };
+		App->gui->GetEntity("Link_Pokeball_1")->position = { 42,11 };
+		App->gui->GetEntity("Link_Pokeball_2")->position = { 52,13 };
+		App->gui->GetEntity("Link_Pokeball_3")->position = { 62,14 };
+		App->gui->GetEntity("Bren_Pokeball_1")->position = { 204,11 };
 	}
 }
 
@@ -1579,6 +1595,7 @@ void PokemonWorldMenu::MoveIn(bool inside)
 
 Button* PokemonWorldMenu::GetFirst()
 {
+	App->scene->player->SetAnimState(L_IDLE);
 	return menu_opt[0];
 }
 
