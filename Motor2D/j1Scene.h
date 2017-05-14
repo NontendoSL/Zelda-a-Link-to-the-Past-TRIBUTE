@@ -144,6 +144,8 @@ public:
 	bool notrepeatCombat = true;
 
 	bool swap_object = false;
+	bool swap_ganon = false;
+	bool swap_player = false;
 
 private:
 	uint volume = 120;

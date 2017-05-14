@@ -277,13 +277,28 @@ bool j1Scene::Update(float dt)
 			}
 			// ---------
 
-			//Set picked object the last ---
+			//Set picked object the last 
 			if (player->picked_object != nullptr && swap_object == true)
 			{
 				App->entity_elements->SwapObject(player->picked_object);
 				swap_object = false;
 			}
-			//-------------
+
+			//Blit Ganon Last
+			if (swap_ganon == true)
+			{
+				App->entity_elements->SwapGanon();
+				swap_ganon = false;
+			}
+
+			//Blit Player Last
+			if (swap_player == true)
+			{
+				App->entity_elements->SwapPlayer();
+				swap_player = false;
+			}
+
+
 		}
 	return true;
 }

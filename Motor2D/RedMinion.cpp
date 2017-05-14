@@ -136,7 +136,7 @@ void RedMinion::OnCollision(Collider* c1, Collider* c2)
 		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
 		{
-			if (state != RM_HIT)
+			if (state != RM_HIT && state != RM_DYING)
 			{
 				App->audio->PlayFx(11);
 				knockback_time.Start();
