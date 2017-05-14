@@ -142,7 +142,6 @@ bool Groudon::Update(float dt)
 		use_cooldown = 0;
 		attacker = false;
 		wait_attack.Start();
-		CreateBoleFire();
 		current_animation = App->anim_manager->GetAnimation(state, direction, SALAMENCE);
 		current_animation->Reset();
 	}

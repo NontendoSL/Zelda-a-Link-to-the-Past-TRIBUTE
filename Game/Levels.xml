@@ -243,8 +243,16 @@
       <camera follow="true"/> 
       <Link pos_x="200" pos_y="453"/>
       <vilagers>
-        <vilager id="3" name="Brendan" rect_x="0" rect_y="0" rect_w="14" rect_h="21" pos_x="304" pos_y="190" switch_map="17" dialog="Hi, I'm Brendan, in this world we don't fight with swords, we combat with the pokemons, i will teach you"/>
+        <vilager id="3" name="Brendan" rect_x="0" rect_y="0" rect_w="14" rect_h="21" pos_x="304" pos_y="190" switch_map="17" dialog="Hi! I'm Brendan, in this world we don't fight with swords like you!, we do it with the pokemons, let me teach you how:  Pokemons can attack with basic hits and with their own special habilities, train with this doll!"/>
       </vilagers>
+      <editcost>
+        <edit pos_x="24" pos_y="11" />
+        <edit pos_x="25" pos_y="11" />
+      </editcost>
+      <deledit>
+        <edit pos_x="24" pos_y="55" />
+        <edit pos_x="25" pos_y="55" />
+      </deledit>
     </map>
 
     <map n="10" file="LeagueHall.tmx">
@@ -256,14 +264,6 @@
       <vilagers>
         <vilager id="4" name="Joy" rect_x="74" rect_y="82" rect_w="16" rect_h="21" pos_x="128" pos_y="56" dialog="Hey, welcome to the Pokemon League, I see you haven't money so I give you 500 credits for your gems: P. Then you can buy objects to improve the stats of your pokemons."/>
       </vilagers>
-      <editcost>
-        <edit pos_x="24" pos_y="11" />
-        <edit pos_x="25" pos_y="11" />
-      </editcost>
-      <deledit>
-        <edit pos_x="24" pos_y="55" />
-        <edit pos_x="25" pos_y="55" />
-      </deledit>
     </map>
 
     <map n="11" file="EliteFour01.tmx">
