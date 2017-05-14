@@ -228,9 +228,13 @@ bool Walrein::Walking(float dt)
 		dis_moved = 0;
 		reset_distance = false;
 	}
-	if (canmove % 2 == 0)
+	if (canmove % 3 != 0)
 	{
 		Move(dt);
+	}
+	else
+	{
+		walking = true;
 	}
 	if (canmove > 500)
 	{
@@ -371,7 +375,19 @@ bool Walrein::Chasing(float dt)
 		dis_moved = 0;
 		reset_distance = false;
 	}
-	Move(dt);
+	if (canmove % 3 != 0)
+	{
+		Move(dt);
+	}
+	else
+	{
+		walking = true;
+	}
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
 
 
 	if (dis_moved >= distance)
