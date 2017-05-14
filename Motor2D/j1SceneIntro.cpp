@@ -217,15 +217,16 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 		{
 			if (menu == true)
 			{
-				main_menu->active = false;
-				goHouse = true;
+
 				((Button*)element)->click = false;
 
 				if (App->fs->Exists("save/save_file.xml"))
 				{
+					main_menu->active = false;
 					App->LoadGame("save_file.xml");
+					App->scene->continue_game = true;
+					goHouse = true;
 				}
-				App->scene->continue_game = true;
 				return;
 			}
 		}

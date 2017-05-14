@@ -93,7 +93,7 @@
     <action  button="14" event="4" />
 
     <!--Button A-->
-    <action  button="0" event="5" />
+    <action  button="0" event="8" />
 
     <!--Button B-->
     <action  button="1"  event="6" />
@@ -102,7 +102,7 @@
     <action  button="2"  event="7" />
 
     <!--Button Y-->
-    <action  button="3"  event="8" />
+    <action  button="3"  event="5" />
 
     <!--Button SELECT-->
     <action  button="4"  event="9" />

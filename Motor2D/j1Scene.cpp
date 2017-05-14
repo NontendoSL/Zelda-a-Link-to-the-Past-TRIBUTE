@@ -129,7 +129,7 @@ bool j1Scene::Update(float dt)
 			}*/
 
 			//Make advance the dialogue text.
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
 			{
 				if (player->dialog != nullptr)
 				{

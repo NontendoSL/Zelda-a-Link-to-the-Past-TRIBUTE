@@ -102,6 +102,7 @@ bool Player::Update(float dt)
 		score = 0;
 		hp_hearts = { hp_hearts.x, hp_hearts.x };
 		App->scene->switch_map = App->scene->last_map;
+		App->scene->useTP = true;
 		if (gems > 10)
 		{
 			gems = gems - (gems/ 10);
