@@ -88,6 +88,13 @@ bool j1Scene::Start()
 			NewGame();
 			App->gui->SetGui(ZELDA_HUD);
 			start_menu->ResetInventory();
+			new_game = false;
+		}
+
+		else if (continue_game == true)
+		{
+			ContinueGame();
+			continue_game = false;
 		}
 
 		help_timer = SDL_GetTicks();
@@ -921,12 +928,31 @@ bool j1Scene::Save(pugi::xml_node& node) const
 	return ret;
 }
 
-bool j1Scene::Load(pugi::xml_node& node)
+bool j1Scene::Load(pugi::xml_node& checknode)
 {
 	bool ret = true;
 
-	pugi::xml_node checkpoint = node.append_child("CheckPoint");
-	ContinueGame(checkpoint);
+	pugi::xml_node node = checknode.child("CheckPoint");
+
+	pugi::xml_node curr_node = node.child("HP");
+	Check.hp_hearts.x = curr_node.attribute("max").as_int(6);
+	Check.hp_hearts.y = curr_node.attribute("current").as_int(6);
+
+	curr_node = node.child("MAP");
+	Check.map_id = curr_node.attribute("id").as_int(1);
+
+	curr_node = node.child("RESOURCES");
+	Check.rupees = curr_node.attribute("rupees").as_uint(0);
+	Check.arrows = curr_node.attribute("arrows").as_uint(0);
+	Check.bombs = curr_node.attribute("bombs").as_uint(0);
+
+	curr_node = node.child("WEAPONS");
+	Check.bow_picked = curr_node.attribute("bow").as_bool(false);
+	Check.bombcontainer_picked = curr_node.attribute("bombmanager").as_bool(false);
+	Check.hookshot_picked = curr_node.attribute("hookshot").as_bool(false);
+
+	curr_node = node.child("UI");
+	Check.world = curr_node.attribute("world").as_string("");
 
 	return ret;
 }
@@ -943,16 +969,43 @@ bool j1Scene::NewGame()
 	return true;
 }
 
-bool j1Scene::ContinueGame(pugi::xml_node& node)
+bool j1Scene::ContinueGame()
 {
 	if (player == NULL)
 	{
 		player = App->entity_elements->CreatePlayer();
 	}
 
-	player->LoadStats(node);
+	player->LoadStats();
 
-	switch_map = node.child("MAP").attribute("id").as_int(1);
+	//SET ZELDA UI ---------------------------------------------------------
+	if (Check.world == "Zelda")
+	{
+		App->gui->SetGui(ZELDA_HUD);
+		if (player->bow != nullptr)
+		{
+			App->scene->start_menu->PickItem("bow");
+		}
+		if (player->hook != nullptr)
+		{
+			App->scene->start_menu->PickItem("hookshot");
+		}
+		if (player->bombmanager != nullptr)
+		{
+			App->scene->start_menu->PickItem("bomb");
+		}
+	}
+	// ----------------------------------------------------------------------
+
+	//SET POKEMON UI -------------------------------------------------
+	else if (Check.world == "Pokemon")
+	{
+		App->gui->SetGui(POKEMON_HUD);
+	}
+
+	//----------------------------------------------------------------
+
+	Load_new_map(Check.map_id, true);
 
 	return true;
 }

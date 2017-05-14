@@ -128,7 +128,7 @@ public:
 
 	//LOAD/SAVE FUNCTION ----
 	void SaveCheckPoint(int map_id);
-	void LoadStats(pugi::xml_node& node);
+	void LoadStats();
 	//-----------------------
 
 public:

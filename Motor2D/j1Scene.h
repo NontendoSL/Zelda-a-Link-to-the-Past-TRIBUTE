@@ -39,6 +39,35 @@ struct Teleport
 	iPoint position;
 };
 
+struct CheckPointInfo
+{
+	//MAP
+	iPoint pos = { 0, 0 };
+	int map_id = 0;
+
+	//UI
+	std::string world;
+
+	//ZELDA WORLD ---------------
+	//STATS
+	iPoint hp_hearts{ 6, 6 };
+
+	//RESOURCES
+	uint rupees = 0;
+	uint bombs = 0;
+	uint arrows = 0;
+
+	//WEAPONS
+	bool bow_picked = false;
+	bool bombcontainer_picked = false;
+	bool hookshot_picked = false;
+	//-----------------------------
+
+	//POKEMON WORLD --------
+
+	//----------------------
+};
+
 class j1Scene : public j1Module
 {
 public:
@@ -74,7 +103,7 @@ public:
 
 	//Load Maps
 	bool NewGame();
-	bool ContinueGame(pugi::xml_node&);
+	bool ContinueGame();
 	bool Load_new_map(int n, bool isTP);
 
 	//Load CombatMaps
@@ -90,6 +119,8 @@ public:
 	//SAVE/LOAD FUNCTION
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
+
+	CheckPointInfo Check;
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;

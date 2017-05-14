@@ -292,9 +292,9 @@ bool Player::SaveData(pugi::xml_node& check_node)
 	resources.append_attribute("bombs") = checkpoint.bombs;
 
 	pugi::xml_node weapons = check_node.append_child("WEAPONS");
-	resources.append_attribute("bow") = checkpoint.bow_picked;
-	resources.append_attribute("bombmanager") = checkpoint.bombcontainer_picked;
-	resources.append_attribute("hookshot") = checkpoint.hookshot_picked;
+	weapons.append_attribute("bow") = checkpoint.bow_picked;
+	weapons.append_attribute("bombmanager") = checkpoint.bombcontainer_picked;
+	weapons.append_attribute("hookshot") = checkpoint.hookshot_picked;
 
 	pugi::xml_node ui = check_node.append_child("UI");
 	if (App->gui->GetGuiState() >= ZELDA_HUD && App->gui->GetGuiState() < POKEMON_COMBAT)
@@ -1784,40 +1784,36 @@ void Player::SaveCheckPoint(int map_id)
 
 }
 
-void Player::LoadStats(pugi::xml_node & node)
+void Player::LoadStats()
 {
-	pugi::xml_node curr_node = node.child("HP");
-	hp_hearts.x = curr_node.attribute("max").as_int(6);
-	hp_hearts.y = curr_node.attribute("current").as_int(6);
+	hp_hearts.x = App->scene->Check.hp_hearts.x;
+	hp_hearts.y = App->scene->Check.hp_hearts.y;
 
-	curr_node = node.child("RESOURCES");
-	gems = curr_node.attribute("rupees").as_uint(0);
-	arrows = curr_node.attribute("arrows").as_uint(0);
-	bombs = curr_node.attribute("bombs").as_uint(0);
+	gems = App->scene->Check.rupees;
+	arrows = App->scene->Check.arrows;
+	bombs = App->scene->Check.bombs;
 
-	curr_node = node.child("WEAPONS");
-	if (curr_node.attribute("bow").as_bool(false) == true)
+	if (App->scene->Check.bow_picked == true)
 	{
 		bow = App->entity_elements->CreateBow();
 	}
-	if (curr_node.attribute("bombmanager").as_bool(false) == true)
+	if (App->scene->Check.bombcontainer_picked == true)
 	{
 		bombmanager = App->entity_elements->CreateBombContainer();
 	}
-	if (curr_node.attribute("hookshot").as_bool(false) == true)
+	if (App->scene->Check.hookshot_picked == true)
 	{
 		hook = App->entity_elements->CreateHookshot();
 	}
 
-	curr_node = node.child("UI");
-	if (curr_node.attribute("world").as_string("") == "Zelda")
-	{
-		App->gui->SetGui(ZELDA_HUD);
-	}
-	if (curr_node.attribute("world").as_string("") == "Pokemon")
-	{
-		App->gui->SetGui(POKEMON_HUD);
-	}
+	//if (App->scene->Check.world == "Zelda")
+	//{
+	//	App->gui->SetGui(ZELDA_HUD);
+	//}
+	//if (App->scene->Check.world == "Pokemon")
+	//{
+	//	App->gui->SetGui(POKEMON_HUD);
+	//}
 
-	SaveCheckPoint(node.child("MAP").attribute("id").as_int(1));
+	SaveCheckPoint(App->scene->Check.map_id);
 }

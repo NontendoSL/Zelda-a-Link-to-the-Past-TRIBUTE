@@ -225,6 +225,7 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 				{
 					App->LoadGame("save_file.xml");
 				}
+				App->scene->continue_game = true;
 				return;
 			}
 		}
