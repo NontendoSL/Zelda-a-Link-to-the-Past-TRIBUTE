@@ -42,6 +42,9 @@ bool GreenMinion::Start(iPoint pos)
 	//Spawn Timer
 	spawn_time.Start();
 
+	//Orient Timer
+	change_dir.Start();
+
 	return true;
 }
 
@@ -83,6 +86,7 @@ bool GreenMinion::Update(float dt)
 		}
 		}
 	}
+
 	if (collision_feet != nullptr)
 	{
 		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);

@@ -277,7 +277,7 @@ bool Ganon::InitCombat()
 
 void Ganon::IdleRage()
 {
-	if (wait_time.ReadSec() >= 1)
+	if (wait_time.ReadSec() >= 0.7)
 	{
 		state = G_ATTACKING;
 		anim_state = G_SPECIAL_2;
@@ -527,7 +527,7 @@ void Ganon::ResetJump()
 
 void Ganon::Hit()
 {
-	if (HitTime.ReadSec() >= 0.3)
+	if (HitTime.ReadSec() >= 0.5)
 	{
 		state = G_IDLE;
 		anim_state = G_WALKING;
@@ -536,7 +536,7 @@ void Ganon::Hit()
 
 void Ganon::HitRage()
 {
-	if (HitTime.ReadSec() >= 0.3)
+	if (HitTime.ReadSec() >= 0.5)
 	{
 		state = G_IDLE;
 		anim_state = G_WALKING;
@@ -545,7 +545,7 @@ void Ganon::HitRage()
 
 void Ganon::Spawn()
 {
-	if (minions_spawned % 5 == 0 && minions_spawned > 0)
+	if (minions_spawned % 2 == 0 && minions_spawned > 0)
 	{
 		App->entity_elements->CreateRMinion({ 200 + (rand() % 100), 200 + (rand() % 100) });
 	}
