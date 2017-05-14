@@ -147,7 +147,6 @@ bool j1Scene::Update(float dt)
 					{
 						dialog_inmapZelda = false;
 					}
-
 				}
 			}
 
@@ -170,7 +169,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 10;
+				switch_map = 12;
 			}
 
 			/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -1146,6 +1145,8 @@ bool j1Scene::Load_Combat_map(int n)
 			stop_rearch = true;
 		}
 	}
+	//set timer
+	App->combatmanager->comprovate.Start();
 	App->gui->SetGui(POKEMON_COMBAT);
 	return true;
 }
