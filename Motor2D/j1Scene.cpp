@@ -952,7 +952,7 @@ bool j1Scene::Load(pugi::xml_node& checknode)
 	Check.hookshot_picked = curr_node.attribute("hookshot").as_bool(false);
 
 	curr_node = node.child("UI");
-	Check.world = curr_node.attribute("world").as_string("");
+	Check.world = curr_node.attribute("world").as_string("Zelda");
 
 	return ret;
 }
