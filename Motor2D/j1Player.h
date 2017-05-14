@@ -43,6 +43,7 @@ struct CheckPoint
 	bool bow_picked = false;
 	bool bombcontainer_picked = false;
 	bool hookshot_picked = false;
+	bool sword_picked = false;
 	//-----------------------------
 
 	//POKEMON WORLD --------

@@ -951,7 +951,8 @@ bool j1Scene::Load(pugi::xml_node& checknode)
 	Check.bow_picked = curr_node.attribute("bow").as_bool(false);
 	Check.bombcontainer_picked = curr_node.attribute("bombmanager").as_bool(false);
 	Check.hookshot_picked = curr_node.attribute("hookshot").as_bool(false);
-
+	Check.sword_picked = curr_node.attribute("sword").as_bool(false);
+	
 	curr_node = node.child("UI");
 	Check.world = curr_node.attribute("world").as_string("Zelda");
 
@@ -1195,7 +1196,10 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 	}
 
 	//Save CheckPoint Stats ---
-	player->SaveCheckPoint(n);
+	if (n < 9 || n == 16)
+	{
+		player->SaveCheckPoint(n);
+	}
 	// --------------------------
 
 	last_map = n;

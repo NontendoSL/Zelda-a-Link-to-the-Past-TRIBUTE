@@ -296,6 +296,7 @@ bool Player::SaveData(pugi::xml_node& check_node)
 	weapons.append_attribute("bow") = checkpoint.bow_picked;
 	weapons.append_attribute("bombmanager") = checkpoint.bombcontainer_picked;
 	weapons.append_attribute("hookshot") = checkpoint.hookshot_picked;
+	weapons.append_attribute("sword") = checkpoint.sword_picked;
 
 	pugi::xml_node ui = check_node.append_child("UI");
 	if (App->gui->GetGuiState() >= ZELDA_HUD && App->gui->GetGuiState() < POKEMON_COMBAT)
@@ -1761,6 +1762,10 @@ void Player::SaveCheckPoint(int map_id)
 	{
 		checkpoint.hookshot_picked = true;
 	}
+	if (sword_equiped == true)
+	{
+		checkpoint.sword_picked = true;
+	}
 
 	LOG("CHECKPOINT SAVED ---");
 	LOG("Map: %i", checkpoint.map_id);
@@ -1805,6 +1810,10 @@ void Player::LoadStats()
 	if (App->scene->Check.hookshot_picked == true)
 	{
 		hook = App->entity_elements->CreateHookshot();
+	}
+	if (App->scene->Check.sword_picked == true)
+	{
+		sword_equiped = true;
 	}
 
 	//if (App->scene->Check.world == "Zelda")
