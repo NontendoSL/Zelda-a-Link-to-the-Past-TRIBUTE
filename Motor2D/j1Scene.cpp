@@ -126,6 +126,8 @@ bool j1Scene::Update(float dt)
 				if (win_timer + 1500 < SDL_GetTicks())
 				{
 					App->gui->GetEntity("YOU WIN")->visible = false;
+					switch_map = 1;
+					useTP = true;
 				}
 			}
 			player->ShowHearts();
