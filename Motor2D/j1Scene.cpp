@@ -1040,7 +1040,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 					App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), 0);
 				}
 
-				if (n == 10)
+				if (n == 9)
 				{
 					for (pugi::xml_node editcost = temp.child("deledit").child("edit"); editcost != NULL; editcost = editcost.next_sibling())
 					{
