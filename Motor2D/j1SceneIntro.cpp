@@ -20,6 +20,7 @@
 #include "j1FileSystem.h"
 #include "j1Collision.h"
 #include "j1AnimationManager.h"
+#include "Video.h"
 
 j1SceneIntro::j1SceneIntro() : j1Module()
 {
@@ -47,7 +48,8 @@ bool j1SceneIntro::Start()
 	Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	App->input_manager->AddListener(this);
-
+	SDL_Rect r = { 0, 0, 640, 480 };
+	App->video->PlayVideo("video.ogv", r);
 	fade = true;
 	return true;
 }
@@ -64,97 +66,101 @@ bool j1SceneIntro::PreUpdate()
 bool j1SceneIntro::Update(float dt)
 {
 	bool ret = true;
-	if (App->scene->ingame == false)
+	if (App->video->video_finished)
 	{
-		if (menu == false)
+		if (App->scene->ingame == false)
 		{
-			if (bg_anim < -180) {
-				right = true;
-			}
-			if (bg_anim > 0) {
-				right = false;
-			}
-			if (right)
+			if (menu == false)
 			{
-				bg_anim += 0.3;
+				if (bg_anim < -180) {
+					right = true;
+				}
+				if (bg_anim > 0) {
+					right = false;
+				}
+				if (right)
+				{
+					bg_anim += 0.3;
+				}
+				else
+				{
+					bg_anim -= 0.3;
+				}
+				App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
+				App->render->Blit(TitleScreen_letters, 50, 10, NULL, NULL, false);
 			}
 			else
 			{
-				bg_anim -= 0.3;
-			}
-			App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
-			App->render->Blit(TitleScreen_letters, 50, 10, NULL, NULL, false);
-		}
-		else
-		{
-			if (bg_anim > -70) {
-				bg_anim -= 0.2;
-			}
-			App->render->Blit(Menu_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
-			App->render->Blit(TitleScreen_letters, -10, 0, NULL, NULL, false);
+				if (bg_anim > -70) {
+					bg_anim -= 0.2;
+				}
+				App->render->Blit(Menu_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
+				App->render->Blit(TitleScreen_letters, -10, 0, NULL, NULL, false);
 
-		}
+			}
 
-		// Change Volume Music -------------------------------------
-		if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
-		{
-			if (volume < 120)
-				volume += 10;
-			App->audio->VolumeMusic(volume);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
-		{
-			if (volume > 0)
-				volume -= 10;
-			App->audio->VolumeMusic(volume);
-		}
-		// --------------------------------------------------------
-	}
-	if (goHouse)
-	{
-		if (fade)
-		{
-			App->fadetoblack->FadeToBlack(3);
-			App->audio->FadeMusic(3);
-			fade = false;
-		}
-		else
-		{
-			if (App->fadetoblack->Checkfadetoblack())
+			// Change Volume Music -------------------------------------
+			if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
 			{
-				App->scene->ingame = true;
-				App->scene->Start();
-				goHouse = false;
+				if (volume < 120)
+					volume += 10;
+				App->audio->VolumeMusic(volume);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+			{
+				if (volume > 0)
+					volume -= 10;
+				App->audio->VolumeMusic(volume);
+			}
+			// --------------------------------------------------------
+		}
+		if (goHouse)
+		{
+			if (fade)
+			{
+				App->fadetoblack->FadeToBlack(3);
+				App->audio->FadeMusic(3);
+				fade = false;
+			}
+			else
+			{
+				if (App->fadetoblack->Checkfadetoblack())
+				{
+					App->scene->ingame = true;
+					App->scene->Start();
+					goHouse = false;
+				}
 			}
 		}
-	}
 
 
-	if (App->scene->ingame == false)
-	{
-
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		if (App->scene->ingame == false)
 		{
-			ret = false;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
-		{
-			if (menu == false)
+
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 			{
-				LoadMainMenu();
+				ret = false;
 			}
-		}
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_UP)
-		{
-			if (menu == false)
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 			{
-				menu = true;
-				bg_anim = 0;
-				TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
-				App->gui->SetGui(MAIN_MENU);
+				if (menu == false)
+				{
+					LoadMainMenu();
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_UP)
+			{
+				if (menu == false)
+				{
+					menu = true;
+					bg_anim = 0;
+					TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
+					App->gui->SetGui(MAIN_MENU);
+				}
 			}
 		}
 	}
+	
 	return ret;
 	
 }

@@ -29,7 +29,7 @@ public:
 	bool Awake(pugi::xml_node&);
 
 	// Update videoframes and audiopackets
-	bool Update(float dt);
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
@@ -69,6 +69,9 @@ private:
 	static AudioQueue* audio_queue_tail;
 
 	SDL_Rect rendering_rect;
+
+public:
+	bool video_finished = false;
 };
 
 #endif // __VIDEO_H__

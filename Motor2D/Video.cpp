@@ -48,6 +48,7 @@ bool Video::Awake(pugi::xml_node& config)
 	return true;
 }
 
+
 // Called before quitting
 bool Video::CleanUp()
 {
@@ -187,8 +188,11 @@ void Video::PlayVideo(const char *fname, SDL_Rect r)
 	want_to_play = true;
 }
 
-bool Video::Update(float dt)
+bool Video::PostUpdate()
 {
+	if (!THEORAPLAY_isDecoding(decoder))
+		video_finished = true;
+
 	if (want_to_play && !quit && THEORAPLAY_isDecoding(decoder))
 	{
 		Uint32 now = SDL_GetTicks() - baseticks;
@@ -237,6 +241,7 @@ bool Video::Update(float dt)
 
 			THEORAPLAY_freeVideo(video);
 			video = NULL;
+			video_finished = false;
 		} 
 
 		// TODO 4: Render the texture. Use SDL_RenderCopy and the rendering rect (if you want).

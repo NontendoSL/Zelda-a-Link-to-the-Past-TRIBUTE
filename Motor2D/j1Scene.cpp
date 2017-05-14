@@ -181,10 +181,8 @@ bool j1Scene::Update(float dt)
 			// TP LEVEL -----------------------------------------
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
-				SDL_Rect r = { 0, 0, 640, 480 };
-				App->video->PlayVideo("video.ogv", r);
-				//useTP = true;
-				//switch_map = 10;
+				useTP = true;
+				switch_map = 10;
 			}
 
 			/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
