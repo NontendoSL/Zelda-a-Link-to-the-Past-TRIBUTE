@@ -643,7 +643,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							else
 							{
 								App->scene->combat_map_id = 0;
-								dialog = App->gui->CreateDialogue("Congratulations! you defeated me, you see the next coach. He will not lose so easily...");
+								dialog = App->gui->CreateDialogue("Congratulations! You defeated me. Go ahead and proceed with your run!");
 							}
 						}
 						else
