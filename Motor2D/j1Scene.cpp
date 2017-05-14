@@ -199,7 +199,7 @@ bool j1Scene::Update(float dt)
 			// --------------------------------------------------------
 
 			// TP LEVEL -----------------------------------------
-			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
 				switch_map = 10;
@@ -235,12 +235,12 @@ bool j1Scene::Update(float dt)
 				switch_map = 20;
 			}*/
 
-			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 			{
 				player->sword_equiped = true;
 				useTP = true;
 				switch_map = 16;
-			}
+			}*/
 
 			/*if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 			{
@@ -260,7 +260,7 @@ bool j1Scene::Update(float dt)
 			}
 
 			//MINI TP -----------------------------------------------
-			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 			{
 				App->scene->player->position.x += 50;
 				App->render->camera.x -= 100;
@@ -288,7 +288,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && App->gui->GetGuiState()==POKEMON_HUD)
 			{
 				App->gui->SetGui(POKEMON_SHOP);
-			}
+			}*/
 
 			//-------------------------------------------------------
 			// TP LEVEL
