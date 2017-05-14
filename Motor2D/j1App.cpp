@@ -427,8 +427,7 @@ void j1App::LoadGame(const char* file)
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
 	want_to_load = true;
-	load_game = fs->GetSaveDirectory();
-	load_game+=file;
+	load_game = std::string(fs->GetSaveDirectory()) + std::string(file);
 }
 
 // ---------------------------------------
