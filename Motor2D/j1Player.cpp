@@ -286,6 +286,28 @@ bool Player::CleanUp()
 	return ret;
 }
 
+bool Player::SaveData(pugi::xml_node& check_node)
+{
+	pugi::xml_node hp = check_node.append_child("HP");
+	hp.append_attribute("max") = checkpoint.hp_hearts.x;
+	hp.append_attribute("current") = checkpoint.hp_hearts.y;
+
+	pugi::xml_node map = check_node.append_child("MAP");
+	map.append_attribute("id") = checkpoint.map_id;
+
+	pugi::xml_node resources = check_node.append_child("RESOURCES");
+	resources.append_attribute("rupees") = checkpoint.rupees;
+	resources.append_attribute("arrows") = checkpoint.arrows;
+	resources.append_attribute("bombs") = checkpoint.bombs;
+
+	pugi::xml_node weapons = check_node.append_child("WEAPONS");
+	resources.append_attribute("bow") = checkpoint.bow_picked;
+	resources.append_attribute("bombmanager") = checkpoint.bombcontainer_picked;
+	resources.append_attribute("hookshot") = checkpoint.hookshot_picked;
+
+	return true;
+}
+
 bool Player::Save()
 {
 	App->entity_elements->XML.child("config").child("Link").child("stats").attribute("hp").set_value(hp);
@@ -1663,4 +1685,48 @@ bool Player::CameraisIn() //Comprovate if the camera is inside the Map
 		ret = true;
 	}
 	return ret;
+}
+
+void Player::SaveCheckPoint(int map_id)
+{
+	checkpoint.pos = position;
+	checkpoint.map_id = map_id;
+	checkpoint.hp_hearts = hp_hearts;
+
+	checkpoint.arrows = arrows;
+	checkpoint.bombs = bombs;
+	checkpoint.rupees = gems;
+
+	if (bow != nullptr)
+	{
+		checkpoint.bow_picked = true;
+	}
+	if (bombmanager != nullptr)
+	{
+		checkpoint.bombcontainer_picked = true;
+	}
+	if (hook != nullptr)
+	{
+		checkpoint.hookshot_picked = true;
+	}
+
+	LOG("CHECKPOINT SAVED ---");
+	LOG("Map: %i", checkpoint.map_id);
+	LOG("Position: (%i,%i)",checkpoint.pos);
+	LOG("Max HP: %i, Current HP: %i", checkpoint.hp_hearts.x, checkpoint.hp_hearts.y);
+	LOG("Rupees: %i, Arrows: %i, Bombs: %i", checkpoint.rupees, checkpoint.arrows, checkpoint.bombs);
+	if (checkpoint.bow_picked == true)
+	{
+		LOG("Bow PICKED", checkpoint.pos);
+	}
+	if (checkpoint.bombcontainer_picked == true)
+	{
+		LOG("Bomb Container PICKED", checkpoint.pos);
+	}
+	if (checkpoint.hookshot_picked == true)
+	{
+		LOG("Hookshot PICKED", checkpoint.pos);
+	}
+	LOG("--------------------");
+	
 }

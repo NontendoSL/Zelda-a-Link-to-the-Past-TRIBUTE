@@ -21,6 +21,32 @@ class Dialogue;
 class Image;
 class DynamicObjects;
 
+struct CheckPoint
+{
+	//MAP
+	iPoint pos = { 0, 0 };
+	int map_id = 0;
+
+	//ZELDA WORLD ---------------
+	//STATS
+	iPoint hp_hearts{ 6, 6 };
+
+	//RESOURCES
+	uint rupees = 0;
+	uint bombs = 0;
+	uint arrows = 0;
+
+	//WEAPONS
+	bool bow_picked = false;
+	bool bombcontainer_picked = false;
+	bool hookshot_picked = false;
+	//-----------------------------
+
+	//POKEMON WORLD --------
+	
+	//----------------------
+};
+
 class Player : public Creature
 {
 public:
@@ -48,6 +74,8 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	bool SaveData(pugi::xml_node&);
 
 	bool Save();
 
@@ -94,6 +122,10 @@ public:
 
 	//Comprovate camera in map
 	bool CameraisIn();
+
+	//LOAD/SAVE FUNCTION ----
+	void SaveCheckPoint(int map_id);
+	//-----------------------
 
 public:
 	//--- POKEMON TRAINER CARD ---
@@ -163,7 +195,7 @@ private:
 
 	Animation* current_animation = nullptr;
 
-
+	CheckPoint checkpoint;
 };
 
 

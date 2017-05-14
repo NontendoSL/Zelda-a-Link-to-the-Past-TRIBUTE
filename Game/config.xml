@@ -64,9 +64,6 @@
 
     <!--PARTICLES-->
 	  <file file="animation/AnimationsAndEffects.xml"/>
-
-
-    
 	</animation>
   
 	<window>
@@ -82,8 +79,7 @@
 		<folder>maps/</folder>
 	</map>
 
-  <inputManager>
-    
+  <inputManager> 
     <!--Move UP-->
     <action  button="11" event="1" />
 
@@ -119,8 +115,6 @@
 
     <!--Button RB-->
     <action  button="10"  event="12" />
-
-    
   </inputManager>
   
 </config>
