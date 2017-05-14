@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "j1Fonts.h"
 #include "j1Audio.h"
+#include "j1Scene.h"
 #include "SDL\include\SDL.h"
 
 InputManager::InputManager() : j1Module()
@@ -29,7 +30,32 @@ bool InputManager::Awake(pugi::xml_node& conf)
 		actions.insert(new_action);
 	}
 
+	for (pugi::xml_node tmp = conf.child("action2"); tmp != nullptr; tmp = tmp.next_sibling())
+	{
+		std::pair<int, INPUTEVENT> new_action;
+		new_action.first = tmp.attribute("button").as_int();
+		new_action.second = (INPUTEVENT)tmp.attribute("event").as_int();
+		actions_2.insert(new_action);
+	}
+
+	actions_inUse = actions;
+
 	return ret;
+}
+
+void InputManager::ChangeInput(bool isNormal)
+{
+	if (isNormal)
+	{
+		actions_inUse = actions;
+		LOG("CONFIGURATO NORMAL");
+	}
+	else
+	{
+		actions_inUse = actions_2;
+		LOG("CONFIGURATO TACTIC");
+	}
+
 }
 
 // Called before all Updates
@@ -46,6 +72,45 @@ bool InputManager::Update(float dt)
 	{
 		ChangeInputEvent(MUP);
 	}*/
+	if (App->scene->ingame)
+	{
+		if (App->scene->use_tatical)
+		{
+			if (App->scene->gamestate == INMENU)
+			{
+				if (App->scene->gamestate_input != INMENU)
+				{
+					App->scene->gamestate_input = INMENU;
+					change = true;
+				}
+			}
+			else if(App->scene->gamestate == INGAME)
+			{
+				if (App->scene->gamestate_input != INGAME)
+				{
+					App->scene->gamestate_input = INGAME;
+					change = true;
+				}
+			}
+
+			if (change)
+			{
+				change = false;
+				if (App->scene->gamestate_input == INMENU)
+				{
+					ChangeInput(true);
+				}
+				else if (App->scene->gamestate_input == INGAME)
+				{
+					ChangeInput(false);
+				}
+			}
+		}
+	}
+	else
+	{
+		ChangeInput(true);
+	}
 	return true;
 }
 
@@ -74,8 +139,8 @@ void InputManager::InputDetected(int button, EVENTSTATE state)
 {
 	if (next_input_change == false)
 	{
-		std::multimap<int, INPUTEVENT>::iterator tmp = actions.find(button);
-		if (tmp != actions.end())
+		std::multimap<int, INPUTEVENT>::iterator tmp = actions_inUse.find(button);
+		if (tmp != actions_inUse.end())
 		{
 			std::pair<INPUTEVENT, EVENTSTATE> new_current_action;
 			new_current_action.first = (*tmp).second;
@@ -99,25 +164,25 @@ bool InputManager::ChangeEventButton(int new_button)
 {
 	bool ret = false;
 
-	std::multimap<int, INPUTEVENT>::iterator tmp = actions.find(new_button);
-	if (tmp != actions.end())
+	std::multimap<int, INPUTEVENT>::iterator tmp = actions_inUse.find(new_button);
+	if (tmp != actions_inUse.end())
 	{
 		LOG("This button is actually in another action");
 		return ret;
 	}
 	//Look for the event to erase it
-	tmp = actions.begin();
+	tmp = actions_inUse.begin();
 	while ((*tmp).second != event_to_change)
 	{
 		tmp++;
 	}
-	actions.erase(tmp);
+	actions_inUse.erase(tmp);
 
 	//This is the event with the new button
 	std::pair<int, INPUTEVENT> event_changed;
 	event_changed.first = new_button;
 	event_changed.second = event_to_change;
-	actions.insert(event_changed);
+	actions_inUse.insert(event_changed);
 
 	//Reset the variables
 	next_input_change = false;

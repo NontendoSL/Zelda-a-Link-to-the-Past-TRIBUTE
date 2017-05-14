@@ -115,6 +115,44 @@
 
     <!--Button RB-->
     <action  button="10"  event="12" />
+
+
+
+    <!--Move UP-->
+    <action2  button="11" event="1" />
+
+    <!--Move DOWN-->
+    <action2  button="12" event="2" />
+
+    <!--Move LEFT-->
+    <action2  button="13" event="3" />
+
+    <!--Move RIGHT-->
+    <action2  button="14" event="4" />
+
+    <!--Button A-->
+    <action2  button="0" event="11" />
+
+    <!--Button B-->
+    <action2  button="1"  event="12" />
+
+    <!--Button X-->
+    <action2  button="2"  event="8" />
+
+    <!--Button Y-->
+    <action2  button="3"  event="5" />
+
+    <!--Button SELECT-->
+    <action2  button="4"  event="9" />
+
+    <!--Button START-->
+    <action2  button="6"  event="10" />
+
+    <!--Button LB-->
+    <action2  button="9"  event="6" />
+
+    <!--Button RB-->
+    <action2  button="10"  event="7" />
   </inputManager>
   
 </config>

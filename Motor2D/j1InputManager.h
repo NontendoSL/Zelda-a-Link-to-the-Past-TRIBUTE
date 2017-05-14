@@ -55,6 +55,8 @@ public:
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);
 
+	void ChangeInput(bool isNormal);
+
 	// Called before all Updates
 	bool PreUpdate();
 
@@ -82,6 +84,10 @@ public:
 private:
 
 	std::multimap<int, INPUTEVENT> actions;
+	std::multimap<int, INPUTEVENT> actions_2;
+	bool change = false;
+
+	std::multimap<int, INPUTEVENT> actions_inUse;
 	std::multimap<INPUTEVENT, EVENTSTATE> current_action;
 
 

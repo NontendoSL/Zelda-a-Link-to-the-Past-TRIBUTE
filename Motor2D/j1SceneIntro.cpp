@@ -255,6 +255,8 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 		{
 			((Button*)element)->click = true;
 			((Button*)App->gui->GetEntity("tactic_controller_but"))->click = false;
+			App->input_manager->ChangeInput(true);
+			App->scene->use_tatical = false;
 		}
 	}
 	if (element->identifier == "tactic_controller_but")
@@ -263,6 +265,8 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 		{
 			((Button*)element)->click = true;
 			((Button*)App->gui->GetEntity("normal_controller_but"))->click = false;
+			App->input_manager->ChangeInput(false);
+			App->scene->use_tatical = true;
 		}
 	}
 }

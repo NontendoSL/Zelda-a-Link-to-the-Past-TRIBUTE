@@ -95,6 +95,7 @@ private:
 public:
 	SDL_Texture* debug_tex;
 	GameState gamestate = INGAME;
+	GameState gamestate_input = INMENU;
 	//Teleports
 	std::vector<Teleport> teleports;
 
@@ -147,6 +148,7 @@ public:
 	bool swap_object = false;
 	bool swap_ganon = false;
 	bool swap_player = false;
+	bool use_tatical = false;
 
 	bool cash_swapped = false;
 private:
