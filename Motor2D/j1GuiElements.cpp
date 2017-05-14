@@ -1632,6 +1632,7 @@ PokemonWorldBag::PokemonWorldBag()
 	App->gui->GetEntity("pop_up box::bag")->visible = false;
 	App->gui->GetEntity("popup bag text")->visible = false;
 
+	AddItem("pk_bag:CITRUS BERRY", true);
 }
 
 PokemonWorldBag::~PokemonWorldBag()
@@ -2076,6 +2077,10 @@ void ControllerMapping::Input()
 	{
 		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_UP)
+	{
+		App->gui->SetGui(MAIN_MENU);
+	}
 }
 
 Button * ControllerMapping::GetFirst()
@@ -2088,11 +2093,17 @@ void ControllerMapping::Select(bool right)
 	if (App->gui->GetFocused() == normal)
 	{
 		if (right)
+		{
 			App->gui->SetFocus(tactic);
+			App->gui->GetEntity("normal_controller_bg")->Hitbox.x = 323;
+		}
 	}
 	else if (App->gui->GetFocused() == tactic)
 	{
-		if (right==false)
+		if (right == false)
+		{
 			App->gui->SetFocus(normal);
+			App->gui->GetEntity("normal_controller_bg")->Hitbox.x = 0;
+		}
 	}
 }

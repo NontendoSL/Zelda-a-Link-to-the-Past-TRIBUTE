@@ -169,7 +169,7 @@ bool j1Scene::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 14;
+				switch_map = 15;
 			}
 
 			/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -451,6 +451,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			App->gui->SetGui(POKEMON_HUD);
 			poke_hud->active = true;
 			App->gui->SetFocus(poke_hud->GetFirst());
+			gamestate = INMENU;
 		}
 	}
 	if (element->identifier == "pk_menu:bag")

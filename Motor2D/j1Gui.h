@@ -106,7 +106,7 @@ public:
 
 	j1GuiEntity* GetFocused();
 
-	void SetFocus(j1GuiEntity* to_focus);
+	void SetFocus(j1GuiEntity* to_focus, bool remain_click=false);
 
 	void MoveGroup(GuiGroup group, bool x_axis, float speed, bool move_all = false);
 

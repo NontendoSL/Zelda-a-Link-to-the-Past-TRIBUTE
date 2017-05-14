@@ -245,7 +245,24 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 			{
 				((Button*)element)->click = false;
 				App->gui->SetGui(MAPPING_CONTROLLER);
+				main_menu->active = false;
 			}
+		}
+	}
+	if (element->identifier == "normal_controller_but")
+	{
+		if (event == GuiAction::CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+			((Button*)App->gui->GetEntity("tactic_controller_but"))->click = false;
+		}
+	}
+	if (element->identifier == "tactic_controller_but")
+	{
+		if (event == GuiAction::CLICK_DOWN)
+		{
+			((Button*)element)->click = true;
+			((Button*)App->gui->GetEntity("normal_controller_but"))->click = false;
 		}
 	}
 }

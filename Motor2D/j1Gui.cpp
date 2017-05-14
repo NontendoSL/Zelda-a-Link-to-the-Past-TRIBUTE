@@ -258,13 +258,14 @@ j1GuiEntity* j1Gui::GetFocused()
 	return focused;
 }
 
-void j1Gui::SetFocus(j1GuiEntity* to_focus)
+void j1Gui::SetFocus(j1GuiEntity* to_focus, bool remain_click)
 {
 	if (focused != to_focus)
 	{
 		if (focused != nullptr)
 		{
-			((Button*)focused)->click = false;
+			if(remain_click==false)
+				((Button*)focused)->click = false;
 		}
 
 		focused = to_focus;
