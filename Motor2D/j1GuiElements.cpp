@@ -420,7 +420,8 @@ MainMenu::MainMenu()
 	options.push_back((Button*)App->gui->GetEntity("Continue_b"));
 	options.push_back((Button*)App->gui->GetEntity("Newgame_b"));
 	options.push_back((Button*)App->gui->GetEntity("Loadgame_b"));
-
+	options.push_back((Button*)App->gui->GetEntity("Options_b"));
+	options.push_back((Button*)App->gui->GetEntity("Quitgame_b"));
 	for (int i = 0; i < options.size(); i++)
 	{
 		options[i]->resize = false; //buttons on main menu are not resized 

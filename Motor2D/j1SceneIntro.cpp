@@ -209,6 +209,43 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 			}
 		}
 	}
+	if (element->identifier == "Quitgame_b")
+	{
+		if (event == GuiAction::CLICK_DOWN)
+		{
+			if (menu == true)
+			{
+				((Button*)element)->click = true;
+				App->audio->PlayFx(Menu_Cursor);
+			}
+		}
+		else if (event == GuiAction::CLICK_UP)
+		{
+			if (menu == true)
+			{
+				((Button*)element)->click = false;
+				App->scene->update_return = false;
+			}
+		}
+	}
+	if (element->identifier == "Options_b")
+	{
+		if (event == GuiAction::CLICK_DOWN)
+		{
+			if (menu == true)
+			{
+				((Button*)element)->click = true;
+				App->audio->PlayFx(Menu_Cursor);
+			}
+		}
+		else if (event == GuiAction::CLICK_UP)
+		{
+			if (menu == true)
+			{
+				((Button*)element)->click = false;
+			}
+		}
+	}
 }
 
 void j1SceneIntro::LoadMainMenu()
