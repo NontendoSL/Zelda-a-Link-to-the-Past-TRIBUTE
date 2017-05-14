@@ -26,11 +26,22 @@ CONTROLS
 		
 	Controller:
 	
+	NORMAL:
+
 		D-Pad -> move in any of the 8 directions and navigate through the menu.
 		Start -> Navigate trhough game intro and open/close the ingame menu.
 		A -> Select items from the menu. Interact with chests and NPCs.
 		X -> Attack.
-		B -> Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability in combat
+		B -> Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability in combat.
+
+	TACTIC:
+
+		D-Pad -> move in any of the 8 directions and navigate through the menu.
+		Start -> Navigate trhough game intro and open/close the ingame menu.
+		Y -> Select items from the menu. Interact with chests and NPCs.
+		Left grid -> Attack.
+		Right grid -> Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability in combat.
+
 
 	DEBUG MODE:
 	
@@ -40,7 +51,9 @@ CONTROLS
 		X -> Lower Pokémon HP in combat.
 		I,J,K,L -> Movement mini-teleports (4 directions).
 		G -> Defeats enemy pokémon to instawin the combat.
-		8 -> teleport to Pyramid of Power(Boss Fight).
+		1 -> Teleport to League Hall.
+		3 -> Teleport to First Pokémon Combat.
+		8 -> Teleport to Pyramid of Power(Boss Fight).
 		
 
 OBJECTIVE
@@ -66,6 +79,22 @@ THE POKÉMON COMBAT
 
 CHANGELOG
 
+v0.9 ALPHA
+
+	All game features have been added and finished.
+	The boss and miniboss now have visible hp bar.
+	The boss now has the 3 phases correctly implemented.
+	Added Link uncle.
+	Changed some paths in order to make the game easier and faster to the player.
+	Pokémon items limited to 3 each Pokémon.
+	Added new tactical control.
+	Added menu shortcuts to change control and to close the game.
+	Pokémon combat enhanced, all Pokémon have and do their habilities.
+	Added master Ricard.
+	Added Pokémon tutorial.
+	Added intro placeholder.
+	All dialogs enhanced.
+	Save and Load function added.
 v0.8
 
 	The boss has been implemented.
