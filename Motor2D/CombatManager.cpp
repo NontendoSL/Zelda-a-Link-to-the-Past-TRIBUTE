@@ -34,6 +34,8 @@ CombatManager::CombatManager()
 
 CombatManager::~CombatManager()
 {
+	App->tex->UnLoad(texture_special_dusclops);
+	texture_special_dusclops = nullptr;
 }
 
 bool CombatManager::Awake(pugi::xml_node &config)
@@ -50,12 +52,27 @@ bool CombatManager::Start()
 		Item_pokeCombat id;
 		bag_items.push_back(id);
 	}
+	texture_special_dusclops = App->tex->Load("textures/Dusclops_special_2.png");
 	return ret;
 }
 
 bool CombatManager::PreUpdate()
 {
-
+	if (App->scene->combat)
+	{
+		if (comprovate.ReadSec() > 1)
+		{
+			comprovate.Start();
+			if (pokemon_active_link != nullptr && pokemon_active_link->active)
+			{
+				pokemon_active_link->CheckDeleteColliders();
+			}
+			if (pokemon_active_trainer != nullptr && pokemon_active_trainer->active)
+			{
+				pokemon_active_trainer->CheckDeleteColliders();
+			}
+		}
+	}
 	return true;
 }
 

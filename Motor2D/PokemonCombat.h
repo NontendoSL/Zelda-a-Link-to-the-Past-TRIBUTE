@@ -7,6 +7,9 @@
 #include "j1Collision.h"
 #include "CombatManager.h"
 
+#define VIEWING_DISTANCE 120
+#define ATTACK_DISTANCE 30
+
 enum PokemonCombatState { PC_IDLE = 0, PC_WALKING, PC_ATTACKING, PC_SPECIAL, PC_HIT, PC_DYING, PC_STATIC, PC_STUNNED, PC_COLLISION, PC_CHASING };
 enum PokemonParticles { BUBBLE, LEAF };
 
@@ -37,11 +40,16 @@ public:
 		anim_state = a_state;
 	}
 
+	bool Special_inUse()
+	{
+		return use_special;
+	}
+
 	void ModifyStats(const Item_pokeCombat* items)
 	{
 		if (items->def_protein > 0)
 		{
-			defense += items->def_protein * potion_hp;
+			defense += items->def_protein * potion_defense;
 		}
 		if (items->hp_up > 0)
 		{
@@ -51,6 +59,18 @@ public:
 		{
 			attack += items->x_attack * potion_attack;
 			sp_damage += items->x_attack * potion_attack;
+		}
+	}
+
+	void CheckDeleteColliders()
+	{
+		if (sp_attack != nullptr && state != PC_SPECIAL)
+		{
+			sp_attack->to_delete = true;
+		}
+		if (collision_attack != nullptr && state != PC_ATTACKING)
+		{
+			collision_attack->to_delete = true;
 		}
 	}
 
@@ -120,6 +140,7 @@ public:
 	Collider* sp_attack = nullptr;
 	Collider* collision_attack = nullptr;
 	j1Timer time_stunned;
+	j1Timer wait_attack;
 
 protected:
 
@@ -130,7 +151,8 @@ protected:
 
 	bool attacker = false;
 	bool getdamage = false;
-
+	bool use_special = false;
+	
 private:
 
 	int potion_hp = 20;

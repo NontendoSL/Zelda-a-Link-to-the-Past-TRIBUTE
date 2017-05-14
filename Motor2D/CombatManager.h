@@ -76,6 +76,8 @@ public:
 	PokemonCombat* pokemon_active_trainer = nullptr;
 
 	uint id_map_combat = 0;
+	SDL_Texture* texture_special_dusclops = nullptr;
+	j1Timer comprovate;
 
 private:
 	std::list<SceneElement*> elementcombat;
@@ -84,6 +86,7 @@ private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	int pokemon_order = 0;
 	bool ordering = false;
+
 };
 
 #endif // __COMBATMANAGER_H__
