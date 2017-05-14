@@ -435,7 +435,7 @@ void j1App::SaveGame(const char* file) const
 	// from the "GetSaveGames" list ... should we overwrite ?
 
 	want_to_save = true;
-	save_game=file;
+	save_game = file;
 }
 
 // ---------------------------------------
