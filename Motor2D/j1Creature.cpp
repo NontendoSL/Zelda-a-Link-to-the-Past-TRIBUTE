@@ -81,46 +81,40 @@ bool Creature::GoTo(iPoint destination, int speed)
 
 bool Creature::Orientate()
 {
-	iPoint player_pos = App->scene->player->position;
-
-	Direction prev_dir = direction;
-	if (abs(player_pos.x - position.x) < abs(player_pos.y - position.y))
+	if (change_dir.ReadSec() >= 0.5)
 	{
-		if (player_pos.y > position.y)
+		iPoint player_pos = App->scene->player->position;
+
+		Direction prev_dir = direction;
+		if (abs(player_pos.x - position.x) < abs(player_pos.y - position.y))
 		{
-			direction = DOWN;
+			if (player_pos.y > position.y)
+			{
+				direction = DOWN;
+			}
+
+			else
+			{
+				direction = UP;
+			}
 		}
 
 		else
 		{
-			direction = UP;
+			if (player_pos.x < position.x)
+			{
+				direction = LEFT;
+			}
+
+			else
+			{
+				direction = RIGHT;
+			}
 		}
+		change_dir.Start();
 	}
 
-	else
-	{
-		if (player_pos.x < position.x)
-		{
-			direction = LEFT;
-		}
-
-		else
-		{
-			direction = RIGHT;
-		}
-	}
-
-	if (prev_dir == direction)
-	{
-		return false;
-	}
-
-	else
-	{
-		return true;
-	}
-
-
+	return true;
 }
 
 bool Creature::OrientateTo(iPoint pos)
