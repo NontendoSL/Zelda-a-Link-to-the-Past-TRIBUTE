@@ -30,6 +30,7 @@ bool Shiftry::Awake(pugi::xml_node &conf)
 		direction = RIGHT;
 
 	cooldown = conf.attribute("cooldown").as_int(0);
+	use_cooldown = cooldown;
 	hp = conf.attribute("hp").as_int(0);
 	attack = conf.attribute("attack").as_int(0);
 	speed = conf.attribute("speed").as_int(0);
@@ -128,36 +129,36 @@ bool Shiftry::Update(float dt)
 	ThrowSP();
 	}*/
 
-	if (CheckPlayerPos() < 30 && state == PC_WALKING)
+	if (CheckPlayerPos() < VIEWING_DISTANCE && state == PC_WALKING)
 	{
-		OrientatePokeLink();
 		state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < 6 && (state == PC_WALKING || state == PC_CHASING))
+	if (CheckPlayerPos() < ATTACK_DISTANCE && (state == PC_WALKING || state == PC_CHASING) && wait_attack.ReadSec() > 0.5)
 	{
 		OrientatePokeLink();
+		reset_distance = true;
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
 		current_animation = App->anim_manager->GetAnimation(state, direction, SHIFTRY);
 		current_animation->Reset();
 	}
 
-	if (hp <= hp_max / 2)
+	if (hp <= hp_max / 2 && use_cooldown == cooldown)
 	{
 		state = PC_SPECIAL;
 		anim_state = PC_SPECIAL;
+		use_cooldown = 0;
 		current_animation = App->anim_manager->GetAnimation(state, direction, SHIFTRY);
 		current_animation->Reset();
+	}
+	if (use_cooldown < cooldown && state != PC_SPECIAL)
+	{
+		use_cooldown++;
 	}
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
-
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-	{
-		hp -= 10;
-	}
 	return true;
 }
 
@@ -259,6 +260,11 @@ bool Shiftry::Walking(float dt)
 	{
 		Move(dt);
 	}
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
 
 
 	if (dis_moved >= distance)
@@ -355,6 +361,7 @@ bool Shiftry::Attack()
 			state = PC_IDLE;
 			anim_state = PC_IDLE;
 			getdamage = false;
+			wait_attack.Start();
 		}
 	}
 	else
@@ -388,8 +395,10 @@ bool Shiftry::Attack()
 void Shiftry::Special_Attack()
 {
 	hp += 1;
-	if(hp == hp_max)
+	hp_healed++;
+	if(hp_healed > HEALING)
 	{
+		hp_healed = 0;
 		state = PC_IDLE;
 		anim_state = PC_IDLE;
 	}
@@ -400,7 +409,7 @@ bool Shiftry::Chasing(float dt)
 	walking = false;
 	if (reset_distance)
 	{
-		distance = rand() % 75 + 35;
+		distance = rand() % 75 + 60;
 		dis_moved = 0;
 		reset_distance = false;
 	}

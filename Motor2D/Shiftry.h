@@ -4,6 +4,8 @@
 
 #include "PokemonCombat.h"
 
+#define HEALING 30
+
 class Shiftry : public PokemonCombat
 {
 public:
@@ -60,6 +62,8 @@ private:
 	bool reset_distance = false;
 	int timetorun = 0;
 	int hp_max = 0;
+	int use_cooldown = 0;
+	int hp_healed = 0;
 	//bool drawThrowSP = false; **Only the special attack is launch.**
 
 };
