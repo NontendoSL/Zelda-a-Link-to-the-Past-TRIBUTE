@@ -1024,15 +1024,43 @@ void j1Scene::SetMusics(int id)
 {
 	if (id == 7 && last_map != 8)
 	{
-		App->audio->PlayMusic("", 0);
+		App->audio->PlayMusic("auido/music/POKEMON/PokemonPetalburgWoods.ogg", 0);
 	}
 
 	if (id == 9)
 	{
-		App->audio->PlayMusic("", 0);
+		App->audio->PlayMusic("auido/music/POKEMON/PokemonEverGrandeCity.ogg", 0);
 	}
 
-	//if (id == )
+	if (id == 10)
+	{
+		App->audio->PlayMusic("auido/music/POKEMON/PokemonPokemonCenter.ogg", 0);
+	}
+
+	if (id >= 11 && id < 16)
+	{
+		App->audio->PlayMusic("auido/music/POKEMON/PokemonVictoryRoad.ogg", 0);
+	}
+
+	if (id == 17)
+	{
+		App->audio->PlayMusic("auido/music/POKEMON/PokemonRivalBattle.ogg", 0);
+	}
+
+	if (id >= 18 && id < 22)
+	{
+		App->audio->PlayMusic("auido/music/POKEMON/PokemonElitteFourBattle.ogg", 0);
+	}
+
+	if (id == 22)
+	{
+		App->audio->PlayMusic("auido/music/POKEMON/PokemonChampionBattle.ogg", 0);
+	}
+
+	if (id == 16)
+	{
+		App->audio->PlayMusic("auido/music/ZELDA/ZeldaLastChamber.ogg", 0);
+	}
 }
 
 

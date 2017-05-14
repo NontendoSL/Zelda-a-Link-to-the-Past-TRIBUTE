@@ -19,6 +19,7 @@ Golem::Golem()
 
 Golem::~Golem()
 {
+	collision_feet = nullptr;
 }
 
 bool Golem::Awake(pugi::xml_node &conf, uint id)
@@ -155,7 +156,11 @@ bool Golem::Update(float dt)
 	}*/
 
 	//Collision follow the player
-	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+	if (collision_feet != nullptr)
+	{
+		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+	}
+
 	return true;
 }
 

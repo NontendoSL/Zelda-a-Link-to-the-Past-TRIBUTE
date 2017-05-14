@@ -243,6 +243,7 @@ bool j1EntityElementScene::DeleteDynObject(DynamicObjects* dynobject)
 	{
 		dynobject->collision->to_delete = true;
 	}
+	dynobject->collision = nullptr;
 	delete dynobject;
 	dynobject = nullptr;
 	return true;
@@ -252,6 +253,7 @@ bool j1EntityElementScene::DeleteItem(Item* item)
 {
 	elementscene.remove(item);
 	item->collision->to_delete = true;
+	item->collision = nullptr;
 	delete item;
 	item = nullptr;
 	return true;
@@ -263,6 +265,7 @@ bool j1EntityElementScene::DeletePokemon(Pokemon* pokemon)
 	{
 		elementscene.remove(pokemon);
 		pokemon->collision_feet->to_delete = true;
+		pokemon->collision_feet = nullptr;
 		delete pokemon;
 		pokemon = nullptr;
 	}
@@ -329,6 +332,8 @@ bool j1EntityElementScene::DeleteVilager(Villager* vilager)
 	if (vilager != nullptr)
 	{
 		elementscene.remove(vilager);
+		vilager->collision_feet->to_delete = true;
+		vilager->collision_feet = nullptr;
 		delete vilager;
 		vilager = nullptr;
 		return true;

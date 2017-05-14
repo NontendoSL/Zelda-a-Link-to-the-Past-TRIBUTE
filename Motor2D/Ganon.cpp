@@ -257,6 +257,7 @@ bool Ganon::InitCombat()
 
 	else if (start_dialogue == true && App->scene->player->dialog == nullptr)
 	{
+		App->audio->PlayMusic("auido/music/ZELDA/ZeldaGanonBattle.ogg", 0);
 		start_dialogue = false;
 		phase = INITIAL;
 		state = G_IDLE;

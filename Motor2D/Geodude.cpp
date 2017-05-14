@@ -19,6 +19,7 @@ Geodude::Geodude()
 
 Geodude::~Geodude()
 {
+	collision_feet = nullptr;
 }
 
 bool Geodude::Awake(pugi::xml_node &conf, uint id, iPoint pos)
@@ -117,7 +118,10 @@ bool Geodude::Update(float dt)
 	}*/
 
 	//Collision follow the player
-	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+	if (collision_feet != nullptr)
+	{
+		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+	}
 	return true;
 }
 
