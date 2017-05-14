@@ -151,10 +151,17 @@ void Particle::render()
 		degrade.y = 0;
 	}
 	SDL_SetTextureAlphaMod(App->particlemanager->atlas_particle, degrade.y);
-	if (App->combatmanager->pokemon_active_trainer->name == "SALAMANCE" && App->combatmanager->pokemon_active_trainer->GetState() == PC_SPECIAL
-		&& (App->combatmanager->pokemon_active_trainer->direction == UP || App->combatmanager->pokemon_active_trainer->direction == DOWN))
+	if (App->scene->combat)
 	{
-		App->render->Blit(App->particlemanager->atlas_particle, position.x, position.y, &rect, 1.0f, true, 90);
+		if (App->combatmanager->pokemon_active_trainer->name == "SALAMANCE" && App->combatmanager->pokemon_active_trainer->GetState() == PC_SPECIAL
+			&& (App->combatmanager->pokemon_active_trainer->direction == UP || App->combatmanager->pokemon_active_trainer->direction == DOWN))
+		{
+			App->render->Blit(App->particlemanager->atlas_particle, position.x, position.y, &rect, 1.0f, true, 90);
+		}
+		else
+		{
+			App->render->Blit(App->particlemanager->atlas_particle, position.x, position.y, &rect);
+		}
 	}
 	else
 	{
