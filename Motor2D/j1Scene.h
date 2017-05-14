@@ -22,6 +22,7 @@ class PokemonWorldHud;
 class PokemonWorldMenu;
 class PokemonWorldBag;
 class PokemonWorldShop;
+class ControllerMapping;
 
 class Player;
 class Item;

@@ -47,6 +47,7 @@ bool j1SceneIntro::Start()
 	Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	App->input_manager->AddListener(this);
+
 	fade = true;
 	return true;
 }
@@ -243,6 +244,7 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 			if (menu == true)
 			{
 				((Button*)element)->click = false;
+				App->gui->SetGui(MAPPING_CONTROLLER);
 			}
 		}
 	}
@@ -251,6 +253,7 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 void j1SceneIntro::LoadMainMenu()
 {
 	main_menu = App->gui->CreateMainMenu();
+	controller_map = App->gui->CreateControllerMapping();
 }
 
 

@@ -65,10 +65,11 @@ private:
 	uint volume = 120;
 
 public:
-	MainMenu*		main_menu = nullptr;
-	bool			goHouse = false;
-	bool			fade;
-	bool			menu = false;
+	MainMenu*			main_menu = nullptr;
+	ControllerMapping* controller_map = nullptr;
+	bool				goHouse = false;
+	bool				fade;
+	bool				menu = false;
 };
 
 #endif
