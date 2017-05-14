@@ -357,10 +357,12 @@ void Ganon::MeleeAttack()
 		if (direction == DOWN)
 		{
 			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 10, 48, 48 }, COLLIDER_GANON_ATTACK, this);
+			App->audio->PlayFx(7);
 		}
 		else if (direction == UP)
 		{
 			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 30, 48, 53}, COLLIDER_GANON_ATTACK, this);
+			App->audio->PlayFx(7);
 		}
 	}
 
@@ -404,6 +406,7 @@ void Ganon::FireBats()
 			App->entity_elements->CreateFireBat();
 			num_firebats++;
 			time_to_create = 0;
+			App->audio->PlayFx(16);
 		}
 	}
 	else
@@ -492,7 +495,7 @@ void Ganon::FireJump()
 		//Set Attack Collider ---------------
 		collision_attack = App->collision->AddCollider({ position.x - offset_x - 12, position.y - offset_y - 20, 60, 60 }, COLLIDER_GANON_ATTACK, this);
 		//----------------------------
-
+		App->audio->PlayFx(7);
 		App->particlemanager->CreateExplosion_Particle(nullptr, nullptr, position, SDL_Rect{ 0, 4, 2, 0 }, CIRCLE, iPoint(10, 10), iPoint(10, 2), fPoint(60, 60), P_RANDOM, 22);
 
 		float factor = (float)M_PI / 180.0f * MULTI_P;
