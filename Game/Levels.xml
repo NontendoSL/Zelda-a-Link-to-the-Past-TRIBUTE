@@ -256,6 +256,14 @@
       <vilagers>
         <vilager id="4" name="Joy" rect_x="74" rect_y="82" rect_w="16" rect_h="21" pos_x="128" pos_y="56" dialog="Hey, welcome to the Pokemon League, I see you haven't money so I give you 500 credits for your gems: P. Then you can buy objects to improve the stats of your pokemons."/>
       </vilagers>
+      <editcost>
+        <edit pos_x="24" pos_y="11" />
+        <edit pos_x="25" pos_y="11" />
+      </editcost>
+      <deledit>
+        <edit pos_x="24" pos_y="55" />
+        <edit pos_x="25" pos_y="55" />
+      </deledit>
     </map>
 
     <map n="11" file="EliteFour01.tmx">

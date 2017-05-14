@@ -920,7 +920,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 		//hud->OpenClose(true);
 	}
 
-	if (n == 9 || n==10)
+	if (n == 9 || n == 10)
 	{
 		App->gui->SetGui(POKEMON_HUD);
 		player->pokecash = player->gems * 3;
@@ -1037,6 +1037,14 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 				for (pugi::xml_node editcost = temp.child("editcost").child("edit"); editcost != NULL; editcost = editcost.next_sibling())
 				{
 					App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), 0);
+				}
+
+				if (n == 10)
+				{
+					for (pugi::xml_node editcost = temp.child("deledit").child("edit"); editcost != NULL; editcost = editcost.next_sibling())
+					{
+						App->map->EditCost(editcost.attribute("pos_x").as_int(0), editcost.attribute("pos_y").as_int(0), App->map->data.tilesets[0]->firstgid + 1);
+					}
 				}
 				player->state_complet = false;
 			}
