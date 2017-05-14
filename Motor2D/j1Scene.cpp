@@ -128,6 +128,18 @@ bool j1Scene::Update(float dt)
 			if (player->dialog != nullptr)
 			{
 				dialog_inmapZelda = true;
+				joy_talk = true;
+			}
+			if (joy_talk && player->dialog == nullptr && last_map==10 && cash_swapped==false)
+			{
+				player->pokecash = player->gems * 12;
+				if (player->pokecash < 50)
+				{
+					player->pokecash = 50;
+				}
+				poke_hud->RefreshMoney();
+				joy_talk = false;
+				cash_swapped = true;
 			}
 
 			if (dialog_inmapZelda && player->dialog == nullptr)
@@ -892,7 +904,6 @@ void j1Scene::SwitchMap(bool isTP)
 		switch_map = 0;
 		fade = false;
 		gamestate = INGAME;
-		id_map = switch_map;
 		useTP = false;
 	}
 }
@@ -923,10 +934,6 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 
 	if (n == 9 || n == 10)
 	{
-		App->gui->SetGui(POKEMON_HUD);
-		player->pokecash = player->gems * 3;
-		player->pokecash += 500;
-		poke_hud->RefreshMoney();
 		if (n == 9)
 		{
 			player->Unequip();
@@ -1192,11 +1199,6 @@ bool j1Scene::Load_Combat_map(int n)
 	return true;
 }
 
-int j1Scene::IdMap()
-{
-	return id_map;
-
-}
 
 
 // ---------------------------------------------

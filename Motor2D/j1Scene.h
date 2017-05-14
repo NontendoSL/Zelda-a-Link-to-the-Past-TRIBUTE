@@ -77,8 +77,6 @@ public:
 	//Load CombatMaps
 	bool Load_Combat_map(int n);
 
-	int IdMap();
-
 	void SwitchMenu(bool direction);
 
 	void ChangeState(GameState state);
@@ -123,7 +121,6 @@ public:
 
 	//id maps -------------------------------
 	int switch_map = 0;
-	int id_map = 0;
 	int last_map = 0;
 	int combat_map_id = 0;
 
@@ -151,9 +148,10 @@ public:
 	bool swap_ganon = false;
 	bool swap_player = false;
 
+	bool cash_swapped = false;
 private:
 	uint volume = 120;
-
+	bool joy_talk = false;
 
 };
 

@@ -262,7 +262,7 @@
         <dynobject id="7" name="pc" type="POKEMON" rect_x="94" rect_y="1" rect_w="16" rect_h="32" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
       </dynobjects>
       <vilagers>
-        <vilager id="4" name="Joy" rect_x="74" rect_y="82" rect_w="16" rect_h="21" pos_x="128" pos_y="56" dialog="Hey, welcome to the Pokemon League, I see you haven't money so I give you 500 credits for your gems: P. Then you can buy objects to improve the stats of your pokemons."/>
+        <vilager id="4" name="Joy" rect_x="74" rect_y="82" rect_w="16" rect_h="21" pos_x="128" pos_y="56" dialog="Wow! What are those rupees? you can't use them here but i will change it for pokecash if you want...     Remember that you can buy items in the pc shop, and later equip them inside your bag"/>
       </vilagers>
     </map>
 

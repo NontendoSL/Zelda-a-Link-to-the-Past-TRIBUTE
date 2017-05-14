@@ -101,19 +101,10 @@ bool Player::Update(float dt)
 	{
 		score = 0;
 		hp_hearts = { hp_hearts.x, hp_hearts.x };
-		
-		// SWITCH MAPS ------------------
-		if (App->scene->IdMap() == 2)
+		App->scene->switch_map = App->scene->last_map;
+		if (gems > 10)
 		{
-			App->scene->switch_map = App->scene->id_map;
-		}
-		else if (App->scene->IdMap() == 4)
-		{
-			App->scene->switch_map = App->scene->id_map;
-		}
-		else if (App->scene->IdMap() == 5)
-		{
-			App->scene->switch_map = App->scene->id_map;
+			gems = gems - (gems/ 10);
 		}
 	}
 
@@ -435,6 +426,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						//First time picking a bomb
 						if (bombmanager == nullptr)
 						{
+							dialog = App->gui->CreateDialogue("Bomb picked!");
 							bombmanager = App->entity_elements->CreateBombContainer();
 							App->scene->start_menu->PickItem("bomb");
 							App->audio->PlayFx(20);
@@ -449,6 +441,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						//First time picking a hookshot
 						if (hook == nullptr)
 						{
+							dialog = App->gui->CreateDialogue("Hookshot picked!");
 							hook = App->entity_elements->CreateHookshot();
 							App->scene->start_menu->PickItem("hookshot");
 							App->audio->PlayFx(20);
@@ -460,6 +453,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						//First time picking a bow
 						if (bow == nullptr)
 						{
+							dialog = App->gui->CreateDialogue("Bow picked!");
 							bow = App->entity_elements->CreateBow();
 							App->scene->start_menu->PickItem("bow");
 							App->audio->PlayFx(20);
@@ -617,7 +611,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 				{
 					if (dialog == nullptr)
 					{
-						App->scene->gamestate = INMENU;
+						//App->scene->gamestate = INMENU;
 						if (direction == UP)
 							c2->callback->direction = DOWN;
 						else if (direction == DOWN)
@@ -657,6 +651,17 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 								App->gui->GetEntity("pendant_link")->visible = true;
 								App->map->EditCost(32, 42, App->map->data.tilesets[0]->firstgid + 1);
 								App->map->EditCost(33, 42, App->map->data.tilesets[0]->firstgid + 1);
+							}
+							else if (App->scene->last_map == 10)
+							{
+								if (App->scene->cash_swapped)
+								{
+									dialog = App->gui->CreateDialogue("You are in the Pokemon League! Here you will face the greatest trainers from Hoenn!");
+								}
+								else
+								{
+									dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+								}
 							}
 						}
 
