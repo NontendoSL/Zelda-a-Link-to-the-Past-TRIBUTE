@@ -54,6 +54,12 @@ public:
 
 	int CheckPlayerPos();
 
+	//Special Attack
+	SDL_Rect rect_special;
+	iPoint pos_special;
+	bool stop_anim_special = false;
+	int angle_special = 0;
+
 private:
 
 	//Timer
@@ -64,12 +70,6 @@ private:
 	bool reset_distance = false;
 	int timetorun = 0;
 	int use_cooldown = 0;
-
-
-	SDL_Rect rect_special;
-	iPoint pos_special;
-	bool stop_anim_special = false;
-	int angle_special = 0;
 	//bool drawThrowSP = false; **Only the special attack is launch.**
 
 };

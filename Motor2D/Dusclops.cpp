@@ -50,15 +50,15 @@ bool Dusclops::Start()
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 17;
-timetoplay = SDL_GetTicks();
-collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKECOMBAT, this);
-timetoplay = SDL_GetTicks();
-reset_distance = false;
-sp_attacking = false;
-reset_run = true;
-rect_special = { 0,0,30,30 };
-pos_special = iPoint(0, 0);
-return true;
+	timetoplay = SDL_GetTicks();
+	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKECOMBAT, this);
+	timetoplay = SDL_GetTicks();
+	reset_distance = false;
+	sp_attacking = false;
+	reset_run = true;
+	rect_special = { 0,0,30,30 };
+	pos_special = iPoint(0, 0);
+	return true;
 }
 
 bool Dusclops::Update(float dt)
@@ -147,10 +147,6 @@ bool Dusclops::Update(float dt)
 	{
 		stop_anim_special = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-	{
-		hp = 20;
-	}
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
@@ -158,10 +154,6 @@ bool Dusclops::Update(float dt)
 
 void Dusclops::Draw()
 {
-	if (use_special)
-	{
-		App->render->Blit(App->combatmanager->texture_special_dusclops, position.x - 15 - pos_special.x, position.y - 20 - pos_special.y, &rect_special, 0, true, angle_special);
-	}
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, DUSCLOPS);
 }
 
@@ -506,13 +498,6 @@ bool Dusclops::Movebyhit(int speed)
 			position.x += speed;
 		}
 	}
-	/*if (position.x > (prev_position.x + 65) ||
-	position.x < (prev_position.x + 65) ||
-	position.y >(prev_position.y + 65) ||
-	position.y < (prev_position.y + 65))
-	{
-	state = IDLE;
-	}*/
 	return true;
 }
 

@@ -175,6 +175,18 @@ bool CombatManager::PostUpdate()
 			}
 			item++;
 		}
+		//Draw Special attack Dusclops
+		if (pokemon_active_trainer != nullptr)
+		{
+			if (pokemon_active_trainer->name == "DUSCLOPS")
+			{
+				if (pokemon_active_trainer->use_special)
+				{
+					Dusclops* dus = (Dusclops*)pokemon_active_trainer;
+					App->render->Blit(texture_special_dusclops, dus->position.x - 15 - dus->pos_special.x, dus->position.y - 20 - dus->pos_special.y, &dus->rect_special, 0, true, dus->angle_special);
+				}
+			}
+		}
 	}
 	return true;
 }

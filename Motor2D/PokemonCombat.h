@@ -142,6 +142,8 @@ public:
 	j1Timer time_stunned;
 	j1Timer wait_attack;
 
+	bool use_special = false;
+
 protected:
 
 	PokemonCombatState state = PC_IDLE;
@@ -151,7 +153,6 @@ protected:
 
 	bool attacker = false;
 	bool getdamage = false;
-	bool use_special = false;
 	
 private:
 
