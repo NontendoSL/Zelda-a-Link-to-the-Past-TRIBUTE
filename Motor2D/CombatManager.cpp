@@ -198,6 +198,8 @@ bool CombatManager::CleanUp()
 	while (item != elementcombat.end())
 	{
 		item._Ptr->_Myval->CleanUp();
+		elementcombat.remove(item._Ptr->_Myval);
+		delete item._Ptr->_Myval;
 		item++;
 	}
 	return ret;
