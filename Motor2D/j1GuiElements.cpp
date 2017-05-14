@@ -2008,7 +2008,10 @@ void PokemonWorldShop::Input()
 	{
 		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_UP);
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+	{
+		App->gui->SetGui(POKEMON_HUD);
+	}
 }
 
 Button * PokemonWorldShop::GetFirst()

@@ -646,6 +646,10 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						}
 						else
 						{
+							if (App->scene->last_map == 3)
+							{
+								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+							}
 							if (App->scene->last_map == 5)
 							{
 								App->scene->combat_map_id = villager->switch_map;

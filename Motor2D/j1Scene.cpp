@@ -122,7 +122,7 @@ bool j1Scene::Update(float dt)
 			}*/
 
 			//Make advance the dialogue text.
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_UP)
 			{
 				if (player->dialog != nullptr)
 				{
@@ -189,10 +189,10 @@ bool j1Scene::Update(float dt)
 				switch_map = 10;
 			}
 
-			/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 18;
+				switch_map = 7;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
@@ -201,7 +201,7 @@ bool j1Scene::Update(float dt)
 				switch_map = 19;
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+			/*if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 			{
 				useTP = true;
 				switch_map = 20;
@@ -273,10 +273,7 @@ bool j1Scene::Update(float dt)
 			{
 				App->gui->SetGui(POKEMON_SHOP);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->gui->GetGuiState() == POKEMON_SHOP)
-			{
-				App->gui->SetGui(POKEMON_HUD);
-			}
+
 			//-------------------------------------------------------
 			// TP LEVEL
 

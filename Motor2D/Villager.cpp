@@ -16,7 +16,7 @@ bool Villager::Awake(pugi::xml_node& conf)
 	position.x = conf.attribute("pos_x").as_int(0);
 	position.y = conf.attribute("pos_y").as_int(0);
 	name = conf.attribute("name").as_string("");
-	active = conf.attribute("active").as_bool(true);
+	active = true;
 	dialog = conf.attribute("dialog").as_string("");
 	rect = { conf.attribute("rect_x").as_int(0), conf.attribute("rect_y").as_int(0), conf.attribute("rect_w").as_int(0), conf.attribute("rect_h").as_int(0) };
 	switch_map = conf.attribute("switch_map").as_int(0);
@@ -30,7 +30,7 @@ bool Villager::Start()
 	anim_state = V_IDLE;
 
 	if (active)
-		collision_feet = App->collision->AddCollider({ position.x, position.y, 15, 21 }, COLLIDER_VILAGER, this);
+		collision_feet = App->collision->AddCollider({ position.x, position.y, 20, 21 }, COLLIDER_VILAGER, this);
 
 	return true;
 }
