@@ -93,17 +93,27 @@ bool j1Collision::Start()
 bool j1Collision::PreUpdate()
 {
 	// Remove all colliders scheduled for deletion
+	/*for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	std::vector<Collider*>::iterator item = colliders.begin();
 	while (item != colliders.end())
 	{
-		if ((*item) != nullptr && (*item)->to_delete)
+	if (colliders[i] != nullptr && colliders[i]->to_delete == true)
+	if ((*item) != nullptr && (*item)->to_delete)
+	{
+	delete colliders[i];
+	colliders[i] = nullptr;
+	if(num_colliders > 1)
+	num_colliders--;
+	RELEASE(*item);
+	colliders.erase(item);
+	}
+	}*/
+	for (std::vector<Collider*>::const_iterator item = colliders.cbegin(); item != colliders.cend(); ++item)
+	{
+		if ((*item) != nullptr && (*item)->to_delete == true)
 		{
 			colliders.erase(item);
-			RELEASE(*item);
-		}
-		else
-		{
-			item++;
+			--item;
 		}
 	}
 	waittodelete = false;
