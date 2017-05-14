@@ -21,7 +21,9 @@ Soldier::Soldier():NPC()
 }
 
 Soldier::~Soldier()
-{}
+{
+
+}
 
 bool Soldier::Awake(pugi::xml_node &conf, uint id)
 {
@@ -152,7 +154,7 @@ bool Soldier::Start()
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 16, 15 }, COLLIDER_ENEMY, this);
 
 	//Get the animations
-	animation = *App->anim_manager->GetAnimStruct(SOLDIER);
+	animation = App->anim_manager->GetAnimStruct(SOLDIER);
 
 	return true;
 }
@@ -233,26 +235,26 @@ void Soldier::Draw()
 
 	if (direction == UP)
 	{
-		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
-		pivot = animation.anim[anim_state].North_action.GetCurrentOffset();
+		anim_rect = animation->anim[anim_state].North_action.GetCurrentFrame();
+		pivot = animation->anim[anim_state].North_action.GetCurrentOffset();
 	}
 	else if (direction == DOWN)
 	{
-		anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
-		pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
+		anim_rect = animation->anim[anim_state].South_action.GetCurrentFrame();
+		pivot = animation->anim[anim_state].South_action.GetCurrentOffset();
 	}
 	else if (direction == LEFT)
 	{
-		anim_rect = animation.anim[anim_state].West_action.GetCurrentFrame();
-		pivot = animation.anim[anim_state].West_action.GetCurrentOffset();
+		anim_rect = animation->anim[anim_state].West_action.GetCurrentFrame();
+		pivot = animation->anim[anim_state].West_action.GetCurrentOffset();
 	}
 	else if (direction == RIGHT)
 	{
-		anim_rect = animation.anim[anim_state].East_action.GetCurrentFrame();
-		pivot = animation.anim[anim_state].East_action.GetCurrentOffset();
+		anim_rect = animation->anim[anim_state].East_action.GetCurrentFrame();
+		pivot = animation->anim[anim_state].East_action.GetCurrentOffset();
 	}
 
-	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+	App->render->Blit(animation->graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
 
 }
 

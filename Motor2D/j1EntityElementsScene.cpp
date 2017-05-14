@@ -33,6 +33,7 @@ j1EntityElementScene::j1EntityElementScene()
 
 j1EntityElementScene::~j1EntityElementScene()
 {
+
 }
 
 bool j1EntityElementScene::Awake(pugi::xml_node &config)
@@ -153,6 +154,8 @@ bool j1EntityElementScene::CleanUp()
 	while (item != elementscene.end())
 	{
 		item._Ptr->_Myval->CleanUp();
+		elementscene.remove(item._Ptr->_Myval);
+		delete item._Ptr->_Myval;
 		item++;
 	}
 	return ret;
@@ -212,7 +215,10 @@ void j1EntityElementScene::CreateSoldier(uint id, pugi::xml_node& config)
 {
 	Soldier* element = new Soldier();
 	element->Awake(config, id);
-	element->Start();
+	if (element->Start())
+	{
+		LOG("Soldier Created");
+	}
 	elementscene.push_back(element);
 }
 
@@ -434,7 +440,7 @@ Hookshot* j1EntityElementScene::CreateHookshot()
 	return hook;
 }
 
-Bow * j1EntityElementScene::CreateBow()
+Bow* j1EntityElementScene::CreateBow()
 {
 	Bow* bow = new Bow(true);
 	bow->name = "bow";

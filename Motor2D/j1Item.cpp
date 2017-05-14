@@ -5,7 +5,7 @@
 #include "j1Collision.h"
 
 
-Item::Item() :SceneElement()
+Item::Item() : SceneElement()
 {
 	name = "items";
 	type = ITEM;

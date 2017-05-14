@@ -128,6 +128,7 @@ bool ParticleManager::PostUpdate()
 
 bool ParticleManager::CleanUp()
 {
+	DeleteAllGroups();
 	return true;
 }
 
@@ -217,7 +218,9 @@ bool ParticleManager::DeleteAllGroups()
 	std::list<P_Follow*>::iterator follow = Group_Follow.begin();
 	while (follow != Group_Follow.end())
 	{
-		follow._Ptr->_Myval->particle.clear();
+		follow._Ptr->_Myval->DeleteAllParticles();
+		Group_Follow.erase(follow);
+		delete follow._Ptr->_Myval;
 		follow++;
 	}
 	Group_Follow.clear();

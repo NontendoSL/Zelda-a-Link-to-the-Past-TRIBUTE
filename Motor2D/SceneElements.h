@@ -23,7 +23,7 @@ public:
 	SceneElement()
 	{}
 
-	~SceneElement()
+	virtual ~SceneElement()
 	{}
 
 	virtual bool Awake(pugi::xml_node& conf, uint id = 0) 

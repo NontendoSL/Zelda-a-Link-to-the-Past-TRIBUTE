@@ -105,6 +105,10 @@ Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_pa
 	size_rect = size;
 }
 
+Particle::~Particle()
+{
+}
+
 bool Particle::Modify(fPoint respawn, iPoint area, iPoint timelife, iPoint num_tex_p)
 {
 	//with random change position

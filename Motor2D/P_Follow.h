@@ -23,6 +23,8 @@ public:
 
 	void Update_position(iPoint* pos);
 
+	void DeleteAllParticles();
+
 
 public:
 	std::vector<Particle*> particle;

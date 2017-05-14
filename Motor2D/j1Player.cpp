@@ -1129,6 +1129,7 @@ bool Player::Interact()
 			//if (current_animation->Finished())
 			//{
 			collision_interact->to_delete = true;
+			collision_interact = nullptr;
 			interaction = false;
 			//current_animation->Reset();
 			//current_animation = nullptr;

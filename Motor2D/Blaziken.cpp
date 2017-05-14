@@ -351,6 +351,7 @@ bool Blaziken::Attack()
 		if (current_animation->Finished())
 		{
 			App->collision->EraseCollider(collision_attack);
+			collision_attack = nullptr;
 			attacker = false;
 			current_animation->Reset();
 			current_animation = nullptr;

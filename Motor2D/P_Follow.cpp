@@ -91,3 +91,21 @@ void P_Follow::Update_position(iPoint* element)
 		pos.y = element->y - App->render->camera.y / 2;
 	}
 }
+
+void P_Follow::DeleteAllParticles()
+{
+	std::vector<Particle*>::iterator item = particle.begin();
+	while (item != particle.end())
+	{
+		if ((*item) != nullptr)
+		{
+			RELEASE(*item);
+			particle.erase(item);
+		}
+		else
+		{
+			item++;
+		}
+	}
+	particle.clear();
+}

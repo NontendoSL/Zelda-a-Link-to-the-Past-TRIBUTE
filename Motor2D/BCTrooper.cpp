@@ -20,6 +20,11 @@ BCTrooper::~BCTrooper()
 	points.clear();
 	App->tex->UnLoad(texture);
 	texture = nullptr;
+	for (int i = 0; i < 4; i++)
+	{
+		boles[i].particle_maze = nullptr;
+		boles[i].collision_maze = nullptr;
+	}
 }
 
 bool BCTrooper::Awake(pugi::xml_node &conf, uint id)
@@ -53,7 +58,7 @@ bool BCTrooper::Start()
 	// Create Particles
 	for (int i = 0; i < 4; i++)
 	{
-		App->particlemanager->CreateFollow_P(nullptr, &boles[i].position, SDL_Rect{ 0,10,2,0 }, iPoint(5, 5), iPoint(18, 8), 4, 30, false);
+		App->particlemanager->CreateFollow_P(nullptr, &boles[i].position, SDL_Rect{ 0,10,2,0 }, iPoint(5, 5), iPoint(18, 8), 4, 29, false);
 		boles[i].particle_maze = App->particlemanager->Group_Follow.back();
 	}
 	boles[0].particle_maze->active = true;
