@@ -49,6 +49,10 @@ public:
 
 	bool Movebyhit(int speed);
 
+
+public:
+	Collider* top_leaf_sp = nullptr;
+	Collider* bot_leaf_sp = nullptr;
 private:
 
 	//Timer
@@ -68,8 +72,6 @@ private:
 	SDL_Rect sp_rect = { 47, 265, 13, 13 };
 	std::vector<iPoint>leafs_pos;
 	uint rotation = 0;
-	Collider* top_leaf_sp = nullptr;
-	Collider* bot_leaf_sp = nullptr;
 	bool leaving = true;
 };
 

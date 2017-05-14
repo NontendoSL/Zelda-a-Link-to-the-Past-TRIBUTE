@@ -502,6 +502,24 @@ PokemonCombat* CombatManager::change_pokemon()//true Link - false Brendan
 	return nullptr;
 }
 
+void CombatManager::BeforePrepareCombat()
+{
+	std::list<PokemonCombat*>::iterator item = App->scene->player->pokedex.begin();
+	while (item != App->scene->player->pokedex.end())
+	{
+		PokemonCombat* pokemon = item._Ptr->_Myval;
+		if (pokemon->name == "SCEPTILE")
+		{
+			((Sceptyle*)pokemon)->top_leaf_sp = nullptr;
+			((Sceptyle*)pokemon)->bot_leaf_sp = nullptr;
+		}
+		pokemon->sp_attack = nullptr;
+		pokemon->collision_attack = nullptr;
+		pokemon->collision_feet = nullptr;
+		item++;
+	}
+}
+
 void CombatManager::Kill(bool trainer)
 {
 	if (trainer)

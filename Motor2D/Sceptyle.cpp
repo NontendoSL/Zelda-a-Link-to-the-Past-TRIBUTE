@@ -14,6 +14,8 @@ Sceptyle::Sceptyle()
 
 Sceptyle::~Sceptyle()
 {
+	App->tex->UnLoad(sp_leaf);
+	leafs_pos.clear();
 	sp_attack = nullptr;
 	top_leaf_sp = nullptr;
 	bot_leaf_sp = nullptr;

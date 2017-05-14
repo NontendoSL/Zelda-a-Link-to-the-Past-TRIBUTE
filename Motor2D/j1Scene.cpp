@@ -1229,6 +1229,8 @@ bool j1Scene::Load_Combat_map(int n)
 	{
 		if (temp.attribute("n").as_int(0) == n)
 		{
+			//all collider nullptr
+			App->combatmanager->BeforePrepareCombat();
 			//trainer
 			//poketrainer = App->combatmanager->CreateTrainer(temp.child("trainer"), 1);
 			poke_enemy = App->combatmanager->CreatePokemon(temp.child("trainer").child("pokemon"), temp.child("trainer").child("pokemon").attribute("id").as_int(4));
