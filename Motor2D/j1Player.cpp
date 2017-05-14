@@ -678,6 +678,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 								else
 								{
 									dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+									App->scene->joy_talk = true;
 								}
 							}
 						}

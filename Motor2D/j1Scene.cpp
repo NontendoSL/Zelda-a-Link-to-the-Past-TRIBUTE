@@ -141,7 +141,6 @@ bool j1Scene::Update(float dt)
 			if (player->dialog != nullptr)
 			{
 				dialog_inmapZelda = true;
-				joy_talk = true;
 			}
 			if (joy_talk && player->dialog == nullptr && last_map==10 && cash_swapped==false)
 			{

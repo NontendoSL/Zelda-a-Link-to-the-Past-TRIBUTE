@@ -192,9 +192,10 @@ public:
 	bool new_game = false;
 	bool continue_game = false;
 
+	bool joy_talk = false;
 private:
 	uint volume = 120;
-	bool joy_talk = false;
+
 
 };
 
