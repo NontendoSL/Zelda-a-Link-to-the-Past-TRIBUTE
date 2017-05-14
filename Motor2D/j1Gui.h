@@ -18,7 +18,8 @@ enum GuiGroup
 	POKEMON_MENU,
 	POKEMON_BAG,
 	POKEMON_SHOP,
-	POKEMON_HUD
+	POKEMON_HUD,
+	MAPPING_CONTROLLER
 };
 enum FontName;
 
@@ -35,6 +36,7 @@ class PokemonWorldHud;
 class PokemonWorldMenu;
 class PokemonWorldBag;
 class PokemonWorldShop;
+class ControllerMapping;
 class PokemonCombat;
 class Selector;
 
@@ -95,6 +97,8 @@ public:
 	PokemonWorldBag* CreatePokemonWorldBag();
 
 	PokemonWorldShop* CreatePokemonWorldShop();
+
+	ControllerMapping* CreateControllerMapping();
 
 	void Erase(j1GuiEntity* to_delete);
 

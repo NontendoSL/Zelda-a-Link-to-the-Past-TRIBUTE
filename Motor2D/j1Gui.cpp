@@ -38,7 +38,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	gui_groups_name.push_back("PokemonWorld_Bag"); 
 	gui_groups_name.push_back("PokemonWorld_Shop");
 	gui_groups_name.push_back("PokemonWorld_HUD");
-
+	gui_groups_name.push_back("Mapping_Controller");
 	return ret;
 }
 
@@ -115,6 +115,9 @@ void j1Gui::ReceiveInput()
 		return;
 	case GuiGroup::POKEMON_SHOP:
 		App->scene->poke_shop->Input();
+		return;
+	case GuiGroup::MAPPING_CONTROLLER:
+		App->intro->controller_map->Input();
 		return;
 	}
 }
@@ -321,6 +324,9 @@ void j1Gui::SetGui(GuiGroup guistate)
 	case POKEMON_SHOP:
 		SetFocus(App->scene->poke_shop->GetFirst());
 		return;
+	case MAPPING_CONTROLLER:
+		SetFocus(App->intro->controller_map->GetFirst());
+		return;
 	default:
 		SetFocus(nullptr);
 		return;
@@ -429,6 +435,13 @@ PokemonWorldBag * j1Gui::CreatePokemonWorldBag()
 PokemonWorldShop * j1Gui::CreatePokemonWorldShop()
 {
 	PokemonWorldShop* element = new PokemonWorldShop();
+	entities.push_back(element);
+	return element;
+}
+
+ControllerMapping * j1Gui::CreateControllerMapping()
+{
+	ControllerMapping* element = new ControllerMapping();
 	entities.push_back(element);
 	return element;
 }

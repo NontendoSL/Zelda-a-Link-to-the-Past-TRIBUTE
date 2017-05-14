@@ -327,4 +327,20 @@ private:
 	std::vector<Button*>shop_item;
 	uint text_timer = 0;
 };
+
+//---------------------------------
+
+class ControllerMapping : public j1GuiEntity
+{
+public:
+	ControllerMapping();
+	~ControllerMapping();
+public:
+	void Input();
+	Button* GetFirst();
+	void Select(bool right);
+private:
+	Button* normal = nullptr;
+	Button* tactic = nullptr;
+};
 #endif // __j1GUIELEMENTS_H__

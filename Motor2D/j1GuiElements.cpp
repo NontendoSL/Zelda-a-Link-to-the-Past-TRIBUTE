@@ -2023,3 +2023,50 @@ void PokemonWorldShop::PopText(const char * text)
 	((Text*)App->gui->GetEntity("item bought text"))->Write(text);
 	text_timer = SDL_GetTicks();
 }
+
+ControllerMapping::ControllerMapping()
+{
+	normal = (Button*)App->gui->GetEntity("normal_controller_but");
+	tactic = (Button*)App->gui->GetEntity("tactic_controller_but");
+
+}
+
+ControllerMapping::~ControllerMapping()
+{
+
+}
+
+void ControllerMapping::Input()
+{
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
+	{
+		Select(true);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
+	{
+		Select(false);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+	{
+		App->gui->GetFocused()->listener->OnGui(App->gui->GetFocused(), CLICK_DOWN);
+	}
+}
+
+Button * ControllerMapping::GetFirst()
+{
+	return normal;
+}
+
+void ControllerMapping::Select(bool right)
+{
+	if (App->gui->GetFocused() == normal)
+	{
+		if (right)
+			App->gui->SetFocus(tactic);
+	}
+	else if (App->gui->GetFocused() == tactic)
+	{
+		if (right==false)
+			App->gui->SetFocus(normal);
+	}
+}
