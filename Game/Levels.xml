@@ -360,9 +360,9 @@
   <map_combat>
 
     <Link>
-      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="60" dir="right" hp="80" attack="3" special_attack="10" defense="1" pos_x="96" pos_y="128" active="false"/>
-      <pokemon id="2" name="SCEPTILE" speed="1" cooldown="190" dir="right" hp="100" attack="4" special_attack="15" defense="1" pos_x="96" pos_y="128" active="false"/>
-      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="250" dir="right" hp="150" attack="5" special_attack="20" defense="1" pos_x="96" pos_y="128" active="false"/>
+      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="200" dir="right" hp="80"  attack="5" special_attack="15" defense="2" pos_x="96" pos_y="128"  active="false"/>
+      <pokemon id="2" name="SCEPTILE" speed="1" cooldown="300" dir="right" hp="190" attack="1" special_attack="20" defense="3" pos_x="96" pos_y="128"  active="false"/>
+      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="100" dir="right" hp="250" attack="2" special_attack="10" defense="4" pos_x="96" pos_y="128"  active="false"/>
     </Link>
 
     <map n="17" file="CombatPracticeMap.tmx">
@@ -377,7 +377,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="88" pos_y="144"/>
       <trainer id="1" name="Sidney" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
-        <pokemon id="6" name="SHIFTRY" speed="1" cooldown="150" dir="left" hp="120" attack="5" special_attack="23" defense="1" pos_x="228" pos_y="144" active="true"/>
+        <pokemon id="6" name="SHIFTRY" speed="1" cooldown="200" dir="left" hp="200" attack="5" special_attack="23" defense="6" pos_x="228" pos_y="144" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="3" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -405,7 +405,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="88" pos_y="144"/>
       <trainer id="1" name="Phoebe" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
-        <pokemon id="7" name="DUSCLOPS" speed="1" cooldown="150" dir="left" hp="130" attack="3" special_attack="12" defense="1" pos_x="228" pos_y="144" active="true"/>
+        <pokemon id="7" name="DUSCLOPS" speed="1" cooldown="150" dir="left" hp="250" attack="7" special_attack="20" defense="5" pos_x="228" pos_y="144" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -431,7 +431,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="88" pos_y="144"/>
       <trainer id="1" name="Glacia" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
-        <pokemon id="4" name="WALREIN" speed="1" cooldown="150" dir="left" hp="140" attack="6" special_attack="21" defense="1" pos_x="228" pos_y="144" active="true"/>
+        <pokemon id="4" name="WALREIN" speed="1" cooldown="400" dir="left" hp="350" attack="6" special_attack="18" defense="7" pos_x="228" pos_y="144" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="55" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -451,7 +451,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="88" pos_y="144"/>
       <trainer id="1" name="Drake" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
-        <pokemon id="5" name="SALAMANCE" speed="1" cooldown="600" dir="left" hp="120" attack="3" special_attack="12" defense="1" pos_x="228" pos_y="144" active="true"/>
+        <pokemon id="5" name="SALAMANCE" speed="1" cooldown="250" dir="left" hp="300" attack="3" special_attack="25" defense="8" pos_x="228" pos_y="144" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="81" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -477,7 +477,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="72" pos_y="152"/>
       <trainer id="1" name="Red" active="false" pos_x="168" pos_y="160" file="textures/PokemonCharacters.png">
-        <pokemon id="8" name="GROUDON" speed="1" cooldown="150" dir="left" hp="69" attack="3" special_attack="12" defense="1" pos_x="272" pos_y="152" active="true"/>
+        <pokemon id="8" name="GROUDON" speed="1" cooldown="150" dir="left" hp="400" attack="15" special_attack="21" defense="10" pos_x="272" pos_y="152" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
