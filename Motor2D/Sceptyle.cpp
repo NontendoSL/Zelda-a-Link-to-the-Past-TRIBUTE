@@ -120,6 +120,10 @@ bool Sceptyle::Update(float dt)
 
 	}
 
+	if (App->combatmanager->pokemon_active_trainer->name != "DUSCLOPS")
+	{
+		dusclops_special = false;
+	}
 	if (dusclops_special == false && App->combatmanager->pokemon_active_trainer->name == "DUSCLOPS" && App->combatmanager->pokemon_active_trainer->Special_inUse())
 	{
 		dusclops_special = true;

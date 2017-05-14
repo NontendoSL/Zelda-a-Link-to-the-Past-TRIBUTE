@@ -4,21 +4,6 @@
 
 #include "PokemonCombat.h"
 
-struct Bole_Fire
-{
-	iPoint position;
-	SDL_Rect rect;
-	bool jump_finished = false;
-	bool stop = false;
-	Collider* collider = nullptr;
-	j1Timer jump_timer;
-	float jump_time = 0;
-	iPoint jump_origin;
-	iPoint jump_dest;
-	j1Timer time_in_finished;
-	bool active = true;
-};
-
 class Groudon : public PokemonCombat
 {
 public:
@@ -66,13 +51,7 @@ public:
 
 	void CreateBoleFire();
 
-	void FireJump(Bole_Fire*);
-
-	void DoJump(Bole_Fire*);
-
 private:
-	std::vector<Bole_Fire*> bole_special;
-	SDL_Texture* texture = nullptr;
 	//Timer
 	int timetoplay = 0;
 	int dis_moved = 0;
