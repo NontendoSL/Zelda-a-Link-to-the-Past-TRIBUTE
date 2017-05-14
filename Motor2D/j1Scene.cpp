@@ -53,7 +53,7 @@ bool j1Scene::Start()
 		{
 			LoadUi();
 			
-			App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg");
+			App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg", 0);
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
 			App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
