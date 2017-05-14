@@ -30,6 +30,7 @@ bool Dusclops::Awake(pugi::xml_node &conf)
 		direction = RIGHT;
 
 	cooldown = conf.attribute("cooldown").as_int(0);
+	use_cooldown = cooldown;
 	hp = conf.attribute("hp").as_int(0);
 	attack = conf.attribute("attack").as_int(0);
 	speed = conf.attribute("speed").as_int(0);
@@ -49,16 +50,15 @@ bool Dusclops::Start()
 	scale = App->win->GetScale();
 	offset_x = 7;
 	offset_y = 17;
-	timetoplay = SDL_GetTicks();
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKECOMBAT, this);
-	timetoplay = SDL_GetTicks();
-	reset_distance = false;
-	sp_attacking = false;
-	reset_run = true;
-	texture_special = App->tex->Load("textures/Dusclops_special_2.png");
-	rect_special = { 0,0,30,30 };
-	pos_special = iPoint(0,0);
-	return true;
+timetoplay = SDL_GetTicks();
+collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 15, 15 }, COLLIDER_POKECOMBAT, this);
+timetoplay = SDL_GetTicks();
+reset_distance = false;
+sp_attacking = false;
+reset_run = true;
+rect_special = { 0,0,30,30 };
+pos_special = iPoint(0, 0);
+return true;
 }
 
 bool Dusclops::Update(float dt)
@@ -66,7 +66,6 @@ bool Dusclops::Update(float dt)
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
-		//pokemon controlled by player
 		switch (state)
 		{
 		case PC_IDLE:
@@ -117,26 +116,13 @@ bool Dusclops::Update(float dt)
 	{
 
 	}
-	/*else if (App->scene->gamestate == TIMETOPLAY)
-	{
-	if (SDL_GetTicks() - timetoplay > 1000)
-	{
-	App->scene->gamestate = INGAME;
-	}
-	}*/
-	/*	**Only the special attack is launch.**
-	if (drawThrowSP)
-	{
-		ThrowSP();
-	}*/
 
-	if (CheckPlayerPos() < 30 && state == PC_WALKING)
+	if (CheckPlayerPos() < VIEWING_DISTANCE && state == PC_WALKING)
 	{
-		OrientatePokeLink();
 		state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < 6 && (state == PC_WALKING || state == PC_CHASING))
+	if (CheckPlayerPos() < ATTACK_DISTANCE && (state == PC_WALKING || state == PC_CHASING) && wait_attack.ReadSec() > 0.5)
 	{
 		OrientatePokeLink();
 		state = PC_ATTACKING;
@@ -145,12 +131,7 @@ bool Dusclops::Update(float dt)
 		current_animation->Reset();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
-	{
-		hp = 40;
-	}
-
-	if (hp < 50 && use_special == false)
+	if (hp < 60 && use_special == false)
 	{
 		state = PC_SPECIAL;
 		anim_state = PC_SPECIAL;
@@ -166,8 +147,10 @@ bool Dusclops::Update(float dt)
 	{
 		stop_anim_special = true;
 	}
-
-	LOG("%i", rect_special.w);
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+	{
+		hp = 20;
+	}
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
@@ -177,7 +160,7 @@ void Dusclops::Draw()
 {
 	if (use_special)
 	{
-		App->render->Blit(texture_special, position.x - 15 - pos_special.x, position.y - 20 - pos_special.y, &rect_special, 0, true, angle_special);
+		App->render->Blit(App->combatmanager->texture_special_dusclops, position.x - 15 - pos_special.x, position.y - 20 - pos_special.y, &rect_special, 0, true, angle_special);
 	}
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, DUSCLOPS);
 }
@@ -271,10 +254,19 @@ bool Dusclops::Walking(float dt)
 		dis_moved = 0;
 		reset_distance = false;
 	}
-	if (canmove % 2 == 0)
+	if (canmove % 3 != 0)
 	{
 		Move(dt);
 	}
+	else
+	{
+		walking = true;
+	}
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
 
 
 	if (dis_moved >= distance)
@@ -370,6 +362,7 @@ bool Dusclops::Attack()
 			current_animation = nullptr;
 			state = PC_IDLE;
 			anim_state = PC_IDLE;
+			wait_attack.Start();
 			getdamage = false;
 		}
 	}
@@ -434,7 +427,19 @@ bool Dusclops::Chasing(float dt)
 		dis_moved = 0;
 		reset_distance = false;
 	}
-	Move(dt);
+	if (canmove % 3 != 0)
+	{
+		Move(dt);
+	}
+	else
+	{
+		walking = true;
+	}
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
 
 
 	if (dis_moved >= distance)

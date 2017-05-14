@@ -54,8 +54,6 @@ public:
 
 	int CheckPlayerPos();
 
-	bool use_special = false;
-
 private:
 
 	//Timer
@@ -65,8 +63,9 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
+	int use_cooldown = 0;
 
-	SDL_Texture* texture_special = nullptr;
+
 	SDL_Rect rect_special;
 	iPoint pos_special;
 	bool stop_anim_special = false;
