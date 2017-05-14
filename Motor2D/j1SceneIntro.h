@@ -59,6 +59,7 @@ private:
 	SDL_Texture*	Menu_bg = nullptr;
 	float			bg_anim = 0;
 	bool			right = false;
+	bool			clenaudio_video = false;
 
 
 	uint Menu_Cursor;

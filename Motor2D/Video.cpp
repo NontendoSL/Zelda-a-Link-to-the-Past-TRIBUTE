@@ -248,7 +248,8 @@ bool Video::PostUpdate()
 		SDL_RenderCopy(App->render->renderer, texture, NULL, &rendering_rect);
 	}
 
-	if (quit) ResetValues();
+	if (quit) 
+		ResetValues();
 
 	return true;
 }
