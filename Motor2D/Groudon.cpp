@@ -14,6 +14,9 @@ Groudon::Groudon()
 
 Groudon::~Groudon()
 {
+	App->tex->UnLoad(texture);
+	bole_special.clear();
+	texture = nullptr;
 }
 
 
@@ -30,6 +33,7 @@ bool Groudon::Awake(pugi::xml_node &conf)
 		direction = RIGHT;
 
 	cooldown = conf.attribute("cooldown").as_int(0);
+	use_cooldown = 0;
 	hp = conf.attribute("hp").as_int(0);
 	attack = conf.attribute("attack").as_int(0);
 	speed = conf.attribute("speed").as_int(0);
@@ -49,6 +53,7 @@ bool Groudon::Start()
 	scale = App->win->GetScale();
 	offset_x = 15;
 	offset_y = 34;
+	texture = App->tex->Load("Groudon_special.png");
 	timetoplay = SDL_GetTicks();
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 30, 30 }, COLLIDER_POKECOMBAT, this);
 	timetoplay = SDL_GetTicks();
@@ -57,6 +62,7 @@ bool Groudon::Start()
 	reset_run = true;
 	return true;
 }
+
 
 bool Groudon::Update(float dt)
 {
@@ -115,19 +121,84 @@ bool Groudon::Update(float dt)
 
 	}
 
-	if (CheckPlayerPos() < 30 && state == PC_WALKING)
+	if (CheckPlayerPos() < VIEWING_DISTANCE && state == PC_WALKING)
 	{
-		OrientatePokeLink();
 		state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < 6 && (state == PC_WALKING || state == PC_CHASING))
+	if (CheckPlayerPos() < ATTACK_DISTANCE && (state == PC_WALKING || state == PC_CHASING) && wait_attack.ReadSec() > 0.5)
 	{
 		OrientatePokeLink();
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
-		current_animation = App->anim_manager->GetAnimation(state, direction, GROUDON);
+		attacker = false;
+		current_animation = App->anim_manager->GetAnimation(state, direction, SALAMENCE);
 		current_animation->Reset();
+	}
+
+	if (use_cooldown == cooldown && state != PC_SPECIAL)
+	{
+		state = PC_SPECIAL;
+		anim_state = PC_SPECIAL;
+		use_cooldown = 0;
+		attacker = false;
+		wait_attack.Start();
+		CreateBoleFire();
+		cooldown = 90000;
+		current_animation = App->anim_manager->GetAnimation(state, direction, SALAMENCE);
+		current_animation->Reset();
+	}
+
+	max_boles = 0;
+	if (bole_special.size() > 0)
+	{
+		for (int i = 0; i < bole_special.size(); i++)
+		{
+			if (bole_special[i]->active)
+			{
+				if (bole_special[i]->time_in_finished.ReadSec() > 1)
+				{
+					bole_special[i]->active = false;
+				}
+				else
+				{
+					FireJump(bole_special[i]);
+					bole_special[i]->collider->SetPos(bole_special[i]->position.x, bole_special[i]->position.y);
+				}
+			}
+			else
+			{
+				max_boles++;
+			}
+		}
+	}
+
+	if (max_boles == 3)
+	{
+		int candelete = 0;
+		for (int i = 0; i < bole_special.size(); i++)
+		{
+			if (bole_special[i]->collider != nullptr)
+			{
+				bole_special[i]->collider->to_delete = true;
+				bole_special[i]->collider = nullptr;
+			}
+			else
+			{
+				candelete++;
+				delete bole_special[i];
+			}
+		}
+		if (candelete == 3)
+		{
+			bole_special.clear();
+		}
+	}
+
+
+	if (use_cooldown < cooldown && state != PC_SPECIAL)
+	{
+		use_cooldown++;
 	}
 
 	//Collision follow the player
@@ -137,6 +208,13 @@ bool Groudon::Update(float dt)
 
 void Groudon::Draw()
 {
+	if (bole_special.size() > 0)
+	{
+		for (int i = 0; i < bole_special.size(); i++)
+		{
+			App->render->Blit(texture, bole_special[i]->position.x, bole_special[i]->position.y, &bole_special[i]->rect);
+		}
+	}
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, GROUDON);
 }
 
@@ -229,10 +307,19 @@ bool Groudon::Walking(float dt)
 		dis_moved = 0;
 		reset_distance = false;
 	}
-	if (canmove % 2 == 0)
+	if (canmove % 3 != 0)
 	{
 		Move(dt);
 	}
+	else
+	{
+		walking = true;
+	}
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
 
 
 	if (dis_moved >= distance)
@@ -358,14 +445,79 @@ bool Groudon::Attack()
 	return true;
 }
 
-/*void Dusclops::ThrowSP() **Only the special attack is launch.**
-{
-
-}*/
-
 void Groudon::Special_Attack()
 {
+	if (attacker)
+	{
+		attacker = false;
+		current_animation->Reset();
+		current_animation = nullptr;
+		state = PC_IDLE;
+		anim_state = PC_IDLE;
+		getdamage = false;
+	}
+	else
+	{
+		if (wait_attack.ReadSec() > 2)
+		{
+			wait_attack.Start();
+			CreateBoleFire();
+		}
+		if (bole_special.size() > 2)
+		{
+			attacker = true;
+		}
+	}
+}
 
+void Groudon::CreateBoleFire()
+{
+	Bole_Fire* bole = new Bole_Fire;
+	bole->jump_origin = position;
+	bole->jump_dest = App->combatmanager->pokemon_active_link->position;
+	bole->jump_timer.Start();
+	bole->rect = { 0,0,27,21 };
+	bole->jump_finished = false;
+	bole->collider = App->collision->AddCollider(bole->rect, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+	bole_special.push_back(bole);
+}
+
+
+void Groudon::FireJump(Bole_Fire* bole)
+{
+	// CHECK JUMP MOVEMENT -----------------------
+	if (bole->position.DistanceTo(bole->jump_dest) >= 10)
+	{
+		DoJump(bole);
+	}
+	else
+	{
+		bole->jump_finished = true;
+	}
+	// --------------------------------------------
+
+	//  ----------
+	if (bole->jump_finished && bole->stop == false)
+	{
+		bole->stop = true;
+		bole->rect = { 31,0,95,69 };
+		bole->collider->rect = bole->rect;
+		bole->time_in_finished.Start();
+	}
+	// -----------------------------
+}
+
+void Groudon::DoJump(Bole_Fire* bole)
+{
+	bole->jump_time = bole->jump_timer.ReadSec();
+	//jump_time *= 1.5;
+	// QUADRATIC
+	//position.x = (1 - jump_time) * (1 - jump_time)*jump_origin.x + 2 * jump_time * (1 - jump_time) * (jump_origin.x + 5) + jump_time * jump_time * jump_dest.x;
+	bole->position.y = (1 - bole->jump_time) * (1 - bole->jump_time)*bole->jump_origin.y + 2 * bole->jump_time * (1 - bole->jump_time) * (bole->jump_origin.y - 50) + bole->jump_time * bole->jump_time * bole->jump_dest.y;
+
+	// LINEAR
+	bole->position.x = bole->jump_origin.x + (bole->jump_dest.x - bole->jump_origin.x) * bole->jump_time;
+	//position.y = jump_origin.y + (jump_dest.y - jump_origin.y) * jump_time;
 }
 
 bool Groudon::Chasing(float dt)
@@ -377,7 +529,19 @@ bool Groudon::Chasing(float dt)
 		dis_moved = 0;
 		reset_distance = false;
 	}
-	Move(dt);
+	if (canmove % 3 != 0)
+	{
+		Move(dt);
+	}
+	else
+	{
+		walking = true;
+	}
+	if (canmove > 500)
+	{
+		canmove = 0;
+	}
+	canmove++;
 
 
 	if (dis_moved >= distance)
