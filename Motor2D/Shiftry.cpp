@@ -65,7 +65,6 @@ bool Shiftry::Update(float dt)
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
-		//pokemon controlled by player
 		switch (state)
 		{
 		case PC_IDLE:
@@ -116,18 +115,6 @@ bool Shiftry::Update(float dt)
 	{
 
 	}
-	/*else if (App->scene->gamestate == TIMETOPLAY)
-	{
-	if (SDL_GetTicks() - timetoplay > 1000)
-	{
-	App->scene->gamestate = INGAME;
-	}
-	}*/
-	/*	**Only the special attack is launch.**
-	if (drawThrowSP)
-	{
-	ThrowSP();
-	}*/
 
 	if (CheckPlayerPos() < VIEWING_DISTANCE && state == PC_WALKING)
 	{

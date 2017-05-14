@@ -184,25 +184,28 @@ void Blaziken::OnCollision(Collider* c1, Collider* c2)
 					dir_hit = pokemon_2->direction;
 					knockback_time.Start();
 
-					pokemon_2->SetState(PC_COLLISION);
-					pokemon_2->SetAnimState(PC_IDLE);
-					if (pokemon_2->direction == UP)
+					if (pokemon_2->GetState() != PC_SPECIAL)
 					{
-						pokemon_2->dir_hit = DOWN;
+						pokemon_2->SetState(PC_COLLISION);
+						pokemon_2->SetAnimState(PC_IDLE);
+						if (pokemon_2->direction == UP)
+						{
+							pokemon_2->dir_hit = DOWN;
+						}
+						else if (pokemon_2->direction == DOWN)
+						{
+							pokemon_2->dir_hit = UP;
+						}
+						else if (pokemon_2->direction == RIGHT)
+						{
+							pokemon_2->dir_hit = LEFT;
+						}
+						else
+						{
+							pokemon_2->dir_hit = RIGHT;
+						}
+						pokemon_2->knockback_time.Start();
 					}
-					else if (pokemon_2->direction == DOWN)
-					{
-						pokemon_2->dir_hit = UP;
-					}
-					else if (pokemon_2->direction == RIGHT)
-					{
-						pokemon_2->dir_hit = LEFT;
-					}
-					else
-					{
-						pokemon_2->dir_hit = RIGHT;
-					}
-					pokemon_2->knockback_time.Start();
 				}
 			}
 		}
