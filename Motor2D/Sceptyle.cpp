@@ -14,6 +14,9 @@ Sceptyle::Sceptyle()
 
 Sceptyle::~Sceptyle()
 {
+	sp_attack = nullptr;
+	top_leaf_sp = nullptr;
+	bot_leaf_sp = nullptr;
 }
 
 bool Sceptyle::Awake(pugi::xml_node &conf )

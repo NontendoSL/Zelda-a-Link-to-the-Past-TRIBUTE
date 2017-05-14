@@ -271,7 +271,10 @@ void Button::Update(j1GuiEntity* focused)
 Button::~Button()
 {
 	delete buttontext;
-
+	if (anim != nullptr)
+	{
+		RELEASE(anim);
+	}
 }
 
 /////////////////////////////// DIALOGUE METHODS ///////////////////////////////
@@ -926,7 +929,10 @@ void ZeldaMenu::ShowItemInfo()
 
 ZeldaMenu::~ZeldaMenu()
 {
-
+	for (int i = 0; i < items.size(); i++)
+	{
+		delete items[i];
+	}
 }
 
 
@@ -1641,7 +1647,10 @@ PokemonWorldBag::PokemonWorldBag()
 
 PokemonWorldBag::~PokemonWorldBag()
 {
-
+	for (int i = 0; i < bag_item.size(); i++)
+	{
+		delete bag_item[i];
+	}
 }
 
 void PokemonWorldBag::Update(j1GuiEntity * nothing)
