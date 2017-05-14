@@ -87,7 +87,7 @@ public:
 	void SwitchMap(bool isTP);
 
 	//SAVE/LOAD FUNCTION
-	bool Save(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;

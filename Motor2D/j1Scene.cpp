@@ -370,6 +370,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			App->SaveGame("save_file.xml");
 		}
 	}
 	if (element->identifier == "menu_opt")
@@ -896,9 +897,9 @@ void j1Scene::SwitchMap(bool isTP)
 	}
 }
 
-bool j1Scene::Save(pugi::xml_node& node)
+bool j1Scene::Save(pugi::xml_node& node) const
 {
-	bool ret = false;
+	bool ret = true;
 
 	//Player node
 	pugi::xml_node checkpoint = node.append_child("CheckPoint");

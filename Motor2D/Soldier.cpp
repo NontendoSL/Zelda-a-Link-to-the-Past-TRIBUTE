@@ -112,7 +112,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 		//DYNOBJECT COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_DYNOBJECT && c2->callback != nullptr)
 		{
-			if (((DynamicObjects*)c2->callback)->GetState() == D_AIR)
+			if (((DynamicObjects*)c2->callback)->GetState() == D_AIR && soldier_type != PASSIVE)
 			{
 				App->audio->PlayFx(12);
 				knockback_time.Start();
