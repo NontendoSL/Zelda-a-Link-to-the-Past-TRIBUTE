@@ -66,7 +66,7 @@ private:
 
 public:
 	MainMenu*			main_menu = nullptr;
-	ControllerMapping* controller_map = nullptr;
+	ControllerMapping*  controller_map = nullptr;
 	bool				goHouse = false;
 	bool				fade;
 	bool				menu = false;

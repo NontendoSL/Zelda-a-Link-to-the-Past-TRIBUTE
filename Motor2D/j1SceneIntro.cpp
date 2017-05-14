@@ -49,7 +49,7 @@ bool j1SceneIntro::Start()
 	App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 	App->input_manager->AddListener(this);
 	SDL_Rect r = { 0, 0, 640, 480 };
-	App->video->PlayVideo("video.ogv", r);
+	//App->video->PlayVideo("video.ogv", r);
 	fade = true;
 	return true;
 }
@@ -191,6 +191,7 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 				main_menu->active = false;
 				goHouse = true;
 				((Button*)element)->click = false;
+				App->scene->new_game = true;
 				return;
 			}
 		}
@@ -212,6 +213,11 @@ void j1SceneIntro::OnGui(j1GuiEntity* element, GuiAction event)
 				main_menu->active = false;
 				goHouse = true;
 				((Button*)element)->click = false;
+
+				if (App->fs->Exists("save/save_file.xml"))
+				{
+					App->LoadGame("save_file.xml");
+				}
 				return;
 			}
 		}

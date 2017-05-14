@@ -73,7 +73,10 @@ public:
 	void CreateTeleports();
 
 	//Load Maps
+	bool NewGame();
+	bool ContinueGame(pugi::xml_node&);
 	bool Load_new_map(int n, bool isTP);
+
 	//Load CombatMaps
 	bool Load_Combat_map(int n);
 
@@ -86,6 +89,7 @@ public:
 
 	//SAVE/LOAD FUNCTION
 	bool Save(pugi::xml_node&) const;
+	bool Load(pugi::xml_node&);
 
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
@@ -151,6 +155,11 @@ public:
 	bool use_tatical = false;
 
 	bool cash_swapped = false;
+
+	//NEW GAME / CONTINUE
+	bool new_game = false;
+	bool continue_game = false;
+
 private:
 	uint volume = 120;
 	bool joy_talk = false;

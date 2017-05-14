@@ -296,6 +296,16 @@ bool Player::SaveData(pugi::xml_node& check_node)
 	resources.append_attribute("bombmanager") = checkpoint.bombcontainer_picked;
 	resources.append_attribute("hookshot") = checkpoint.hookshot_picked;
 
+	pugi::xml_node ui = check_node.append_child("UI");
+	if (App->gui->GetGuiState() >= ZELDA_HUD && App->gui->GetGuiState() < POKEMON_COMBAT)
+	{
+		ui.append_attribute("world") = "Zelda";
+	}
+	else if (App->gui->GetGuiState() >= POKEMON_COMBAT && App->gui->GetGuiState() < MAPPING_CONTROLLER)
+	{
+		ui.append_attribute("world") = "Pokemon";
+	}
+
 	return true;
 }
 
@@ -1721,6 +1731,15 @@ void Player::SaveCheckPoint(int map_id)
 	checkpoint.map_id = map_id;
 	checkpoint.hp_hearts = hp_hearts;
 
+	if (App->gui->GetGuiState() >= ZELDA_HUD && App->gui->GetGuiState() < POKEMON_COMBAT)
+	{
+		checkpoint.world = "Zelda";
+	}
+	else if (App->gui->GetGuiState() >= POKEMON_COMBAT && App->gui->GetGuiState() < MAPPING_CONTROLLER)
+	{
+		checkpoint.world = "Pokemon";
+	}
+
 	checkpoint.arrows = arrows;
 	checkpoint.bombs = bombs;
 	checkpoint.rupees = gems;
@@ -1740,7 +1759,7 @@ void Player::SaveCheckPoint(int map_id)
 
 	LOG("CHECKPOINT SAVED ---");
 	LOG("Map: %i", checkpoint.map_id);
-	LOG("Position: (%i,%i)",checkpoint.pos);
+	LOG("Position: (%i,%i)", checkpoint.pos);
 	LOG("Max HP: %i, Current HP: %i", checkpoint.hp_hearts.x, checkpoint.hp_hearts.y);
 	LOG("Rupees: %i, Arrows: %i, Bombs: %i", checkpoint.rupees, checkpoint.arrows, checkpoint.bombs);
 	if (checkpoint.bow_picked == true)
@@ -1755,6 +1774,46 @@ void Player::SaveCheckPoint(int map_id)
 	{
 		LOG("Hookshot PICKED", checkpoint.pos);
 	}
-	LOG("--------------------");
 	
+	LOG("WORLD: %s", checkpoint.world.c_str());
+	LOG("--------------------");
+
+}
+
+void Player::LoadStats(pugi::xml_node & node)
+{
+	pugi::xml_node curr_node = node.child("HP");
+	hp_hearts.x = curr_node.attribute("max").as_int(6);
+	hp_hearts.y = curr_node.attribute("current").as_int(6);
+
+	curr_node = node.child("RESOURCES");
+	gems = curr_node.attribute("rupees").as_uint(0);
+	arrows = curr_node.attribute("arrows").as_uint(0);
+	bombs = curr_node.attribute("bombs").as_uint(0);
+
+	curr_node = node.child("WEAPONS");
+	if (curr_node.attribute("bow").as_bool(false) == true)
+	{
+		bow = App->entity_elements->CreateBow();
+	}
+	if (curr_node.attribute("bombmanager").as_bool(false) == true)
+	{
+		bombmanager = App->entity_elements->CreateBombContainer();
+	}
+	if (curr_node.attribute("hookshot").as_bool(false) == true)
+	{
+		hook = App->entity_elements->CreateHookshot();
+	}
+
+	curr_node = node.child("UI");
+	if (curr_node.attribute("world").as_string("") == "Zelda")
+	{
+		App->gui->SetGui(ZELDA_HUD);
+	}
+	if (curr_node.attribute("world").as_string("") == "Pokemon")
+	{
+		App->gui->SetGui(POKEMON_HUD);
+	}
+
+	SaveCheckPoint(node.child("MAP").attribute("id").as_int(1));
 }

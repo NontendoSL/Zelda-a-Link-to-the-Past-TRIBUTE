@@ -83,10 +83,14 @@ bool j1Scene::Start()
 			first_loop = false;
 		}
 
-		Load_new_map(1, true);
+		if (new_game == true)
+		{
+			NewGame();
+			App->gui->SetGui(ZELDA_HUD);
+			start_menu->ResetInventory();
+		}
+
 		help_timer = SDL_GetTicks();
-		App->gui->SetGui(ZELDA_HUD);
-		start_menu->ResetInventory();
 	}
 
 	inventory = false;
@@ -920,17 +924,48 @@ bool j1Scene::Save(pugi::xml_node& node) const
 	return ret;
 }
 
-bool j1Scene::Load_new_map(int n, bool isTP)
+bool j1Scene::Load(pugi::xml_node& node)
+{
+	bool ret = true;
+
+	pugi::xml_node checkpoint = node.append_child("CheckPoint");
+	ContinueGame(checkpoint);
+
+	return ret;
+}
+
+bool j1Scene::NewGame()
 {
 	if (player == NULL)
 	{
 		player = App->entity_elements->CreatePlayer();
 	}
-	if (n == 1)
+
+	Load_new_map(1, true);
+
+	return true;
+}
+
+bool j1Scene::ContinueGame(pugi::xml_node& node)
+{
+	if (player == NULL)
 	{
-		player->score = 0;
-		player->gems = 0;
-		//hud->OpenClose(true);
+		player = App->entity_elements->CreatePlayer();
+	}
+
+	player->LoadStats(node);
+
+	switch_map = node.child("MAP").attribute("id").as_int(1);
+
+	return true;
+}
+
+
+bool j1Scene::Load_new_map(int n, bool isTP)
+{
+	if (player == NULL)
+	{
+		player = App->entity_elements->CreatePlayer();
 	}
 
 	if (n == 9 || n == 10)

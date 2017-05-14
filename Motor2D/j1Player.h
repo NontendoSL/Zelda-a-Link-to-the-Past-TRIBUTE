@@ -27,6 +27,9 @@ struct CheckPoint
 	iPoint pos = { 0, 0 };
 	int map_id = 0;
 
+	//UI
+	std::string world;
+
 	//ZELDA WORLD ---------------
 	//STATS
 	iPoint hp_hearts{ 6, 6 };
@@ -125,6 +128,7 @@ public:
 
 	//LOAD/SAVE FUNCTION ----
 	void SaveCheckPoint(int map_id);
+	void LoadStats(pugi::xml_node& node);
 	//-----------------------
 
 public:
