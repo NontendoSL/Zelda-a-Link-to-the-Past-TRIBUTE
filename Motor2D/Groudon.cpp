@@ -60,6 +60,9 @@ bool Groudon::Start()
 	reset_distance = false;
 	sp_attacking = false;
 	reset_run = true;
+
+	change_dir.Start();
+
 	return true;
 }
 

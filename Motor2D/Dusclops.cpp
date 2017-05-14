@@ -58,6 +58,9 @@ bool Dusclops::Start()
 	reset_run = true;
 	rect_special = { 0,0,30,30 };
 	pos_special = iPoint(0, 0);
+
+	change_dir.Start();
+
 	return true;
 }
 

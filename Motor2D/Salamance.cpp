@@ -59,6 +59,8 @@ bool Salamance::Start()
 	sp_attacking = false;
 	reset_run = true;
 
+	change_dir.Start();
+
 	return true;
 }
 

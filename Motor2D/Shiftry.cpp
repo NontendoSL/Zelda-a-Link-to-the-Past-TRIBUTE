@@ -57,6 +57,9 @@ bool Shiftry::Start()
 	sp_attacking = false;
 	reset_run = true;
 	hp_max = hp;
+
+	change_dir.Start();
+
 	return true;
 }
 
