@@ -198,3 +198,21 @@ void P_Explosion::MoveParticles()
 		particle[i]->Move(fPoint(particle[i]->GetSpeed().x * temp, particle[i]->GetSpeed().y * temp));
 	}
 }
+
+void P_Explosion::DeleteAllParticles()
+{
+	std::vector<Particle*>::iterator item = particle.begin();
+	while (item != particle.end())
+	{
+		if ((*item) != nullptr)
+		{
+			RELEASE(*item);
+			particle.erase(item);
+		}
+		else
+		{
+			item++;
+		}
+	}
+	particle.clear();
+}

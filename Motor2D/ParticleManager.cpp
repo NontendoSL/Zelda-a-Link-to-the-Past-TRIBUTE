@@ -228,7 +228,9 @@ bool ParticleManager::DeleteAllGroups()
 	std::list<P_Fire*>::iterator fire = Group_Fire.begin();
 	while (fire != Group_Fire.end())
 	{
-		fire._Ptr->_Myval->particle.clear();
+		fire._Ptr->_Myval->DeleteAllParticles();
+		Group_Follow.erase(fire);
+		delete fire._Ptr->_Myval;
 		fire++;
 	}
 	Group_Fire.clear();
@@ -236,7 +238,9 @@ bool ParticleManager::DeleteAllGroups()
 	std::list<P_Explosion*>::iterator explosion = Group_Explosion.begin();
 	while (explosion != Group_Explosion.end())
 	{
-		explosion._Ptr->_Myval->particle.clear();
+		explosion._Ptr->_Myval->DeleteAllParticles();
+		Group_Follow.erase(explosion);
+		delete explosion._Ptr->_Myval;
 		explosion++;
 	}
 	Group_Explosion.clear();
@@ -244,7 +248,9 @@ bool ParticleManager::DeleteAllGroups()
 	std::list<P_Firework*>::iterator firework = Group_Firework.begin();
 	while (firework != Group_Firework.end())
 	{
-		firework._Ptr->_Myval->particle.clear();
+		firework._Ptr->_Myval->DeleteAllParticles();
+		Group_Follow.erase(firework);
+		delete firework._Ptr->_Myval;
 		firework++;
 	}
 	Group_Firework.clear();

@@ -112,6 +112,24 @@ void P_Fire::MoveParticles()
 	}
 }
 
+void P_Fire::DeleteAllParticles()
+{
+	std::vector<Particle*>::iterator item = particle.begin();
+	while (item != particle.end())
+	{
+		if ((*item) != nullptr)
+		{
+			RELEASE(*item);
+			particle.erase(item);
+		}
+		else
+		{
+			item++;
+		}
+	}
+	particle.clear();
+}
+
 void P_Fire::Update_position(iPoint* element)
 {
 	pos.x = element->x - App->render->camera.x / App->win->GetScale();

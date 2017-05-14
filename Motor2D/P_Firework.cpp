@@ -179,3 +179,21 @@ void P_Firework::MoveParticles()
 	}
 
 }
+
+void P_Firework::DeleteAllParticles()
+{
+	std::vector<Particle*>::iterator item = particle.begin();
+	while (item != particle.end())
+	{
+		if ((*item) != nullptr)
+		{
+			RELEASE(*item);
+			particle.erase(item);
+		}
+		else
+		{
+			item++;
+		}
+	}
+	particle.clear();
+}

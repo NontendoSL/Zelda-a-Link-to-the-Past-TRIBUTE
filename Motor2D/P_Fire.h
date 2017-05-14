@@ -26,6 +26,8 @@ public:
 
 	void MoveParticles();
 
+	void DeleteAllParticles();
+
 public:
 	std::vector<Particle*> particle;
 	SceneElement* element_to_follow;
