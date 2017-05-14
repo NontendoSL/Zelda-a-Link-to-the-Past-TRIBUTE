@@ -528,7 +528,10 @@ void ZeldaHud::Input()
 {
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 	{
-		App->scene->switch_menu = true;
+		if (App->scene->gamestate != CUTSCENE)
+		{
+			App->scene->switch_menu = true;
+		}
 	}
 }
 
@@ -1026,24 +1029,30 @@ void PokemonCombatHud::LoadNewPokemon(PokemonCombat* pokemon, bool trainer) //tr
 
 void PokemonCombatHud::CombatInfo(PokemonCombat* pokemon, PokemonCombat* pokemon_2)
 {
-	//pokemon 1
-	((Text*)App->gui->GetEntity("link_pk_name"))->Write(pokemon->name.c_str());
-	hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
-	cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
-	if (hpbar_pLink.x == 0)
-		hpbar_pLink.x = 1;
-	hp1->Hitbox.w = (hpbar_pLink.y * 47) / hpbar_pLink.x;
-	ability->elements[0]->Hitbox.h = 0;
-	cooldown = false;
-	poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
-	pokemon->target = pokemon_2;
+	if (pokemon != nullptr)
+	{
+		//pokemon 1
+		((Text*)App->gui->GetEntity("link_pk_name"))->Write(pokemon->name.c_str());
+		hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
+		cdtime = iPoint(pokemon->cooldown, pokemon->cooldown);
+		if (hpbar_pLink.x == 0)
+			hpbar_pLink.x = 1;
+		hp1->Hitbox.w = (hpbar_pLink.y * 47) / hpbar_pLink.x;
+		ability->elements[0]->Hitbox.h = 0;
+		cooldown = false;
+		poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
+		pokemon->target = pokemon_2;
+	}
 
-	//Pokemon 2
-	((Text*)App->gui->GetEntity("brendan_pk_name"))->Write(pokemon_2->name.c_str());
-	hpbar_pBrendan = iPoint(pokemon_2->hp, pokemon_2->hp);
-	hp2->Hitbox.w = (hpbar_pBrendan.y * 47) / hpbar_pBrendan.x;
-	poke_hp_Brendan->Write(std::string(std::to_string(hpbar_pBrendan.y) + "/" + std::to_string(hpbar_pBrendan.x)).c_str());
-	pokemon_2->target = pokemon;
+	if (pokemon_2 != nullptr)
+	{
+		//Pokemon 2
+		((Text*)App->gui->GetEntity("brendan_pk_name"))->Write(pokemon_2->name.c_str());
+		hpbar_pBrendan = iPoint(pokemon_2->hp, pokemon_2->hp);
+		hp2->Hitbox.w = (hpbar_pBrendan.y * 47) / hpbar_pBrendan.x;
+		poke_hp_Brendan->Write(std::string(std::to_string(hpbar_pBrendan.y) + "/" + std::to_string(hpbar_pBrendan.x)).c_str());
+		pokemon_2->target = pokemon;
+	}
 
 	//TOP HUD BALLS
 	for (int i = 0; i < App->gui->GetEntity("top hud")->elements.size(); i++)
@@ -1215,7 +1224,7 @@ void PokemonWorldHud::Input()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 	{
-		if (App->scene->player->dialog == nullptr)
+		if (App->scene->gamestate != CUTSCENE)
 		{
 			if (active)
 			{
