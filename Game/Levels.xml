@@ -341,6 +341,9 @@
       <vilagers>
         <vilager id="10" name="Ric" rect_x="16" rect_y="125" rect_w="20" rect_h="25" pos_x="230" pos_y="553" dialog="Hey, Link take this object and go to kill Ganon.         Good Luck!"/>
       </vilagers>
+      <dynobjects>
+        <dynobject id="6" name="door" type="ZELDA" rect_x="71" rect_y="89" rect_w="32" rect_h="16" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
+      </dynobjects>
     </map>
 
   </maps>

@@ -627,15 +627,36 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						else
 							c2->callback->direction = LEFT;
 						Villager* villager = (Villager*)c2->callback;
-						if (App->scene->notrepeatCombat)
+						if (App->scene->last_map > 8 && App->scene->last_map != 10 && App->scene->last_map != 16)
 						{
-							App->scene->combat_map_id = villager->switch_map;
-							dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+							if (App->scene->notrepeatCombat)
+							{
+								App->scene->combat_map_id = villager->switch_map;
+								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+							}
+							else
+							{
+								App->scene->combat_map_id = 0;
+								dialog = App->gui->CreateDialogue("Congratulations! you defeated me, you see the next coach. He will not lose so easily...");
+							}
 						}
 						else
 						{
-							App->scene->combat_map_id = 0;
-							dialog = App->gui->CreateDialogue("Congratulations! you defeated me, you see the next coach. He will not lose so easily...");
+							if (App->scene->last_map == 5)
+							{
+								App->scene->switch_map = villager->switch_map;
+								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+							}
+							else if (App->scene->last_map == 16)
+							{
+								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+								App->entity_elements->DeleteElement("door");
+								App->map->EditCost(32, 54, 0);
+								App->map->EditCost(33, 54, 0);
+
+								App->map->EditCost(32, 42, App->map->data.tilesets[0]->firstgid + 1);
+								App->map->EditCost(33, 42, App->map->data.tilesets[0]->firstgid + 1);
+							}
 						}
 
 						collision_interact->to_delete = true;

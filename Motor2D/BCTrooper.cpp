@@ -369,6 +369,10 @@ void BCTrooper::Hit()
 	}
 	else
 	{
+		if (Change_State.ReadSec() < 0.2)
+		{
+			Movebyhit(2);
+		}
 		if (Change_State.ReadSec() > 1.5)
 		{
 			if (ChangeRadius_insta(10, false))
@@ -478,6 +482,39 @@ Collider* BCTrooper::GetColliderMaze(uint pos)
 	return boles[pos].collision_maze;
 }
 
+bool BCTrooper::Movebyhit(int speed)
+{
+	if (dir_hit == UP)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		{
+			position.y -= speed;
+		}
+	}
+	else if (dir_hit == DOWN)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		{
+			position.y += speed;
+		}
+	}
+	else if (dir_hit == LEFT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		{
+			position.x -= speed;
+		}
+	}
+	else if (dir_hit == RIGHT)
+	{
+		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		{
+			position.x += speed;
+		}
+	}
+	return true;
+}
+
 uint BCTrooper::GetMazeSize() const
 {
 	return boles.size();
@@ -513,11 +550,14 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD)
 		{
+			Player* link = (Player*)c2->callback;
 			if (Wait_attack.ReadSec() > 1.6 && state != BC_DEFEND)
 			{
 				App->audio->PlayFx(12);
 				hp -= 10;
 				state = BC_HIT;
+				dir_hit = link->direction;
+
 				reset_time = true;
 				stunned = true;
 				if (hp <= 0)

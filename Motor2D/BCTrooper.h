@@ -62,6 +62,8 @@ public:
 	BCTrooperState GetState() const;
 	Collider* GetColliderMaze(uint pos);
 
+	bool Movebyhit(int speed);
+
 	uint GetMazeSize() const;
 
 	//Collision----------------------------------
