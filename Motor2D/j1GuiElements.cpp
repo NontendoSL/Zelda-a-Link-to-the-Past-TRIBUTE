@@ -519,6 +519,7 @@ ZeldaHud::ZeldaHud()
 	belong = ZELDA_HUD;
 	App->gui->GetEntity("boss bar")->visible = false;
 	App->gui->GetEntity("hp boss")->visible = false;
+	App->gui->GetEntity("YOU WIN")->visible = false;
 }
 
 void ZeldaHud::Update(j1GuiEntity* focused)

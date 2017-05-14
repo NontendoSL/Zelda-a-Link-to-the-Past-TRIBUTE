@@ -121,6 +121,13 @@ bool j1Scene::Update(float dt)
 
 		if (ingame == true)
 		{
+			if (App->gui->GetEntity("YOU WIN")->visible)
+			{
+				if (win_timer + 1500 < SDL_GetTicks())
+				{
+					App->gui->GetEntity("YOU WIN")->visible = false;
+				}
+			}
 			player->ShowHearts();
 
 			/*if (help_timer + 2000 < SDL_GetTicks() && help_bool)

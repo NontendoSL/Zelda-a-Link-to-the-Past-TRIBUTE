@@ -193,7 +193,7 @@ public:
 	//NEW GAME / CONTINUE
 	bool new_game = false;
 	bool continue_game = false;
-
+	uint win_timer = 0;
 	bool joy_talk = false;
 private:
 	uint volume = 120;

@@ -52,6 +52,10 @@ bool Ganon::Start()
 
 bool Ganon::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	{
+		hp = 0;
+	}
 	App->gui->GetEntity("hp boss")->Hitbox.w = (hp * 149) / 100;
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Red);
 	// STATE MACHINE ------------------
@@ -149,6 +153,7 @@ bool Ganon::InitialUpdate(float dt)
 
 bool Ganon::InvincibleUpdate(float dt)
 {
+
 	if(hp<100)
 		hp+=0.1f;
 	// Until player hasn't killed a certain amount of enemies.
@@ -177,7 +182,7 @@ bool Ganon::InvincibleUpdate(float dt)
 		state = G_ATTACKING;
 		special_attack = G_SPECIAL_2;
 		anim_state = G_SPECIAL_2;
-		hp = 30;
+		hp = 100;
 	}
 	return true;
 }
@@ -240,6 +245,7 @@ bool Ganon::RageUpdate(float dt)
 
 bool Ganon::DeathUpdate(float dt)
 {
+	Die();
 	to_delete = true;
 	return true;
 }
@@ -563,7 +569,10 @@ void Ganon::Spawn()
 
 bool Ganon::Die()
 {
-
+	App->gui->GetEntity("boss bar")->visible = false;
+	App->gui->GetEntity("hp boss")->visible = false;
+	App->gui->GetEntity("YOU WIN")->visible = true;
+	App->scene->win_timer = SDL_GetTicks();
 	return true;
 }
 
