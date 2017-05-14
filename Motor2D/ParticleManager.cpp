@@ -229,7 +229,7 @@ bool ParticleManager::DeleteAllGroups()
 	while (fire != Group_Fire.end())
 	{
 		fire._Ptr->_Myval->DeleteAllParticles();
-		Group_Follow.erase(fire);
+		Group_Fire.erase(fire);
 		delete fire._Ptr->_Myval;
 		fire++;
 	}
@@ -239,7 +239,7 @@ bool ParticleManager::DeleteAllGroups()
 	while (explosion != Group_Explosion.end())
 	{
 		explosion._Ptr->_Myval->DeleteAllParticles();
-		Group_Follow.erase(explosion);
+		Group_Explosion.erase(explosion);
 		delete explosion._Ptr->_Myval;
 		explosion++;
 	}
@@ -249,7 +249,7 @@ bool ParticleManager::DeleteAllGroups()
 	while (firework != Group_Firework.end())
 	{
 		firework._Ptr->_Myval->DeleteAllParticles();
-		Group_Follow.erase(firework);
+		Group_Firework.erase(firework);
 		delete firework._Ptr->_Myval;
 		firework++;
 	}
