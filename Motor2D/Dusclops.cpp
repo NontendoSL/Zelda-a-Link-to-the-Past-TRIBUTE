@@ -367,22 +367,22 @@ bool Dusclops::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 37, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x + 15, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y + 1, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y + 3, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - 22, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 	}

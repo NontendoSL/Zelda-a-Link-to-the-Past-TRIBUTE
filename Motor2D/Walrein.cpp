@@ -351,17 +351,17 @@ void Walrein::Special_Attack()
 		}
 		else if (direction == RIGHT)
 		{
-			sp_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			sp_attack = App->collision->AddCollider({ position.x + 14, position.y - 26, 8, 22 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == DOWN)
 		{
-			sp_attack = App->collision->AddCollider({ position.x - 10, position.y + 1, 22, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			sp_attack = App->collision->AddCollider({ position.x - 10, position.y + 2, 22, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == LEFT)
 		{
-			sp_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			sp_attack = App->collision->AddCollider({ position.x - 22, position.y - 26, 8, 22 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 	}

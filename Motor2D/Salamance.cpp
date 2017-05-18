@@ -366,22 +366,22 @@ bool Salamance::Attack()
 		attacker = true;
 		if (direction == UP)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - 11, position.y - 37, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == RIGHT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x + 17, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == DOWN)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - 10, position.y + 2, 22, 8 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 		else if (direction == LEFT)
 		{
-			collision_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
+			collision_attack = App->collision->AddCollider({ position.x - 25, position.y - 26, 8, 22 }, COLLIDER_POKEMON_ATTACK, this);
 			App->audio->PlayFx(10);
 		}
 	}
@@ -417,7 +417,7 @@ void Salamance::Special_Attack()
 		wait_attack.Start();
 		if (direction == UP)
 		{
-			sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 16, 50 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 70, 16, 50 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 			App->audio->PlayFx(10);
 			//Particles
 			App->particlemanager->CreateFire_Particle(nullptr, nullptr, iPoint(position.x - offset_x, position.y - offset_y), { 0,12,12,0 }, { 2,5 }, { 15, 10 }, { 0, 250 }, P_UP, 100, 2);
@@ -425,7 +425,7 @@ void Salamance::Special_Attack()
 		}
 		else if (direction == RIGHT)
 		{
-			sp_attack = App->collision->AddCollider({ position.x + 12, position.y - 26, 50, 16 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			sp_attack = App->collision->AddCollider({ position.x + 10, position.y - 26, 50, 16 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 			App->audio->PlayFx(10);
 			//Particles
 			App->particlemanager->CreateFire_Particle(nullptr, nullptr, iPoint(position.x - offset_x, position.y - offset_y), { 0,12,12,0 }, { 2,5 }, { 15, 10 }, { 250, 0 }, P_RIGHT, 100, 2);
@@ -433,7 +433,7 @@ void Salamance::Special_Attack()
 		}
 		else if (direction == DOWN)
 		{
-			sp_attack = App->collision->AddCollider({ position.x - 10, position.y - 4, 16, 50 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			sp_attack = App->collision->AddCollider({ position.x - 10, position.y - 2, 16, 50 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 			App->audio->PlayFx(10);
 			//Particles
 			App->particlemanager->CreateFire_Particle(nullptr, nullptr, iPoint(position.x - offset_x, position.y - offset_y), { 0,12,12,0 }, { 2,5 }, { 15, 10 }, { 0, 250 }, P_DOWN, 100, 2);
@@ -441,7 +441,7 @@ void Salamance::Special_Attack()
 		}
 		else if (direction == LEFT)
 		{
-			sp_attack = App->collision->AddCollider({ position.x - 20, position.y - 26, 50, 16 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+			sp_attack = App->collision->AddCollider({ position.x - 60, position.y - 26, 50, 16 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 			App->audio->PlayFx(10);
 			//Particles
 			App->particlemanager->CreateFire_Particle(nullptr, nullptr, iPoint(position.x - offset_x, position.y - offset_y), { 0,12,12,0 }, { 2,5 }, { 15, 10 }, { 250, 0 }, P_LEFT, 100, 2);
