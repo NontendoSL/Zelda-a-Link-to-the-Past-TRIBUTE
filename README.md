@@ -80,6 +80,11 @@ THE POKÉMON COMBAT
 
 CHANGELOG
 
+v0.9.1 
+	
+	Game Intro added (team logo and first scene implemented)
+	Pokémon collisions adjousted.
+
 v0.9 ALPHA
 
 	All game features have been added and finished.
