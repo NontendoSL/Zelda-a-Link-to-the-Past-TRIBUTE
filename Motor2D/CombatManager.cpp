@@ -508,11 +508,6 @@ void CombatManager::BeforePrepareCombat()
 	while (item != App->scene->player->pokedex.end())
 	{
 		PokemonCombat* pokemon = item._Ptr->_Myval;
-		if (pokemon->name == "SCEPTILE")
-		{
-			((Sceptyle*)pokemon)->top_leaf_sp = nullptr;
-			((Sceptyle*)pokemon)->bot_leaf_sp = nullptr;
-		}
 		pokemon->sp_attack = nullptr;
 		pokemon->collision_attack = nullptr;
 		pokemon->collision_feet = nullptr;

@@ -178,7 +178,7 @@ bool Ganon::InvincibleUpdate(float dt)
 		state = G_ATTACKING;
 		special_attack = G_SPECIAL_2;
 		anim_state = G_SPECIAL_2;
-		hp = 100;
+		hp = 30;
 	}
 	return true;
 }
@@ -257,7 +257,7 @@ bool Ganon::InitCombat()
 
 	else if (start_dialogue == true && App->scene->player->dialog == nullptr)
 	{
-		App->audio->PlayMusic("auido/music/ZELDA/ZeldaGanonBattle.ogg", 0);
+		App->audio->PlayMusic("audio/music/ZELDA/ZeldaGanonBattle.ogg", 0);
 		start_dialogue = false;
 		phase = INITIAL;
 		state = G_IDLE;

@@ -15,10 +15,10 @@ Sceptyle::Sceptyle()
 Sceptyle::~Sceptyle()
 {
 	App->tex->UnLoad(sp_leaf);
-	leafs_pos.clear();
-	sp_attack = nullptr;
+	//leafs_pos.clear();
+	/*sp_attack = nullptr;
 	top_leaf_sp = nullptr;
-	bot_leaf_sp = nullptr;
+	bot_leaf_sp = nullptr;*/
 }
 
 bool Sceptyle::Awake(pugi::xml_node &conf )
@@ -148,6 +148,12 @@ bool Sceptyle::Update(float dt)
 	{
 		ThrowSP();
 	}
+	/*else
+	{
+		sp_attack = nullptr;
+		top_leaf_sp = nullptr;
+		bot_leaf_sp = nullptr;
+	}*/
 
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -158,15 +164,9 @@ void Sceptyle::Draw()
 {
 	if (drawThrowSP)
 	{
-		if (sp_attack != nullptr && top_leaf_sp != nullptr && bot_leaf_sp != nullptr)
-		{
-			App->render->Blit(sp_leaf, leafs_pos[0].x, leafs_pos[0].y, &sp_rect, NULL, true, rotation, 6, 6); //1st leaf
-			sp_attack->SetPos(leafs_pos[0].x, leafs_pos[0].y);
-			App->render->Blit(sp_leaf, leafs_pos[1].x, leafs_pos[1].y, &sp_rect, NULL, true, rotation, 6, 6);  //2nd leaf
-			top_leaf_sp->SetPos(leafs_pos[1].x, leafs_pos[1].y);
-			App->render->Blit(sp_leaf, leafs_pos[2].x, leafs_pos[2].y, &sp_rect, NULL, true, rotation, 6, 6);  //3rd leaf
-			bot_leaf_sp->SetPos(leafs_pos[2].x, leafs_pos[2].y);
-		}
+		App->render->Blit(sp_leaf, leafs_pos[0].x, leafs_pos[0].y, &sp_rect, NULL, true, rotation, 6, 6); //1st leaf
+		App->render->Blit(sp_leaf, leafs_pos[1].x, leafs_pos[1].y, &sp_rect, NULL, true, rotation, 6, 6);  //2nd leaf
+		App->render->Blit(sp_leaf, leafs_pos[2].x, leafs_pos[2].y, &sp_rect, NULL, true, rotation, 6, 6);  //3rd leaf
 	}
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, SCEPTILE);
 }
@@ -267,9 +267,9 @@ void Sceptyle::Special_Attack()
 		sp_direction = direction;
 		sp_start = position;
 		drawThrowSP = true;
-		sp_attack = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+		/*sp_attack = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
 		top_leaf_sp = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
-		bot_leaf_sp = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
+		bot_leaf_sp = App->collision->AddCollider({ position.x,position.y, 10, 10 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);*/ 
 		switch (sp_direction)
 		{
 		case 0:
@@ -304,19 +304,19 @@ void Sceptyle::ThrowSP()
 	if ((sp_direction == 2 && leafs_pos[0].x > position.x)|| (sp_direction == 3 && leafs_pos[0].x < position.x) || (sp_direction == 1  && leafs_pos[0].y < position.y)|| (sp_direction == 0 && leafs_pos[0].y > position.y))
 	{
 		range.y = 0;
-		sp_attack->to_delete=true;
+		/*sp_attack->to_delete=true;
 		top_leaf_sp->to_delete = true;
 		bot_leaf_sp->to_delete = true;
 		sp_attack = nullptr;
 		top_leaf_sp = nullptr;
-		bot_leaf_sp = nullptr;
+		bot_leaf_sp = nullptr;*/
 		for (int i = 0; i < leafs_pos.size(); i++)
 		{
 			leafs_pos[i] = { 0,0 };
 		}
-		sp_attacking = false;
+		/*sp_attacking = false;
 		drawThrowSP = false;
-		getdamage = false;
+		getdamage = false;*/
 		leaving = true;
 	}
 	else

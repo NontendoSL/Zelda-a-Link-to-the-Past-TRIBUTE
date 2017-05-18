@@ -68,7 +68,7 @@
   
 	<window>
     <resolution width="640" height="480" scale="2" />
-		<fullscreen value="true" />
+		<fullscreen value="false" />
 	</window>
   
 	<file_system>

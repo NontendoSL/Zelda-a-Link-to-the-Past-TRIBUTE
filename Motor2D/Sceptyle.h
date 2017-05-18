@@ -51,8 +51,8 @@ public:
 
 
 public:
-	Collider* top_leaf_sp = nullptr;
-	Collider* bot_leaf_sp = nullptr;
+	//Collider* top_leaf_sp = nullptr;
+	//Collider* bot_leaf_sp = nullptr;
 private:
 
 	//Timer

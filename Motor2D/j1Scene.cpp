@@ -139,7 +139,7 @@ bool j1Scene::Update(float dt)
 			}*/
 
 			//Make advance the dialogue text.
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_A) == EVENTSTATE::E_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_Y) == EVENTSTATE::E_DOWN)
 			{
 				if (player->dialog != nullptr)
 				{
@@ -151,6 +151,7 @@ bool j1Scene::Update(float dt)
 			{
 				dialog_inmapZelda = true;
 			}
+
 			if (joy_talk && player->dialog == nullptr && last_map==10 && cash_swapped==false)
 			{
 				player->pokecash = player->gems * 12;
@@ -201,6 +202,7 @@ bool j1Scene::Update(float dt)
 			// TP LEVEL -----------------------------------------
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
+				player->sword_equiped = true;
 				useTP = true;
 				switch_map = 16;
 			}
@@ -279,8 +281,8 @@ bool j1Scene::Update(float dt)
 			{
 				App->scene->player->position.y -= 50;
 				App->render->camera.y += 100;
-			}
-			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+			}*/
+			/*if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			{
 					//App->scene->player->position.x = App->input->GetMousePosition().x;
 					//App->scene->player->position.y = App->input->GetMousePosition().y;
@@ -294,7 +296,7 @@ bool j1Scene::Update(float dt)
 			// TP LEVEL
 
 			//WEAPONS TEST ---------
-			/*if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P))
+			if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P))
 			{
 				player->bow = App->entity_elements->CreateBow();
 				App->scene->start_menu->PickItem("bow");
@@ -304,7 +306,9 @@ bool j1Scene::Update(float dt)
 				player->bombs = 99;
 				player->setWeapons = true;
 				player->sword_equiped = true;
-			}*/
+				player->hook = App->entity_elements->CreateHookshot();
+				App->scene->start_menu->PickItem("hookshot");
+			}
 			// ---------
 
 			//Set picked object the last 
@@ -1024,42 +1028,42 @@ void j1Scene::SetMusics(int id)
 {
 	if (id == 7 && last_map != 8)
 	{
-		App->audio->PlayMusic("auido/music/POKEMON/PokemonPetalburgWoods.ogg", 0);
+		App->audio->PlayMusic("audio/music/POKEMON/PokemonVictoryRoad.ogg", 0);
 	}
 
 	if (id == 9)
 	{
-		App->audio->PlayMusic("auido/music/POKEMON/PokemonEverGrandeCity.ogg", 0);
+		App->audio->PlayMusic("audio/music/POKEMON/PokemonEverGrandeCity.ogg", 0);
 	}
 
 	if (id == 10)
 	{
-		App->audio->PlayMusic("auido/music/POKEMON/PokemonPokemonCenter.ogg", 0);
+		App->audio->PlayMusic("audio/music/POKEMON/PokemonPokemonCenter.ogg", 0);
 	}
 
 	if (id >= 11 && id < 16)
 	{
-		App->audio->PlayMusic("auido/music/POKEMON/PokemonVictoryRoad.ogg", 0);
+		App->audio->PlayMusic("audio/music/POKEMON/PokemonVictoryRoad.ogg", 0);
 	}
 
 	if (id == 17)
 	{
-		App->audio->PlayMusic("auido/music/POKEMON/PokemonRivalBattle.ogg", 0);
+		App->audio->PlayMusic("audio/music/POKEMON/PokemonRivalBattle.ogg", 0);
 	}
 
 	if (id >= 18 && id < 22)
 	{
-		App->audio->PlayMusic("auido/music/POKEMON/PokemonElitteFourBattle.ogg", 0);
+		App->audio->PlayMusic("audio/music/POKEMON/PokemonElitteFourBattle.ogg", 0);
 	}
 
 	if (id == 22)
 	{
-		App->audio->PlayMusic("auido/music/POKEMON/PokemonChampionBattle.ogg", 0);
+		App->audio->PlayMusic("audio/music/POKEMON/PokemonChampionBattle.ogg", 0);
 	}
 
 	if (id == 16)
 	{
-		App->audio->PlayMusic("auido/music/ZELDA/ZeldaLastChamber.ogg", 0);
+		App->audio->PlayMusic("audio/music/ZELDA/ZeldaLastChamber.ogg", 0);
 	}
 }
 
@@ -1127,7 +1131,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 			//map
 			std::string name_map = temp.attribute("file").as_string("");
 			App->map->Load(name_map.c_str(), n);
-
+			LOG("LOAD");
 			//items
 			pugi::xml_node temp_item = temp.child("items").child("item");
 			for (int i = 0; i < temp.child("items").attribute("num").as_int(0); i++)
