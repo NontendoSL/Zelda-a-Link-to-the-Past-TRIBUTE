@@ -27,6 +27,7 @@
 #include "Pokemon.h"
 #include "Villager.h"
 #include "RedMinion.h"
+#include "CombatManager.h"
 
 //Constructor
 Player::Player() : Creature()
@@ -307,6 +308,23 @@ bool Player::SaveData(pugi::xml_node& check_node)
 	{
 		ui.append_attribute("world") = "Pokemon";
 	}
+
+	pugi::xml_node pokemon_items = check_node.append_child("POKEMON_ITEMS");
+
+	pugi::xml_node pokemon = pokemon_items.append_child("Blaziken");
+	pokemon.append_attribute("hp") = checkpoint.blaz_hp;
+	pokemon.append_attribute("attack") = checkpoint.blaz_atk;
+	pokemon.append_attribute("defense") = checkpoint.blaz_def;
+
+	pokemon = pokemon_items.append_child("Sceptyle");
+	pokemon.append_attribute("hp") = checkpoint.scept_hp;
+	pokemon.append_attribute("attack") = checkpoint.scept_atk;
+	pokemon.append_attribute("defense") = checkpoint.scept_def;
+
+	pokemon = pokemon_items.append_child("Swampert");
+	pokemon.append_attribute("hp") = checkpoint.swamp_hp;
+	pokemon.append_attribute("attack") = checkpoint.swamp_atk;
+	pokemon.append_attribute("defense") = checkpoint.swamp_def;
 
 	return true;
 }
@@ -1768,6 +1786,10 @@ void Player::SaveCheckPoint(int map_id)
 		checkpoint.sword_picked = true;
 	}
 
+	//POKEMON ITEMS ----------
+	App->combatmanager->SaveItemsCheckPoint();
+	// -----------------------
+
 	LOG("CHECKPOINT SAVED ---");
 	LOG("Map: %i", checkpoint.map_id);
 	LOG("Position: (%i,%i)", checkpoint.pos);
@@ -1787,6 +1809,11 @@ void Player::SaveCheckPoint(int map_id)
 	}
 	
 	LOG("WORLD: %s", checkpoint.world.c_str());
+
+	LOG("BLAZIKEN = hp: %i, attack: %i, defense: %i", checkpoint.blaz_hp, checkpoint.blaz_atk, checkpoint.blaz_def);
+	LOG("SCEPTYLE = hp: %i, attack: %i, defense: %i", checkpoint.scept_hp, checkpoint.scept_atk, checkpoint.scept_def);
+	LOG("SWAMPERT = hp: %i, attack: %i, defense: %i", checkpoint.swamp_hp, checkpoint.swamp_atk, checkpoint.swamp_def);
+
 	LOG("--------------------");
 
 }
@@ -1800,6 +1827,7 @@ void Player::LoadStats()
 	arrows = App->scene->Check.arrows;
 	bombs = App->scene->Check.bombs;
 
+	// WEAPONS -----------------------------------------------------
 	if (App->scene->Check.bow_picked == true)
 	{
 		bow = App->entity_elements->CreateBow();
@@ -1816,6 +1844,7 @@ void Player::LoadStats()
 	{
 		sword_equiped = true;
 	}
+	// ---------------------------------------------------------------
 
 	//if (App->scene->Check.world == "Zelda")
 	//{

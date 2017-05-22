@@ -47,7 +47,15 @@ struct CheckPoint
 	//-----------------------------
 
 	//POKEMON WORLD --------
-	
+	int blaz_hp = 0;
+	int blaz_atk = 0;
+	int blaz_def = 0;
+	int scept_hp = 0;
+	int scept_atk = 0;
+	int scept_def = 0;
+	int swamp_hp = 0;
+	int swamp_atk = 0;
+	int swamp_def = 0;
 	//----------------------
 };
 
@@ -172,6 +180,8 @@ public:
 	//Weapons test
 	bool setWeapons = false;
 
+	CheckPoint checkpoint;
+
 private:
 
 	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)
@@ -199,8 +209,6 @@ private:
 	//bool changeResolution = false;
 
 	Animation* current_animation = nullptr;
-
-	CheckPoint checkpoint;
 };
 
 

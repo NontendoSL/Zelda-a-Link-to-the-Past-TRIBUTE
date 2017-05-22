@@ -402,11 +402,11 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->SaveGame("save_file.xml");
 		}
 		else
 		{
 			((Button*)element)->click = false;
-			App->SaveGame("save_file.xml");
 		}
 	}
 	if (element->identifier == "menu_opt")
@@ -534,6 +534,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->SaveGame("save_file.xml");
 		}
 		else
 		{
@@ -970,7 +971,26 @@ bool j1Scene::Load(pugi::xml_node& checknode)
 	curr_node = node.child("UI");
 	Check.world = curr_node.attribute("world").as_string("Zelda");
 
+	curr_node = node.child("POKEMON_ITEMS");
+	Check.blaz_hp = curr_node.child("Blaziken").attribute("hp").as_int(0);
+	Check.blaz_atk = curr_node.child("Blaziken").attribute("atk").as_int(0);
+	Check.blaz_def = curr_node.child("Blaziken").attribute("def").as_int(0);
+
+	Check.scept_hp = curr_node.child("Sceptyle").attribute("hp").as_int(0);
+	Check.scept_atk = curr_node.child("Sceptyle").attribute("atk").as_int(0);
+	Check.scept_def = curr_node.child("Sceptyle").attribute("def").as_int(0);
+
+	Check.swamp_hp = curr_node.child("Swampert").attribute("hp").as_int(0);
+	Check.swamp_atk = curr_node.child("Swampert").attribute("atk").as_int(0);
+	Check.swamp_def = curr_node.child("Swampert").attribute("def").as_int(0);
+
+
 	return ret;
+}
+
+void j1Scene::SetItemsinUI()
+{
+	//Complete this function.
 }
 
 bool j1Scene::NewGame()
@@ -1017,9 +1037,11 @@ bool j1Scene::ContinueGame()
 	else if (Check.world == "Pokemon")
 	{
 		App->gui->SetGui(POKEMON_HUD);
+		//SetItemsinUI();
 	}
-
 	//----------------------------------------------------------------
+
+
 
 	Load_new_map(Check.map_id, true);
 
@@ -1256,10 +1278,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 	}
 
 	//Save CheckPoint Stats ---
-	if (n < 9 || n == 16)
-	{
-		player->SaveCheckPoint(n);
-	}
+	player->SaveCheckPoint(n);
 	// --------------------------
 
 	last_map = n;

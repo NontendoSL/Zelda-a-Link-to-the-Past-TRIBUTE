@@ -65,7 +65,15 @@ struct CheckPointInfo
 	//-----------------------------
 
 	//POKEMON WORLD --------
-
+	int blaz_hp = 0;
+	int blaz_atk = 0;
+	int blaz_def = 0;
+	int scept_hp = 0;
+	int scept_atk = 0;
+	int scept_def = 0;
+	int swamp_hp = 0;
+	int swamp_atk = 0;
+	int swamp_def = 0;
 	//----------------------
 };
 
@@ -120,6 +128,8 @@ public:
 	//SAVE/LOAD FUNCTION
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
+
+	void SetItemsinUI();
 
 	void SetMusics(int id);
 

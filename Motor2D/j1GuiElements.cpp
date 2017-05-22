@@ -1408,7 +1408,7 @@ void PokemonWorldHud::SetMoneyHitbox(Image * number, uint ammount)
 	}
 }
 
-void PokemonWorldHud::GiveItem(std::string pokemon, std::string item_id)
+void PokemonWorldHud::GiveItem(std::string pokemon, std::string item_id) //TODO MARC -> adapt give function when pressed Continue Game
 {
 	std::string pk_bar_identifier;
 	if (pokemon == "BLAZIKEN")
