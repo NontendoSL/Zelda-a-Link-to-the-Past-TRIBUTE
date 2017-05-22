@@ -451,6 +451,11 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						App->audio->PlayFx(4);
 						gems++;
 					}
+					if (c2->callback->name == "red_rupee")
+					{
+						App->audio->PlayFx(4);
+						gems+=20;
+					}
 					if (c2->callback->name == "bomb")
 					{
 						//First time picking a bomb

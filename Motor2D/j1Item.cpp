@@ -77,6 +77,11 @@ bool Item::Start()
 		width = 10;
 		height = 16;
 	}
+	else if (id == 8)
+	{
+		width = 8;
+		height = 14;
+	}
 	delay.Start();
 	collision = App->collision->AddCollider({ position.x, position.y, width, height }, COLLIDER_ITEM, this);
 	return true;

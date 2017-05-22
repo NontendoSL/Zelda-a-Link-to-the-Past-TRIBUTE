@@ -419,6 +419,9 @@ void BCTrooper::Death()
 	App->map->EditCost(40, 13, 0);
 	App->map->EditCost(41, 13, 0);
 	App->entity_elements->DeleteElement("door");
+
+	App->entity_elements->CreateItem(8, position);
+
 	to_delete = true;
 }
 
