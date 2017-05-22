@@ -304,6 +304,7 @@ void Ganon::Walk(float dt)
 	if (position.DistanceTo(jump_dest) >= 5)
 	{
 		DoJump();
+		App->audio->PlayFx(26);
 	}
 	else
 	{
@@ -357,12 +358,12 @@ void Ganon::MeleeAttack()
 		if (direction == DOWN)
 		{
 			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 10, 48, 48 }, COLLIDER_GANON_ATTACK, this);
-			App->audio->PlayFx(7);
+			App->audio->PlayFx(25);
 		}
 		else if (direction == UP)
 		{
 			collision_attack = App->collision->AddCollider({ position.x - offset_x - 6, position.y - offset_y - 30, 48, 53}, COLLIDER_GANON_ATTACK, this);
-			App->audio->PlayFx(7);
+			App->audio->PlayFx(25);
 		}
 	}
 
@@ -538,6 +539,7 @@ void Ganon::Hit()
 {
 	if (HitTime.ReadSec() >= 0.7)
 	{
+		App->audio->PlayFx(12);
 		state = G_IDLE;
 		anim_state = G_WALKING;
 	}
@@ -547,6 +549,7 @@ void Ganon::HitRage()
 {
 	if (HitTime.ReadSec() >= 0.7)
 	{
+		App->audio->PlayFx(12);
 		state = G_IDLE;
 		anim_state = G_WALKING;
 	}
@@ -557,11 +560,13 @@ void Ganon::Spawn()
 	if (minions_spawned % 2 == 0 && minions_spawned > 0)
 	{
 		App->entity_elements->CreateRMinion({ 200 + (rand() % 100), 200 + (rand() % 100) });
+		App->audio->PlayFx(16);
 	}
 
 	else
 	{
 		App->entity_elements->CreateGMinion({ 200 + (rand() % 100), 200 + (rand() % 100) });
+		App->audio->PlayFx(16);
 	}
 
 	minions_spawned++;
@@ -569,6 +574,7 @@ void Ganon::Spawn()
 
 bool Ganon::Die()
 {
+	App->audio->PlayFx(11);
 	App->gui->GetEntity("boss bar")->visible = false;
 	App->gui->GetEntity("hp boss")->visible = false;
 	App->gui->GetEntity("YOU WIN")->visible = true;
