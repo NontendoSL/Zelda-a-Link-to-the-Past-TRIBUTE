@@ -512,11 +512,11 @@ int Soldier::DropItem()
 	{
 		int id = rand() % 100 + 1;
 
-		if (id > 0 && id <= 30)
+		if (id > 0 && id <= 45)
 		{
 			item_id = 1;
 		}
-		else if (id > 30 && id <= 60)
+		else if (id > 45 && id <= 60)
 		{
 			item_id = 7;
 		}
