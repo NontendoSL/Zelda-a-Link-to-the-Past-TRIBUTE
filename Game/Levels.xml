@@ -120,7 +120,7 @@
     </map>
 
     <map n="3" file="Uncle.tmx">
-      <Link pos_x="96" pos_y="320" />
+      <Link pos_x="384" pos_y="112"/>
       <camera follow="true"/>
       <soldier num="2">
         <!-- Interactive soldiers -->

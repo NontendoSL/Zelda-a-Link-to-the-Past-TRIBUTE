@@ -70,6 +70,11 @@ public:
 	void BeforePrepareCombat();
 
 	void Kill(bool trainer);
+
+	void LoadPokemonItems();
+	void SavePokemonItems();
+	void SaveItemsCheckPoint();
+
 public:
 	pugi::xml_node conf;
 	pugi::xml_document XML;

@@ -1418,7 +1418,7 @@ void PokemonWorldHud::GiveItem(std::string pokemon, std::string item_id)
 	if (pokemon == "SWAMPERT")
 		pk_bar_identifier = "pk_bar_hud_3";
 
-		for(int i=0;i<poke_bar.size();i++)
+	for (int i = 0; i < poke_bar.size(); i++)
 		{
 			if (poke_bar[i]->identifier == pk_bar_identifier)
 			{

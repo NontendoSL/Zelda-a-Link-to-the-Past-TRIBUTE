@@ -527,6 +527,60 @@ void CombatManager::Kill(bool trainer)
 	}
 }
 
+void CombatManager::LoadPokemonItems()
+{
+	/*BLAZIKEN*/
+	bag_items[0].hp_up = App->scene->Check.blaz_hp;
+	bag_items[0].x_attack = App->scene->Check.blaz_atk;
+	bag_items[0].def_protein = App->scene->Check.blaz_def;
+
+	/*SCEPTYLE*/
+	bag_items[1].hp_up = App->scene->Check.scept_hp;
+	bag_items[1].x_attack = App->scene->Check.scept_atk;
+	bag_items[1].def_protein = App->scene->Check.scept_def;
+
+	/*SWAMPERT*/
+	bag_items[2].hp_up = App->scene->Check.swamp_hp;
+	bag_items[2].x_attack = App->scene->Check.swamp_atk;
+	bag_items[2].def_protein = App->scene->Check.swamp_def;
+}
+
+void CombatManager::SavePokemonItems()
+{
+	/*BLAZIKEN*/
+	App->scene->Check.blaz_hp = bag_items[0].hp_up;
+	App->scene->Check.blaz_atk = bag_items[0].x_attack;
+	App->scene->Check.blaz_def = bag_items[0].def_protein;
+
+	/*SCEPTYLE*/
+	App->scene->Check.scept_hp = bag_items[1].hp_up;
+	App->scene->Check.scept_atk = bag_items[1].x_attack;
+	App->scene->Check.scept_def = bag_items[1].def_protein;
+
+	/*SWAMPERT*/
+	App->scene->Check.swamp_hp = bag_items[2].hp_up;
+	App->scene->Check.swamp_atk = bag_items[2].x_attack;
+	App->scene->Check.swamp_def = bag_items[2].def_protein;
+}
+
+void CombatManager::SaveItemsCheckPoint()
+{
+	/*BLAZIKEN*/
+	App->scene->player->checkpoint.blaz_hp = bag_items[0].hp_up;
+	App->scene->player->checkpoint.blaz_atk = bag_items[0].x_attack;
+	App->scene->player->checkpoint.blaz_def = bag_items[0].def_protein;
+
+	/*SCEPTYLE*/
+	App->scene->player->checkpoint.scept_hp = bag_items[1].hp_up;
+	App->scene->player->checkpoint.scept_atk = bag_items[1].x_attack;
+	App->scene->player->checkpoint.scept_def = bag_items[1].def_protein;
+
+	/*SWAMPERT*/
+	App->scene->player->checkpoint.swamp_hp = bag_items[2].hp_up;
+	App->scene->player->checkpoint.swamp_atk = bag_items[2].x_attack;
+	App->scene->player->checkpoint.swamp_def = bag_items[2].def_protein;
+}
+
 
 // ---------------------------------------------
 pugi::xml_node CombatManager::LoadConfig(pugi::xml_document& config_file) const
