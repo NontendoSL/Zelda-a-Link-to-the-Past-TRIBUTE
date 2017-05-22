@@ -1846,14 +1846,21 @@ void Player::LoadStats()
 	}
 	// ---------------------------------------------------------------
 
-	//if (App->scene->Check.world == "Zelda")
-	//{
-	//	App->gui->SetGui(ZELDA_HUD);
-	//}
-	//if (App->scene->Check.world == "Pokemon")
-	//{
-	//	App->gui->SetGui(POKEMON_HUD);
-	//}
+	// POKEMON ITEMS ----------------------------------
+	App->combatmanager->LoadPokemonItems();
+	// ------------------------------------------------
+
+	// UI -----------------------------------------------
+	if (App->scene->Check.world == "Zelda")
+	{
+		App->gui->SetGui(ZELDA_HUD);
+	}
+	if (App->scene->Check.world == "Pokemon")
+	{
+		App->gui->SetGui(POKEMON_HUD);
+
+	}
+	// -----------------------------------------------------
 
 	SaveCheckPoint(App->scene->Check.map_id);
 }
