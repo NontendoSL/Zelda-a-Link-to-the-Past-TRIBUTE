@@ -663,10 +663,11 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							{
 								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
 								App->entity_elements->DeleteElement("door");
-								App->scene->switch_map = 16;
 								App->gui->GetEntity("pendant_link")->visible = true;
-								App->map->EditCost(32, 42, App->map->data.tilesets[0]->firstgid + 1);
-								App->map->EditCost(33, 42, App->map->data.tilesets[0]->firstgid + 1);
+								App->map->EditCost(32, 53, 0);
+								App->map->EditCost(33, 53, 0);
+								App->map->EditCost(32, 54, 0);
+								App->map->EditCost(33, 54, 0);
 							}
 							else if (App->scene->last_map == 10)
 							{
