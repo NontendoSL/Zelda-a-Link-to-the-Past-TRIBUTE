@@ -12,6 +12,7 @@
 #include "j1Player.h"
 #include "j1Weapon.h"
 #include "j1DynamicObjects.h"
+#include "Animation.h"
 
 Soldier::Soldier():NPC()
 {
@@ -81,7 +82,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
 		{
-			if (destructible == true && state != S_HIT)
+			if (destructible == true && state != S_HIT && state != S_DYING)
 			{
 				App->audio->PlayFx(12);
 				knockback_time.Start();
@@ -141,6 +142,8 @@ bool Soldier::Start()
 		reset_run = true;
 		radar = 75;
 		chase_speed = 50;
+		death_graphics = App->tex->Load("textures/AnimationsAndEffects.png");
+
 	}
 
 	else if (soldier_type == PASSIVE)
@@ -432,9 +435,11 @@ bool Soldier::Attack()
 
 bool Soldier::Die()
 {
-	App->audio->PlayFx(11);
-	App->entity_elements->CreateItem(DropItem(), position);
-	to_delete = true;
+	if (animation.anim[anim_state].South_action.Finished() == true)
+	{
+		App->entity_elements->CreateItem(DropItem(), position);
+		to_delete = true;
+	}
 	return true;
 }
 
@@ -442,44 +447,58 @@ bool Soldier::Movebyhit(float dt)
 {
 	if (hp <= 0)
 	{
+		App->audio->PlayFx(11);
 		state = S_DYING;
-		anim_state = S_IDLE;
-		return true;
+		anim_state = S_DYING;
+		animation.anim[S_DYING].ResetAnimations();
+		direction = DOWN;
+
+		//Erase Collider
+		collision_feet->to_delete = true;
+		collision_feet = nullptr;
+
+		if (death_graphics != nullptr)
+		{
+			animation.graphics = death_graphics;
+		}
 	}
 
-	if (knockback_time.ReadSec() >= 0.2)
+	else
 	{
-		state = S_CHASING;
-		anim_state = S_WALKING;
-		return true;
-	}
+		if (knockback_time.ReadSec() >= 0.2)
+		{
+			state = S_CHASING;
+			anim_state = S_WALKING;
+			return true;
+		}
 
-	if (dir_hit == UP)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(240*dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		if (dir_hit == UP)
 		{
-			position.y -= ceil(240 * dt);
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+			{
+				position.y -= ceil(240 * dt);
+			}
 		}
-	}
-	else if (dir_hit == DOWN)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		else if (dir_hit == DOWN)
 		{
-			position.y += ceil(240 * dt);
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(240 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+			{
+				position.y += ceil(240 * dt);
+			}
 		}
-	}
-	else if (dir_hit == LEFT)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x - ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		else if (dir_hit == LEFT)
 		{
-			position.x -= ceil(240 * dt);
+			if (App->map->MovementCost(collision_feet->rect.x - ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+			{
+				position.x -= ceil(240 * dt);
+			}
 		}
-	}
-	else if (dir_hit == RIGHT)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		else if (dir_hit == RIGHT)
 		{
-			position.x += ceil(240 * dt);
+			if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(240 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+			{
+				position.x += ceil(240 * dt);
+			}
 		}
 	}
 

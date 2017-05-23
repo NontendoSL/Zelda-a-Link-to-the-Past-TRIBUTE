@@ -93,7 +93,7 @@
     <map n="2" file="Link_OverWorld.tmx">
       <camera follow="true"/>
       <Link pos_x="704" pos_y="1288" />
-      <soldier num="13">
+      <soldier num="14">
         <!-- Static soldiers -->
         <soldier id="1" pos_x="517" pos_y="1465" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
         <soldier id="1" pos_x="517" pos_y="1445" hp="10" attack="10" dir="right" canMove="false" destructible="false" file="textures/Soldiers.png" />
@@ -110,6 +110,7 @@
         <soldier id="1" pos_x="440" pos_y="568" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
         <soldier id="1" pos_x="888" pos_y="560" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
         <soldier id="1" pos_x="888" pos_y="416" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
+        <soldier id="1" pos_x="550" pos_y="1300" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
       </soldier>
 
       <dynobjects>

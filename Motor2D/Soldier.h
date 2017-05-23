@@ -65,10 +65,12 @@ private:
 	SoldierState state = S_IDLE;
 	SoldierState anim_state = S_IDLE;
 
-	//Soldier Test for Release 0.1
+	//Animation Variables
 	AnimationStruct animation;
 	SDL_Rect anim_rect;
 	iPoint pivot;
+	SDL_Texture* death_graphics = nullptr;
+
 	bool stunned = false;
 
 	Item* item_inside = nullptr;

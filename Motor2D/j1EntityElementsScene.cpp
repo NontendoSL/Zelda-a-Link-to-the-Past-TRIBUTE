@@ -346,8 +346,11 @@ bool j1EntityElementScene::DeleteCreature(Creature* creature)
 	if (creature != nullptr)
 	{
 		elementscene.remove(creature);
-		creature->collision_feet->to_delete = true;
-		creature->collision_feet = nullptr;
+		if (creature->collision_feet != nullptr)
+		{
+			creature->collision_feet->to_delete = true;
+			creature->collision_feet = nullptr;
+		}
 		delete creature;
 		creature = nullptr;
 	}
