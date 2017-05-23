@@ -511,6 +511,12 @@ void CombatManager::BeforePrepareCombat()
 		pokemon->sp_attack = nullptr;
 		pokemon->collision_attack = nullptr;
 		pokemon->collision_feet = nullptr;
+		if (item._Ptr->_Myval->name == "SCEPTILE")
+		{
+			((Sceptyle*)pokemon)->bot_leaf_sp = nullptr;
+			((Sceptyle*)pokemon)->top_leaf_sp = nullptr;
+			((Sceptyle*)pokemon)->drawThrowSP = false;
+		}
 		item++;
 	}
 }

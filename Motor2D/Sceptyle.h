@@ -51,8 +51,9 @@ public:
 
 
 public:
-	//Collider* top_leaf_sp = nullptr;
-	//Collider* bot_leaf_sp = nullptr;
+	Collider* top_leaf_sp = nullptr;
+	Collider* bot_leaf_sp = nullptr;
+	bool drawThrowSP = false;
 private:
 
 	//Timer
@@ -62,7 +63,6 @@ private:
 	bool reset_run = false;
 	bool reset_distance = false;
 	int timetorun = 0;
-	bool drawThrowSP = false;
 
 	j1Timer autoAttack;
 	bool dusclops_special = false;

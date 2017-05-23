@@ -264,7 +264,7 @@ bool j1Scene::Update(float dt)
 			}
 
 			//MINI TP -----------------------------------------------
-			/*if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 			{
 				App->scene->player->position.x += 50;
 				App->render->camera.x -= 100;
@@ -283,7 +283,7 @@ bool j1Scene::Update(float dt)
 			{
 				App->scene->player->position.y -= 50;
 				App->render->camera.y += 100;
-			}*/
+			}
 			/*if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			{
 					//App->scene->player->position.x = App->input->GetMousePosition().x;
