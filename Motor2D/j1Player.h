@@ -6,7 +6,7 @@
 #include "j1Creature.h"
 #include "j1InputManager.h"
 
-enum LinkState { L_IDLE = 0, L_WALKING, L_ATTACKING, L_DYING, L_PICKING, L_HOOKTHROWN, L_HIT, L_INTERACTING };
+enum LinkState { L_IDLE = 0, L_WALKING, L_ATTACKING, L_WALKSHIELD, L_BOW, L_PICKING, L_FALL, L_HIT, L_HOOKTHROWN, L_PUSH, L_INTERACTING, L_DYING, };
 
 class Creature;
 class InputListener;
