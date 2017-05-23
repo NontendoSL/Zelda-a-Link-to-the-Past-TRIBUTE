@@ -233,7 +233,7 @@ int DynamicObjects::DropItem()
 	{
 		int id = rand() % 100 + 1;
 
-		if (id > 0 && id <= 40)
+		if (id > 0 && id <= 10)
 		{
 			item_id = 1;
 		}
