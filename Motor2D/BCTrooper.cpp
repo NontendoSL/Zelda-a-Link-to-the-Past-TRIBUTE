@@ -161,15 +161,6 @@ bool BCTrooper::Update(float dt)
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
-	{
-		hp = 30;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-	{
-		hp = 10;
-	}
-
 	//Increment dificult
 	if (hp < 40)
 	{
@@ -177,7 +168,7 @@ bool BCTrooper::Update(float dt)
 	}
 	if (hp < 20)
 	{
-		//speed_bole = 5;
+		//speed_bole = 2;
 	}
 	//Update colliders position
 	collision_feet->SetPos(position.x - 8, position.y - 5);
@@ -539,7 +530,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 			c1 == boles[2].collision_maze || c1 == boles[3].collision_maze)	&& c2->type == COLLIDER_PLAYER)
 		{
 			Player* link = (Player*)c2->callback;
-			if (link->invincible_timer.ReadSec() >= 1 && state != BC_HIT)
+			if (link->invincible_timer.ReadSec() >= 1 && state != BC_HIT && hp > 0)
 			{
 				App->audio->PlayFx(13);
 				link->SetState(L_HIT);
