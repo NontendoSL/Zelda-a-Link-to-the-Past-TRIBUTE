@@ -133,7 +133,7 @@ bool Soldier::Start()
 	if (soldier_type == AGGRESSIVE)
 	{
 		offset_x = 8;
-		offset_y = 15;
+		offset_y = 0;
 		state = S_IDLE;
 		anim_state = S_IDLE;
 		speed = 40;
