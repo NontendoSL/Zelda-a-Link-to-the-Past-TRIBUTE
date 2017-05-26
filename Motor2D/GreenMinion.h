@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-enum GMinionState { GM_WALKING = 0, GM_HIT, GM_DYING, GM_SPAWNING, GM_IDLE };
+enum GMinionState { GM_WALKING = 0, GM_DYING, GM_HIT, GM_SPAWNING, GM_IDLE };
 
 
 class GreenMinion : public NPC
@@ -53,6 +53,7 @@ private:
 	AnimationStruct animation;
 	SDL_Rect anim_rect;
 	iPoint pivot;
+	SDL_Texture* death_graphics = nullptr;
 	// ---------------------------------
 
 	//MOVEMENT VARIABLES ---

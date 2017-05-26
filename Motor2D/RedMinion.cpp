@@ -336,6 +336,7 @@ bool RedMinion::Die()
 
 		to_delete = true;
 	}
+
 	return true;
 }
 
