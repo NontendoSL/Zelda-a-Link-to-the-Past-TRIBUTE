@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-enum RMinionState { RM_WALKING = 0, RM_HIT, RM_DYING, RM_SPAWNING, RM_IDLE };
+enum RMinionState { RM_WALKING = 0, RM_DYING, RM_HIT, RM_SPAWNING, RM_IDLE };
 
 
 class RedMinion : public NPC
@@ -59,6 +59,7 @@ private:
 	AnimationStruct animation;
 	SDL_Rect anim_rect;
 	iPoint pivot;
+	SDL_Texture* death_graphics = nullptr;
 	// ---------------------------------
 
 	//MOVEMENT VARIABLES ---

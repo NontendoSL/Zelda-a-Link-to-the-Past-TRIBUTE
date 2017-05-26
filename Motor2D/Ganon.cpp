@@ -304,7 +304,6 @@ void Ganon::Walk(float dt)
 	if (position.DistanceTo(jump_dest) >= 5)
 	{
 		DoJump();
-		App->audio->PlayFx(26);
 	}
 	else
 	{
@@ -467,6 +466,7 @@ void Ganon::StartJump()
 	jump_dest = App->scene->player->position;
 	jump_timer.Start();
 	num_jumps++;
+	App->audio->PlayFx(26);
 }
 
 void Ganon::FireJump()

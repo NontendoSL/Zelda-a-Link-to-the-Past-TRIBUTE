@@ -35,6 +35,8 @@ bool RedMinion::Start(iPoint pos)
 	//explosion_anim = *App->anim_manager->GetAnimStruct(BOMB);
 	animation.anim[anim_state].ResetAnimations();
 	//explosion_anim.anim[W_DYING].ResetAnimations();
+	death_graphics = App->tex->Load("textures/AnimationsAndEffects.png");
+
 
 	//Set Collision
 	offset_x = 8;
@@ -97,30 +99,30 @@ bool RedMinion::Update(float dt)
 
 void RedMinion::Draw()
 {
-	if (state != RM_DYING)
+
+	if (direction == UP)
 	{
-		if (direction == UP)
-		{
-			anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
-			pivot = animation.anim[anim_state].North_action.GetCurrentOffset();
-		}
-		else if (direction == DOWN)
-		{
-			anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
-			pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
-		}
-		else if (direction == LEFT)
-		{
-			anim_rect = animation.anim[anim_state].West_action.GetCurrentFrame();
-			pivot = animation.anim[anim_state].West_action.GetCurrentOffset();
-		}
-		else if (direction == RIGHT)
-		{
-			anim_rect = animation.anim[anim_state].East_action.GetCurrentFrame();
-			pivot = animation.anim[anim_state].East_action.GetCurrentOffset();
-		}	
-		App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].North_action.GetCurrentOffset();
 	}
+	else if (direction == DOWN)
+	{
+		anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
+	}
+	else if (direction == LEFT)
+	{
+		anim_rect = animation.anim[anim_state].West_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].West_action.GetCurrentOffset();
+	}
+	else if (direction == RIGHT)
+	{
+		anim_rect = animation.anim[anim_state].East_action.GetCurrentFrame();
+		pivot = animation.anim[anim_state].East_action.GetCurrentOffset();
+	}
+
+	App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+
 
 	//else
 	//{
@@ -258,68 +260,82 @@ bool RedMinion::Movebyhit(float dt)
 	//CHECK FOR DEATH
 	if (hp <= 0)
 	{
+		App->audio->PlayFx(11);
 		state = RM_DYING;
-		anim_state = RM_WALKING;
-		return true;
+		anim_state = RM_DYING;
+		animation.anim[RM_DYING].ResetAnimations();
+		direction = DOWN;
+
+		//Erase Collider
+		collision_feet->to_delete = true;
+		collision_feet = nullptr;
+
+		if (death_graphics != nullptr)
+		{
+			animation.graphics = death_graphics;
+		}
 	}
 
-	//CHECK FOR RESET WALKING
-	if (knockback_time.ReadSec() >= 0.2)
+	else
 	{
-		state = RM_WALKING;
-		anim_state = RM_WALKING;
-		return true;
-	}
+		//CHECK FOR RESET WALKING
+		if (knockback_time.ReadSec() >= 0.2)
+		{
+			state = RM_WALKING;
+			anim_state = RM_WALKING;
+			return true;
+		}
 
-	//CHECK HIT DIRECTION -------
-	if (dir_hit == UP)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(100 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		//CHECK HIT DIRECTION -------
+		if (dir_hit == UP)
 		{
-			position.y -= ceil(100 * dt);
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - ceil(100 * dt), collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+			{
+				position.y -= ceil(100 * dt);
+			}
 		}
-	}
-	else if (dir_hit == DOWN)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(100 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		else if (dir_hit == DOWN)
 		{
-			position.y += ceil(100 * dt);
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + ceil(100 * dt), collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+			{
+				position.y += ceil(100 * dt);
+			}
 		}
-	}
-	else if (dir_hit == LEFT)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x - ceil(100 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+		else if (dir_hit == LEFT)
 		{
-			position.x -= ceil(100 * dt);
+			if (App->map->MovementCost(collision_feet->rect.x - ceil(100 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+			{
+				position.x -= ceil(100 * dt);
+			}
 		}
-	}
-	else if (dir_hit == RIGHT)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(100 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+		else if (dir_hit == RIGHT)
 		{
-			position.x += ceil(100 * dt);
+			if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + ceil(100 * dt), collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+			{
+				position.x += ceil(100 * dt);
+			}
 		}
+		//------------------------------
 	}
-	//------------------------------
-
 	return true;
 }
 
 bool RedMinion::Die()
 {
-
-	if (item_id != -1)
+	if (animation.anim[anim_state].South_action.Finished() == true)
 	{
-		App->entity_elements->CreateItem(DropItem(), position);
+		if (item_id != -1)
+		{
+			App->entity_elements->CreateItem(DropItem(), position);
+		}
+
+		if (App->entity_elements->ganon != nullptr)
+		{
+			App->entity_elements->ganon->IncreaseDeadMinions();
+		}
+
+		to_delete = true;
 	}
-
-	if (App->entity_elements->ganon != nullptr)
-	{
-		App->entity_elements->ganon->IncreaseDeadMinions();
-	}
-
-	to_delete = true;
-
 	return true;
 }
 
