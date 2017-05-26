@@ -286,9 +286,12 @@ bool RedMinion::Movebyhit(float dt)
 		animation.anim[RM_DYING].ResetAnimations();
 		direction = DOWN;
 
-		//Erase Collider
-		collision_feet->to_delete = true;
-		collision_feet = nullptr;
+		if (collision_feet != nullptr)
+		{
+			//Erase Collider
+			collision_feet->to_delete = true;
+			collision_feet = nullptr;
+		}
 
 		if (death_graphics != nullptr)
 		{
