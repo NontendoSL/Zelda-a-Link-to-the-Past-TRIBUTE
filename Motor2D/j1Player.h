@@ -163,6 +163,7 @@ public:
 	//Pokemons has Link
 	std::list<PokemonCombat*> pokedex;
 	bool state_complet = false;
+	bool lose_combat = false;
 
 	bool camera_follow = false;
 

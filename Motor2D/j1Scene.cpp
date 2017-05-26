@@ -1212,6 +1212,13 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 				App->entity_elements->CreateVillager(vilager);
 			}
 
+			//Change UI when lose combat or win but on this code only when lose
+			if (player->lose_combat)
+			{
+				App->gui->SetGui(POKEMON_HUD);
+				player->lose_combat = false;
+			}
+
 			//EditCost (Only in EliteFour)
 			if (player->state_complet == true)
 			{

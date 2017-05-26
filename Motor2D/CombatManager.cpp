@@ -105,7 +105,18 @@ bool CombatManager::Update(float dt)
 							elementcombat.remove(item._Ptr->_Myval);
 							item++;
 							pokemon_order++;
-							change_pokemon();
+							if (pokemon_order >= 3)
+							{
+								pokemon_order = 0;
+								App->scene->player->lose_combat = true;
+								App->scene->combat = false;
+								App->scene->switch_map = App->scene->last_map;
+								App->scene->useTP = true;
+							}
+							else
+							{
+								change_pokemon();
+							}
 						}
 						else //pokemon_active_trainer == poke
 						{
@@ -128,6 +139,10 @@ bool CombatManager::Update(float dt)
 				item._Ptr->_Myval->Update(dt);
 				item++;
 			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		{
+			pokemon_active_link->hp = 0;
 		}
 	}
 	return true;
@@ -519,6 +534,7 @@ void CombatManager::BeforePrepareCombat()
 		}
 		item++;
 	}
+	pokemon_order = 0;
 }
 
 void CombatManager::Kill(bool trainer)
