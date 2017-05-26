@@ -115,10 +115,16 @@ bool j1Collision::PreUpdate()
 			temp_del.push_back(*item);
 			colliders.erase(item);
 			--item;
+			LOG("Delete colisiones!!");
 		}
 	}
-	for (std::vector<Collider*>::iterator item_2 = temp_del.begin(); item_2 != temp_del.cend(); ++item_2)
-		RELEASE(*item_2);
+	for (std::vector<Collider*>::iterator item_2 = temp_del.end(); item_2 != temp_del.begin(); --item_2)
+	{
+		temp_del.pop_back();
+		//RELEASE(*item_2);
+		LOG("SIZE TEMP %i", temp_del.size());
+	}
+		
 	waittodelete = false;
 	return true;
 }
@@ -349,6 +355,7 @@ void j1Collision::EreseAllColiderPlayer()
 		if (colliders[i] != nullptr)
 		{
 			colliders[i]->to_delete = true;
+			LOG("DEL ALL WITHOUT PLAYER");
 		}
 	}
 }
