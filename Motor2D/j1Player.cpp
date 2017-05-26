@@ -63,7 +63,6 @@ bool Player::Start()
 	//changeResolution = false;
 	attacker = false;
 
-
 	//ANIMATION ---------------
 	direction = DOWN;
 	state = L_IDLE;
@@ -581,9 +580,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						interaction = false;
 					}
 
-					//When Red Minion impacts Link, it explodes
-					((RedMinion*)c2->callback)->SetState(RM_DYING);
-					App->audio->PlayFx(7);
+					//When Red Minion impacts Link, it explodes --------
+					((RedMinion*)c2->callback)->start_explosion = true;
+					//-------------------------------------------------
 				}
 			}
 			// --------------------------------------

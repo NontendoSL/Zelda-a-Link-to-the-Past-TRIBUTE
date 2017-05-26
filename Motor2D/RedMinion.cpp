@@ -36,7 +36,7 @@ bool RedMinion::Start(iPoint pos)
 	animation.anim[anim_state].ResetAnimations();
 	//explosion_anim.anim[W_DYING].ResetAnimations();
 	death_graphics = App->tex->Load("textures/AnimationsAndEffects.png");
-
+	explosion = App->tex->Load("textures/Items.png");
 
 	//Set Collision
 	offset_x = 8;
@@ -56,6 +56,21 @@ bool RedMinion::Update(float dt)
 {
 	if (App->scene->gamestate == INGAME)
 	{
+		if (start_explosion == true)
+		{
+			App->audio->PlayFx(7);
+			state = RM_EXPLODING;
+			anim_state = RM_EXPLODING;
+			animation.anim[RM_EXPLODING].ResetAnimations();
+			direction = DOWN;
+
+			if (explosion != nullptr)
+			{
+				animation.graphics = explosion;
+			}
+			start_explosion = false;
+		}
+
 		switch (state)
 		{
 		case RM_SPAWNING:
@@ -84,12 +99,18 @@ bool RedMinion::Update(float dt)
 			Die();
 			break;
 		}
+		case RM_EXPLODING:
+		{
+			Explode();
+			break;
+		}
 		default:
 		{
 			break;
 		}
 		}
 	}
+
 	if (collision_feet != nullptr)
 	{
 		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
@@ -99,7 +120,6 @@ bool RedMinion::Update(float dt)
 
 void RedMinion::Draw()
 {
-
 	if (direction == UP)
 	{
 		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();
@@ -139,7 +159,7 @@ void RedMinion::OnCollision(Collider* c1, Collider* c2)
 		//SWORD COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_SWORD && c1->callback != nullptr)
 		{
-			if (state != RM_HIT && state != RM_DYING)
+			if (state != RM_HIT && state != RM_DYING && state != RM_EXPLODING)
 			{
 				App->audio->PlayFx(11);
 				knockback_time.Start();
@@ -154,7 +174,7 @@ void RedMinion::OnCollision(Collider* c1, Collider* c2)
 		// ARROW COLLISION
 		if (c1 == collision_feet && c2->type == COLLIDER_ARROW && c2->arrow_callback != nullptr)
 		{
-			if (c2->arrow_callback->step == AIR && state != RM_HIT)
+			if (c2->arrow_callback->step == AIR && state != RM_HIT && state != RM_EXPLODING)
 			{
 				App->audio->PlayFx(12);
 				knockback_time.Start();
@@ -321,6 +341,26 @@ bool RedMinion::Movebyhit(float dt)
 }
 
 bool RedMinion::Die()
+{
+	if (animation.anim[anim_state].South_action.Finished() == true)
+	{
+		if (item_id != -1)
+		{
+			App->entity_elements->CreateItem(DropItem(), position);
+		}
+
+		if (App->entity_elements->ganon != nullptr)
+		{
+			App->entity_elements->ganon->IncreaseDeadMinions();
+		}
+
+		to_delete = true;
+	}
+
+	return true;
+}
+
+bool RedMinion::Explode()
 {
 	if (animation.anim[anim_state].South_action.Finished() == true)
 	{

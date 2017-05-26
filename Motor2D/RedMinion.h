@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-enum RMinionState { RM_WALKING = 0, RM_DYING, RM_HIT, RM_SPAWNING, RM_IDLE };
+enum RMinionState { RM_WALKING = 0, RM_DYING, RM_EXPLODING, RM_HIT, RM_SPAWNING, RM_IDLE };
 
 
 class RedMinion : public NPC
@@ -35,6 +35,7 @@ public:
 	bool Move(float dt);
 	bool Movebyhit(float dt);
 	bool Die();
+	bool Explode();
 	// -----------------------
 
 	// UTILITY FUNCTIONS ---------
@@ -45,7 +46,7 @@ public:
 	RMinionState GetState() const;
 	//----------------------------
 
-	AnimationStruct explosion_anim;
+	bool start_explosion = false;
 
 private:
 	RMinionState state = RM_IDLE;
@@ -60,6 +61,7 @@ private:
 	SDL_Rect anim_rect;
 	iPoint pivot;
 	SDL_Texture* death_graphics = nullptr;
+	SDL_Texture* explosion = nullptr;
 	// ---------------------------------
 
 	//MOVEMENT VARIABLES ---
