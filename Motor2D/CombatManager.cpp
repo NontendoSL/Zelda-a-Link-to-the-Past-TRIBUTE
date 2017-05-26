@@ -107,6 +107,7 @@ bool CombatManager::Update(float dt)
 							pokemon_order++;
 							if (pokemon_order >= 3)
 							{
+								LOG("Lose Combat");
 								pokemon_order = 0;
 								App->scene->player->lose_combat = true;
 								App->scene->combat = false;
