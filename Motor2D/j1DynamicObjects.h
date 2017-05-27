@@ -4,7 +4,7 @@
 
 #include "SceneElements.h"
 
-enum DynObjectState { D_IDLE = 0, D_DYING, D_PICKED, D_AIR };
+enum DynObjectState { D_IDLE = 0, D_DYING, D_PICKED, D_AIR, D_IMPACTING };
 
 class DynamicObjects : public SceneElement
 {
@@ -50,6 +50,7 @@ public:
 	Collider* collision = nullptr;
 	SDL_Rect rect;
 	bool pickable = false;
+	bool start_impact = false;
 
 
 private:
@@ -60,6 +61,12 @@ private:
 	j1Timer timer;
 	float lifetime = 0;
 	std::string dialog;
+
+	//Animations
+	Animation destroy_animation;
+	SDL_Texture* tex = nullptr;
+	SDL_Rect anim_rect;
+	iPoint pivot;
 };
 
 

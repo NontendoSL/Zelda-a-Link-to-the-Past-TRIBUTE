@@ -122,7 +122,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 				anim_state = S_IDLE;
 				dir_hit = c2->callback->direction;
 				prev_position = position;
-				((DynamicObjects*)c2->callback)->SetState(D_DYING);
+				((DynamicObjects*)c2->callback)->SetState(D_IMPACTING);
 			}
 		}
 	}

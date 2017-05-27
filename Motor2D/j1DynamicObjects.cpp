@@ -54,6 +54,23 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos, bool isSig
 					rect = { temp.attribute("rect_x").as_int(0), temp.attribute("rect_y").as_int(0), temp.attribute("rect_w").as_int(0), temp.attribute("rect_h").as_int(0) };
 					item_id = temp.attribute("item_id").as_int(0);
 					pickable = temp.attribute("pickable").as_bool(false);
+
+					// SET DESTROYING ANIMATIONS -----------
+					if (name == "bush_plant")
+					{
+						tex = App->tex->Load("textures/AnimationsAndEffects.png");
+						destroy_animation = *App->anim_manager->GetAnimation(1, UP, PARTICLES);
+						destroy_animation.Reset();
+					}
+
+					else if (name == "vase")
+					{
+						tex = App->tex->Load("textures/AnimationsAndEffects.png");
+						destroy_animation = *App->anim_manager->GetAnimation(4, UP, PARTICLES);
+						destroy_animation.Reset();
+					}
+					// --------------------------------------
+
 					stop_search = true;
 				}
 				temp = temp.next_sibling();
@@ -104,8 +121,7 @@ bool DynamicObjects::Update(float dt)
 	{
 		if (timer.ReadSec() >= lifetime && state != D_DYING)
 		{
-			state = D_DYING;
-			to_delete = true;
+			state = D_IMPACTING;
 		}
 
 		else
@@ -115,6 +131,21 @@ bool DynamicObjects::Update(float dt)
 			collision->SetPos(position.x, position.y);
 		}
 	}
+
+	else if (state == D_IMPACTING)
+	{
+		if (start_impact == true)
+		{
+			collision->to_delete = true;
+			collision = nullptr;
+			start_impact = false;
+		}
+		else if (destroy_animation.Finished())
+		{
+			state = D_DYING;
+		}
+	}
+
 	else if (state == D_DYING)
 	{
 		to_delete = true;
@@ -127,7 +158,17 @@ void DynamicObjects::Draw()
 {
 	BROFILER_CATEGORY("Draw_DynObjects", Profiler::Color::Moccasin);
 
-	App->render->Blit(App->entity_elements->texture_dynobjects, position.x, position.y, &rect);
+	if (state != D_IMPACTING && state != D_DYING)
+	{
+		App->render->Blit(App->entity_elements->texture_dynobjects, position.x, position.y, &rect);
+	}
+
+	else
+	{
+		anim_rect = destroy_animation.GetCurrentFrame();
+		pivot = destroy_animation.GetCurrentOffset();
+		App->render->Blit(tex, position.x - pivot.x + 8, position.y - pivot.y + 8, &anim_rect);
+	}
 }
 
 bool DynamicObjects::CleanUp()
@@ -199,24 +240,21 @@ DynObjectState DynamicObjects::IsImpact(int actual_floor)
 	{
 		if (arrow_tile == first_floor)
 		{
-			state = D_DYING;
-			to_delete = true;
+			state = D_IMPACTING;
 		}
 	}
 	else if (actual_floor == 1)
 	{
 		if (arrow_tile == second_floor)
 		{
-			state = D_DYING;
-			to_delete = true;
+			state = D_IMPACTING;
 		}
 	}
 	else if (actual_floor == 2)
 	{
 		if (arrow_tile == third_floor)
 		{
-			state = D_DYING;
-			to_delete = true;
+			state = D_IMPACTING;
 		}
 	}
 	else

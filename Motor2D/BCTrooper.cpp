@@ -543,7 +543,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 
 				if (link->picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 				{
-					link->picked_object->SetState(D_DYING);
+					link->picked_object->SetState(D_IMPACTING);
 					link->picked_object = nullptr;
 				}
 			}
@@ -594,7 +594,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 				state = BC_HIT;
 				reset_time = true;
 				stunned = true;
-				((DynamicObjects*)c2->callback)->SetState(D_DYING);
+				((DynamicObjects*)c2->callback)->SetState(D_IMPACTING);
 			}
 		}
 	}

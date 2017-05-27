@@ -163,9 +163,6 @@ bool Player::Update(float dt)
 				charge--;
 			}
 		}
-
-
-
 		// --------------------
 
 		switch (state)
@@ -204,7 +201,6 @@ bool Player::Update(float dt)
 		{
 			break;
 		}
-
 		}
 	}
 
@@ -359,7 +355,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						App->entity_elements->CreateItem(c2->callback->DropItem(), position);
 					}
 
-					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
+					//App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
+					((DynamicObjects*)c2->callback)->SetState(D_IMPACTING);
+					((DynamicObjects*)c2->callback)->start_impact = true;
 				}
 			}
 			// ------------------------------
@@ -541,7 +539,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 					{
-						picked_object->SetState(D_DYING);
+						picked_object->SetState(D_IMPACTING);
 						picked_object = nullptr;
 					}
 
@@ -570,7 +568,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 					{
-						picked_object->SetState(D_DYING);
+						picked_object->SetState(D_IMPACTING);
 						picked_object = nullptr;
 					}
 
@@ -607,7 +605,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 					{
-						picked_object->SetState(D_DYING);
+						picked_object->SetState(D_IMPACTING);
 						picked_object = nullptr;
 					}
 
@@ -770,7 +768,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 					{
-						picked_object->SetState(D_DYING);
+						picked_object->SetState(D_IMPACTING);
 						picked_object = nullptr;
 					}
 
