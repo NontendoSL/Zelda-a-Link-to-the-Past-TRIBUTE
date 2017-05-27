@@ -241,7 +241,7 @@ bool Blaziken::Idle()
 		}
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
@@ -281,7 +281,7 @@ bool Blaziken::Walking(float dt)
 		}
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
