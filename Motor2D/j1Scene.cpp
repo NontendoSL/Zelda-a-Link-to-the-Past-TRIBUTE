@@ -666,12 +666,12 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
-			if (player->pokecash >= 30)
+			if (player->pokecash >= 40)
 			{
 				if (poke_bag->AddItem("pk_bag:DEF PROTEIN", true))
 				{
 					poke_shop->PopText(" PROTEIN PURCHASED");
-					player->pokecash -= 30;
+					player->pokecash -= 40;
 					poke_hud->RefreshMoney();
 					App->audio->PlayFx(21);
 				}
@@ -695,11 +695,11 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
-			if (player->pokecash >= 40)
+			if (player->pokecash >= 50)
 			{
 				if (poke_bag->AddItem("pk_bag:HP UP", true))
 				{
-					player->pokecash -= 40;
+					player->pokecash -= 50;
 					poke_hud->RefreshMoney();
 					poke_shop->PopText("   HP UP PURCHASED");
 					App->audio->PlayFx(21);
@@ -725,12 +725,12 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
-			if (player->pokecash >= 50)
+			if (player->pokecash >= 60)
 			{
 				if (poke_bag->AddItem("pk_bag:X ATTACK", true))
 				{
 					poke_shop->PopText(" X ATTACK PURCHASED");
-					player->pokecash -= 50;
+					player->pokecash -= 60;
 					poke_hud->RefreshMoney();
 					App->audio->PlayFx(21);
 				}
