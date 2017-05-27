@@ -1157,11 +1157,11 @@ void PokemonCombatHud::Input()
 	cooldown = true;
 	cdtime.y = cdtime.x;
 	}*/
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT && hpbar_pLink.y>0)
-	{
-		hpbar_pLink.y--;
-		poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT && hpbar_pLink.y>0)
+	//{
+	//	hpbar_pLink.y--;
+	//	poke_hp_Link->Write(std::string(std::to_string(hpbar_pLink.y) + "/" + std::to_string(hpbar_pLink.x)).c_str());
+	//}
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT && hpbar_pBrendan.y>0)
 	{
 		hpbar_pBrendan.y--;
