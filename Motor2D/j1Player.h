@@ -187,6 +187,7 @@ private:
 
 	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)
 	int actual_floor = 0;
+	int before_map = 0;
 
 	LinkState state = L_IDLE; //Logical state
 	LinkState anim_state = L_IDLE; //Animation state

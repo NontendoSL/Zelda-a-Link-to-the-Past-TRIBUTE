@@ -101,8 +101,17 @@ bool Player::Update(float dt)
 	{
 		score = 0;
 		hp_hearts = { hp_hearts.x, hp_hearts.x };
-		App->scene->switch_map = App->scene->last_map;
-		App->scene->useTP = true;
+		if (before_map == 3 && App->scene->last_map == 2 || before_map == 4 && App->scene->last_map == 2)
+		{
+			App->scene->switch_map = 2;
+			App->scene->useTP = false;
+			App->scene->newPosition = App->scene->teleports[5].position;
+		}
+		else
+		{
+			App->scene->switch_map = App->scene->last_map;
+			App->scene->useTP = true;
+		}
 		if (gems > 10)
 		{
 			gems = gems - (gems/ 10);
@@ -636,6 +645,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							App->scene->teleports[i].rect.y== c2->rect.y)
 						{
 							canSwitchMap = false;
+							before_map = App->scene->last_map;
 							App->scene->switch_map = App->scene->teleports[i].id_map;
 							App->scene->newPosition = App->scene->teleports[i].position;
 						}
