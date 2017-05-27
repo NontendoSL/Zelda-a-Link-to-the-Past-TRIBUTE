@@ -520,6 +520,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			((Button*)element)->click = false;
 			poke_menu->trainer_card = true;
 			App->gui->GetEntity("trainer card")->visible = true;
+			//Comit namber 1004 like telefonica
 		}
 	}
 	if (element->identifier == "pk_menu:menu")
