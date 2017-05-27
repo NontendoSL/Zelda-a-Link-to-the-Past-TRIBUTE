@@ -1560,6 +1560,8 @@ PokemonWorldMenu::PokemonWorldMenu()
 		menu_opt.push_back((Button*)bg_poke->elements[i]);
 	}
 	App->gui->GetEntity("trainer card")->visible = false;
+	App->gui->GetEntity("playtime card")->visible = false;
+	playtime = SDL_GetTicks();
 }
 
 void PokemonWorldMenu::Input()
@@ -1595,8 +1597,10 @@ void PokemonWorldMenu::Input()
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 		{
 			App->gui->GetEntity("trainer card")->visible = false;
+			App->gui->GetEntity("playtime card")->visible = false; 
 			trainer_card = false;
 		}
+		WritePlayTime();
 	}
 
 }
@@ -1649,6 +1653,24 @@ void PokemonWorldMenu::MoveIn(bool inside)
 	{
 		App->gui->GetEntity("pokemon menu bg")->position.x += App->gui->GetEntity("pokemon menu bg")->Hitbox.w;
 	}
+}
+
+void PokemonWorldMenu::WritePlayTime()
+{
+	int minutesplayed = ((SDL_GetTicks() - playtime) / 1000) / 60;
+	int secondsplayed = ((SDL_GetTicks() - playtime) / 1000) - minutesplayed * 60;
+	std::string time;
+	if (minutesplayed < 10)
+	{
+		time = std::to_string(0);
+	}
+	time += std::to_string(minutesplayed) + ":";
+	if (secondsplayed < 10)
+	{
+		time += std::to_string(0);
+	}
+	time += std::to_string(secondsplayed);
+	((Text*)App->gui->GetEntity("playtime card"))->Write(time.c_str());
 }
 
 Button* PokemonWorldMenu::GetFirst()

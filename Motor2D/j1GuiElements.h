@@ -263,11 +263,13 @@ public:
 	Button* GetFirst();
 	void Select(bool down);
 	void MoveIn(bool inside);
+	void WritePlayTime();
 private:
 	std::vector<Button*>menu_opt;
 public:
 	//bool active = false;
 	bool trainer_card = false;
+	uint playtime = 0;
 };
 
 //---------------------------------------
