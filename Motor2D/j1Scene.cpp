@@ -1105,7 +1105,7 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 
 	if (n == 9 || n == 10)
 	{
-		if (n == 9)
+		if (n == 10)
 		{
 			player->Unequip();
 			player->sword_equiped = false;
@@ -1307,6 +1307,14 @@ bool j1Scene::Load_Combat_map(int n)
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
+	if (last_map == 9)
+	{
+		if (n == 17)
+		{
+			player->Unequip();
+			player->sword_equiped = false;
+		}
+	}
 
 	//start_menu->OpenClose(false);
 	//hud->OpenClose(false);
