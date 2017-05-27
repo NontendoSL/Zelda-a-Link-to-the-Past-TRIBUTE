@@ -1559,13 +1559,13 @@ PokemonWorldMenu::PokemonWorldMenu()
 	{
 		menu_opt.push_back((Button*)bg_poke->elements[i]);
 	}
-
+	App->gui->GetEntity("trainer card")->visible = false;
 }
 
 void PokemonWorldMenu::Input()
 {
-	//if (active)
-	//{
+	if (trainer_card == false)
+	{
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
 		{
 			Select(true);
@@ -1589,7 +1589,15 @@ void PokemonWorldMenu::Input()
 			App->gui->SetGui(POKEMON_HUD);
 			App->scene->gamestate = INGAME;
 		}
-	//}
+	}
+	else
+	{
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+		{
+			App->gui->GetEntity("trainer card")->visible = false;
+			trainer_card = false;
+		}
+	}
 
 }
 

@@ -267,6 +267,7 @@ private:
 	std::vector<Button*>menu_opt;
 public:
 	//bool active = false;
+	bool trainer_card = false;
 };
 
 //---------------------------------------

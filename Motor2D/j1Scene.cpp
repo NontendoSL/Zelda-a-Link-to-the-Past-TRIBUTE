@@ -518,6 +518,8 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		else
 		{
 			((Button*)element)->click = false;
+			poke_menu->trainer_card = true;
+			App->gui->GetEntity("trainer card")->visible = true;
 		}
 	}
 	if (element->identifier == "pk_menu:menu")
