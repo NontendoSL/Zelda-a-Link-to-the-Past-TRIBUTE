@@ -122,6 +122,7 @@ bool DynamicObjects::Update(float dt)
 		if (timer.ReadSec() >= lifetime && state != D_DYING)
 		{
 			state = D_IMPACTING;
+			start_impact = true;
 		}
 
 		else
@@ -241,6 +242,7 @@ DynObjectState DynamicObjects::IsImpact(int actual_floor)
 		if (arrow_tile == first_floor)
 		{
 			state = D_IMPACTING;
+			start_impact = true;
 		}
 	}
 	else if (actual_floor == 1)
@@ -248,6 +250,7 @@ DynObjectState DynamicObjects::IsImpact(int actual_floor)
 		if (arrow_tile == second_floor)
 		{
 			state = D_IMPACTING;
+			start_impact = true;
 		}
 	}
 	else if (actual_floor == 2)
@@ -255,6 +258,7 @@ DynObjectState DynamicObjects::IsImpact(int actual_floor)
 		if (arrow_tile == third_floor)
 		{
 			state = D_IMPACTING;
+			start_impact = true;
 		}
 	}
 	else

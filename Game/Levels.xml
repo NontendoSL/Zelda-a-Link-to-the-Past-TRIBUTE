@@ -110,7 +110,6 @@
         <soldier id="1" pos_x="440" pos_y="568" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
         <soldier id="1" pos_x="888" pos_y="560" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
         <soldier id="1" pos_x="888" pos_y="416" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-        <soldier id="1" pos_x="550" pos_y="1300" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
       </soldier>
 
       <dynobjects>

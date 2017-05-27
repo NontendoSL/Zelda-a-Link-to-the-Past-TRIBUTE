@@ -123,6 +123,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 				dir_hit = c2->callback->direction;
 				prev_position = position;
 				((DynamicObjects*)c2->callback)->SetState(D_IMPACTING);
+				((DynamicObjects*)c2->callback)->start_impact = true;
 			}
 		}
 	}

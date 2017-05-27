@@ -540,6 +540,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 					{
 						picked_object->SetState(D_IMPACTING);
+						picked_object->start_impact = true;
 						picked_object = nullptr;
 					}
 
@@ -569,6 +570,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 					{
 						picked_object->SetState(D_IMPACTING);
+						picked_object->start_impact = true;
 						picked_object = nullptr;
 					}
 
@@ -606,6 +608,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 					{
 						picked_object->SetState(D_IMPACTING);
+						picked_object->start_impact = true;
 						picked_object = nullptr;
 					}
 
@@ -769,6 +772,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
 					{
 						picked_object->SetState(D_IMPACTING);
+						picked_object->start_impact = true;
 						picked_object = nullptr;
 					}
 
