@@ -137,6 +137,7 @@ bool DynamicObjects::Update(float dt)
 	{
 		if (start_impact == true)
 		{
+			App->entity_elements->SwapObject(this);
 			collision->to_delete = true;
 			collision = nullptr;
 			start_impact = false;
