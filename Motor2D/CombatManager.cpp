@@ -112,7 +112,7 @@ bool CombatManager::Update(float dt)
 								App->scene->player->lose_combat = true;
 								App->scene->combat = false;
 								App->scene->switch_map = App->scene->last_map;
-								App->scene->useTP = true;
+								App->scene->newPosition = App->scene->player->position;
 							}
 							else
 							{
@@ -123,7 +123,7 @@ bool CombatManager::Update(float dt)
 						{
 							App->scene->combat = false;
 							App->scene->switch_map = App->scene->last_map;
-							App->scene->useTP = true;
+							App->scene->newPosition = App->scene->player->position;
 							App->scene->player->state_complet = true;
 							item++;
 						}
