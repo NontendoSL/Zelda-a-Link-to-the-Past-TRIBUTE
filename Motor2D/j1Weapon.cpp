@@ -298,8 +298,8 @@ void Arrow::Draw()
 		//App->render->DrawQuad({collision->rect.x, collision->rect.y, 4, 4}, 255, 255, 255);
 		break;
 	case IMPACT:
-		//App->anim_manager->Drawing_Manager(W_DYING, direction, position, ARROW);
-		App->render->DrawQuad({ collision->rect.x, collision->rect.y, 4, 4 }, 255, 0, 0);
+		App->anim_manager->Drawing_Manager(W_DYING, direction, position, ARROW);
+		//App->render->DrawQuad({ collision->rect.x, collision->rect.y, 4, 4 }, 255, 0, 0);
 		break;
 	default:
 		break;
