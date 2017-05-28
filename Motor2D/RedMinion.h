@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-enum RMinionState { RM_WALKING = 0, RM_DYING, RM_EXPLODING, RM_HIT, RM_SPAWNING, RM_IDLE };
+enum RMinionState { RM_SPAWNING = 0, RM_WALKING, RM_DYING, RM_EXPLODING, RM_HIT, RM_IDLE };
 
 
 class RedMinion : public NPC

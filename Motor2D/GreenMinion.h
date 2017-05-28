@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-enum GMinionState { GM_WALKING = 0, GM_DYING, GM_HIT, GM_SPAWNING, GM_IDLE };
+enum GMinionState { GM_SPAWNING = 0, GM_WALKING, GM_DYING, GM_HIT, GM_IDLE };
 
 
 class GreenMinion : public NPC

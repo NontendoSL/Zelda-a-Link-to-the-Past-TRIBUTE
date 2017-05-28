@@ -30,7 +30,7 @@ bool RedMinion::Start(iPoint pos)
 
 	//Animation
 	state = RM_SPAWNING;
-	anim_state = RM_WALKING;
+	anim_state = RM_SPAWNING;
 	animation = *App->anim_manager->GetAnimStruct(REDMINION);
 	//explosion_anim = *App->anim_manager->GetAnimStruct(BOMB);
 	animation.anim[anim_state].ResetAnimations();
@@ -41,7 +41,6 @@ bool RedMinion::Start(iPoint pos)
 	//Set Collision
 	offset_x = 8;
 	offset_y = 4;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 17 }, COLLIDER_RMINION, this);
 
 	//Spawn Timer
 	spawn_time.Start();
@@ -206,8 +205,9 @@ void RedMinion::OnCollision(Collider* c1, Collider* c2)
 
 bool RedMinion::Spawning()
 {
-	if (spawn_time.ReadSec() >= 0.7)
+	if (spawn_time.ReadSec() >= 1)
 	{
+		collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 17 }, COLLIDER_RMINION, this);
 		state = RM_WALKING;
 		anim_state = RM_WALKING;
 	}

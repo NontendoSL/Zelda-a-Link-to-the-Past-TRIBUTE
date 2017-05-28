@@ -31,16 +31,14 @@ bool GreenMinion::Start(iPoint pos)
 
 	//Animation
 	state = GM_SPAWNING;
-	anim_state = GM_WALKING;
+	anim_state = GM_SPAWNING;
 	animation = *App->anim_manager->GetAnimStruct(GREENMINION);
 	animation.anim[anim_state].ResetAnimations();
 	death_graphics = App->tex->Load("textures/AnimationsAndEffects.png");
 
-
 	//Set Collision
 	offset_x = 8;
 	offset_y = 4;
-	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 17 }, COLLIDER_GMINION, this);
 
 	//Spawn Timer
 	spawn_time.Start();
@@ -177,10 +175,12 @@ void GreenMinion::OnCollision(Collider* c1, Collider* c2)
 
 bool GreenMinion::Spawning()
 {
-	if (spawn_time.ReadSec() >= 0.7)
+	if (spawn_time.ReadSec() >= 1)
 	{
 		state = GM_WALKING;
 		anim_state = GM_WALKING;
+		collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 17, 17 }, COLLIDER_GMINION, this);
+
 	}
 
 	return true;
