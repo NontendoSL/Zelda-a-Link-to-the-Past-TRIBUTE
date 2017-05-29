@@ -45,76 +45,80 @@ bool FireBat::Start()
 
 bool FireBat::Update(float dt)
 {
-	switch (state)
+	if (App->scene->gamestate == INGAME)
 	{
-	case B_SLEEP:
-		if (App->entity_elements->ganon->start_awake == true && spawn_time.ReadSec() >= 4)
+		switch (state)
 		{
-			state = B_AWAKENING;
-			anim_state = B_AWAKENING;
-			animation.anim[anim_state].ResetAnimations();
+		case B_SLEEP:
+			if (App->entity_elements->ganon->start_awake == true && spawn_time.ReadSec() >= 4)
+			{
+				state = B_AWAKENING;
+				anim_state = B_AWAKENING;
+				animation.anim[anim_state].ResetAnimations();
 
-		}
-		break;
-	case B_AWAKENING:
-	{
-		if (animation.anim[anim_state].South_action.Finished())
+			}
+			break;
+		case B_AWAKENING:
 		{
-			start_chase = true;
-			origin = position;
-			dest = App->scene->player->position;
-			fly_timer.Start();
-			state = B_FLYING;
-			anim_state = B_FLYING;
+			if (animation.anim[anim_state].South_action.Finished())
+			{
+				start_chase = true;
+				origin = position;
+				dest = App->scene->player->position;
+				fly_timer.Start();
+				state = B_FLYING;
+				anim_state = B_FLYING;
 
-			//Modify collider ----------
-			offset_x = 13;
-			offset_y = 5;
-			collision_feet->rect.w = 25;
-			collision_feet->rect.h = 9;
-			//--------------------------
+				//Modify collider ----------
+				offset_x = 13;
+				offset_y = 5;
+				collision_feet->rect.w = 25;
+				collision_feet->rect.h = 9;
+				//--------------------------
+			}
+			break;
 		}
-		break;
-	}
-	case B_FLYING:
-	{
-		if (start_chase == true && fly_timer.ReadSec() <= 2)
+		case B_FLYING:
 		{
-			Fly();
+			if (start_chase == true && fly_timer.ReadSec() <= 2)
+			{
+				Fly();
+			}
+			else
+			{
+				state = B_DYING;
+				anim_state = B_DYING;
+			}
+			break;
 		}
-		else
+		case B_DYING:
 		{
-			state = B_DYING;
-			anim_state = B_DYING;
+			if (animation.anim[anim_state].South_action.Finished())
+			{
+				Die();
+			}
 		}
-		break;
-	}
-	case B_DYING:
-	{
-		if (animation.anim[anim_state].South_action.Finished())
-		{
-			Die();
 		}
-	}
-	}
 
 
-	if (start_chase == false)
-	{
-		//FIREBAT MOVEMENT --------
-		pos_in_vect += speed;
-		if (pos_in_vect >= 180)
+		if (start_chase == false)
 		{
-			pos_in_vect = 0;
+			//FIREBAT MOVEMENT --------
+			pos_in_vect += speed;
+			if (pos_in_vect >= 180)
+			{
+				pos_in_vect = 0;
+			}
+			position = App->entity_elements->ganon->GetPosinVect(pos_in_vect);
+			//------------------------------
 		}
-		position = App->entity_elements->ganon->GetPosinVect(pos_in_vect);
-		//------------------------------
-	}
 
-	if (collision_feet != nullptr)
-	{
-		collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+		if (collision_feet != nullptr)
+		{
+			collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+		}
 	}
+	
 
 	return true;
 }
