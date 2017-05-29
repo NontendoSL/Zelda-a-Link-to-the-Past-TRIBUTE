@@ -628,7 +628,7 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 					anim_state = G_HIT;
 					dir_hit = c2->arrow_callback->direction;
 					prev_position = position;
-					c2->arrow_callback->step = IMPACT;
+					c2->arrow_callback->step = ENEMY_IMPACT;
 				}
 				else if (phase == RAGE && state == G_IDLE)
 				{
@@ -639,7 +639,7 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 					anim_state = G_HIT;
 					dir_hit = c2->arrow_callback->direction;
 					prev_position = position;
-					c2->arrow_callback->step = IMPACT; 
+					c2->arrow_callback->step = ENEMY_IMPACT; 
 				}		
 			}
 		}

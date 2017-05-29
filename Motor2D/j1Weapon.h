@@ -5,7 +5,7 @@
 #include "SceneElements.h"
 enum HookState { TARGET, OBSTACLE, MISS};
 enum BombStep { PLANTED, EXPLOSION };
-enum ArrowStep { AIR, IMPACT, DIE};
+enum ArrowStep { AIR, WALL_IMPACT, ENEMY_IMPACT, DIE};
 
 enum WeaponType { W_BOW, W_HOOKSHOT, W_BOMB };
 enum WeaponState { W_IDLE = 0, W_DYING };
@@ -109,6 +109,7 @@ public:
 	Direction direction = NO_DIRECTION;
 	float arrow_speed = 0;
 	float lifetime = 0;
+	bool start_impact = true;
 	j1Timer timer;
 	j1Timer impact_time;
 	Animation* current = nullptr;

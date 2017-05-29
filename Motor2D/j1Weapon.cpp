@@ -269,16 +269,30 @@ void Arrow::Update(float dt)
 			collision->SetPos(position.x - offset_x, position.y - offset_y);
 
 			//Check for a WALL IMPACT.
-			if (IsImpact(App->scene->player->GetFloor()) == IMPACT)
+			if (IsImpact(App->scene->player->GetFloor()) == WALL_IMPACT)
 			{
 				impact_time.Start();
 				App->audio->PlayFx(17);
 			}
 		}
 
-		else if (step == IMPACT)
+		else if (step == WALL_IMPACT)
 		{
 			if (impact_time.ReadSec() >= 0.5)
+			{
+				step = DIE;
+			}
+		}
+
+		else if (step == ENEMY_IMPACT)
+		{
+			if (start_impact == true)
+			{
+				current = App->anim_manager->GetAnimation(ENEMY_IMPACT, direction, ARROW);
+				current->Reset();
+				start_impact = false;
+			}
+			else if (current->Finished())
 			{
 				step = DIE;
 			}
@@ -296,13 +310,13 @@ void Arrow::Draw()
 	switch (step)
 	{
 	case AIR:
-		App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW);
-		//App->anim_manager->Drawing_Manager(W_IDLE, direction, position, ARROW);
-		//App->render->DrawQuad({collision->rect.x, collision->rect.y, 4, 4}, 255, 255, 255);
+		App->anim_manager->Drawing_Manager(AIR, direction, position, ARROW);
 		break;
-	case IMPACT:
-		App->anim_manager->Drawing_Manager(W_DYING, direction, position, ARROW);
-		//App->render->DrawQuad({ collision->rect.x, collision->rect.y, 4, 4 }, 255, 0, 0);
+	case WALL_IMPACT:
+		App->anim_manager->Drawing_Manager(WALL_IMPACT, direction, position, ARROW);
+		break;
+	case ENEMY_IMPACT:
+		App->anim_manager->Drawing_Manager(ENEMY_IMPACT, direction, position, ARROW);		
 		break;
 	default:
 		break;
@@ -346,21 +360,21 @@ ArrowStep Arrow::IsImpact(int actual_floor)
 	{
 		if (arrow_tile == first_floor)
 		{
-			step = IMPACT;
+			step = WALL_IMPACT;
 		}
 	}
 	else if (actual_floor == 1)
 	{
 		if (arrow_tile == second_floor)
 		{
-			step = IMPACT;
+			step = WALL_IMPACT;
 		}
 	}
 	else if (actual_floor == 2)
 	{
 		if (arrow_tile == third_floor)
 		{
-			step = IMPACT;
+			step = WALL_IMPACT;
 		}
 	}
 	else
