@@ -149,7 +149,7 @@ bool Ganon::InitialUpdate(float dt)
 
 bool Ganon::InvincibleUpdate(float dt)
 {
-	if(hp<100)
+	if(hp<65)
 		hp+=0.1f;
 	// Until player hasn't killed a certain amount of enemies.
 	if (minions_killed < 10)
@@ -177,7 +177,6 @@ bool Ganon::InvincibleUpdate(float dt)
 		state = G_ATTACKING;
 		special_attack = G_SPECIAL_2;
 		anim_state = G_SPECIAL_2;
-		hp = 30;
 	}
 	return true;
 }
@@ -279,7 +278,7 @@ bool Ganon::InitCombat()
 
 void Ganon::IdleRage()
 {
-	if (wait_time.ReadSec() >= 0.7)
+	if (wait_time.ReadSec() >= 1.5)
 	{
 		state = G_ATTACKING;
 		anim_state = G_SPECIAL_2;
@@ -536,7 +535,7 @@ void Ganon::ResetJump()
 
 void Ganon::Hit()
 {
-	if (HitTime.ReadSec() >= 0.7)
+	if (HitTime.ReadSec() >= 1)
 	{
 		App->audio->PlayFx(12);
 		state = G_IDLE;
@@ -546,7 +545,7 @@ void Ganon::Hit()
 
 void Ganon::HitRage()
 {
-	if (HitTime.ReadSec() >= 0.7)
+	if (HitTime.ReadSec() >= 1)
 	{
 		App->audio->PlayFx(12);
 		state = G_IDLE;
@@ -599,7 +598,7 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 				{
 					App->audio->PlayFx(12);
 					HitTime.Start();
-					hp -= 10;
+					hp -= 15;
 					state = G_HIT;
 					anim_state = G_HIT;
 				}
@@ -607,7 +606,7 @@ void Ganon::OnCollision(Collider* c1, Collider* c2)
 				{
 					App->audio->PlayFx(12);
 					HitTime.Start();
-					hp -= 10;
+					hp -= 15;
 					state = G_HIT;
 					anim_state = G_HIT;
 				}
