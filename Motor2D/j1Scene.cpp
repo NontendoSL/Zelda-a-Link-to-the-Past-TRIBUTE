@@ -314,6 +314,7 @@ bool j1Scene::Update(float dt)
 				player->sword_equiped = true;
 				player->hook = App->entity_elements->CreateHookshot();
 				App->scene->start_menu->PickItem("hookshot");
+				player->gems = 999;
 			}
 			// ---------
 
@@ -978,6 +979,9 @@ bool j1Scene::Load(pugi::xml_node& checknode)
 	
 	curr_node = node.child("UI");
 	Check.world = curr_node.attribute("world").as_string("Zelda");
+	
+	curr_node = node.child("POKECASH");
+	Check.cash = curr_node.attribute("cash").as_uint(0);
 
 	curr_node = node.child("POKEMON_ITEMS");
 	Check.blaz_hp = curr_node.child("Blaziken").attribute("hp").as_int(0);
@@ -998,7 +1002,50 @@ bool j1Scene::Load(pugi::xml_node& checknode)
 
 void j1Scene::SetItemsinUI()
 {
-	//Complete this function.
+	/*BLAZIKEN*/
+	for (uint i = 0; i < Check.blaz_hp; i++)
+	{
+		poke_hud->LoadItem("BLAZIKEN","pk_bag:HP UP");
+	}
+	for (uint i = 0; i < Check.blaz_def; i++)
+	{
+		poke_hud->LoadItem("BLAZIKEN", "pk_bag:DEF PROTEIN");
+	}
+	for (uint i = 0; i < Check.blaz_atk; i++)
+	{
+		poke_hud->LoadItem("BLAZIKEN", "pk_bag:X ATTACK");
+	}
+
+	/*SCEPTYLE*/
+	for (uint i = 0; i < Check.scept_hp; i++)
+	{
+		poke_hud->LoadItem("SCEPTILE", "pk_bag:HP UP");
+	}
+	for (uint i = 0; i < Check.scept_def; i++)
+	{
+		poke_hud->LoadItem("SCEPTILE", "pk_bag:DEF PROTEIN");
+	}
+	for (uint i = 0; i < Check.scept_atk; i++)
+	{
+		poke_hud->LoadItem("SCEPTILE", "pk_bag:X ATTACK");
+	}
+
+
+	/*SWAMPERT*/
+	for (uint i = 0; i < Check.swamp_hp; i++)
+	{
+		poke_hud->LoadItem("SWAMPERT", "pk_bag:HP UP");
+	}
+	for (uint i = 0; i < Check.swamp_def; i++)
+	{
+		poke_hud->LoadItem("SWAMPERT", "pk_bag:DEF PROTEIN");
+	}
+	for (uint i = 0; i < Check.swamp_atk; i++)
+	{
+		poke_hud->LoadItem("SWAMPERT", "pk_bag:X ATTACK");
+	}
+
+
 }
 
 bool j1Scene::NewGame()
@@ -1045,10 +1092,10 @@ bool j1Scene::ContinueGame()
 	else if (Check.world == "Pokemon")
 	{
 		App->gui->SetGui(POKEMON_HUD);
-		//SetItemsinUI();
+		SetItemsinUI();
+		poke_hud->RefreshMoney();
 	}
 	//----------------------------------------------------------------
-
 
 
 	Load_new_map(Check.map_id, true);

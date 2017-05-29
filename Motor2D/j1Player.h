@@ -47,6 +47,7 @@ struct CheckPoint
 	//-----------------------------
 
 	//POKEMON WORLD --------
+	uint cash = 0;
 	int blaz_hp = 0;
 	int blaz_atk = 0;
 	int blaz_def = 0;
