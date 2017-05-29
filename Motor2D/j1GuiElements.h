@@ -79,7 +79,7 @@ public:
 class Dialogue : public j1GuiEntity
 {
 public:
-	Dialogue(const char* string);
+	Dialogue(const char* string, int type); //0 ZELDA, 1 WOODEN SIGN, 2 POKEMON
 	~Dialogue();
 public:
 	void Draw();

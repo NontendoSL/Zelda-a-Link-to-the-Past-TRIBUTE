@@ -279,14 +279,24 @@ Button::~Button()
 
 /////////////////////////////// DIALOGUE METHODS ///////////////////////////////
 
-Dialogue::Dialogue(const char*string) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
+Dialogue::Dialogue(const char*string, int signtype) :j1GuiEntity({ 0,82,190,62 }, { 40,150 })
 {
+	switch (signtype)
+	{
+	case 0:
+		Hitbox = { 0, 82, 190, 62 };
+		break;
+	case 1:
+		Hitbox = { 1056, 160, 190, 62 };
+		break;
+	case 2:
+		Hitbox = { 1056, 88, 190, 62 };
+		break;
+	}
+	lines = App->gui->CreateText(GANONF, string, 330, { 5, 0 }, 30, { 255,255,255,255 }, false, "dialogue text", ZELDA_HUD);
 	int win_marge = (App->win->GetWidth() - App->gui->GetEntity("bg")->Hitbox.w*App->win->GetScale()) / 4;
 	position = { win_marge + 40,150 };
-	//TODO MID: Actual font needs a blue outline to match the original one, need to code that or edit the font creating the outline
 	type = DIALOGUE;
-	lines = App->gui->CreateText(GANONF, string, 330, {5, 0 }, 30, { 255,255,255,255 }, false,"dialogue text", ZELDA_HUD);
-	
 	identifier = "dialogue";
 	App->scene->gamestate = GameState::CUTSCENE;
 	for (int i = lines->Hitbox.w*2; i > lines->length*2; enters++)

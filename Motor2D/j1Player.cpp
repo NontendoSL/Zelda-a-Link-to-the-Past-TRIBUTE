@@ -387,7 +387,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							App->scene->gamestate = INMENU;
 							interaction = false;
 							DynamicObjects* dynobj = (DynamicObjects*)c2->callback;
-							dialog = App->gui->CreateDialogue(dynobj->GetDialog().c_str());
+							dialog = App->gui->CreateDialogue(dynobj->GetDialog().c_str(),1);
 							collision_interact->to_delete = true;
 							state = L_IDLE;
 							anim_state = L_IDLE;
@@ -475,7 +475,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						//First time picking a bomb
 						if (bombmanager == nullptr)
 						{
-							dialog = App->gui->CreateDialogue("Bomb picked!");
+							dialog = App->gui->CreateDialogue("Bomb picked!",0);
 							bombmanager = App->entity_elements->CreateBombContainer();
 							App->scene->start_menu->PickItem("bomb");
 							App->audio->PlayFx(20);
@@ -490,7 +490,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						//First time picking a hookshot
 						if (hook == nullptr)
 						{
-							dialog = App->gui->CreateDialogue("Hookshot picked!");
+							dialog = App->gui->CreateDialogue("Hookshot picked!",0);
 							hook = App->entity_elements->CreateHookshot();
 							App->scene->start_menu->PickItem("hookshot");
 							App->audio->PlayFx(20);
@@ -502,7 +502,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						//First time picking a bow
 						if (bow == nullptr)
 						{
-							dialog = App->gui->CreateDialogue("Bow picked!");
+							dialog = App->gui->CreateDialogue("Bow picked!",0);
 							bow = App->entity_elements->CreateBow();
 							App->scene->start_menu->PickItem("bow");
 							App->audio->PlayFx(20);
@@ -525,7 +525,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					if (c2->callback->name == "sword_shield")
 					{
 						sword_equiped = true;
-						dialog = App->gui->CreateDialogue("With great power comes great responsability       -Uncle Link");
+						dialog = App->gui->CreateDialogue("With great power comes great responsability       -Uncle Link",0);
 						App->audio->PlayFx(20);
 					}
 
@@ -679,30 +679,30 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							if (App->scene->notrepeatCombat)
 							{
 								App->scene->combat_map_id = villager->switch_map;
-								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(),2);
 							}
 							else
 							{
 								App->scene->combat_map_id = 0;
-								dialog = App->gui->CreateDialogue("Congratulations! You defeated me. Go ahead and proceed with your run!");
+								dialog = App->gui->CreateDialogue("Congratulations! You defeated me. Go ahead and proceed with your run!",2);
 							}
 						}
 						else
 						{
 							if (App->scene->last_map == 3)
 							{
-								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(),2);
 							}
 							if (App->scene->last_map == 5)
 							{
 								App->scene->combat_map_id = villager->switch_map;
 								App->scene->useTP = true;
-								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(),0);
 								App->gui->GetEntity("pendant_poke")->visible = true;
 							}
 							else if (App->scene->last_map == 16)
 							{
-								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(),2);
 								App->entity_elements->DeleteElement("door");
 								App->gui->GetEntity("pendant_link")->visible = true;
 								App->map->EditCost(32, 53, 0);
@@ -714,11 +714,11 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							{
 								if (App->scene->cash_swapped)
 								{
-									dialog = App->gui->CreateDialogue("You are in the Pokemon League! Here you will face the greatest trainers from Hoenn!");
+									dialog = App->gui->CreateDialogue("You are in the Pokemon League! Here you will face the greatest trainers from Hoenn!",2);
 								}
 								else
 								{
-									dialog = App->gui->CreateDialogue(villager->GetDialog().c_str());
+									dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(),2);
 									App->scene->joy_talk = true;
 								}
 							}
@@ -749,7 +749,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							c2->callback->direction = RIGHT;
 						else
 							c2->callback->direction = LEFT;
-						dialog = App->gui->CreateDialogue("Hey, what are you doing in my world? Here we fight with creatures called pokemon, not with weapons, let's try it");
+						dialog = App->gui->CreateDialogue("Hey, what are you doing in my world? Here we fight with creatures called pokemon, not with weapons, let's try it",2);
 						collision_interact->to_delete = true;
 						interaction = false;
 						state = L_IDLE;

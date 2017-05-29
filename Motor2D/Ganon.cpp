@@ -248,7 +248,7 @@ bool Ganon::InitCombat()
 {
 	if (App->scene->player->position.y <= 195 && start_dialogue == false)
 	{
-		App->scene->player->dialog = App->gui->CreateDialogue("I'm Ganon, the Lord of the Shadow. You will never save the Two Worlds, Link. I'm gonna defeat you right now!");
+		App->scene->player->dialog = App->gui->CreateDialogue("I'm Ganon, the Lord of the Shadow. You will never save the Two Worlds, Link. I'm gonna defeat you right now!",0);
 		start_dialogue = true;
 		LOG("START COMBAT");
 		return true;

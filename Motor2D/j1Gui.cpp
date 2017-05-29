@@ -363,10 +363,10 @@ Button* j1Gui::CreateButton(j1Module* listener, SDL_Rect rect, iPoint pos, iPoin
 	return element;
 }
 
-Dialogue* j1Gui::CreateDialogue(const char* string)
+Dialogue* j1Gui::CreateDialogue(const char* string, int type)
 {
 
-	Dialogue* element = new Dialogue(string);
+	Dialogue* element = new Dialogue(string, type);
 	element->belong = status;
 
 	entities.push_back(element);

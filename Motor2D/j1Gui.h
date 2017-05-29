@@ -78,7 +78,7 @@ public:
 	// create button
 	Button* CreateButton(j1Module* listener, SDL_Rect rect, iPoint pos, iPoint text2, iPoint text3, bool animated = false, std::string identifier = "undefined", GuiGroup group = GuiGroup::NONE, const char* textstring = nullptr, uint textsize = NULL, iPoint textpos = { 0,0 });
 
-	Dialogue* CreateDialogue(const char* string);
+	Dialogue* CreateDialogue(const char* string, int type);
 
 	Selector* CreateSelector(const char* first, const char* second, j1GuiEntity*parent);
 
