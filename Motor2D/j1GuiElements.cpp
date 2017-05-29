@@ -987,12 +987,17 @@ PokemonCombatHud::PokemonCombatHud(PokemonCombat* Link, PokemonCombat* Brendan)
 	cdtime = iPoint(Link->cooldown, Link->cooldown);
 	App->gui->GetEntity("bottom hud")->position.y = (App->win->GetHeight()/2) - App->gui->GetEntity("bottom hud")->Hitbox.h;
 	SetHudType(Brendan);
+
 }
 
 void PokemonCombatHud::Move(bool x_axis, float speed)
 {
 	App->gui->GetEntity("top hud")->position.x += speed;
 	App->gui->GetEntity("bottom hud")->position.x += speed;
+	App->gui->GetEntity("Link_Pokeball_1")->position.x += speed;
+	App->gui->GetEntity("Link_Pokeball_2")->position.x += speed;
+	App->gui->GetEntity("Link_Pokeball_3")->position.x += speed;
+	App->gui->GetEntity("Bren_Pokeball_1")->position.x += speed;
 }
 
 void PokemonCombatHud::LoadNewPokemon(PokemonCombat* pokemon, bool trainer) //true Link - false Brendan
@@ -1125,37 +1130,50 @@ void PokemonCombatHud::SetHudType(PokemonCombat * enemy_poke)
 	{
 		App->gui->GetEntity("top hud")->Hitbox = { 548,236,258,51 };
 		App->gui->GetEntity("bottom hud")->Hitbox = { 549,506,254,33 };
-		App->gui->GetEntity("Link_Pokeball_1")->position = { 44,11 };
-		App->gui->GetEntity("Link_Pokeball_2")->position = { 54,13 };
-		App->gui->GetEntity("Link_Pokeball_3")->position = { 64,14 };
-		App->gui->GetEntity("Bren_Pokeball_1")->position = { 206,11 };
+		App->gui->GetEntity("Link_Pokeball_1")->position.y += 1;
+		App->gui->GetEntity("Link_Pokeball_2")->position.y += 1;
+		App->gui->GetEntity("Link_Pokeball_3")->position.y += 1;
+		App->gui->GetEntity("Bren_Pokeball_1")->position.y += 1;
+		App->gui->GetEntity("Link_Pokeball_1")->position.x -= 1;
+		App->gui->GetEntity("Link_Pokeball_2")->position.x -= 1;
+		App->gui->GetEntity("Link_Pokeball_3")->position.x -= 1;
+		App->gui->GetEntity("Bren_Pokeball_1")->position.x -= 1;
 	}
 	else if (enemy_poke->name == "SHIFTRY")
 	{
 		App->gui->GetEntity("top hud")->Hitbox = { 550,403,254,47 };
-		App->gui->GetEntity("bottom hud")->Hitbox = { 549,461,254,33 }; 
-		App->gui->GetEntity("Link_Pokeball_1")->position = { 42,9 };
-		App->gui->GetEntity("Link_Pokeball_2")->position = { 52,11 };
-		App->gui->GetEntity("Link_Pokeball_3")->position = { 62,12 };
-		App->gui->GetEntity("Bren_Pokeball_1")->position = { 204,9 };
+		App->gui->GetEntity("bottom hud")->Hitbox = { 549,461,254,33 };
+		App->gui->GetEntity("Link_Pokeball_1")->position.y -= 1;
+		App->gui->GetEntity("Link_Pokeball_2")->position.y -= 1;
+		App->gui->GetEntity("Link_Pokeball_3")->position.y -= 1;
+		App->gui->GetEntity("Bren_Pokeball_1")->position.y -= 1;
 	}
 	else if (enemy_poke->name == "DUSCLOPS")
 	{
 		App->gui->GetEntity("top hud")->Hitbox = { 547,353,260,46 };
 		App->gui->GetEntity("bottom hud")->Hitbox = { 1018,420,254,33 };
-		App->gui->GetEntity("Link_Pokeball_1")->position = { 46,9 };
-		App->gui->GetEntity("Link_Pokeball_2")->position = { 56,11 };
-		App->gui->GetEntity("Link_Pokeball_3")->position = { 66,12 };
-		App->gui->GetEntity("Bren_Pokeball_1")->position = { 208,9 };
+		App->gui->GetEntity("Link_Pokeball_1")->position.x += 2;
+		App->gui->GetEntity("Link_Pokeball_2")->position.x += 2;
+		App->gui->GetEntity("Link_Pokeball_3")->position.x += 2;
+		App->gui->GetEntity("Bren_Pokeball_1")->position.x += 2;
 	}
 	else if (enemy_poke->name == "SALAMANCE")
 	{
 		App->gui->GetEntity("top hud")->Hitbox = { 549,296,256,50 };
 		App->gui->GetEntity("bottom hud")->Hitbox = { 1018,371,254,33 };
-		App->gui->GetEntity("Link_Pokeball_1")->position = { 42,11 };
-		App->gui->GetEntity("Link_Pokeball_2")->position = { 52,13 };
-		App->gui->GetEntity("Link_Pokeball_3")->position = { 62,14 };
-		App->gui->GetEntity("Bren_Pokeball_1")->position = { 204,11 };
+		App->gui->GetEntity("Link_Pokeball_1")->position.x -= 1;
+		App->gui->GetEntity("Link_Pokeball_2")->position.x -= 1;
+		App->gui->GetEntity("Link_Pokeball_3")->position.x -= 1;
+		App->gui->GetEntity("Bren_Pokeball_1")->position.x -= 1;
+	}
+	else if (enemy_poke->name == "GROUDON")
+	{
+		App->gui->GetEntity("top hud")->Hitbox = { 1019,248,254,46 };
+		App->gui->GetEntity("bottom hud")->Hitbox = { 1018,325,254,33 };
+		App->gui->GetEntity("Link_Pokeball_1")->position.y -= 1;
+		App->gui->GetEntity("Link_Pokeball_2")->position.y -= 1;
+		App->gui->GetEntity("Link_Pokeball_3")->position.y -= 1;
+		App->gui->GetEntity("Bren_Pokeball_1")->position.y -= 1;
 	}
 }
 
