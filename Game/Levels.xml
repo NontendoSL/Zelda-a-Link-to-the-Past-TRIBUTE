@@ -5,7 +5,7 @@
     <atlas file="textures/LinkWalkingSprites.png" />
     <hit file="textures/hit.png" />
     <day-night file="gui/test.png" />
-    <stats hp="74" attack="10" speed="50" pos_x="100" pos_y="90" />
+    <stats hp="74" attack="30" speed="50" pos_x="100" pos_y="90" />
   </Link>
 
   <!--LOAD ITEMS INFO-->
