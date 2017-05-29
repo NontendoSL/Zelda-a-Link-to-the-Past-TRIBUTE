@@ -492,6 +492,8 @@ void CombatManager::RestoreStats(pugi::xml_node& conf, PokemonCombat* pokemon)
 	{
 		LOG("Error Name!");
 	}
+	App->gui->GetEntity("Link_Pokeball_3")->Hitbox.x = 344;
+	App->gui->GetEntity("Link_Pokeball_2")->Hitbox.x = 344;
 }
 
 PokemonCombat* CombatManager::change_pokemon()//true Link - false Brendan

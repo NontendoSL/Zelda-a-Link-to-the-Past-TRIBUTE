@@ -1009,15 +1009,27 @@ void PokemonCombatHud::LoadNewPokemon(PokemonCombat* pokemon, bool trainer) //tr
 			if (num_pokemons.x == 2)
 			{
 				App->gui->GetEntity("Link_Pokeball_3")->Hitbox.x = 334;
-				ability->Hitbox.y = 120;
-				ability->elements[0]->Hitbox.y = 120;
 			}
 			if (num_pokemons.x == 1)
 			{
 				App->gui->GetEntity("Link_Pokeball_2")->Hitbox.x = 334;
+			}
+			if (pokemon->name == "BLAZIKEN")
+			{
+				ability->Hitbox.y = 155;
+				ability->elements[0]->Hitbox.y = 155;
+			}
+			if (pokemon->name == "SCEPTILE")
+			{
+				ability->Hitbox.y = 120;
+				ability->elements[0]->Hitbox.y = 120;
+			}
+			if (pokemon->name == "SWAMPERT")
+			{
 				ability->Hitbox.y = 190;
 				ability->elements[0]->Hitbox.y = 190;
 			}
+
 
 			((Text*)App->gui->GetEntity("link_pk_name"))->Write(pokemon->name.c_str());
 			hpbar_pLink = iPoint(pokemon->hp, pokemon->hp);
