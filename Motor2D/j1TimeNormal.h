@@ -1,14 +1,14 @@
-#ifndef __j1TIMER_H__
-#define __j1TIMER_H__
+#ifndef __j1TIMENORMAL_H__
+#define __j1TIMENORMAL_H__
 
 #include "p2Defs.h"
 
-class j1Timer
+class j1TimeNormal
 {
 public:
 
 	// Constructor
-	j1Timer();
+	j1TimeNormal();
 
 	void Start();
 	uint32 Read() const;
@@ -16,8 +16,6 @@ public:
 
 private:
 	uint32	started_at;
-	bool stop = false;
-	bool notsumagain = false;
 };
 
-#endif //__j1TIMER_H__
+#endif //__j1TIMENORMAL_H__

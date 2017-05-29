@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
+#include "j1TimeNormal.h"
 #include <list>
 #include "PugiXml\src\pugixml.hpp"
 #include "Brofiler\Brofiler.h"
@@ -134,9 +135,9 @@ private:
 
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
-	j1Timer				startup_time;
-	j1Timer				frame_time;
-	j1Timer				last_sec_frame_time;
+	j1TimeNormal		startup_time;
+	j1TimeNormal		frame_time;
+	j1TimeNormal	    last_sec_frame_time;
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
 	float				dt = 0.0f;

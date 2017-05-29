@@ -55,7 +55,7 @@ bool Ganon::Update(float dt)
 	App->gui->GetEntity("hp boss")->Hitbox.w = (hp * 149) / 100;
 	BROFILER_CATEGORY("DoUpdate_Soldier", Profiler::Color::Red);
 	// STATE MACHINE ------------------
-	if (App->scene->gamestate == INGAME || App->scene->gamestate == INMENU)
+	if (App->scene->gamestate == INGAME)
 	{
 		switch (phase)
 		{
@@ -149,7 +149,6 @@ bool Ganon::InitialUpdate(float dt)
 
 bool Ganon::InvincibleUpdate(float dt)
 {
-
 	if(hp<100)
 		hp+=0.1f;
 	// Until player hasn't killed a certain amount of enemies.

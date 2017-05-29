@@ -140,6 +140,17 @@ bool j1Scene::Update(float dt)
 				help_bool = false;
 			}*/
 
+			if (gamestate == INMENU && stop == false)
+			{
+				timepause.Start();
+			}
+			else if (gamestate == INGAME)
+			{
+				if (timepause.ReadSec() >= 1.0f)
+					stop = false;
+			}
+
+
 			//Make advance the dialogue text.
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_Y) == EVENTSTATE::E_DOWN)
 			{
@@ -796,6 +807,8 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 			if (gamestate != INMENU)
 			{
 				gamestate = INMENU;
+				timepaused32 = SDL_GetTicks();
+				stop = true;
 				App->audio->PlayFx(3);
 			}
 			start_menu->Move(false, 6.0);
@@ -827,6 +840,7 @@ void j1Scene::SwitchMenu(bool direction)//true for down, false for up
 			switch_menu = false;
 			inventory = false;
 			gamestate = INGAME;
+			timepaused32 = SDL_GetTicks() - timepaused32;
 			App->gui->SetGui(ZELDA_HUD);
 			start_menu->on_options = false;
 		}

@@ -187,6 +187,9 @@
     <ClCompile Include="Video.cpp">
       <Filter>Zelda Game\Modules\Base Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1TimeNormal.cpp">
+      <Filter>Zelda Game\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -395,6 +398,9 @@
     </ClInclude>
     <ClInclude Include="Video.h">
       <Filter>Zelda Game\Modules\Base Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1TimeNormal.h">
+      <Filter>Zelda Game\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -254,37 +254,40 @@ Arrow::~Arrow()
 
 void Arrow::Update(float dt)
 {
-	if (timer.ReadSec() >= lifetime && step != DIE)
+	if (App->scene->gamestate == INGAME)
 	{
-		step = DIE;
-	}
-
-	if (step == AIR)
-	{
-		KeepGoing(dt);
-
-		//Set collision to the arrow.
-		collision->SetPos(position.x - offset_x, position.y - offset_y);
-		
-		//Check for a WALL IMPACT.
-		if (IsImpact(App->scene->player->GetFloor()) == IMPACT)
-		{
-			impact_time.Start();
-			App->audio->PlayFx(17);
-		}
-	}
-
-	else if (step == IMPACT)
-	{
-		if (impact_time.ReadSec() >= 0.5)
+		if (timer.ReadSec() >= lifetime && step != DIE)
 		{
 			step = DIE;
 		}
-	}
 
-	else if (step == DIE)
-	{
-		Die();
+		if (step == AIR)
+		{
+			KeepGoing(dt);
+
+			//Set collision to the arrow.
+			collision->SetPos(position.x - offset_x, position.y - offset_y);
+
+			//Check for a WALL IMPACT.
+			if (IsImpact(App->scene->player->GetFloor()) == IMPACT)
+			{
+				impact_time.Start();
+				App->audio->PlayFx(17);
+			}
+		}
+
+		else if (step == IMPACT)
+		{
+			if (impact_time.ReadSec() >= 0.5)
+			{
+				step = DIE;
+			}
+		}
+
+		else if (step == DIE)
+		{
+			Die();
+		}
 	}
 }
 
@@ -436,18 +439,21 @@ Bomb::~Bomb()
 
 void Bomb::Update(float dt)
 {
-	if (SDL_GetTicks() > timer + 2000 && step != EXPLOSION)
+	if (App->scene->gamestate == INGAME)
 	{
-		App->audio->PlayFx(7);
-		step = EXPLOSION;
-		collision = App->collision->AddCollider({ position.x - radius,position.y - radius,radius * 2,radius * 2 }, COLLIDER_BOMB);
-		current = App->anim_manager->GetAnimation(W_DYING, DOWN, BOMB);
-		current->Reset();
-	}
+		if (SDL_GetTicks() > timer + 2000 && step != EXPLOSION)
+		{
+			App->audio->PlayFx(7);
+			step = EXPLOSION;
+			collision = App->collision->AddCollider({ position.x - radius,position.y - radius,radius * 2,radius * 2 }, COLLIDER_BOMB);
+			current = App->anim_manager->GetAnimation(W_DYING, DOWN, BOMB);
+			current->Reset();
+		}
 
-	if (step == EXPLOSION && current->Finished())
-	{
-		Die();
+		if (step == EXPLOSION && current->Finished())
+		{
+			Die();
+		}
 	}
 }
 
