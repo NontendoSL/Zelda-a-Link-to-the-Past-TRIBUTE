@@ -582,7 +582,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 				state = BC_HIT;
 				reset_time = true;
 				stunned = true;
-				c2->arrow_callback->step = IMPACT;
+				c2->arrow_callback->step = ENEMY_IMPACT;
 			}
 		}
 

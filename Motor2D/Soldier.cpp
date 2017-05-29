@@ -106,7 +106,7 @@ void Soldier::OnCollision(Collider* c1, Collider* c2)
 				anim_state = S_IDLE;
 				dir_hit = c2->arrow_callback->direction;
 				prev_position = position;
-				c2->arrow_callback->step = IMPACT; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
+				c2->arrow_callback->step = ENEMY_IMPACT; // TODO MED -> set step to impact: this will reproduce the impact animation and, when finished, set step to DIE.
 			}
 		}
 

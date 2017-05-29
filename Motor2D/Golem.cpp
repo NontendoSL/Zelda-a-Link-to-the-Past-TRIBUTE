@@ -484,7 +484,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 				state = P_HIT;
 				anim_state = P_DYING;
 				hp--;
-				c2->arrow_callback->step = IMPACT; 
+				c2->arrow_callback->step = ENEMY_IMPACT;
 			}
 		}
 
