@@ -442,7 +442,7 @@ void BombContainer::CleanContainer()
 Bomb::Bomb(iPoint position, BombContainer*container) : position(position), container(container)
 {
 	radius = 20;
-	timer = SDL_GetTicks();
+	timer.Start();
 	step = PLANTED;
 }
 
@@ -455,7 +455,7 @@ void Bomb::Update(float dt)
 {
 	if (App->scene->gamestate == INGAME)
 	{
-		if (SDL_GetTicks() > timer + 2000 && step != EXPLOSION)
+		if (timer.ReadSec() >= 2.0f && step != EXPLOSION)
 		{
 			App->audio->PlayFx(7);
 			step = EXPLOSION;

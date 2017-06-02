@@ -154,7 +154,7 @@ public:
 public:
 	iPoint position;
 	int radius = 0;
-	uint timer;
+	j1Timer timer;
 	Animation* current = nullptr;
 	BombContainer* container = nullptr;
 	BombStep step;
