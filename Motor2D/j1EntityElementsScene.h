@@ -98,6 +98,9 @@ public:
 	SDL_Texture* texture_trainer = nullptr;
 	std::string file_tex_trainer;
 
+	//dynspecial texture
+	SDL_Texture* text_vase_bush = nullptr;
+
 	Ganon* ganon = nullptr;
 
 private:

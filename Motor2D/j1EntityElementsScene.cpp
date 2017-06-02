@@ -61,6 +61,7 @@ bool j1EntityElementScene::Start()
 	
 	texture_dynobjects = App->tex->Load(file_tex_dynobjects.c_str());
 	texture_trainer = App->tex->Load(file_tex_trainer.c_str());
+	text_vase_bush = App->tex->Load("textures/AnimationsAndEffects.png");
 
 	char* buf;
 	int size = App->fs->Load("config.xml", &buf);
@@ -158,6 +159,9 @@ bool j1EntityElementScene::CleanUp()
 		delete item._Ptr->_Myval;
 		item++;
 	}
+	texture_dynobjects = nullptr;
+	texture_trainer = nullptr;
+	text_vase_bush = nullptr;
 	return ret;
 }
 

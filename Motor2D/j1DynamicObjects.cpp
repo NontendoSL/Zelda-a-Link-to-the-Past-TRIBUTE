@@ -58,14 +58,14 @@ bool DynamicObjects::Awake(pugi::xml_node &conf, uint id, iPoint pos, bool isSig
 					// SET DESTROYING ANIMATIONS -----------
 					if (name == "bush_plant")
 					{
-						tex = App->tex->Load("textures/AnimationsAndEffects.png");
+						//tex = App->tex->Load("textures/AnimationsAndEffects.png");
 						destroy_animation = *App->anim_manager->GetAnimation(1, UP, PARTICLES);
 						destroy_animation.Reset();
 					}
 
 					else if (name == "vase")
 					{
-						tex = App->tex->Load("textures/AnimationsAndEffects.png");
+						//tex = App->tex->Load("textures/AnimationsAndEffects.png");
 						destroy_animation = *App->anim_manager->GetAnimation(4, UP, PARTICLES);
 						destroy_animation.Reset();
 					}
@@ -169,7 +169,7 @@ void DynamicObjects::Draw()
 	{
 		anim_rect = destroy_animation.GetCurrentFrame();
 		pivot = destroy_animation.GetCurrentOffset();
-		App->render->Blit(tex, position.x - pivot.x + 8, position.y - pivot.y + 8, &anim_rect);
+		App->render->Blit(App->entity_elements->text_vase_bush, position.x - pivot.x + 8, position.y - pivot.y + 8, &anim_rect);
 	}
 }
 
