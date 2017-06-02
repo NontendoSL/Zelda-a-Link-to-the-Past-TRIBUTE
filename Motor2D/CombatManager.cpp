@@ -121,11 +121,14 @@ bool CombatManager::Update(float dt)
 						}
 						else //pokemon_active_trainer == poke
 						{
-							App->scene->combat = false;
-							App->scene->switch_map = App->scene->last_map;
-							App->scene->newPosition = App->scene->player->position;
-							App->scene->player->state_complet = true;
-							item++;
+							if(App->scene->combat)
+							{
+								App->scene->combat = false;
+								App->scene->switch_map = App->scene->last_map;
+								App->scene->newPosition = App->scene->player->position;
+								App->scene->player->state_complet = true;
+								item++;
+							}
 						}
 					}
 					else
@@ -140,10 +143,6 @@ bool CombatManager::Update(float dt)
 				item._Ptr->_Myval->Update(dt);
 				item++;
 			}
-		}
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		{
-			pokemon_active_link->hp = 0;
 		}
 	}
 	return true;
