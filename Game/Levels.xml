@@ -362,9 +362,9 @@
   <map_combat>
 
     <Link>
-      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="100" dir="right" hp="150"  attack="20" special_attack="15" defense="10" pos_x="96" pos_y="128"  active="false"/>
+      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="150" dir="right" hp="150"  attack="20" special_attack="15" defense="10" pos_x="96" pos_y="128"  active="false"/>
       <pokemon id="2" name="SCEPTILE" speed="1" cooldown="600" dir="right" hp="200" attack="10" special_attack="30" defense="12" pos_x="96" pos_y="128"  active="false"/>
-      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="200" dir="right" hp="300" attack="5"  special_attack="20" defense="15" pos_x="96" pos_y="128"  active="false"/>
+      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="250" dir="right" hp="300" attack="5"  special_attack="20" defense="15" pos_x="96" pos_y="128"  active="false"/>
     </Link>
 
     <map n="17" file="CombatPracticeMap.tmx">
