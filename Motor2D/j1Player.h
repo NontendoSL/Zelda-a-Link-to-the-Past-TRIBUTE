@@ -51,12 +51,15 @@ struct CheckPoint
 	int blaz_hp = 0;
 	int blaz_atk = 0;
 	int blaz_def = 0;
+	int blaz_pos = 0;
 	int scept_hp = 0;
 	int scept_atk = 0;
 	int scept_def = 0;
+	int scept_pos = 0;
 	int swamp_hp = 0;
 	int swamp_atk = 0;
 	int swamp_def = 0;
+	int swamp_pos = 0;
 	//----------------------
 };
 
@@ -139,6 +142,8 @@ public:
 	//LOAD/SAVE FUNCTION ----
 	void SaveCheckPoint(int map_id);
 	void LoadStats();
+	void SavePokemonPositions();
+	void LoadPokemonPositions();
 	//-----------------------
 
 public:
@@ -163,6 +168,10 @@ public:
 
 	//Pokemons has Link
 	std::list<PokemonCombat*> pokedex;
+	int blaz_pos = 0;
+	int scept_pos = 0;
+	int swamp_pos = 0;
+
 	bool state_complet = false;
 	bool lose_combat = false;
 

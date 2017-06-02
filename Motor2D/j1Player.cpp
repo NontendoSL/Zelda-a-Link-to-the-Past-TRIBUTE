@@ -322,16 +322,19 @@ bool Player::SaveData(pugi::xml_node& check_node)
 	pokemon.append_attribute("hp") = checkpoint.blaz_hp;
 	pokemon.append_attribute("atk") = checkpoint.blaz_atk;
 	pokemon.append_attribute("def") = checkpoint.blaz_def;
+	pokemon.append_attribute("pos") = checkpoint.blaz_pos;
 
 	pokemon = pokemon_items.append_child("Sceptyle");
 	pokemon.append_attribute("hp") = checkpoint.scept_hp;
 	pokemon.append_attribute("atk") = checkpoint.scept_atk;
 	pokemon.append_attribute("def") = checkpoint.scept_def;
+	pokemon.append_attribute("pos") = checkpoint.scept_pos;
 
 	pokemon = pokemon_items.append_child("Swampert");
 	pokemon.append_attribute("hp") = checkpoint.swamp_hp;
 	pokemon.append_attribute("atk") = checkpoint.swamp_atk;
 	pokemon.append_attribute("def") = checkpoint.swamp_def;
+	pokemon.append_attribute("pos") = checkpoint.swamp_pos;
 
 	return true;
 }
@@ -1803,8 +1806,11 @@ void Player::SaveCheckPoint(int map_id)
 
 	checkpoint.cash = pokecash;
 
-	//POKEMON ITEMS ----------
+	//POKEMON ITEMS & CREATURES ----------
 	App->combatmanager->SaveItemsCheckPoint();
+	checkpoint.blaz_pos = blaz_pos;
+	checkpoint.scept_pos = scept_pos;
+	checkpoint.swamp_pos = swamp_pos;
 	// -----------------------
 
 	LOG("CHECKPOINT SAVED ---");
@@ -1827,10 +1833,9 @@ void Player::SaveCheckPoint(int map_id)
 	
 	LOG("WORLD: %s", checkpoint.world.c_str());
 	LOG("PokeCash: %i", checkpoint.cash);
-	LOG("BLAZIKEN = hp: %i, attack: %i, defense: %i", checkpoint.blaz_hp, checkpoint.blaz_atk, checkpoint.blaz_def);
-	LOG("SCEPTYLE = hp: %i, attack: %i, defense: %i", checkpoint.scept_hp, checkpoint.scept_atk, checkpoint.scept_def);
-	LOG("SWAMPERT = hp: %i, attack: %i, defense: %i", checkpoint.swamp_hp, checkpoint.swamp_atk, checkpoint.swamp_def);
-
+	LOG("BLAZIKEN = hp: %i, attack: %i, defense: %i pos: %i", checkpoint.blaz_hp, checkpoint.blaz_atk, checkpoint.blaz_def, checkpoint.blaz_pos);
+	LOG("SCEPTYLE = hp: %i, attack: %i, defense: %i pos: %i", checkpoint.scept_hp, checkpoint.scept_atk, checkpoint.scept_def, checkpoint.scept_pos);
+	LOG("SWAMPERT = hp: %i, attack: %i, defense: %i pos: %i", checkpoint.swamp_hp, checkpoint.swamp_atk, checkpoint.swamp_def, checkpoint.swamp_pos);
 	LOG("--------------------");
 
 }
@@ -1864,8 +1869,9 @@ void Player::LoadStats()
 	}
 	// ---------------------------------------------------------------
 
-	// POKEMON ITEMS ----------------------------------
+	// POKEMON ITEMS & CREATURES ----------------------------------
 	App->combatmanager->LoadPokemonItems();
+	LoadPokemonPositions();
 	// ------------------------------------------------
 
 	// UI -----------------------------------------------
@@ -1882,3 +1888,16 @@ void Player::LoadStats()
 
 	SaveCheckPoint(App->scene->Check.map_id);
 }
+
+void Player::SavePokemonPositions()
+{
+	//GET THE POSITION OF THE POKEMON FROM UI
+}
+
+void Player::LoadPokemonPositions()
+{
+	blaz_pos = App->scene->Check.blaz_pos;
+	scept_pos = App->scene->Check.scept_pos;
+	swamp_pos = App->scene->Check.swamp_pos;
+}
+
