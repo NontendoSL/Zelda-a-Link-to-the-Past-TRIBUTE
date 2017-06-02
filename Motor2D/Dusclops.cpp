@@ -134,7 +134,7 @@ bool Dusclops::Update(float dt)
 		current_animation->Reset();
 	}
 
-	if (hp < 60 && use_special == false)
+	if (hp < 150 && use_special == false)
 	{
 		state = PC_SPECIAL;
 		anim_state = PC_SPECIAL;

@@ -453,7 +453,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="88" pos_y="144"/>
       <trainer id="1" name="Drake" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
-        <pokemon id="5" name="SALAMANCE" speed="1" cooldown="300" dir="left" hp="350" attack="13" special_attack="20" defense="10" pos_x="228" pos_y="144" active="true"/>
+        <pokemon id="5" name="SALAMANCE" speed="1" cooldown="300" dir="left" hp="350" attack="15" special_attack="20" defense="10" pos_x="228" pos_y="144" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="81" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -479,7 +479,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="72" pos_y="152"/>
       <trainer id="1" name="Red" active="false" pos_x="168" pos_y="160" file="textures/PokemonCharacters.png">
-        <pokemon id="8" name="GROUDON" speed="1" cooldown="150" dir="left" hp="400" attack="15" special_attack="21" defense="10" pos_x="272" pos_y="152" active="true"/>
+        <pokemon id="8" name="GROUDON" speed="1" cooldown="150" dir="left" hp="400" attack="30" special_attack="21" defense="20" pos_x="272" pos_y="152" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />

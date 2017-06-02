@@ -127,7 +127,7 @@ bool Blaziken::Update(float dt)
 		if (autoAttack.ReadSec() > 0.5)
 		{
 			autoAttack.Start();
-			hp -= 1;
+			hp -= 5;
 			App->scene->pokecombat->GetDamage(1, true);
 		}
 	}
