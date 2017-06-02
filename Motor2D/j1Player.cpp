@@ -759,15 +759,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			}
 			// ------------
 
-			// BOMB HIT
-			if (c1 == collision_feet && c2->type == COLLIDER_BOMB)
-			{
-				if (hp_hearts.y > 0)
-				{
-					GetDamage();
-				}
-			}
-
 			// GANON HIT ----------------
 			if (c1 == collision_feet && c2->type == COLLIDER_GANON_ATTACK) //If green soldier attacks you
 			{
