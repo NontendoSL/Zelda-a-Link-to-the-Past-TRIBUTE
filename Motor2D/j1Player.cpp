@@ -698,6 +698,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							}
 							if (App->scene->last_map == 5)
 							{
+								App->scene->playVideo = true;
 								App->scene->combat_map_id = villager->switch_map;
 								App->scene->useTP = true;
 								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(),0);

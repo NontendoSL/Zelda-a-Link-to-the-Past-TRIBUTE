@@ -181,18 +181,47 @@ bool j1Scene::Update(float dt)
 			{
 				if (combat_map_id != 0)
 				{
-					if (notrepeatCombat)
+					if (playVideo)
 					{
-						switch_map = combat_map_id;
-						combat_map_id = 0;
-						useTP = true;
-						dialog_inmapZelda = false;
-						goPokemon = false;
-						notrepeatCombat = false;
+						if (fade == false)
+						{
+							App->fadetoblack->FadeToBlack();
+							gamestate = INMENU;
+							fade = true;
+							now_switch = true;
+						}
+
+						if (App->fadetoblack->Checkfadetoblack() && now_switch)
+						{
+							SDL_Rect r = { 0, 0, 640, 480 };
+							App->video->PlayVideo("GanonDies.ogg", r);
+							fade = false;
+							playVideo = false;
+							waitVideo = true;
+						}
 					}
-					else
+					else 
 					{
-						dialog_inmapZelda = false;
+						if (App->video->video_finished)
+						{
+							if (notrepeatCombat)
+							{
+								switch_map = combat_map_id;
+								combat_map_id = 0;
+								useTP = true;
+								if (waitVideo)
+								{
+									SwitchMap(useTP);
+								}
+								dialog_inmapZelda = false;
+								goPokemon = false;
+								notrepeatCombat = false;
+							}
+							else
+							{
+								dialog_inmapZelda = false;
+							}
+						}
 					}
 				}
 			}
@@ -226,10 +255,10 @@ bool j1Scene::Update(float dt)
 				switch_map = 9;
 			}
 
-			/*if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 			{
 				useTP = true;
-				switch_map = 19;
+				switch_map = 5;
 			}
 
 			/*if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
@@ -359,8 +388,10 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	//Draw a map
-	App->map->Draw(false);
-
+	if (waitVideo == false)
+	{
+		App->map->Draw(false);
+	}
 	return update_return;
 }
 
@@ -898,7 +929,7 @@ void j1Scene::ChangeState(GameState state)
 
 void j1Scene::SwitchMap(bool isTP)
 {
-	if (fade == false)
+	if (fade == false && waitVideo == false)
 	{
 		App->fadetoblack->FadeToBlack();
 		gamestate = INMENU;
@@ -907,9 +938,19 @@ void j1Scene::SwitchMap(bool isTP)
 		fade = true;
 		now_switch = true;
 	}
-
-	if (App->fadetoblack->Checkfadetoblack() && now_switch)
+	/*else if(fade == false)
 	{
+		App->fadetoblack->FadeFromBlack();
+		gamestate = INMENU;
+		player->SetState(L_IDLE);
+		player->SetAnimState(L_IDLE);
+		fade = true;
+		now_switch = true;
+	}*/
+
+	if (App->fadetoblack->Checkfadetoblack() && now_switch || waitVideo && now_switch)
+	{
+		waitVideo = false;
 		now_switch = false;
 		if (App->map->CleanUp())
 		{

@@ -153,6 +153,9 @@ public:
 
 	//Combat or not
 	bool combat = false;
+	//video
+	bool playVideo = false;
+	bool waitVideo = false;
 	//Ingame
 	ZeldaHud* hud = nullptr;
 	ZeldaMenu* start_menu = nullptr;
