@@ -116,6 +116,11 @@ bool Player::Update(float dt)
 		{
 			gems = gems - (gems/ 10);
 		}
+		if (arrows > 10)
+		{
+			arrows = arrows - (arrows / 10);
+		}
+
 	}
 
 	// STATE MACHINE ------------------
