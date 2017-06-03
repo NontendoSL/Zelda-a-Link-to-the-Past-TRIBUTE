@@ -59,6 +59,8 @@ private:
 	int timetorun = 0;
 	int num_hits = 0;
 	//bool drawThrowSP = false; **Only the special attack is launch.**
+	SDL_Texture* passive = nullptr;
+	SDL_Rect passive_rect = { 0,409,21,19 };
 };
 
 #endif //__WALREIN_H_

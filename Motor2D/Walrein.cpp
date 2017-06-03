@@ -39,6 +39,7 @@ bool Walrein::Awake(pugi::xml_node &conf)
 	active = conf.attribute("active").as_bool(false);
 	sp_damage = conf.attribute("special_attack").as_int(0);
 	defense = conf.attribute("defense").as_int(0);
+	passive = App->tex->Load("textures/AnimationsAndEffects.png"); //LOOK at this, not good to load the full texture (already loaded in sceptyle)
 	return true;
 }
 
@@ -123,7 +124,27 @@ bool Walrein::Update(float dt)
 		current_animation = App->anim_manager->GetAnimation(anim_state, direction, WALREIN);
 		current_animation->Reset();
 	}
-
+	
+	//Check for passive draw
+	switch (num_hits)
+	{
+	case 0:
+		if (App->combatmanager->pokemon_active_link->GetState() == PC_STUNNED)
+		{
+			passive_rect = { 0,429,21,19 };
+		}
+		else
+		{
+			passive_rect = { 0,409,21,19 };
+		}
+		break;
+	case 1:
+		passive_rect = { 22,409,21,19 };
+		break;
+	case 2:
+		passive_rect = { 43,409,21,19 };
+		break;
+	}
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 	return true;
@@ -132,6 +153,7 @@ bool Walrein::Update(float dt)
 void Walrein::Draw()
 {
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, WALREIN);
+	App->render->Blit(passive, App->combatmanager->pokemon_active_link->position.x-10, App->combatmanager->pokemon_active_link->position.y , &passive_rect);
 }
 
 bool Walrein::CleanUp()
@@ -154,7 +176,6 @@ void Walrein::OnCollision(Collider* c1, Collider* c2)
 					num_hits++;
 					if (num_hits < 3)
 					{
-						
 						pokemon_2->knockback_time.Start();
 						pokemon_2->hp -= sp_damage;
 						getdamage = true;
