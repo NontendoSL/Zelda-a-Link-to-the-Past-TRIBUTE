@@ -11,6 +11,7 @@
 
 ParticleManager::ParticleManager()
 {
+	name = "particles";
 }
 
 ParticleManager::~ParticleManager()

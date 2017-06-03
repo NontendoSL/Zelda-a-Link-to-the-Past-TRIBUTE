@@ -26,6 +26,7 @@
 #include "j1FadeToBlack.h"
 #include "ParticleManager.h"
 #include "Video.h"
+#include "CutsceneManager.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -52,6 +53,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	input_manager = new InputManager();
 	fadetoblack = new j1FadeToBlack();
 	particlemanager = new ParticleManager();
+	cutscene_manager = new j1CutSceneManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -75,6 +77,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//Add managers
 	AddModule(anim_manager);
 	AddModule(entity_elements);
+	AddModule(cutscene_manager);
 	AddModule(combatmanager);
 
 	//UI

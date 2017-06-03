@@ -25,6 +25,7 @@ class j1Gui;
 class j1EntityElementScene;
 class CombatManager;
 class j1AnimationManager;
+class j1CutSceneManager;
 class j1Collision;
 class j1FadeToBlack;
 class InputManager;
@@ -103,7 +104,7 @@ public:
 	j1Render*				render = NULL;
 	j1Textures*				tex = NULL;
 	j1Audio*				audio = NULL;
-	Video*				video = NULL;
+	Video*					video = NULL;
 	j1SceneIntro*			intro = NULL;
 	j1Scene*				scene = NULL;
 	j1FileSystem*			fs = NULL;
@@ -117,6 +118,7 @@ public:
 	CombatManager*			combatmanager = NULL;
 	j1FadeToBlack*			fadetoblack = NULL;
 	ParticleManager*		particlemanager = NULL;
+	j1CutSceneManager*		cutscene_manager = NULL;
 
 private:
 

@@ -65,6 +65,10 @@
     <!--PARTICLES-->
 	  <file file="animation/AnimationsAndEffects.xml"/>
 	</animation>
+
+  <cutscenemanager>
+    <file file="cutscenes/SydneyIntro.xml"/>
+  </cutscenemanager>
   
 	<window>
     <resolution width="640" height="480" scale="2" />
