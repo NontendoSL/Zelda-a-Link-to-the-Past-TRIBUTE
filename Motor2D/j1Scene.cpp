@@ -25,6 +25,7 @@
 #include "j1Weapon.h"
 #include "j1SceneIntro.h"
 #include "Video.h"
+#include "CutsceneManager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -357,6 +358,13 @@ bool j1Scene::Update(float dt)
 				player->gems = 999;
 			}
 			// ---------
+
+			//CUTSCENE_TEST ---------
+			if (App->input->GetKey(SDL_SCANCODE_O))
+			{
+				App->cs_manager->StartCutscene(0);
+			}
+			//-----------------------
 
 			//Set picked object the last 
 			if (player->picked_object != nullptr && swap_object == true)

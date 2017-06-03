@@ -118,7 +118,7 @@ public:
 	CombatManager*			combatmanager = NULL;
 	j1FadeToBlack*			fadetoblack = NULL;
 	ParticleManager*		particlemanager = NULL;
-	j1CutSceneManager*		cutscene_manager = NULL;
+	j1CutSceneManager*		cs_manager = NULL;
 
 private:
 
