@@ -73,11 +73,11 @@ struct CheckPointInfo
 	int scept_hp = 0;
 	int scept_atk = 0;
 	int scept_def = 0;
-	int scept_pos = 0;
+	int scept_pos = 1;
 	int swamp_hp = 0;
 	int swamp_atk = 0;
 	int swamp_def = 0;
-	int swamp_pos = 0;
+	int swamp_pos = 2;
 	//----------------------
 };
 

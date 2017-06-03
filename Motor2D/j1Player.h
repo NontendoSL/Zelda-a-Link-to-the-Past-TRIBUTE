@@ -55,11 +55,11 @@ struct CheckPoint
 	int scept_hp = 0;
 	int scept_atk = 0;
 	int scept_def = 0;
-	int scept_pos = 0;
+	int scept_pos = 1;
 	int swamp_hp = 0;
 	int swamp_atk = 0;
 	int swamp_def = 0;
-	int swamp_pos = 0;
+	int swamp_pos = 2;
 	//----------------------
 };
 
@@ -169,8 +169,8 @@ public:
 	//Pokemons has Link
 	std::list<PokemonCombat*> pokedex;
 	int blaz_pos = 0;
-	int scept_pos = 0;
-	int swamp_pos = 0;
+	int scept_pos = 1;
+	int swamp_pos = 2;
 
 	bool state_complet = false;
 	bool lose_combat = false;

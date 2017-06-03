@@ -316,7 +316,7 @@ bool Player::SaveData(pugi::xml_node& check_node)
 	pugi::xml_node pokecash_node = check_node.append_child("POKECASH");
 	pokecash_node.append_attribute("cash") = pokecash;
 
-	pugi::xml_node pokemon_items = check_node.append_child("POKEMON_ITEMS");
+	pugi::xml_node pokemon_items = check_node.append_child("POKEMON");
 
 	pugi::xml_node pokemon = pokemon_items.append_child("Blaziken");
 	pokemon.append_attribute("hp") = checkpoint.blaz_hp;
@@ -1881,8 +1881,8 @@ void Player::LoadStats()
 	}
 	if (App->scene->Check.world == "Pokemon")
 	{
-		App->gui->SetGui(POKEMON_HUD);
-
+		App->gui->SetGui(POKEMON_HUD);		
+		App->scene->poke_hud->SetPokeOrder(blaz_pos, scept_pos, swamp_pos);
 	}
 	// -----------------------------------------------------
 

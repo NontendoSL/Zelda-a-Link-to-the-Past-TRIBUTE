@@ -997,19 +997,21 @@ bool j1Scene::Load(pugi::xml_node& checknode)
 	curr_node = node.child("POKECASH");
 	Check.cash = curr_node.attribute("cash").as_uint(0);
 
-	curr_node = node.child("POKEMON_ITEMS");
+	curr_node = node.child("POKEMON");
 	Check.blaz_hp = curr_node.child("Blaziken").attribute("hp").as_int(0);
 	Check.blaz_atk = curr_node.child("Blaziken").attribute("atk").as_int(0);
 	Check.blaz_def = curr_node.child("Blaziken").attribute("def").as_int(0);
+	Check.blaz_pos = curr_node.child("Blaziken").attribute("pos").as_int(0);
 
 	Check.scept_hp = curr_node.child("Sceptyle").attribute("hp").as_int(0);
 	Check.scept_atk = curr_node.child("Sceptyle").attribute("atk").as_int(0);
 	Check.scept_def = curr_node.child("Sceptyle").attribute("def").as_int(0);
+	Check.scept_pos = curr_node.child("Sceptyle").attribute("pos").as_int(0);
 
 	Check.swamp_hp = curr_node.child("Swampert").attribute("hp").as_int(0);
 	Check.swamp_atk = curr_node.child("Swampert").attribute("atk").as_int(0);
 	Check.swamp_def = curr_node.child("Swampert").attribute("def").as_int(0);
-
+	Check.swamp_pos = curr_node.child("Swampert").attribute("pos").as_int(0);
 
 	return ret;
 }

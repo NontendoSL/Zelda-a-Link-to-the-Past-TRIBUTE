@@ -1381,7 +1381,7 @@ void PokemonWorldHud::SwapBars(uint first, uint second)
 	poke_bar[first] = poke_bar[second];
 	poke_bar[second] = first_b;
 
-	for (int i = 0; poke_bar.size(); i++)
+	for (int i = 0; i < poke_bar.size(); i++)
 	{
 		if (poke_bar[i]->identifier == "pk_bar_hud_1")
 		{
@@ -1546,7 +1546,7 @@ void PokemonWorldHud::LoadItem(std::string pokemon, std::string item_id) //TODO 
 
 void PokemonWorldHud::SetPokeOrder(int blaziquen, int sceptile, int swampert)
 {
-	Button	*blaziquenbar = (Button*)App->gui->GetEntity("pk_bar_hud_1");
+	Button *blaziquenbar = (Button*)App->gui->GetEntity("pk_bar_hud_1");
 	Button *sceptilebar = (Button*)App->gui->GetEntity("pk_bar_hud_2");
 	Button *swampertbar = (Button*)App->gui->GetEntity("pk_bar_hud_3");
 	poke_bar[blaziquen] = blaziquenbar;
@@ -1556,7 +1556,7 @@ void PokemonWorldHud::SetPokeOrder(int blaziquen, int sceptile, int swampert)
 
 void PokemonWorldHud::MoveOut(bool out, int id)
 {
-	if (id == -1) // this is if we wanna move in/out an especific bar and not the focused one (testing)
+	if (id == -1) // This is if we wanna move in/out an especific bar and not the focused one (testing)
 	{
 		if (out)
 		{
