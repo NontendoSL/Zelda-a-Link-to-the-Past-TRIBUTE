@@ -15,6 +15,7 @@
 #include "CombatManager.h"
 #include "j1Weapon.h"
 #include "j1Window.h"
+#include "j1FadeToBlack.h"
 #include <assert.h>
 #include "j1Audio.h"
 
@@ -1274,7 +1275,7 @@ void PokemonWorldHud::Input()
 {
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_SELECT) == EVENTSTATE::E_DOWN)
 	{
-		if (App->scene->player->dialog == nullptr)
+		if (App->scene->player->dialog == nullptr && App->fadetoblack->IsFading() == false)
 		{
 			active = !active;
 			if (active)
@@ -1380,8 +1381,22 @@ void PokemonWorldHud::SwapBars(uint first, uint second)
 	poke_bar[first] = poke_bar[second];
 	poke_bar[second] = first_b;
 
-
-	//PLACEHOLDER FOR SWAPING POKEMONS ORDER IN PLAYER CODE SO IT AFFECTS COMBATS
+	for (int i = 0; poke_bar.size(); i++)
+	{
+		if (poke_bar[i]->identifier == "pk_bar_hud_1")
+		{
+			App->scene->player->blaz_pos = i;
+		}
+		if (poke_bar[i]->identifier == "pk_bar_hud_2")
+		{
+			App->scene->player->scept_pos = i;
+		}
+		if (poke_bar[i]->identifier == "pk_bar_hud_3")
+		{
+			App->scene->player->swamp_pos = i;
+		}
+	}
+	
 }
 
 std::string PokemonWorldHud::GetPokeOrder(uint poke_n)
@@ -1527,6 +1542,16 @@ void PokemonWorldHud::LoadItem(std::string pokemon, std::string item_id) //TODO 
 			}
 		}
 	}
+}
+
+void PokemonWorldHud::SetPokeOrder(int blaziquen, int sceptile, int swampert)
+{
+	Button	*blaziquenbar = (Button*)App->gui->GetEntity("pk_bar_hud_1");
+	Button *sceptilebar = (Button*)App->gui->GetEntity("pk_bar_hud_2");
+	Button *swampertbar = (Button*)App->gui->GetEntity("pk_bar_hud_3");
+	poke_bar[blaziquen] = blaziquenbar;
+	poke_bar[sceptile] = sceptilebar;
+	poke_bar[swampert] = swampertbar;
 }
 
 void PokemonWorldHud::MoveOut(bool out, int id)

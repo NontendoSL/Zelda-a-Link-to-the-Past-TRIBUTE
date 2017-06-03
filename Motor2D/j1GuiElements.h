@@ -243,6 +243,7 @@ public:
 	void SetMoneyHitbox(Image* number, uint ammount);
 	void GiveItem(std::string pokemon, std::string item);
 	void LoadItem(std::string pokemon, std::string item_id);
+	void SetPokeOrder(int blaziquen, int sceptile, int swampert);
 private:
 	std::vector<Button*>poke_bar;
 	Image* coin = nullptr;
