@@ -9,7 +9,7 @@
 //TODO 1: Open config.xml and write a new path for the cutscene.
 
 enum CS_Type { CS_IMAGE, CS_TEXT, CS_NPC, CS_DYNOBJECT, CS_ITEM, CS_MUSIC, CS_FX, CS_NONE };
-enum Action_Type { ACT_ENABLE, ACT_DISABLE, ACT_MOVE, ACT_PLAY, ACT_STOP, ACT_NONE };
+enum Action_Type { ACT_ENABLE, ACT_DISABLE, ACT_MOVE, ACT_PLAY, ACT_STOP, ACT_SWITCHMAP, ACT_NONE };
 enum Dir_Type { CS_UP, CS_DOWN, CS_LEFT, CS_RIGHT, NO_DIR };
 
 class SceneElement;
@@ -140,6 +140,7 @@ public:
 	void StopMusic();
 	void ActiveElement();
 	void DisableElement();
+	void SwitchMap(int id);
 	//---------------------------
 
 	//UTILITY FUNCTIONS ------------

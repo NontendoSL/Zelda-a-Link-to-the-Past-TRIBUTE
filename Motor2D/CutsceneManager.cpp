@@ -281,13 +281,16 @@ CS_Element* Cutscene::GetElement(const char* name)
 {
 	CS_Element* temp = nullptr;
 
-	//Iterates elements list of the cutscene to find the correct element (this comparison can be done with the element id too)
-	for (std::list<CS_Element*>::iterator it = elements.begin(); it != elements.end(); it++)
+	if (strcmp(name, "none") != 0) //If the step has an element to link to an action, enter
 	{
-		if (it._Ptr->_Myval->name == name)
+		//Iterates elements list of the cutscene to find the correct element (this comparison can be done with the element id too)
+		for (std::list<CS_Element*>::iterator it = elements.begin(); it != elements.end(); it++)
 		{
-			temp = it._Ptr->_Myval;
-			break;
+			if (it._Ptr->_Myval->name == name)
+			{
+				temp = it._Ptr->_Myval;
+				break;
+			}
 		}
 	}
 
@@ -555,6 +558,9 @@ bool CS_Step::DoAction(float dt)
 		action_name = "stop";
 		StopMusic();
 		break;
+	case ACT_SWITCHMAP:
+		SwitchMap(cutscene->map_id);
+		break;
 	default:
 		action_name = "none";
 		break;
@@ -621,6 +627,10 @@ void CS_Step::SetAction(pugi::xml_node& node)
 	else if (action_type == "stop")
 	{
 		act_type = ACT_STOP;
+	}
+	else if (action_type == "load_map")
+	{
+		act_type = ACT_SWITCHMAP;
 	}
 	else
 	{
@@ -793,6 +803,11 @@ void CS_Step::DisableElement()
 		element->active = false;
 		LOG("Step %i Disabling %s", n, element->name.c_str());
 	}
+}
+
+void CS_Step::SwitchMap(int id)
+{
+	App->scene->switch_map = id;
 }
 
 //Link the element of the cutscene with the step
