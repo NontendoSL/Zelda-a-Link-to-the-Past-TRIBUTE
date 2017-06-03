@@ -60,7 +60,7 @@ bool Hookshot::Start()
 
 bool Hookshot::Update(float dt)
 {
-
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Aqua);
 	return true;
 }
 
@@ -142,6 +142,7 @@ void Hookshot::Reset()
 
 void Hookshot::Draw()
 {
+	BROFILER_CATEGORY("Draw_Weapon", Profiler::Color::Beige);
 	if (in_use == true)
 	{
 		App->anim_manager->Drawing_Manager(anim_state, direction, position, HOOKSHOT); //id 2 = hookshot animation xml
@@ -170,6 +171,8 @@ bool Bow::Start()
 
 bool Bow::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Bisque);
+	
 	if (arrows.size() > 0)
 	{
 		std::list<Arrow*>::const_iterator item = arrows.begin();

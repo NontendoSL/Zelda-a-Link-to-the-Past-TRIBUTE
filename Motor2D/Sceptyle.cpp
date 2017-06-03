@@ -72,6 +72,7 @@ bool Sceptyle::Start()
 
 bool Sceptyle::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Colision", Profiler::Color::Olive);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -162,6 +163,7 @@ bool Sceptyle::Update(float dt)
 
 void Sceptyle::Draw()
 {
+	BROFILER_CATEGORY("Draw_Sceptyle", Profiler::Color::Indigo);
 	if (drawThrowSP)
 	{
 		if (sp_attack != nullptr && top_leaf_sp != nullptr && bot_leaf_sp != nullptr)

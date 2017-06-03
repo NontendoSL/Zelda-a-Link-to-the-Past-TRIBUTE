@@ -66,6 +66,7 @@ bool Salamance::Start()
 
 bool Salamance::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Null);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -157,6 +158,7 @@ bool Salamance::Update(float dt)
 
 void Salamance::Draw()
 {
+	BROFILER_CATEGORY("Draw_Salamance", Profiler::Color::Ivory);
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, SALAMENCE);
 }
 

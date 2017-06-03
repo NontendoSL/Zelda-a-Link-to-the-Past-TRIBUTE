@@ -64,6 +64,8 @@ bool j1SceneIntro::PreUpdate()
 // Called each loop iteration
 bool j1SceneIntro::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_SceneIntro", Profiler::Color::Orchid)
+
 	bool ret = true;
 	if (App->video->video_finished)
 	{

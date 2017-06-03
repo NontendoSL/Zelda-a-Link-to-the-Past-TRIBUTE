@@ -66,6 +66,7 @@ bool Dusclops::Start()
 
 bool Dusclops::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::LightSeaGreen);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -157,6 +158,7 @@ bool Dusclops::Update(float dt)
 
 void Dusclops::Draw()
 {
+	BROFILER_CATEGORY("Draw_Dusclops", Profiler::Color::Plum);
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, DUSCLOPS);
 }
 

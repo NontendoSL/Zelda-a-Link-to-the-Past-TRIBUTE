@@ -40,6 +40,8 @@ bool TrainingDoll::Start()
 
 bool TrainingDoll::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::LightSalmon);
+
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -72,6 +74,7 @@ bool TrainingDoll::Update(float dt)
 
 void TrainingDoll::Draw()
 {
+	BROFILER_CATEGORY("Draw_TrainingDoll", Profiler::Color::Gainsboro);
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, TRAININGDOLL);
 }
 

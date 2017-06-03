@@ -75,6 +75,8 @@ bool j1Input::Start()
 // Called each loop iteration
 bool j1Input::PreUpdate()
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange);
+
 	mouse_motion_x = 0;
 	mouse_motion_y = 0;
 

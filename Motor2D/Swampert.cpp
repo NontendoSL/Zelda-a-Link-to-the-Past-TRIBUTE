@@ -65,6 +65,7 @@ bool Swampert::Start()
 
 bool Swampert::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Wheat);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -150,6 +151,8 @@ bool Swampert::Update(float dt)
 
 void Swampert::Draw()
 {
+	BROFILER_CATEGORY("Draw_Swampert", Profiler::Color::SeaShell);
+
 	if (drawThrowSP)
 	{
 		if (sp_attack != nullptr)

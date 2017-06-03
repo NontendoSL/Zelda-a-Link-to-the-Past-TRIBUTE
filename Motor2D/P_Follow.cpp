@@ -40,6 +40,8 @@ P_Follow::~P_Follow()
 
 bool P_Follow::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Cyan);
+
 	if (element_to_follow != nullptr)
 	{
 		pos.x = element_to_follow->position.x;

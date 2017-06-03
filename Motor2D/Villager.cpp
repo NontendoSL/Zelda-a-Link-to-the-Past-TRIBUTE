@@ -37,11 +37,13 @@ bool Villager::Start()
 
 bool Villager::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Chocolate);
 	return true;
 }
 
 void Villager::Draw()
 {
+	BROFILER_CATEGORY("Draw_Soilder", Profiler::Color::Chocolate);
 	if (active)
 	{
 		/*if (direction == UP)

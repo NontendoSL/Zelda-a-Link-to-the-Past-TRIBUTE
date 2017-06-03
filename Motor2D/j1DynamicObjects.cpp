@@ -110,6 +110,8 @@ bool DynamicObjects::Start()
 
 bool DynamicObjects::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Coral);
+
 	if (to_follow != nullptr && state == D_PICKED)
 	{
 		position.x = to_follow->position.x - to_follow->offset_x;

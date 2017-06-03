@@ -62,6 +62,8 @@ bool j1Render::Start()
 // Called each loop iteration
 bool j1Render::PreUpdate()
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange);
+
 	SDL_RenderClear(renderer);
 	return true;
 }

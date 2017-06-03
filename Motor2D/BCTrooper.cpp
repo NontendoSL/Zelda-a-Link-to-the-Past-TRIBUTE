@@ -185,6 +185,8 @@ bool BCTrooper::Update(float dt)
 
 void BCTrooper::Draw()
 {
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::DarkSlateBlue);
+
 	if (state != BC_DYING)
 	{
 		if (state == BC_DEFEND)

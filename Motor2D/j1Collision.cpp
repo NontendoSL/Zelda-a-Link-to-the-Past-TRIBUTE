@@ -92,6 +92,8 @@ bool j1Collision::Start()
 
 bool j1Collision::PreUpdate()
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange);
+
 	// Remove all colliders scheduled for deletion
 	/*for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	std::vector<Collider*>::iterator item = colliders.begin();
@@ -131,7 +133,7 @@ bool j1Collision::PreUpdate()
 
 bool j1Collision::Update(float dt)
 {
-	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange)
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange);
 	// Called before render is available
 	Collider* c1 = nullptr;
 	Collider* c2 = nullptr;
@@ -197,6 +199,8 @@ bool j1Collision::CleanUp()
 
 void j1Collision::DebugDraw()
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange);
+
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		debug = !debug;
 

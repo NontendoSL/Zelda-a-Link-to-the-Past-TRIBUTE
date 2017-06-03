@@ -38,6 +38,7 @@ bool ParticleManager::PreUpdate()
 
 bool ParticleManager::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Cyan);
 	//Iterate all list
 	//Group FOLLOW -------------------------------------------------
 	std::list<P_Follow*>::iterator item = Group_Follow.begin();

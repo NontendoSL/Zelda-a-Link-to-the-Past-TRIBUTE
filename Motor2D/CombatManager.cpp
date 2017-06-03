@@ -78,7 +78,7 @@ bool CombatManager::PreUpdate()
 
 bool CombatManager::Update(float dt)
 {
-	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Cyan);
+	BROFILER_CATEGORY("DoUpdate_ComabatPokemon", Profiler::Color::Fuchsia);
 
 	//Pokemon of Player is dead
 

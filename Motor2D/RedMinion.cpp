@@ -53,6 +53,8 @@ bool RedMinion::Start(iPoint pos)
 
 bool RedMinion::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::CornflowerBlue);
+
 	if (App->scene->gamestate == INGAME)
 	{
 		if (start_explosion == true)
@@ -119,6 +121,7 @@ bool RedMinion::Update(float dt)
 
 void RedMinion::Draw()
 {
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Crimson);
 	if (direction == UP)
 	{
 		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();

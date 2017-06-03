@@ -149,6 +149,8 @@ P_Explosion::~P_Explosion()
 
 bool P_Explosion::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Cyan);
+
 	MoveParticles();
 
 	return true;

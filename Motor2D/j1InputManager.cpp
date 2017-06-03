@@ -61,12 +61,15 @@ void InputManager::ChangeInput(bool isNormal)
 // Called before all Updates
 bool InputManager::PreUpdate()
 {
+	BROFILER_CATEGORY("DoPreUpdate_InputManager", Profiler::Color::SaddleBrown);
 	bool ret = true;
 	return ret;
 }
 
 bool InputManager::Update(float dt)
 {
+	BROFILER_CATEGORY("DoUpdate_InputManager", Profiler::Color::SlateGray);
+
 	//TODO 7 uncomment this after doned
 	/*if (EventPressed(PAUSE) == E_DOWN)
 	{

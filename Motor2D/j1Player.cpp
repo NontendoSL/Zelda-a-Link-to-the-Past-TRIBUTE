@@ -94,7 +94,7 @@ bool Player::Update(float dt)
 	std::string var = std::to_string(game_timer.ReadSec()) + "seconds of playtime";
 	time->Write(var.c_str());
 	var.clear();*/
-	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Aqua);
 	bool ret = true;
 	//if you die, you appear on the Link House
 	if (hp_hearts.y == 0)
@@ -272,6 +272,8 @@ bool Player::Update(float dt)
 
 void Player::Draw()
 {
+	
+	BROFILER_CATEGORY("Update_Player", Profiler::Color::AliceBlue);
 	//Draw player
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK);
 }

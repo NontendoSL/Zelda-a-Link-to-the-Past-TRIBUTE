@@ -51,6 +51,8 @@ bool GreenMinion::Start(iPoint pos)
 
 bool GreenMinion::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Chartreuse);
+
 	if (App->scene->gamestate == INGAME)
 	{
 		switch (state)
@@ -97,6 +99,8 @@ bool GreenMinion::Update(float dt)
 
 void GreenMinion::Draw()
 {
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::DarkKhaki);
+
 	if (direction == UP)
 	{
 		anim_rect = animation.anim[anim_state].North_action.GetCurrentFrame();

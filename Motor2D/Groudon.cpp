@@ -65,6 +65,7 @@ bool Groudon::Start()
 
 bool Groudon::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::OldLace);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -159,6 +160,7 @@ bool Groudon::Update(float dt)
 
 void Groudon::Draw()
 {
+	BROFILER_CATEGORY("Draw_Grouden", Profiler::Color::MediumBlue);
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, GROUDON);
 }
 

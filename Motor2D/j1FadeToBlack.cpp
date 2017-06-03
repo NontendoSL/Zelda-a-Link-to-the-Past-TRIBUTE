@@ -35,6 +35,7 @@ bool j1FadeToBlack::Start()
 // Update: draw background
 bool j1FadeToBlack::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange);
 	if (goFade == false)
 		return true;
 

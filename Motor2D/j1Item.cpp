@@ -94,6 +94,7 @@ bool Item::Start()
 
 bool Item::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Black);
 	if (delay.ReadSec() >= 0.5)
 	{
 		pickable = true;
@@ -103,6 +104,7 @@ bool Item::Update(float dt)
 
 void Item::Draw()
 {
+	BROFILER_CATEGORY("Draw_Item", Profiler::Color::BlueViolet);
 	App->render->Blit(texture, position.x, position.y);
 }
 

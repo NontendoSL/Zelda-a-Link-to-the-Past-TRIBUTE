@@ -68,6 +68,8 @@ bool Geodude::Start()
 
 bool Geodude::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::DimGray);
+
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -127,7 +129,7 @@ bool Geodude::Update(float dt)
 
 void Geodude::Draw()
 {
-	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow);
+	BROFILER_CATEGORY("Draw_Geodude", Profiler::Color::Yellow);
 
 	if (direction == UP)
 	{

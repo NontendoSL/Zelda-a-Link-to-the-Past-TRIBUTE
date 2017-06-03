@@ -135,6 +135,8 @@ bool j1CutSceneManager::LoadCutscene(uint id)
 
 bool j1CutSceneManager::Update(float dt)
 {
+	BROFILER_CATEGORY("DoUpdate_CutSceneManager", Profiler::Color::Peru);
+
 	bool ret = true;
 
 	if (active_cutscene != nullptr)

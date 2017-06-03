@@ -65,6 +65,7 @@ bool Shiftry::Start()
 
 bool Shiftry::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Navy);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -154,6 +155,7 @@ bool Shiftry::Update(float dt)
 
 void Shiftry::Draw()
 {
+	BROFILER_CATEGORY("Draw_Shiftry", Profiler::Color::WhiteSmoke);
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, SHIFTRY);
 }
 

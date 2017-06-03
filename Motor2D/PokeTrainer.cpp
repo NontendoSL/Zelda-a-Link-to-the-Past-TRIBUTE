@@ -38,7 +38,7 @@ bool PokeTrainer::Start()
 
 bool PokeTrainer::Update(float dt)
 {
-	
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::HotPink);
 
 	return true;
 }

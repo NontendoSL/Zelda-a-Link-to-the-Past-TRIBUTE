@@ -45,6 +45,8 @@ bool FireBat::Start()
 
 bool FireBat::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Beige);
+
 	if (App->scene->gamestate == INGAME)
 	{
 		switch (state)
@@ -125,6 +127,8 @@ bool FireBat::Update(float dt)
 
 void FireBat::Draw()
 {
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::CadetBlue);
+
 	anim_rect = animation.anim[anim_state].South_action.GetCurrentFrame();
 	pivot = animation.anim[anim_state].South_action.GetCurrentOffset();
 

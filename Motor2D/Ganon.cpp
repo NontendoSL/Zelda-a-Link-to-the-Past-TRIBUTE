@@ -98,6 +98,7 @@ bool Ganon::Update(float dt)
 
 void Ganon::Draw()
 {
+	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::DarkGoldenRod);
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, GANON);
 }
 

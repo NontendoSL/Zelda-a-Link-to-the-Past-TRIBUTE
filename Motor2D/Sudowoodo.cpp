@@ -41,12 +41,13 @@ bool Sudowoodo::Start()
 
 bool Sudowoodo::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Khaki);
 	return true;
 }
 
 void Sudowoodo::Draw()
 {
-	BROFILER_CATEGORY("Draw_SOLDIER", Profiler::Color::Yellow)
+	BROFILER_CATEGORY("Draw_Sudowoodo", Profiler::Color::Yellow)
 		//App->anim_manager->Drawing_Manager(state, direction, position, 6);
 		int id;
 	switch (state)

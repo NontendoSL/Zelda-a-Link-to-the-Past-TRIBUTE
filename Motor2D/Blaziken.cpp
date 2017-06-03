@@ -60,6 +60,7 @@ bool Blaziken::Start()
 
 bool Blaziken::Update(float dt)
 {
+	BROFILER_CATEGORY("Upcate_Collision", Profiler::Color::Lime);
 	// STATE MACHINE ------------------
 	if (App->scene->gamestate == INGAME)
 	{
@@ -139,6 +140,7 @@ bool Blaziken::Update(float dt)
 
 void Blaziken::Draw()
 {
+	BROFILER_CATEGORY("Draw_Blaziquen", Profiler::Color::HotPink);
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, BLAZIKEN);
 }
 

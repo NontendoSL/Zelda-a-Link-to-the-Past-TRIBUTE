@@ -54,6 +54,7 @@ P_Firework::~P_Firework()
 
 bool P_Firework::Update(float dt)
 {
+	BROFILER_CATEGORY("Update_Scene", Profiler::Color::Cyan);
 
 	MoveParticles();
 

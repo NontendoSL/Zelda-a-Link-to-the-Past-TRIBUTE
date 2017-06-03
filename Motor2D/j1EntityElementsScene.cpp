@@ -71,7 +71,7 @@ bool j1EntityElementScene::Start()
 
 bool j1EntityElementScene::PreUpdate()
 {
-	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
+	BROFILER_CATEGORY("DoPreUpdate_EntityElementsScene", Profiler::Color::Silver);
 	if (App->scene->combat == false && App->scene->waitVideo == false)
 	{
 		std::list<SceneElement*>::iterator item = elementscene.begin();
@@ -110,7 +110,7 @@ bool j1EntityElementScene::PreUpdate()
 bool j1EntityElementScene::Update(float dt)
 {
 	bool ret = true;
-	BROFILER_CATEGORY("DoUpdate_Elements", Profiler::Color::Cyan);
+	BROFILER_CATEGORY("DoUpdate_EntityElementsScene", Profiler::Color::MediumOrchid);
 	if (App->scene->combat == false && App->scene->waitVideo == false)
 	{
 		std::list<SceneElement*>::iterator item = elementscene.begin();

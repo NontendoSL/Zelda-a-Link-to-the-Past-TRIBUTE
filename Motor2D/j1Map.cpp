@@ -36,7 +36,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw(bool floor_2)
 {
-	BROFILER_CATEGORY("Draw_MAP", Profiler::Color::DarkOrange)
+	BROFILER_CATEGORY("Update_Collision", Profiler::Color::Orange);
 	if(map_loaded == false)
 		return;
 
