@@ -1275,7 +1275,7 @@ void PokemonWorldHud::Input()
 {
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_SELECT) == EVENTSTATE::E_DOWN)
 	{
-		if (App->scene->player->dialog == nullptr && App->fadetoblack->IsFading() == false)
+		if (App->scene->player->dialog == nullptr ) // TODO FADE BUG
 		{
 			active = !active;
 			if (active)
@@ -1546,12 +1546,52 @@ void PokemonWorldHud::LoadItem(std::string pokemon, std::string item_id) //TODO 
 
 void PokemonWorldHud::SetPokeOrder(int blaziquen, int sceptile, int swampert)
 {
+	int first = poke_bar[0]->position.y;
+	int second = poke_bar[1]->position.y;
+	int third = poke_bar[2]->position.y;
 	Button *blaziquenbar = (Button*)App->gui->GetEntity("pk_bar_hud_1");
 	Button *sceptilebar = (Button*)App->gui->GetEntity("pk_bar_hud_2");
 	Button *swampertbar = (Button*)App->gui->GetEntity("pk_bar_hud_3");
 	poke_bar[blaziquen] = blaziquenbar;
 	poke_bar[sceptile] = sceptilebar;
 	poke_bar[swampert] = swampertbar;
+	switch (blaziquen)
+	{
+	case 0:
+		poke_bar[blaziquen]->position.y = first;
+		break;
+	case 1:
+		poke_bar[blaziquen]->position.y = second;
+		break;
+	case 2:
+		poke_bar[blaziquen]->position.y = third;
+		break;
+	}
+	switch (sceptile)
+	{
+	case 0:
+		poke_bar[sceptile]->position.y = first;
+		break;
+	case 1:
+		poke_bar[sceptile]->position.y = second;
+		break;
+	case 2:
+		poke_bar[sceptile]->position.y = third;
+		break;
+	}
+	switch (swampert)
+	{
+	case 0:
+		poke_bar[swampert]->position.y = first;
+		break;
+	case 1:
+		poke_bar[swampert]->position.y = second;
+		break;
+	case 2:
+		poke_bar[swampert]->position.y = third;
+		break;
+	}
+
 }
 
 void PokemonWorldHud::MoveOut(bool out, int id)

@@ -59,7 +59,6 @@ private:
 	int timetorun = 0;
 	int num_hits = 0;
 	//bool drawThrowSP = false; **Only the special attack is launch.**
-
 };
 
 #endif //__WALREIN_H_

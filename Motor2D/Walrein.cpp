@@ -154,6 +154,7 @@ void Walrein::OnCollision(Collider* c1, Collider* c2)
 					num_hits++;
 					if (num_hits < 3)
 					{
+						
 						pokemon_2->knockback_time.Start();
 						pokemon_2->hp -= sp_damage;
 						getdamage = true;
