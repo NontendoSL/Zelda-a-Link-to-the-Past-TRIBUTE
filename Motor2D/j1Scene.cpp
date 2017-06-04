@@ -53,10 +53,9 @@ bool j1Scene::Start()
 		if (first_loop)
 		{
 			LoadUi();
-
+			App->audio->VolumeMusic(50);
 			App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg", 0);
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //1
-			App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
 			App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
 			App->audio->LoadFx("audio/fx/LTTP_Sword_Attack.wav");//5
@@ -89,6 +88,7 @@ bool j1Scene::Start()
 			App->audio->LoadFx("audio/fx/PKMN_Dragon.wav");//32
 			App->audio->LoadFx("audio/fx/PKMN_Ghost.wav");//33
 			App->audio->LoadFx("audio/fx/PKMN_Heal.wav");//34
+			App->audio->LoadFx("audio/fx/LTTP_LinkDeath");//35
 			//Init All teleports
 			CreateTeleports();
 			first_loop = false;
