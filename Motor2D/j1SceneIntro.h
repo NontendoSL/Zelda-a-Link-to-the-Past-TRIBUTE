@@ -58,7 +58,6 @@ private:
 	SDL_Texture*	TitleScreen_bg = nullptr;
 	SDL_Texture*	Menu_bg = nullptr;
 	float			bg_anim = 0;
-	bool			right = false;
 	bool			clenaudio_video = false;
 
 

@@ -82,22 +82,8 @@ bool j1SceneIntro::Update(float dt)
 		{
 			if (menu == false)
 			{
-				if (bg_anim < -180) {
-					right = true;
-				}
-				if (bg_anim > 0) {
-					right = false;
-				}
-				if (right)
-				{
-					bg_anim += 0.3;
-				}
-				else
-				{
-					bg_anim -= 0.3;
-				}
-				App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
-				App->render->Blit(TitleScreen_letters, 50, 10, NULL, NULL, false);
+				App->render->Blit(TitleScreen_bg, 0, 0);
+				App->render->Blit(TitleScreen_letters, 50, 10);
 			}
 			else
 			{
