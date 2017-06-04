@@ -24,6 +24,8 @@ Soldier::Soldier():NPC()
 Soldier::~Soldier()
 {
 	collision_feet = nullptr;
+	App->tex->UnLoad(death_graphics);
+	death_graphics = nullptr;
 }
 
 bool Soldier::Awake(pugi::xml_node &conf, uint id)
@@ -466,7 +468,6 @@ bool Soldier::Movebyhit(float dt)
 			animation.graphics = death_graphics;
 		}
 	}
-
 	else
 	{
 		if (knockback_time.ReadSec() >= 0.2)

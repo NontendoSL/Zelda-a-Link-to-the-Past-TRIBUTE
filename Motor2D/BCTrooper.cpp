@@ -27,6 +27,8 @@ BCTrooper::~BCTrooper()
 		boles[i].particle_maze = nullptr;
 		boles[i].collision_maze = nullptr;
 	}
+	App->tex->UnLoad(death_graphics);
+	death_graphics = nullptr;
 }
 
 bool BCTrooper::Awake(pugi::xml_node &conf, uint id)
@@ -40,6 +42,7 @@ bool BCTrooper::Start()
 	App->gui->GetEntity("boss bar")->visible = true;
 	App->gui->GetEntity("hp boss")->visible = true;
 	texture = App->tex->Load("Particles/bctrooperl.png");
+	death_graphics = App->tex->Load("textures/AnimationsAndEffects.png");
 	position.x = 200;
 	position.y = 250;
 	float factor = (float)M_PI / 180.0f * MULTI_P;
@@ -243,6 +246,10 @@ void BCTrooper::Draw()
 	}
 	else
 	{
+		anim_rect = animation.anim[state].South_action.GetCurrentFrame();
+		iPoint pivot = animation.anim[state].South_action.GetCurrentOffset();
+		App->render->Blit(animation.graphics, position.x - pivot.x, position.y - pivot.y, &anim_rect);
+
 		for (int i = 0; i < 4; i++)
 		{
 			if (boles[i].active)
@@ -252,7 +259,6 @@ void BCTrooper::Draw()
 		}
 	}
 }
-
 
 bool BCTrooper::CleanUp()
 {
@@ -405,17 +411,20 @@ void BCTrooper::Defend()
 
 void BCTrooper::Death()
 {
-	App->gui->GetEntity("hp boss")->Hitbox.w = 149;
-	App->gui->GetEntity("boss bar")->visible = false;
-	App->gui->GetEntity("hp boss")->visible = false;
-	//40 - 13 // 41 - 13
-	App->map->EditCost(40, 13, 0);
-	App->map->EditCost(41, 13, 0);
-	App->entity_elements->DeleteElement("door");
+	if (animation.anim[state].South_action.Finished() == true)
+	{
+		App->gui->GetEntity("hp boss")->Hitbox.w = 149;
+		App->gui->GetEntity("boss bar")->visible = false;
+		App->gui->GetEntity("hp boss")->visible = false;
+		//40 - 13 // 41 - 13
+		App->map->EditCost(40, 13, 0);
+		App->map->EditCost(41, 13, 0);
+		App->entity_elements->DeleteElement("door");
 
-	App->entity_elements->CreateItem(8, position);
+		App->entity_elements->CreateItem(8, position);
 
-	to_delete = true;
+		to_delete = true;
+	}
 }
 
 bool BCTrooper::ChangeRadius_degrade(int radius_to_stop, bool incremenet)
@@ -488,34 +497,49 @@ Collider* BCTrooper::GetColliderMaze(uint pos)
 
 bool BCTrooper::Movebyhit(int speed)
 {
-	if (dir_hit == UP)
+	if (hp <= 0)
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+		App->audio->PlayFx(11);
+		state = BC_DYING;
+		animation.anim[BC_DYING].ResetAnimations();
+		direction = DOWN;
+		if (death_graphics != nullptr)
 		{
-			position.y -= speed;
+			animation.graphics = death_graphics;
 		}
 	}
-	else if (dir_hit == DOWN)
+	else
 	{
-		if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+		if (dir_hit == UP)
 		{
-			position.y += speed;
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y - 4, collision_feet->rect.w, collision_feet->rect.h, UP) == 0)
+			{
+				position.y -= speed;
+			}
+		}
+		else if (dir_hit == DOWN)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x, collision_feet->rect.y + collision_feet->rect.h + 4, collision_feet->rect.w, collision_feet->rect.h, DOWN) == 0)
+			{
+				position.y += speed;
+			}
+		}
+		else if (dir_hit == LEFT)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
+			{
+				position.x -= speed;
+			}
+		}
+		else if (dir_hit == RIGHT)
+		{
+			if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
+			{
+				position.x += speed;
+			}
 		}
 	}
-	else if (dir_hit == LEFT)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x - 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, LEFT) == 0)
-		{
-			position.x -= speed;
-		}
-	}
-	else if (dir_hit == RIGHT)
-	{
-		if (App->map->MovementCost(collision_feet->rect.x + collision_feet->rect.w + 4, collision_feet->rect.y, collision_feet->rect.w, collision_feet->rect.h, RIGHT) == 0)
-		{
-			position.x += speed;
-		}
-	}
+
 	return true;
 }
 
@@ -536,7 +560,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 			{
 				App->audio->PlayFx(13);
 				link->SetState(L_HIT);
-				link->SetAnimState(L_HIT);
+				link->SetAnimState(L_IDLE);
 				link->hurt_timer.Start();
 				link->invincible_timer.Start();
 				link->GetDamage();

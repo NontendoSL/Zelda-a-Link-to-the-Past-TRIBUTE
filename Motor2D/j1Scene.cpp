@@ -375,11 +375,9 @@ bool j1Scene::Update(float dt)
 				if (modeGod)
 				{
 					modeGod = false;
-					player->hp -= 10000;
 				}
 				else
 				{
-					player->hp += 10000;
 					modeGod = true;
 				}
 			}

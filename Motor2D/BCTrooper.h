@@ -7,7 +7,7 @@
 #define NUM_POINTS_CIRCLE 90
 #define MULTI_P 4
 
-enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_HIT, BC_DEFEND,BC_DYING };
+enum BCTrooperState { BC_IDLE = 0, BC_WALKING, BC_HIT, BC_DYING, BC_DEFEND };
 
 class P_Follow;
 
@@ -76,6 +76,7 @@ private:
 	//state
 	BCTrooperState state = BC_IDLE;
 	SDL_Texture* texture = nullptr;
+	SDL_Texture* death_graphics = nullptr;
 	std::vector<iPoint> points;
 	std::vector<Bole> boles;
 	bool next_phase = false;
