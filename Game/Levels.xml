@@ -332,7 +332,7 @@
       <camera follow="false"/>
       <Link pos_x="160" pos_y="225"/>
       <vilagers>
-        <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="153" pos_y="130" switch_map="22" cutscene_id="4" dialog="..."/>
+        <vilager id="9" name="Red" rect_x="42" rect_y="42" rect_w="14" rect_h="19" pos_x="153" pos_y="130" switch_map="22" cutscene_id="4" dialog="With this body, and his pokemon, I will defeat you and bring darkness to the worlds!"/>
       </vilagers>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="29" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
@@ -362,9 +362,9 @@
   <map_combat>
 
     <Link>
-      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="150" dir="right" hp="150"  attack="20" special_attack="15" defense="10" pos_x="96" pos_y="128"  active="false"/>
-      <pokemon id="2" name="SCEPTILE" speed="1" cooldown="600" dir="right" hp="200" attack="10" special_attack="30" defense="12" pos_x="96" pos_y="128"  active="false"/>
-      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="250" dir="right" hp="300" attack="5"  special_attack="20" defense="15" pos_x="96" pos_y="128"  active="false"/>
+      <pokemon id="1" name="BLAZIKEN" speed="1" cooldown="150" dir="right" hp="150"  attack="15" special_attack="10" defense="10" pos_x="96" pos_y="128"  active="false"/>
+      <pokemon id="2" name="SCEPTILE" speed="1" cooldown="600" dir="right" hp="200" attack="10" special_attack="25" defense="12" pos_x="96" pos_y="128"  active="false"/>
+      <pokemon id="3" name="SWAMPERT" speed="1" cooldown="250" dir="right" hp="300" attack="5"  special_attack="15" defense="15" pos_x="96" pos_y="128"  active="false"/>
     </Link>
 
     <map n="17" file="CombatPracticeMap.tmx">
