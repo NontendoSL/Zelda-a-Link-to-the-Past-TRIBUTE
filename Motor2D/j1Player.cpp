@@ -105,6 +105,7 @@ bool Player::Update(float dt)
 		}
 		else
 		{
+			App->audio->PlayFx(35);
 			score = 0;
 			App->scene->Link_die = true;
 			hp_hearts = { hp_hearts.x, hp_hearts.x };
