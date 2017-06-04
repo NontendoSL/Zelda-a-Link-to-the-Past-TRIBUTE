@@ -1274,13 +1274,14 @@ void PokemonWorldHud::Input()
 {
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_SELECT) == EVENTSTATE::E_DOWN)
 	{
-		if (App->scene->player->dialog == nullptr ) // TODO FADE BUG
+		if (App->scene->player->dialog == nullptr && App->fadetoblack->Checkfadefromblack()) // TODO FADE BUG
 		{
 			active = !active;
 			if (active)
 			{
 				App->gui->SetFocus(GetFirst());
 				App->scene->gamestate = INMENU;
+				App->scene->player->SetAnimState(L_IDLE);
 			}
 			else
 			{
