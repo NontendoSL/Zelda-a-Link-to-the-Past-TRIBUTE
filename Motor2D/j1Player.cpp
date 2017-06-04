@@ -1754,6 +1754,11 @@ void Player::GetDamage()
 		hp_hearts.y--;
 }
 
+void Player::SetNormalLife()
+{
+	hp_hearts = { hp_hearts.x, hp_hearts.x };
+}
+
 void Player::SetKnockbackDir()
 {
 	if (direction == UP)
