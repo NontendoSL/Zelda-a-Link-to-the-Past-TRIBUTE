@@ -123,7 +123,6 @@ bool CombatManager::Update(float dt)
 						{
 							if(App->scene->combat)
 							{
-								App->scene->combat = false;
 								App->scene->switch_map = App->scene->last_map;
 								App->scene->newPosition = App->scene->player->position;
 								App->scene->player->state_complet = true;

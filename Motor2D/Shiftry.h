@@ -4,7 +4,9 @@
 
 #include "PokemonCombat.h"
 
-#define HEALING 30
+#define HEALING 40
+
+class P_Fire;
 
 class Shiftry : public PokemonCombat
 {
@@ -64,6 +66,8 @@ private:
 	int hp_max = 0;
 	int use_cooldown = 0;
 	int hp_healed = 0;
+	bool wait2up = false;
+	P_Fire* particule_special = nullptr;
 	//bool drawThrowSP = false; **Only the special attack is launch.**
 
 };

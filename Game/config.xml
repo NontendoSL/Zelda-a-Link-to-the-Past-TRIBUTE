@@ -4,9 +4,9 @@
 		<title>Zelda a Link to Pokemon World</title>
 		<organization>NontendoSL</organization>
 	</app>
-  
+ 
 	<renderer>
-		<vsync value="false" />
+		<vsync value="true" />
 	</renderer>
   
 	<font>

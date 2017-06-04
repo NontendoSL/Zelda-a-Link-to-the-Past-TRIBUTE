@@ -6,6 +6,7 @@
 #include "j1Audio.h"
 #include "j1GuiElements.h"
 #include "CombatManager.h"
+#include "ParticleManager.h"
 
 Shiftry::Shiftry()
 {
@@ -135,8 +136,10 @@ bool Shiftry::Update(float dt)
 		current_animation->Reset();
 	}
 
-	if (hp <= hp_max / 2 && use_cooldown == cooldown)
+	if (hp <= 220 && use_cooldown == cooldown)
 	{
+		App->particlemanager->CreateFire_Particle(this, nullptr, { 0,0 }, { 0,6,2,0 }, { 12,2 }, { 12,4 }, { 0, 70 }, P_UP, 60, 4, true);
+		particule_special = App->particlemanager->Group_Fire.back();
 		state = PC_SPECIAL;
 		anim_state = PC_SPECIAL;
 		use_cooldown = 0;
@@ -391,14 +394,20 @@ bool Shiftry::Attack()
 
 void Shiftry::Special_Attack()
 {
-	hp += 1;
-	hp_healed++;
-	if(hp_healed > HEALING)
+	if (wait2up)
 	{
-		hp_healed = 0;
-		state = PC_IDLE;
-		anim_state = PC_IDLE;
+		hp += 1;
+		hp_healed++;
+		if (hp_healed > HEALING)
+		{
+			App->particlemanager->DeleteFire_p(particule_special);
+			particule_special = nullptr;
+			hp_healed = 0;
+			state = PC_IDLE;
+			anim_state = PC_IDLE;
+		}
 	}
+	wait2up = !wait2up;
 }
 
 bool Shiftry::Chasing(float dt)
