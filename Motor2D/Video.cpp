@@ -4,6 +4,7 @@
 #include "p2Log.h"
 #include "j1Window.h"
 #include "j1Input.h"
+#include "j1InputManager.h"
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Audio.h"
@@ -199,7 +200,7 @@ bool Video::PostUpdate()
 
 		// Events -------------------------------------------------------
 
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 			quit = 1;
 
 		// ----------------------------------------------------------------
