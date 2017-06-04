@@ -54,7 +54,6 @@ bool j1Scene::Start()
 		{
 			LoadUi();
 			App->audio->VolumeMusic(50);
-			App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg", 0);
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //1
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
 			App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
@@ -102,10 +101,13 @@ bool j1Scene::Start()
 			start_menu->ResetInventory();
 			help_bool = true;
 			new_game = false;
+			sleep_start = true;
+			playVideo = true;
 		}
 
 		else if (continue_game == true)
 		{
+			App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg", 0);
 			ContinueGame();
 			continue_game = false;
 		}
@@ -133,6 +135,29 @@ bool j1Scene::Update(float dt)
 
 	if (ingame == true)
 	{
+		if (sleep_start)
+		{
+			if (playVideo)
+			{
+				SDL_Rect r = { 0, 0, 640, 480 };
+				App->video->PlayVideo("Sleeping.ogg", r);
+				playVideo = false;
+			}
+			else
+			{
+				if (App->video->video_finished)
+				{
+					App->video->ResetValues();
+					App->audio->CleanUp();
+					App->audio->Awake(pugi::xml_node(nullptr));
+					App->audio->Start();
+					LoadFX();
+					App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg", 0);
+					App->audio->VolumeMusic(50);
+					sleep_start = false;
+				}
+			}
+		}
 		if (App->gui->GetEntity("YOU WIN")->visible)
 		{
 			if (win_timer + 1500 < SDL_GetTicks())
@@ -238,6 +263,10 @@ bool j1Scene::Update(float dt)
 							if (waitVideo)
 							{
 								App->video->ResetValues();
+								App->audio->CleanUp();
+								App->audio->Awake(pugi::xml_node(nullptr));
+								App->audio->Start();
+								LoadFX();
 								if (key_boss == false)
 								{
 									SwitchMap(useTP);
@@ -1091,6 +1120,46 @@ bool j1Scene::Load(pugi::xml_node& checknode)
 	Check.swamp_pos = curr_node.child("Swampert").attribute("pos").as_int(0);
 
 	return ret;
+}
+
+void j1Scene::LoadFX()
+{
+	App->intro->Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
+	App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //1
+	App->audio->LoadFx("audio/fx/LTTP_Pause_Close.wav"); //3
+	App->audio->LoadFx("audio/fx/LTTP_Rupee1.wav");//4
+	App->audio->LoadFx("audio/fx/LTTP_Sword_Attack.wav");//5
+	App->audio->LoadFx("audio/fx/LTTP_BombLay.wav");//6
+	App->audio->LoadFx("audio/fx/LTTP_Bomb_Explosion.wav");//7
+	App->audio->LoadFx("audio/fx/PKMN_Scratch_Attack.wav");//8
+	App->audio->LoadFx("audio/fx/PKMN_Blaziken_Attack.wav");//9
+	App->audio->LoadFx("audio/fx/PKMN_Tackle_Attack.wav");//10
+	App->audio->LoadFx("audio/fx/LTTP_Enemy_Death.wav");//11
+	App->audio->LoadFx("audio/fx/LTTP_Enemy_Hit.wav");//12
+	App->audio->LoadFx("audio/fx/LTTP_Link_Hurt.wav");//13
+	App->audio->LoadFx("audio/fx/LTTP_Fall.wav");//14
+	App->audio->LoadFx("audio/fx/LTTP_Chest_Open.wav");//15
+	App->audio->LoadFx("audio/fx/LTTP_BombBreaksWall.wav");//16 Arrow charge GOOD
+	App->audio->LoadFx("audio/fx/LTTP_ArrowHitWall.wav");//17 Arrow hit
+	App->audio->LoadFx("audio/fx/LTTP_Arrow.wav");//18
+	App->audio->LoadFx("audio/fx/LTTP_Stun.wav");//19
+	App->audio->LoadFx("audio/fx/LTTP_ItemGet.wav");//20
+	App->audio->LoadFx("audio/fx/PKMN_Paying.wav");//21
+	App->audio->LoadFx("audio/fx/PKMN_IncreasingStat.wav");//22
+	App->audio->LoadFx("audio/fx/PKMN_Select.wav");//23
+	App->audio->LoadFx("audio/fx/PKMN_MenuOpen.wav");//24
+	App->audio->LoadFx("audio/fx/LTTP_Melee.wav");//25
+	App->audio->LoadFx("audio/fx/LTTP_GanonJump.wav");//26
+	App->audio->LoadFx("audio/fx/LTTP_Firbats.wav");//27
+	App->audio->LoadFx("audio/fx/LTTP_Teleport.wav");//28
+	App->audio->LoadFx("audio/fx/LTTP_Grass_Destroyed.wav");//29
+	App->audio->LoadFx("audio/fx/LTTP_Break.wav");//30
+	App->audio->LoadFx("audio/fx/PKMN_Ice.wav");//31
+	App->audio->LoadFx("audio/fx/PKMN_Dragon.wav");//32
+	App->audio->LoadFx("audio/fx/PKMN_Ghost.wav");//33
+	App->audio->LoadFx("audio/fx/PKMN_Heal.wav");//34
+	App->audio->LoadFx("audio/fx/LTTP_LinkDeath.wav");//35
+	App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");//36
 }
 
 void j1Scene::SetItemsinUI()

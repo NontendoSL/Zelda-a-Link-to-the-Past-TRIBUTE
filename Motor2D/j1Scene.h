@@ -133,6 +133,8 @@ public:
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
 
+	void LoadFX();
+
 	void SetItemsinUI();
 
 	void SetMusics(int id);
@@ -212,6 +214,9 @@ public:
 	bool first_loop = true;
 	bool useTP = false;
 	bool notrepeatCombat = true;
+
+	//sleep
+	bool sleep_start = false;
 
 	bool swap_object = false;
 	bool swap_ganon = false;

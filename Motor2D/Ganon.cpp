@@ -272,6 +272,10 @@ bool Ganon::DeathUpdate(float dt)
 		if (App->video->video_finished)
 		{
 			App->video->ResetValues();
+			App->audio->CleanUp();
+			App->audio->Awake(pugi::xml_node(nullptr));
+			App->audio->Start();
+			App->scene->LoadFX();
 			Die();
 			to_delete = true;
 		}

@@ -62,10 +62,11 @@ private:
 	bool			clenaudio_video = false;
 
 
-	uint Menu_Cursor;
+
 	uint volume = 50;
 
 public:
+	uint Menu_Cursor;
 	MainMenu*			main_menu = nullptr;
 	ControllerMapping*  controller_map = nullptr;
 	bool				goHouse = false;
