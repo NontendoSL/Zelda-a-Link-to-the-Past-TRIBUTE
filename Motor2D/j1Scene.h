@@ -205,7 +205,7 @@ public:
 
 	////DIALOGUE VICENTE METHOD PROVISIONAL TILL WE IMPLEMENT IT PROPERLY
 	uint help_timer = 0;
-	bool help_bool = true;
+	bool help_bool = false;
 
 	//provisional app close and game loop
 	bool update_return = true;

@@ -663,6 +663,12 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			// MAP TELEPORTING ---------------
 			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
 			{
+				if (picked_object != nullptr) // Destroy the picked object if an enemy attacks you.
+				{
+					picked_object->SetState(D_IMPACTING);
+					picked_object->start_impact = true;
+					picked_object = nullptr;
+				}
 				if (canSwitchMap == false) // TODO LOW -> delete canSwitchMap
 				{
 					canSwitchMap = true;

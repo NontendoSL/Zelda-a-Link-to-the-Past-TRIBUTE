@@ -99,6 +99,7 @@ bool j1Scene::Start()
 			NewGame();
 			App->gui->SetGui(ZELDA_HUD);
 			start_menu->ResetInventory();
+			help_bool = true;
 			new_game = false;
 			sleep_start = true;
 			playVideo = true;
@@ -408,13 +409,6 @@ bool j1Scene::Update(float dt)
 			}
 		}
 		// ---------
-
-		//CUTSCENE_TEST ---------
-		if (App->input->GetKey(SDL_SCANCODE_O))
-		{
-			App->cs_manager->StartCutscene(0);
-		}
-		//-----------------------
 
 		//Set picked object the last 
 		if (player->picked_object != nullptr && swap_object == true)
