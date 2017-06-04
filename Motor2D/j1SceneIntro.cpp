@@ -45,7 +45,6 @@ bool j1SceneIntro::Start()
 	TitleScreen_letters = App->tex->Load("gui/title_screen/letters.png");
 	TitleScreen_bg = App->tex->Load("gui/title_screen/IntroFons.png"); 
 	Menu_bg = App->tex->Load("gui/title_screen/menu_bg.png");
-	Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
 	App->input_manager->AddListener(this);
 	SDL_Rect r = { 0, 0, 640, 480 };
 	App->video->PlayVideo("Intro.ogg", r);
@@ -84,6 +83,7 @@ bool j1SceneIntro::Update(float dt)
 			App->audio->CleanUp();
 			App->audio->Awake(pugi::xml_node(nullptr));
 			App->audio->Start();
+			Menu_Cursor = App->audio->LoadFx("audio/fx/LTTP_Menu_Cursor.wav");
 			App->audio->PlayMusic("audio/music/ZELDA/ZeldaScreenSelection.ogg");
 		}
 		if (App->scene->ingame == false)

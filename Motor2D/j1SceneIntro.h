@@ -55,7 +55,7 @@ public:
 private:
 	//Start screen
 	SDL_Texture*	TitleScreen_letters = nullptr;
-	Animation letters_anim;
+	Animation		letters_anim;
 	SDL_Texture*	TitleScreen_bg = nullptr;
 	SDL_Texture*	Menu_bg = nullptr;
 	float			bg_anim = 0;
