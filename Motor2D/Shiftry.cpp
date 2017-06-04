@@ -138,6 +138,7 @@ bool Shiftry::Update(float dt)
 
 	if (hp <= hp_max / 2 && use_cooldown == cooldown)
 	{
+		App->audio->PlayFx(34);
 		App->particlemanager->CreateFire_Particle(this, nullptr, { 0,0 }, { 0,6,2,0 }, { 12,2 }, { 12,4 }, { 0, 70 }, P_UP, 60, 4, true);
 		particule_special = App->particlemanager->Group_Fire.back();
 		state = PC_SPECIAL;

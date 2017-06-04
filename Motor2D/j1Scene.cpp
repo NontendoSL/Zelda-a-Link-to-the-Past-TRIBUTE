@@ -88,6 +88,7 @@ bool j1Scene::Start()
 			App->audio->LoadFx("audio/fx/PKMN_Ice.wav");//31
 			App->audio->LoadFx("audio/fx/PKMN_Dragon.wav");//32
 			App->audio->LoadFx("audio/fx/PKMN_Ghost.wav");//33
+			App->audio->LoadFx("audio/fx/PKMN_Heal.wav");//34
 			//Init All teleports
 			CreateTeleports();
 			first_loop = false;
