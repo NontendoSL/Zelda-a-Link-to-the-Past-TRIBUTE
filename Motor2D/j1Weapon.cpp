@@ -193,7 +193,7 @@ void Hookshot::Draw()
 			dy_50 = 50;
 			dy_100 = 100;
 			offset_hook_x = -3;
-			offset_hook_y = 3;
+			offset_hook_y = -2;
 		}
 		else //direction == DOWN
 		{
