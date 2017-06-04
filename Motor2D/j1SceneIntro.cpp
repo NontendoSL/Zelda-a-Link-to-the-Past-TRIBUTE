@@ -91,7 +91,7 @@ bool j1SceneIntro::Update(float dt)
 			if (menu == false)
 			{
 				App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false);
-				App->render->Blit(TitleScreen_letters, 140, 120, &letters_anim.GetCurrentFrame());
+				App->render->Blit(TitleScreen_letters, 130, 120, &letters_anim.GetCurrentFrame());
 			}
 			else
 			{
