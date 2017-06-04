@@ -814,10 +814,12 @@ void ZeldaMenu::Input()
 		{
 			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MRIGHT) == EVENTSTATE::E_DOWN)
 			{
+				App->audio->PlayFx(36);
 				Select(true);
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_DOWN)
 			{
+				App->audio->PlayFx(36);
 				Select(false);
 			}
 		}
@@ -826,10 +828,12 @@ void ZeldaMenu::Input()
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_DOWN)
 			{
 				SelectOption(true);
+				App->audio->PlayFx(36);
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::MUP) == EVENTSTATE::E_DOWN)
 			{
 				SelectOption(false);
+				App->audio->PlayFx(36);
 			}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
