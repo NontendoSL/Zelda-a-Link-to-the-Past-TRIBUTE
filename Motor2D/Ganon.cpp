@@ -559,13 +559,13 @@ void Ganon::Spawn()
 	if (minions_spawned % 2 == 0 && minions_spawned > 0)
 	{
 		App->entity_elements->CreateRMinion({ 200 + (rand() % 100), 200 + (rand() % 100) });
-		App->audio->PlayFx(16);
+		App->audio->PlayFx(28);
 	}
 
 	else
 	{
 		App->entity_elements->CreateGMinion({ 200 + (rand() % 100), 200 + (rand() % 100) });
-		App->audio->PlayFx(16);
+		App->audio->PlayFx(28);
 	}
 
 	minions_spawned++;

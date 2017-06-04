@@ -4,6 +4,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "Ganon.h"
+#include "j1Audio.h"
 
 FireBat::FireBat()
 {
@@ -64,6 +65,7 @@ bool FireBat::Update(float dt)
 		{
 			if (animation.anim[anim_state].South_action.Finished())
 			{
+				App->audio->PlayFx(27);
 				start_chase = true;
 				origin = position;
 				dest = App->scene->player->position;

@@ -81,6 +81,8 @@ bool j1Scene::Start()
 			App->audio->LoadFx("audio/fx/PKMN_MenuOpen.wav");//24
 			App->audio->LoadFx("audio/fx/LTTP_Melee.wav");//25
 			App->audio->LoadFx("audio/fx/LTTP_GanonJump.wav");//26
+			App->audio->LoadFx("audio/fx/LTTP_Firbats.wav");//27
+			App->audio->LoadFx("audio/fx/LTTP_Teleport.wav");//28
 
 			//Init All teleports
 			CreateTeleports();

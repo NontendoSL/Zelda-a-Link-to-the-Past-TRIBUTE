@@ -323,6 +323,8 @@ bool GreenMinion::Die()
 {
 	if (animation.anim[anim_state].South_action.Finished() == true)
 	{
+		App->audio->PlayFx(11);
+
 		if (item_id != -1)
 		{
 			App->entity_elements->CreateItem(DropItem(), position);
