@@ -123,6 +123,7 @@ public:
 	void KeepGoing();
 	void PickUpHook();
 	void MoveTo(const iPoint& pos);
+	void BowAnim();
 	//----------------------------------
 
 	int GetnuminputUse();

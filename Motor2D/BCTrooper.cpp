@@ -536,7 +536,7 @@ void BCTrooper::OnCollision(Collider* c1, Collider* c2)
 			{
 				App->audio->PlayFx(13);
 				link->SetState(L_HIT);
-				link->SetAnimState(L_IDLE);
+				link->SetAnimState(L_HIT);
 				link->hurt_timer.Start();
 				link->invincible_timer.Start();
 				link->GetDamage();

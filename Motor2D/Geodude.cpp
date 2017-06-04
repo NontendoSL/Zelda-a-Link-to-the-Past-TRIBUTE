@@ -400,7 +400,7 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (((Player*)c2->callback)->GetState() != L_HIT && ((Player*)c2->callback)->GetState() != L_HOOKTHROWN)
 			{
-				if (state != P_ATTACKING && state != L_HIT)
+				if (state != P_ATTACKING && state != L_HIT && state != L_DYING)
 				{
 					App->audio->PlayFx(13);
 					Player* player = (Player*)c2->callback;
@@ -409,7 +409,7 @@ void Geodude::OnCollision(Collider* c1, Collider* c2)
 					animation.anim[anim_state].ResetAnimations();
 					Orientate();
 					player->SetState(L_HIT);
-					player->SetAnimState(L_IDLE);
+					player->SetAnimState(L_HIT);
 					player->invincible_timer.Start();
 					player->hurt_timer.Start();
 					player->GetDamage();
