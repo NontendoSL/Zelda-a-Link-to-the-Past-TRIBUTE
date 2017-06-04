@@ -50,6 +50,14 @@ bool j1SceneIntro::Start()
 	SDL_Rect r = { 0, 0, 640, 480 };
 	App->video->PlayVideo("Intro.ogg", r);
 	fade = true;
+
+
+	//letters anim
+	letters_anim.PushBack({ 0,0,68,15 });
+	letters_anim.PushBack({ 70,0,68,15 });
+	letters_anim.PushBack({ 140,0,68,15 });
+	letters_anim.PushBack({ 210,0,68,15 });
+	letters_anim.speed = 0.15f;
 	return true;
 }
 
@@ -82,8 +90,8 @@ bool j1SceneIntro::Update(float dt)
 		{
 			if (menu == false)
 			{
-				App->render->Blit(TitleScreen_bg, 0, 0);
-				App->render->Blit(TitleScreen_letters, 50, 10);
+				App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false);
+				App->render->Blit(TitleScreen_letters, 140, 120, &letters_anim.GetCurrentFrame());
 			}
 			else
 			{
