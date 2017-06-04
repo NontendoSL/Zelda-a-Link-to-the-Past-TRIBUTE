@@ -420,7 +420,7 @@ bool Soldier::Chase(float dt)
 	//path.clear();
 	//attack_time.Start();
 
-	if (App->scene->player->GetState() != L_HIT)
+	if (App->scene->player->GetState() != L_HIT && App->scene->player->GetState() != L_DYING)
 	{
 		iPoint player_pos = App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y);
 		GoTo(player_pos, ceil(dt*chase_speed));

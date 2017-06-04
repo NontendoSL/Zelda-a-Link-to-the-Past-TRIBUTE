@@ -42,6 +42,7 @@ bool j1SceneIntro::Awake()
 // Called before the first frame
 bool j1SceneIntro::Start()
 {
+	App->audio->VolumeMusic(50);
 	TitleScreen_letters = App->tex->Load("gui/title_screen/letters.png");
 	TitleScreen_bg = App->tex->Load("gui/title_screen/IntroFons.png"); 
 	Menu_bg = App->tex->Load("gui/title_screen/menu_bg.png");
