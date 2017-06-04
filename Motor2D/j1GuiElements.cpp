@@ -433,7 +433,6 @@ MainMenu::MainMenu()
 {
 	options.push_back((Button*)App->gui->GetEntity("Continue_b"));
 	options.push_back((Button*)App->gui->GetEntity("Newgame_b"));
-	options.push_back((Button*)App->gui->GetEntity("Loadgame_b"));
 	options.push_back((Button*)App->gui->GetEntity("Options_b"));
 	options.push_back((Button*)App->gui->GetEntity("Quitgame_b"));
 	for (int i = 0; i < options.size(); i++)
@@ -1119,7 +1118,7 @@ void PokemonCombatHud::CombatInfo(PokemonCombat* pokemon, PokemonCombat* pokemon
 }
 
 
-void PokemonCombatHud::GetDamage(uint damage, bool trainer)
+void PokemonCombatHud::GetDamage(int damage, bool trainer)
 {
 	if (trainer)
 	{
