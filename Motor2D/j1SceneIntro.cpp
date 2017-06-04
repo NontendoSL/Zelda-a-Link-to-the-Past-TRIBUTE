@@ -92,7 +92,7 @@ bool j1SceneIntro::Update(float dt)
 			if (menu == false)
 			{
 				App->render->Blit(TitleScreen_bg, 0, 0, NULL, NULL, false);
-				App->render->Blit(TitleScreen_letters, 130, 120, &letters_anim.GetCurrentFrame());
+				App->render->Blit(TitleScreen_letters, 130, 160, &letters_anim.GetCurrentFrame());
 			}
 			else
 			{
@@ -101,7 +101,6 @@ bool j1SceneIntro::Update(float dt)
 				}
 				App->render->Blit(Menu_bg, 0, 0, NULL, NULL, false, NULL, NULL, NULL, { bg_anim,0 });
 				App->render->Blit(TitleScreen_letters, -10, 0, NULL, NULL, false);
-
 			}
 
 			// Change Volume Music -------------------------------------
