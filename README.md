@@ -19,8 +19,8 @@ CONTROLS
 		Enter -> Start game from menu and open/close menu when in game.
 		Spacebar -> Use the equipped item. Hold it to charge the stamina bar. Click it to continue dialogs.
 		R -> Select item in the menu.
-		E -> Attack.
-		Q -> Interact with chests and NPCs.
+		E -> Attack // Pokémon normal attack.
+		Q -> Interact with chests and NPCs // Pokémon special attack.
 		Z -> Cast the special Ability in combat.
 		+/- -> Up/Down the audio volume.
 		
@@ -51,32 +51,50 @@ CONTROLS
 		F1 -> Display navigation map.
 		F2 -> Display weapons collision map.
 		F10 -> Display colliders.
-		Ctrl + P -> Obtain all items.
-		Ctrl + G -> Activate / deactivate God Mode.
-		X -> Lower Pokémon HP in combat.
-		G -> Defeats enemy pokémon to instawin the combat.
-		1 -> Teleport to Ganon.
-		2 -> Teleport to outside Victory Road.
-		3 -> Teleport to Mini-Boss room.4
-		O -> Teleport to battle against Sidney.
+		Ctrl + P -> Obtain all items + 99 arrows + 99 bombs + 999 rupees
+		Ctrl + G -> Enable/ Disable God Mode.
+		C -> Lower Pokémon HP in combat.
+		1 -> Teleport to Ganon Final Room.
+		2 -> Teleport to outside of Victory Road.
+		3 -> Teleport to Mini-Boss Room.
 
 THE POKÉMON COMBAT
 	
 	You will have 3 Pokémon with a melee and a special attack, that will do more damage to the Pokémon enemy. The special attack
 	has got a cooldown time to be cast again. At the moment, enemy IA won't attack you. It's only a test to see how this mechanic
 	will work. (different Pokémon with different attacks & types that will do more or less damage depending the Pokémon).
+
+SAVE/LOAD
+	
+	You can save the game through the Zelda/Pokémon menus. If you Load a saved game, the game inits with the stats at the start of the level 
+	you saved last time, like a Checkpoint System.
+
+WIN/LOSE CONDITIONS
+	
+	If you are defeated in Zelda World, the game will be restarted at the start of the last level you were playing.
+	If you are defeated in Victory Road, the game is restarted the same way as Zelda World.
+	
+	YOU WIN THE GAME when you defeat Ganon, the Final Boss. A final cutscene appears and you are teleported to the Link's House again.
+	
 	 
 
 CHANGELOG
 
 v1.0 GOLD
 
-	Added all cutscenes.
+	Added all cutscenes (initial, teleport to Pokémon World, Boss defeated).
 	Intro updated.
-	Press start screen added.
+	"Press Start" screen updated
 	God Mode added.
 	Added Load/Save feature.
 	Added musics and sound effects.
+	Pokémon Combat intros added.
+	Link Pokémon License.
+	Link Animations (shooting arrows, hit, throwing hookshot).
+	Overwold Sound Fx.
+	Balancing (enemies, items, weapons, Pokémon, money, drop rate & Boss stats).
+	Bug fixing and Polish.
+	
 
 v0.9.1 
 	
