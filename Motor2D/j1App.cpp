@@ -77,11 +77,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//Add managers
 	AddModule(anim_manager);
 	AddModule(entity_elements);
-	AddModule(cs_manager);
 	AddModule(combatmanager);
 
 	//UI
 	AddModule(gui);
+	AddModule(cs_manager);
+
 	AddModule(collision);
 
 	// render last to swap buffer

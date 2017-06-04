@@ -378,7 +378,7 @@ bool Cutscene::DrawElements()
 			if (it._Ptr->_Myval->active == true)
 			{
 				CS_Image* image = dynamic_cast<CS_Image*>(*it);
-				App->render->Blit(image->GetTexture(), image->GetPos().x - App->render->camera.x, image->GetPos().y - App->render->camera.y, &image->GetRect(), NULL, false);
+				App->render->Blit(image->GetTexture(), image->GetPos().x - App->render->camera.x, image->GetPos().y - App->render->camera.y, &image->GetRect(), NULL);
 			}
 		}
 	}
@@ -730,6 +730,7 @@ bool CS_Step::CheckMovementCompleted(iPoint curr_pos)
 	case CS_UP:
 		if (curr_pos.y <= dest.y)
 		{
+			curr_pos.y = dest.y;
 			ret = true;
 			FinishStep();
 		}
@@ -737,6 +738,7 @@ bool CS_Step::CheckMovementCompleted(iPoint curr_pos)
 	case CS_DOWN:
 		if (curr_pos.y >= dest.y)
 		{
+			curr_pos.y = dest.y;
 			ret = true;
 			FinishStep();
 		}
@@ -744,6 +746,7 @@ bool CS_Step::CheckMovementCompleted(iPoint curr_pos)
 	case CS_LEFT:
 		if (curr_pos.x <= dest.x)
 		{
+			curr_pos.x = dest.x;
 			ret = true;
 			FinishStep();
 		}
@@ -751,6 +754,7 @@ bool CS_Step::CheckMovementCompleted(iPoint curr_pos)
 	case CS_RIGHT:
 		if (curr_pos.x >= dest.x)
 		{
+			curr_pos.x = dest.x;
 			ret = true;
 			FinishStep();
 		}
