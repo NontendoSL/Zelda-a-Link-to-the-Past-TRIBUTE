@@ -281,8 +281,7 @@ void Swampert::Special_Attack()
 		sp_start = position;
 		drawThrowSP = true;
 		sp_attack = App->collision->AddCollider({ position.x,position.y, 8, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
-		//audio TODO
-		//App->audio->PlayFx(7);
+		App->audio->PlayFx(37);
 	}
 }
 

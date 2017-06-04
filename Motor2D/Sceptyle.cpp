@@ -301,9 +301,8 @@ void Sceptyle::Special_Attack()
 			leafs_pos[2] = { position.x + 2 ,position.y-8};
 			break;
 		}
-
 		//audio TODO
-		//App->audio->PlayFx(7);
+		App->audio->PlayFx(38);
 	}
 }
 
