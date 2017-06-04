@@ -146,7 +146,7 @@ bool j1Scene::Update(float dt)
 
 		if (help_timer + 2000 < SDL_GetTicks() && help_bool)
 		{
-			player->dialog = App->gui->CreateDialogue("Link... I need your help. Head to the castle and you'll find guidance. Hurry up!", 1);
+			player->dialog = App->gui->CreateDialogue("Link... I need your help. Head to the castle and you'll find guidance. Hurry up!", 0);
 			help_bool = false;
 		}
 
