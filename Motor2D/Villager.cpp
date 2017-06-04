@@ -20,6 +20,7 @@ bool Villager::Awake(pugi::xml_node& conf)
 	dialog = conf.attribute("dialog").as_string("");
 	rect = { conf.attribute("rect_x").as_int(0), conf.attribute("rect_y").as_int(0), conf.attribute("rect_w").as_int(0), conf.attribute("rect_h").as_int(0) };
 	switch_map = conf.attribute("switch_map").as_int(0);
+	cutscene_id = conf.attribute("cutscene_id").as_int(-1);
 	return true;
 }
 

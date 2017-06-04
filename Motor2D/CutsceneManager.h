@@ -140,7 +140,7 @@ public:
 	void StopMusic();
 	void ActiveElement();
 	void DisableElement();
-	void SwitchMap(int id);
+	void SwitchToCombatMap(int id);
 	//---------------------------
 
 	//UTILITY FUNCTIONS ------------
@@ -156,7 +156,7 @@ private:
 	int n = -1;							//Number identifier to manage an order
 	float start = -1;					//Time to start the step
 	float duration = -1;				//Duration of the step
-	Action_Type act_type = ACT_NONE;		//Type of action that will be executed in this step
+	Action_Type act_type = ACT_NONE;	//Type of action that will be executed in this step
 	CS_Element*	element = nullptr;		//Element to apply the action
 	bool active = false;				//If step is reproducing.
 	bool finished = false;

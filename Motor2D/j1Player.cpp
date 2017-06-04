@@ -665,9 +665,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					}
 				}
 			}
-			// ---------------------
+			// --------------------------------------
 
-			// NPC INTERACTING --------------
+			// NPC INTERACTING ----------------------
 			if (c1 == collision_interact && c2->type == COLLIDER_VILAGER && c2->callback != nullptr)
 			{
 				if (App->scene->gamestate == INGAME)
@@ -688,12 +688,12 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 						{
 							if (App->scene->notrepeatCombat)
 							{
-								App->scene->combat_map_id = villager->switch_map;
+								App->scene->cutscene_id = villager->cutscene_id;
 								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(),2);
 							}
 							else
 							{
-								App->scene->combat_map_id = 0;
+								App->scene->cutscene_id = -1;
 								dialog = App->gui->CreateDialogue("Congratulations! You defeated me. Go ahead and proceed with your run!",2);
 							}
 						}

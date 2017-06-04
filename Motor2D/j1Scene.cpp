@@ -180,7 +180,7 @@ bool j1Scene::Update(float dt)
 
 			if (dialog_inmapZelda && player->dialog == nullptr)
 			{
-				if (combat_map_id != 0)
+				if (combat_map_id != 0 || cutscene_id != -1)
 				{
 					if (playVideo)
 					{
@@ -207,9 +207,17 @@ bool j1Scene::Update(float dt)
 						{
 							if (notrepeatCombat)
 							{
-								switch_map = combat_map_id;
-								combat_map_id = 0;
-								useTP = true;
+								if (cutscene_id != -1)
+								{
+									App->cs_manager->StartCutscene(cutscene_id);
+									cutscene_id = -1;
+								}
+								if (combat_map_id != 0)
+								{
+									switch_map = combat_map_id;
+									combat_map_id = 0;
+									useTP = true;
+								}
 								if (waitVideo)
 								{
 									SwitchMap(useTP);

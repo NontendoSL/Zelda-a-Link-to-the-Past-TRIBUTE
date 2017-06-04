@@ -36,6 +36,7 @@ public:
 	std::string GetDialog();
 
 	int switch_map = 0;
+	int cutscene_id = -1;
 
 private:
 	VillagerState state = V_IDLE;

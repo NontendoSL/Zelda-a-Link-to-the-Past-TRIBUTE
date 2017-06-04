@@ -184,6 +184,7 @@ public:
 	int switch_map = 0;
 	int last_map = 0;
 	int combat_map_id = 0;
+	int cutscene_id = -1;
 
 	bool notrepeatmusic;
 

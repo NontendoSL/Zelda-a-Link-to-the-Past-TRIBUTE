@@ -559,7 +559,7 @@ bool CS_Step::DoAction(float dt)
 		StopMusic();
 		break;
 	case ACT_SWITCHMAP:
-		SwitchMap(cutscene->map_id);
+		SwitchToCombatMap(cutscene->map_id);
 		break;
 	default:
 		action_name = "none";

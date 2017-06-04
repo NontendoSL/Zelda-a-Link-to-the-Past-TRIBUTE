@@ -68,6 +68,10 @@
 
   <cutscenemanager>
     <file file="cutscenes/SydneyIntro.xml"/>
+    <file file="cutscenes/PhoebeIntro.xml"/>
+    <file file="cutscenes/GlaciaIntro.xml"/>
+    <file file="cutscenes/DrakeIntro.xml"/>
+    <file file="cutscenes/RedIntro.xml"/>
   </cutscenemanager>
   
 	<window>
