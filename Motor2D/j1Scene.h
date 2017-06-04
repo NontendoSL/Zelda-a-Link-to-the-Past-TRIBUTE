@@ -140,11 +140,11 @@ public:
 	void SetMusics(int id);
 
 	CheckPointInfo Check;
-
+	void GoMainMenu();
 private:
 	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	void LoadUi();
-	void GoMainMenu();
+
 
 public:
 	SDL_Texture* debug_tex;

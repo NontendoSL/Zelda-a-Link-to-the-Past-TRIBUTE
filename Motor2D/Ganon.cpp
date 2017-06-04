@@ -615,8 +615,7 @@ bool Ganon::Die()
 	App->audio->PlayFx(11);
 	App->gui->GetEntity("boss bar")->visible = false;
 	App->gui->GetEntity("hp boss")->visible = false;
-	App->gui->GetEntity("YOU WIN")->visible = true;
-	App->scene->win_timer = SDL_GetTicks();
+	App->scene->GoMainMenu();
 	return true;
 }
 
