@@ -177,6 +177,8 @@ public:
 	bool switch_menu = false;
 	bool inventory = false;
 
+
+
 	//TimePause
 	j1TimeNormal timepause;
 	uint32 timepaused32;

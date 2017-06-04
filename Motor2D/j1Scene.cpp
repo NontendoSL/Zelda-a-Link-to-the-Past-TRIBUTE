@@ -122,307 +122,282 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	BROFILER_CATEGORY("Update_Scene", Profiler::Color::DarkGreen)
+	BROFILER_CATEGORY("Update_Scene", Profiler::Color::DarkGreen);
 
-		if (ingame == true)
+	if (ingame == true)
+	{
+		if (App->gui->GetEntity("YOU WIN")->visible)
 		{
-			if (App->gui->GetEntity("YOU WIN")->visible)
+			if (win_timer + 1500 < SDL_GetTicks())
 			{
-				if (win_timer + 1500 < SDL_GetTicks())
-				{
-					App->gui->GetEntity("YOU WIN")->visible = false;
-					switch_map = 1;
-					useTP = true;
-				}
+				App->gui->GetEntity("YOU WIN")->visible = false;
+				switch_map = 1;
+				useTP = true;
 			}
-			player->ShowHearts();
+		}
+		player->ShowHearts();
 
-			/*if (help_timer + 2000 < SDL_GetTicks() && help_bool)
-			{
-				player->dialog = App->gui->CreateDialogue("Link... I need your help. Head to the castle and you'll find guidance. Hurry up!");
-				help_bool = false;
-			}*/
+		/*if (help_timer + 2000 < SDL_GetTicks() && help_bool)
+		{
+			player->dialog = App->gui->CreateDialogue("Link... I need your help. Head to the castle and you'll find guidance. Hurry up!");
+			help_bool = false;
+		}*/
 
-			if (gamestate == INMENU && stop == false)
-			{
-				timepause.Start();
-			}
-			else if (gamestate == INGAME)
-			{
-				if (timepause.ReadSec() >= 1.0f)
-					stop = false;
-			}
+		if (gamestate == INMENU && stop == false)
+		{
+			timepause.Start();
+		}
+		else if (gamestate == INGAME)
+		{
+			if (timepause.ReadSec() >= 1.0f)
+				stop = false;
+		}
 
 
-			//Make advance the dialogue text.
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_Y) == EVENTSTATE::E_DOWN)
-			{
-				if (player->dialog != nullptr)
-				{
-					player->dialog->PushLine(true);
-				}
-			}
-			
+		//Make advance the dialogue text.
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_Y) == EVENTSTATE::E_DOWN)
+		{
 			if (player->dialog != nullptr)
 			{
-				dialog_inmapZelda = true;
+				player->dialog->PushLine(true);
 			}
+		}
 
-			if (joy_talk && player->dialog == nullptr && last_map==10 && cash_swapped==false)
+		if (player->dialog != nullptr)
+		{
+			dialog_inmapZelda = true;
+		}
+
+		if (joy_talk && player->dialog == nullptr && last_map == 10 && cash_swapped == false)
+		{
+			player->pokecash = player->gems * 12;
+			if (player->pokecash < 50)
 			{
-				player->pokecash = player->gems * 12;
-				if (player->pokecash < 50)
+				player->pokecash = 50;
+			}
+			poke_hud->RefreshMoney();
+			joy_talk = false;
+			cash_swapped = true;
+		}
+
+		if (dialog_inmapZelda && player->dialog == nullptr)
+		{
+			if (combat_map_id != 0 || cutscene_id != -1)
+			{
+				if (playVideo)
 				{
-					player->pokecash = 50;
-				}
-				poke_hud->RefreshMoney();
-				joy_talk = false;
-				cash_swapped = true;
-			}
-
-			if (dialog_inmapZelda && player->dialog == nullptr)
-			{
-				if (combat_map_id != 0 || cutscene_id != -1)
-				{
-					if (playVideo)
+					if (fade == false)
 					{
-						if (fade == false)
-						{
-							App->fadetoblack->FadeToBlack();
-							gamestate = INMENU;
-							fade = true;
-							now_switch = true;
-						}
-
-						if (App->fadetoblack->Checkfadetoblack() && now_switch)
-						{
-							SDL_Rect r = { 0, 0, 640, 480 };
-							App->video->PlayVideo("ToPokemonWorld320.ogg", r);
-							fade = false;
-							playVideo = false;
-							waitVideo = true;
-						}
+						App->fadetoblack->FadeToBlack();
+						gamestate = INMENU;
+						fade = true;
+						now_switch = true;
 					}
-					else 
+
+					if (App->fadetoblack->Checkfadetoblack() && now_switch)
 					{
-						if (App->video->video_finished)
-						{
-							if (notrepeatCombat)
-							{
-								if (cutscene_id != -1)
-								{
- 									App->cs_manager->StartCutscene(cutscene_id);
-									cutscene_id = -1;
-								}
-								if (combat_map_id != 0)
-								{
-									switch_map = combat_map_id;
-									combat_map_id = 0;
-									useTP = true;
-								}
-								if (waitVideo)
-								{
-									App->video->ResetValues();
-									SwitchMap(useTP);
-								}
-								dialog_inmapZelda = false;
-								goPokemon = false;
-								notrepeatCombat = false;
-							}
-							else
-							{
-								dialog_inmapZelda = false;
-							}
-						}
+						SDL_Rect r = { 0, 0, 640, 480 };
+						App->video->PlayVideo("ToPokemonWorld320.ogg", r);
+						fade = false;
+						playVideo = false;
+						waitVideo = true;
 					}
-				}
-			}
-
-			// Change Volume Music -------------------------------------
-			if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
-			{
-				if(volume < 120)
-					volume += 10;
-				App->audio->VolumeMusic(volume);
-			}
-			if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
-			{
-				if (volume > 0)
-					volume -= 10;
-				App->audio->VolumeMusic(volume);
-			}
-			// --------------------------------------------------------
-
-			// TP LEVEL -----------------------------------------
-			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-			{
-				player->sword_equiped = true;
-				useTP = true;
-				switch_map = 16;
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-			{
-				useTP = true;
-				switch_map = 9;
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-			{
-				useTP = true;
-				switch_map = 5;
-			}
-
-			/*if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
-			{
-				useTP = true;
-				switch_map = 20;
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
-			{
-				useTP = true;
-				switch_map = 21;
-			}
-
-			/*if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
-			{
-				useTP = true;
-				switch_map = 20;
-			}*/
-
-			/*if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-			{
-				player->sword_equiped = true;
-				useTP = true;
-				switch_map = 16;
-			}*/
-
-			/*if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
-			{
-				useTP = true;
-				switch_map = 21;
-			}*/
-			// --------------------------------------------------------
-
-			if (switch_map > 0)
-			{
-				SwitchMap(useTP);
-			}
-
-			if (switch_menu)
-			{
-				SwitchMenu(!inventory);
-			}
-
-			//MINI TP -----------------------------------------------
-			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-			{
-				App->scene->player->position.x += 50;
-				App->render->camera.x -= 100;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-			{
-				App->scene->player->position.y += 50;
-				App->render->camera.y -= 100;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-			{
-				App->scene->player->position.x -= 50;
-				App->render->camera.x += 100;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-			{
-				App->scene->player->position.y -= 50;
-				App->render->camera.y += 100;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-			{
-				App->scene->player->gems+=1;
-			}
-			/*if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
-			{
-					//App->scene->player->position.x = App->input->GetMousePosition().x;
-					//App->scene->player->position.y = App->input->GetMousePosition().y;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && App->gui->GetGuiState()==POKEMON_HUD)
-			{
-				App->gui->SetGui(POKEMON_SHOP);
-			}*/
-
-			//-------------------------------------------------------
-			// TP LEVEL
-
-			//WEAPONS TEST ---------
-			if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P) && 
-				App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
-			{
-				player->bow = App->entity_elements->CreateBow();
-				App->scene->start_menu->PickItem("bow");
-				player->arrows = 99;
-				player->bombmanager = App->entity_elements->CreateBombContainer();
-				App->scene->start_menu->PickItem("bomb");
-				player->bombs = 99;
-				player->setWeapons = true;
-				player->sword_equiped = true;
-				player->hook = App->entity_elements->CreateHookshot();
-				App->scene->start_menu->PickItem("hookshot");
-				player->gems = 999;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
-				App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
-			{
-				if (modeGod)
-				{
-					App->gui->GetEntity("life")->visible = true;
-					for (int i = 0; i < App->gui->GetEntity("life")->elements.size(); i++)
-					{
-						App->gui->GetEntity("life")->elements[i]->visible=true;
-					}
-					modeGod = false;
 				}
 				else
 				{
-					//App->gui->GetEntity("life")->visible = false;
-					for (int i = 0; i < App->gui->GetEntity("life")->elements.size(); i++)
+					if (App->video->video_finished)
 					{
-						App->gui->GetEntity("life")->elements[i]->visible = false;
+						if (notrepeatCombat)
+						{
+							if (cutscene_id != -1)
+							{
+								App->cs_manager->StartCutscene(cutscene_id);
+								cutscene_id = -1;
+							}
+							if (combat_map_id != 0)
+							{
+								switch_map = combat_map_id;
+								combat_map_id = 0;
+								useTP = true;
+							}
+							if (waitVideo)
+							{
+								App->video->ResetValues();
+								SwitchMap(useTP);
+							}
+							dialog_inmapZelda = false;
+							goPokemon = false;
+							notrepeatCombat = false;
+						}
+						else
+						{
+							dialog_inmapZelda = false;
+						}
 					}
-					modeGod = true;
 				}
 			}
-			// ---------
-
-			//CUTSCENE_TEST ---------
-			if (App->input->GetKey(SDL_SCANCODE_O))
-			{
-				App->cs_manager->StartCutscene(0);
-			}
-			//-----------------------
-
-			//Set picked object the last 
-			if (player->picked_object != nullptr && swap_object == true)
-			{
-				App->entity_elements->SwapObject(player->picked_object);
-				swap_object = false;
-			}
-
-			//Blit Ganon Last
-			if (swap_ganon == true)
-			{
-				App->entity_elements->SwapGanon();
-				swap_ganon = false;
-			}
-
-			//Blit Player Last
-			if (swap_player == true)
-			{
-				App->entity_elements->SwapPlayer();
-				swap_player = false;
-			}
-
-
 		}
+
+		// Change Volume Music -------------------------------------
+		if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+		{
+			if (volume < 120)
+				volume += 10;
+			App->audio->VolumeMusic(volume);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+		{
+			if (volume > 0)
+				volume -= 10;
+			App->audio->VolumeMusic(volume);
+		}
+		// --------------------------------------------------------
+
+		// TP LEVEL -----------------------------------------
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			player->sword_equiped = true;
+			useTP = true;
+			switch_map = 16;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			useTP = true;
+			switch_map = 9;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		{
+			useTP = true;
+			switch_map = 5;
+		}
+
+		/*if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+		{
+			useTP = true;
+			switch_map = 20;
+		}*/
+		// --------------------------------------------------------
+
+		if (switch_map > 0)
+		{
+			SwitchMap(useTP);
+		}
+
+		if (switch_menu)
+		{
+			SwitchMenu(!inventory);
+		}
+
+		//MINI TP -----------------------------------------------
+		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		{
+			App->scene->player->position.x += 50;
+			App->render->camera.x -= 100;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		{
+			App->scene->player->position.y += 50;
+			App->render->camera.y -= 100;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		{
+			App->scene->player->position.x -= 50;
+			App->render->camera.x += 100;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		{
+			App->scene->player->position.y -= 50;
+			App->render->camera.y += 100;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+		{
+			App->scene->player->gems += 1;
+		}
+		/*if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+		{
+				//App->scene->player->position.x = App->input->GetMousePosition().x;
+				//App->scene->player->position.y = App->input->GetMousePosition().y;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && App->gui->GetGuiState()==POKEMON_HUD)
+		{
+			App->gui->SetGui(POKEMON_SHOP);
+		}*/
+
+		//-------------------------------------------------------
+		// TP LEVEL
+
+		//WEAPONS TEST ---------
+		if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P) &&
+			App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+		{
+			player->bow = App->entity_elements->CreateBow();
+			App->scene->start_menu->PickItem("bow");
+			player->arrows = 99;
+			player->bombmanager = App->entity_elements->CreateBombContainer();
+			App->scene->start_menu->PickItem("bomb");
+			player->bombs = 99;
+			player->setWeapons = true;
+			player->sword_equiped = true;
+			player->hook = App->entity_elements->CreateHookshot();
+			App->scene->start_menu->PickItem("hookshot");
+			player->gems = 999;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
+			App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+		{
+			if (modeGod)
+			{
+				App->gui->GetEntity("life")->visible = true;
+				for (int i = 0; i < App->gui->GetEntity("life")->elements.size(); i++)
+				{
+					App->gui->GetEntity("life")->elements[i]->visible = true;
+				}
+				modeGod = false;
+			}
+			else
+			{
+				//App->gui->GetEntity("life")->visible = false;
+				for (int i = 0; i < App->gui->GetEntity("life")->elements.size(); i++)
+				{
+					App->gui->GetEntity("life")->elements[i]->visible = false;
+				}
+				modeGod = true;
+			}
+		}
+		// ---------
+
+		//CUTSCENE_TEST ---------
+		if (App->input->GetKey(SDL_SCANCODE_O))
+		{
+			App->cs_manager->StartCutscene(0);
+		}
+		//-----------------------
+
+		//Set picked object the last 
+		if (player->picked_object != nullptr && swap_object == true)
+		{
+			App->entity_elements->SwapObject(player->picked_object);
+			swap_object = false;
+		}
+
+		//Blit Ganon Last
+		if (swap_ganon == true)
+		{
+			App->entity_elements->SwapGanon();
+			swap_ganon = false;
+		}
+
+		//Blit Player Last
+		if (swap_player == true)
+		{
+			App->entity_elements->SwapPlayer();
+			swap_player = false;
+		}
+
+
+	}
 	return true;
 }
 
