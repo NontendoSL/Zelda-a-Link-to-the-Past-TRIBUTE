@@ -209,7 +209,7 @@ bool j1Scene::Update(float dt)
 							{
 								if (cutscene_id != -1)
 								{
-									App->cs_manager->StartCutscene(cutscene_id);
+ 									App->cs_manager->StartCutscene(cutscene_id);
 									cutscene_id = -1;
 								}
 								if (combat_map_id != 0)

@@ -72,6 +72,7 @@
     <file file="cutscenes/GlaciaIntro.xml"/>
     <file file="cutscenes/DrakeIntro.xml"/>
     <file file="cutscenes/RedIntro.xml"/>
+    <file file="cutscenes/BrendanIntro.xml"/>
   </cutscenemanager>
   
 	<window>

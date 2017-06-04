@@ -378,7 +378,7 @@ bool Cutscene::DrawElements()
 			if (it._Ptr->_Myval->active == true)
 			{
 				CS_Image* image = dynamic_cast<CS_Image*>(*it);
-				App->render->Blit(image->GetTexture(), image->GetPos().x - App->render->camera.x, image->GetPos().y - App->render->camera.y, &image->GetRect(), NULL);
+				App->render->Blit(image->GetTexture(), image->GetPos().x, image->GetPos().y, &image->GetRect(), NULL);
 			}
 		}
 	}
