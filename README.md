@@ -23,7 +23,6 @@ CONTROLS
 		Q -> Interact with chests and NPCs.
 		Z -> Cast the special Ability in combat.
 		+/- -> Up/Down the audio volume.
-		0 -> Open shop in Pokémon World.
 		
 	Controller:
 	
@@ -31,17 +30,20 @@ CONTROLS
 
 		D-Pad -> move in any of the 8 directions and navigate through the menu.
 		Start -> Navigate trhough game intro and open/close the ingame menu.
-		A -> Select items from the menu. Interact with chests and NPCs.
+		A -> Slide texts.
+		Y -> Interact with chests and NPCs. Pick up and throw things.
 		X -> Attack.
-		B -> Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability in combat.
+		B -> Select items from the menu. Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability in combat.
 
 	TACTIC:
 
 		D-Pad -> move in any of the 8 directions and navigate through the menu.
 		Start -> Navigate trhough game intro and open/close the ingame menu.
-		Y -> Select items from the menu. Interact with chests and NPCs.
-		Left grid -> Attack.
-		Right grid -> Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability in combat.
+		X -> Slide texts.
+		Y -> Select items from the menu. Interact with chests and NPCs. Pick up and throw things.
+		B -> Equip items.
+		Right grid -> Attack.
+		Left grid -> Use equipped item. Hold it to charge the stamina bar (if equipped). Use Pokemon special ability in combat.
 
 
 	DEBUG MODE:
@@ -49,27 +51,14 @@ CONTROLS
 		F1 -> Display navigation map.
 		F2 -> Display weapons collision map.
 		F10 -> Display colliders.
+		Ctrl + P -> Obtain all items.
+		Ctrl + G -> Activate / deactivate God Mode.
 		X -> Lower Pokémon HP in combat.
-		I,J,K,L -> Movement mini-teleports (4 directions).
 		G -> Defeats enemy pokémon to instawin the combat.
-		1 -> Teleport to League Hall.
-		3 -> Teleport to First Pokémon Combat.
-		8 -> Teleport to Pyramid of Power(Boss Fight).
-		
-
-OBJECTIVE
-	
-	The main objective of this Vertical Slice is to show you the potential of our game through the core mechanics. We have divided
-	it into 3 different parts:
-		1st STAGE -> we are in Kakariko Village. Fight agains some soldiers to reach the "magic hole".
-
-		2nd STAGE -> We are teletransported into the Victory Road of Hoenn, a beautiful region of the Pokémon World. Link is
-			     confused, so he will explore this big cave to come back to his home.
-			     - FIRST FLOOR > explore this level until achieve the hookshot inside a big chest. You will be able to pass across
-			     the broken bridges, with the help of sudowoodos (the Pokémon Tree)
-			     - SECOND FLOOR > big rocks will block your path, so take the bombs inside the other big chest and place them next
-			     to the rocks. You will wake up the slept golems, and will chase you annoy them.
-		3rd STAGE -> Wou will be in the combat arena, where Brendan will give you a little taste of an intense Pokémon Combat.
+		1 -> Teleport to Ganon.
+		2 -> Teleport to outside Victory Road.
+		3 -> Teleport to Mini-Boss room.4
+		O -> Teleport to battle against Sidney.
 
 THE POKÉMON COMBAT
 	
@@ -79,6 +68,15 @@ THE POKÉMON COMBAT
 	 
 
 CHANGELOG
+
+v1.0 GOLD
+
+	Added all cutscenes.
+	Intro updated.
+	Press start screen added.
+	God Mode added.
+	Added Load/Save feature.
+	Added musics and sound effects.
 
 v0.9.1 
 	
