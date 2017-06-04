@@ -139,10 +139,23 @@ bool DynamicObjects::Update(float dt)
 	{
 		if (start_impact == true)
 		{
-			App->entity_elements->SwapObject(this);
-			collision->to_delete = true;
-			collision = nullptr;
-			start_impact = false;
+			if (name == "bush_plant")
+			{
+				App->audio->PlayFx(29);
+				App->entity_elements->SwapObject(this);
+				collision->to_delete = true;
+				collision = nullptr;
+				start_impact = false;
+			}
+			else if (name == "vase")
+			{
+				App->audio->PlayFx(30);
+				App->entity_elements->SwapObject(this);
+				collision->to_delete = true;
+				collision = nullptr;
+				start_impact = false;
+			}
+
 		}
 		else if (destroy_animation.Finished())
 		{

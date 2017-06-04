@@ -83,6 +83,8 @@ bool j1Scene::Start()
 			App->audio->LoadFx("audio/fx/LTTP_GanonJump.wav");//26
 			App->audio->LoadFx("audio/fx/LTTP_Firbats.wav");//27
 			App->audio->LoadFx("audio/fx/LTTP_Teleport.wav");//28
+			App->audio->LoadFx("audio/fx/LTTP_Grass_Destroyed.wav");//29
+			App->audio->LoadFx("audio/fx/LTTP_Break.wav");//30
 
 			//Init All teleports
 			CreateTeleports();
