@@ -152,6 +152,11 @@ bool j1Gui::PostUpdate()
 			}
 		}
 	}
+	if (App->scene->modeGod)
+	{
+		SDL_Rect god = { 259,50,38,7 };
+		App->render->Blit(atlas, -App->render->camera.x / 2 + 13, -App->render->camera.y / 2 + 20, &god);
+	}
 	return true;
 }
 

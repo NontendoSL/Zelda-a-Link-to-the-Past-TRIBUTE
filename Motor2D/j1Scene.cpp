@@ -351,7 +351,8 @@ bool j1Scene::Update(float dt)
 			// TP LEVEL
 
 			//WEAPONS TEST ---------
-			if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P))
+			if (player->setWeapons == false && App->input->GetKey(SDL_SCANCODE_P) && 
+				App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
 			{
 				player->bow = App->entity_elements->CreateBow();
 				App->scene->start_menu->PickItem("bow");
@@ -364,6 +365,20 @@ bool j1Scene::Update(float dt)
 				player->hook = App->entity_elements->CreateHookshot();
 				App->scene->start_menu->PickItem("hookshot");
 				player->gems = 999;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
+				App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+			{
+				if (modeGod)
+				{
+					modeGod = false;
+					player->hp -= 10000;
+				}
+				else
+				{
+					player->hp += 10000;
+					modeGod = true;
+				}
 			}
 			// ---------
 

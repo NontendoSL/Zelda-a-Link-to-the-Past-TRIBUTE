@@ -156,6 +156,8 @@ public:
 	//video
 	bool playVideo = false;
 	bool waitVideo = false;
+	//ModeGod
+	bool modeGod = false;
 	//Ingame
 	ZeldaHud* hud = nullptr;
 	ZeldaMenu* start_menu = nullptr;
