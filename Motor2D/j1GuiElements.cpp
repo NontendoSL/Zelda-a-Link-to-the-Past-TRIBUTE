@@ -1784,7 +1784,16 @@ void PokemonWorldMenu::WritePlayTime()
 	}
 	time += std::to_string(secondsplayed);
 	((Text*)App->gui->GetEntity("playtime card"))->Write(time.c_str());
-	((Text*)App->gui->GetEntity("money card"))->Write(std::to_string(App->scene->player->pokecash).c_str());
+	int cash = 0;
+	if (App->scene->player->pokecash > 999)
+	{
+		cash = App->scene->player->pokecash % 1000;
+	}
+	else
+	{
+		cash = App->scene->player->pokecash;
+	}
+	((Text*)App->gui->GetEntity("money card"))->Write(std::to_string(cash).c_str());
 }
 
 Button* PokemonWorldMenu::GetFirst()
