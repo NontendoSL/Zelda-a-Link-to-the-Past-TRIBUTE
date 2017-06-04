@@ -41,8 +41,10 @@ public:
 	static void SDLCALL audio_callback(void *userdata, Uint8 *stream, int len);
 	static void queue_audio(const THEORAPLAY_AudioPacket *audio);
 
-private:
 	void ResetValues();
+
+private:
+
 
 	// Load video file
 	void LoadVideo(const char *fname);

@@ -72,6 +72,7 @@ bool j1SceneIntro::Update(float dt)
 		if (clenaudio_video == false)
 		{
 			clenaudio_video = true;
+			App->video->ResetValues();
 			App->audio->CleanUp();
 			App->audio->Awake(pugi::xml_node(nullptr));
 			App->audio->Start();

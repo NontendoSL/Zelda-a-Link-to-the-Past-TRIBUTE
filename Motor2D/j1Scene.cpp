@@ -195,7 +195,7 @@ bool j1Scene::Update(float dt)
 						if (App->fadetoblack->Checkfadetoblack() && now_switch)
 						{
 							SDL_Rect r = { 0, 0, 640, 480 };
-							App->video->PlayVideo("GanonDies.ogg", r);
+							App->video->PlayVideo("ToPokemonWorld320.ogg", r);
 							fade = false;
 							playVideo = false;
 							waitVideo = true;
@@ -220,6 +220,7 @@ bool j1Scene::Update(float dt)
 								}
 								if (waitVideo)
 								{
+									App->video->ResetValues();
 									SwitchMap(useTP);
 								}
 								dialog_inmapZelda = false;
