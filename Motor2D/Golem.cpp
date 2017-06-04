@@ -495,7 +495,7 @@ void Golem::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (((Player*)c2->callback)->GetState() != L_HIT && ((Player*)c2->callback)->GetState() != L_HOOKTHROWN)
 			{
-				if (state != P_ATTACKING && state != L_HIT && state != L_DYING)
+				if (state != P_ATTACKING && state != L_HIT && state != L_DYING && state != L_HOOKTHROWN)
 				{
 					App->audio->PlayFx(13);
 					Player* player = (Player*)c2->callback;

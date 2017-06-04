@@ -136,7 +136,9 @@ bool Player::Update(float dt)
 			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_UP)
 			{
 				state = L_HOOKTHROWN;
-				anim_state = L_IDLE;
+				anim_state = L_HOOKTHROWN;
+				current_animation = App->anim_manager->GetAnimation(anim_state, direction, LINK);
+				current_animation->Reset();
 				ThrowHookshot(charge);
 			}
 			else if (charge > 0)
@@ -557,7 +559,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			// LINK HIT BY ENEMY -------------------
 			if (c1 == collision_feet && (c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_GMINION)) //If green soldier attacks you
 			{
-				if (state != L_HIT && invincible_timer.ReadSec() >= 1 && state != L_DYING)
+				if (state != L_HIT && invincible_timer.ReadSec() >= 1 && state != L_DYING && state != L_HOOKTHROWN)
 				{
 					App->audio->PlayFx(13);
 					state = L_HIT;
@@ -587,7 +589,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			// LINK HIT BY	RED MINION -------------------
 			if (c1 == collision_feet && c2->type == COLLIDER_RMINION) //If green soldier attacks you
 			{
-				if (state != L_HIT && invincible_timer.ReadSec() >= 1)
+				if (state != L_HIT && invincible_timer.ReadSec() >= 1 && state != L_HOOKTHROWN)
 				{
 					App->audio->PlayFx(13);
 					state = L_HIT;
@@ -621,7 +623,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			// LINK HIT BY FIREBAT OR BOMB (same mechanic) -------------------
 			if (c1 == collision_feet && (c2->type == COLLIDER_FIREBAT || c2->type == COLLIDER_BOMB))
 			{
-				if (state != L_HIT && invincible_timer.ReadSec() >= 1 && state != L_DYING)
+				if (state != L_HIT && invincible_timer.ReadSec() >= 1 && state != L_DYING && state != L_HOOKTHROWN)
 				{
 					App->audio->PlayFx(13);
 					state = L_HIT;
@@ -782,7 +784,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			// GANON HIT ----------------
 			if (c1 == collision_feet && c2->type == COLLIDER_GANON_ATTACK) //If green soldier attacks you
 			{
-				if (state != L_HIT && invincible_timer.ReadSec() >= 1 && state != L_DYING)
+				if (state != L_HIT && invincible_timer.ReadSec() >= 1 && state != L_DYING && state != L_HOOKTHROWN)
 				{
 					App->audio->PlayFx(13);
 					state = L_HIT;
