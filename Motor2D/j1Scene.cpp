@@ -374,10 +374,20 @@ bool j1Scene::Update(float dt)
 			{
 				if (modeGod)
 				{
+					App->gui->GetEntity("life")->visible = true;
+					for (int i = 0; i < App->gui->GetEntity("life")->elements.size(); i++)
+					{
+						App->gui->GetEntity("life")->elements[i]->visible=true;
+					}
 					modeGod = false;
 				}
 				else
 				{
+					//App->gui->GetEntity("life")->visible = false;
+					for (int i = 0; i < App->gui->GetEntity("life")->elements.size(); i++)
+					{
+						App->gui->GetEntity("life")->elements[i]->visible = false;
+					}
 					modeGod = true;
 				}
 			}
