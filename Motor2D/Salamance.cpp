@@ -417,6 +417,7 @@ void Salamance::Special_Attack()
 	{
 		attacker = true;
 		wait_attack.Start();
+		App->audio->PlayFx(32);
 		if (direction == UP)
 		{
 			sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 70, 16, 50 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);

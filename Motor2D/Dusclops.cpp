@@ -396,6 +396,7 @@ void Dusclops::Special_Attack()
 	use_special = true;
 	if (current_animation->Finished() && stop_anim_special)
 	{
+		App->audio->PlayFx(33);
 		current_animation->Reset();
 		current_animation = nullptr;
 		state = PC_IDLE;

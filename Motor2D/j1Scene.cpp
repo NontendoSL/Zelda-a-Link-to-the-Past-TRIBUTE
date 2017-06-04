@@ -85,6 +85,9 @@ bool j1Scene::Start()
 			App->audio->LoadFx("audio/fx/LTTP_Teleport.wav");//28
 			App->audio->LoadFx("audio/fx/LTTP_Grass_Destroyed.wav");//29
 			App->audio->LoadFx("audio/fx/LTTP_Break.wav");//30
+			App->audio->LoadFx("audio/fx/PKMN_Ice.wav");//31
+			App->audio->LoadFx("audio/fx/PKMN_Dragon.wav");//32
+			App->audio->LoadFx("audio/fx/PKMN_Ghost.wav");//33
 			//Init All teleports
 			CreateTeleports();
 			first_loop = false;

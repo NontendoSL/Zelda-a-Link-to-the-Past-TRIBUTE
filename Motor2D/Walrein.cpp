@@ -366,6 +366,7 @@ void Walrein::Special_Attack()
 	else
 	{
 		attacker = true;
+		App->audio->PlayFx(31);
 		if (direction == UP)
 		{
 			sp_attack = App->collision->AddCollider({ position.x - 11, position.y - 35, 22, 8 }, COLLIDER_POKEMON_SPECIAL_ATTACK, this);
