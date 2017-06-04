@@ -141,6 +141,7 @@ bool j1Scene::Update(float dt)
 		{
 			if (playVideo)
 			{
+				gamestate = INMENU;
 				SDL_Rect r = { 0, 0, 640, 480 };
 				App->video->PlayVideo("Sleeping.ogg", r);
 				playVideo = false;
@@ -156,6 +157,7 @@ bool j1Scene::Update(float dt)
 					LoadFX();
 					App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg", 0);
 					App->audio->VolumeMusic(50);
+					gamestate = INGAME;
 					sleep_start = false;
 				}
 			}

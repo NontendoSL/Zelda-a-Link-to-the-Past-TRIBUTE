@@ -49,8 +49,6 @@ public:
 
 	int CheckPlayerPos();
 
-	void CreateBoleFire();
-
 private:
 	//Timer
 	int timetoplay = 0;

@@ -126,7 +126,7 @@ bool Groudon::Update(float dt)
 		state = PC_CHASING;
 	}
 
-	if (CheckPlayerPos() < ATTACK_DISTANCE && (state == PC_WALKING || state == PC_CHASING) && wait_attack.ReadSec() > 0.5)
+	if (CheckPlayerPos() < ATTACK_DISTANCE + 5 && (state == PC_WALKING || state == PC_CHASING) && wait_attack.ReadSec() > 0.5)
 	{
 		OrientatePokeLink();
 		state = PC_ATTACKING;
@@ -136,7 +136,7 @@ bool Groudon::Update(float dt)
 		current_animation->Reset();
 	}
 
-	if (use_cooldown == cooldown && state != PC_SPECIAL)
+	if (use_cooldown == cooldown && state != PC_SPECIAL && CheckPlayerPos() < ATTACK_DISTANCE + 5)
 	{
 		state = PC_SPECIAL;
 		anim_state = PC_SPECIAL;
@@ -357,7 +357,7 @@ bool Groudon::Attack()
 		{
 			App->collision->EraseCollider(collision_attack);
 			attacker = false;
-			collision_attack == nullptr;
+			collision_attack = nullptr;
 			current_animation->Reset();
 			current_animation = nullptr;
 			state = PC_IDLE;
@@ -398,7 +398,7 @@ void Groudon::Special_Attack()
 	{
 		if (current_animation->Finished())
 		{
-			App->collision->EraseCollider(collision_attack);
+			App->collision->EraseCollider(sp_attack);
 			attacker = false;
 			sp_attack = nullptr;
 			current_animation->Reset();
