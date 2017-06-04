@@ -465,6 +465,21 @@ Bow* j1EntityElementScene::CreateBow()
 	return bow;
 }
 
+void j1EntityElementScene::DeleteArrows()
+{
+	std::list<SceneElement*>::iterator temp = elementscene.begin();
+	while (temp != elementscene.end())
+	{
+		if (temp._Ptr->_Myval->name == "bow")
+		{
+			Bow* bow = (Bow*)temp._Ptr->_Myval;
+			bow->DestroyArrows();
+			break;
+		}
+		temp++;
+	}
+}
+
 BombContainer* j1EntityElementScene::CreateBombContainer()
 {
 	BombContainer* element = new BombContainer();

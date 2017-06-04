@@ -1020,7 +1020,11 @@ void j1Scene::SwitchMap(bool isTP)
 			{
 				weapon_equiped = player->equiped_item->Wtype;
 			}
+			//First Delete all arrows
+			App->entity_elements->DeleteArrows();
+			//Now Delete All elements
 			App->entity_elements->DelteElements();
+
 			if (App->combatmanager->Getsize_elements() > 0)
 			{
 				App->combatmanager->DeleteElements_combat();

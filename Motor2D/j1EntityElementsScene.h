@@ -60,6 +60,7 @@ public:
 	void CreateItem(uint id, iPoint position);
 	Hookshot* CreateHookshot();
 	Bow* CreateBow();
+	void DeleteArrows();
 	void CreateDynObject(iPoint pos, uint id, uint id_map, bool isSign = false, pugi::xml_node& conf = pugi::xml_node(NULL));
 	Player* CreatePlayer();
 	BombContainer* CreateBombContainer();

@@ -145,7 +145,6 @@ void Hookshot::Draw()
 	BROFILER_CATEGORY("Draw_Weapon", Profiler::Color::Beige);
 	if (in_use == true)
 	{
-		App->anim_manager->Drawing_Manager(anim_state, direction, position, HOOKSHOT); //id 2 = hookshot animation xml
 		uint dist = 0; 
 		uint dist_2 = 0;
 		uint dist_2_50 = 0;
@@ -231,6 +230,8 @@ void Hookshot::Draw()
 				App->render->Blit(App->entity_elements->hookshot_chain, position.x + dx_100 + offset_hook_x, position.y + dy_100 + offset_hook_y, &chain_2r_50, 1.0f, true, angle, 5, 5);
 			}
 		}
+
+		App->anim_manager->Drawing_Manager(anim_state, direction, position, HOOKSHOT); //id 2 = hookshot animation xml
 	}
 }
 // ----------------------------------
@@ -285,7 +286,19 @@ void Bow::CleanContainer()
 	arrows.pop_front();
 }
 
-
+void Bow::DestroyArrows()
+{
+	if (arrows.size() > 0)
+	{
+		std::list<Arrow*>::const_iterator item = arrows.begin();
+		while (item != arrows.end())
+		{
+			item._Ptr->_Myval->Die();
+			item++;
+		}
+		arrows.clear();
+	}
+}
 
 float Bow::SetSpeed(float charge)
 {

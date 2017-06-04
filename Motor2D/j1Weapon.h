@@ -129,6 +129,7 @@ public:
 	bool Update(float dt);
 	void Draw();
 	void CleanContainer();
+	void DestroyArrows();
 
 	float SetSpeed(float charge);
 	void Shoot(iPoint pos, Direction dir, float speed);
