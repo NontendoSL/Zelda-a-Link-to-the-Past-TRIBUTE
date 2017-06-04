@@ -1306,6 +1306,7 @@ void j1Scene::SetMusics(int id)
 	{
 		App->audio->PlayMusic("audio/music/ZELDA/ZeldaLastChamber.ogg", 0);
 	}
+	App->audio->VolumeMusic(50);
 }
 
 

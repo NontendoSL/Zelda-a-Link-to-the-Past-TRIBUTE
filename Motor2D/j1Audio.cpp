@@ -224,6 +224,7 @@ unsigned int j1Audio::LoadFx(const char* path)
 	{
 		fx.push_back(chunk);
 		ret = fx.size();
+		LOG("Loaded!");
 	}
 
 	return ret;
