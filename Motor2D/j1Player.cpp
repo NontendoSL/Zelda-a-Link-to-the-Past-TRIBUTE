@@ -730,13 +730,21 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 							}
 							else if (App->scene->last_map == 16)
 							{
-								dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(),2);
-								App->entity_elements->DeleteElement("door");
-								App->gui->GetEntity("pendant_link")->visible = true;
-								App->map->EditCost(32, 53, 0);
-								App->map->EditCost(33, 53, 0);
-								App->map->EditCost(32, 54, 0);
-								App->map->EditCost(33, 54, 0);
+								if (App->scene->notrepeatCombat)
+								{
+									App->scene->key_boss = true;
+									App->scene->playVideo = true;
+									dialog = App->gui->CreateDialogue(villager->GetDialog().c_str(), 2);
+									App->gui->GetEntity("pendant_link")->visible = true;
+									App->map->EditCost(32, 53, 0);
+									App->map->EditCost(33, 53, 0);
+									App->map->EditCost(32, 54, 0);
+									App->map->EditCost(33, 54, 0);
+								}
+								else
+								{
+									dialog = App->gui->CreateDialogue("Come on! Go to defeat Ganon. Princess Zelda need you!", 2);
+								}
 							}
 							else if (App->scene->last_map == 10)
 							{

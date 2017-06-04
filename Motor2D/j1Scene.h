@@ -177,7 +177,10 @@ public:
 	bool switch_menu = false;
 	bool inventory = false;
 
-
+	// key
+	bool key_boss = false;
+	//sleep
+	bool sleep_start = false;
 
 	//TimePause
 	j1TimeNormal timepause;

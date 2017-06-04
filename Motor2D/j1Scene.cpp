@@ -53,7 +53,7 @@ bool j1Scene::Start()
 		if (first_loop)
 		{
 			LoadUi();
-			
+
 			App->audio->PlayMusic("audio/music/ZELDA/Zeldakakariko_village.ogg", 0);
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //1
 			App->audio->LoadFx("audio/fx/LTTP_Pause_Open.wav"); //2
@@ -100,6 +100,8 @@ bool j1Scene::Start()
 			App->gui->SetGui(ZELDA_HUD);
 			start_menu->ResetInventory();
 			new_game = false;
+			sleep_start = true;
+			playVideo = true;
 		}
 
 		else if (continue_game == true)
@@ -131,6 +133,22 @@ bool j1Scene::Update(float dt)
 
 	if (ingame == true)
 	{
+		if (sleep_start)
+		{
+			if (playVideo)
+			{
+				SDL_Rect r = { 0, 0, 640, 480 };
+				App->video->PlayVideo("Sleeping.ogg", r);
+				playVideo = false;
+			}
+			else
+			{
+				if (App->video->video_finished)
+				{
+					sleep_start = false;
+				}
+			}
+		}
 		if (App->gui->GetEntity("YOU WIN")->visible)
 		{
 			if (win_timer + 1500 < SDL_GetTicks())
@@ -142,11 +160,11 @@ bool j1Scene::Update(float dt)
 		}
 		player->ShowHearts();
 
-		/*if (help_timer + 2000 < SDL_GetTicks() && help_bool)
+		if (help_timer + 2000 < SDL_GetTicks() && help_bool)
 		{
-			player->dialog = App->gui->CreateDialogue("Link... I need your help. Head to the castle and you'll find guidance. Hurry up!");
+			player->dialog = App->gui->CreateDialogue("Link... I need your help. Head to the castle and you'll find guidance. Hurry up!", 1);
 			help_bool = false;
-		}*/
+		}
 
 		if (gamestate == INMENU && stop == false)
 		{
@@ -187,7 +205,7 @@ bool j1Scene::Update(float dt)
 
 		if (dialog_inmapZelda && player->dialog == nullptr)
 		{
-			if (combat_map_id != 0 || cutscene_id != -1)
+			if (combat_map_id != 0 || cutscene_id != -1 || last_map == 16 && key_boss)
 			{
 				if (playVideo)
 				{
@@ -202,7 +220,15 @@ bool j1Scene::Update(float dt)
 					if (App->fadetoblack->Checkfadetoblack() && now_switch)
 					{
 						SDL_Rect r = { 0, 0, 640, 480 };
-						App->video->PlayVideo("ToPokemonWorld320.ogg", r);
+						if (key_boss)
+						{
+							App->entity_elements->DeleteElement("door");
+							App->video->PlayVideo("Pendant.ogg", r);
+						}
+						else
+						{
+							App->video->PlayVideo("ToPokemonWorld320.ogg", r);
+						}
 						fade = false;
 						playVideo = false;
 						waitVideo = true;
@@ -228,11 +254,21 @@ bool j1Scene::Update(float dt)
 							if (waitVideo)
 							{
 								App->video->ResetValues();
-								SwitchMap(useTP);
+								if (key_boss == false)
+								{
+									SwitchMap(useTP);
+								}
+								else
+								{
+									waitVideo = false;
+									gamestate = INGAME;
+								}
+
 							}
 							dialog_inmapZelda = false;
 							goPokemon = false;
 							notrepeatCombat = false;
+							key_boss = false;
 						}
 						else
 						{
