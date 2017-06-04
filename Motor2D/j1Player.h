@@ -131,6 +131,7 @@ public:
 	void AddHeartContainer();
 	void ShowHearts();
 	void GetDamage();
+	void SetNormalLife();
 	void SetKnockbackDir();
 
 	LinkState GetState() const;

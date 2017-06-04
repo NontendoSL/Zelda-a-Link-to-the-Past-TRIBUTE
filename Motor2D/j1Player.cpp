@@ -106,6 +106,7 @@ bool Player::Update(float dt)
 		else
 		{
 			score = 0;
+			App->scene->Link_die = true;
 			hp_hearts = { hp_hearts.x, hp_hearts.x };
 			if (before_map == 3 && App->scene->last_map == 2 || before_map == 4 && App->scene->last_map == 2)
 			{

@@ -179,8 +179,8 @@ public:
 
 	// key
 	bool key_boss = false;
-	//sleep
-	bool sleep_start = false;
+	// Life
+	bool Link_die = false;
 
 	//TimePause
 	j1TimeNormal timepause;

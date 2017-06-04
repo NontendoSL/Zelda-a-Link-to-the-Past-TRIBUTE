@@ -101,8 +101,6 @@ bool j1Scene::Start()
 			start_menu->ResetInventory();
 			help_bool = true;
 			new_game = false;
-			sleep_start = true;
-			playVideo = true;
 		}
 
 		else if (continue_game == true)
@@ -134,22 +132,6 @@ bool j1Scene::Update(float dt)
 
 	if (ingame == true)
 	{
-		if (sleep_start)
-		{
-			if (playVideo)
-			{
-				SDL_Rect r = { 0, 0, 640, 480 };
-				App->video->PlayVideo("Sleeping.ogg", r);
-				playVideo = false;
-			}
-			else
-			{
-				if (App->video->video_finished)
-				{
-					sleep_start = false;
-				}
-			}
-		}
 		if (App->gui->GetEntity("YOU WIN")->visible)
 		{
 			if (win_timer + 1500 < SDL_GetTicks())
@@ -1262,6 +1244,11 @@ bool j1Scene::Load_new_map(int n, bool isTP)
 	if (player == NULL)
 	{
 		player = App->entity_elements->CreatePlayer();
+	}
+	if (Link_die)
+	{
+		Link_die = false;
+		player->SetNormalLife();
 	}
 
 	if (n == 9 || n == 10)
