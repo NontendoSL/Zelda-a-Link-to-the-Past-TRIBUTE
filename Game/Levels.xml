@@ -379,7 +379,7 @@
       <camera follow="false"/>
       <poke_Link pos_x="88" pos_y="144"/>
       <trainer id="1" name="Sidney" active="false" pos_x="152" pos_y="136" file="textures/PokemonCharacters.png">
-        <pokemon id="6" name="SHIFTRY" speed="1" cooldown="150" dir="left" hp="250" attack="20" special_attack="23" defense="20" pos_x="228" pos_y="144" active="true"/>
+        <pokemon id="6" name="SHIFTRY" speed="1" cooldown="800" dir="left" hp="250" attack="20" special_attack="23" defense="20" pos_x="228" pos_y="144" active="true"/>
       </trainer>
       <dynobjects>
         <dynobject id="6" name="door" type="ZELDA" rect_x="3" rect_y="62" rect_w="26" rect_h="21" pickable ="false" file="textures/DynObjectsSpriteSheet.png" />
