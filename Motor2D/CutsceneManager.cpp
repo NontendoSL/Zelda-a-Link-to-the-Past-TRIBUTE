@@ -805,9 +805,10 @@ void CS_Step::DisableElement()
 	}
 }
 
-void CS_Step::SwitchMap(int id)
+void CS_Step::SwitchToCombatMap(int id)
 {
 	App->scene->switch_map = id;
+	App->scene->useTP = true;
 }
 
 //Link the element of the cutscene with the step
