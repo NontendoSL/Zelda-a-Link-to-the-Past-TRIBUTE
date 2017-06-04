@@ -771,7 +771,7 @@ void CS_Step::Play()
 	//Differentiation between Play Music / Play SoundFx
 	if (element->GetType() == CS_MUSIC)
 	{
-		CS_Music* mus = static_cast<CS_Music*>(element);
+   		CS_Music* mus = static_cast<CS_Music*>(element);
 		mus->Play();
 	}
 	if (element->GetType() == CS_FX)
@@ -878,7 +878,7 @@ CS_Music::~CS_Music()
 
 void CS_Music::Play()
 {
-	App->audio->PlayMusic(path.c_str());
+	App->audio->PlayMusic(path.c_str(), 0);
 }
 //----------------------------------------
 
