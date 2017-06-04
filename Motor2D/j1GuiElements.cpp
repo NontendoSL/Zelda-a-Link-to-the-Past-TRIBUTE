@@ -1666,6 +1666,7 @@ PokemonWorldMenu::PokemonWorldMenu()
 	}
 	App->gui->GetEntity("trainer card")->visible = false;
 	App->gui->GetEntity("playtime card")->visible = false;
+	App->gui->GetEntity("money card")->visible = false;
 	playtime = SDL_GetTicks();
 }
 
@@ -1703,6 +1704,7 @@ void PokemonWorldMenu::Input()
 		{
 			App->gui->GetEntity("trainer card")->visible = false;
 			App->gui->GetEntity("playtime card")->visible = false; 
+			App->gui->GetEntity("money card")->visible = false;
 			trainer_card = false;
 		}
 		WritePlayTime();
@@ -1776,6 +1778,7 @@ void PokemonWorldMenu::WritePlayTime()
 	}
 	time += std::to_string(secondsplayed);
 	((Text*)App->gui->GetEntity("playtime card"))->Write(time.c_str());
+	((Text*)App->gui->GetEntity("money card"))->Write(std::to_string(App->scene->player->pokecash).c_str());
 }
 
 Button* PokemonWorldMenu::GetFirst()

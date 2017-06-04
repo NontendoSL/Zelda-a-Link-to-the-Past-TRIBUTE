@@ -598,6 +598,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 			poke_menu->trainer_card = true;
 			App->gui->GetEntity("trainer card")->visible = true;
 			App->gui->GetEntity("playtime card")->visible = true;
+			App->gui->GetEntity("money card")->visible = true;
 			poke_menu->WritePlayTime();
 		}
 	}
