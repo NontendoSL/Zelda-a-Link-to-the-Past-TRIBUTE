@@ -223,7 +223,7 @@ public:
 	uint win_timer = 0;
 	bool joy_talk = false;
 private:
-	uint volume = 120;
+	uint volume = 50;
 
 
 };

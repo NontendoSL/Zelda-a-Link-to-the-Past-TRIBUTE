@@ -63,7 +63,7 @@ private:
 
 
 	uint Menu_Cursor;
-	uint volume = 120;
+	uint volume = 50;
 
 public:
 	MainMenu*			main_menu = nullptr;
