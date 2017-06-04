@@ -245,7 +245,7 @@
       <camera follow="true"/> 
       <Link pos_x="200" pos_y="453"/>
       <vilagers>
-        <vilager id="3" name="Brendan" rect_x="0" rect_y="0" rect_w="14" rect_h="21" pos_x="304" pos_y="190" switch_map="17" dialog="Hi! I'm Brendan, in this world we don't fight with swords like you!, we do it with the pokemons, let me teach you how:  Pokemons can attack with basic hits and with their own special habilities, train with this doll!"/>
+        <vilager id="3" name="Brendan" rect_x="0" rect_y="0" rect_w="14" rect_h="21" pos_x="304" pos_y="190" switch_map="17" cut_scene_id ="0" dialog="Hi! I'm Brendan, in this world we don't fight with swords like you!, we do it with the pokemons, let me teach you how:  Pokemons can attack with basic hits and with their own special habilities, train with this doll!"/>
       </vilagers>
       <editcost>
         <edit pos_x="24" pos_y="11" />
