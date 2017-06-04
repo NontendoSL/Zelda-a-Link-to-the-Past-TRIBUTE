@@ -398,6 +398,7 @@ void Shiftry::Special_Attack()
 	{
 		hp += 1;
 		hp_healed++;
+		App->scene->pokecombat->GetDamage(-1, false);
 		if (hp_healed > HEALING)
 		{
 			App->particlemanager->DeleteFire_p(particule_special);
