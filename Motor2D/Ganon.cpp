@@ -7,7 +7,9 @@
 #include "j1Gui.h"
 #include "j1GuiEntity.h"
 #include "ParticleManager.h"
+#include "j1FadeToBlack.h"
 #include "j1Weapon.h"
+#include "Video.h"
 
 Ganon::Ganon() :NPC()
 {
@@ -91,6 +93,13 @@ bool Ganon::Update(float dt)
 		if (collision_feet != nullptr)
 		{
 			collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
+		}
+	}
+	else if (App->scene->gamestate == CUTSCENE)
+	{
+		if (phase == DEATH)
+		{
+			DeathUpdate(dt);
 		}
 	}
 	return true;
@@ -240,8 +249,34 @@ bool Ganon::RageUpdate(float dt)
 
 bool Ganon::DeathUpdate(float dt)
 {
-	Die();
-	to_delete = true;
+	if (video == false)
+	{
+		if (fade == false)
+		{
+			App->fadetoblack->FadeToBlack();
+			App->scene->gamestate = CUTSCENE;
+			fade = true;
+			now_switch = true;
+		}
+
+		if (App->fadetoblack->Checkfadetoblack() && now_switch)
+		{
+			SDL_Rect r = { 0, 0, 640, 480 };
+			App->video->PlayVideo("GanonDies.ogg", r);
+			fade = false;
+			video = true;
+		}
+	}
+	else
+	{
+		if (App->video->video_finished)
+		{
+			App->video->ResetValues();
+			Die();
+			to_delete = true;
+		}
+	}
+
 	return true;
 }
 bool Ganon::InitCombat()

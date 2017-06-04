@@ -12,7 +12,6 @@ enum GanonState { G_WALKING = 0, G_HIT, G_MELEE, G_SPECIAL_1/*Jump&Fire*/, G_SPE
 enum SpawnType { GREEN, RED };
 
 
-
 class Ganon : public NPC
 {
 public:
@@ -144,6 +143,12 @@ private:
 	j1Timer explosion_timer;
 	j1Timer wait_time;
 	// -----------------------
+
+	//DEAD -------------------
+	bool video = false;
+	bool fade = false;
+	bool now_switch = false;
+	// -----------------
 
 	bool test = true;
 

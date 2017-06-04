@@ -99,28 +99,34 @@ bool Player::Update(float dt)
 	//if you die, you appear on the Link House
 	if (hp_hearts.y == 0)
 	{
-		score = 0;
-		hp_hearts = { hp_hearts.x, hp_hearts.x };
-		if (before_map == 3 && App->scene->last_map == 2 || before_map == 4 && App->scene->last_map == 2)
+		if (App->scene->modeGod)
 		{
-			App->scene->switch_map = 2;
-			App->scene->useTP = false;
-			App->scene->newPosition = App->scene->teleports[5].position;
+			hp_hearts = { hp_hearts.x, hp_hearts.x };
 		}
 		else
 		{
-			App->scene->switch_map = App->scene->last_map;
-			App->scene->useTP = true;
+			score = 0;
+			hp_hearts = { hp_hearts.x, hp_hearts.x };
+			if (before_map == 3 && App->scene->last_map == 2 || before_map == 4 && App->scene->last_map == 2)
+			{
+				App->scene->switch_map = 2;
+				App->scene->useTP = false;
+				App->scene->newPosition = App->scene->teleports[5].position;
+			}
+			else
+			{
+				App->scene->switch_map = App->scene->last_map;
+				App->scene->useTP = true;
+			}
+			if (gems > 10)
+			{
+				gems = gems - (gems / 10);
+			}
+			if (arrows > 10)
+			{
+				arrows = arrows - (arrows / 10);
+			}
 		}
-		if (gems > 10)
-		{
-			gems = gems - (gems/ 10);
-		}
-		if (arrows > 10)
-		{
-			arrows = arrows - (arrows / 10);
-		}
-
 	}
 
 	// STATE MACHINE ------------------
