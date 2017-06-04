@@ -389,7 +389,7 @@ bool Sceptyle::Idle()
 		anim_state = PC_WALKING;
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 	{
 		if (App->scene->pokecombat->cooldown == false)
 		{
@@ -403,7 +403,7 @@ bool Sceptyle::Idle()
 
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 	{
 		state = PC_ATTACKING;
 		anim_state = PC_ATTACKING;
@@ -432,7 +432,7 @@ bool Sceptyle::Walking(float dt)
 			anim_state = PC_IDLE;
 		}
 
-		else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_B) == EVENTSTATE::E_DOWN)
 		{
 			if (App->scene->pokecombat->cooldown == false)
 			{
@@ -445,7 +445,7 @@ bool Sceptyle::Walking(float dt)
 			}
 		}
 
-		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_X) == EVENTSTATE::E_DOWN)
 		{
 			state = PC_ATTACKING;
 			anim_state = PC_ATTACKING;
