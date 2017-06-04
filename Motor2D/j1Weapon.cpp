@@ -146,6 +146,91 @@ void Hookshot::Draw()
 	if (in_use == true)
 	{
 		App->anim_manager->Drawing_Manager(anim_state, direction, position, HOOKSHOT); //id 2 = hookshot animation xml
+		uint dist = 0; 
+		uint dist_2 = 0;
+		uint dist_2_50 = 0;
+		double angle = 0;
+		uint dx_50 = 0;
+		uint dx_100 = 0;
+		uint offset_hook_x = 0;
+		uint offset_hook_y = 0;
+		uint dy_50 = 0;
+		uint dy_100 = 0;
+		if (direction == LEFT)
+		{
+			dist = App->scene->player->position.x - position.x;
+			dist_2 = App->scene->player->position.x - (position.x + 50);
+			dist_2_50 = App->scene->player->position.x - (position.x + 100);
+			angle = 0;
+			dx_50 = 50;
+			dx_100 = 100;
+			dy_50 = 0;
+			dy_100 = 0;
+			offset_hook_x = 3;
+			offset_hook_y = -2;
+		}
+		else if (direction == RIGHT)
+		{
+			dist = position.x - App->scene->player->position.x;
+			dist_2 = position.x - App->scene->player->position.x - 50;
+			dist_2_50 = position.x - App->scene->player->position.x - 100;
+			angle = 180;
+			dx_50 = -50;
+			dx_100 = -100;
+			dy_50 = 0;
+			dy_100 = 0;
+			offset_hook_x = -8;
+			offset_hook_y = -2;
+		}
+		else if (direction == UP)
+		{
+			dist = App->scene->player->position.y - position.y;
+			dist_2 = App->scene->player->position.y - (position.y + 50);
+			dist_2_50 = App->scene->player->position.y - (position.y + 100);
+			angle = 90;
+			dx_50 = 0;
+			dx_100 = 0;
+			dy_50 = 50;
+			dy_100 = 100;
+			offset_hook_x = -3;
+			offset_hook_y = 3;
+		}
+		else //direction == DOWN
+		{
+			dist = position.y - App->scene->player->position.y;
+			dist_2 = position.y - App->scene->player->position.y - 50;
+			dist_2_50 = position.y - App->scene->player->position.y - 100;
+			angle = -90;
+			dx_50 = 0;
+			dx_100 = 0;
+			dy_50 = -50;
+			dy_100 = -100;
+			offset_hook_x = -3;
+			offset_hook_y = -6;
+		}
+
+		if (dist <= 50)
+		{
+			SDL_Rect chain_r = { 0,0,dist,6 };
+			App->render->Blit(App->entity_elements->hookshot_chain, position.x + offset_hook_x, position.y + offset_hook_y, &chain_r, 1.0f, true, angle, 5, 5);
+		}
+		else
+		{
+			SDL_Rect chain_r = { 0,0,50,6 };
+			App->render->Blit(App->entity_elements->hookshot_chain, position.x + offset_hook_x, position.y + offset_hook_y, &chain_r, 1.0f, true, angle, 5, 5);
+			if (dist_2 <= 50)
+			{
+				SDL_Rect chain_2r = { 0,0,dist_2,6 };
+				App->render->Blit(App->entity_elements->hookshot_chain, position.x + dx_50 + offset_hook_x, position.y + dy_50 + offset_hook_y, &chain_2r, 1.0f, true, angle, 5, 5);
+			}
+			else
+			{
+				SDL_Rect chain_2r = { 0,0,50,6 };
+				App->render->Blit(App->entity_elements->hookshot_chain, position.x + dx_50 + offset_hook_x, position.y + dy_50 + offset_hook_y, &chain_2r, 1.0f, true, angle, 5, 5);
+				SDL_Rect chain_2r_50 = { 0,0,dist_2_50,6 };
+				App->render->Blit(App->entity_elements->hookshot_chain, position.x + dx_100 + offset_hook_x, position.y + dy_100 + offset_hook_y, &chain_2r_50, 1.0f, true, angle, 5, 5);
+			}
+		}
 	}
 }
 // ----------------------------------

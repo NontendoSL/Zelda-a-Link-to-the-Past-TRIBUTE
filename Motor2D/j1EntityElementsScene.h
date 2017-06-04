@@ -100,6 +100,8 @@ public:
 
 	//dynspecial texture
 	SDL_Texture* text_vase_bush = nullptr;
+	//wepaon Hookshot chain
+	SDL_Texture* hookshot_chain = nullptr;
 
 	Ganon* ganon = nullptr;
 
