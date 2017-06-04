@@ -1298,7 +1298,7 @@ void PokemonWorldHud::Input()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 	{
-		if (App->scene->gamestate != CUTSCENE)
+		if (App->scene->gamestate != CUTSCENE && App->fadetoblack->Checkfadefromblack())
 		{
 			if (active)
 			{
@@ -1698,7 +1698,6 @@ void PokemonWorldMenu::Input()
 		}
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
 		{
-			//active = false;
 			MoveIn(false);
 			App->gui->SetGui(POKEMON_HUD);
 			App->scene->gamestate = INGAME;
