@@ -1,11 +1,11 @@
 What is The Legend of Zelda: A Link to Pokemon World?
 	
 	It's a project for a subject called Project 2 of Video Games Design and Development  
-	degree at Centre de la Imatge i MultimËdia (CITM), Terrassa. 
+	degree at Centre de la Imatge i Multim√®dia (CITM), Terrassa. 
 	It's an action RPG game based on the original "A Link to The past" (1991, SNES)
-	and mixed with PokÈmon Emerald (2004, GBA). 
+	and mixed with Pok√©mon Emerald (2004, GBA). 
 	We have taken the essence of Zelda: a Link to the Past and 
-	added our personal touch: an amazing journey to the PokÈmon World. Link will become the best PokÈmon 
+	added our personal touch: an amazing journey to the Pok√©mon World. Link will become the best Pok√©mon 
 	trainer after fighting against some of them with his sword on his hand. Ganon has rapped the princess 
 	Zelda and you will have to do this travel to rescue her.
 
@@ -19,8 +19,8 @@ CONTROLS
 		Enter -> Start game from menu and open/close menu when in game.
 		Spacebar -> Use the equipped item. Hold it to charge the stamina bar. Click it to continue dialogs.
 		R -> Select item in the menu.
-		E -> Attack // PokÈmon normal attack.
-		Q -> Interact with chests and NPCs // PokÈmon special attack.
+		E -> Attack // Pok√©mon normal attack.
+		Q -> Interact with chests and NPCs // Pok√©mon special attack.
 		Z -> Cast the special Ability in combat.
 		+/- -> Up/Down the audio volume.
 		
@@ -53,20 +53,20 @@ CONTROLS
 		F10 -> Display colliders.
 		Ctrl + P -> Obtain all items + 99 arrows + 99 bombs + 999 rupees
 		Ctrl + G -> Enable/ Disable God Mode.
-		C -> Lower PokÈmon HP in combat.
+		C -> Lower Pok√©mon HP in combat.
 		1 -> Teleport to Ganon Final Room.
 		2 -> Teleport to outside of Victory Road.
 		3 -> Teleport to Mini-Boss Room.
 
-THE POK…MON COMBAT
+THE POK√âMON COMBAT
 	
-	You will have 3 PokÈmon with a melee and a special attack, that will do more damage to the PokÈmon enemy. The special attack
+	You will have 3 Pok√©mon with a melee and a special attack, that will do more damage to the Pok√©mon enemy. The special attack
 	has got a cooldown time to be cast again. At the moment, enemy IA won't attack you. It's only a test to see how this mechanic
-	will work. (different PokÈmon with different attacks & types that will do more or less damage depending the PokÈmon).
+	will work. (different Pok√©mon with different attacks and types that will do more or less damage depending the Pok√©mon).
 
 SAVE/LOAD
 	
-	You can save the game through the Zelda/PokÈmon menus. If you Load a saved game, the game inits with the stats at the start of the level 
+	You can save the game through the Zelda/Pok√©mon menus. If you Load a saved game, the game inits with the stats at the start of the level 
 	you saved last time, like a Checkpoint System.
 
 WIN/LOSE CONDITIONS
@@ -82,24 +82,24 @@ CHANGELOG
 
 v1.0 GOLD
 
-	Added all cutscenes (initial, teleport to PokÈmon World, Boss defeated).
+	Added all cutscenes (initial, teleport to Pok√©mon World, Boss defeated).
 	Intro updated.
 	"Press Start" screen updated
 	God Mode added.
 	Added Load/Save feature.
 	Added musics and sound effects.
-	PokÈmon Combat intros added.
-	Link PokÈmon License.
+	Pok√©mon Combat intros added.
+	Link Pok√©mon License.
 	Link Animations (shooting arrows, hit, throwing hookshot).
 	Overwold Sound Fx.
-	Balancing (enemies, items, weapons, PokÈmon, money, drop rate & Boss stats).
+	Balancing (enemies, items, weapons, Pok√©mon, money, drop rate and Boss stats).
 	Bug fixing and Polish.
 	
 
 v0.9.1 
 	
 	Game Intro added (team logo and first scene implemented)
-	PokÈmon collisions adjousted.
+	Pok√©mon collisions adjousted.
 
 v0.9 ALPHA
 
@@ -108,12 +108,12 @@ v0.9 ALPHA
 	The boss now has the 3 phases correctly implemented.
 	Added Link uncle.
 	Changed some paths in order to make the game easier and faster to the player.
-	PokÈmon items limited to 3 each PokÈmon.
+	Pok√©mon items limited to 3 each Pok√©mon.
 	Added new tactical control.
 	Added menu shortcuts to change control and to close the game.
-	PokÈmon combat enhanced, all PokÈmon have and do their habilities.
+	Pok√©mon combat enhanced, all Pok√©mon have and do their habilities.
 	Added master Ricard.
-	Added PokÈmon tutorial.
+	Added Pok√©mon tutorial.
 	Added intro placeholder.
 	All dialogs enhanced.
 	Save and Load function added.
@@ -121,12 +121,12 @@ v0.8
 
 	The boss has been implemented.
 	Added new enemies for the boss fight.
-	All pokÈmon combat implemented and working.
+	All pok√©mon combat implemented and working.
 	Player bag implemented.
 	Bag UI implemented.
-	PokÈmon items implemented.
-	PokÈmon money implemented.
-	The shop has been implemented, use 0 in PokÈmon World.
+	Pok√©mon items implemented.
+	Pok√©mon money implemented.
+	The shop has been implemented, use 0 in Pok√©mon World.
 	Shop UI implemented.
 	All elite four members working properly.
 	Minor map changes.
@@ -134,7 +134,7 @@ v0.8
 
 v0.7
 
-	Added PokÈmon World maps:
+	Added Pok√©mon World maps:
 	- Victory League Outdoor.
 	- Victory League Indoor.
 	- Elite Four Dark Room.
@@ -149,7 +149,7 @@ v0.7
 	Now the bow has an indicator of when the arrow will be shot.
 	Objects can be grabbed and can be thrown at enemies.
 	Zelda UI upgraded, now you can exit by selecting exit option.
-	PokÈmon UI upgraded.
+	Pok√©mon UI upgraded.
 	Minor changes in sounds and Fx.
 	Some dialog addition and changes.
 	Added all pokemon NPC.
@@ -182,8 +182,8 @@ v0.5 VERTICAL SLICE
 	Game over screen added.
 	Victory screen added (it shows playtime and score).
 	More sounds, musics & Fx added.
-	Added NPC Brendan. The player can talk to him to trigger an event (PokÈmon combat).
-	PokÈmon combat prototype implemented with a new combat map.
+	Added NPC Brendan. The player can talk to him to trigger an event (Pok√©mon combat).
+	Pok√©mon combat prototype implemented with a new combat map.
 	Victory Road has been modified in certain spots that would allow the player to finish the game
 	sooner than intended.	
 
@@ -228,13 +228,13 @@ AUTHORS
 
 	We are a group of Video Games students from CITM, UPC fundation in Terrassa. Our members are:
 		
-		Jordi OÒa
-		Elliot JimÈnez
-		Sergio ¡lvarez
-		Sergio S·ez
-		Yabel RodrÌguez
+		Jordi O√±a
+		Elliot Jim√©nez
+		Sergio √Ålvarez
+		Sergio S√°ez
+		Yabel Rodr√≠guez
 		Albert Llopart
-		Marc Fabi·n
+		Marc Fabi√°n
 
 SOCIAL MEDIA
 
