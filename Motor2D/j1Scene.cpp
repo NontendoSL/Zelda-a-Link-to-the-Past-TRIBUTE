@@ -303,7 +303,7 @@ bool j1Scene::Update(float dt)
 		// --------------------------------------------------------
 
 		// TP LEVEL -----------------------------------------
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			player->sword_equiped = true;
 			useTP = true;
@@ -340,7 +340,7 @@ bool j1Scene::Update(float dt)
 		}
 
 		//MINI TP -----------------------------------------------
-		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		{
 			App->scene->player->position.x += 50;
 			App->render->camera.x -= 100;
