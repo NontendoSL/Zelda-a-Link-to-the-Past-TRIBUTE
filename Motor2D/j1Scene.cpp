@@ -303,24 +303,28 @@ bool j1Scene::Update(float dt)
 		// --------------------------------------------------------
 
 		// TP LEVEL -----------------------------------------
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		if (modeGod)
 		{
-			player->sword_equiped = true;
-			useTP = true;
-			switch_map = 16;
+			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+			{
+				player->sword_equiped = true;
+				useTP = true;
+				switch_map = 16;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+			{
+				useTP = true;
+				switch_map = 9;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+			{
+				useTP = true;
+				switch_map = 5;
+			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		{
-			useTP = true;
-			switch_map = 9;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-		{
-			useTP = true;
-			switch_map = 5;
-		}
 
 		/*if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 		{
