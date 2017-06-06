@@ -77,7 +77,7 @@
   
 	<window>
     <resolution width="640" height="480" scale="2" />
-		<fullscreen value="false" />
+		<fullscreen value="true" />
 	</window>
   
 	<file_system>
