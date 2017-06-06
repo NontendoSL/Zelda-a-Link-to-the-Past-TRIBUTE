@@ -512,11 +512,11 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
-			App->SaveGame("save_file.xml");
 		}
 		else
 		{
 			((Button*)element)->click = false;
+			App->SaveGame("save_file.xml");
 		}
 	}
 	if (element->identifier == "menu_opt")
@@ -524,6 +524,7 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->SaveGame("save_file.xml");
 		}
 		else
 		{
@@ -636,12 +637,15 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
+			App->SaveGame("save_file.xml");
 		}
 		else
 		{
 			((Button*)element)->click = false;
 			poke_menu->MoveIn(false);
 			GoMainMenu();
+
+
 		}
 	}
 	if (element->identifier == "pk_menu:save")
@@ -649,11 +653,11 @@ void j1Scene::OnGui(j1GuiEntity* element, GuiAction event)
 		if (event == CLICK_DOWN)
 		{
 			((Button*)element)->click = true;
-			App->SaveGame("save_file.xml");
 		}
 		else
 		{
 			((Button*)element)->click = false;
+			App->SaveGame("save_file.xml");
 		}
 	}
 	if (element->identifier == "pk_menu:options")
