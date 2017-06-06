@@ -1,4 +1,4 @@
-What is The Legend of Zelda: A Link to Pokemon World?
+﻿What is The Legend of Zelda: A Link to Pokemon World?
 	
 	It's a project for a subject called Project 2 of Video Games Design and Development  
 	degree at Centre de la Imatge i Multimèdia (CITM), Terrassa. 
@@ -6,7 +6,7 @@ What is The Legend of Zelda: A Link to Pokemon World?
 	and mixed with Pokémon Emerald (2004, GBA). 
 	We have taken the essence of Zelda: a Link to the Past and 
 	added our personal touch: an amazing journey to the Pokémon World. Link will become the best Pokémon 
-	trainer after fighting against some of them with his sword on his hand. Ganon has rapped the princess 
+	trainer after fighting against some of them with his sword on his hand. Ganon has kidnapped the princess 
 	Zelda and you will have to do this travel to rescue her.
 
 
@@ -75,8 +75,11 @@ WIN/LOSE CONDITIONS
 	If you are defeated in Victory Road, the game is restarted the same way as Zelda World.
 	
 	YOU WIN THE GAME when you defeat Ganon, the Final Boss. A final cutscene appears and you are teleported to the Link's House again.
-	
-	 
+
+GOD MODE
+
+	When God Mode is activated you will not suffer any damage from the enemies and you can also use the teleports.
+		 
 
 CHANGELOG
 
