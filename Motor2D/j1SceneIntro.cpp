@@ -145,17 +145,13 @@ bool j1SceneIntro::Update(float dt)
 			{
 				ret = false;
 			}
-			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_DOWN)
-			{
-				if (menu == false)
-				{
-					LoadMainMenu();
-				}
-			}
+			
+			
 			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP || App->input_manager->EventPressed(INPUTEVENT::BUTTON_START) == EVENTSTATE::E_UP)
 			{
 				if (menu == false)
 				{
+					LoadMainMenu();
 					menu = true;
 					bg_anim = 0;
 					TitleScreen_letters = App->tex->Load("gui/title_screen/letters_menu.png");
